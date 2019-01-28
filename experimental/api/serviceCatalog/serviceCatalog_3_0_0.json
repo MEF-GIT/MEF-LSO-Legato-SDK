@@ -2,17 +2,19 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "serviceCatalog API designed for ONAP Beijing Release.\nThis API is build from TMF open API17.5\nonly operation GET (by id & byList) for resource serviceSpecification is available",
-    "version": "1.0.0",
-    "title": "API ServiceCatalog"
+    "description": "serviceCatalog API designed for ONAP Casablanca Release.\nThis API is build from TMF open API17.5. \nOnly operation GET (by id & byList) for resource serviceSpecification is available",
+    "version": "3.0.0",
+    "title": "API ServiceCatalog",
+    "x-logo": {
+      "url": "/redoc/logo.png",
+      "backgroundColor": "#FFFFFF"
+    }
   },
+  
   "host": "serverRoot",
-  "basePath":	"/nbi/api/v1",
+  "basePath":	"/nbi/api/v3",
   "schemes": [
     "https"
-  ],
-  "consumes": [
-    "application/json;charset=utf-8"
   ],
   "produces": [
     "application/json;charset=utf-8"
@@ -29,6 +31,9 @@
       "get": {
         "tags": [
            "ServiceSpecification"
+        ],
+        "produces": [
+           "application/json;charset=utf-8"
         ],        
         "operationId": "serviceSpecificationFind",
         "summary": "List service specifications",
@@ -136,6 +141,9 @@
       "get": {
         "tags": [
            "ServiceSpecification"
+        ],
+        "produces": [
+           "application/json;charset=utf-8"
         ],        
         "operationId": "serviceSpecificationGet",
         "summary": "Retrieve a service specification",
