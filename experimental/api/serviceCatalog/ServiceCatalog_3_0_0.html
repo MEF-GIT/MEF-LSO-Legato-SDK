@@ -1,8 +1,3 @@
-<!--
-This work is licensed under a Creative Commons Attribution 4.0 International License.
-http://creativecommons.org/licenses/by/4.0
-Copyright 2018 Orange
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +5,7 @@ Copyright 2018 Orange
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>API ServiceOrder</title>
+<title>API ServiceCatalog</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -432,7 +427,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>API ServiceOrder</h1>
+<h1>API ServiceCatalog</h1>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
@@ -442,36 +437,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_version_information">Version information</a></li>
 <li><a href="#_uri_scheme">URI scheme</a></li>
 <li><a href="#_tags">Tags</a></li>
-<li><a href="#_consumes">Consumes</a></li>
 <li><a href="#_produces">Produces</a></li>
 </ul>
 </li>
 <li><a href="#_paths">Resources</a>
 <ul class="sectlevel2">
-<li><a href="#_serviceorder_resource">ServiceOrder</a></li>
+<li><a href="#_servicespecification_resource">ServiceSpecification</a></li>
 </ul>
 </li>
 <li><a href="#_definitions">Definitions</a>
 <ul class="sectlevel2">
-<li><a href="#_actiontype">ActionType</a></li>
-<li><a href="#_createserviceorder">CreateServiceOrder</a></li>
-<li><a href="#_createserviceorderitem">CreateServiceOrderItem</a></li>
+<li><a href="#_attachment">Attachment</a></li>
+<li><a href="#_distributionstatus">DistributionStatus</a></li>
 <li><a href="#_errorrepresentation">ErrorRepresentation</a></li>
-<li><a href="#_hub">Hub</a></li>
-<li><a href="#_orderitemrelationship">OrderItemRelationship</a></li>
-<li><a href="#_orderrelationship">OrderRelationship</a></li>
-<li><a href="#_relatedparty">RelatedParty</a></li>
-<li><a href="#_relationshiptype">RelationshipType</a></li>
-<li><a href="#_service">Service</a></li>
-<li><a href="#_servicecharacteristic">ServiceCharacteristic</a></li>
-<li><a href="#_serviceorder">ServiceOrder</a></li>
-<li><a href="#_serviceorderitem">ServiceOrderItem</a></li>
-<li><a href="#_serviceref">ServiceRef</a></li>
-<li><a href="#_servicerelationship">ServiceRelationship</a></li>
-<li><a href="#_servicespecificationref">ServiceSpecificationRef</a></li>
-<li><a href="#_statetype">StateType</a></li>
-<li><a href="#_targetserviceschema">TargetServiceSchema</a></li>
-<li><a href="#_value">Value</a></li>
+<li><a href="#_lifecyclestatusvalues">LifecycleStatusValues</a></li>
+<li><a href="#_relatedpartyref">RelatedPartyRef</a></li>
+<li><a href="#_resourcespecificationref">ResourceSpecificationRef</a></li>
+<li><a href="#_servicespeccharacteristic">ServiceSpecCharacteristic</a></li>
+<li><a href="#_servicespeccharacteristicvalue">ServiceSpecCharacteristicValue</a></li>
+<li><a href="#_servicespecification">ServiceSpecification</a></li>
+<li><a href="#_targetserviceschemaref">TargetServiceSchemaRef</a></li>
+<li><a href="#_timeperiod">TimePeriod</a></li>
 </ul>
 </li>
 </ul>
@@ -482,23 +468,30 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="sect2">
+<h3 id="_api_url">Api URL</h3>
 <div class="paragraph">
-<p>serviceOrder API designed for ONAP Beijing Release.
-This API is build from TMF open API18.0 (applying TMF Guideline 3.0);
-Only operations GET (by id and list) and POST are available.</p>
+<p><a href="https://api-designer.sso.infra.ftgroup/swagger-ui/?url=https://api-designer.sso.infra.ftgroup/api/1.0/apis/XOmvoxNn9d/swagger.json">Swagger UI</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://plantuml.rd.francetelecom.fr/proxy?fmt=svg&amp;src=https://api-designer.sso.infra.ftgroup/api/1.0/apis/XOmvoxNn9d/plantuml&amp;noCache=995303.0">plant UML UI</a></p>
+</div>
+<div class="paragraph">
+<p>serviceCatalog API designed for ONAP Beijing Release.
+This API is build from TMF open API17.5.
+Only operation GET (by id &amp; byList) for resource serviceSpecification is available</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_version_information">Version information</h3>
 <div class="paragraph">
-<p><em>Version</em> : 1.0.0_inProgress</p>
+<p><em>Version</em> : 3.0.0_inProgress</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_uri_scheme">URI scheme</h3>
 <div class="paragraph">
 <p><em>Host</em> : serverRoot<br>
-<em>BasePath</em> : /nbi/api/v1<br>
+<em>BasePath</em> : /nbi/api/v3<br>
 <em>Schemes</em> : HTTPS</p>
 </div>
 </div>
@@ -507,17 +500,7 @@ Only operations GET (by id and list) and POST are available.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>ServiceOrder : A Service Order is a type of order which can be used to describe a group of operations on service – one service order item per service. An action at the level of the service order item describe the operation to be done on a service (add, terminate for example). The service order is triggered from the BSS system in charge of the product order management to ONAP that will manage the service fulfillment.</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_consumes">Consumes</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json;charset=utf-8</code></p>
+<p>ServiceSpecification</p>
 </li>
 </ul>
 </div>
@@ -538,23 +521,20 @@ Only operations GET (by id and list) and POST are available.</p>
 <h2 id="_paths">Resources</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_serviceorder_resource">ServiceOrder</h3>
-<div class="paragraph">
-<p>A Service Order is a type of order which can be used to describe a group of operations on service – one service order item per service. An action at the level of the service order item describe the operation to be done on a service (add, terminate for example). The service order is triggered from the BSS system in charge of the product order management to ONAP that will manage the service fulfillment.</p>
-</div>
+<h3 id="_servicespecification_resource">ServiceSpecification</h3>
 <div class="sect3">
-<h4 id="_serviceordercreate">Create a service order</h4>
+<h4 id="_servicespecificationfind">List service specifications</h4>
 <div class="literalblock">
 <div class="content">
-<pre>POST /serviceOrder</pre>
+<pre>GET /serviceSpecification</pre>
 </div>
 </div>
 <div class="sect4">
 <h5 id="_description">Description</h5>
 <div class="paragraph">
-<p>This operation creates a service order entity.
-The TMF Open API specification document provides the list of mandatory and non mandatory attributes when creating a ServiceOrder, including any possible rule conditions and applicable default values.
-POST should be used without specifying the id and the href, the Service Order Management system is in charge of generating the id + href for the ServiceOrder.</p>
+<p>This operation returns service specifications from a catalog.
+Only a predefined set of attribute is proposed : Based on SDC limitations, only attributes category and distributionStatus are available for serviceSpecification filtering
+Fields attribute could be used to filter attributes retrieved</p>
 </div>
 <div class="paragraph">
 <p>Specific business errors for current operation will be encapsulated in</p>
@@ -562,53 +542,45 @@ POST should be used without specifying the id and the href, the Service Order Ma
 <div class="paragraph">
 <p>HTTP Response 422 Unprocessable entity</p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>100: OrderItem with 'add' action but serviceSpecification id missing</p>
-</li>
-<li>
-<p>101: OrderItem with 'change'/'noChange'/'remove' but service id missing</p>
-</li>
-<li>
-<p>102: OrderItem with 'add' action - serviceSpecification id provided but not existing</p>
-</li>
-<li>
-<p>103: OrderItem with 'add' action but service id already existing in the inventory</p>
-</li>
-<li>
-<p>104: A customer for existing service(s) is provided but he did not exist</p>
-</li>
-<li>
-<p>105: OrderItem with 'change'/'noChange'/'remove' - Service id provided but it is not existing in the inventory</p>
-</li>
-<li>
-<p>106: [Not managed for current Relese] Issue with lcpCloudRegionId and tenantId provided</p>
-</li>
-</ul>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_parameters">Parameters</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
-<col style="width: 22.2222%;">
-<col style="width: 33.3333%;">
-<col style="width: 44.4445%;">
+<col style="width: 11.1111%;">
+<col style="width: 16.6666%;">
+<col style="width: 50%;">
+<col style="width: 22.2223%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-middle">Type</th>
 <th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
 <th class="tableblock halign-left valign-middle">Schema</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Body</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceOrder</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_createserviceorder">CreateServiceOrder</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>category</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Service Category (filter)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>distributionStatus</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Service distribution status (filter)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>fields</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Field selection - used to filtering the attributes to be retreived</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
@@ -630,205 +602,9 @@ POST should be used without specifying the id and the href, the Service Order Ma
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>201</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Success</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_createserviceorder">CreateServiceOrder</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Bad Request</p>
-<p class="tableblock">List of supported error codes:
-- 20: Invalid URL parameter value
-- 21: Missing body
-- 22: Invalid body
-- 23: Missing body field
-- 24: Invalid body field
-- 25: Missing header
-- 26: Invalid header value
-- 27: Missing query-string parameter
-- 28: Invalid query-string parameter value</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>401</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unauthorized</p>
-<p class="tableblock">List of supported error codes:
-- 40: Missing credentials
-- 41: Invalid credentials
-- 42: Expired credentials</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>403</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Forbidden</p>
-<p class="tableblock">List of supported error codes:
-- 50: Access denied
-- 51: Forbidden requester
-- 52: Forbidden user
-- 53: Too many requests</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>404</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Not Found</p>
-<p class="tableblock">List of supported error codes:
-- 60: Resource not found</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>422</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unprocessable entity</p>
-<p class="tableblock">Functional error</p>
-<p class="tableblock">Specific encapsulated business errors for current operation</p>
-<p class="tableblock">* 100: OrderItem with 'add' action but serviceSpecification id missing</p>
-<p class="tableblock">* 101: OrderItem with 'change'/'noChange'/'remove' but service id missing</p>
-<p class="tableblock">* 102: OrderItem with 'add' action - serviceSpecification id provided but not existing</p>
-<p class="tableblock">* 103: OrderItem with 'add' action but service id already existing in the inventory</p>
-<p class="tableblock">* 104: A customer for existing service(s) is provided but he did not exist</p>
-<p class="tableblock">* 105: OrderItem with 'change'/'noChange'/'remove' - Service id provided but it is not existing in the inventory</p>
-<p class="tableblock">* 106: [Not managed for current Relese] Issue with lcpCloudRegionId and tenantId provided</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>500</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Internal Server Error</p>
-<p class="tableblock">List of supported error codes:
-- 1: Internal error</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>503</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Service Unavailable</p>
-<p class="tableblock">List of supported error codes:
-- 5: The service is temporarily unavailable
-- 6: Orange API is over capacity, retry later !</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_errorrepresentation">ErrorRepresentation</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_serviceorderfind">List service orders</h4>
-<div class="literalblock">
-<div class="content">
-<pre>GET /serviceOrder</pre>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_description_2">Description</h5>
-<div class="paragraph">
-<p>Retrieve and list service order entities according to given criteria.
-Only a predefined set of attribute is proposed.
-Attribute selection could be described in the fields attribute.</p>
-</div>
-<div class="paragraph">
-<p>Specific business errors for current operation will be encapsulated in</p>
-</div>
-<div class="paragraph">
-<p>HTTP Response 422 Unprocessable entity</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_parameters_2">Parameters</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 11.1111%;">
-<col style="width: 16.6666%;">
-<col style="width: 50%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Type</th>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>description</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>externalId</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>fields</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">this attribute could be used to filter retrieved attribute(s) and/or sort SO.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>limit</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The maximum number of elements to retrieve (it can be greater than the actual available number of items).</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>offset</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The index of the first element to retrieve. Zero is the first element of the collection.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">integer (int32)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderDate.gt</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">order date greather than</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderDate.lt</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">order date lower than</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>Query</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>state</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">state of the order(s) to be retrieved</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect4">
-<h5 id="_responses_2">Responses</h5>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 10%;">
-<col style="width: 70%;">
-<col style="width: 20%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">HTTP Code</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Success<br>
-<strong>Headers</strong> : <br>
-<code>X-Total-Count</code> (integer (int32))<br>
-<code>X-Result-Count</code> (integer (int32))</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_serviceorder">ServiceOrder</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Success</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_servicespecification">ServiceSpecification</a> &gt; array</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
@@ -895,19 +671,28 @@ Attribute selection could be described in the fields attribute.</p>
 </tbody>
 </table>
 </div>
+<div class="sect4">
+<h5 id="_produces_2">Produces</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json;charset=utf-8</code></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_serviceorderget">Retrieve a service order</h4>
+<h4 id="_servicespecificationget">Retrieve a service specification</h4>
 <div class="literalblock">
 <div class="content">
-<pre>GET /serviceOrder/{id}</pre>
+<pre>GET /serviceSpecification/{id}</pre>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_description_3">Description</h5>
+<h5 id="_description_2">Description</h5>
 <div class="paragraph">
-<p>This operation retrieves a service order entity.
-Attribute selection is enabled for all first level attributes.</p>
+<p>This operation returns a service specification by its id from a catalog. Attribute selection is enabled using the fields attribute.</p>
 </div>
 <div class="paragraph">
 <p>Specific business errors for current operation will be encapsulated in</p>
@@ -917,7 +702,7 @@ Attribute selection is enabled for all first level attributes.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_parameters_3">Parameters</h5>
+<h5 id="_parameters_2">Parameters</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 11.1111%;">
@@ -952,7 +737,7 @@ Attribute selection is enabled for all first level attributes.</p>
 </table>
 </div>
 <div class="sect4">
-<h5 id="_responses_3">Responses</h5>
+<h5 id="_responses_2">Responses</h5>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 10%;">
@@ -970,7 +755,7 @@ Attribute selection is enabled for all first level attributes.</p>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>200</strong></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">Success</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_serviceorder">ServiceOrder</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_servicespecification">ServiceSpecification</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>400</strong></p></td>
@@ -1037,6 +822,16 @@ Attribute selection is enabled for all first level attributes.</p>
 </tbody>
 </table>
 </div>
+<div class="sect4">
+<h5 id="_produces_3">Produces</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json;charset=utf-8</code></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1045,20 +840,10 @@ Attribute selection is enabled for all first level attributes.</p>
 <h2 id="_definitions">Definitions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_actiontype">ActionType</h3>
+<h3 id="_attachment">Attachment</h3>
 <div class="paragraph">
-<p>Action type to be describer on the order item.
-modify is not managed in Beijing release</p>
-</div>
-<div class="paragraph">
-<p><em>Type</em> : enum (add, modify, delete, noChange)</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_createserviceorder">CreateServiceOrder</h3>
-<div class="paragraph">
-<p>This structure is used in the operation POST for a serviceOrder request.
-Attribute description is not accurate and should be find in the serviceOrder class.</p>
+<p>An attachment is a file uses to describe the service.
+In nbi we use attachment to retrieve ONAP artifacts.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1075,149 +860,101 @@ Attribute description is not accurate and should be find in the serviceOrder cla
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">This attribute allows to dynamically extends TMF class. Valued with 'ONAPartifact'. We used this features to add following attributes:
+artifactLabel
+artifactGroupType
+artifactTimeout
+artifactChecksum
+artifactVersion
+generatedFromUUID<br>
+<strong>Default</strong> : <code>"ONAPartifact"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>category</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>artifactChecksum</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Used to categorize the order that can be useful for the OM system (e.g. “broadband”, “TVOption”, …)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - artifactChecksum</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>artifactGroupType</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - artifactGroupType</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>artifactLabel</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - artifactLabel</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>artifactTimeout</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - artifactTimeout</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>artifactVersion</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - artifactVersion</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>description</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A free-text description of the service order</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Description of the attachment - filled with artifactDescription</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>externalId</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>generatedFromUUID</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">ID given by the consumer and only understandable by him (to facilitate his searches)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - generatedFromUUID</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderItem</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_createserviceorderitem">CreateServiceOrderItem</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderRelationship</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_orderrelationship">OrderRelationship</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>priority</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A way that can be used by consumers to prioritize orders in Service Order Management system (from 0 to 4 : 0 is the highest priority, and 4 the lowest)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the attachment - filled with artifactUUID.</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>relatedParty</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>mimeType</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_relatedparty">RelatedParty</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Filled with artifactType</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>requestedCompletionDate</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Requested delivery date from the requestor perspective</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the attachment - filled with artifactName</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>requestedStartDate</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>url</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Order start date wished by the requestor</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Uniform Resource Locator, is a web page address - filled with artifactURL</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_createserviceorderitem">CreateServiceOrderItem</h3>
+<h3 id="_distributionstatus">DistributionStatus</h3>
 <div class="paragraph">
-<p>This structure is used in the operation POST for a serviceOrder request to describe an item.
-Attribute description is not accurate and should be find in the serviceOrderItem class.</p>
+<p>Service distribution status from ONAP.</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Indicates the base type of the resource.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A link to the schema describing this REST resource</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Indicates the type of resource.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>action</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_actiontype">ActionType</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Identifier of the line item (generally it is a sequence number 01, 02, 03, …)</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderItemRelationship</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_orderitemrelationship">OrderItemRelationship</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>service</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_service">Service</a></p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p><em>Type</em> : enum (DISTRIBUTION_NOT_APPROVED, DISTRIBUTION_APPROVED, DISTRIBUTED, DISTRIBUTION_REJECTED)</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_errorrepresentation">ErrorRepresentation</h3>
 <div class="paragraph">
-<p>Representation of an error.</p>
+<p>This class is used to describe error.
+for nbi Beijing release we do not manage additional error for serviceCatalog</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1236,13 +973,13 @@ Attribute description is not accurate and should be find in the serviceOrderItem
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">it provides a link to the schema describing a REST resource</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">it provides a link to the schema describing a REST resource.</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The class type of a REST resource</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">The class type of a REST resource.</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
@@ -1264,7 +1001,7 @@ Attribute description is not accurate and should be find in the serviceOrderItem
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>referenceError</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>referenceErrror</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">url pointing to documentation describing the error</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
@@ -1279,46 +1016,19 @@ Attribute description is not accurate and should be find in the serviceOrderItem
 </table>
 </div>
 <div class="sect2">
-<h3 id="_hub">Hub</h3>
+<h3 id="_lifecyclestatusvalues">LifecycleStatusValues</h3>
 <div class="paragraph">
-<p>An HUB resource is used by client side to subscribe to notification.
-Not managed in the Beijing release.</p>
+<p>Service lifecycle value from ONAP SDC</p>
 </div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 42.8571%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>callback</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>query</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p><em>Type</em> : enum (NOT_CERTIFIED_CHECKOUT, NOT_CERTIFIED_CHECKIN, READY_FOR_CERTIFICATION, CERTIFICATION_IN_PROGRESS, CERTIFIED)</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_orderitemrelationship">OrderItemRelationship</h3>
+<h3 id="_relatedpartyref">RelatedPartyRef</h3>
 <div class="paragraph">
-<p>Linked order item to the one containing this attribute.
-nbi component used this relationship to sort request to ONAP.</p>
+<p>Party linked to the service catalog.
+in nbi we retrieve information about last updater of the service in SDC</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1336,137 +1046,31 @@ nbi component used this relationship to sort request to ONAP.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of an order item</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>type</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_relationshiptype">RelationshipType</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_orderrelationship">OrderRelationship</h3>
-<div class="paragraph">
-<p>Linked order to the one containing this attribute.
-This relationship is not used to sort ONAP request.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@referredType</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Type of the referred order.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A hyperlink to the related order</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The id of the related order</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>type</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The type of related order, can be : “dependency” if the order needs to be “not started” until another order item is complete (a service order in this case) or “cross-ref” to keep track of the source order (a productOrder)</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_relatedparty">RelatedParty</h3>
-<div class="paragraph">
-<p>A related party defines party which are involved in this order and the role they are playing.
-for Beijing release:
-With the current version of APIs used from SO and AAI we need to manage a ‘customer’. This customer concept is confusing with Customer BSS concept. We took the following rules to manage the ‘customer’ information:
-o It could be provided through a serviceOrder in the service Order a relatedParty with role ‘ONAPcustomer’ should be provided in the serviceOrder header (we will not consider in this release the party at item level); External API component will check if this customer exists and create it in AAI if not.
-o If no relatedParty are provided the service will be affected to ‘generic’ customer (dummy customer) – we assume this ‘generic’ customer always exists.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@referredType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">An hyperlink to the party - not used in Beijnig release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of a related party</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the related party. Filled with lastUpdaterUserId</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the related party</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the related party - Filled with lastUpdatedFullName</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>role</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The role of the related party (e.g. Owner, requester, fullfiller etc).
-ONLY 'ONAPcustomer' is considered</p></td>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Role payed by the related party
+Only role 'lastUpdater' is retrieved in Beijing release</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_relationshiptype">RelationshipType</h3>
+<h3 id="_resourcespecificationref">ResourceSpecificationRef</h3>
 <div class="paragraph">
-<p>Relationship type;
-Only reliesOn is managed in Beijing release.</p>
-</div>
-<div class="paragraph">
-<p><em>Type</em> : enum (reliesOn)</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_service">Service</h3>
-<div class="paragraph">
-<p>Service (to be added, modified, deleted) description</p>
+<p>A list of resourceSpec identified to deliver the service.
+for nbi we retrieve resource information available in service description (through SDC api) bu as well information retrieved in the TOSCA file.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1483,77 +1087,73 @@ Only reliesOn is managed in Beijing release.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The URL to get the resource schema.
-Not managed in Beijing Release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">To define the service type
-Not managed in Beijing Release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Reference to the Service (useful for delete or modify command).
-Not managed in Beijing release.</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">This attribute allows to dynamically extends TMF class. Valued with: 'ONAPresource'. We used this features to add following attributes:
+resourceInstanceName
+resourceInvariantUUID
+resourceType
+modelCustomizationName
+modelCustomizationId<br>
+<strong>Default</strong> : <code>"ONAPresource"</code></p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Identifier of a service instance.
-It must be valued if orderItem action is 'delete' and corresponds to a AAI service.id</p></td>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the resource specification - filled with resourceUUID</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>modelCustomizationId</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - Retrieved in the TOSCA file : attribute customizationUUID in topology_template/node_template for the resource</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>modelCustomizationName</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - Retrieved in the TOSCA file : attribute name in topology_template/node_template for the resource</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the service - When orderItem action is 'add' this name will be used in ONAP/SO request as InstaceName.</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the resource specification - filled with resourceName</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>relatedParty</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>resourceInstanceName</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_relatedparty">RelatedParty</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - resourceInstanceName</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceCharacteristic</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>resourceInvariantUUID</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_servicecharacteristic">ServiceCharacteristic</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - resourceInvariantUUID</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceRelationship</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>resourceType</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_servicerelationship">ServiceRelationship</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - resoucreType</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceSpecification</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>version</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_servicespecificationref">ServiceSpecificationRef</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceState</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">The lifecycle state of the service requested;
-Not managed in Beijing release.</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Version for this resource specification - filled with resourceVersion</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_servicecharacteristic">ServiceCharacteristic</h3>
+<h3 id="_servicespeccharacteristic">ServiceSpecCharacteristic</h3>
 <div class="paragraph">
-<p>ServiceCharacteristic</p>
+<p>A characteristic quality or distinctive feature of a ServiceSpecification.
+ServiceSpecCharacteristic are retrieved in the serviceTosca file in the topology_template section in the inputs section.</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1569,386 +1169,284 @@ Not managed in Beijing release.</p></td>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of characteristic</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>value</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_value">Value</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>valueType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_serviceorder">ServiceOrder</h3>
-<div class="paragraph">
-<p>A Service Order is a type of order which can be used to place an order between a customer and a service provider or between a service provider and a partner and vice versa</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">An url pointing to type description - we do not use it in nbi Beijing release</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">This attribute allows to dynamically extends TMF class. Valued with: 'ONAPserviceCharacteristic'. We do not used this features in nbi Beijing release.</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>category</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Used to categorize the order that can be useful for the OM system (e.g. “broadband”, “TVOption”, …)</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>completionDateTime</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Date when the order was completed</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>description</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A free-text description of the service order</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A narrative that explains in detail what the characteristic is - Filled with parameter_description</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>expectedCompletionDate</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the characteristic - Filled with parameter_name</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>required</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A parameter to define if the characteristic is mandatory - Filled from parameter_required – if not fielded by default ‘true’<br>
+<strong>Default</strong> : <code>true</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceSpecCharacteristicValue</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_servicespeccharacteristicvalue">ServiceSpecCharacteristicValue</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>externalId</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>status</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">ID given by the consumer and only understandable by him (to facilitate his searches)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Status of the characteristic - filled with status_value</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>valueType</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A kind of value that the characteristic can take on, such as numeric, text and so forth - Filled with parameter_type</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_servicespeccharacteristicvalue">ServiceSpecCharacteristicValue</h3>
+<div class="paragraph">
+<p>A number or text that can be assigned to a service specification characteristic.
+ServiceSpecCharacteristicValue are retrieved in the service Tosca file</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>isDefault</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Information calculated from parameter default in the Tosca file</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">boolean</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>value</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A discrete value that the characteristic can take on</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>valueType</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A kind of value that the characteristic can take on, such as numeric, text, and so forth
+Retrieved in the Tosca in the topology_template section in the inputs section - parameter_type.
+We do not manage parameter_type= list or map for Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_servicespecification">ServiceSpecification</h3>
+<div class="paragraph">
+<p>ServiceSpecification is a class that offers characteristics to describe a type of service. Functionally, it acts as a template by which Services may be instantiated. By sharing the same specification, these services would therefore share the same set of characteristics.
+the service information are retrieved in SDC</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 61.1111%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Description</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Not used for Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Not used for Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">This attribute allows to dynamically extends TMF class. Valued with 'ONAPservice'. We used this features to add following attributes:
+invariantUUID
+toscaModelURL
+toscaResourceName
+category (1)
+subcategory (1)
+distributionStatus<br>
+<strong>Default</strong> : <code>"ONAPservice"</code></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>attachment</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_attachment">Attachment</a> &gt; array</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>category</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute - extended through @type - category
+Please note that this attribute is managed in TMF - in future release we&#8217;ll introduce category resource</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>description</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">A narrative that explains in detail what the service specification is - Filled with SDC Service description</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>distributionStatus</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_distributionstatus">DistributionStatus</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Hyperlink to access the order</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Reference of the service specification- not mapped in Beijing</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">ID created on repository side</p></td>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the service specification. Filled with SDC Service uuid</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderDate</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>invariantUUID</strong><br>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - invariantUUID</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderItem</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>lifecycleStatus</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_serviceorderitem">ServiceOrderItem</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_lifecyclestatusvalues">LifecycleStatusValues</a></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderRelationship</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_orderrelationship">OrderRelationship</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>priority</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">A way that can be used by consumers to prioritize orders in Service Order Management system (from 0 to 4 : 0 is the highest priority, and 4 the lowest)</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the service specification- Filled with SDC Service name</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>relatedParty</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_relatedparty">RelatedParty</a> &gt; array</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_relatedpartyref">RelatedPartyRef</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>requestedCompletionDate</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Requested delivery date from the requestor perspective</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>requestedStartDate</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Order start date wished by the requestor</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>startDate</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Date when the order was started for processing</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>state</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>resourceSpecification</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_statetype">StateType</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_serviceorderitem">ServiceOrderItem</h3>
-<div class="paragraph">
-<p>An identified part of the order. A service order is decomposed into one or more order items.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">not used in Beijing relase</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_resourcespecificationref">ResourceSpecificationRef</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">not used in Beijing relase</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Used to extend the order item.
-not used in Beijing relase</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>action</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceSpecCharacteristic</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_actiontype">ActionType</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_servicespeccharacteristic">ServiceSpecCharacteristic</a> &gt; array</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Identifier of the line item (generally it is a sequence number 01, 02, 03, …)</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>orderItemRelationship</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>subcategory</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">&lt; <a href="#_orderitemrelationship">OrderItemRelationship</a> &gt; array</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>service</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_service">Service</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>state</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_statetype">StateType</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_serviceref">ServiceRef</h3>
-<div class="paragraph">
-<p>Service references</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Reference of the service</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the service</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_servicerelationship">ServiceRelationship</h3>
-<div class="paragraph">
-<p>Linked Services to the one instantiate
-nbi component used this relationship to sort request to ONAP.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 42.8571%;">
-<col style="width: 57.1429%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>service</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_service">Service</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>type</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_relationshiptype">RelationshipType</a></p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_servicespecificationref">ServiceSpecificationRef</h3>
-<div class="paragraph">
-<p>The service specification (these attributes are fetched from the catalogue).</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@baseType</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Not used in Beijing release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Not used in Beijing release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Not used in Beijing release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>href</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Reference of the service specification
-Not used in Beijing release.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>id</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Unique identifier of the service specification
-This information will be used to retrieve SDC information + mapped to SO ModelNameVersionIdin the request.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>name</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Name of the service specification
-Not used in Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute - extended through @type - category
+Please note that this attribute is managed in TMF - in future release we&#8217;ll introduce category resourc</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>targetServiceSchema</strong><br>
 <em>optional</em></p></td>
 <td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_targetserviceschema">TargetServiceSchema</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_targetserviceschemaref">TargetServiceSchemaRef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>toscaModelURL</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - toscaModelURL</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>toscaResourceName</strong><br>
+<em>optional</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Additional attribute (not in the TMF API) - extended through @type - toscaResourceName</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>version</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Version of the service Specification
-Not used in Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Service specification version - Filled with SDC Service version</p></td>
 <td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="sect2">
-<h3 id="_statetype">StateType</h3>
-<div class="paragraph">
-<p>List of possible state for the order and the orderItem.</p>
-</div>
-<div class="paragraph">
-<p><em>Type</em> : enum (acknowledged, rejected, pending, held, inProgress, cancelled, completed, failed, partial)</p>
-</div>
+<h3 id="_targetserviceschemaref">TargetServiceSchemaRef</h3>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 57.1429%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-middle">Name</th>
+<th class="tableblock halign-left valign-middle">Schema</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
+<em>required</em></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="sect2">
-<h3 id="_targetserviceschema">TargetServiceSchema</h3>
+<h3 id="_timeperiod">TimePeriod</h3>
 <div class="paragraph">
-<p>Target to the schema describing the service spec resource</p>
+<p>A time period</p>
 </div>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
@@ -1965,60 +1463,16 @@ Not used in Beijing release</p></td>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">This field provided a link to the schema describing this REST resource.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
-<em>required</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Indicates the (class) type of resource.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="sect2">
-<h3 id="_value">Value</h3>
-<div class="paragraph">
-<p>Value is a descriptive structure for service characteristic;
-For Beijing we only manage 'basic' attribute - the serviceCharacteristicValue must be used.</p>
-</div>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 61.1111%;">
-<col style="width: 22.2223%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-middle">Name</th>
-<th class="tableblock halign-left valign-middle">Description</th>
-<th class="tableblock halign-left valign-middle">Schema</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@schemaLocation</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>endDateTime</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">This field provided a link to the schema describing this REST resource.
-Not used in Beijing Release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">End date and time of the period</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>@type</strong><br>
+<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>startDateTime</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Indicates the (class) type of resource.
-Not used in Beijing Release</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>serviceCharacteristicValue</strong><br>
-<em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">Value of the characteristic.
-This attribute must be used in Beijing Release to provide characteristic value.</p></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">Start date and time of the period</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string (date-time)</p></td>
 </tr>
 </tbody>
 </table>
@@ -2028,7 +1482,7 @@ This attribute must be used in Beijing Release to provide characteristic value.<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-22 09:37:52 UTC
+Last updated 2018-09-12 13:43:40 +00:00
 </div>
 </div>
 </body>

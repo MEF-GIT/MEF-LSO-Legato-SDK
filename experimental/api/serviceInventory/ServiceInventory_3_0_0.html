@@ -1,8 +1,3 @@
-<!--
-This work is licensed under a Creative Commons Attribution 4.0 International License.
-http://creativecommons.org/licenses/by/4.0
-Copyright 2018 Orange
--->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -442,7 +437,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_version_information">Version information</a></li>
 <li><a href="#_uri_scheme">URI scheme</a></li>
 <li><a href="#_tags">Tags</a></li>
-<li><a href="#_consumes">Consumes</a></li>
 <li><a href="#_produces">Produces</a></li>
 </ul>
 </li>
@@ -463,7 +457,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_servicespecificationref">ServiceSpecificationRef</a></li>
 <li><a href="#_supportingresource">SupportingResource</a></li>
 <li><a href="#_value">Value</a></li>
-<li><a href="#_statevalues">stateValues</a></li>
 </ul>
 </li>
 </ul>
@@ -474,6 +467,13 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_overview">Overview</h2>
 <div class="sectionbody">
 <div class="sect2">
+<h3 id="_api_url">Api URL</h3>
+<div class="paragraph">
+<p><a href="https://api-designer.sso.infra.ftgroup/swagger-ui/?url=https://api-designer.sso.infra.ftgroup/api/1.0/apis/5ymwb6l1dR/swagger.json">Swagger UI</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://plantuml.rd.francetelecom.fr/proxy?fmt=svg&amp;src=https://api-designer.sso.infra.ftgroup/api/1.0/apis/5ymwb6l1dR/plantuml&amp;noCache=137264.0">plant UML UI</a></p>
+</div>
 <div class="paragraph">
 <p>serviceInventory API designed for ONAP Beijing Release.
 This API is build from TMF open API18.0 (applying TMF Guideline 3.0)
@@ -483,14 +483,14 @@ only operation GET (by id &amp; byList) for resource serviceSpecification is ava
 <div class="sect2">
 <h3 id="_version_information">Version information</h3>
 <div class="paragraph">
-<p><em>Version</em> : 1.0.0_inProgress</p>
+<p><em>Version</em> : 3.0.0_inProgress</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_uri_scheme">URI scheme</h3>
 <div class="paragraph">
 <p><em>Host</em> : serverRoot<br>
-<em>BasePath</em> : /nbi/api/v1<br>
+<em>BasePath</em> : /nbi/api/v3<br>
 <em>Schemes</em> : HTTPS</p>
 </div>
 </div>
@@ -500,16 +500,6 @@ only operation GET (by id &amp; byList) for resource serviceSpecification is ava
 <ul>
 <li>
 <p>Service</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_consumes">Consumes</h3>
-<div class="ulist">
-<ul>
-<li>
-<p><code>application/json;charset=utf-8</code></p>
 </li>
 </ul>
 </div>
@@ -687,6 +677,16 @@ fields attribute may be used to filter retrieved attribute(s) for each service</
 </tbody>
 </table>
 </div>
+<div class="sect4">
+<h5 id="_produces_2">Produces</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json;charset=utf-8</code></p>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_serviceget">Retrieve a service</h4>
@@ -836,6 +836,16 @@ Attribute selection is enabled for all first level attributes.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect4">
+<h5 id="_produces_3">Produces</h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>application/json;charset=utf-8</code></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -1156,8 +1166,8 @@ Not managed in Beijing release</p></td>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>state</strong><br>
 <em>optional</em></p></td>
-<td class="tableblock halign-left valign-middle"></td>
-<td class="tableblock halign-left valign-middle"><p class="tableblock"><a href="#_statevalues">stateValues</a></p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">State of the service. Not managed in Beijing release</p></td>
+<td class="tableblock halign-left valign-middle"><p class="tableblock">string</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-middle"><p class="tableblock"><strong>supportingResource</strong><br>
@@ -1410,18 +1420,12 @@ Not managed in Beijing release.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_statevalues">stateValues</h3>
-<div class="paragraph">
-<p><em>Type</em> : enum (feasibilityChecked, designed, reserved, inactive, active, terminated)</p>
-</div>
-</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-03-22 09:31:41 UTC
+Last updated 2018-09-12 13:43:17 +00:00
 </div>
 </div>
 </body>

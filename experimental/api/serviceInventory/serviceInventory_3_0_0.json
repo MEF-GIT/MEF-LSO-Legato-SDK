@@ -2,18 +2,19 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "serviceInventory API designed for ONAP Beijing Release.\nThis API is build from TMF open API18.0 (applying TMF Guideline 3.0)\nonly operation GET (by id & byList) for resource serviceSpecification is available",
-    "version": "1.0.0",
-    "title": "API ServiceInventory"
+    "description": "serviceInventory API designed for ONAP Casablanca Release.\nThis API is build from TMF open API18.0 (applying TMF Guideline 3.0)\nonly operation GET (by id & byList) for resource serviceSpecification is available",
+    "version": "3.0.0",
+    "title": "API ServiceInventory",
+    "x-logo": {
+      "url": "/redoc/logo.png",
+      "backgroundColor": "#FFFFFF"
+    }
   },
   
   "host": "serverRoot",
-  "basePath":	"/nbi/api/v1",
+  "basePath":	"/nbi/api/v3",
   "schemes": [
     "https"
-  ],
-  "consumes": [
-    "application/json;charset=utf-8"
   ],
   "produces": [
     "application/json;charset=utf-8"
@@ -30,6 +31,9 @@
       "get": {
         "tags": [
            "Service"
+        ],
+        "produces": [
+           "application/json;charset=utf-8"
         ],        
         "operationId": "serviceFind",
         "summary": "List services",
@@ -153,6 +157,9 @@
       "get": {
         "tags": [
            "Service"
+        ],
+        "produces": [
+           "application/json;charset=utf-8"
         ],        
         "operationId": "serviceGet",
         "summary": "Retrieve a service",
@@ -263,19 +270,6 @@
   },
 "definitions": {
   
-    "stateValues": {
-      "description": "",
-      
-      "type": "string",
-      "enum": [
-  	          "feasibilityChecked",
-  	          "designed",
-  	          "reserved",
-  	          "inactive",
-  	          "active",
-  	          "terminated"]
-      
-    },
 
     "ErrorRepresentation": {
       "description": "This class is used to describe error.\nfor nbi Beijing release we do not manage additional error for serviceCatalog",
@@ -344,8 +338,8 @@
               "type": "string"
         },
         "state": {
-          
-           "$ref": "#/definitions/stateValues"
+          "description": "State of the service. Not managed in Beijing release",
+              "type": "string"
         },
         "hasStarted": {
           "description": "This is a Boolean attribute that, if TRUE, signifies that this Service has already been started. If the value of this attribute is FALSE, then this signifies that this Service has NOT been Started\nNot managed in Beijing release",
