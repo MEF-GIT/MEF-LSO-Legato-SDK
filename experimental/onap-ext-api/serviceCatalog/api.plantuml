@@ -1,0 +1,110 @@
+@startuml
+
+enum LifecycleStatusValues {
+   NOT_CERTIFIED_CHECKOUT
+   NOT_CERTIFIED_CHECKIN
+   READY_FOR_CERTIFICATION
+   CERTIFICATION_IN_PROGRESS
+   CERTIFIED
+}
+enum DistributionStatus {
+   DISTRIBUTION_NOT_APPROVED
+   DISTRIBUTION_APPROVED
+   DISTRIBUTED
+   DISTRIBUTION_REJECTED
+}
+
+class ErrorRepresentation {
+   code:int
+   reason:string
+   message:string
+   status:string
+   referenceErrror:string
+   @type:string
+   @schemaLocation:string
+}
+
+class TimePeriod {
+   startDateTime:dateTime
+   endDateTime:dateTime
+}
+
+class RelatedPartyRef {
+   id:string
+   role:string
+   name:string
+}
+
+class ServiceSpecification {
+   id:string
+   href:string
+   name:string
+   description:string
+   @type:string
+   @schemaLocation:string
+   @baseType:string
+   invariantUUID:string
+   toscaModelURL:string
+   toscaResourceName:string
+   category:string
+   subcategory:string
+   version:string
+}
+   ServiceSpecification --> "0-1" DistributionStatus : distributionStatus
+   ServiceSpecification --> "0-1" LifecycleStatusValues : lifecycleStatus
+   ServiceSpecification --> "0-1" TargetServiceSchemaRef : targetServiceSchema
+   ServiceSpecification --> "0-*" Attachment : attachment
+   ServiceSpecification --> "0-*" RelatedPartyRef : relatedParty
+   ServiceSpecification --> "0-*" ResourceSpecificationRef : resourceSpecification
+   ServiceSpecification --> "0-*" ServiceSpecCharacteristic : serviceSpecCharacteristic
+
+class ServiceSpecCharacteristic {
+   name:string
+   description:string
+   valueType:string
+   @type:string
+   @schemaLocation:string
+   required:boolean
+   status:string
+}
+   ServiceSpecCharacteristic --> "0-*" ServiceSpecCharacteristicValue : serviceSpecCharacteristicValue
+
+class Attachment {
+   id:string
+   name:string
+   description:string
+   @type:string
+   artifactLabel:string
+   artifactGroupType:string
+   artifactTimeout:string
+   artifactChecksum:string
+   artifactVersion:string
+   generatedFromUUID:string
+   url:string
+   mimeType:string
+}
+
+class ServiceSpecCharacteristicValue {
+   valueType:string
+   isDefault:boolean
+   value:string
+}
+
+class ResourceSpecificationRef {
+   id:string
+   version:string
+   name:string
+   @type:string
+   resourceInstanceName:string
+   resourceInvariantUUID:string
+   resourceType:string
+   modelCustomizationName:string
+   modelCustomizationId:string
+}
+
+class TargetServiceSchemaRef {
+   @type:string
+   @schemaLocation:string
+}
+
+@enduml

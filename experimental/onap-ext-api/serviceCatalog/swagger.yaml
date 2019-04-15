@@ -1,0 +1,488 @@
+swagger: "2.0"
+info:
+  description: "serviceCatalog API designed for ONAP Beijing Release.\nThis API is\
+    \ build from TMF open API17.5. \nOnly operation GET (by id & byList) for resource\
+    \ serviceSpecification is available\n\n"
+  version: "3.0.0_tag"
+  title: "API ServiceCatalog"
+  x-logo:
+    url: "/redoc/logo.png"
+    backgroundColor: "#FFFFFF"
+host: "serverRoot"
+basePath: "/nbi/api/v1"
+schemes:
+- "https"
+produces:
+- "application/json;charset=utf-8"
+tags:
+- name: "ServiceSpecification"
+  description: ""
+paths:
+  /serviceSpecification:
+    get:
+      tags:
+      - "ServiceSpecification"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "serviceSpecificationFind"
+      summary: "List service specifications"
+      description: "This operation returns service specifications from a catalog.\n\
+        Only a predefined set of attribute is proposed : Based on SDC limitations,\
+        \ only attributes category and distributionStatus are available for serviceSpecification\
+        \ filtering\nFields attribute could be used to filter attributes retrieved"
+      deprecated: false
+      parameters:
+      - name: "fields"
+        required: false
+        in: "query"
+        description: "Field selection - used to filtering the attributes to be retreived"
+        type: "string"
+      - name: "category"
+        required: false
+        in: "query"
+        description: "Service Category (filter)"
+        type: "string"
+      - name: "distributionStatus"
+        required: false
+        in: "query"
+        description: "Service distribution status (filter)"
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceSpecification"
+        400:
+          description: "Bad Request\n\nList of supported error codes:\n- 20: Invalid\
+            \ URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing\
+            \ body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid\
+            \ header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string\
+            \ parameter value"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        401:
+          description: "Unauthorized\n\nList of supported error codes:\n- 40: Missing\
+            \ credentials\n- 41: Invalid credentials\n- 42: Expired credentials"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        403:
+          description: "Forbidden\n\nList of supported error codes:\n- 50: Access\
+            \ denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many\
+            \ requests"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        404:
+          description: "Not Found\n\nList of supported error codes:\n- 60: Resource\
+            \ not found"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        422:
+          description: "Unprocessable entity\n\nFunctional error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        500:
+          description: "Internal Server Error\n\nList of supported error codes:\n\
+            - 1: Internal error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        503:
+          description: "Service Unavailable\n\nList of supported error codes:\n- 5:\
+            \ The service is temporarily unavailable\n- 6: Orange API is over capacity,\
+            \ retry later !"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+  /serviceSpecification/{id}:
+    get:
+      tags:
+      - "ServiceSpecification"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "serviceSpecificationGet"
+      summary: "Retrieve a service specification"
+      description: "This operation returns a service specification by its id from\
+        \ a catalog. Attribute selection is enabled using the fields attribute."
+      deprecated: false
+      parameters:
+      - name: "id"
+        required: true
+        in: "path"
+        type: "string"
+      - name: "fields"
+        required: false
+        in: "query"
+        description: "Attribute selection"
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: "#/definitions/ServiceSpecification"
+        400:
+          description: "Bad Request\n\nList of supported error codes:\n- 20: Invalid\
+            \ URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing\
+            \ body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid\
+            \ header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string\
+            \ parameter value"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        401:
+          description: "Unauthorized\n\nList of supported error codes:\n- 40: Missing\
+            \ credentials\n- 41: Invalid credentials\n- 42: Expired credentials"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        403:
+          description: "Forbidden\n\nList of supported error codes:\n- 50: Access\
+            \ denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many\
+            \ requests"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        404:
+          description: "Not Found\n\nList of supported error codes:\n- 60: Resource\
+            \ not found"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        422:
+          description: "Unprocessable entity\n\nFunctional error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        500:
+          description: "Internal Server Error\n\nList of supported error codes:\n\
+            - 1: Internal error"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+        503:
+          description: "Service Unavailable\n\nList of supported error codes:\n- 5:\
+            \ The service is temporarily unavailable\n- 6: Orange API is over capacity,\
+            \ retry later !"
+          schema:
+            $ref: "#/definitions/ErrorRepresentation"
+definitions:
+  LifecycleStatusValues:
+    description: "Service lifecycle value from ONAP SDC"
+    type: "string"
+    enum:
+    - "NOT_CERTIFIED_CHECKOUT"
+    - "NOT_CERTIFIED_CHECKIN"
+    - "READY_FOR_CERTIFICATION"
+    - "CERTIFICATION_IN_PROGRESS"
+    - "CERTIFIED"
+  DistributionStatus:
+    description: "Service distribution status from ONAP."
+    type: "string"
+    enum:
+    - "DISTRIBUTION_NOT_APPROVED"
+    - "DISTRIBUTION_APPROVED"
+    - "DISTRIBUTED"
+    - "DISTRIBUTION_REJECTED"
+  ErrorRepresentation:
+    description: "This class is used to describe error.\nfor nbi Beijing release we\
+      \ do not manage additional error for serviceCatalog"
+    required:
+    - "code"
+    - "reason"
+    type: "object"
+    properties:
+      code:
+        description: "Application related code (as defined in the API or from a common\
+          \ list)"
+        type: "integer"
+        format: "int32"
+      reason:
+        description: "Text that explains the reason for error. This can be shown to\
+          \ a client user."
+        type: "string"
+      message:
+        description: "Text that provide more details and corrective actions related\
+          \ to the error. This can be shown to a client user"
+        type: "string"
+      status:
+        description: "http error code extension like 400-2"
+        type: "string"
+      referenceErrror:
+        description: "url pointing to documentation describing the error"
+        type: "string"
+      '@type':
+        description: "The class type of a REST resource."
+        type: "string"
+      '@schemaLocation':
+        description: "it provides a link to the schema describing a REST resource."
+        type: "string"
+  TimePeriod:
+    description: "A time period"
+    type: "object"
+    properties:
+      startDateTime:
+        description: "Start date and time of the period"
+        type: "string"
+        format: "date-time"
+      endDateTime:
+        description: "End date and time of the period"
+        type: "string"
+        format: "date-time"
+  RelatedPartyRef:
+    description: "Party linked to the service catalog.\nin nbi we retrieve information\
+      \ about last updater of the service in SDC"
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the related party. Filled with lastUpdaterUserId"
+        type: "string"
+      role:
+        description: "Role payed by the related party\nOnly role 'lastUpdater' is\
+          \ retrieved in Beijing release"
+        type: "string"
+      name:
+        description: "Name of the related party - Filled with lastUpdatedFullName"
+        type: "string"
+  ServiceSpecification:
+    description: "ServiceSpecification is a class that offers characteristics to describe\
+      \ a type of service. Functionally, it acts as a template by which Services may\
+      \ be instantiated. By sharing the same specification, these services would therefore\
+      \ share the same set of characteristics.\nthe service information are retrieved\
+      \ in SDC"
+    required:
+    - "invariantUUID"
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the service specification. Filled with\
+          \ SDC Service uuid"
+        type: "string"
+      href:
+        description: "Reference of the service specification- not mapped in Beijing"
+        type: "string"
+      name:
+        description: "Name of the service specification- Filled with SDC Service name"
+        type: "string"
+      description:
+        description: "A narrative that explains in detail what the service specification\
+          \ is - Filled with SDC Service description"
+        type: "string"
+      '@type':
+        description: "This attribute allows to dynamically extends TMF class. Valued\
+          \ with 'ONAPservice'. We used this features to add following attributes:\n\
+          invariantUUID\ntoscaModelURL\ntoscaResourceName\ncategory (1)\nsubcategory\
+          \ (1)\ndistributionStatus"
+        type: "string"
+        default: "ONAPservice"
+      '@schemaLocation':
+        description: "Not used for Beijing release"
+        type: "string"
+      '@baseType':
+        description: "Not used for Beijing release"
+        type: "string"
+      invariantUUID:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - invariantUUID"
+        type: "string"
+      toscaModelURL:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - toscaModelURL"
+        type: "string"
+      toscaResourceName:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - toscaResourceName"
+        type: "string"
+      category:
+        description: "Additional attribute - extended through @type - category\nPlease\
+          \ note that this attribute is managed in TMF - in future release we'll introduce\
+          \ category resource"
+        type: "string"
+      subcategory:
+        description: "Additional attribute - extended through @type - category\nPlease\
+          \ note that this attribute is managed in TMF - in future release we'll introduce\
+          \ category resourc"
+        type: "string"
+      distributionStatus:
+        $ref: "#/definitions/DistributionStatus"
+      version:
+        description: "Service specification version - Filled with SDC Service version"
+        type: "string"
+      lifecycleStatus:
+        $ref: "#/definitions/LifecycleStatusValues"
+      targetServiceSchema:
+        $ref: "#/definitions/TargetServiceSchemaRef"
+      attachment:
+        type: "array"
+        items:
+          $ref: "#/definitions/Attachment"
+      relatedParty:
+        type: "array"
+        items:
+          $ref: "#/definitions/RelatedPartyRef"
+      resourceSpecification:
+        type: "array"
+        items:
+          $ref: "#/definitions/ResourceSpecificationRef"
+      serviceSpecCharacteristic:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceSpecCharacteristic"
+  ServiceSpecCharacteristic:
+    description: "A characteristic quality or distinctive feature of a ServiceSpecification.\
+      \ \nServiceSpecCharacteristic are retrieved in the serviceTosca file in the\
+      \ topology_template section in the inputs section."
+    type: "object"
+    properties:
+      name:
+        description: "Name of the characteristic - Filled with parameter_name"
+        type: "string"
+      description:
+        description: "A narrative that explains in detail what the characteristic\
+          \ is - Filled with parameter_description"
+        type: "string"
+      valueType:
+        description: "A kind of value that the characteristic can take on, such as\
+          \ numeric, text and so forth - Filled with parameter_type"
+        type: "string"
+      '@type':
+        description: "This attribute allows to dynamically extends TMF class. Valued\
+          \ with: 'ONAPserviceCharacteristic'. We do not used this features in nbi\
+          \ Beijing release."
+        type: "string"
+      '@schemaLocation':
+        description: "An url pointing to type description - we do not use it in nbi\
+          \ Beijing release"
+        type: "string"
+      required:
+        description: "A parameter to define if the characteristic is mandatory - Filled\
+          \ from parameter_required – if not fielded by default ‘true’"
+        type: "boolean"
+        default: true
+      status:
+        description: "Status of the characteristic - filled with status_value"
+        type: "string"
+      serviceSpecCharacteristicValue:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceSpecCharacteristicValue"
+  Attachment:
+    description: "An attachment is a file uses to describe the service.\nIn nbi we\
+      \ use attachment to retrieve ONAP artifacts."
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the attachment - filled with artifactUUID."
+        type: "string"
+      name:
+        description: "Name of the attachment - filled with artifactName"
+        type: "string"
+      description:
+        description: "Description of the attachment - filled with artifactDescription"
+        type: "string"
+      '@type':
+        description: "This attribute allows to dynamically extends TMF class. Valued\
+          \ with 'ONAPartifact'. We used this features to add following attributes:\
+          \ \nartifactLabel\nartifactGroupType\nartifactTimeout\nartifactChecksum\n\
+          artifactVersion\ngeneratedFromUUID"
+        type: "string"
+        default: "ONAPartifact"
+      artifactLabel:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - artifactLabel"
+        type: "string"
+      artifactGroupType:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - artifactGroupType"
+        type: "string"
+      artifactTimeout:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - artifactTimeout"
+        type: "string"
+      artifactChecksum:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - artifactChecksum"
+        type: "string"
+      artifactVersion:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - artifactVersion"
+        type: "string"
+      generatedFromUUID:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - generatedFromUUID"
+        type: "string"
+      url:
+        description: "Uniform Resource Locator, is a web page address - filled with\
+          \ artifactURL"
+        type: "string"
+      mimeType:
+        description: "Filled with artifactType"
+        type: "string"
+  ServiceSpecCharacteristicValue:
+    description: "A number or text that can be assigned to a service specification\
+      \ characteristic.\nServiceSpecCharacteristicValue are retrieved in the service\
+      \ Tosca file"
+    type: "object"
+    properties:
+      valueType:
+        description: "A kind of value that the characteristic can take on, such as\
+          \ numeric, text, and so forth\nRetrieved in the Tosca in the topology_template\
+          \ section in the inputs section - parameter_type. \nWe do not manage parameter_type=\
+          \ list or map for Beijing release"
+        type: "string"
+      isDefault:
+        description: "Information calculated from parameter default in the Tosca file"
+        type: "boolean"
+      value:
+        description: "A discrete value that the characteristic can take on"
+        type: "string"
+  ResourceSpecificationRef:
+    description: "A list of resourceSpec identified to deliver the service.\nfor nbi\
+      \ we retrieve resource information available in service description (through\
+      \ SDC api) bu as well information retrieved in the TOSCA file."
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the resource specification - filled with\
+          \ resourceUUID"
+        type: "string"
+      version:
+        description: "Version for this resource specification - filled with resourceVersion"
+        type: "string"
+      name:
+        description: "Name of the resource specification - filled with resourceName"
+        type: "string"
+      '@type':
+        description: "This attribute allows to dynamically extends TMF class. Valued\
+          \ with: 'ONAPresource'. We used this features to add following attributes:\n\
+          resourceInstanceName\nresourceInvariantUUID\nresourceType\nmodelCustomizationName\n\
+          modelCustomizationId"
+        type: "string"
+        default: "ONAPresource"
+      resourceInstanceName:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - resourceInstanceName"
+        type: "string"
+      resourceInvariantUUID:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - resourceInvariantUUID"
+        type: "string"
+      resourceType:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - resoucreType"
+        type: "string"
+      modelCustomizationName:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - Retrieved in the TOSCA file : attribute name in topology_template/node_template\
+          \ for the resource"
+        type: "string"
+      modelCustomizationId:
+        description: "Additional attribute (not in the TMF API) - extended through\
+          \ @type - Retrieved in the TOSCA file : attribute customizationUUID in topology_template/node_template\
+          \ for the resource"
+        type: "string"
+  TargetServiceSchemaRef:
+    description: ""
+    required:
+    - "@type"
+    - "@schemaLocation"
+    type: "object"
+    properties:
+      '@type':
+        description: ""
+        type: "string"
+      '@schemaLocation':
+        description: ""
+        type: "string"

@@ -1,0 +1,30 @@
+@startuml
+
+
+class ErrorDetail {
+   code:int
+   message:string
+   description:string
+   infoURL:string
+}
+
+class Error {
+   code:int
+   message:string
+   description:string
+   infoURL:string
+}
+   Error --> "0-*" ErrorDetail : details
+
+class HubIn {
+   query:string
+   callback:string
+}
+
+class Hub {
+   id:string
+   query:string
+   callback:string
+}
+
+@enduml
