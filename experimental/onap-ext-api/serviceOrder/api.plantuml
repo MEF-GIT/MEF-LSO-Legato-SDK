@@ -1,0 +1,205 @@
+@startuml
+
+enum ActionType {
+   add
+   modify
+   delete
+   noChange
+}
+enum StateType {
+   acknowledged
+   rejected
+   pending
+   held
+   inProgress
+   cancelled
+   completed
+   failed
+   partial
+}
+enum RelationshipType {
+   reliesOn
+}
+enum EventType {
+   ServiceOrderCreationNotification
+   ServiceOrderStateChangeNotification
+   ServiceOrderItemStateChangeNotification
+}
+enum SeverityMessage {
+   information
+   error
+}
+
+class Error {
+   code:int
+   reason:string
+   message:string
+   status:string
+   referenceError:string
+}
+
+class ServiceRelationship
+   ServiceRelationship --> "1-1" RelationshipType : type
+   ServiceRelationship --> "1-1" Service : service
+
+class ServiceRef {
+   id:string
+   href:string
+}
+
+class ServiceCharacteristic {
+   name:string
+   valueType:string
+}
+   ServiceCharacteristic --> "0-1" Value : value
+
+class RelatedParty {
+   id:string
+   href:string
+   role:string
+   name:string
+   @referredType:string
+}
+
+class ServiceSpecificationRef {
+   id:string
+   href:string
+   name:string
+   version:string
+   @type:string
+   @schemaLocation:string
+   @baseType:string
+}
+   ServiceSpecificationRef --> "0-1" TargetServiceSchema : targetServiceSchema
+
+class Service {
+   id:string
+   href:string
+   name:string
+   serviceState:string
+   @type:string
+   @schemaLocation:string
+}
+   Service --> "0-*" ServiceCharacteristic : serviceCharacteristic
+   Service --> "0-*" ServiceRelationship : serviceRelationship
+   Service --> "0-*" RelatedParty : relatedParty
+   Service --> "0-1" ServiceSpecificationRef : serviceSpecification
+
+class OrderItemRelationship {
+   id:string
+}
+   OrderItemRelationship --> "1-1" RelationshipType : type
+
+class ServiceOrderItem {
+   id:string
+   percentProgress:string
+   @type:string
+   @schemaLocation:string
+   @baseType:string
+}
+   ServiceOrderItem --> "0-1" ActionType : action
+   ServiceOrderItem --> "0-1" StateType : state
+   ServiceOrderItem --> "0-*" OrderItemRelationship : orderItemRelationship
+   ServiceOrderItem --> "1-1" Service : service
+   ServiceOrderItem --> "0-*" OrderMessage : orderItemMessage
+
+class ServiceOrder {
+   id:string
+   href:string
+   externalId:string
+   priority:string
+   description:string
+   category:string
+   orderDate:dateTime
+   completionDateTime:dateTime
+   requestedStartDate:dateTime
+   requestedCompletionDate:dateTime
+   expectedCompletionDate:dateTime
+   startDate:dateTime
+   @baseType:string
+   @type:string
+   @schemaLocation:string
+}
+   ServiceOrder --> "0-1" StateType : state
+   ServiceOrder --> "0-*" RelatedParty : relatedParty
+   ServiceOrder --> "0-*" OrderRelationship : orderRelationship
+   ServiceOrder --> "0-*" ServiceOrderItem : orderItem
+   ServiceOrder --> "0-*" OrderMessage : orderMessage
+
+class OrderRelationship {
+   type:string
+   id:string
+   href:string
+   @referredType:string
+}
+
+class TargetServiceSchema {
+   @type:string
+   @schemaLocation:string
+}
+
+class Value {
+   serviceCharacteristicValue:string
+}
+
+class CreateServiceOrderItem {
+   id:string
+}
+   CreateServiceOrderItem --> "0-1" ActionType : action
+   CreateServiceOrderItem --> "0-*" OrderItemRelationship : orderItemRelationship
+   CreateServiceOrderItem --> "1-1" Service : service
+
+class CreateServiceOrder {
+   externalId:string
+   priority:string
+   description:string
+   category:string
+   requestedStartDate:dateTime
+   requestedCompletionDate:dateTime
+}
+   CreateServiceOrder --> "0-*" RelatedParty : relatedParty
+   CreateServiceOrder --> "0-*" OrderRelationship : orderRelationship
+   CreateServiceOrder --> "0-*" CreateServiceOrderItem : orderItem
+
+class ServiceOrderSummary {
+   id:string
+   href:string
+   externalId:string
+   orderDate:dateTime
+   completionDateTime:dateTime
+}
+   ServiceOrderSummary --> "0-1" StateType : state
+
+class Notification {
+   eventId:string
+   eventDate:dateTime
+}
+   Notification --> "1-1" EventType : eventType
+   Notification --> "1-1" ServiceOrderSummaryWithItem : event
+
+class ServiceOrderItemSummary {
+   id:string
+}
+   ServiceOrderItemSummary --> "0-1" ActionType : action
+   ServiceOrderItemSummary --> "0-1" StateType : state
+   ServiceOrderItemSummary --> "1-1" Service : service
+
+class ServiceOrderSummaryWithItem {
+   id:string
+   href:string
+   externalId:string
+   orderDate:dateTime
+   completionDateTime:dateTime
+}
+   ServiceOrderSummaryWithItem --> "0-1" StateType : state
+   ServiceOrderSummaryWithItem --> "0-*" ServiceOrderItemSummary : orderItem
+
+class OrderMessage {
+   code:string
+   field:string
+   messageInformation:string
+   correctionRequired:boolean
+}
+   OrderMessage --> "1-1" SeverityMessage : severity
+
+@enduml

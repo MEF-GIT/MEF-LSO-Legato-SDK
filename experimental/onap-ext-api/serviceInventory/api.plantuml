@@ -1,0 +1,109 @@
+@startuml
+
+enum eventType {
+   ServiceCreationNotification
+   ServiceAttributeValueChangeNotification
+   ServiceRemoveNotification
+}
+
+class ErrorRepresentation {
+   code:int
+   reason:string
+   message:string
+   status:string
+   referenceError:string
+   @type:string
+   @schemaLocation:string
+}
+
+class Service {
+   id:string
+   href:string
+   name:string
+   type:string
+   state:string
+   @type:string
+   @baseType:string
+   @schemaLocation:string
+}
+   Service --> "0-1" ServiceSpecificationRef : serviceSpecification
+   Service --> "0-*" ServiceCharacteristic : characteristic
+   Service --> "0-*" SupportingResource : supportingResource
+   Service --> "0-*" RelatedPartyRef : relatedParty
+
+class ServiceSpecificationRef {
+   id:string
+   href:string
+   name:string
+   version:string
+   @referredType:string
+   @schemaLocation:string
+   invariantUUID:string
+}
+
+class ServiceCharacteristic {
+   name:string
+   valueType:string
+}
+   ServiceCharacteristic --> "0-1" Value : value
+
+class SupportingResource {
+   id:string
+   href:string
+   role:string
+   name:string
+   @referredType:string
+   @schemaLocation:string
+   status:string
+   modelInvariantId:string
+   modelVersionId:string
+   modelCustomisationId:string
+}
+
+class RelatedPartyRef {
+   id:string
+   href:string
+   role:string
+   @referredType:string
+}
+
+class Value {
+   @type:string
+   @schemaLocation:string
+   serviceCharacteristicValue:string
+}
+
+class ListRelatedPartyRef {
+   id:string
+   role:string
+}
+
+class ListServiceSpecificationRef {
+   id:string
+   name:string
+}
+
+class ListService {
+   id:string
+   name:string
+}
+   ListService --> "0-1" ListServiceSpecificationRef : serviceSpecification
+   ListService --> "0-1" ListRelatedPartyRef : relatedParty
+
+class ServiceInventoryEvent {
+   id:string
+   href:string
+   name:string
+   type:string
+   state:string
+}
+   ServiceInventoryEvent --> "1-1" RelatedPartyRef : relatedParty
+
+class Notification {
+   eventId:string
+   eventDate:dateTime
+}
+   Notification --> "1-1" eventType : eventType
+   Notification --> "1-1" ServiceInventoryEvent : event
+
+@enduml
