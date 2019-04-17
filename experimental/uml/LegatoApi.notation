@@ -1,125 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:css="http://www.eclipse.org/papyrus/infra/gmfdiag/css" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:style="http://www.eclipse.org/papyrus/infra/gmfdiag/style" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
   <notation:Diagram xmi:id="_YrXK0A6jEem-wJYL1Wo8Jw" type="PapyrusUMLClassDiagram" name="LegatoApiOperations" measurementUnit="Pixel">
-    <children xmi:type="notation:Shape" xmi:id="_S3xM0A6pEem-wJYL1Wo8Jw" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_S3xM0g6pEem-wJYL1Wo8Jw" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_S3xM0w6pEem-wJYL1Wo8Jw" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_S3xM1A6pEem-wJYL1Wo8Jw" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_S3xM1Q6pEem-wJYL1Wo8Jw" type="Class_AttributeCompartment">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_pdwI8A6uEemZMPeUl_jG7g" source="PapyrusCSSForceValue">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_pdwI8Q6uEemZMPeUl_jG7g" key="visible" value="true"/>
-        </eAnnotations>
-        <children xmi:type="notation:Shape" xmi:id="_wGuyoA6vEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_Y1Sh4A6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_wGuyoQ6vEemZMPeUl_jG7g"/>
-        </children>
-        <children xmi:type="notation:Shape" xmi:id="_wGvZsA6vEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_aNDmEA6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_wGvZsQ6vEemZMPeUl_jG7g"/>
-        </children>
-        <children xmi:type="notation:Shape" xmi:id="_wGvZsg6vEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_B16_8g6qEem-wJYL1Wo8Jw"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_wGvZsw6vEemZMPeUl_jG7g"/>
-        </children>
-        <children xmi:type="notation:Shape" xmi:id="_lRiuQGCfEemtJ9G6Ppq-zA" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_CnMr4g6qEem-wJYL1Wo8Jw"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_lRiuQWCfEemtJ9G6Ppq-zA"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_S3xM1g6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_S3xM1w6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_S3xM2A6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S3xM2Q6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_S3xz4A6pEem-wJYL1Wo8Jw" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_S3xz4Q6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_S3xz4g6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_S3xz4w6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S3xz5A6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_S3xz5Q6pEem-wJYL1Wo8Jw" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_S3xz5g6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_S3xz5w6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_S3xz6A6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S3xz6Q6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_S3vXoA6pEem-wJYL1Wo8Jw"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_S3xM0Q6pEem-wJYL1Wo8Jw" x="-189" y="35" height="87"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_3OuXwA6pEem-wJYL1Wo8Jw" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_3OuXwg6pEem-wJYL1Wo8Jw" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_3OuXww6pEem-wJYL1Wo8Jw" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_3OuXxA6pEem-wJYL1Wo8Jw" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_3OuXxQ6pEem-wJYL1Wo8Jw" type="Class_AttributeCompartment">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_rtpH8A6uEemZMPeUl_jG7g" source="PapyrusCSSForceValue">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_rtpH8Q6uEemZMPeUl_jG7g" key="visible" value="true"/>
-        </eAnnotations>
-        <children xmi:type="notation:Shape" xmi:id="_scNeIA6uEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_eMoaAA6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_scNeIQ6uEemZMPeUl_jG7g"/>
-        </children>
-        <children xmi:type="notation:Shape" xmi:id="_scOFMA6uEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_flsesA6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_scOFMQ6uEemZMPeUl_jG7g"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_3OuXxg6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_3OuXxw6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_3OuXyA6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OuXyQ6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_3OuXyg6pEem-wJYL1Wo8Jw" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_3OuXyw6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_3OuXzA6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_3OuXzQ6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OuXzg6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_3OuXzw6pEem-wJYL1Wo8Jw" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_3OuX0A6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_3OuX0Q6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_3OuX0g6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OuX0w6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_3Or7gA6pEem-wJYL1Wo8Jw"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_3OuXwQ6pEem-wJYL1Wo8Jw" x="347" y="23" width="168" height="63"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_72DIMA6pEem-wJYL1Wo8Jw" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_72DvQA6pEem-wJYL1Wo8Jw" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_72DvQQ6pEem-wJYL1Wo8Jw" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_72DvQg6pEem-wJYL1Wo8Jw" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_72DvQw6pEem-wJYL1Wo8Jw" type="Class_AttributeCompartment">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_lmF64A6uEemZMPeUl_jG7g" source="PapyrusCSSForceValue">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_lmGh8A6uEemZMPeUl_jG7g" key="visible" value="true"/>
-        </eAnnotations>
-        <children xmi:type="notation:Shape" xmi:id="_mg2S8A6uEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_h1eI8A6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_mg2S8Q6uEemZMPeUl_jG7g"/>
-        </children>
-        <children xmi:type="notation:Shape" xmi:id="_mg26AA6uEemZMPeUl_jG7g" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_jPLG0A6uEemZMPeUl_jG7g"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_mg26AQ6uEemZMPeUl_jG7g"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_72DvRA6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_72DvRQ6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_72DvRg6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_72DvRw6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_72DvSA6pEem-wJYL1Wo8Jw" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_72DvSQ6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_72DvSg6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_72DvSw6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_72DvTA6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_72DvTQ6pEem-wJYL1Wo8Jw" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_72DvTg6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_72DvTw6pEem-wJYL1Wo8Jw"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_72DvUA6pEem-wJYL1Wo8Jw"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_72DvUQ6pEem-wJYL1Wo8Jw"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_72Ar8A6pEem-wJYL1Wo8Jw"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_72DIMQ6pEem-wJYL1Wo8Jw" x="347" y="96" height="66"/>
-    </children>
     <children xmi:type="notation:Shape" xmi:id="_Xjb7YBkVEemr_r_S_xiYDA" type="Interface_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_Xjb7YhkVEemr_r_S_xiYDA" type="Interface_NameLabel"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_Xjb7YxkVEemr_r_S_xiYDA" type="Interface_FloatingNameLabel">
@@ -218,45 +99,55 @@
       <element xmi:type="uml:Class" href="LegatoApi.uml#_qVAHgBkWEemr_r_S_xiYDA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gFCKgR8fEemr_r_S_xiYDA" x="1130" y="-79" height="118"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_TdncoGB-EemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_TdncoWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Tdnco2B-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_S3vXoA6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TdncomB-EemtJ9G6Ppq-zA" x="11" y="35"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_TeKPMGB-EemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_TeKPMWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TeKPM2B-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_3Or7gA6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TeKPMmB-EemtJ9G6Ppq-zA" x="547" y="23"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_TemUEGB-EemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_TemUEWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TemUE2B-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_72Ar8A6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TemUEmB-EemtJ9G6Ppq-zA" x="547" y="96"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Te7EMGB-EemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Te7EMWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Te7EM2B-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <children xmi:type="notation:Shape" xmi:id="_UtE-8GC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_UtE-8WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_UtE-82C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:Interface" href="LegatoApi.uml#_XjY4EBkVEemr_r_S_xiYDA"/>
       </styles>
       <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Te7EMmB-EemtJ9G6Ppq-zA" x="-14" y="-141"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_UtE-8mC2EemtJ9G6Ppq-zA" x="-14" y="-141"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_TgP54GB-EemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_TgP54WB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TgP542B-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <children xmi:type="notation:Shape" xmi:id="_Ut43QGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_Ut43QWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Ut43Q2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_qVAHgBkWEemr_r_S_xiYDA"/>
       </styles>
       <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_TgP54mB-EemtJ9G6Ppq-zA" x="928" y="-6"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ut43QmC2EemtJ9G6Ppq-zA" x="1330" y="-79"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_kv-lYGC3EemtJ9G6Ppq-zA" type="Interface_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_kv-lYmC3EemtJ9G6Ppq-zA" type="Interface_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_kv-lY2C3EemtJ9G6Ppq-zA" type="Interface_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_kv-lZGC3EemtJ9G6Ppq-zA" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_kv-lZWC3EemtJ9G6Ppq-zA" type="Interface_AttributeCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_kv-lZmC3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_kv-lZ2C3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_kv-laGC3EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kv-laWC3EemtJ9G6Ppq-zA"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_kv_McGC3EemtJ9G6Ppq-zA" type="Interface_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_kv_McWC3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_kv_McmC3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_kv_Mc2C3EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kv_MdGC3EemtJ9G6Ppq-zA"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_kv_MdWC3EemtJ9G6Ppq-zA" type="Interface_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_kv_MdmC3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_kv_Md2C3EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_kv_MeGC3EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kv_MeWC3EemtJ9G6Ppq-zA"/>
+      </children>
+      <element xmi:type="uml:Interface" href="LegatoApi.uml#_kv6T8GC3EemtJ9G6Ppq-zA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kv-lYWC3EemtJ9G6Ppq-zA" x="112" y="45"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_kwF6I2C3EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_kwF6JGC3EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_kwF6JmC3EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Interface" href="LegatoApi.uml#_kv6T8GC3EemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_kwF6JWC3EemtJ9G6Ppq-zA" x="200"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_YrXK0Q6jEem-wJYL1Wo8Jw" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_YrXK0g6jEem-wJYL1Wo8Jw"/>
@@ -271,68 +162,6 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Dz9zQg6lEem-wJYL1Wo8Jw" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Dz9zQw6lEem-wJYL1Wo8Jw"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Dz9zRA6lEem-wJYL1Wo8Jw"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_B2oxoA6qEem-wJYL1Wo8Jw" type="Association_Edge" source="_S3xM0A6pEem-wJYL1Wo8Jw" target="_72DIMA6pEem-wJYL1Wo8Jw" routing="Rectilinear">
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxow6qEem-wJYL1Wo8Jw" type="Association_StereotypeLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L2rTMA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxpA6qEem-wJYL1Wo8Jw" y="-20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxpQ6qEem-wJYL1Wo8Jw" type="Association_NameLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L3fykA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxpg6qEem-wJYL1Wo8Jw" y="20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxpw6qEem-wJYL1Wo8Jw" visible="false" type="Association_TargetRoleLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L4FBYA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxqA6qEem-wJYL1Wo8Jw" x="25" y="-20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxqQ6qEem-wJYL1Wo8Jw" type="Association_SourceRoleLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L4q3QA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxqg6qEem-wJYL1Wo8Jw" x="-72" y="-12"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxqw6qEem-wJYL1Wo8Jw" type="Association_SourceMultiplicityLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L5RUMA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxrA6qEem-wJYL1Wo8Jw" x="11" y="11"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_B2oxrQ6qEem-wJYL1Wo8Jw" type="Association_TargetMultiplicityLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_L52jAA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_B2oxrg6qEem-wJYL1Wo8Jw" x="-16" y="15"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_B2oxoQ6qEem-wJYL1Wo8Jw"/>
-      <element xmi:type="uml:Association" href="LegatoApi.uml#_B16Y4A6qEem-wJYL1Wo8Jw"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_B2oxog6qEem-wJYL1Wo8Jw" points="[130, 110, -643984, -643984]$[347, 110, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_B39AQA6qEem-wJYL1Wo8Jw" id="(1.0,0.8505747126436781)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_B39AQQ6qEem-wJYL1Wo8Jw" id="(0.0,0.19696969696969696)"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Cn_WEA6qEem-wJYL1Wo8Jw" type="Association_Edge" source="_S3xM0A6pEem-wJYL1Wo8Jw" target="_3OuXwA6pEem-wJYL1Wo8Jw" routing="Rectilinear">
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WEw6qEem-wJYL1Wo8Jw" type="Association_StereotypeLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K6wdgA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WFA6qEem-wJYL1Wo8Jw" y="-20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WFQ6qEem-wJYL1Wo8Jw" type="Association_NameLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K7nZIA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WFg6qEem-wJYL1Wo8Jw" y="20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WFw6qEem-wJYL1Wo8Jw" visible="false" type="Association_TargetRoleLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K8N2EA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WGA6qEem-wJYL1Wo8Jw" x="25" y="-20"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WGQ6qEem-wJYL1Wo8Jw" type="Association_SourceRoleLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K85LgA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WGg6qEem-wJYL1Wo8Jw" x="-43" y="-15"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WGw6qEem-wJYL1Wo8Jw" type="Association_SourceMultiplicityLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K9hdoA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WHA6qEem-wJYL1Wo8Jw" x="6" y="13"/>
-      </children>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Cn_WHQ6qEem-wJYL1Wo8Jw" type="Association_TargetMultiplicityLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_K-H6kA6qEem-wJYL1Wo8Jw" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Cn_WHg6qEem-wJYL1Wo8Jw" x="-18" y="15"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_Cn_WEQ6qEem-wJYL1Wo8Jw"/>
-      <element xmi:type="uml:Association" href="LegatoApi.uml#_CnME0A6qEem-wJYL1Wo8Jw"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Cn_WEg6qEem-wJYL1Wo8Jw" points="[130, 48, -643984, -643984]$[347, 48, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CqBWYA6qEem-wJYL1Wo8Jw" id="(1.0,0.13793103448275862)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_CqBWYQ6qEem-wJYL1Wo8Jw" id="(0.0,0.38095238095238093)"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_UJlS4B8kEemr_r_S_xiYDA" type="Usage_Edge" source="_Xjb7YBkVEemr_r_S_xiYDA" target="_gFCKgB8fEemr_r_S_xiYDA" routing="Rectilinear">
       <children xmi:type="notation:DecorationNode" xmi:id="_UJl58B8kEemr_r_S_xiYDA" type="Usage_NameLabel">
@@ -349,55 +178,35 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_URGQIB8kEemr_r_S_xiYDA" id="(1.0,0.3291139240506329)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_URGQIR8kEemr_r_S_xiYDA" id="(0.49714285714285716,0.0)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_TdncpGB-EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_S3xM0A6pEem-wJYL1Wo8Jw" target="_TdncoGB-EemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_TdncpWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TdncqWB-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_S3vXoA6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TdncpmB-EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Tdncp2B-EemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TdncqGB-EemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_TeKPNGB-EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_3OuXwA6pEem-wJYL1Wo8Jw" target="_TeKPMGB-EemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_TeKPNWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TeKPOWB-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_3Or7gA6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TeKPNmB-EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TeKPN2B-EemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TeKPOGB-EemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_TemUFGB-EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_72DIMA6pEem-wJYL1Wo8Jw" target="_TemUEGB-EemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_TemUFWB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TemUGWB-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_72Ar8A6pEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TemUFmB-EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TemUF2B-EemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TemUGGB-EemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Te7ENGB-EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Xjb7YBkVEemr_r_S_xiYDA" target="_Te7EMGB-EemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Te7rQGB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Te7rRGB-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <edges xmi:type="notation:Connector" xmi:id="_UtE-9GC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Xjb7YBkVEemr_r_S_xiYDA" target="_UtE-8GC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_UtE-9WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_UtE--WC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:Interface" href="LegatoApi.uml#_XjY4EBkVEemr_r_S_xiYDA"/>
       </styles>
       <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Te7rQWB-EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Te7rQmB-EemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Te7rQ2B-EemtJ9G6Ppq-zA"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_UtE-9mC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UtE-92C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_UtE--GC2EemtJ9G6Ppq-zA"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_TgP55GB-EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_gFCKgB8fEemr_r_S_xiYDA" target="_TgP54GB-EemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_TgP55WB-EemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_TgP56WB-EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <edges xmi:type="notation:Connector" xmi:id="_Ut43RGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_gFCKgB8fEemr_r_S_xiYDA" target="_Ut43QGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_Ut43RWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Ut43SWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_qVAHgBkWEemr_r_S_xiYDA"/>
       </styles>
       <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_TgP55mB-EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TgP552B-EemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_TgP56GB-EemtJ9G6Ppq-zA"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Ut43RmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ut43R2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Ut43SGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_kwF6J2C3EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_kv-lYGC3EemtJ9G6Ppq-zA" target="_kwF6I2C3EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_kwF6KGC3EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_kwF6LGC3EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Interface" href="LegatoApi.uml#_kv6T8GC3EemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_kwF6KWC3EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kwF6KmC3EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kwF6K2C3EemtJ9G6Ppq-zA"/>
     </edges>
   </notation:Diagram>
   <css:ModelStyleSheets xmi:id="_NvqAUA6lEem-wJYL1Wo8Jw">
@@ -634,243 +443,67 @@
       <element xmi:type="uml:Enumeration" href="LegatoApi.uml#_GPIqYCLLEemKW_RJTNbleA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GPTCcSLLEemKW_RJTNbleA" x="273" y="293" height="92"/>
     </children>
+    <children xmi:type="notation:Shape" xmi:id="_Ypy54GC7EemtJ9G6Ppq-zA" type="Class_Shape">
+      <children xmi:type="notation:DecorationNode" xmi:id="_Ypy54mC7EemtJ9G6Ppq-zA" type="Class_NameLabel"/>
+      <children xmi:type="notation:DecorationNode" xmi:id="_Ypy542C7EemtJ9G6Ppq-zA" type="Class_FloatingNameLabel">
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_Ypy55GC7EemtJ9G6Ppq-zA" y="15"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Ypy55WC7EemtJ9G6Ppq-zA" type="Class_AttributeCompartment">
+        <children xmi:type="notation:Shape" xmi:id="_jbVJ0GC7EemtJ9G6Ppq-zA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="LegatoApi.uml#_hFeK8BkYEemr_r_S_xiYDA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_jbVJ0WC7EemtJ9G6Ppq-zA"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_jbVJ0mC7EemtJ9G6Ppq-zA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="LegatoApi.uml#_hKGwsBmDEemr_r_S_xiYDA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_jbVJ02C7EemtJ9G6Ppq-zA"/>
+        </children>
+        <children xmi:type="notation:Shape" xmi:id="_jbVw4GC7EemtJ9G6Ppq-zA" type="Property_ClassAttributeLabel">
+          <element xmi:type="uml:Property" href="LegatoApi.uml#_O6Y6kBkYEemr_r_S_xiYDA"/>
+          <layoutConstraint xmi:type="notation:Location" xmi:id="_jbVw4WC7EemtJ9G6Ppq-zA"/>
+        </children>
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Ypy55mC7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Ypy552C7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ypy56GC7EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ypy56WC7EemtJ9G6Ppq-zA"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Ypy56mC7EemtJ9G6Ppq-zA" type="Class_OperationCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Ypy562C7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Ypy57GC7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ypy57WC7EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ypy57mC7EemtJ9G6Ppq-zA"/>
+      </children>
+      <children xmi:type="notation:BasicCompartment" xmi:id="_Ypzg8GC7EemtJ9G6Ppq-zA" type="Class_NestedClassifierCompartment">
+        <styles xmi:type="notation:TitleStyle" xmi:id="_Ypzg8WC7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:SortingStyle" xmi:id="_Ypzg8mC7EemtJ9G6Ppq-zA"/>
+        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ypzg82C7EemtJ9G6Ppq-zA"/>
+        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ypzg9GC7EemtJ9G6Ppq-zA"/>
+      </children>
+      <element xmi:type="uml:Class" href="LegatoApi.uml#_c8bPUBmDEemr_r_S_xiYDA"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ypy54WC7EemtJ9G6Ppq-zA" x="52" y="424" width="219" height="73"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Yp95A2C7EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_Yp95BGC7EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Yp95BmC7EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_c8bPUBmDEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Yp95BWC7EemtJ9G6Ppq-zA" x="200"/>
+    </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_UVHtoRkHEemr_r_S_xiYDA" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_UVHtohkHEemr_r_S_xiYDA"/>
     <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_UVHtoxkHEemr_r_S_xiYDA" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
       <owner xmi:type="uml:Package" href="LegatoApi.uml#_L6mYoA6kEem-wJYL1Wo8Jw"/>
     </styles>
     <element xmi:type="uml:Package" href="LegatoApi.uml#_L6mYoA6kEem-wJYL1Wo8Jw"/>
-  </notation:Diagram>
-  <notation:Diagram xmi:id="_7eBogBkXEemr_r_S_xiYDA" type="PapyrusUMLClassDiagram" name="LegatoApiMetadata" measurementUnit="Pixel">
-    <children xmi:type="notation:Shape" xmi:id="_-GlmMBkXEemr_r_S_xiYDA" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_-GlmMhkXEemr_r_S_xiYDA" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_-GlmMxkXEemr_r_S_xiYDA" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_-GlmNBkXEemr_r_S_xiYDA" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_-GlmNRkXEemr_r_S_xiYDA" type="Class_AttributeCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_XaMYcBkYEemr_r_S_xiYDA" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_O6Y6kBkYEemr_r_S_xiYDA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_XaMYcRkYEemr_r_S_xiYDA"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_-GlmNhkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_-GlmNxkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_-GlmOBkXEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-GlmORkXEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_-GmNQBkXEemr_r_S_xiYDA" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_-GmNQRkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_-GmNQhkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_-GmNQxkXEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-GmNRBkXEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_-GmNRRkXEemr_r_S_xiYDA" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_-GmNRhkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_-GmNRxkXEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_-GmNSBkXEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-GmNSRkXEemr_r_S_xiYDA"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_-Gh70BkXEemr_r_S_xiYDA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-GlmMRkXEemr_r_S_xiYDA" x="74" y="41" height="55"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_YbjHwBkYEemr_r_S_xiYDA" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_Ybju0BkYEemr_r_S_xiYDA" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Ybju0RkYEemr_r_S_xiYDA" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Ybju0hkYEemr_r_S_xiYDA" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Ybju0xkYEemr_r_S_xiYDA" type="Class_AttributeCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_ldZNcBkYEemr_r_S_xiYDA" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_hFeK8BkYEemr_r_S_xiYDA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_ldZNcRkYEemr_r_S_xiYDA"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Ybju1BkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Ybju1RkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ybju1hkYEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ybju1xkYEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Ybju2BkYEemr_r_S_xiYDA" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Ybju2RkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Ybju2hkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ybju2xkYEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ybju3BkYEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Ybju3RkYEemr_r_S_xiYDA" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Ybju3hkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Ybju3xkYEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Ybju4BkYEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Ybju4RkYEemr_r_S_xiYDA"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_YbgrgBkYEemr_r_S_xiYDA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_YbjHwRkYEemr_r_S_xiYDA" x="69" y="135" height="59"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_KefUYBmDEemr_r_S_xiYDA" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_KefUYhmDEemr_r_S_xiYDA" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_Kef7cBmDEemr_r_S_xiYDA" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_Kef7cRmDEemr_r_S_xiYDA" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Kef7chmDEemr_r_S_xiYDA" type="Class_AttributeCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_UYSEABmDEemr_r_S_xiYDA" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_RGrwYBmDEemr_r_S_xiYDA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_UYSEARmDEemr_r_S_xiYDA"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Kef7cxmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Kef7dBmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Kef7dRmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kef7dhmDEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Kef7dxmDEemr_r_S_xiYDA" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Kef7eBmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Kef7eRmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Kef7ehmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kef7exmDEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_Kef7fBmDEemr_r_S_xiYDA" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_Kef7fRmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_Kef7fhmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_Kef7fxmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Kef7gBmDEemr_r_S_xiYDA"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_Keab4BmDEemr_r_S_xiYDA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_KefUYRmDEemr_r_S_xiYDA" x="246" y="138" height="49"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_c8fgwBmDEemr_r_S_xiYDA" type="Class_Shape">
-      <children xmi:type="notation:DecorationNode" xmi:id="_c8fgwhmDEemr_r_S_xiYDA" type="Class_NameLabel"/>
-      <children xmi:type="notation:DecorationNode" xmi:id="_c8fgwxmDEemr_r_S_xiYDA" type="Class_FloatingNameLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_c8fgxBmDEemr_r_S_xiYDA" y="15"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_c8fgxRmDEemr_r_S_xiYDA" type="Class_AttributeCompartment">
-        <children xmi:type="notation:Shape" xmi:id="_jRpsABmDEemr_r_S_xiYDA" type="Property_ClassAttributeLabel">
-          <element xmi:type="uml:Property" href="LegatoApi.uml#_hKGwsBmDEemr_r_S_xiYDA"/>
-          <layoutConstraint xmi:type="notation:Location" xmi:id="_jRpsARmDEemr_r_S_xiYDA"/>
-        </children>
-        <styles xmi:type="notation:TitleStyle" xmi:id="_c8fgxhmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_c8fgxxmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_c8fgyBmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c8fgyRmDEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_c8gH0BmDEemr_r_S_xiYDA" type="Class_OperationCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_c8gH0RmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_c8gH0hmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_c8gH0xmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c8gH1BmDEemr_r_S_xiYDA"/>
-      </children>
-      <children xmi:type="notation:BasicCompartment" xmi:id="_c8gH1RmDEemr_r_S_xiYDA" type="Class_NestedClassifierCompartment">
-        <styles xmi:type="notation:TitleStyle" xmi:id="_c8gH1hmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:SortingStyle" xmi:id="_c8gH1xmDEemr_r_S_xiYDA"/>
-        <styles xmi:type="notation:FilteringStyle" xmi:id="_c8gH2BmDEemr_r_S_xiYDA"/>
-        <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c8gH2RmDEemr_r_S_xiYDA"/>
-      </children>
-      <element xmi:type="uml:Class" href="LegatoApi.uml#_c8bPUBmDEemr_r_S_xiYDA"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c8fgwRmDEemr_r_S_xiYDA" x="52" y="230" height="51"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_a-LqEGCJEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_a-LqEWCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-LqE2CJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_-Gh70BkXEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a-LqEmCJEemtJ9G6Ppq-zA" x="274" y="41"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_a-iPYGCJEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_a-i2cGCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-i2cmCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_YbgrgBkYEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a-i2cWCJEemtJ9G6Ppq-zA" x="269" y="135"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_a-40sGCJEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_a-40sWCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-40s2CJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Keab4BmDEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a-40smCJEemtJ9G6Ppq-zA" x="446" y="138"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_a_QoIGCJEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_a_QoIWCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a_RPMGCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <edges xmi:type="notation:Connector" xmi:id="_Yp95B2C7EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Ypy54GC7EemtJ9G6Ppq-zA" target="_Yp95A2C7EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_Yp95CGC7EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Yp-gEmC7EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_c8bPUBmDEemr_r_S_xiYDA"/>
       </styles>
       <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_a_QoImCJEemtJ9G6Ppq-zA" x="252" y="230"/>
-    </children>
-    <styles xmi:type="notation:StringValueStyle" xmi:id="_7eBogRkXEemr_r_S_xiYDA" name="diagram_compatibility_version" stringValue="1.4.0"/>
-    <styles xmi:type="notation:DiagramStyle" xmi:id="_7eBoghkXEemr_r_S_xiYDA"/>
-    <styles xmi:type="style:PapyrusDiagramStyle" xmi:id="_7eBogxkXEemr_r_S_xiYDA" diagramKindId="org.eclipse.papyrus.uml.diagram.class">
-      <owner xmi:type="uml:Package" href="LegatoApi.uml#_L6mYoA6kEem-wJYL1Wo8Jw"/>
-    </styles>
-    <element xmi:type="uml:Package" href="LegatoApi.uml#_L6mYoA6kEem-wJYL1Wo8Jw"/>
-    <edges xmi:type="notation:Connector" xmi:id="_wi0CsBkYEemr_r_S_xiYDA" type="Generalization_Edge" source="_YbjHwBkYEemr_r_S_xiYDA" target="_-GlmMBkXEemr_r_S_xiYDA">
-      <children xmi:type="notation:DecorationNode" xmi:id="_wi0CsxkYEemr_r_S_xiYDA" type="Generalization_StereotypeLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_xTw-gBkYEemr_r_S_xiYDA" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_wi0pwBkYEemr_r_S_xiYDA" y="39"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_wi0CsRkYEemr_r_S_xiYDA"/>
-      <element xmi:type="uml:Generalization" href="LegatoApi.uml#_wiKicBkYEemr_r_S_xiYDA"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_wi0CshkYEemr_r_S_xiYDA" points="[162, 134, -643984, -643984]$[164, 96, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wjeKABkYEemr_r_S_xiYDA" id="(0.475177304964539,0.0)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_wjeKARkYEemr_r_S_xiYDA" id="(0.45226130653266333,1.0)"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_VzQNMBmDEemr_r_S_xiYDA" type="Generalization_Edge" source="_KefUYBmDEemr_r_S_xiYDA" target="_-GlmMBkXEemr_r_S_xiYDA">
-      <children xmi:type="notation:DecorationNode" xmi:id="_VzQNMxmDEemr_r_S_xiYDA" type="Generalization_StereotypeLabel">
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_VzQNNBmDEemr_r_S_xiYDA" y="40"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_VzQNMRmDEemr_r_S_xiYDA"/>
-      <element xmi:type="uml:Generalization" href="LegatoApi.uml#_VyxsEBmDEemr_r_S_xiYDA"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_VzQNMhmDEemr_r_S_xiYDA" points="[320, 138, -643984, -643984]$[251, 96, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Vz-l8BmDEemr_r_S_xiYDA" id="(0.38341968911917096,0.0)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Vz-l8RmDEemr_r_S_xiYDA" id="(0.8894472361809045,1.0)"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_khuz0BmDEemr_r_S_xiYDA" type="Generalization_Edge" source="_c8fgwBmDEemr_r_S_xiYDA" target="_YbjHwBkYEemr_r_S_xiYDA">
-      <children xmi:type="notation:DecorationNode" xmi:id="_khuz0xmDEemr_r_S_xiYDA" type="Generalization_StereotypeLabel">
-        <styles xmi:type="notation:BooleanValueStyle" xmi:id="_k7O48BmDEemr_r_S_xiYDA" name="IS_UPDATED_POSITION" booleanValue="true"/>
-        <layoutConstraint xmi:type="notation:Location" xmi:id="_khuz1BmDEemr_r_S_xiYDA" y="40"/>
-      </children>
-      <styles xmi:type="notation:FontStyle" xmi:id="_khuz0RmDEemr_r_S_xiYDA"/>
-      <element xmi:type="uml:Generalization" href="LegatoApi.uml#_khN2cBmDEemr_r_S_xiYDA"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_khuz0hmDEemr_r_S_xiYDA" points="[149, 233, -643984, -643984]$[149, 194, -643984, -643984]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kix8sBmDEemr_r_S_xiYDA" id="(0.5370370370370371,0.0)"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_kix8sRmDEemr_r_S_xiYDA" id="(0.562962962962963,1.0)"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_a-LqFGCJEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_-GlmMBkXEemr_r_S_xiYDA" target="_a-LqEGCJEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_a-LqFWCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-LqGWCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_-Gh70BkXEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_a-LqFmCJEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-LqF2CJEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-LqGGCJEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_a-i2c2CJEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_YbjHwBkYEemr_r_S_xiYDA" target="_a-iPYGCJEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_a-i2dGCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-i2eGCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_YbgrgBkYEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_a-i2dWCJEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-i2dmCJEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-i2d2CJEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_a-5bwGCJEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_KefUYBmDEemr_r_S_xiYDA" target="_a-40sGCJEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_a-5bwWCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a-5bxWCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Keab4BmDEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_a-5bwmCJEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-5bw2CJEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a-5bxGCJEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_a_RPMWCJEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_c8fgwBmDEemr_r_S_xiYDA" target="_a_QoIGCJEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_a_RPMmCJEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_a_RPNmCJEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_c8bPUBmDEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_a_RPM2CJEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_RPNGCJEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_a_RPNWCJEemtJ9G6Ppq-zA"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Yp95CWC7EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Yp-gEGC7EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Yp-gEWC7EemtJ9G6Ppq-zA"/>
     </edges>
   </notation:Diagram>
   <notation:Diagram xmi:id="_bwfH8B8mEemr_r_S_xiYDA" type="PapyrusUMLClassDiagram" name="LegatoApiSchema" measurementUnit="Pixel">
@@ -1474,118 +1107,6 @@
       <element xmi:type="uml:Class" href="LegatoApi.uml#_znxxIA6nEem-wJYL1Wo8Jw"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ucVp4WCfEemtJ9G6Ppq-zA" x="782" y="-59" width="171" height="54"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y5azoGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y5azoWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y5azo2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_gpYUEB8nEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y5azomCiEemtJ9G6Ppq-zA" x="374" y="76"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y6l4UGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y6l4UWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y6l4U2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_FEgX4B8pEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y6l4UmCiEemtJ9G6Ppq-zA" x="431" y="561"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y8LzwGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y8LzwWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y8Lzw2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GmAm4B8pEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y8LzwmCiEemtJ9G6Ppq-zA" x="329" y="413"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y88BsGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y88BsWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y88Bs2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_xSf70A6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y88BsmCiEemtJ9G6Ppq-zA" x="614" y="-29"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y9Z7wGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y9ai0GCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y9ai0mCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Pi11MA6lEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y9ai0WCiEemtJ9G6Ppq-zA" x="759" y="52"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y-aoYGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y-aoYWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y-aoY2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_sPG6cA6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y-aoYmCiEemtJ9G6Ppq-zA" x="866" y="316"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y_DhkGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y_DhkWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y_Dhk2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_IwVmIBmnEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y_DhkmCiEemtJ9G6Ppq-zA" x="890" y="481"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Y_ipwGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Y_ipwWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y_ipw2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_UVC3EGCCEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Y_ipwmCiEemtJ9G6Ppq-zA" x="407" y="-141"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ZASQoGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ZASQoWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZAS3sGCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GCutcBkEEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZASQomCiEemtJ9G6Ppq-zA" x="-35" y="81"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ZBfKgGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ZBfKgWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZBfKg2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_XC4C8B8eEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZBfKgmCiEemtJ9G6Ppq-zA" x="-32" y="545"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ZCOKUGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ZCOKUWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZCOKU2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_VPqfgBmlEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZCOKUmCiEemtJ9G6Ppq-zA" x="3" y="-68"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ZC0AMGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ZC0AMWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZC0AM2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_OHY7oBmtEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZC0AMmCiEemtJ9G6Ppq-zA" x="-33" y="357"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ZEfbMGCiEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ZEfbMWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZEfbM2CiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_znxxIA6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ZEfbMmCiEemtJ9G6Ppq-zA" x="935" y="-58"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_ElWyoGCkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_ElWyoWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ElWyo2CkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ElWyomCkEemtJ9G6Ppq-zA" x="759" y="-48"/>
-    </children>
     <children xmi:type="notation:Shape" xmi:id="_Eum1QGCkEemtJ9G6Ppq-zA" type="AssociationClass_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_Eum1QmCkEemtJ9G6Ppq-zA" type="AssociationClass_NameLabel"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_Eum1Q2CkEemtJ9G6Ppq-zA" type="AssociationClass_FloatingNameLabel">
@@ -1619,22 +1140,6 @@
       </children>
       <element xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Eum1QWCkEemtJ9G6Ppq-zA" x="839" y="257" height="68"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_Euv_N2CkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_Euv_OGCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Euv_OmCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Euv_OWCkEemtJ9G6Ppq-zA" x="1185" y="346"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_GSx9wGCkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_GSx9wWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_GSx9w2CkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GSx9wmCkEemtJ9G6Ppq-zA" x="374" y="-24"/>
     </children>
     <children xmi:type="notation:Shape" xmi:id="_GZm-gGCkEemtJ9G6Ppq-zA" type="AssociationClass_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_GZnlkGCkEemtJ9G6Ppq-zA" type="AssociationClass_NameLabel"/>
@@ -1670,22 +1175,6 @@
       <element xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GZm-gWCkEemtJ9G6Ppq-zA" x="395" y="415" height="68"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_GZtFLmCkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_GZtFL2CkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_GZtsMGCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_GZtFMGCkEemtJ9G6Ppq-zA" x="678" y="370"/>
-    </children>
-    <children xmi:type="notation:Shape" xmi:id="_H89AkGCkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_H89AkWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_H89Ak2CkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_H89AkmCkEemtJ9G6Ppq-zA" x="431" y="461"/>
-    </children>
     <children xmi:type="notation:Shape" xmi:id="_IG0uQGCkEemtJ9G6Ppq-zA" type="AssociationClass_Shape">
       <children xmi:type="notation:DecorationNode" xmi:id="_IG1VUGCkEemtJ9G6Ppq-zA" type="AssociationClass_NameLabel"/>
       <children xmi:type="notation:DecorationNode" xmi:id="_IG1VUWCkEemtJ9G6Ppq-zA" type="AssociationClass_FloatingNameLabel">
@@ -1720,13 +1209,157 @@
       <element xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
       <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IG0uQWCkEemtJ9G6Ppq-zA" x="603" y="662" height="65"/>
     </children>
-    <children xmi:type="notation:Shape" xmi:id="_IG8DEmCkEemtJ9G6Ppq-zA" type="StereotypeComment">
-      <styles xmi:type="notation:TitleStyle" xmi:id="_IG8DE2CkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_IG8qEGCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+    <children xmi:type="notation:Shape" xmi:id="_SRP1sGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SRP1sWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SRQcwGC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_gpYUEB8nEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SRP1smC2EemtJ9G6Ppq-zA" x="374" y="76"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SUSioGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SUSioWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SUSio2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SUSiomC2EemtJ9G6Ppq-zA" x="374" y="-24"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SUxDwGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SUxDwWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SUxDw2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_FEgX4B8pEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SUxDwmC2EemtJ9G6Ppq-zA" x="363" y="561"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SV-ksGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SV-ksWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SV-ks2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
         <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
       </styles>
       <element xsi:nil="true"/>
-      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_IG8DFGCkEemtJ9G6Ppq-zA" x="1011" y="444"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SV-ksmC2EemtJ9G6Ppq-zA" x="363" y="461"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SWhXQGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SWhXQWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SWhXQ2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GmAm4B8pEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SWhXQmC2EemtJ9G6Ppq-zA" x="334" y="396"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SXyikGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SXyikWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SXyik2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_xSf70A6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SXyikmC2EemtJ9G6Ppq-zA" x="614" y="-29"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SYma4GC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SYma4WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SYma42C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Pi11MA6lEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SYma4mC2EemtJ9G6Ppq-zA" x="805" y="68"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Sa6IAGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_Sa6IAWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Sa6vEGC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Sa6IAmC2EemtJ9G6Ppq-zA" x="805" y="-32"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SbU-wGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SbU-wWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SbU-w2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_sPG6cA6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SbU-wmC2EemtJ9G6Ppq-zA" x="910" y="403"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_ScTPIGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_ScTPIWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ScTPI2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_IwVmIBmnEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ScTPImC2EemtJ9G6Ppq-zA" x="934" y="554"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SdF5UGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SdF5UWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SdF5U2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_UVC3EGCCEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SdF5UmC2EemtJ9G6Ppq-zA" x="407" y="-141"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Sex7YGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_Sex7YWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SeyicGC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GCutcBkEEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Sex7YmC2EemtJ9G6Ppq-zA" x="-35" y="81"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SgXPwGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SgXPwWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SgXPw2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_XC4C8B8eEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SgXPwmC2EemtJ9G6Ppq-zA" x="-32" y="545"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SiJYcGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SiJYcWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SiJYc2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_VPqfgBmlEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SiJYcmC2EemtJ9G6Ppq-zA" x="3" y="-68"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_Si930GC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_Si930WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Si9302C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_OHY7oBmtEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Si930mC2EemtJ9G6Ppq-zA" x="-33" y="357"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SkAZoGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SkAZoWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SkAZo2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_znxxIA6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SkAZomC2EemtJ9G6Ppq-zA" x="982" y="-59"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SkjMMGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SkjMMWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SkjMM2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SkjMMmC2EemtJ9G6Ppq-zA" x="1039" y="257"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SlK3QGC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SlK3QWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SlK3Q2C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SlK3QmC2EemtJ9G6Ppq-zA" x="595" y="415"/>
+    </children>
+    <children xmi:type="notation:Shape" xmi:id="_SluQ4GC2EemtJ9G6Ppq-zA" type="StereotypeComment">
+      <styles xmi:type="notation:TitleStyle" xmi:id="_SluQ4WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SluQ42C2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <layoutConstraint xmi:type="notation:Bounds" xmi:id="_SluQ4mC2EemtJ9G6Ppq-zA" x="803" y="662"/>
     </children>
     <styles xmi:type="notation:StringValueStyle" xmi:id="_bwfH8R8mEemr_r_S_xiYDA" name="diagram_compatibility_version" stringValue="1.4.0"/>
     <styles xmi:type="notation:DiagramStyle" xmi:id="_bwfH8h8mEemr_r_S_xiYDA"/>
@@ -2203,136 +1836,6 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_OnZKMGCiEemtJ9G6Ppq-zA" id="(1.0,0.23717948717948717)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_OnZKMWCiEemtJ9G6Ppq-zA" id="(0.9005847953216374,1.0)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y5azpGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_gpbXYB8nEemr_r_S_xiYDA" target="_Y5azoGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y5azpWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y5azqWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_gpYUEB8nEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y5azpmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y5azp2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y5azqGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y6l4VGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_FElQYB8pEemr_r_S_xiYDA" target="_Y6l4UGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y6l4VWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y6l4WWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_FEgX4B8pEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y6l4VmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y6l4V2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y6l4WGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y8Ma0GCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GmDqMB8pEemr_r_S_xiYDA" target="_Y8LzwGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y8Ma0WCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y8Ma1WCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GmAm4B8pEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y8Ma0mCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y8Ma02CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y8Ma1GCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y88BtGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_KA1AkB8sEemr_r_S_xiYDA" target="_Y88BsGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y88BtWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y88owmCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_xSf70A6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y88BtmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y88owGCiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y88owWCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y9ai02CiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Qy2moB8vEemr_r_S_xiYDA" target="_Y9Z7wGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y9ai1GCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y9ai2GCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Pi11MA6lEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y9ai1WCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y9ai1mCiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y9ai12CiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y-aoZGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_99U7ICKcEemKW_RJTNbleA" target="_Y-aoYGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y-aoZWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y-aoaWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_sPG6cA6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y-aoZmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y-aoZ2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y-aoaGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y_DhlGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_VPuqoCKdEemKW_RJTNbleA" target="_Y_DhkGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y_DhlWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y_EIomCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_IwVmIBmnEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y_DhlmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y_EIoGCiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y_EIoWCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Y_ipxGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_aIgjIGCFEemtJ9G6Ppq-zA" target="_Y_ipwGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Y_ipxWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Y_ipyWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_UVC3EGCCEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Y_ipxmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y_ipx2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Y_ipyGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ZAS3sWCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53WcAGCcEemtJ9G6Ppq-zA" target="_ZASQoGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ZAS3smCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZAS3tmCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GCutcBkEEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZAS3s2CiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZAS3tGCiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZAS3tWCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ZBfKhGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53atcGCcEemtJ9G6Ppq-zA" target="_ZBfKgGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ZBfKhWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZBfKiWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_XC4C8B8eEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZBfKhmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZBfKh2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZBfKiGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ZCOKVGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53dwwWCcEemtJ9G6Ppq-zA" target="_ZCOKUGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ZCOxYGCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZCOxZGCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_VPqfgBmlEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZCOxYWCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZCOxYmCiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZCOxY2CiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ZC0ANGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53e-6GCcEemtJ9G6Ppq-zA" target="_ZC0AMGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ZC0ANWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZC0AOWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_OHY7oBmtEemr_r_S_xiYDA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZC0ANmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZC0AN2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZC0AOGCiEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ZEgCQGCiEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_ucVp4GCfEemtJ9G6Ppq-zA" target="_ZEfbMGCiEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ZEgCQWCiEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ZEgCRWCiEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_znxxIA6nEem-wJYL1Wo8Jw"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ZEgCQmCiEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZEgCQ2CiEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ZEgCRGCiEemtJ9G6Ppq-zA"/>
-    </edges>
     <edges xmi:type="notation:Connector" xmi:id="_EfpMMGCkEemtJ9G6Ppq-zA" type="AssociationClass_Edge" source="_Qy2moB8vEemr_r_S_xiYDA" target="_Qy2moB8vEemr_r_S_xiYDA" routing="Rectilinear">
       <children xmi:type="notation:DecorationNode" xmi:id="_EfpzQGCkEemtJ9G6Ppq-zA" type="AssociationClass_SourceRoleLabel">
         <styles xmi:type="notation:BooleanValueStyle" xmi:id="_EjZOUGClEemtJ9G6Ppq-zA" name="IS_UPDATED_POSITION" booleanValue="true"/>
@@ -2347,26 +1850,6 @@
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_EfpMMmCkEemtJ9G6Ppq-zA" points="[895, 195, -643984, -643984]$[951, 195, -643984, -643984]$[951, 246, -643984, -643984]$[873, 246, -643984, -643984]$[873, 224, -643984, -643984]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Eqd8IGCkEemtJ9G6Ppq-zA" id="(1.0,0.8205128205128205)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Eqd8IWCkEemtJ9G6Ppq-zA" id="(0.9241379310344827,1.0)"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_ElWypGCkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_EfpMMGCkEemtJ9G6Ppq-zA" target="_ElWyoGCkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_ElWypWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ElXZsGCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ElWypmCkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ElWyp2CkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ElWyqGCkEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_Euv_O2CkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Eum1QGCkEemtJ9G6Ppq-zA" target="_Euv_N2CkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_Euv_PGCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_EuwmQmCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Euv_PWCkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_EuwmQGCkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_EuwmQWCkEemtJ9G6Ppq-zA"/>
     </edges>
     <edges xmi:type="notation:Connector" xmi:id="_Ez6zEGCkEemtJ9G6Ppq-zA" type="AssociationClass_TetherEdge" source="_EfpMMGCkEemtJ9G6Ppq-zA" target="_Eum1QGCkEemtJ9G6Ppq-zA">
       <styles xmi:type="notation:FontStyle" xmi:id="_Ez6zEWCkEemtJ9G6Ppq-zA"/>
@@ -2390,26 +1873,6 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GWn78GCkEemtJ9G6Ppq-zA" id="(1.0,0.9074074074074074)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GWn78WCkEemtJ9G6Ppq-zA" id="(0.8977272727272727,1.0)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_GSx9xGCkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GPXdYGCkEemtJ9G6Ppq-zA" target="_GSx9wGCkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_GSx9xWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_GSx9yWCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GSx9xmCkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GSx9x2CkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GSx9yGCkEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_GZtsMWCkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GZm-gGCkEemtJ9G6Ppq-zA" target="_GZtFLmCkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_GZtsMmCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_GZtsNmCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_GZtsM2CkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GZtsNGCkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_GZtsNWCkEemtJ9G6Ppq-zA"/>
-    </edges>
     <edges xmi:type="notation:Connector" xmi:id="_Ge35AGCkEemtJ9G6Ppq-zA" type="AssociationClass_TetherEdge" source="_GPXdYGCkEemtJ9G6Ppq-zA" target="_GZm-gGCkEemtJ9G6Ppq-zA">
       <styles xmi:type="notation:FontStyle" xmi:id="_Ge35AWCkEemtJ9G6Ppq-zA"/>
       <element xsi:nil="true"/>
@@ -2432,32 +1895,202 @@
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IB3VwGCkEemtJ9G6Ppq-zA" id="(1.0,0.7943262411347518)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IB3VwWCkEemtJ9G6Ppq-zA" id="(0.7954545454545454,1.0)"/>
     </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_H89AlGCkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_H4kP0GCkEemtJ9G6Ppq-zA" target="_H89AkGCkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_H89AlWCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_H89AmWCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_H89AlmCkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_H89Al2CkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_H89AmGCkEemtJ9G6Ppq-zA"/>
-    </edges>
-    <edges xmi:type="notation:Connector" xmi:id="_IG8qEWCkEemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_IG0uQGCkEemtJ9G6Ppq-zA" target="_IG8DEmCkEemtJ9G6Ppq-zA">
-      <styles xmi:type="notation:FontStyle" xmi:id="_IG8qEmCkEemtJ9G6Ppq-zA"/>
-      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_IG8qFmCkEemtJ9G6Ppq-zA" name="BASE_ELEMENT">
-        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
-      </styles>
-      <element xsi:nil="true"/>
-      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IG8qE2CkEemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
-      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IG8qFGCkEemtJ9G6Ppq-zA"/>
-      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IG8qFWCkEemtJ9G6Ppq-zA"/>
-    </edges>
     <edges xmi:type="notation:Connector" xmi:id="_IMIFAGCkEemtJ9G6Ppq-zA" type="AssociationClass_TetherEdge" source="_H4kP0GCkEemtJ9G6Ppq-zA" target="_IG0uQGCkEemtJ9G6Ppq-zA">
       <styles xmi:type="notation:FontStyle" xmi:id="_IMIFAWCkEemtJ9G6Ppq-zA"/>
       <element xsi:nil="true"/>
       <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_IMIFAmCkEemtJ9G6Ppq-zA" points="[-240, 66, 0, 0]$[-240, 66, 0, 0]"/>
       <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_IMIsEGCkEemtJ9G6Ppq-zA" id="(0.6887755102040817,0.4742268041237113)"/>
       <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_I8724GCkEemtJ9G6Ppq-zA" id="(0.0,0.4307692307692308)"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SRQcwWC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_gpbXYB8nEemr_r_S_xiYDA" target="_SRP1sGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SRQcwmC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SRQcxmC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_gpYUEB8nEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SRQcw2C2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SRQcxGC2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SRQcxWC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SUSipGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GPXdYGCkEemtJ9G6Ppq-zA" target="_SUSioGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SUSipWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SUSiqWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SUSipmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SUSip2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SUSiqGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SUxq0GC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_FElQYB8pEemr_r_S_xiYDA" target="_SUxDwGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SUxq0WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SUxq1WC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_FEgX4B8pEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SUxq0mC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SUxq02C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SUxq1GC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SV_LwGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_H4kP0GCkEemtJ9G6Ppq-zA" target="_SV-ksGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SV_LwWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SV_LxWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SV_LwmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SV_Lw2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SV_LxGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SWhXRGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GmDqMB8pEemr_r_S_xiYDA" target="_SWhXQGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SWhXRWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SWhXSWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GmAm4B8pEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SWhXRmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SWhXR2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SWhXSGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SXyilGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_KA1AkB8sEemr_r_S_xiYDA" target="_SXyikGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SXyilWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SXyimWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_xSf70A6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SXyilmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SXyil2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SXyimGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SYnB8GC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Qy2moB8vEemr_r_S_xiYDA" target="_SYma4GC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SYnB8WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SYnB9WC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_Pi11MA6lEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SYnB8mC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SYnB82C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SYnB9GC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_Sa6vEWC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_EfpMMGCkEemtJ9G6Ppq-zA" target="_Sa6IAGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_Sa6vEmC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Sa6vFmC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Sa6vE2C2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Sa6vFGC2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Sa6vFWC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SbU-xGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_99U7ICKcEemKW_RJTNbleA" target="_SbU-wGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SbU-xWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SbU-yWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_sPG6cA6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SbU-xmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SbU-x2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SbU-yGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_ScTPJGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_VPuqoCKdEemKW_RJTNbleA" target="_ScTPIGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_ScTPJWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_ScTPKWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_IwVmIBmnEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_ScTPJmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ScTPJ2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_ScTPKGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SdF5VGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_aIgjIGCFEemtJ9G6Ppq-zA" target="_SdF5UGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SdF5VWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SdF5WWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_UVC3EGCCEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SdF5VmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SdF5V2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SdF5WGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SeyicWC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53WcAGCcEemtJ9G6Ppq-zA" target="_Sex7YGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SeyicmC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SeyidmC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_GCutcBkEEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Seyic2C2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SeyidGC2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SeyidWC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SgXPxGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53atcGCcEemtJ9G6Ppq-zA" target="_SgXPwGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SgXPxWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SgXPyWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_XC4C8B8eEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SgXPxmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SgXPx2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SgXPyGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SiJYdGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53dwwWCcEemtJ9G6Ppq-zA" target="_SiJYcGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SiJYdWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SiJYeWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_VPqfgBmlEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SiJYdmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SiJYd2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SiJYeGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_Si931GC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_53e-6GCcEemtJ9G6Ppq-zA" target="_Si930GC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_Si931WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_Si932WC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_OHY7oBmtEemr_r_S_xiYDA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_Si931mC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Si9312C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_Si932GC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SkAZpGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_ucVp4GCfEemtJ9G6Ppq-zA" target="_SkAZoGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SkAZpWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SkBAsGC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:Class" href="LegatoApi.uml#_znxxIA6nEem-wJYL1Wo8Jw"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SkAZpmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SkAZp2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SkAZqGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SkjMNGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_Eum1QGCkEemtJ9G6Ppq-zA" target="_SkjMMGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SkjMNWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SkjMOWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_EcYc0GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SkjMNmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SkjMN2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SkjMOGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SlK3RGC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_GZm-gGCkEemtJ9G6Ppq-zA" target="_SlK3QGC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SlK3RWC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SlK3SWC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_GKHJ8GCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SlK3RmC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SlK3R2C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SlK3SGC2EemtJ9G6Ppq-zA"/>
+    </edges>
+    <edges xmi:type="notation:Connector" xmi:id="_SluQ5GC2EemtJ9G6Ppq-zA" type="StereotypeCommentLink" source="_IG0uQGCkEemtJ9G6Ppq-zA" target="_SluQ4GC2EemtJ9G6Ppq-zA">
+      <styles xmi:type="notation:FontStyle" xmi:id="_SluQ5WC2EemtJ9G6Ppq-zA"/>
+      <styles xmi:type="notation:EObjectValueStyle" xmi:id="_SluQ6WC2EemtJ9G6Ppq-zA" name="BASE_ELEMENT">
+        <eObjectValue xmi:type="uml:AssociationClass" href="LegatoApi.uml#_H0jSgGCkEemtJ9G6Ppq-zA"/>
+      </styles>
+      <element xsi:nil="true"/>
+      <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_SluQ5mC2EemtJ9G6Ppq-zA" points="[0, 0, 0, 0]$[0, 0, 0, 0]"/>
+      <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SluQ52C2EemtJ9G6Ppq-zA"/>
+      <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_SluQ6GC2EemtJ9G6Ppq-zA"/>
     </edges>
   </notation:Diagram>
 </xmi:XMI>
