@@ -34,7 +34,7 @@ PrimitiveType > Compartment[kind="operations"] {
 }
 
 /* Show only name, type, multiplicity and defaultValue of attributes */
-Property { maskLabel: name type multiplicity defaultValue;}
+Property { maskLabel: name type multiplicity defaultValue modifiers;}
 
 /* Show optional stereotype RootElement */
 Label[type=StereotypeLabel][stereotype="OpenInterfaceModel_Profile::RootElement"]{
