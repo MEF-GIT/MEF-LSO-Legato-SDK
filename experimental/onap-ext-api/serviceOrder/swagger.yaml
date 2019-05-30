@@ -59,6 +59,11 @@ paths:
         description: ""
         schema:
           $ref: "#/definitions/CreateServiceOrder"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
+        type: "string"
       responses:
         201:
           description: "Created"
@@ -152,11 +157,17 @@ paths:
       - name: "id"
         required: true
         in: "path"
+        description: ""
         type: "string"
       - name: "fields"
         required: false
         in: "query"
         description: "Attribute selection"
+        type: "string"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
         type: "string"
       responses:
         200:
@@ -209,6 +220,11 @@ paths:
         description: ""
         schema:
           $ref: "#/definitions/Notification"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
+        type: "string"
       responses:
         201:
           description: "Created"

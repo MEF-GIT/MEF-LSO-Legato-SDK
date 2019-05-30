@@ -668,7 +668,7 @@ The type of related Service can be : “dependency” if this Service needs to b
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_VpPBIA6kEem-wJYL1Wo8Jw" name="TypeDefinitions">
-      <packagedElement xmi:type="uml:Enumeration" xmi:id="_X3YTcBkHEemr_r_S_xiYDA" name="ServiceLifecycleState">
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_X3YTcBkHEemr_r_S_xiYDA" name="ServiceState">
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_pFGKYBkMEemr_r_S_xiYDA" name="FEASIBILITY_CHECKED"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Dz-n0BkNEemr_r_S_xiYDA" name="DESIGNED"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_FELrcBkNEemr_r_S_xiYDA" name="RESERVED"/>
@@ -693,7 +693,7 @@ The type of related Service can be : “dependency” if this Service needs to b
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_wzuKEBmoEemr_r_S_xiYDA" name="DISTRIBUTED"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_3Ga3MBmoEemr_r_S_xiYDA" name="DISTRIBUTION_REJECTED"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Enumeration" xmi:id="_AymooBmpEemr_r_S_xiYDA" name="ServiceSpecLifecycleState">
+      <packagedElement xmi:type="uml:Enumeration" xmi:id="_AymooBmpEemr_r_S_xiYDA" name="ServiceSpecificationState">
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_GPknoBmpEemr_r_S_xiYDA" name="NOT_CERTIFIED_CHECKOUT"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_Ijt0gBmpEemr_r_S_xiYDA" name="NOT_CERTIFIED_CHECKIN"/>
         <ownedLiteral xmi:type="uml:EnumerationLiteral" xmi:id="_NG6S4BmpEemr_r_S_xiYDA" name="READY_FOR_CERTIFICATION"/>
@@ -1271,6 +1271,42 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
         </ownedOperation>
       </packagedElement>
     </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_MQ6gcIIfEemFWK3-x94uxw" name="StateMachines">
+      <packagedElement xmi:type="uml:StateMachine" xmi:id="_B-aeQIIREemFWK3-x94uxw" name="ServiceSpecLifecycleState">
+        <region xmi:type="uml:Region" xmi:id="_Elmi8IIREemFWK3-x94uxw" name="CertificationFlow">
+          <transition xmi:type="uml:Transition" xmi:id="_mL0PIIISEemFWK3-x94uxw" name="CheckIn" source="_eZ_HAIIREemFWK3-x94uxw" target="_qz4b4IIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_pEcCEIISEemFWK3-x94uxw" name="CheckoutForModification" source="_qz4b4IIREemFWK3-x94uxw" target="_1R558IIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_9MxCQIISEemFWK3-x94uxw" name="CheckoutForSubmission" source="_qz4b4IIREemFWK3-x94uxw" target="_3fvDcIIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_EwQzcIIUEemFWK3-x94uxw" name="CheckIn" source="_1R558IIREemFWK3-x94uxw" target="_qz4b4IIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_KATUQIIVEemFWK3-x94uxw" name="TestingStarted" source="_3fvDcIIREemFWK3-x94uxw" target="_5laWgIIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_OCsLoIIVEemFWK3-x94uxw" name="TestingCompleted" source="_5laWgIIREemFWK3-x94uxw" target="_cDprUIIdEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_wQqQ0IIVEemFWK3-x94uxw" name="SubmitForDistribution" source="_7yZygIIREemFWK3-x94uxw" target="_Q_ceYIIaEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_jaq8MIIdEemFWK3-x94uxw" name="NO" source="_cDprUIIdEemFWK3-x94uxw" target="_1R558IIREemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_oWf9AIIdEemFWK3-x94uxw" name="YES" source="_cDprUIIdEemFWK3-x94uxw" target="_7yZygIIREemFWK3-x94uxw"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_eZ_HAIIREemFWK3-x94uxw" name="Initial"/>
+          <subvertex xmi:type="uml:State" xmi:id="_qz4b4IIREemFWK3-x94uxw" name="NOT_CERTIFIED_CHECKIN"/>
+          <subvertex xmi:type="uml:State" xmi:id="_1R558IIREemFWK3-x94uxw" name="NOT_CERTIFIED_CHECKOUT"/>
+          <subvertex xmi:type="uml:State" xmi:id="_3fvDcIIREemFWK3-x94uxw" name="READY_FOR_CERTIFICATION"/>
+          <subvertex xmi:type="uml:State" xmi:id="_5laWgIIREemFWK3-x94uxw" name="CERTIFICATION_IN_PROGRESS"/>
+          <subvertex xmi:type="uml:State" xmi:id="_7yZygIIREemFWK3-x94uxw" name="CERTIFIED"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_cDprUIIdEemFWK3-x94uxw" name="Approved?" kind="choice"/>
+        </region>
+        <region xmi:type="uml:Region" xmi:id="_C-rSUIIaEemFWK3-x94uxw" name="DistributionFlow">
+          <transition xmi:type="uml:Transition" xmi:id="_wpAGEIIaEemFWK3-x94uxw" name="VerificationComplete" source="_Q_ceYIIaEemFWK3-x94uxw" target="_mTaLQIIaEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_qQFKQIIcEemFWK3-x94uxw" name="YES" source="_mTaLQIIaEemFWK3-x94uxw" target="_gRdP4IIaEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_0EEM0IIcEemFWK3-x94uxw" name="NO" source="_mTaLQIIaEemFWK3-x94uxw" target="_p-0tEIIaEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_410EkIIcEemFWK3-x94uxw" name="Deploy" source="_gRdP4IIaEemFWK3-x94uxw" target="_sS_vIIIaEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_5-dusIIcEemFWK3-x94uxw" source="_sS_vIIIaEemFWK3-x94uxw" target="_CXOxcIISEemFWK3-x94uxw"/>
+          <transition xmi:type="uml:Transition" xmi:id="_7OxgAIIcEemFWK3-x94uxw" source="_p-0tEIIaEemFWK3-x94uxw" target="_Q_ceYIIaEemFWK3-x94uxw"/>
+          <subvertex xmi:type="uml:State" xmi:id="_Q_ceYIIaEemFWK3-x94uxw" name="DISTRIBUTION_NOT_APPROVED"/>
+          <subvertex xmi:type="uml:FinalState" xmi:id="_CXOxcIISEemFWK3-x94uxw" name="Final"/>
+          <subvertex xmi:type="uml:State" xmi:id="_gRdP4IIaEemFWK3-x94uxw" name="DISTRIBUTION_APPROVED"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_mTaLQIIaEemFWK3-x94uxw" name="Approved?" kind="choice"/>
+          <subvertex xmi:type="uml:State" xmi:id="_p-0tEIIaEemFWK3-x94uxw" name="DISTRIBUTION_REJECTED"/>
+          <subvertex xmi:type="uml:State" xmi:id="_sS_vIIIaEemFWK3-x94uxw" name="DISTRIBUTED"/>
+        </region>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_ip5QgA6jEem-wJYL1Wo8Jw">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_is0BoA6jEem-wJYL1Wo8Jw" source="PapyrusVersion">
         <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_is0BoQ6jEem-wJYL1Wo8Jw" key="Version" value="0.2.14"/>
@@ -1309,6 +1345,12 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
         <references xmi:type="ecore:EPackage" href="UmlProfiles/ProfileLifecycleProfile/ProfileLifecycle_Profile.profile.uml#_AL3HsHweEee8oZaf2rRQlg"/>
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="UmlProfiles/ProfileLifecycleProfile/ProfileLifecycle_Profile.profile.uml#_CBpGoEdZEearpawF38eisA"/>
+    </profileApplication>
+    <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_r8MHwIIREemFWK3-x94uxw">
+      <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_r8SOYIIREemFWK3-x94uxw" source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <references xmi:type="ecore:EPackage" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#_Kv8EIKFXEeS_KNX0nfvIVQ"/>
+      </eAnnotations>
+      <appliedProfile xmi:type="uml:Profile" href="pathmap://PAPYRUS_ACTIONLANGUAGE_PROFILE/ActionLanguage-Profile.profile.uml#ActionLanguage"/>
     </profileApplication>
   </uml:Model>
   <OpenModel_Profile:OpenModelStatement xmi:id="_iszakA6jEem-wJYL1Wo8Jw" base_Model="_YqoLAA6jEem-wJYL1Wo8Jw"/>
@@ -1585,4 +1627,6 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelParameter xmi:id="_98K7QmFrEem47bEO5cndzg" base_Parameter="_98E0qGFrEem47bEO5cndzg"/>
   <OpenModel_Profile:OpenModelParameter xmi:id="_98K7Q2FrEem47bEO5cndzg" base_Parameter="_98E0rGFrEem47bEO5cndzg"/>
   <OpenModel_Profile:OpenModelParameter xmi:id="_98LiUGFrEem47bEO5cndzg" base_Parameter="_98E0sGFrEem47bEO5cndzg"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_B-c6gIIREemFWK3-x94uxw" base_Class="_B-aeQIIREemFWK3-x94uxw"/>
+  <OpenModel_Profile:OpenModelClass xmi:id="_B-f90IIREemFWK3-x94uxw" base_Class="_B-aeQIIREemFWK3-x94uxw"/>
 </xmi:XMI>
