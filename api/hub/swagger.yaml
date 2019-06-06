@@ -1,0 +1,180 @@
+swagger: "2.0"
+info:
+  description: "Provides the ability to subscribe to and unsubscribe from External\
+    \ API notifications.\n\n**Main operation**\n\n```\nPOST /hub\n```\n\nrequest sample\
+    \ 1\n\n```\n{\n  \"callback\": \"http://mydomain/notification\",\n  \"query\"\
+    : \"eventType = ServiceOrderCreationNotification\"\n}\n```\n\nrequest sample 2\n\
+    \n```\n{\n  \"callback\": \"http://mydomain/notification\",\n  \"query\": \"eventType=ServiceOrderCreationNotification,ServiceOrderStateChangeNotification\"\
+    \n}\n```\n\n**EventType for serviceOrdering**\n\n- ServiceOrderCreationNotification\n\
+    - ServiceOrderStateChangeNotification\n- ServiceOrderItemStateChangeNotification\n\
+    \n**EventType for serviceInventory**\n\n- ServiceCreationNotification\n- ServiceAttributeValueChangeNotification\n\
+    - ServiceRemoveNotification\n\n"
+  version: "4.0.0_inProgress"
+  title: "API Hub"
+  x-logo:
+    url: "/redoc/logo.png"
+    backgroundColor: "#FFFFFF"
+host: "api.orange.com"
+basePath: "/"
+schemes:
+- "http"
+produces:
+- "application/json;charset=utf-8"
+tags:
+- name: "Hub"
+  description: "provided by NBI"
+paths:
+  /hub:
+    post:
+      tags:
+      - "Hub"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "hubCreate"
+      summary: "create hub"
+      description: ""
+      deprecated: false
+      parameters:
+      - name: "Hub"
+        required: true
+        in: "body"
+        description: ""
+        schema:
+          $ref: "#/definitions/HubIn"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Hub"
+    get:
+      tags:
+      - "Hub"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "hubFind"
+      summary: "find hub"
+      description: ""
+      deprecated: false
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Hub"
+  /hub/{hubId}:
+    get:
+      tags:
+      - "Hub"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "hubGet"
+      summary: "get hub"
+      description: ""
+      deprecated: false
+      parameters:
+      - name: "hubId"
+        required: true
+        in: "path"
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: "#/definitions/Hub"
+    delete:
+      tags:
+      - "Hub"
+      operationId: "hubDelete"
+      summary: "delete hub"
+      description: ""
+      deprecated: false
+      parameters:
+      - name: "hubId"
+        required: true
+        in: "path"
+        type: "string"
+      responses:
+        204:
+          description: "No Content"
+definitions:
+  ErrorDetail:
+    description: ""
+    required:
+    - "code"
+    - "message"
+    type: "object"
+    properties:
+      code:
+        description: ""
+        type: "integer"
+        format: "int32"
+      message:
+        description: ""
+        type: "string"
+      description:
+        description: ""
+        type: "string"
+      infoURL:
+        description: ""
+        type: "string"
+  Error:
+    description: ""
+    required:
+    - "code"
+    - "message"
+    type: "object"
+    properties:
+      code:
+        description: ""
+        type: "integer"
+        format: "int32"
+      message:
+        description: ""
+        type: "string"
+      description:
+        description: ""
+        type: "string"
+      infoURL:
+        description: ""
+        type: "string"
+      details:
+        type: "array"
+        items:
+          $ref: "#/definitions/ErrorDetail"
+  HubIn:
+    description: ""
+    required:
+    - "query"
+    - "callback"
+    type: "object"
+    properties:
+      query:
+        description: "The query must have an eventType= information.\\nOptionally\
+          \ a ? could be added to reduce hub.\\nquery”:”eventType = ServiceOrderStateChangeNotification”\
+          &serviceOrder.state=COMPLETED"
+        type: "string"
+      callback:
+        description: "URL where notification must be send"
+        type: "string"
+  Hub:
+    description: ""
+    required:
+    - "id"
+    - "query"
+    - "callback"
+    type: "object"
+    properties:
+      id:
+        description: ""
+        type: "string"
+      query:
+        description: "The query must have an eventType= information.\\nOptionally\
+          \ a ? could be added to reduce hub.\\nquery”:”eventType = ServiceOrderStateChangeNotification”\
+          &serviceOrder.state=COMPLETED"
+        type: "string"
+      callback:
+        description: "URL where notification must be send"
+        type: "string"

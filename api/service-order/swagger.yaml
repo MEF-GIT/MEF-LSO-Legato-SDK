@@ -1,0 +1,800 @@
+swagger: "2.0"
+info:
+  description: "Request the instantiation of a service\n\nA Service Order is a type\
+    \ of order which can be used to describe a group of operations on service – one\
+    \ service order item per service. An action at the level of the service order\
+    \ item describe the operation to be done on a service (add, terminate for example).\
+    \ The service order is triggered from the BSS system in charge of the product\
+    \ order management to ONAP that will manage the service fulfillment.\n\nList of\
+    \ available subscription for serviceOrdering notifications, see /hub resources\
+    \ for more information:\n\n- ServiceOrderCreationNotification\n- ServiceOrderStateChangeNotification\n\
+    - ServiceOrderItemStateChangeNotification\n\n"
+  version: "4.0.0_inProgress"
+  title: "API ServiceOrder"
+  x-logo:
+    url: "/redoc/logo.png"
+    backgroundColor: "#FFFFFF"
+host: "localhost:8080"
+basePath: "/nbi/api/v4"
+schemes:
+- "http"
+produces:
+- "application/json;charset=utf-8"
+tags:
+- name: "ServiceOrder"
+  description: "provided by NBI"
+- name: "Notification"
+  description: "provided by subscribers, which MUST registered by creating a hub resource"
+paths:
+  /serviceOrder:
+    post:
+      tags:
+      - "ServiceOrder"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "serviceOrderCreate"
+      summary: "Create a service order"
+      description: "This operation creates a service order entity.\nThe TMF Open API\
+        \ specification document provides the list of mandatory and non mandatory\
+        \ attributes when creating a ServiceOrder, including any possible rule conditions\
+        \ and applicable default values.\nPOST should be used without specifying the\
+        \ id and the href, the Service Order Management system is in charge of generating\
+        \ the id + href for the ServiceOrder.\n\nIn Beijing Release, NBI will use\
+        \ only POST {{url}}/ecomp/mso/infra/serviceInstances/v4 SO API. This mean\
+        \ that only the 'service-instance' level will be created in AAI. Additional\
+        \ resource like VNF and/OR VF are not created.\n\nIn Casablanca release, NBI\
+        \ has been improved to also be able to use POST {{url}}/e2eServiceInstances/v3\
+        \ SO API. This API is able to instantiate in ONAP E2E service; This is useful\
+        \ for CCVPN and VoLTE UC.\nDepending on the service category defined in SDC,\
+        \ NBI will use one or the other SO API. If category starts with e2e, NBI will\
+        \ use  {url}}/e2eServiceInstances/v3 SO API - else it will use {{url}}/ecomp/mso/infra/serviceInstances/v4\
+        \ SO API."
+      deprecated: false
+      parameters:
+      - name: "serviceOrder"
+        required: true
+        in: "body"
+        description: ""
+        schema:
+          $ref: "#/definitions/CreateServiceOrder"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
+        type: "string"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/ServiceOrder"
+    get:
+      tags:
+      - "ServiceOrder"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "serviceOrderFind"
+      summary: "List service orders"
+      description: "Retrieve and list service order entities according to given criteria.\n\
+        Only a predefined set of attribute is proposed.\nAttribute selection could\
+        \ be described in the fields attribute."
+      deprecated: false
+      parameters:
+      - name: "externalId"
+        required: false
+        in: "query"
+        description: ""
+        type: "string"
+      - name: "state"
+        required: false
+        in: "query"
+        description: "state of the order(s) to be retrieved"
+        type: "string"
+      - name: "description"
+        required: false
+        in: "query"
+        description: ""
+        type: "string"
+      - name: "orderDate.gt"
+        required: false
+        in: "query"
+        description: "order date greather than"
+        type: "string"
+      - name: "orderDate.lt"
+        required: false
+        in: "query"
+        description: "order date lower than"
+        type: "string"
+      - name: "fields"
+        required: false
+        in: "query"
+        description: "this attribute could be used to filter retrieved attribute(s)\
+          \ and/or sort SO."
+        type: "string"
+      - name: "offset"
+        required: false
+        in: "query"
+        description: "The index of the first element to retrieve. Zero is the first\
+          \ element of the collection."
+        type: "integer"
+        format: "int32"
+      - name: "limit"
+        required: false
+        in: "query"
+        description: "The maximum number of elements to retrieve (it can be greater\
+          \ than the actual available number of items)."
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ServiceOrder"
+          headers:
+            X-Total-Count:
+              description: ""
+              type: "integer"
+              format: "int32"
+            X-Result-Count:
+              description: ""
+              type: "integer"
+              format: "int32"
+  /serviceOrder/{id}:
+    get:
+      tags:
+      - "ServiceOrder"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "serviceOrderGet"
+      summary: "Retrieve a service order"
+      description: "This operation retrieves a service order entity. \nAttribute selection\
+        \ is enabled for all first level attributes."
+      deprecated: false
+      parameters:
+      - name: "id"
+        required: true
+        in: "path"
+        description: ""
+        type: "string"
+      - name: "fields"
+        required: false
+        in: "query"
+        description: "Attribute selection"
+        type: "string"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
+        type: "string"
+      responses:
+        200:
+          description: "Ok"
+          schema:
+            $ref: "#/definitions/ServiceOrder"
+  /notification:
+    post:
+      tags:
+      - "Notification"
+      consumes:
+      - "application/json;charset=utf-8"
+      produces:
+      - "application/json;charset=utf-8"
+      operationId: "notificationCreate"
+      summary: "NBI will send notification to this operation provided by subscribers"
+      description: "Notification structure depends of the eventType:\n\n- ServiceOrderCreationNotification\n\
+        - ServiceOrderStateChangeNotification\n\n```\n{\n  \"eventId\": \"string\"\
+        ,\n  \"eventDate\": \"2019-03-12T16:21:27.530Z\",\n  \"eventType\": \"string\"\
+        ,\n  \"event\": {\n    \"id\": \"string\",\n    \"href\": \"string\",\n  \
+        \  \"externalId\": \"string\",\n    \"state\": \"acknowledged\",\n    \"orderDate\"\
+        : \"2019-03-12T16:21:27.530Z\",\n    \"completionDateTime\": \"2019-03-12T16:21:27.530Z\"\
+        \n  }\n}\n```\n\n- ServiceOrderItemStateChangeNotification\n\n```\n{\n  \"\
+        eventId\": \"string\",\n  \"eventDate\": \"2019-03-12T16:21:44.066Z\",\n \
+        \ \"eventType\": \"string\",\n  \"event\": {\n    \"id\": \"string\",\n  \
+        \  \"href\": \"string\",\n    \"externalId\": \"string\",\n    \"state\":\
+        \ \"acknowledged\",\n    \"orderDate\": \"2019-03-12T16:21:44.066Z\",\n  \
+        \  \"completionDateTime\": \"2019-03-12T16:21:44.066Z\",\n    \"orderItem\"\
+        : [\n      {\n        \"id\": \"string\",\n        \"action\": \"add\",\n\
+        \        \"state\": \"acknowledged\",\n        \"service\": {\n          \"\
+        id\": \"string\",\n          \"href\": \"string\",\n          \"name\": \"\
+        string\",\n          \"serviceState\": \"string\",\n          \"serviceCharacteristic\"\
+        : [\n            {\n              \"name\": \"string\",\n              \"\
+        valueType\": \"string\",\n              \"value\": {\n                \"serviceCharacteristicValue\"\
+        : \"string\"\n              }\n            }\n          ],\n          \"serviceRelationship\"\
+        : [\n            {\n              \"type\": \"reliesOn\"\n            }\n\
+        \          ],\n          \"relatedParty\": [\n            {\n            \
+        \  \"id\": \"string\",\n              \"href\": \"string\",\n            \
+        \  \"role\": \"string\",\n              \"name\": \"string\",\n          \
+        \    \"@referredType\": \"string\"\n            }\n          ],\n        \
+        \  \"serviceSpecification\": {\n            \"id\": \"string\",\n        \
+        \    \"href\": \"string\",\n            \"name\": \"string\",\n          \
+        \  \"version\": \"string\",\n          }\n        }\n      }\n    ]\n  }\n\
+        }\n```"
+      deprecated: false
+      parameters:
+      - name: "Notification"
+        required: true
+        in: "body"
+        description: ""
+        schema:
+          $ref: "#/definitions/Notification"
+      - name: "Target"
+        required: false
+        in: "header"
+        description: ""
+        type: "string"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Notification"
+definitions:
+  ActionType:
+    description: "Action type to be describer on the order item.\nmodify is not managed\
+      \ in Beijing release"
+    type: "string"
+    enum:
+    - "add"
+    - "modify"
+    - "delete"
+    - "noChange"
+  StateType:
+    description: "List of possible state for the order and the orderItem."
+    type: "string"
+    enum:
+    - "acknowledged"
+    - "rejected"
+    - "pending"
+    - "held"
+    - "inProgress"
+    - "cancelled"
+    - "completed"
+    - "failed"
+    - "partial"
+  RelationshipType:
+    description: "Relationship type;\nOnly reliesOn is managed in Beijing release."
+    type: "string"
+    enum:
+    - "reliesOn"
+  EventType:
+    description: ""
+    type: "string"
+    enum:
+    - "ServiceOrderCreationNotification"
+    - "ServiceOrderStateChangeNotification"
+    - "ServiceOrderItemStateChangeNotification"
+  SeverityMessage:
+    description: ""
+    type: "string"
+    enum:
+    - "information"
+    - "error"
+  Error:
+    description: ""
+    required:
+    - "code"
+    - "reason"
+    type: "object"
+    properties:
+      code:
+        description: "Application related code (as defined in the API or from a common\
+          \ list)"
+        type: "integer"
+        format: "int32"
+      reason:
+        description: "Text that explains the reason for error. This can be shown to\
+          \ a client user."
+        type: "string"
+      message:
+        description: "Text that provide more details and corrective actions related\
+          \ to the error. This can be shown to a client user"
+        type: "string"
+      status:
+        description: "http error code extension like 400-2"
+        type: "string"
+      referenceError:
+        description: "url pointing to documentation describing the error"
+        type: "string"
+  ServiceRelationship:
+    description: "Linked Services to the one instantiate\nnbi component used this\
+      \ relationship to sort request to ONAP."
+    required:
+    - "type"
+    - "service"
+    type: "object"
+    properties:
+      type:
+        $ref: "#/definitions/RelationshipType"
+      service:
+        $ref: "#/definitions/Service"
+  ServiceRef:
+    description: "Service references"
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the service"
+        type: "string"
+      href:
+        description: "Reference of the service"
+        type: "string"
+  ServiceCharacteristic:
+    description: "ServiceCharacteristic"
+    required:
+    - "name"
+    type: "object"
+    properties:
+      name:
+        description: "Name of characteristic"
+        type: "string"
+      valueType:
+        description: ""
+        type: "string"
+      value:
+        $ref: "#/definitions/Value"
+  RelatedParty:
+    description: "A related party defines party which are involved in this order and\
+      \ the role they are playing.\nfor Beijing release:\nWith the current version\
+      \ of APIs used from SO and AAI we need to manage a ‘customer’. This customer\
+      \ concept is confusing with Customer BSS concept. We took the following rules\
+      \ to manage the ‘customer’ information:\no\tIt could be provided through a serviceOrder\
+      \ in the service Order a relatedParty with role ‘ONAPcustomer’ should be provided\
+      \ in the serviceOrder header (we will not consider in this release the party\
+      \ at item level); External API component will check if this customer exists\
+      \ and create it in AAI if not.\no\tIf no relatedParty are provided the service\
+      \ will be affected to ‘generic’ customer (dummy customer) – we assume this ‘\
+      generic’ customer always exists."
+    required:
+    - "id"
+    - "role"
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of a related party"
+        type: "string"
+      href:
+        description: "An hyperlink to the party - not used in Beijnig release"
+        type: "string"
+      role:
+        description: "The role of the related party (e.g. Owner, requester, fullfiller\
+          \ etc).\nONLY 'ONAPcustomer' is considered"
+        type: "string"
+      name:
+        description: "Name of the related party"
+        type: "string"
+      '@referredType':
+        description: ""
+        type: "string"
+  ServiceSpecificationRef:
+    description: "The service specification (these attributes are fetched from the\
+      \ catalogue)."
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "Unique identifier of the service specification\nThis information\
+          \ will be used to retrieve SDC information + mapped to SO ModelNameVersionIdin\
+          \ the request."
+        type: "string"
+      href:
+        description: "Reference of the service specification\nNot used in Beijing\
+          \ release."
+        type: "string"
+      name:
+        description: "Name of the service specification\nNot used in Beijing release"
+        type: "string"
+      version:
+        description: "Version of the service Specification\nNot used in Beijing release"
+        type: "string"
+      targetServiceSchema:
+        $ref: "#/definitions/TargetServiceSchema"
+      '@type':
+        description: "Not used in Beijing release"
+        type: "string"
+      '@schemaLocation':
+        description: "Not used in Beijing release"
+        type: "string"
+      '@baseType':
+        description: "Not used in Beijing release"
+        type: "string"
+  Service:
+    description: "Service (to be added, modified, deleted) description"
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "Identifier of a service instance.\nIt must be valued if orderItem\
+          \ action is 'delete' and corresponds to a AAI service.id"
+        type: "string"
+      href:
+        description: "Reference to the Service (useful for delete or modify command).\n\
+          Not managed in Beijing release."
+        type: "string"
+      name:
+        description: "Name of the service - When orderItem action is 'add' this name\
+          \ will be used in ONAP/SO request as InstaceName."
+        type: "string"
+      serviceState:
+        description: "The lifecycle state of the service requested;\nNot managed in\
+          \ Beijing release."
+        type: "string"
+      '@type':
+        description: "To define the service type\nNot managed in Beijing Release"
+        type: "string"
+      '@schemaLocation':
+        description: "The URL to get the resource schema.\nNot managed in Beijing\
+          \ Release"
+        type: "string"
+      serviceCharacteristic:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceCharacteristic"
+      serviceRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceRelationship"
+      relatedParty:
+        type: "array"
+        items:
+          $ref: "#/definitions/RelatedParty"
+      serviceSpecification:
+        $ref: "#/definitions/ServiceSpecificationRef"
+  OrderItemRelationship:
+    description: "Linked order item to the one containing this attribute.\nnbi component\
+      \ used this relationship to sort request to ONAP."
+    required:
+    - "type"
+    - "id"
+    type: "object"
+    properties:
+      type:
+        $ref: "#/definitions/RelationshipType"
+      id:
+        description: "Unique identifier of an order item"
+        type: "string"
+  ServiceOrderItem:
+    description: "An identified part of the order. A service order is decomposed into\
+      \ one or more order items."
+    required:
+    - "id"
+    - "service"
+    type: "object"
+    properties:
+      id:
+        description: "Identifier of the line item (generally it is a sequence number\
+          \ 01, 02, 03, …)"
+        type: "string"
+      action:
+        $ref: "#/definitions/ActionType"
+      state:
+        $ref: "#/definitions/StateType"
+      percentProgress:
+        description: "Progress of the delivery in percentage."
+        type: "string"
+      '@type':
+        description: "Used to extend the order item.\nnot used in Beijing relase"
+        type: "string"
+      '@schemaLocation':
+        description: "not used in Beijing relase"
+        type: "string"
+      '@baseType':
+        description: "not used in Beijing relase"
+        type: "string"
+      orderItemRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderItemRelationship"
+      service:
+        $ref: "#/definitions/Service"
+      orderItemMessage:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderMessage"
+  ServiceOrder:
+    description: "A Service Order is a type of order which can be used to place an\
+      \ order between a customer and a service provider or between a service provider\
+      \ and a partner and vice versa"
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "ID created on repository side"
+        type: "string"
+      href:
+        description: "Hyperlink to access the order"
+        type: "string"
+      externalId:
+        description: "ID given by the consumer and only understandable by him (to\
+          \ facilitate his searches)"
+        type: "string"
+      priority:
+        description: "A way that can be used by consumers to prioritize orders in\
+          \ Service Order Management system (from 0 to 4 : 0 is the highest priority,\
+          \ and 4 the lowest)"
+        type: "string"
+      description:
+        description: "A free-text description of the service order"
+        type: "string"
+      category:
+        description: "Used to categorize the order that can be useful for the OM system\
+          \ (e.g. “broadband”, “TVOption”, ...)"
+        type: "string"
+      state:
+        $ref: "#/definitions/StateType"
+      orderDate:
+        description: ""
+        type: "string"
+        format: "date-time"
+      completionDateTime:
+        description: "Date when the order was completed"
+        type: "string"
+        format: "date-time"
+      requestedStartDate:
+        description: "Order start date wished by the requestor"
+        type: "string"
+        format: "date-time"
+      requestedCompletionDate:
+        description: "Requested delivery date from the requestor perspective"
+        type: "string"
+        format: "date-time"
+      expectedCompletionDate:
+        description: ""
+        type: "string"
+        format: "date-time"
+      startDate:
+        description: "Date when the order was started for processing"
+        type: "string"
+        format: "date-time"
+      '@baseType':
+        description: ""
+        type: "string"
+      '@type':
+        description: ""
+        type: "string"
+      '@schemaLocation':
+        description: ""
+        type: "string"
+      relatedParty:
+        type: "array"
+        items:
+          $ref: "#/definitions/RelatedParty"
+      orderRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderRelationship"
+      orderItem:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceOrderItem"
+      orderMessage:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderMessage"
+  OrderRelationship:
+    description: "Linked order to the one containing this attribute.\nThis relationship\
+      \ is not used to sort ONAP request."
+    required:
+    - "id"
+    type: "object"
+    properties:
+      type:
+        description: "The type of related order, can be : “dependency” if the order\
+          \ needs to be “not started” until another order item is complete (a service\
+          \ order in this case) or “cross-ref” to keep track of the source order (a\
+          \ productOrder)"
+        type: "string"
+      id:
+        description: "The id of the related order"
+        type: "string"
+      href:
+        description: "A hyperlink to the related order"
+        type: "string"
+      '@referredType':
+        description: "Type of the referred order."
+        type: "string"
+  TargetServiceSchema:
+    description: "Target to the schema describing the service spec resource"
+    required:
+    - "@type"
+    - "@schemaLocation"
+    type: "object"
+    properties:
+      '@type':
+        description: "Indicates the (class) type of resource."
+        type: "string"
+      '@schemaLocation':
+        description: "This field provided a link to the schema describing this REST\
+          \ resource."
+        type: "string"
+  Value:
+    description: "Value is a descriptive structure for service characteristic"
+    type: "object"
+    properties:
+      serviceCharacteristicValue:
+        description: "Value of the characteristic."
+        type: "string"
+  CreateServiceOrderItem:
+    description: "This structure is used in the operation POST for a serviceOrder\
+      \ request to describe an item.\nAttribute description is not accurate and should\
+      \ be find in the serviceOrderItem class."
+    required:
+    - "id"
+    - "service"
+    type: "object"
+    properties:
+      id:
+        description: "Identifier of the line item (generally it is a sequence number\
+          \ 01, 02, 03, …)"
+        type: "string"
+      action:
+        $ref: "#/definitions/ActionType"
+      orderItemRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderItemRelationship"
+      service:
+        $ref: "#/definitions/Service"
+  CreateServiceOrder:
+    description: "This structure is used in the operation POST for a serviceOrder\
+      \ request.\nAttribute description is not accurate and should be find in the\
+      \ serviceOrder class."
+    type: "object"
+    properties:
+      externalId:
+        description: "ID given by the consumer and only understandable by him (to\
+          \ facilitate his searches)"
+        type: "string"
+      priority:
+        description: "A way that can be used by consumers to prioritize orders in\
+          \ Service Order Management system (from 0 to 4 : 0 is the highest priority,\
+          \ and 4 the lowest)"
+        type: "string"
+      description:
+        description: "A free-text description of the service order"
+        type: "string"
+      category:
+        description: "Used to categorize the order that can be useful for the OM system\
+          \ (e.g. “broadband”, “TVOption”, ...)"
+        type: "string"
+      requestedStartDate:
+        description: "Order start date wished by the requestor"
+        type: "string"
+        format: "date-time"
+      requestedCompletionDate:
+        description: "Requested delivery date from the requestor perspective"
+        type: "string"
+        format: "date-time"
+      relatedParty:
+        type: "array"
+        items:
+          $ref: "#/definitions/RelatedParty"
+      orderRelationship:
+        type: "array"
+        items:
+          $ref: "#/definitions/OrderRelationship"
+      orderItem:
+        type: "array"
+        items:
+          $ref: "#/definitions/CreateServiceOrderItem"
+  ServiceOrderSummary:
+    description: "This structure is used to provide a subset of serviceOrder attributes\
+      \ to be provided in particular for notification messages"
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "ID created on repository side"
+        type: "string"
+      href:
+        description: "Hyperlink to access the order"
+        type: "string"
+      externalId:
+        description: "ID given by the consumer and only understandable by him (to\
+          \ facilitate his searches)"
+        type: "string"
+      state:
+        $ref: "#/definitions/StateType"
+      orderDate:
+        description: ""
+        type: "string"
+        format: "date-time"
+      completionDateTime:
+        description: "Date when the order was completed"
+        type: "string"
+        format: "date-time"
+  Notification:
+    description: "Notification structure for a serviceOrdering notification"
+    required:
+    - "eventId"
+    - "eventDate"
+    - "eventType"
+    - "event"
+    type: "object"
+    properties:
+      eventId:
+        description: ""
+        type: "string"
+      eventDate:
+        description: ""
+        type: "string"
+        format: "date-time"
+      eventType:
+        $ref: "#/definitions/EventType"
+      event:
+        $ref: "#/definitions/ServiceOrderSummaryWithItem"
+  ServiceOrderItemSummary:
+    description: "Service Order item summary to be used for notification"
+    required:
+    - "id"
+    - "service"
+    type: "object"
+    properties:
+      id:
+        description: "Identifier of the line item (generally it is a sequence number\
+          \ 01, 02, 03, …)"
+        type: "string"
+      action:
+        $ref: "#/definitions/ActionType"
+      state:
+        $ref: "#/definitions/StateType"
+      service:
+        $ref: "#/definitions/Service"
+  ServiceOrderSummaryWithItem:
+    description: "Service order item summary with item description"
+    required:
+    - "id"
+    type: "object"
+    properties:
+      id:
+        description: "ID created on repository side"
+        type: "string"
+      href:
+        description: "Hyperlink to access the order"
+        type: "string"
+      externalId:
+        description: "ID given by the consumer and only understandable by him (to\
+          \ facilitate his searches)"
+        type: "string"
+      state:
+        $ref: "#/definitions/StateType"
+      orderDate:
+        description: ""
+        type: "string"
+        format: "date-time"
+      completionDateTime:
+        description: "Date when the order was completed"
+        type: "string"
+        format: "date-time"
+      orderItem:
+        type: "array"
+        items:
+          $ref: "#/definitions/ServiceOrderItemSummary"
+  OrderMessage:
+    description: "An optional array of messages associated with the Order"
+    required:
+    - "severity"
+    - "correctionRequired"
+    type: "object"
+    properties:
+      code:
+        description: "A code associated to this message"
+        type: "string"
+      field:
+        description: "Service Order attribute related to this error message"
+        type: "string"
+      messageInformation:
+        description: "Message related to this order"
+        type: "string"
+      severity:
+        $ref: "#/definitions/SeverityMessage"
+      correctionRequired:
+        description: "Indicator that an action is required to allow service order\
+          \ fullfilment to follow up"
+        type: "boolean"
