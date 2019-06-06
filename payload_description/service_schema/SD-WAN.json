@@ -1,5 +1,4 @@
 {
-  "definitions": {
     "SdWanUni": {
       "description": "The reference point that represents the boundary between the responsiblity of the Subscriber and the responsibility of the Service Provider.",
       "type": "object",
@@ -558,5 +557,4 @@
         }
       }
     }
-  }
 }
