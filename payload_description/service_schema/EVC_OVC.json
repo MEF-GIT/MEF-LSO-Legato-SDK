@@ -1,5 +1,4 @@
 {
-  "definitions": {
     "CarrierEthernetServiceEndPoint": {
       "type": "object",
       "description": "The CarrierEthernetServiceEndPoint represents the EVC End Point or the OVC End Point. This is an abstract class and the super class of EvcEndPoint and OvcEndPoint. It contains the common attributes of EvcEndPoint and OvcEndPoint, as well as all common associations with the other object classes, such as CosIdentifier(s), EecIdentifier(s), a ColorIdentifier, EgressMap(s), a CarrierEthernetService (i.e., EVC or OVC), etc. ",
@@ -1499,5 +1498,4 @@
         }
       }
     }
-  }
 }
