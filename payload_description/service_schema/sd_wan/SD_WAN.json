@@ -1,0 +1,571 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Legato Service API Schema: SD-WAN",
+        "version": "1.0.0_wd"
+    },
+    "paths": {
+    },
+    "components": {
+        "schemas": {
+            "SdWanUni": {
+                "description": "The reference point that represents the boundary between the responsiblity of the Subscriber and the responsibility of the Service Provider.",
+                "type": "object",
+                "properties": {
+                    "uniIdentifier": {
+                        "description": "Identification of the UNI for management purposes.",
+                        "type": "string"
+                    },
+                    "l2Interface": {
+                        "$ref": "#/components/schemas/L2Interface"
+                    },
+                    "ipv4ConnectionAddressing": {
+                        "description": "IPv4 Connection Address mechanism. Possible values are None, Static or DHCP.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv4ConnectionAddressing"
+                        },
+                        "minItems": 1
+                    },
+                    "ipv6ConnectionAddressing": {
+                        "description": "IPv6 Connection Address mechanism. Possible values are None, SLAAC, Static or LL-only.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv6ConnectionAddressing"
+                        },
+                        "minItems": 1
+                    },
+                    "maxL2FrameSize": {
+                        "description": "Specifies the maximum length L2 frame that is accepted by the Service Provider.",
+                        "type": "integer"
+                    }
+                }
+            },
+            "Ipv4ConnectionAddressing": {
+                "description": "Specifies how IPv4 addresses are allocated to the devices on the Subscriber side of the UNI. For DHCP and Static the Primary Subnet and Secondary Subnet List must be included.",
+                "type": "object",
+                "properties": {
+                    "ipv4AddressType": {
+                        "description": "IPv4 Connection Address mechanism.",
+                        "type": "string",
+                        "enum": [
+                            "None",
+                            "DHCP",
+                            "Static"
+                        ]
+                    },
+                    "ipv4PrimarySubnet": {
+                        "$ref": "#/components/schemas/Ipv4Subnet"
+                    },
+                    "ipv4SecondarySubnetList": {
+                        "description": "Includes IPv4 Prefix and Service Provider IPv4 Addresses.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv4Subnet"
+                        },
+                        "minItems": 0
+                    }
+                }
+            },
+            "Ipv4Subnet": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "ipv4AddressPrefix": {
+                        "$ref": "#/components/schemas/Ipv4Address"
+                    },
+                    "serviceProviderIpv4Addresses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv4Address"
+                        }
+                    }
+                }
+            },
+            "Ipv4Address": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "type": "string",
+                        "pattern": ""
+                    },
+                    "subnetMask": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "Ipv6ConnectionAddressing": {
+                "description": "Specifies how IPv6 addresses are allocated to the devices on the Subscriber side of the UNI.  For DHCP, SLAAC and Static, IPv6 Prefix and Service Provider Addresses are needed.",
+                "type": "object",
+                "properties": {
+                    "ipv6AddressType": {
+                        "type": "string",
+                        "enum": [
+                            "None",
+                            "DHCP",
+                            "SLAAC",
+                            "Static",
+                            "LLonly"
+                        ]
+                    },
+                    "ipv6Subnet": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv6Subnet"
+                        }
+                    }
+                }
+            },
+            "Ipv6Subnet": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "ipv6Prefix": {
+                        "$ref": "#/components/schemas/Ipv6Address"
+                    },
+                    "serviceProviderIpv6Addresses": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Ipv6Address"
+                        }
+                    }
+                }
+            },
+            "Ipv6Address": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "addressPrefix": {
+                        "type": "string",
+                        "pattern": ""
+                    },
+                    "prefixLength": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "SwVcEndPoint": {
+                "description": "A logical construct at an SD-WAN UNI that partitions ingress IP Packets into Applications, applies Policy to each IP Packet based on the associated Application, and selects an appropriate path to transport the IP Packet over the SWVC.",
+                "type": "object",
+                "properties": {
+                    "endPointIdentifier": {
+                        "description": "Identification of the SWVC End Point for management purposes.",
+                        "type": "string"
+                    },
+                    "policyMap": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PolicyMap"
+                        },
+                        "minItems": 1
+                    },
+                    "sdWanUni": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SdWanUni"
+                        },
+                        "minItems": 1
+                    }
+                }
+            },
+            "Swvc": {
+                "description": "SD-WAN Virtual Connection.",
+                "type": "object",
+                "properties": {
+                    "@type": {
+                        "type": "string",
+                        "default": "Swvc"
+                    },
+                    "swvcIdentifier": {
+                        "type": "string",
+                        "description": "Identification of the SWVC for management purposes."
+                    },
+                    "swvcEndPointList": {
+                        "type": "array",
+                        "description": "The SWVC End Points that are connected by SWVC",
+                        "items": {
+                            "$ref": "#/components/schemas/SwVcEndPoint"
+                        },
+                        "minItems": 1
+                    },
+                    "serviceUptimeObjective": {
+                        "$ref": "#/components/schemas/ServiceUptimeObjective"
+                    },
+                    "bandwidthAveragingPeriod": {
+                        "type": "integer",
+                        "description": "The period of time over which the bandwidth of flow of IP Packets is averaged. Integer number of milliseconds."
+                    },
+                    "reservedPrefixes": {
+                        "type": "array",
+                        "description": "IP Prefixes reserved for use by the SP.",
+                        "items": {
+                            "$ref": "#/components/schemas/IpPrefixes"
+                        }
+                    },
+                    "listOfPolicies": {
+                        "type": "array",
+                        "description": "A list of the Policies that can be applied to Application Flows carried by the SWVC.",
+                        "items": {
+                            "$ref": "#/components/schemas/Policy"
+                        },
+                        "minItems": 1
+                    },
+                    "listOfApplicationFlowGroups": {
+                        "description": "A list of the Application Flow Groups that Application Flows can be members of.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ApplicationFlowGroup"
+                        },
+                        "minItems": 1
+                    },
+                    "listOfApplicationFlows": {
+                        "description": "Specifies the Application Flows that can be recognized by the SD-WAN service and information about how to identify IP packets in each Application Flow.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ApplicationFlows"
+                        },
+                        "minItems": 1
+                    }
+                }
+            },
+            "SdWanEdge": {
+                "type": "object",
+                "properties": {
+                    "sdWanUni": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SdWanUni"
+                        },
+                        "minItems": 1
+                    },
+                    "swVcEndPoint": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SwVcEndPoint"
+                        },
+                        "minItems": 0
+                    },
+                    "underLayConnectivityService": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UnderlayConnectivityService"
+                        },
+                        "minItems": 0
+                    }
+                }
+            },
+            "Tvc": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "publicPrivate": {
+                        "$ref": "#/components/schemas/PublicPrivate"
+                    }
+                }
+            },
+            "PolicyMap": {
+                "description": "Specifies the Policies that are assigned to Application Flows and Application Flow Groups at the SWVC End Point. The value of the SWVC End Point Policy Mapi is a list of 2-tuples <app,pol> where: \n\t* app is an Application Flow or Application Flow Group name,\n\t* pol is a Policy name.",
+                "type": "object",
+                "properties": {
+                    "app": {
+                        "description": "Application Flow or Application Flow Group name.",
+                        "type": "string"
+                    },
+                    "policy": {
+                        "description": "Policy name.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Policy"
+                        },
+                        "minItems": 0,
+                        "maxItems": 1
+                    }
+                }
+            },
+            "Policy": {
+                "description": "Policy that has Policy Name (polName) and Policy Criterion (polCl). A Policy is a list of Policy Criteria. Policies are assigned to Application Flows and Application Flow Groups at each SWVC End Point.",
+                "type": "object",
+                "properties": {
+                    "polName": {
+                        "description": "An identifier String that specifies the name of Policy. polName cannot be 'block'.",
+                        "type": "string"
+                    },
+                    "polCl": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PolCl"
+                        },
+                        "minItems": 1
+                    }
+                }
+            },
+            "PolCl": {
+                "description": "A non-empty list of Policy Criteria 2-tuples of the form <pcName,pcParam>.",
+                "type": "object",
+                "properties": {
+                    "pcName": {
+                        "description": "An identifier String containing a Policy Criterion name from Table 3 (MEF SD-WAN Service Specification) or a Service Provider-defined Policy Criterion name.",
+                        "type": "string"
+                    },
+                    "pcParam": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PolicyCriteria"
+                        },
+                        "minItems": 1
+                    }
+                }
+            },
+            "PolicyCriteria": {
+                "type": "object",
+                "properties": {
+                    "internet": {
+                        "description": "Can this Application Flow be routed to the Internet ?.",
+                        "type": "string",
+                        "enum": [
+                            "Yes",
+                            "No"
+                        ]
+                    },
+                    "encyrption": {
+                        "description": "Does the Application Flow require the TVC to be encrypted ?.",
+                        "type": "string",
+                        "enum": [
+                            "Yes",
+                            "No",
+                            "Either"
+                        ]
+                    },
+                    "publicPrivate": {
+                        "description": "Can the Application Flow traverse Public or Private Underlay Connectivity Services (or both) ?.",
+                        "type": "string",
+                        "enum": [
+                            "PublicOnly",
+                            "PrivateOnly",
+                            "Either"
+                        ]
+                    },
+                    "billingMethod": {
+                        "description": "Can this Application Flow be sent over an Underlay Connectivity Service that has usage-based or flat-rate billing ?.",
+                        "type": "string",
+                        "enum": [
+                            "FlatOnly",
+                            "Either"
+                        ]
+                    },
+                    "primaryBackup": {
+                        "description": "Can this Application Flow use a TVC designated as 'backup' as well as 'primary', or only a TVC designated 'primary' ?.",
+                        "type": "string",
+                        "enum": [
+                            "PrimaryOnly",
+                            "Either"
+                        ]
+                    },
+                    "bandwidthPolicyCriterion": {
+                        "$ref": "#/components/schemas/BandwidthPolicyCriterion"
+                    },
+                    "spDefinePolicyCriteria": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SpDefinedPolicyCriteria"
+                        }
+                    }
+                }
+            },
+            "BandwidthPolicyCriterion": {
+                "description": "Specifies a rate (bandwidth) limit on an Application Flow or Application Flow Group.",
+                "type": "object",
+                "properties": {
+                    "commit": {
+                        "description": "Amount of bandwidth in bits per second that is committed to the Application Flow.",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "max": {
+                        "description": "The maximum amount of bandwidth in bits per second that can be used by the Application Flow.",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "time": {
+                        "description": "Averaging period (in milliseconds) for packet flow.",
+                        "type": "number",
+                        "format": "float"
+                    }
+                }
+            },
+            "SpDefinedPolicyCriteria": {
+                "description": "Service Provider defined Policy Criteria.",
+                "type": "object",
+                "properties": {
+                    "pcName": {
+                        "description": "Policy criteria name.",
+                        "type": "string"
+                    },
+                    "spDefinePolicy": {
+                        "description": "List of Service Provider Policies.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SpPolicy"
+                        }
+                    }
+                }
+            },
+            "SpPolicy": {
+                "description": "Service Provider Policy.",
+                "type": "object",
+                "properties": {
+                    "criterion": {
+                        "description": "Policy criterion.",
+                        "type": "string"
+                    },
+                    "behavior": {
+                        "description": "Policy Criterion behavior.",
+                        "type": "string"
+                    },
+                    "behaviorWithIb": {
+                        "description": "Behavior with INTERNET-BREAKOUT.",
+                        "type": "string"
+                    },
+                    "behaviorWithOtherPc": {
+                        "description": "Interaction that Policy Criterion has with other Policy Criteria.",
+                        "type": "string"
+                    }
+                }
+            },
+            "ServiceUptimeObjective": {
+                "description": "Proportion of time, during a given time period Tk, that the service is working from the perspective of the Subscriber, excluding a pre-agreed exceptions.",
+                "type": "object",
+                "properties": {
+                    "ts": {
+                        "description": "Represents the data and time that evaluation of Service Uptime starts for the SWVC.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "T": {
+                        "description": "Time duration, e.g. 1 month or 2 weeks, that is used in conjunction with ts to specify time intervals for determining when the Service Uptime Objective is met. Note the units for T are not constrained, in particular, 1 month is an allow value for T.",
+                        "type": "string"
+                    },
+                    "U": {
+                        "description": "Objective for Service Uptime expressed as a percentage.",
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 100
+                    }
+                }
+            },
+            "ApplicationFlows": {
+                "description": "Non-empty ordered list of 3-tuples <appName,appCL,appGroup>",
+                "type": "object",
+                "properties": {
+                    "appName": {
+                        "description": "Identifier String is used to refer to Application Flow.",
+                        "type": "string"
+                    },
+                    "appCL": {
+                        "description": "Non-empty list of Application Flow Criteria.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ApplicationFlowCriteria"
+                        }
+                    }
+                }
+            },
+            "ApplicationFlowGroup": {
+                "description": "Mechanism for associating a Policy with multiple Application Flows at an SWVC End Point.",
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "Identifier String is used to refer to Application Flow Group.",
+                        "type": "string"
+                    },
+                    "applicationFlows": {
+                        "description": "Associated Application Flows.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ApplicationFlows"
+                        }
+                    }
+                }
+            },
+            "ApplicationFlowCriteria": {
+                "description": "Used to describe Application Flow MUST include the Criteria.",
+                "type": "object",
+                "properties": {
+                    "ethertype": {
+                        "description": "Ethertype.",
+                        "type": "integer"
+                    },
+                    "cVlans": {
+                        "description": "C-VLAN ID List.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 4094
+                        }
+                    },
+                    "sav4": {
+                        "$ref": "#/components/schemas/Ipv4Address"
+                    },
+                    "dav4": {
+                        "$ref": "#/components/schemas/Ipv4Address"
+                    },
+                    "protov4": {
+                        "description": "IPv4 Protocol List.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        }
+                    },
+                    "sav6": {
+                        "$ref": "#/components/schemas/Ipv6Address"
+                    },
+                    "dav6": {
+                        "$ref": "#/components/schemas/Ipv6Address"
+                    },
+                    "nextHead6": {
+                        "description": "IPv6 Next Header List.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 255
+                        }
+                    },
+                    "sport": {
+                        "description": "TCP/UDP Source Port List.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        }
+                    },
+                    "dport": {
+                        "description": "TCP/UDP Destination Port List.",
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 65535
+                        }
+                    },
+                    "appid": {
+                        "description": "Application Identifier.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "any": {
+                        "description": "Match Any IP Packet.",
+                        "type": "boolean"
+                    }
+                }
+            }
+        }
+    }
+}
