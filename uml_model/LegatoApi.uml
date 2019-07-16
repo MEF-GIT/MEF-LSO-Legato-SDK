@@ -73,41 +73,6 @@ This state attribute value-transition follows the &quot;Service Lifecycle State 
 The type of related Service can be : “dependency” if this Service needs to be “not started” until another Service instance is complete, &quot;relies-on&quot; if this Order Item relies on the related Service instance or simply “cross-ref” to keep track of the source Service instance</body>
           </ownedComment>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_8bMHgA6nEem-wJYL1Wo8Jw" name="_serviceCharacteristic" type="_sPG6cA6nEem-wJYL1Wo8Jw" aggregation="composite" association="_8bJEMA6nEem-wJYL1Wo8Jw">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_aAq04GF5Eem47bEO5cndzg" annotatedElement="_8bMHgA6nEem-wJYL1Wo8Jw">
-            <body>A list of Service Characteristics.&#xD;
-This is essentially a name/value pair list used to store instance specific values of Service attributes.&#xD;
-The behavior is equivalent to a MAP data structure where only one entry for any given value of &quot;name&quot; can exist.</body>
-          </ownedComment>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_8bMukQ6nEem-wJYL1Wo8Jw"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_8bMukg6nEem-wJYL1Wo8Jw" value="*"/>
-        </ownedAttribute>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_sPG6cA6nEem-wJYL1Wo8Jw" name="ServiceCharacteristic">
-        <ownedComment xmi:type="uml:Comment" xmi:id="_FgR6AGF5Eem47bEO5cndzg" annotatedElement="_sPG6cA6nEem-wJYL1Wo8Jw">
-          <body>Characteristics of the service that is instantiated or to modified</body>
-        </ownedComment>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_WcvoEA6sEemZMPeUl_jG7g" name="name" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_PNrMYGF5Eem47bEO5cndzg" annotatedElement="_WcvoEA6sEemZMPeUl_jG7g">
-            <body>Name of the characteristic</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_XHi4kA6sEemZMPeUl_jG7g"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_XHwT8A6sEemZMPeUl_jG7g" value="1"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_TPC9AA6sEemZMPeUl_jG7g" name="valueType" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_Mz4qgGF5Eem47bEO5cndzg" annotatedElement="_TPC9AA6sEemZMPeUl_jG7g">
-            <body>ValueType of the characteristic.&#xD;
-Could a simple attribute or a complex one as a table or an array.</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_T73mwA6sEemZMPeUl_jG7g"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_T8USsA6sEemZMPeUl_jG7g" value="1"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_UAWh0BmnEemr_r_S_xiYDA" name="_value" type="_IwVmIBmnEemr_r_S_xiYDA" isUnique="false" aggregation="composite" association="_UAP0IBmnEemr_r_S_xiYDA">
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_UAYXABmnEemr_r_S_xiYDA"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_UAYXARmnEemr_r_S_xiYDA" value="1"/>
-        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_znxxIA6nEem-wJYL1Wo8Jw" name="SupportingResource">
         <ownedComment xmi:type="uml:Comment" xmi:id="_rgzVsGF3Eem47bEO5cndzg" annotatedElement="_znxxIA6nEem-wJYL1Wo8Jw">
@@ -179,10 +144,6 @@ This state attribute value-transition follows the &quot;Service Specification Li
           <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tvuzYKMKEemlc6vity7U6Q"/>
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tvuzYaMKEemlc6vity7U6Q" value="1"/>
         </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_oKreYRmtEemr_r_S_xiYDA" name="_specCharacteristic" type="_OHY7oBmtEemr_r_S_xiYDA" isReadOnly="true" aggregation="composite" association="_oKppMBmtEemr_r_S_xiYDA">
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_oKtTkBmtEemr_r_S_xiYDA"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_oKtTkRmtEemr_r_S_xiYDA" value="*"/>
-        </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_c8bPUBmDEemr_r_S_xiYDA" name="ApiEntityMetaData">
         <ownedAttribute xmi:type="uml:Property" xmi:id="_hFeK8BkYEemr_r_S_xiYDA" name="@type" isUnique="false">
@@ -207,13 +168,6 @@ This state attribute value-transition follows the &quot;Service Specification Li
           <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_PvR7MBkYEemr_r_S_xiYDA" value="1"/>
         </ownedAttribute>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_IwVmIBmnEemr_r_S_xiYDA" name="ServiceCharacteristicValue">
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_IIyaQA6sEemZMPeUl_jG7g" name="value" isUnique="false">
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_IwtV4A6sEemZMPeUl_jG7g"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Iw9NgA6sEemZMPeUl_jG7g" value="1"/>
-        </ownedAttribute>
-      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_VPqfgBmlEemr_r_S_xiYDA" name="Attachment">
         <ownedComment xmi:type="uml:Comment" xmi:id="_2Q1qUGCGEemtJ9G6Ppq-zA" annotatedElement="_VPqfgBmlEemr_r_S_xiYDA">
           <body>An attchment represents a file that is used to complement the description of an entity through video, pictures, etc...</body>
@@ -230,75 +184,6 @@ This state attribute value-transition follows the &quot;Service Specification Li
             <body>Attachment type such as video, picture, etc...</body>
           </ownedComment>
           <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_OHY7oBmtEemr_r_S_xiYDA" name="ServiceSpecCharacteristic">
-        <ownedComment xmi:type="uml:Comment" xmi:id="_z9gvEGCBEemtJ9G6Ppq-zA" annotatedElement="_OHY7oBmtEemr_r_S_xiYDA">
-          <body>A characteristic quality or distinctive feature of a ServiceSpecification. This class allows to encode the attributes of a service specification.&#xD;
-It is not expected to specialize this class in UML, since the specification instances of this class can be derived from Service schema class attributes defined in UML.</body>
-        </ownedComment>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_Xe750BmtEemr_r_S_xiYDA" name="name" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_yYwzQGCLEemtJ9G6Ppq-zA" annotatedElement="_Xe750BmtEemr_r_S_xiYDA">
-            <body>Name of the characteristic - A word, term, or phrase by which this characteristic specification is known and distinguished from other characteristic specifications</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_ZBGQIBmtEemr_r_S_xiYDA" name="description" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_tvhXQGCLEemtJ9G6Ppq-zA" annotatedElement="_ZBGQIBmtEemr_r_S_xiYDA">
-            <body>A narrative that explains in detail what the characteristic is.</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_dAVF0BmtEemr_r_S_xiYDA" name="required" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_2qMMMGCLEemtJ9G6Ppq-zA" annotatedElement="_dAVF0BmtEemr_r_S_xiYDA">
-            <body>A parameter to define if the characteristic is mandatory.</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_h3r2UBmtEemr_r_S_xiYDA" name="valueType" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_4LoGkGCHEemtJ9G6Ppq-zA" annotatedElement="_h3r2UBmtEemr_r_S_xiYDA">
-            <body>A kind of value that the characteristic can take on, such as numeric, text and so forth&#xD;
-</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_cprTYh8eEemr_r_S_xiYDA" name="_value" type="_XC4C8B8eEemr_r_S_xiYDA" isUnique="false" aggregation="composite" association="_cpo3IB8eEemr_r_S_xiYDA">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_GHyioGCMEemtJ9G6Ppq-zA" annotatedElement="_cprTYh8eEemr_r_S_xiYDA">
-            <body>A list of service spec characteristic values - that can function as a template for service instantiation</body>
-          </ownedComment>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cptvoB8eEemr_r_S_xiYDA"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cptvoR8eEemr_r_S_xiYDA" value="*"/>
-        </ownedAttribute>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_XC4C8B8eEemr_r_S_xiYDA" name="ServiceSpecCharacteristicValue">
-        <ownedComment xmi:type="uml:Comment" xmi:id="_rrcUwGCNEemtJ9G6Ppq-zA" annotatedElement="_XC4C8B8eEemr_r_S_xiYDA">
-          <body>This class represents service spec characteristic values - that can function as a template for service instantiation</body>
-        </ownedComment>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_yUPiYB8eEemr_r_S_xiYDA" name="value" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_0gzy8GCNEemtJ9G6Ppq-zA" annotatedElement="_yUPiYB8eEemr_r_S_xiYDA">
-            <body>A discrete serialized string value that the characteristic can take on.</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_32dNwB8eEemr_r_S_xiYDA" name="isDefault" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_xhN8sGCKEemtJ9G6Ppq-zA" annotatedElement="_32dNwB8eEemr_r_S_xiYDA">
-            <body>Indicates if the value is the default value for a characteristic</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Boolean"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_-R2PMGCNEemtJ9G6Ppq-zA" name="format" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_KZmrMGCOEemtJ9G6Ppq-zA" annotatedElement="_-R2PMGCNEemtJ9G6Ppq-zA">
-            <body>Indicates the format of the value string (e.g. regex, integer, float, etc - this is driven by the specific API schema valid-formats) constraint for the ServiceSpecCharacteristic value</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-        </ownedAttribute>
-        <ownedAttribute xmi:type="uml:Property" xmi:id="_fwfwQGCOEemtJ9G6Ppq-zA" name="validFor" isUnique="false">
-          <ownedComment xmi:type="uml:Comment" xmi:id="_laKHcGCOEemtJ9G6Ppq-zA" annotatedElement="_fwfwQGCOEemtJ9G6Ppq-zA">
-            <body>The period of time in seconds for which a value is applicable</body>
-          </ownedComment>
-          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-          <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mPsBQGCOEemtJ9G6Ppq-zA"/>
-          <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_mP6qwGCOEemtJ9G6Ppq-zA" value="1"/>
         </ownedAttribute>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_GmAm4B8pEemr_r_S_xiYDA" name="OrderMessage">
@@ -540,12 +425,6 @@ The type of related Service can be : “dependency” if this Service needs to b
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_SSV90A6kEem-wJYL1Wo8Jw" name="Associations">
-      <packagedElement xmi:type="uml:Association" xmi:id="_8bJEMA6nEem-wJYL1Wo8Jw" memberEnd="_8bMHgA6nEem-wJYL1Wo8Jw _8bNVoA6nEem-wJYL1Wo8Jw">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8bK5YA6nEem-wJYL1Wo8Jw" source="org.eclipse.papyrus">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8bLgcA6nEem-wJYL1Wo8Jw" key="nature" value="UML_Nature"/>
-        </eAnnotations>
-        <ownedEnd xmi:type="uml:Property" xmi:id="_8bNVoA6nEem-wJYL1Wo8Jw" name="_service" type="_Pi11MA6lEem-wJYL1Wo8Jw" association="_8bJEMA6nEem-wJYL1Wo8Jw"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_I1pdEA6oEem-wJYL1Wo8Jw" memberEnd="_I1qEIg6oEem-wJYL1Wo8Jw _I1qrMg6oEem-wJYL1Wo8Jw">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_I1qEIA6oEem-wJYL1Wo8Jw" source="org.eclipse.papyrus">
           <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_I1qEIQ6oEem-wJYL1Wo8Jw" key="nature" value="UML_Nature"/>
@@ -564,29 +443,11 @@ The type of related Service can be : “dependency” if this Service needs to b
         </eAnnotations>
         <ownedEnd xmi:type="uml:Property" xmi:id="_a3reohmqEemr_r_S_xiYDA" name="_serviceSpecification" type="_GCutcBkEEemr_r_S_xiYDA" association="_a3pCYBmqEemr_r_S_xiYDA"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Association" xmi:id="_UAP0IBmnEemr_r_S_xiYDA" memberEnd="_UAWh0BmnEemr_r_S_xiYDA _UAYXAhmnEemr_r_S_xiYDA">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_UAUsoBmnEemr_r_S_xiYDA" source="org.eclipse.papyrus">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_UAUsoRmnEemr_r_S_xiYDA" key="nature" value="UML_Nature"/>
-        </eAnnotations>
-        <ownedEnd xmi:type="uml:Property" xmi:id="_UAYXAhmnEemr_r_S_xiYDA" name="_serviceCharacteristic" type="_sPG6cA6nEem-wJYL1Wo8Jw" association="_UAP0IBmnEemr_r_S_xiYDA"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Association" xmi:id="_oKppMBmtEemr_r_S_xiYDA" memberEnd="_oKreYRmtEemr_r_S_xiYDA _oKt6oBmtEemr_r_S_xiYDA">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_oKq3UBmtEemr_r_S_xiYDA" source="org.eclipse.papyrus">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_oKreYBmtEemr_r_S_xiYDA" key="nature" value="UML_Nature"/>
-        </eAnnotations>
-        <ownedEnd xmi:type="uml:Property" xmi:id="_oKt6oBmtEemr_r_S_xiYDA" name="_serviceSpecification" type="_GCutcBkEEemr_r_S_xiYDA" association="_oKppMBmtEemr_r_S_xiYDA"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_eQeCkBmuEemr_r_S_xiYDA" memberEnd="_eQf3whmuEemr_r_S_xiYDA _eQiUAhmuEemr_r_S_xiYDA">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_eQf3wBmuEemr_r_S_xiYDA" source="org.eclipse.papyrus">
           <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_eQf3wRmuEemr_r_S_xiYDA" key="nature" value="UML_Nature"/>
         </eAnnotations>
         <ownedEnd xmi:type="uml:Property" xmi:id="_eQiUAhmuEemr_r_S_xiYDA" name="_serviceSpecification" type="_GCutcBkEEemr_r_S_xiYDA" association="_eQeCkBmuEemr_r_S_xiYDA"/>
-      </packagedElement>
-      <packagedElement xmi:type="uml:Association" xmi:id="_cpo3IB8eEemr_r_S_xiYDA" memberEnd="_cprTYh8eEemr_r_S_xiYDA _cpuWsB8eEemr_r_S_xiYDA">
-        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_cprTYB8eEemr_r_S_xiYDA" source="org.eclipse.papyrus">
-          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_cprTYR8eEemr_r_S_xiYDA" key="nature" value="UML_Nature"/>
-        </eAnnotations>
-        <ownedEnd xmi:type="uml:Property" xmi:id="_cpuWsB8eEemr_r_S_xiYDA" name="_serviceSpecCharacteristic" type="_OHY7oBmtEemr_r_S_xiYDA" association="_cpo3IB8eEemr_r_S_xiYDA"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Association" xmi:id="_VWrl4B8pEemr_r_S_xiYDA" memberEnd="_VWtbEh8pEemr_r_S_xiYDA _VXBkIB8pEemr_r_S_xiYDA">
         <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_VWtbEB8pEemr_r_S_xiYDA" source="org.eclipse.papyrus">
@@ -1458,16 +1319,10 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelStatement xmi:id="_iszakA6jEem-wJYL1Wo8Jw" base_Model="_YqoLAA6jEem-wJYL1Wo8Jw"/>
   <OpenModel_Profile:OpenModelClass xmi:id="_Pi2cQA6lEem-wJYL1Wo8Jw" base_Class="_Pi11MA6lEem-wJYL1Wo8Jw"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_Pi2cQQ6lEem-wJYL1Wo8Jw" base_Class="_Pi11MA6lEem-wJYL1Wo8Jw"/>
-  <OpenModel_Profile:OpenModelClass xmi:id="_sPG6cQ6nEem-wJYL1Wo8Jw" base_Class="_sPG6cA6nEem-wJYL1Wo8Jw"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_sPHhgA6nEem-wJYL1Wo8Jw" base_Class="_sPG6cA6nEem-wJYL1Wo8Jw"/>
   <OpenModel_Profile:OpenModelClass xmi:id="_xSgi4A6nEem-wJYL1Wo8Jw" base_Class="_xSf70A6nEem-wJYL1Wo8Jw"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_xSgi4Q6nEem-wJYL1Wo8Jw" base_Class="_xSf70A6nEem-wJYL1Wo8Jw"/>
   <OpenModel_Profile:OpenModelClass xmi:id="_znxxIQ6nEem-wJYL1Wo8Jw" base_Class="_znxxIA6nEem-wJYL1Wo8Jw"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_znyYMA6nEem-wJYL1Wo8Jw" base_Class="_znxxIA6nEem-wJYL1Wo8Jw"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_8bMHgQ6nEem-wJYL1Wo8Jw" base_Property="_8bMHgA6nEem-wJYL1Wo8Jw"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_8bMukA6nEem-wJYL1Wo8Jw" base_StructuralFeature="_8bMHgA6nEem-wJYL1Wo8Jw"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_8bNVoQ6nEem-wJYL1Wo8Jw" base_Property="_8bNVoA6nEem-wJYL1Wo8Jw"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_8bNVog6nEem-wJYL1Wo8Jw" base_StructuralFeature="_8bNVoA6nEem-wJYL1Wo8Jw"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_I1qEIw6oEem-wJYL1Wo8Jw" base_Property="_I1qEIg6oEem-wJYL1Wo8Jw"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_I1qEJA6oEem-wJYL1Wo8Jw" base_StructuralFeature="_I1qEIg6oEem-wJYL1Wo8Jw"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_I1qrMw6oEem-wJYL1Wo8Jw" base_Property="_I1qrMg6oEem-wJYL1Wo8Jw"/>
@@ -1478,12 +1333,6 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelAttribute xmi:id="_emWwUQ6oEem-wJYL1Wo8Jw" base_StructuralFeature="_emWJQg6oEem-wJYL1Wo8Jw"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_xChpUQ6rEemZMPeUl_jG7g" base_StructuralFeature="_xChpUA6rEemZMPeUl_jG7g"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_xCi3cA6rEemZMPeUl_jG7g" base_Property="_xChpUA6rEemZMPeUl_jG7g"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_IIzBUA6sEemZMPeUl_jG7g" base_StructuralFeature="_IIyaQA6sEemZMPeUl_jG7g"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_II0PcA6sEemZMPeUl_jG7g" base_Property="_IIyaQA6sEemZMPeUl_jG7g"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_TPC9AQ6sEemZMPeUl_jG7g" base_StructuralFeature="_TPC9AA6sEemZMPeUl_jG7g"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_TPDkEA6sEemZMPeUl_jG7g" base_Property="_TPC9AA6sEemZMPeUl_jG7g"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_WcvoEQ6sEemZMPeUl_jG7g" base_StructuralFeature="_WcvoEA6sEemZMPeUl_jG7g"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_WcwPIA6sEemZMPeUl_jG7g" base_Property="_WcvoEA6sEemZMPeUl_jG7g"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_KGCUoA6tEemZMPeUl_jG7g" base_StructuralFeature="_KGBtkA6tEemZMPeUl_jG7g"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_KGDiwA6tEemZMPeUl_jG7g" base_Property="_KGBtkA6tEemZMPeUl_jG7g"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_2umJYQ6tEemZMPeUl_jG7g" base_StructuralFeature="_2umJYA6tEemZMPeUl_jG7g"/>
@@ -1547,46 +1396,16 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelAttribute xmi:id="_UG6SQBmmEemr_r_S_xiYDA" base_StructuralFeature="_UG5EIBmmEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_hQjCARmmEemr_r_S_xiYDA" base_Property="_hQjCABmmEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_hQjpEBmmEemr_r_S_xiYDA" base_StructuralFeature="_hQjCABmmEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelClass xmi:id="_IwWNMBmnEemr_r_S_xiYDA" base_Class="_IwVmIBmnEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_IwWNMRmnEemr_r_S_xiYDA" base_Class="_IwVmIBmnEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_UAXI4BmnEemr_r_S_xiYDA" base_Property="_UAWh0BmnEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_UAXI4RmnEemr_r_S_xiYDA" base_StructuralFeature="_UAWh0BmnEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_UAYXAxmnEemr_r_S_xiYDA" base_Property="_UAYXAhmnEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_UAYXBBmnEemr_r_S_xiYDA" base_StructuralFeature="_UAYXAhmnEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_a3qQgxmqEemr_r_S_xiYDA" base_Property="_a3qQghmqEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_a3q3kBmqEemr_r_S_xiYDA" base_StructuralFeature="_a3qQghmqEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_a3reoxmqEemr_r_S_xiYDA" base_Property="_a3reohmqEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_a3repBmqEemr_r_S_xiYDA" base_StructuralFeature="_a3reohmqEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_VCWNgRmrEemr_r_S_xiYDA" base_Property="_VCWNgBmrEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_VCZQ0BmrEemr_r_S_xiYDA" base_StructuralFeature="_VCWNgBmrEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_OHY7oRmtEemr_r_S_xiYDA" base_Class="_OHY7oBmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelClass xmi:id="_OHZisBmtEemr_r_S_xiYDA" base_Class="_OHY7oBmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_Xe8g4BmtEemr_r_S_xiYDA" base_Property="_Xe750BmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_Xe9H8BmtEemr_r_S_xiYDA" base_StructuralFeature="_Xe750BmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_ZBG3MBmtEemr_r_S_xiYDA" base_Property="_ZBGQIBmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_ZBG3MRmtEemr_r_S_xiYDA" base_StructuralFeature="_ZBGQIBmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_dAVF0RmtEemr_r_S_xiYDA" base_Property="_dAVF0BmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_dAWT8BmtEemr_r_S_xiYDA" base_StructuralFeature="_dAVF0BmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_h3r2URmtEemr_r_S_xiYDA" base_Property="_h3r2UBmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_h3sdYBmtEemr_r_S_xiYDA" base_StructuralFeature="_h3r2UBmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_oKreYhmtEemr_r_S_xiYDA" base_Property="_oKreYRmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_oKsFcBmtEemr_r_S_xiYDA" base_StructuralFeature="_oKreYRmtEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_oKt6oRmtEemr_r_S_xiYDA" base_Property="_oKt6oBmtEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_oKt6ohmtEemr_r_S_xiYDA" base_StructuralFeature="_oKt6oBmtEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_eQge0BmuEemr_r_S_xiYDA" base_Property="_eQf3whmuEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_eQhF4BmuEemr_r_S_xiYDA" base_StructuralFeature="_eQf3whmuEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_eQi7EBmuEemr_r_S_xiYDA" base_Property="_eQiUAhmuEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_eQi7ERmuEemr_r_S_xiYDA" base_StructuralFeature="_eQiUAhmuEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelClass xmi:id="_XC4qAB8eEemr_r_S_xiYDA" base_Class="_XC4C8B8eEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_XC4qAR8eEemr_r_S_xiYDA" base_Class="_XC4C8B8eEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_cpr6cB8eEemr_r_S_xiYDA" base_Property="_cprTYh8eEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_cptIkB8eEemr_r_S_xiYDA" base_StructuralFeature="_cprTYh8eEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_cpuWsR8eEemr_r_S_xiYDA" base_Property="_cpuWsB8eEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_cpuWsh8eEemr_r_S_xiYDA" base_StructuralFeature="_cpuWsB8eEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_yUPiYR8eEemr_r_S_xiYDA" base_Property="_yUPiYB8eEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_yUQJcB8eEemr_r_S_xiYDA" base_StructuralFeature="_yUPiYB8eEemr_r_S_xiYDA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_32dNwR8eEemr_r_S_xiYDA" base_Property="_32dNwB8eEemr_r_S_xiYDA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_32d00B8eEemr_r_S_xiYDA" base_StructuralFeature="_32dNwB8eEemr_r_S_xiYDA"/>
   <OpenModel_Profile:OpenModelClass xmi:id="_gpY7IB8nEemr_r_S_xiYDA" base_Class="_gpYUEB8nEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_gpY7IR8nEemr_r_S_xiYDA" base_Class="_gpYUEB8nEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_w2RZcR8nEemr_r_S_xiYDA" base_Property="_w2RZcB8nEemr_r_S_xiYDA"/>
@@ -1655,10 +1474,6 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelAttribute xmi:id="_SbexUR8vEemr_r_S_xiYDA" base_StructuralFeature="_SbeKQh8vEemr_r_S_xiYDA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelClass xmi:id="_UVC3EWCCEemtJ9G6Ppq-zA" base_Class="_UVC3EGCCEemtJ9G6Ppq-zA"/>
   <OpenModel_Profile:OpenModelClass xmi:id="_UVEFMGCCEemtJ9G6Ppq-zA" base_Class="_UVC3EGCCEemtJ9G6Ppq-zA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_-R2PMWCNEemtJ9G6Ppq-zA" base_StructuralFeature="_-R2PMGCNEemtJ9G6Ppq-zA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_-R22QGCNEemtJ9G6Ppq-zA" base_Property="_-R2PMGCNEemtJ9G6Ppq-zA"/>
-  <OpenModel_Profile:OpenModelAttribute xmi:id="_fwgXUGCOEemtJ9G6Ppq-zA" base_StructuralFeature="_fwfwQGCOEemtJ9G6Ppq-zA"/>
-  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_fwgXUWCOEemtJ9G6Ppq-zA" base_Property="_fwfwQGCOEemtJ9G6Ppq-zA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_7D59cGCWEemtJ9G6Ppq-zA" base_StructuralFeature="_7D5WYmCWEemtJ9G6Ppq-zA"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_7D59cWCWEemtJ9G6Ppq-zA" base_Property="_7D5WYmCWEemtJ9G6Ppq-zA"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_7D7LkWCWEemtJ9G6Ppq-zA" base_StructuralFeature="_7D7LkGCWEemtJ9G6Ppq-zA"/>
