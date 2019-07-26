@@ -28,7 +28,7 @@ This SDK contains the following items:
 	*  service-inventory - Contains the API definitions for querying and retrieving _Service_ instances from the service inventory system in the SOF.
 	*  service-order - Contains the API definitions for posting _Service-Order_ request to the service order system in the SOF. Each _Service-Order_ contains one or more _Service-Order-Items_, each of which specifies the Service instance (and its characteristics) to be added/updated/deleted. 
 	*  hub - Contains the API definitions for registering _Notification-Listeners_ to be called-back when the specified condition occurs.
-* documentation - ...
+* documentation
   * uml_gendoc - Contains the model diagrams and description using the _papyrus-gendoc_ tool
 *  payload_description - Common descriptors are found in this directory
 	*  service_schema – Contains sample OpenAPI 3.0 schema files for MSCM Carrier Ethernet (EVC_OVC) & SD-WAN services
