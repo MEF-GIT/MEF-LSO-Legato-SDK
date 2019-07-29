@@ -46,7 +46,7 @@ https://wiki.onap.org/display/DW/External+API+Framework+Project
 
 An instance of the ONAP project may be provided in MEFnet for MEF members to undertake integration testing. Please see the MEFnet Terms of Use.
 
-https://wiki.mef.net/display/CTO/MEFnet
+https://wiki.mef.net/display/CESG/MEFnet
 
 https://mef.net/TOU
 
