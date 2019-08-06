@@ -1,7 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:OpenInterfaceModel_Profile="http:///schemas/OpenInterfaceModel_Profile/_3NKYsD78EeiIisB6uOvKFA/8" xmlns:OpenModel_Profile="http:///schemas/OpenModel_Profile/_S30WUD8HEeiIisB6uOvKFA/26" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xsi:schemaLocation="http:///schemas/OpenInterfaceModel_Profile/_3NKYsD78EeiIisB6uOvKFA/8 ../../MEF_General_Common/UmlProfiles/OpenInterfaceModelProfile/OpenInterfaceModel_Profile.profile.uml#_3NPRMD78EeiIisB6uOvKFA http:///schemas/OpenModel_Profile/_S30WUD8HEeiIisB6uOvKFA/26 ../../MEF_General_Common/UmlProfiles/OpenModelProfile/OpenModel_Profile.profile.uml#_S32LgD8HEeiIisB6uOvKFA">
   <uml:Model xmi:id="_YqoLAA6jEem-wJYL1Wo8Jw" name="LegatoApi">
-    <packagedElement xmi:type="uml:Package" xmi:id="_L6mYoA6kEem-wJYL1Wo8Jw" name="Diagrams"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_L6mYoA6kEem-wJYL1Wo8Jw" name="Diagrams">
+      <packagedElement xmi:type="uml:Actor" xmi:id="_ehkb8KqxEemPZ8H0ApJBwA" name="SP-BUS (Requestor)"/>
+      <packagedElement xmi:type="uml:Actor" xmi:id="_gNGJoKqxEemPZ8H0ApJBwA" name="SP-SOF (Responder)"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_jDZBUKqxEemPZ8H0ApJBwA" name="Initialize Service Catalog System"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_pz_LYKqxEemPZ8H0ApJBwA" name="Query Service Catalog System"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_wdtRYKqxEemPZ8H0ApJBwA" client="_pz_LYKqxEemPZ8H0ApJBwA" supplier="_jDZBUKqxEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="__cI_kKqxEemPZ8H0ApJBwA" name="Synchronize with Service Catalog">
+        <include xmi:type="uml:Include" xmi:id="_xdr1wKqzEemPZ8H0ApJBwA" addition="_pz_LYKqxEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_E-EXEKqyEemPZ8H0ApJBwA" client="__cI_kKqxEemPZ8H0ApJBwA" supplier="_jDZBUKqxEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_xGRQwKqyEemPZ8H0ApJBwA" memberEnd="_xGX-cKqyEemPZ8H0ApJBwA _xGaasKqyEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_xGWJQKqyEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_xGWJQaqyEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_xGX-cKqyEemPZ8H0ApJBwA" name="synchronize with service catalog" type="__cI_kKqxEemPZ8H0ApJBwA" association="_xGRQwKqyEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_xGaasKqyEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_xGRQwKqyEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_yzXEsKqyEemPZ8H0ApJBwA" memberEnd="_yzY54KqyEemPZ8H0ApJBwA _yzZg8aqyEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_yzYS0KqyEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_yzYS0aqyEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_yzY54KqyEemPZ8H0ApJBwA" name="initialize service catalog system" type="_jDZBUKqxEemPZ8H0ApJBwA" association="_yzXEsKqyEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_yzZg8aqyEemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_yzXEsKqyEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_06aQwKqyEemPZ8H0ApJBwA" memberEnd="_06cF8aqyEemPZ8H0ApJBwA _06hlgaqyEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_06be4KqyEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_06cF8KqyEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_06cF8aqyEemPZ8H0ApJBwA" name="query service catalog system" type="_pz_LYKqxEemPZ8H0ApJBwA" association="_06aQwKqyEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_06hlgaqyEemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_06aQwKqyEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_1_lwIKqyEemPZ8H0ApJBwA" memberEnd="_1_m-QqqyEemPZ8H0ApJBwA _1_oMYKqyEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_1_m-QKqyEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_1_m-QaqyEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_1_m-QqqyEemPZ8H0ApJBwA" name="synchronize with service catalog" type="__cI_kKqxEemPZ8H0ApJBwA" association="_1_lwIKqyEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_1_oMYKqyEemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_1_lwIKqyEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_40drgKqyEemPZ8H0ApJBwA" memberEnd="_40fgsaqyEemPZ8H0ApJBwA _40gHwaqyEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_40eSkKqyEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_40fgsKqyEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_40fgsaqyEemPZ8H0ApJBwA" name="query service catalog system" type="_pz_LYKqxEemPZ8H0ApJBwA" association="_40drgKqyEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_40gHwaqyEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_40drgKqyEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_72rfUKqyEemPZ8H0ApJBwA" name="Iniatiate Service Fulfilment Request"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_-3Q7cKqyEemPZ8H0ApJBwA" name="Update Service Fulfillment Request"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_Fbju4KqzEemPZ8H0ApJBwA" name="Query Service Order System"/>
+      <packagedElement xmi:type="uml:UseCase" xmi:id="_ICcRkKqzEemPZ8H0ApJBwA" name="Query Service Inventory System"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_Xi35kKqzEemPZ8H0ApJBwA" client="_72rfUKqyEemPZ8H0ApJBwA" supplier="__cI_kKqxEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_ZJPacKqzEemPZ8H0ApJBwA" client="_-3Q7cKqyEemPZ8H0ApJBwA" supplier="_72rfUKqyEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_azDQ4KqzEemPZ8H0ApJBwA" client="_Fbju4KqzEemPZ8H0ApJBwA" supplier="_72rfUKqyEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_cG3pMKqzEemPZ8H0ApJBwA" client="_Fbju4KqzEemPZ8H0ApJBwA" supplier="_-3Q7cKqyEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_etwy8KqzEemPZ8H0ApJBwA" client="_ICcRkKqzEemPZ8H0ApJBwA" supplier="_-3Q7cKqyEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_f7LBQKqzEemPZ8H0ApJBwA" client="_ICcRkKqzEemPZ8H0ApJBwA" supplier="_72rfUKqyEemPZ8H0ApJBwA"/>
+      <packagedElement xmi:type="uml:Association" xmi:id="_0b7IgKqzEemPZ8H0ApJBwA" memberEnd="_0b8WoqqzEemPZ8H0ApJBwA _0b9kwaqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_0b8WoKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_0b8WoaqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_0b8WoqqzEemPZ8H0ApJBwA" name="iniatiate service fulfilment request" type="_72rfUKqyEemPZ8H0ApJBwA" association="_0b7IgKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_0b9kwaqzEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_0b7IgKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_23FjYKqzEemPZ8H0ApJBwA" memberEnd="_23GxgaqzEemPZ8H0ApJBwA _23HYkaqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_23GKcKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_23GxgKqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_23GxgaqzEemPZ8H0ApJBwA" name="update service fulfillment request" type="_-3Q7cKqyEemPZ8H0ApJBwA" association="_23FjYKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_23HYkaqzEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_23FjYKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_4aNjAKqzEemPZ8H0ApJBwA" memberEnd="_4aOxIaqzEemPZ8H0ApJBwA _4aPYMaqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4aOKEKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4aOxIKqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_4aOxIaqzEemPZ8H0ApJBwA" name="query service order system" type="_Fbju4KqzEemPZ8H0ApJBwA" association="_4aNjAKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_4aPYMaqzEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_4aNjAKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_66qtkKqzEemPZ8H0ApJBwA" memberEnd="_66r7sKqzEemPZ8H0ApJBwA _66tw4KqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_66rUoKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_66rUoaqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_66r7sKqzEemPZ8H0ApJBwA" name="query service inventory system" type="_ICcRkKqzEemPZ8H0ApJBwA" association="_66qtkKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_66tw4KqzEemPZ8H0ApJBwA" name="sp-bus" type="_ehkb8KqxEemPZ8H0ApJBwA" association="_66qtkKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_8lR1QKqzEemPZ8H0ApJBwA" memberEnd="_8lTDYKqzEemPZ8H0ApJBwA _8lTqcaqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_8lScUKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_8lScUaqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_8lTDYKqzEemPZ8H0ApJBwA" name="iniatiate service fulfilment request" type="_72rfUKqyEemPZ8H0ApJBwA" association="_8lR1QKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_8lTqcaqzEemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_8lR1QKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_-IHhAKqzEemPZ8H0ApJBwA" memberEnd="_-IIIEqqzEemPZ8H0ApJBwA _-IJWMKqzEemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_-IIIEKqzEemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_-IIIEaqzEemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_-IIIEqqzEemPZ8H0ApJBwA" name="update service fulfillment request" type="_-3Q7cKqyEemPZ8H0ApJBwA" association="_-IHhAKqzEemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_-IJWMKqzEemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_-IHhAKqzEemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_ADIcMKq0EemPZ8H0ApJBwA" memberEnd="_ADPJ4Kq0EemPZ8H0ApJBwA _ADPw8aq0EemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_ADOi0Kq0EemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_ADOi0aq0EemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_ADPJ4Kq0EemPZ8H0ApJBwA" name="query service order system" type="_Fbju4KqzEemPZ8H0ApJBwA" association="_ADIcMKq0EemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_ADPw8aq0EemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_ADIcMKq0EemPZ8H0ApJBwA"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Association" xmi:id="_F08p0Kq0EemPZ8H0ApJBwA" memberEnd="_F0938qq0EemPZ8H0ApJBwA _F0_tIKq0EemPZ8H0ApJBwA">
+        <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_F0938Kq0EemPZ8H0ApJBwA" source="org.eclipse.papyrus">
+          <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_F0938aq0EemPZ8H0ApJBwA" key="nature" value="UML_Nature"/>
+        </eAnnotations>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_F0938qq0EemPZ8H0ApJBwA" name="query service inventory system" type="_ICcRkKqzEemPZ8H0ApJBwA" association="_F08p0Kq0EemPZ8H0ApJBwA"/>
+        <ownedEnd xmi:type="uml:Property" xmi:id="_F0_tIKq0EemPZ8H0ApJBwA" name="sp-sof" type="_gNGJoKqxEemPZ8H0ApJBwA" association="_F08p0Kq0EemPZ8H0ApJBwA"/>
+      </packagedElement>
+    </packagedElement>
     <packagedElement xmi:type="uml:Package" xmi:id="_N7BYQA6kEem-wJYL1Wo8Jw" name="Imports"/>
     <packagedElement xmi:type="uml:Package" xmi:id="_Qd_rUA6kEem-wJYL1Wo8Jw" name="ObjectClasses">
       <packagedElement xmi:type="uml:Class" xmi:id="_xSf70A6nEem-wJYL1Wo8Jw" name="RelatedParty">
@@ -1552,4 +1663,56 @@ List of supported error codes: - 5: The service is temporarily unavailable - 6: 
   <OpenModel_Profile:OpenModelAttribute xmi:id="_tvuMUKMKEemlc6vity7U6Q" base_StructuralFeature="_tvtlQKMKEemlc6vity7U6Q"/>
   <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_tvvacKMKEemlc6vity7U6Q" base_Property="_tvuzYqMKEemlc6vity7U6Q"/>
   <OpenModel_Profile:OpenModelAttribute xmi:id="_tvvacaMKEemlc6vity7U6Q" base_StructuralFeature="_tvuzYqMKEemlc6vity7U6Q"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_xGZMkKqyEemPZ8H0ApJBwA" base_StructuralFeature="_xGX-cKqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_xGZzoKqyEemPZ8H0ApJBwA" base_Property="_xGX-cKqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_xGbBwKqyEemPZ8H0ApJBwA" base_StructuralFeature="_xGaasKqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_xGbBwaqyEemPZ8H0ApJBwA" base_Property="_xGaasKqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_yzY54aqyEemPZ8H0ApJBwA" base_StructuralFeature="_yzY54KqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_yzZg8KqyEemPZ8H0ApJBwA" base_Property="_yzY54KqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_yzZg8qqyEemPZ8H0ApJBwA" base_StructuralFeature="_yzZg8aqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_yzaIAKqyEemPZ8H0ApJBwA" base_Property="_yzZg8aqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_06dUEKqyEemPZ8H0ApJBwA" base_StructuralFeature="_06cF8aqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_06hlgKqyEemPZ8H0ApJBwA" base_Property="_06cF8aqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_06iMkKqyEemPZ8H0ApJBwA" base_StructuralFeature="_06hlgaqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_06iMkaqyEemPZ8H0ApJBwA" base_Property="_06hlgaqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_1_nlUKqyEemPZ8H0ApJBwA" base_StructuralFeature="_1_m-QqqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_1_nlUaqyEemPZ8H0ApJBwA" base_Property="_1_m-QqqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_1_oMYaqyEemPZ8H0ApJBwA" base_StructuralFeature="_1_oMYKqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_1_oMYqqyEemPZ8H0ApJBwA" base_Property="_1_oMYKqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_40fgsqqyEemPZ8H0ApJBwA" base_StructuralFeature="_40fgsaqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_40gHwKqyEemPZ8H0ApJBwA" base_Property="_40fgsaqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_40gu0KqyEemPZ8H0ApJBwA" base_StructuralFeature="_40gHwaqyEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_40hV4KqyEemPZ8H0ApJBwA" base_Property="_40gHwaqyEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_0b89sKqzEemPZ8H0ApJBwA" base_StructuralFeature="_0b8WoqqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_0b9kwKqzEemPZ8H0ApJBwA" base_Property="_0b8WoqqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_0b9kwqqzEemPZ8H0ApJBwA" base_StructuralFeature="_0b9kwaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_0b-L0KqzEemPZ8H0ApJBwA" base_Property="_0b9kwaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_23GxgqqzEemPZ8H0ApJBwA" base_StructuralFeature="_23GxgaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_23HYkKqzEemPZ8H0ApJBwA" base_Property="_23GxgaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_23H_oKqzEemPZ8H0ApJBwA" base_StructuralFeature="_23HYkaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_23H_oaqzEemPZ8H0ApJBwA" base_Property="_23HYkaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_4aOxIqqzEemPZ8H0ApJBwA" base_StructuralFeature="_4aOxIaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_4aPYMKqzEemPZ8H0ApJBwA" base_Property="_4aOxIaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_4aPYMqqzEemPZ8H0ApJBwA" base_StructuralFeature="_4aPYMaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_4aPYM6qzEemPZ8H0ApJBwA" base_Property="_4aPYMaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_66r7saqzEemPZ8H0ApJBwA" base_StructuralFeature="_66r7sKqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_66r7sqqzEemPZ8H0ApJBwA" base_Property="_66r7sKqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_66uX8KqzEemPZ8H0ApJBwA" base_StructuralFeature="_66tw4KqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_66uX8aqzEemPZ8H0ApJBwA" base_Property="_66tw4KqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_8lTDYaqzEemPZ8H0ApJBwA" base_StructuralFeature="_8lTDYKqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_8lTqcKqzEemPZ8H0ApJBwA" base_Property="_8lTDYKqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_8lTqcqqzEemPZ8H0ApJBwA" base_StructuralFeature="_8lTqcaqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_8lTqc6qzEemPZ8H0ApJBwA" base_Property="_8lTqcaqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_-IIvIKqzEemPZ8H0ApJBwA" base_StructuralFeature="_-IIIEqqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_-IIvIaqzEemPZ8H0ApJBwA" base_Property="_-IIIEqqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_-IJWMaqzEemPZ8H0ApJBwA" base_StructuralFeature="_-IJWMKqzEemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_-IJWMqqzEemPZ8H0ApJBwA" base_Property="_-IJWMKqzEemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_ADPJ4aq0EemPZ8H0ApJBwA" base_StructuralFeature="_ADPJ4Kq0EemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_ADPw8Kq0EemPZ8H0ApJBwA" base_Property="_ADPJ4Kq0EemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_ADQYAKq0EemPZ8H0ApJBwA" base_StructuralFeature="_ADPw8aq0EemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_ADQYAaq0EemPZ8H0ApJBwA" base_Property="_ADPw8aq0EemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_F0-fAKq0EemPZ8H0ApJBwA" base_StructuralFeature="_F0938qq0EemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_F0_GEKq0EemPZ8H0ApJBwA" base_Property="_F0938qq0EemPZ8H0ApJBwA"/>
+  <OpenModel_Profile:OpenModelAttribute xmi:id="_F0_tIaq0EemPZ8H0ApJBwA" base_StructuralFeature="_F0_tIKq0EemPZ8H0ApJBwA"/>
+  <OpenInterfaceModel_Profile:OpenInterfaceModelAttribute xmi:id="_F1AUMKq0EemPZ8H0ApJBwA" base_Property="_F0_tIKq0EemPZ8H0ApJBwA"/>
 </xmi:XMI>
