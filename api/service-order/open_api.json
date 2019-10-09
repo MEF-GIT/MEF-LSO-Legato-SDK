@@ -1,20 +1,13 @@
 {
-  "openapi" : "3.0.0",
+  "openapi" : "3.0.2",
   "info" : {
-    "description" : " **Legato Service Order Management**\n\nThe intent of this API is to provide a consistent/standardized mechanism to manipulate the Service instances (and in turn the Service fulfillment) through Service Orders. The Service Order API can be invoked by the Business Applications (BA) systems to initiate Service Orders that manipulate the Service fulfillment process by the Service Orchestration Function (SOF).\n\nThe scope of this API introduces the following capabilities to the API:\n\n•\tADD: Request a new Service\n\n•\tMODIFY: Change an existing Service\n\n•\tDELETE:  Delete an existing Service\n\n•\tNO_CHANGE:\n\n•\tSupport for Service Order Notifications\n\n•\tThe client could also retrieve a single, or set, of Service Orders based upon a specified filter.",
-    "version" : "4.0.1_inProgress-oas3",
-    "title" : "Legato API Service Order",
-    "x-logo" : {
-      "url" : "/redoc/logo.png",
-      "backgroundColor" : "#FFFFFF"
-    }
+    "description" : "**Legato Service Order Management** </p>The intent of this API is to provide a consistent and standardized mechanism to manipulate the Service instances (and in turn the Service fulfillment) through Service Orders. </p>The Service Order API can be invoked by the Business Applications (BA) systems to initiate Service Orders that manipulate the Service fulfillment process by the Service Orchestration Function (SOF). The scope of this API introduces the following capabilities to the API: </p>* ADD: Request a new Service </p>* MODIFY: Change an existing Service</p> * DELETE:  Delete an existing Service. </p>The client could also retrieve a single, or set, of Service Orders based upon a specified filter.",
+    "version" : "MEF_W99_v0.2.0",
+    "title" : "Legato API Service Order"
   },
   "tags" : [ {
     "name" : "ServiceOrder",
     "description" : "Service request communicate to Service Orchestration Functionality Layer from Business Application Layer."
-  }, {
-    "name" : "ServiceOrderItem",
-    "description" : "Service component request communicate to Service Orchestration Functionality Layer from Business Application Layer."
   } ],
   "paths" : {
     "/serviceOrder" : {
@@ -342,331 +335,6 @@
         }
       }
     },
-    "/serviceOrderItem" : {
-      "post" : {
-        "tags" : [ "ServiceOrderItem" ],
-        "operationId" : "serviceOrderItemCreate",
-        "summary" : "Create a service order",
-        "description" : "This operation creates a Service Order instance in the Service Order management system maintained by the SOF. A Service Order is used to request operations on a Service instance. A Service Order groups one or more one Service Order Items - one per specific action on a Service instance. The Action associated with the Service Order Item describes the operation (add, remove, update) to be applied on the specified Service instance. The Service Order Item and its associated Action can operate on both existing (remove, update) as well as future (add) Service instance. The Service Order is triggered from the Business Application (BA) system in charge of the Product Order management to the Service Orchestration Function (SOF) system that will orchestrate the Service fulfillment. The assumption is that the Service Specifications describing the Service instance in the Service Order Item are already available (to both BA & SOF). If an exception is encountered, then appropriate returnCode and error information is populated and returned as specified.",
-        "deprecated" : false,
-        "parameters" : [ {
-          "name" : "Target",
-          "required" : false,
-          "in" : "header",
-          "description" : "",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "201" : {
-            "description" : "Created",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ServiceOrder"
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "405" : {
-            "description" : "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "408" : {
-            "description" : "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "422" : {
-            "description" : "Unprocessable entity\n\nFunctional error",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable\n\n",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          }
-        },
-        "requestBody" : {
-          "content" : {
-            "application/json;charset=utf-8" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/CreateServiceOrder"
-              }
-            }
-          },
-          "required" : true
-        }
-      },
-      "get" : {
-        "tags" : [ "ServiceOrderItem" ],
-        "operationId" : "serviceOrderItemFind",
-        "summary" : "List service orders",
-        "description" : "This operation returns a list of Service Order instances matching the query parameters from the Service Order management system maintained by the SOF. Attribute selection is possible using the 'fields' parameter to filter retrieved attribute(s) for each Service Order instance. If an exception is encountered, then appropriate returnCode and error information is populated and returned as specified.",
-        "deprecated" : false,
-        "parameters" : [ {
-          "name" : "externalId",
-          "required" : false,
-          "in" : "query",
-          "description" : "Filter by externalId",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "state",
-          "required" : false,
-          "in" : "query",
-          "description" : "State of the order(s) to be retrieved",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "description",
-          "required" : false,
-          "in" : "query",
-          "description" : "",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "orderDate.gt",
-          "required" : false,
-          "in" : "query",
-          "description" : "order date greather than",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "orderDate.lt",
-          "required" : false,
-          "in" : "query",
-          "description" : "order date lower than",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "fields",
-          "required" : false,
-          "in" : "query",
-          "description" : "this attribute could be used to filter retrieved attribute(s) and/or sort SO.",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "offset",
-          "required" : false,
-          "in" : "query",
-          "description" : "The index of the first element to retrieve. Zero is the first element of the collection.",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
-        }, {
-          "name" : "limit",
-          "required" : false,
-          "in" : "query",
-          "description" : "The maximum number of elements to retrieve (it can be greater than the actual available number of items).",
-          "schema" : {
-            "type" : "integer",
-            "format" : "int32"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Ok",
-            "headers" : {
-              "X-Total-Count" : {
-                "description" : "",
-                "schema" : {
-                  "type" : "integer",
-                  "format" : "int32"
-                }
-              },
-              "X-Result-Count" : {
-                "description" : "",
-                "schema" : {
-                  "type" : "integer",
-                  "format" : "int32"
-                }
-              }
-            },
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/ServiceOrder"
-                  }
-                }
-              }
-            }
-          },
-          "400" : {
-            "description" : "Bad Request\n\nList of supported error codes:\n- 20: Invalid URL parameter value\n- 21: Missing body\n- 22: Invalid body\n- 23: Missing body field\n- 24: Invalid body field\n- 25: Missing header\n- 26: Invalid header value\n- 27: Missing query-string parameter\n- 28: Invalid query-string parameter value",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "401" : {
-            "description" : "Unauthorized\n\nList of supported error codes:\n- 40: Missing credentials\n- 41: Invalid credentials\n- 42: Expired credentials",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "403" : {
-            "description" : "Forbidden\n\nList of supported error codes:\n- 50: Access denied\n- 51: Forbidden requester\n- 52: Forbidden user\n- 53: Too many requests",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "404" : {
-            "description" : "Not Found\n\nList of supported error codes:\n- 60: Resource not found",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "405" : {
-            "description" : "Method Not Allowed\n\nList of supported error codes:\n- 61: Method not allowed",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "408" : {
-            "description" : "Request Time-out\n\nList of supported error codes:\n- 63: Request time-out",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "422" : {
-            "description" : "Unprocessable entity\n\nFunctional error",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "500" : {
-            "description" : "Internal Server Error\n\nList of supported error codes:\n- 1: Internal error",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          },
-          "503" : {
-            "description" : "Service Unavailable\n\n",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ErrorRepresentation"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/serviceOrder/{id}" : {
       "get" : {
         "tags" : [ "ServiceOrder" ],
@@ -704,49 +372,8 @@
           }
         }
       }
-    },
-    "/serviceOrderItem/{id}" : {
-      "get" : {
-        "tags" : [ "ServiceOrderItem" ],
-        "operationId" : "serviceOrderItemGet",
-        "summary" : "Retrieve a service order",
-        "description" : "This operation retrieves a Service Order instance identified by the Id parameter from the Service Order managment system maintained by the SOF. Attribute selection is possible using the 'fields' parameter to filter retrieved attribute(s) for the returned Service Order instance. If an exception is encountered, then appropriate returnCode and error information is populated and returned as specified.",
-        "deprecated" : false,
-        "parameters" : [ {
-          "name" : "id",
-          "required" : true,
-          "in" : "path",
-          "description" : "",
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "fields",
-          "required" : false,
-          "in" : "query",
-          "description" : "Attribute selection",
-          "schema" : {
-            "type" : "string"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Ok",
-            "content" : {
-              "application/json;charset=utf-8" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ServiceOrder"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
-  "servers" : [ {
-    "url" : "http://localhost:8080/nbi/api/v1"
-  } ],
   "components" : {
     "schemas" : {
       "ActionType" : {
@@ -861,14 +488,14 @@
       },
       "ServiceRelationship" : {
         "description" : "Linked Services to the one instantiate\nnbi component used this relationship to sort request to ONAP.",
-        "required" : [ "type", "service" ],
         "type" : "object",
         "properties" : {
           "type" : {
             "$ref" : "#/components/schemas/RelationshipType"
           },
-          "service" : {
-            "$ref" : "#/components/schemas/Service"
+          "serviceReference" : {
+            "type" : "string",
+            "format" : "uri"
           }
         }
       },
@@ -1109,8 +736,9 @@
           "type" : {
             "$ref" : "#/components/schemas/RelationshipType"
           },
-          "serviceOrderItem" : {
-            "$ref" : "#/components/schemas/ServiceOrderItem"
+          "serviceOrderItemReference" : {
+            "type" : "string",
+            "format" : "uri"
           }
         }
       },
@@ -1284,8 +912,9 @@
           "type" : {
             "$ref" : "#/components/schemas/RelationshipType"
           },
-          "serviceOrder" : {
-            "$ref" : "#/components/schemas/ServiceOrder"
+          "serviceOrderReference" : {
+            "type" : "string",
+            "format" : "uri"
           }
         }
       },
