@@ -1,0 +1,484 @@
+openapi: 3.0.2
+info:
+  title: Legato Service Order Management API
+  version: MEF_W99_v0.2.0
+  description: >+
+    **Legato Service Order Management API**
+    </p>
+    The intent of this API is to provide a consistent and standardized mechanism
+    to manipulate the Service instances (and in turn the Service fulfillment)
+    through Service Orders.
+    </p>
+    The Service Order API can be invoked by the Business Applications (BA)
+    systems to initiate Service Orders that manipulate the Service fulfillment
+    process by the Service Orchestration Function (SOF).
+    </p>
+    The scope of this API introduces the following capabilities to the API
+      - **ADD**: Request a new Service
+      - **MODIFY**: Change an existing Service
+      - **DELETE**:  Delete an existing Service.
+    </p>
+    The client could also retrieve a single, or set, of Service Orders based
+    upon a specified filter.
+
+tags:
+  - name: ServiceOrder
+    description: "
+      Service request communicate to Service Orchestration Functionality Layer
+      from Business Application Layer."
+paths:
+  /serviceOrder:
+    post:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderCreate
+      summary: Create a service order
+      description: |-
+        This operation creates a Service Order instance in the Service Order
+        management system maintained by the SOF. A Service Order is used to
+        request operations on a Service instance. A Service Order groups one
+        or more one Service Order Items - one per specific action on a Service
+        instance. The Action associated with the Service Order Item describes
+        the operation (add, remove, update) to be applied on the specified
+        Service instance. The Service Order Item and its associated Action can
+        operate on both existing (remove, update) as well as future (add)
+        Service instance. The Service Order is triggered from the Business
+        Application (BA) system in charge of the Product Order management to
+        the Service Orchestration Function (SOF) system that will orchestrate
+        the Service fulfillment. The assumption is that the Service
+        Specifications describing the Service instance in the Service Order
+        Item are already available (to both BA & SOF). If an exception is
+        encountered, then appropriate returnCode and error information is
+        populated and returned as specified.
+      deprecated: false
+      parameters:
+        - name: Target
+          required: false
+          in: header
+          description: ''
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ServiceOrder'
+        '400':
+          description: |-
+            Bad Request
+
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '401':
+          description: |-
+            Unauthorized
+
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '403':
+          description: |-
+            Forbidden
+
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '404':
+          description: |-
+            Not Found
+
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '405':
+          description: |-
+            Method Not Allowed
+
+            List of supported error codes:
+            - 61: Method not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '408':
+          description: |-
+            Request Time-out
+
+            List of supported error codes:
+            - 63: Request time-out
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '422':
+          description: |-
+            Unprocessable entity
+
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '500':
+          description: |-
+            Internal Server Error
+
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '503':
+          description: |-
+            Service Unavailable
+
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: 'commonComponents.yaml#/components/schemas/CreateServiceOrder'
+        required: true
+    get:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderFind
+      summary: List service orders
+      description: |-
+        This operation returns a list of Service Order instances matching the
+        query parameters from the Service Order management system maintained by
+        the SOF. Attribute selection is possible using the ''fields'' parameter
+        to filter retrieved attribute(s) for each Service Order instance.
+        If an exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      deprecated: false
+      parameters:
+        - name: externalId
+          required: false
+          in: query
+          description: "
+            Filter by externalId"
+          schema:
+            type: string
+        - name: state
+          required: false
+          in: query
+          description: "
+            State of the order(s) to be retrieved"
+          schema:
+            type: string
+        - name: description
+          required: false
+          in: query
+          description: ''
+          schema:
+            type: string
+        - name: orderDate.gt
+          required: false
+          in: query
+          description: "
+            order date greather than"
+          schema:
+            type: string
+        - name: orderDate.lt
+          required: false
+          in: query
+          description: "
+            order date lower than"
+          schema:
+            type: string
+        - name: fields
+          required: false
+          in: query
+          description: "
+            this attribute could be used to filter retrieved attribute(s)
+            and/or sort SO."
+          schema:
+            type: string
+        - name: offset
+          required: false
+          in: query
+          description: "
+            The index of the first element to retrieve.
+            Zero is the first element of the collection."
+          schema:
+            type: integer
+            format: int32
+        - name: limit
+          required: false
+          in: query
+          description: "
+            The maximum number of elements to retrieve (it can be greater than
+            the actual available number of items)."
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Ok
+          headers:
+            X-Total-Count:
+              description: ''
+              schema:
+                type: integer
+                format: int32
+            X-Result-Count:
+              description: ''
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: 'commonComponents.yaml#/components/schemas/ServiceOrder'
+        '400':
+          description: |-
+            Bad Request
+
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '401':
+          description: |-
+            Unauthorized
+
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '403':
+          description: |-
+            Forbidden
+
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '404':
+          description: |-
+            Not Found
+
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '405':
+          description: |-
+            Method Not Allowed
+
+            List of supported error codes:
+            - 61: Method not allowed
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '408':
+          description: |-
+            Request Time-out
+
+            List of supported error codes:
+            - 63: Request time-out
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '422':
+          description: |-
+            Unprocessable entity
+
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '500':
+          description: |-
+            Internal Server Error
+
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '503':
+          description: |+
+            Service Unavailable
+
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+  '/serviceOrder/{id}':
+    get:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderGet
+      summary: Retrieve a service order
+      description: |-
+        This operation retrieves a Service Order instance identified by the Id
+        parameter from the Service Order managment system maintained by the SOF.
+        Attribute selection is possible using the ''fields'' parameter to filter
+        retrieved attribute(s) for the returned Service Order instance. If an
+        exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      deprecated: false
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: ''
+          schema:
+            type: string
+        - name: fields
+          required: false
+          in: query
+          description: Attribute selection
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ServiceOrder'
+        '400':
+          description: |-
+            Bad Request
+
+            List of supported error codes:
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '401':
+          description: |-
+            Unauthorized
+
+            List of supported error codes:
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '403':
+          description: |-
+            Forbidden
+
+            List of supported error codes:
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '404':
+          description: |-
+            Not Found
+
+            List of supported error codes:
+            - 60: Resource not found
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '422':
+          description: |-
+            Unprocessable entity
+
+            Functional error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '500':
+          description: |-
+            Internal Server Error
+
+            List of supported error codes:
+            - 1: Internal error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
+        '503':
+          description: |-
+            Service Unavailable
+
+            List of supported error codes:
+            - 5: The service is temporarily unavailable
+            - 6: Orange API is over capacity, retry later !
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'commonComponents.yaml#/components/schemas/ErrorRepresentation'
