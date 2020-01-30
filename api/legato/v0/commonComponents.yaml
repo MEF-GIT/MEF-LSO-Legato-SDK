@@ -7,11 +7,12 @@ info:
     </p>
      This OAS document contains the schema defintions of common components that
      are reused/referenced by different Legato API specifications.
-     This includes common schemas, parameters, responses, headers, etc.
+     This includes common schemas, parameters, responses, headers, etc
 
 tags:
   - name: ServiceCommon
     description: Common schema components used by all Legato APIs.
+    
 paths: {}
 components:
   schemas:
@@ -23,27 +24,436 @@ components:
         - MODIFY
         - DELETE
         - NO_CHANGE
+    
+    ApiEntity:
+      description: |-
+        The base class of all Legato API Entities
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityMetaData'
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            name:
+              type: string
+              description: |-
+                Name of an object instance of this entity class. 
+    
+    ApiEntityRef:
+      description: |-
+        The base class of all Legato API Entities
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityType'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              type: string
+              description: |-
+                Unique identifier of an instance of this entity. The ID is
+                invariant and is assigned by SOF. In other words this entity
+                will have the same ID throught its lifetime.
+            href:
+              type: string
+              format: uri
+              description: |-
+                URI reference of an object instance of this entity class.
+                
+    ApiEntityMetaData:
+      description: |-
+        The meta data that describes the class type of the API Entity (REST
+        resource) instance as well as supports polymorphism and extension
+        mechanisms.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityType'
+        - type: object
+          properties:
+            '@baseType':
+              type: string
+              description: |-
+                The super/base class type of this REST resource if applicable.
+            '@schemaLocation':
+              type: string
+              format: uri
+              description: |-
+                Provides a link to the schema describing the REST resource in
+                URI format.
+    
+    ApiEntitySchemaMetaData:
+      description: |-
+        The metadata that references the schema associated with an API Entity 
+        (REST resource) instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityType'
+        - type: object
+          required:
+            - '@schemaLocation'
+          properties:
+            '@schemaLocation':
+              type: string
+              format: uri
+              description: |-
+                Provides a link to the schema describing the REST resource in
+                URI format.  
+    
+    ApiEntityType:
+      description: |-
+        The metadata that describes the class type of the API Entity (REST
+        resource) instance.
+      type: object
+      required:
+        - '@type'
+      properties:
+        '@type':
+          type: string
+          description: |-
+            The class type of an instance of Api Entity (REST resource).
+                
+    Attachment:
+      description: |-
+        An attachment represents a file that is used to complement the
+        description of an entity through video, pictures, etc..
+      type: object
+      properties:
+        description:
+          description: A narrative text describing the content of the attachment
+          type: string
+        mimeType:
+          description: 'Attachment type such as video, picture, etc..'
+          type: string
+    
+    DistributionStatus:
+      description: |-
+        List of possible state for the Distribution Status.
+      type: string
+      enum:
+        - DISTRIBUTION_APPROVED
+        - DISTRIBUTION_NOT_APPROVED
+        - DISTRIBUTION_REJECTED
+        - DISTRIBUTED
+        - RETIRED
+        
+    Service:
+      description: |-
+        The Service instance managed by SOF and retrievable by an BA over the 
+        Legato IRP via the Service Invertory API.
+      allOf:
+        - $ref: '#/components/schemas/ServiceConfiguration'
+        - type: object
+          properties:
+            supportingResource:
+              type: array
+              items:
+                $ref: '#/components/schemas/SupportingResource'
+              minItems: 0
+    
+    ServiceConfiguration:
+      description: |-
+        The Service configration information provided-to or retrieved-from SOF
+        via an ServiceOrderItem by an BA over Legato IRP..
+      allOf:
+        - $ref: '#/components/schemas/ApiEntity'
+        - type: object
+          properties:
+            type:
+              description: Type of the service - e.g. Access E-Line.
+              type: string
+            state:
+              $ref: '#/components/schemas/ServiceState'
+            relatedParty:
+              type: array
+              items:
+                $ref: '#/components/schemas/RelatedPartyRef'
+              minItems: 0
+            serviceSpecification:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceSpecification'
+              minItems: 0
+              maxItems: 1
+            serviceRelationship:
+              $ref: '#/components/schemas/ServiceRelationship'
+              
+    ServiceRef:
+      description: |-
+        Reference to a Service instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: 'Service'
+              
+    ServiceRelationship:
+      description: |-
+        Reference to an related Service and the type of association.
+      type: object
+      required:
+        - relationshipType
+        - service
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/RelationshipType'
+        service:
+          $ref: '#/components/schemas/ServiceRef'
+           
+    ServiceState:
+      description: |-
+        List of possible state for the Service.
+      type: string
+      enum:
+        - FEASIBILITY_CHECKED
+        - DESIGNED
+        - RESERVED
+        - ACTIVE
+        - INACTIVE
+        - TERMINATED
+        
+    OrderMessage:
+      description: |-
+        Offers the capability to provide additional information about the Order.
+      type: object
+      properties:
+        code:
+          description: |-
+            A code associated to this message.
+          type: string
+        field:
+          description: |-
+            Service Order attribute related to this error message.
+          type: string
+        messageInformation:
+          description: |-
+            Additional description text related to this message.
+          type: string
+        correctionRequired:
+          description: |-
+            Indicator that an action is required to allow service order
+            fullfilment to follow up.
+          type: boolean
+        severity:
+          $ref: '#/components/schemas/SeverityMessage'
+          
+    ErrorRepresentation:
+      description: Representation of an error.
+      type: object
+      properties:
+        code:
+          description: |-
+            Application related code (as defined in API or from a common list)
+          type: integer
+          format: int32
+        reason:
+          description: |-
+            Text that explains the reason for error. This can be shown to a
+            client user.
+          type: string
+        message:
+          description: |-
+            Text that provides more details and corrective actions related to
+            the error. This can be shown to a client user.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1
+        referenceError:
+          description: |-
+            URL pointing to documentation describing the error.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1
+        status:
+          description: |-
+            HTTP error code extension like 400-2.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1
+          
+    RelatedPartyRef:
+      description: |-
+        A related party defines a party and its role, that is linked to a
+        specific entity such as ServiceSpecification, ServiceOrder, Service, etc
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            name:
+              description: |-
+                Name of the related party
+              type: string
+            role:
+              description: |-
+                The role of the related party (e.g. Owner, requester).
+              type: string
+       
+    RelationshipType:
+      description: Relationship type.
+      type: string
+      enum:
+        - RELIES_ON
+        - DEPENDENCY
+        - CROSS_REF
+     
+    SeverityMessage:
+      description: Enumerations defining severity.
+      type: string
+      enum:
+        - INFORMATION
+        - ERROR
+           
+    ServiceOrder:
+      description: |-
+        A Service Order is used to request operations on a Service instance.
+        A Service Order groups one or more one Service Order Items - one per
+        specific action on a Service instance. The Action associated with the
+        Service Order Item describes the operation (add, remove, update) to be
+        applied on the specified Service instance.The Service Order Item and
+        its associated Action can operate on both existing (remove, update) as
+        well as future (add) Service instance.The Service Order is triggered
+        from the Business Application (BA) system in charge of the Product Order
+        management to the Service Orchestration Function (SOF) system that will
+        orchestrate the Service fulfillment.
+      allOf:
+        - $ref: '#/components/schemas/ServiceOrderConfiguration'
+        - type: object
+          properties:
+            state:
+              $ref: '#/components/schemas/ServiceOrderState'
+            orderDate:
+              description: Date when the order was created.
+              type: string
+              format: date-time
+            startDate:
+              description: |-
+                Date when the order fulfillment starts
+              type: string
+              format: date-time
+            expectedCompletionDate:
+              description: Expected delivery date set by the provider.
+              type: string
+              format: date-time
+            completionDateTime:
+              description: Date when the order was completed
+              type: string
+              format: date-time
+            orderMessage:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderMessage'
+              minItems: 0
+    
+    ServiceOrderConfiguration:
+      description: |-
+        This structure is used in the operation POST for a serviceOrder request
+      allOf:
+        - $ref: '#/components/schemas/ApiEntity'
+        - type: object
+          properties:
+            externalId:
+              description: |-
+                ID given by the consumer and only understandable by client
+                (to facilitate client searches)
+              type: string
+            description:
+              description: |-
+                A free-text description of the service order
+              type: string
+            category:
+              description: |-
+                Used to categorize the order that can be useful for OM system
+                (e.g. “broadband”, “TVOption”, ...)'
+              type: string
+            priority:
+              description: |-
+                A way that can be used by consumers to prioritize orders in
+                Service Order Management system (from 0 to 4 : 0 is the highest
+                priority, and 4 the lowest
+              type: integer
+            requestedStartDate:
+              description: |-
+                Order start date wished by the requestor
+              type: string
+              format: date-time
+            requestedCompletionDate:
+              description: |-
+                Requested delivery date from the requestor perspective
+              type: string
+              format: date-time
+            relatedParty:
+              type: array
+              items:
+                $ref: '#/components/schemas/RelatedPartyRef'
+              minItems: 0
+              maxItems: 1
+            orderItem:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceOrderItem'
+              minItems: 0
+            orderRelationship:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceOrderRelationship'
+              minItems: 0
+              maxItems: 1
+    
+    ServiceOrderRef:
+      description: |-
+        Reference to a Service Order instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: 'ServiceOrder'
+                   
+    ServiceOrderRelationship:
+      description: |-
+        Reference to an related Service Order and the type of association.
+      type: object
+      required:
+        - relationshipType
+        - serviceOrder
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/RelationshipType'
+        serviceOrder:
+           $ref: '#/components/schemas/ServiceOrderRef'
+           
     ServiceOrderState:
       description: |-
         List of possible state for the Service Order. 
-
-        * ACKNOWLEDGED - Order has been received and has passed message validation.
-
+        * ACKNOWLEDGED - Order has been received and has passed message
+          validation.
         * IN_PROGRESS - Service Fulfillment has started.
-
-        * PENDING - Order is currently in a waiting stage for an explicitly action/activity to be completed before the order can progress further, pending order amend or cancel assessment. A pending stage can lead into auto cancellation of an order, if no action is take within the defined timeframes to be described under the Agreement.
-
-        * HELD - Order cannot be progressed due to a temporary issue. For example, processing is temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the order will continue to progress.
-
+        * PENDING - Order is currently in a waiting stage for an explicitly
+          action/activity to be completed before the order can progress further,
+          pending order amend or cancel assessment. A pending stage can lead
+          into auto cancellation of an order, if no action is take within the
+          defined timeframes to be described under the Agreement.
+        * HELD - Order cannot be progressed due to a temporary issue. For
+          example, processing is temporarily delayed to resolve an
+          infrastructure shortfall to facilitate supply of order. Upon
+          resolution of the issue, the order will continue to progress.
         * CANCELLED - In-Flight Order has been successfully cancelled.
-
         * COMPLETED - Provisioning completed and the Service is now active.
-
-        * FAILED - All of the Order items have failed which results in the entire Order to be Failed.
-
-        * PARTIAL - Some of the Order items processing have failed and some have succeeded so the entire Order is in a Partial state. This provides support for partial Failure of an Order.
-
-        * REJECTED - An order failed the Order Feasibility checks. Service technical eligibility is not done throught service order API but with dedicated serviceQualification API (from preOrdering domain) invalid information is provided through the order request. The order request fails to meet business rules for ordering.
+        * FAILED - All of the Order items have failed which results in the
+          entire Order to be Failed.
+        * PARTIAL - Some of the Order items processing have failed and some have
+          succeeded so the entire Order is in a Partial state. This provides
+          support for partial Failure of an Order.
+        * REJECTED - An order failed the Order Feasibility checks. Service
+          technical eligibility is not done throught service order API but with
+          dedicated serviceQualification API (from preOrdering domain) invalid
+          information is provided through the order request. The order request
+          fails to meet business rules for ordering.
       type: string
       enum:
         - ACKNOWLEDGED
@@ -55,18 +465,118 @@ components:
         - FAILED
         - PARTIAL
         - REJECTED
-    ServiceState:
-      description: List of possible state for the Service.
-      type: string
-      enum:
-        - FEASIBILITY_CHECKED
-        - DESIGNED
-        - RESERVED
-        - ACTIVE
-        - INACTIVE
-        - TERMINATED
+        
+    ServiceOrderItem:
+      description: |-
+        An identified part of the order. A service order is decomposed into one
+        or more order items.
+      allOf:
+        - $ref: '#/components/schemas/ServiceOrderItemConfiguration'
+        - type: object
+          properties:
+            state:
+              $ref: '#/components/schemas/ServiceOrderState'
+            orderItemMessage:
+              type: array
+              items:
+                $ref: '#/components/schemas/OrderMessage'
+              minItems: 0
+            percentProgress:
+              description: Progress of the delivery in percentage.
+              type: integer
+        
+    ServiceOrderItemConfiguration:
+      description: |-
+        This structure is used in the operation POST for a serviceOrder request
+        to describe an item.
+      required:
+        - id
+        - service
+      type: object
+      properties:
+        id:
+          description: |-
+            Identifier of the line item (generally it is a sequence number
+            01, 02, 03, …)
+          type: string
+        action:
+          $ref: '#/components/schemas/ActionType'
+        service:
+          $ref: '#/components/schemas/Service'
+        orderItemRelationship:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServiceOrderItemRelationship'
+          minItems: 0
+          maxItems: 1
+    
+    ServiceOrderItemRef:
+      description: |-
+        Reference to a Service Order Item instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: 'ServiceOrderItem' 
+              
+    ServiceOrderItemRelationship:
+      description: |-
+        Reference to an related Service Order Item and the type of association.
+      type: object
+      required:
+        - relationshipType
+        - serviceOrder
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/RelationshipType'
+        serviceOrder:
+           $ref: '#/components/schemas/ServiceOrderItemRef'
+           
+    ServiceSpecification:
+      description: |-
+        ServiceSpecification offers the ability to describe the characteristics
+        of a specific type of service. Functionally, it acts as a template by
+        which Services may be instantiated. By sharing the same specification,
+        these services would therefore share the same set of characteristics.
+      allOf:
+        - $ref: '#/components/schemas/ServiceSpecificationRef'
+        - type: object
+          properties:
+            category:
+              description: |-
+                The category is used to group service specifications in logical
+                containers. Categories can be further sub-categorized into other
+                categories.
+              type: string
+            subcategory:
+              description: |-
+                Categories can be further sub-categorized into other categories.
+              type: string
+            description:
+              description: |-
+                A narrative that explains  details of the service specification.
+              type: string
+            lifecycleStatus:
+              $ref: '#/components/schemas/ServiceSpecificationState'
+            distributionStatus:
+              $ref: '#/components/schemas/DistributionStatus'
+            attachment:
+              type: array
+              items:
+                $ref: '#/components/schemas/Attachment'
+              minItems: 0
+              maxItems: 1
+            relatedParty:
+              type: array
+              items:
+                $ref: '#/components/schemas/RelatedPartyRef'
+              minItems: 0 
+    
     ServiceSpecificationState:
-      description: List of possible state for the Service Specification.
+      description: |-
+        List of possible state for the Service Specification.
       type: string
       enum:
         - NOT_CERTIFIED_CHECKOUT
@@ -75,482 +585,27 @@ components:
         - CERTIFICATION_IN_PROGRESS
         - CERTIFIED
         - REJECTED
-    DistributionStatus:
-      description: List of possible state for the Distribution Status.
-      type: string
-      enum:
-        - DISTRIBUTION_APPROVED
-        - DISTRIBUTION_NOT_APPROVED
-        - DISTRIBUTION_REJECTED
-        - DISTRIBUTED
-        - RETIRED
-    ApiEntityMetaData:
-      description: ''
-      type: object
-      properties:
-        '@type':
-          description: The class type of a REST resource.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@baseType':
-          type: array
-          description: ''
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@schemaLocation':
-          type: array
-          description: Provides a link to the schema describing the REST resource in URI format.
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-    RelationshipType:
-      description: Relationship type.
-      type: string
-      enum:
-        - RELIES_ON
-        - DEPENDENCY
-        - CROSS_REF
-    SeverityMessage:
-      description: Enumerations defining severity.
-      type: string
-      enum:
-        - INFORMATION
-        - ERROR
-    ErrorRepresentation:
-      description: Representation of an error.
-      type: object
-      properties:
-        code:
-          description: Application related code (as defined in the API or from a common list)
-          type: integer
-          format: int32
-        reason:
-          description: Text that explains the reason for error. This can be shown to a client user.
-          type: string
-        message:
-          description: Text that provides more details and corrective actions related to the error. This can be shown to a client user.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        referenceError:
-          description: URL pointing to documentation describing the error.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        status:
-          description: HTTP error code extension like 400-2.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-    ServiceRelationship:
+        
+    ServiceSpecificationRef:
       description: |-
-        Linked Services to the one instantiate
-        nbi component used this relationship to sort request to ONAP.
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/RelationshipType'
-        serviceReference:
-          type: string
-          format: uri
-    RelatedParty:
-      description: 'A related party defines a party and its role, that is linked to a specific entity (such as ServiceSpecification, ServiceOrder, Service, etc)'
-      type: object
-      properties:
-        role:
-          description: 'The role of the related party (e.g. Owner, requester).'
-          type: string
-        id:
-          description: 'Unique identifier of an instance of this entity. Inherited from ApiEntity. '
-          type: string
-        href:
-          description: URI reference of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        name:
-          description: Name of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        '@type':
-          description: The class type of a REST resource. Inherited from ApiEntityMetaData.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@baseType':
-          type: array
-          description: Inherited from ApiEntityMetaData.
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@schemaLocation':
-          type: array
-          description: 'Provides a link to the schema describing the REST resource in URI format.Inherited from ApiEntityMetaData. '
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-    Service:
-      description: 'Service offers the ability to describe the characteristics of an instance of specific type of service. The Business Application (BA) triggers the Service Orchestration Function (SOF) to create/update/delete a Service via the Service Order/Service Order Item operations. The SOF is responsible for orchestrating the Service fulfillment and maintaining Service instance state/attributes and notifying BA of any changes. Functionally, a Service is instantiated using a related Service Specification instance as its template. Thus the Services that share the same Service Specification instance would therefore share the same set of characteristics. The MEF Service classes that describe a specific type of MEF Service instance will be associated with the Service Specification class, as well as the Service instances will contain a reference to the MEF Service schema.The assumption is that the Service Specifications describing the Service instance in the Service Order Item are already available (to both BA & SOF).'
-      required:
-        - id
-      type: object
-      properties:
-        id:
-          description: 'Unique identifier of an instance of this entity. Inherited from ApiEntity. '
-          type: string
-        href:
-          description: URI reference of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        name:
-          description: Name of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        type:
-          description: Type of the service - TBD – e.g. OrderedService or PartnerService.
-          type: string
-        state:
-          $ref: '#/components/schemas/ServiceState'
-        hasStarted:
-          description: 'This attribute if TRUE, indicates that this Service has already been started. If the value of this attribute is FALSE, then this signifies that this Service has NOT been Started.'
-          type: boolean
-        relatedParty:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedParty'
-          minItems: 0
-        supportingResource:
-          type: array
-          items:
-            $ref: '#/components/schemas/SupportingResource'
-          minItems: 0
-        serviceSpecification:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceSpecification'
-          minItems: 0
-          maxItems: 1
-        serviceRelationship:
-          $ref: '#/components/schemas/ServiceRelationship'
-    ServiceSpecification:
-      description: 'ServiceSpecification offers the ability to describe the characteristics of a specific type of service. Functionally, it acts as a template by which Services may be instantiated. By sharing the same specification, these services would therefore share the same set of characteristics. The MEF Service classes describe a specific type of MEF Service will be associated with this class via a <specify> stereotype to enable generation of specification characteristics (via tooling or otherwise).'
-      type: object
-      properties:
-        version:
-          description: Service specification version.
-          type: string
-        category:
-          description: The category is used to group service specifications in logical containers. Categories can be further sub-categorized into other categories.
-          type: string
-        subcategory:
-          description: Categories can be further sub-categorized into other categories.
-          type: string
-        description:
-          description: A narrative that explains the details of the service specification.
-          type: string
-        lifecycleStatus:
-          $ref: '#/components/schemas/ServiceSpecificationState'
-        distributionStatus:
-          $ref: '#/components/schemas/DistributionStatus'
-        attachment:
-          type: array
-          items:
-            $ref: '#/components/schemas/Attachment'
-          minItems: 0
-          maxItems: 1
-        relatedParty:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedParty'
-          minItems: 0
-        targetServiceSchema:
-          type: array
-          items:
-            $ref: '#/components/schemas/ApiEntityMetaData'
-          minItems: 0
-          maxItems: 1
-        id:
-          description: Unique identifier of ApiEntity instance.
-          type: string
-        href:
-          description: URI reference of ApiEntity instance.
-          type: string
-        name:
-          description: Name of ApiEntity instance.
-          type: string
-    Attachment:
-      description: 'An attachment represents a file that is used to complement the description of an entity through video, pictures, etc..'
-      type: object
-      properties:
-        description:
-          description: A narrative text describing the content of the attachment.
-          type: string
-        mimeType:
-          description: 'Attachment type such as video, picture, etc..'
-          type: string
+        Reference to a ServiceSpecification instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            version:
+              description: Service specification version.
+              type: string
+            targetServiceSchema:
+              $ref: '#/components/schemas/ApiEntitySchemaMetaData'
+                
     SupportingResource:
-      description: Provides reference to the Resource supporting the Service instance.
-      type: object
-      properties:
-        role:
-          description: Role provide by SupportingResource.
-          type: string
-        id:
-          description: 'Unique identifier of an instance of this entity. Inherited from ApiEntity. '
-          type: string
-        href:
-          description: URI reference of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        name:
-          description: Name of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        '@type':
-          description: The class type of a REST resource. Inherited from ApiEntityMetaData.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@baseType':
-          type: array
-          description: Inherited from ApiEntityMetaData.
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@schemaLocation':
-          type: array
-          description: 'Provides a link to the schema describing the REST resource in URI format.Inherited from ApiEntityMetaData. '
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-    OrderItemRelationship:
-      description: 'Reference to an related Service Order Item and the type of association. The type of related Service Order Item, can be : ''dependency'' if this Order Item needs to be ''not started'' until another order item is complete, ''relies-on'' if this Order Item relies on the related order item or simply “cross-ref” to keep track of the source Order Item.'
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/RelationshipType'
-        serviceOrderItemReference:
-          type: string
-          format: uri
-    ServiceOrderItem:
-      description: An identified part of the order. A service order is decomposed into one or more order items.
-      required:
-        - id
-        - service
-      type: object
-      properties:
-        id:
-          description: 'Identifier of the line item (generally it is a sequence number 01, 02, 03, …)'
-          type: string
-        actionType:
-          $ref: '#/components/schemas/ActionType'
-        service:
-          $ref: '#/components/schemas/Service'
-        orderItemRelationship:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItemRelationship'
-          minItems: 0
-          maxItems: 1
-        orderItemMessage:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderMessage'
-          minItems: 0
-        percentProgress:
-          description: Progress of the delivery in percentage.
-          type: integer
-        state:
-          $ref: '#/components/schemas/ServiceOrderState'
-    ServiceOrder:
-      description: 'A Service Order is used to request operations on a Service instance. A Service Order groups one or more one Service Order Items - one per specific action on a Service instance. The Action associated with the Service Order Item describes the operation (add, remove, update) to be applied on the specified Service instance.The Service Order Item and its associated Action can operate on both existing (remove, update) as well as future (add) Service instance.The Service Order is triggered from the Business Application (BA) system in charge of the Product Order management to the Service Orchestration Function (SOF) system that will orchestrate the Service fulfillment.The assumption is that the Service Specifications describing the Service instance in the Service Order Item are already available (to both BA & SOF).'
-      type: object
-      properties:
-        externalId:
-          description: ID given by the consumer and only understandable by client (to facilitate client searches)
-          type: string
-        description:
-          description: A free-text description of the service order
-          type: string
-        category:
-          description: 'Used to categorize the order that can be useful for the OM system (e.g. “broadband”, “TVOption”, ...)'
-          type: string
-        priority:
-          description: 'A way that can be used by consumers to prioritize orders in Service Order Management system (from 0 to 4 : 0 is the highest priority, and 4 the lowest)'
-          type: integer
-        state:
-          $ref: '#/components/schemas/ServiceOrderState'
-        requestedStartDate:
-          description: Order start date wished by the requestor
-          type: string
-          format: date-time
-        requestedCompletionDate:
-          description: Requested delivery date from the requestor perspective
-          type: string
-          format: date-time
-        orderDate:
-          description: Date when the order was created.
-          type: string
-          format: date-time
-        startDate:
-          description: Date when the order fulfillment start – valued by server side (not requester)
-          type: string
-          format: date-time
-        expectedCompletionDate:
-          description: Expected delivery date amended by the provider.
-          type: string
-          format: date-time
-        completionDateTime:
-          description: Date when the order was completed
-          type: string
-          format: date-time
-        relatedParty:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedParty'
-          minItems: 0
-          maxItems: 1
-        orderItem:
-          type: array
-          items:
-            $ref: '#/components/schemas/ServiceOrderItem'
-          minItems: 0
-        orderMessage:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderMessage'
-          minItems: 0
-        orderRelationship:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRelationship'
-          minItems: 0
-          maxItems: 1
-        id:
-          description: 'Unique identifier of an instance of this entity. Inherited from ApiEntity. '
-          type: string
-        href:
-          description: URI reference of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        name:
-          description: Name of an object instance of this entity class. Inherited from ApiEntity
-          type: string
-        '@type':
-          description: The class type of a REST resource. Inherited from ApiEntityMetaData.
-          type: array
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@baseType':
-          type: array
-          description: Inherited from ApiEntityMetaData.
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-        '@schemaLocation':
-          type: array
-          description: 'Provides a link to the schema describing the REST resource in URI format.Inherited from ApiEntityMetaData. '
-          items:
-            type: string
-          minItems: 0
-          maxItems: 1
-    OrderRelationship:
-      description: 'Reference to an related Service Order and the type of association. The type of related Service Order, can be : “dependency” if the order needs to be “not started” until another order is complete or “cross-ref” to keep track of the source order.'
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/RelationshipType'
-        serviceOrderReference:
-          type: string
-          format: uri
-    CreateServiceOrderItem:
       description: |-
-        This structure is used in the operation POST for a serviceOrder request to describe an item.
-        Attribute description is not accurate and should be find in the serviceOrderItem class.
-      required:
-        - id
-        - service
-      type: object
-      properties:
-        id:
-          description: 'Identifier of the line item (generally it is a sequence number 01, 02, 03, …)'
-          type: string
-        action:
-          $ref: '#/components/schemas/ActionType'
-        orderItemRelationship:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItemRelationship'
-        service:
-          $ref: '#/components/schemas/Service'
-    CreateServiceOrder:
-      description: |-
-        This structure is used in the operation POST for a serviceOrder request.
-        Attribute description is not accurate and should be find in the serviceOrder class.
-      type: object
-      properties:
-        externalId:
-          description: ID given by the consumer and only understandable by him (to facilitate his searches)
-          type: string
-        priority:
-          description: 'A way that can be used by consumers to prioritize orders in Service Order Management system (from 0 to 4 : 0 is the highest priority, and 4 the lowest)'
-          type: string
-        description:
-          description: A free-text description of the service order
-          type: string
-        category:
-          description: 'Used to categorize the order that can be useful for the OM system (e.g. “broadband”, “TVOption”, ...)'
-          type: string
-        requestedStartDate:
-          description: Order start date wished by the requestor
-          type: string
-          format: date-time
-        requestedCompletionDate:
-          description: Requested delivery date from the requestor perspective
-          type: string
-          format: date-time
-        relatedParty:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedParty'
-        orderRelationship:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderRelationship'
-        orderItem:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateServiceOrderItem'
-    OrderMessage:
-      description: Offers the capability to provide additional information about the Order.
-      type: object
-      properties:
-        code:
-          description: A code associated to this message.
-          type: string
-        field:
-          description: Service Order attribute related to this error message.
-          type: string
-        messageInformation:
-          description: Additional description text related to this message.
-          type: string
-        correctionRequired:
-          description: Indicator that an action is required to allow service order fullfilment to follow up.
-          type: boolean
-        severity:
-          $ref: '#/components/schemas/SeverityMessage'
+        Provides reference to the Resource supporting the Service instance.
+      allOf:
+        - $ref: '#/components/schemas/ApiEntity'
+        - type: object
+          properties:
+            role:
+              description: Role provide by SupportingResource.
+              type: string
