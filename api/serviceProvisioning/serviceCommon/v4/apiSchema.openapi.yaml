@@ -1,0 +1,148 @@
+openapi: 3.0.3
+info:
+  title: Legato Service Common Components
+  version: 4.0.0-RC
+  description: |-
+    This OAS document contains the schema defintions of common components that
+    are reused/referenced by different Legato API specifications.
+    This includes common schemas, parameters, responses, headers, etc
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 633/638/641 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+
+tags:
+  - name: ServiceCommon
+    description: Common schema components used by all Legato APIs.
+    
+paths: {}
+components:
+  schemas:
+    Addressable:
+      description: |-
+        Base schema for all adressable API schema objects.
+      required:
+        - id
+      allOf:
+        - $ref: '#/components/schemas/Extensible'
+        - type: object
+          properties:
+            id:
+              type: string
+              readOnly: true
+              description: |-
+                Unique identifier of the API schema object instance. The 
+                ID is invariant and is assigned by the server. In other words 
+                this entity will have the same ID throught its lifetime.
+            href:
+              type: string
+              format: uri
+              description: |-
+                URI reference of the API schema object instance.
+            name:
+              type: string
+              description: |-
+                Name of the API schema object instance.
+
+    Extensible:
+      description: |-
+        Base schema for all API schema objects that support polymorphic 
+        extensions of its defined schema.
+      required:
+        - '@type'
+      type: object
+      properties:
+        '@type':
+          type: string
+          description: |-
+            The concrete (non-abstract) class type of the API schema object.
+        '@baseType':
+          type: string
+          description: |-
+            When sub-classing, this defines the super/base class type (if 
+            applicable) of the API schema object.
+        '@schemaLocation':
+          type: string
+          format: uri
+          description: |-
+            A URI refernce to the schema file that defines the attributes and relationships of the API schema object.
+
+    Referenceable:
+      description: |-
+        Base schema for all adressable API schema object references.
+      allOf:
+        - $ref: '#/components/schemas/Addressable'
+        - type: object
+          required:
+            - '@referredType'
+          properties:
+            '@referredType':
+              type: string
+              description: |-
+                The class type of the target API schema object instance.
+
+    Note:
+      description: |-
+        Extra information about a given entity.
+      allOf:
+        - $ref: '#/components/schemas/Extensible'
+        - type: object
+          properties:
+            author: 
+              type: string
+              description: Author of the note
+            date: 
+              type: string
+              format: date-time
+              description: Date of the note
+            system: 
+              type: string 
+              description: |-
+                Describes the system from which the action related to this note was done
+            text: 
+              type: string
+              description: Text of the note
+
+    Place:
+      description: |-
+        Place reference. Place defines the places where the products are sold 
+        or delivered.
+      allOf:
+        - $ref: '#/components/schemas/Addressable'
+        - type: object
+          properties:
+            role:
+              description: |-
+                Role of the place, such as: [home delivery], [shop retrieval].
+              type: string
+
+    TimePeriod:
+      type: object 
+      description: |-
+        A period of time, either as a deadline (endDateTime only) a startDateTime only, or both 
+      properties:
+          endDateTime:
+              type: string
+              format: date-time
+              description: End of the time period, using IETC-RFC-3339 format
+          startDateTime:
+              type: string
+              format: date-time 
+              description: |-
+                Start of the time period, using IETC-RFC-3339 format. If you 
+                define a start, you must also define an end
+
+    RelatedPartyRef:
+      description: |-
+        A related party defines a party and its role, that is linked to a
+        specific entity such as ServiceSpecification, ServiceOrder, Service, etc
+      allOf:
+        - $ref: '#/components/schemas/Referenceable'
+        - type: object
+          properties:
+            role:
+              description: |-
+                The role of the related party (e.g. Owner, requester).
+              type: string

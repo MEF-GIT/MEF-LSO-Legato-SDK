@@ -1,0 +1,1381 @@
+openapi: 3.0.3
+info:
+  title: Legato Service API Specification - L1CS
+  version: 1.0.0-RC
+paths: {}
+components:
+  schemas:
+    L1SubscriberUni:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - physicalLayer
+      description: The UNI is the physical demarcation point between the responsibility of the L1 Service Provider and the responsibility of the L1 Subscriber. Reference MEF 63 Section 8.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: The value of the UNI ID Service Attribute is a string that is used to allow Subscriber and Service Provider to uniquely identify the UNI. Reference MEF 64 Section 8.1.1 UNI ID Service Attribute.
+        physicalLayer:
+          type: object
+          description: 'The Physical Layer Service At-tribute specifies the Client Proto-col, the Coding Function and the optical interface Function.  Ref-erence MEF 63 Section 8.1.2 Physical Layer Service Attribute.'
+          oneOf:
+            - $ref: '#/components/schemas/Eth1000BaseXOpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth10GBaseWOpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth10GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth100GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth40GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc100OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc400OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc800OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc1200OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc1600OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc3200OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm1OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm4OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm16OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm64OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm256OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc3OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc12OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc48OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc192OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc768OpticalInterfaceFunction'
+        subscriberL1VcEndPoint:
+          $ref: '#/components/schemas/SubscriberL1VcEndPoint'
+    SubscriberL1VcEndPoint:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - uni
+        - l1SubscriberUni
+      description: A Subscriber L1VC End Point is a logical entity at a given UNI that is associated with L1CI passing over that UNI. Reference MEF 63 Section 8.3.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: The value of the Subscriber L1VC End Point identifier Service Attribute is a string that is used to allow the Subscriber and Service Provider to uniquely identify the Subscriber L1VC End Point. Reference MEF 63 Section 8.3.1.
+        uni:
+          type: string
+          minLength: 45
+          description: 'The value of the Subscriber L1VC End Point UNI Service Attribute is a UNI ID Service Attribute value per MEF 63 Section 8.1.1, which serves to specify the UNI where the Subscriber L1VC End Point is located. MEF 63 Section 8.3.2.'
+        l1SubscriberUni:
+          $ref: '#/components/schemas/L1SubscriberUniRef'
+        subscriberL1Vc:
+          $ref: '#/components/schemas/SubscriberL1VcRef'
+    SubscriberL1Vc:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - endPointList
+        - subscriberL1VcEndPoint
+      description: A subscriber L1VC represents the logical attachment of a Subscriber L1VC to two SubscriberL1VCEndPoint. Reference MEF 63 Section 8.2.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: The value of the Subscriber L1VC ID service attribute is a string that is used to identify the Subscriber L1VC within the service provider network. Reference MEF 63 Section 8.2.1.
+        endPointList:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: The value of the Subscriber L1VC End Point List service attribute is a list of two Subscriber L1VC End Point ID Service Attribute values (Section 8.3.1.). Reference MEF 63 Section 8.2.2.
+        l1ServiceLevelSpecification:
+          $ref: '#/components/schemas/L1ServiceLevelSpecification'
+          description: The Subscriber L1VC Service Level Specification (SLS) Ser-vice Attribute is the technical specification of aspects of the service performance agreed to by the Service Provider and Subscriber.  Reference MEF 63 Section 8.2.3.
+        subscriberL1VcEndPoint:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubscriberL1VcEndPoint'
+    L1OperatorUni:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - physicalLayer
+      description: The L1 Operator UNI Service Attribute values are agreed to by the SP/SO and the Operator
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: An identifier for the UNI indent-ed for SP/SO and Operator to uniquely identify the UNI. Ref-erence MEF 64 Section 8.3.1 Operator UNI Identifier Service Attribute.
+        physicalLayer:
+          type: object
+          description: 'The L1 physical layer specifies the client protocols, the coding functions and the optical inter-face functions used by the oper-ator for teh physical link imple-menting the UNI. Reference MEF 64 Section 8.3.2 Operator UNI Physical Layer Service Attribute.'
+          oneOf:
+            - $ref: '#/components/schemas/Eth1000BaseXOpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth10GBaseWOpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth10GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth100GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Eth40GBaseROpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc100OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc400OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc800OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc1200OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc1600OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Fc3200OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm1OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm4OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm16OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm64OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Stm256OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc3OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc12OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc48OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc192OpticalInterfaceFunction'
+            - $ref: '#/components/schemas/Oc768OpticalInterfaceFunction'
+        operatorL1VcEndPoint:
+          $ref: '#/components/schemas/OperatorL1VcEndPoint'
+    OperatorL1VcEndPoint:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - externalInterfaceType
+        - externalInterfaceIdentifier
+      description: An Operator L1VC End Point represents the logical attachment of an Operator L1VC to an EI. Reference MEF 64 Section 8.5 Operator L1VC End Point Service Attributes.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: An identifier for the Operator L1VC End Point is a string that is used to allow the SP/SO and operator to uniquely identify the Operator L1VC End Point. Ref-erence MEF 64 Section 8.5.1 Operator L1VC End Point Iden-tifier Service Attribute.
+        externalInterfaceType:
+          type: string
+          description: 'The Extrnal Interface Type identifies the types of External Interface at Operator L1 End Point is UNI or ENNI. Reference MEF 64 Section 8..5.2 Operator L1VC End Point External Inter-face Type Service Attribute. '
+          enum:
+            - UNI
+            - ENNI
+        externalInterfaceIdentifier:
+          type: string
+          minLength: 45
+          description: The External Interface Type identifies the types of External Interface at Operator L1 End Point is UNI or ENNI. Reference MEF 64 Section 8..5.2 Operator L1VC End Point External Inter-face Type Service Attribute.
+        l1VcEndPointMap:
+          $ref: '#/components/schemas/L1VcEndPointMap'
+        l1EnniService:
+          $ref: '#/components/schemas/L1EnniServiceRef'
+        l1OperatorUni:
+          $ref: '#/components/schemas/L1OperatorUniRef'
+        operatorL1Vc:
+          $ref: '#/components/schemas/OperatorL1VcRef'
+    OperatorL1Vc:
+      type: object
+      required:
+        - identifier
+        - administrativeState
+        - operationalState
+        - endPointList
+        - operatorL1VcEndPoint
+      description: An Operator L1VC is an association of two Operator L1VC End Points. Reference MEF 63 Sec-tion 8.4 Operator L1VC Service Attributes.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        identifier:
+          type: string
+          minLength: 45
+          description: An identifier for the Operator L1VC is a string that is used to allow the SP/SO and operator to uniquely identify an Operator L1VC. Reference MEF 64 Sec-tion 8.4.1 Operator L1VC Identi-fier Service Attribute.
+        endPointList:
+          type: array
+          description: 'The Operator L1VC End Point List represents a list of two Op-erator L1VC End Point Identifier values, one for each Operator L1VC End Point associated by the Operator l1VC. Reference MEF 64 Section 8.4.2 Operator L1VC End Point List Service Attribute.'
+          items:
+            type: string
+            minLength: 45
+        l1ServiceLevelSpecification:
+          $ref: '#/components/schemas/L1ServiceLevelSpecification'
+        operatorL1VcEndPoint:
+          $ref: '#/components/schemas/OperatorL1VcEndPoint'
+    L1Enni:
+      type: object
+      required:
+        - peeringIdentifier
+        - administrativeState
+        - operationalState
+        - listOfPhysicalLayer
+        - l1EnniService
+      description: The L1 ENNI class controls Operator Network behaviors that enable Operator Networks to be interconnected and exchanged OTUk frames. The interconnection is achieved by the Operators agreeing on the value for each ENNI attributes. Reference MEF 64 Section 8.1 ENNI Common Attributes.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        peeringIdentifier:
+          type: string
+          minLength: 45
+          description: The ENNI Peering Identifier value is a string used to allow the Operators at ENNI to uniquely identify the ENNI. Reference MEF 64 Section 8.1.1 ENNI Peering Identifier Com-mon Attribute.
+        listOfPhysicalLayer:
+          type: array
+          description: The list of coding function and wavelength structure supporting the ENNI. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers Common At-tribute.
+          items:
+            $ref: '#/components/schemas/L1EnniPhysicalLayer'
+        protection:
+          type: string
+          description: The protection protocol de-ployed at ENNI for the ODU container exchanged by the Op-erator. Reference MEF 64 Sec-tion 8.1.3 ENNI Protection Common Attribute.
+          enum:
+            - 1_PLUS_1_UNIDIR_SNC_I
+            - 1_PLUS_1_BIDIR_SNC_I
+            - 1_TO_N_BIDIR_SNC_I
+            - 1_PLUS_1_UNIDIR_SNC_NE
+            - 1_PLUS_1_BIDIR_SNC_NE
+            - 1_PLUS_1_UNIDIR_SNC_NS
+            - 1_PLUS_1_BIDIR_SNC_NS
+            - 1_PLUS_1_UNIDIR_SNC_S
+            - 1_PLUS_1_BIDIR_SNC_S
+            - 1_TO_N_BIDIR_SNC_S
+            - 1_PLUS_1_UNIDIR_CL-SNCG_1
+            - 1_PLUS_1_BIDIR_CL-SNCG_1
+            - 1_TO_1_BIDIR_CL-SNCG_1
+        l1EnniService:
+          $ref: '#/components/schemas/L1EnniServiceRef'
+    L1EnniService:
+      type: object
+      required:
+        - identifier
+      description: 'For each instance of an ENNI, there are multiple sets of ENNI Service Attributes. The value for each ENNI Service Attribute in a set for an Operator network is specific to the SP/SO that is us-ing the ENNI. Reference MEF 64 Section 8.2 ENNI Service Attributes.'
+      properties:
+        identifier:
+          type: string
+          minLength: 45
+          description: The Operator ENNI Identifier Service Attribute value is a string used to allow the SP/SO and Operator to uniquely identify the ENNI. Reference MEF 64 Sec-tion 8.2.1 Operator ENNI Identi-fier Service Attribute.
+        pathOverhead:
+          $ref: '#/components/schemas/PathOverHead'
+        operatorL1VcEndPoint:
+          $ref: '#/components/schemas/OperatorL1VcEndPoint'
+        multiplexingCapabilityList:
+          oneOf:
+            - $ref: '#/components/schemas/HighOrderOdu4MultiplexingSequences'
+            - $ref: '#/components/schemas/HighOrderOdu3MultiplexingSequences'
+            - $ref: '#/components/schemas/HighOrderOdu2And2eMultiplexingSequences'
+            - $ref: '#/components/schemas/HighOrderOdu1MultiplexingSequences'
+    L1SubscriberUniRef:
+      description: Reference to a Service Instance
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: L1SubscriberUni
+    L1OperatorUniRef:
+      description: Reference to a Service Instance
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: L1OperatorUni
+    SubscriberL1VcRef:
+      description: Reference to a Service Instance
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: SubscriberL1Vc
+    OperatorL1VcRef:
+      description: Reference to a Service Instance
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: OperatorL1Vc
+    L1EnniServiceRef:
+      description: Reference to a Service Instance
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityRef'
+        - type: object
+          properties:
+            '@type':
+              type: string
+              default: L1EnniService
+    L1EnniPhysicalLayer:
+      type: object
+      description: The L1 ENNI Physical layer Service Attribute is a list of 2-tuples of the ENNI Coding Function and ENNI Optical Interface Function. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers Common Attribute.
+      oneOf:
+        - $ref: '#/components/schemas/Otu1OpticalInterfaceFunction'
+        - $ref: '#/components/schemas/Otu2And2EOpticalInterfaceFunction'
+        - $ref: '#/components/schemas/Otu3OpticalInterfaceFunction'
+        - $ref: '#/components/schemas/Otu4OpticalInterfaceFunction'
+    L1EnniCodingFunction:
+      type: object
+      description: 'ENNI Coding function is a 3-tuple of the <k, OTUk OH, HO ODUk OH>. k is an index repre-senting the physical layer line rate. OTUk OH is a list of overhead values corresponding to the terminated OTUk. HO ODUk OH is either None or List where the value represents the overhead values corresponding to the terminated HO ODUk.'
+      properties:
+        otukOverHead:
+          type: array
+          items:
+            $ref: '#/components/schemas/OtuKOverHead'
+            minItems: 1
+          description: A list of overhead values corre-sponding to the terminated OTUk.
+        highOrderOduk:
+          type: array
+          items:
+            $ref: '#/components/schemas/HighOrderOduKOverHead'
+          description: 'The overhead values corresponding to the terminated HO ODUk (or SHO ODUk), where each entry in the list has the value Disabled or Enabled.'
+        lineRate:
+          type: string
+          description: LineRate representing the OTLk.4/OTUk physical layer line rate.
+          enum:
+            - OTU1
+            - OTU2
+            - OTU2E
+            - OTU3
+            - OTU4
+      discriminator:
+        propertyName: lineRate
+        mapping:
+          OTU1: '#/components/schemas/Otu1OpticalInterfaceFunction'
+          OTU2: '#/components/schemas/Otu2And2EOpticalInterfaceFunction'
+          OTU2E: '#/components/schemas/Otu2And2EOpticalInterfaceFunction'
+          OTU3: '#/components/schemas/Otu3OpticalInterfaceFunction'
+          OTU4: '#/components/schemas/Otu4OpticalInterfaceFunction'
+    OtuKOverHead:
+      type: object
+      required:
+        - otukTti
+        - otukGcc0
+        - otukOsmc
+      description: 'OTUk Overhead must be a list of three pairs {field,values} with each field and corresponding values in Table 13 - OTUk Overhead Data Type Attributes.'
+      properties:
+        otukTti:
+          type: string
+          description: OTUk Trail Trace Identifier.
+          enum:
+            - ENABLED
+            - DISABLED
+        otukGcc0:
+          type: string
+          description: OTUk General Communications Channel.
+          enum:
+            - ENABLED
+            - DISABLED
+        otukOsmc:
+          type: string
+          description: ' OTUk OTN Synchronization Mes-saging Channel.'
+          enum:
+            - ENABLED
+            - DISABLED
+    HighOrderOduKOverHead:
+      type: object
+      required:
+        - superHighOrderHighOrderOdukTti
+        - superHighOrderHighOrderOdukGcc1
+        - superHighOrderHighOrderOdukGcc2
+        - superHighOrderHighOrderOdukAps
+      description: 'The value of HO ODUk OH is either None or List of overhead values corresponding to the ter-minated HO ODUk, where each entry in the list has the value Disabled or Enabled.'
+      properties:
+        superHighOrderHighOrderOdukTti:
+          type: string
+          description: Super High Order/High Order ODUk Trail Trace Identifier.
+          enum:
+            - ENABLED
+            - DISABLED
+        superHighOrderHighOrderOdukGcc1:
+          type: string
+          description: Super High Order/High Order ODUk General Communications Channel 1.
+          enum:
+            - ENABLED
+            - DISABLED
+        superHighOrderHighOrderOdukGcc2:
+          type: string
+          description: Super High Order/High Order ODUk General Communications Channel 2.
+          enum:
+            - ENABLED
+            - DISABLED
+        superHighOrderHighOrderOdukAps:
+          type: string
+          description: Super High Order/High Order ODUk Automatic Protection Switching.
+          enum:
+            - ENABLED
+            - DISABLED
+    PathOverHead:
+      type: object
+      required:
+        - oduTti
+        - oduGcc1
+        - oduGcc2
+        - oduAps
+      description: 'An ODU path is the connectivity between the locations where the path overhead is terminated. Either None or List. When the value of the Operator Path Overhead Service Attribute is List, the entries are the overhead values corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI which is terminated in an Operator’s network. Reference MEF 64 Section 8.2.3 Operator Path Overhead Service Attribute.'
+      properties:
+        oduTti:
+          type: string
+          description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU TTI is enabled or disabled.'
+          enum:
+            - ENABLED
+            - DISABLED
+        oduGcc1:
+          type: string
+          description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU GCC1 is enabled or disabled.'
+          enum:
+            - ENABLED
+            - DISABLED
+        oduGcc2:
+          type: string
+          description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU GCC2 is enabled or disabled.'
+          enum:
+            - ENABLED
+            - DISABLED
+        oduAps:
+          type: string
+          description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU APS is enabled or disabled.'
+          enum:
+            - ENABLED
+            - DISABLED
+    L1VcEndPointMap:
+      type: object
+      required:
+        - lineRate
+        - tributarySlotRate
+      description: Either Not Applicable or non-empty list of tuples of attributes in Table 16. Reference MEF 64 Section 8.5.4 Operator L1VC End Point Map Service Attribute.
+      properties:
+        lineRate:
+          type: string
+          description: 'Line Rate representing element in the set {1,2,..,k} and k is specified in the value of ENNI List of Physical Layer Common Attribute for the ENNI Identified by the value of Operator L1VC End Point External Interface Identifier Service Attribute.'
+          enum:
+            - OTU1
+            - OTU2
+            - OTU2E
+            - OTU3
+            - OTU4
+        tributarySlotRate:
+          type: integer
+          description: Tributary Slot Rate indicates the normal Tributary Slot rate.
+          enum:
+            - '1.25'
+            - '2.5'
+        tributarySlots:
+          type: array
+          items:
+            type: integer
+          description: Tributary Slot is list of integers that represents Tributary Slots occupied in a HO ODUi.
+    L1PhysicalLayer:
+      type: object
+      description: 'The L1 Physical Layer Service Attribute specifies the Client Protocol, the Coding Function and the Optical Interface Function.  Reference MEF 63 Section 8.1.2 Physical Layer Service Attrib-ute.'
+      properties:
+        clientProtocol:
+          type: string
+          description: 'The Client Protocol must be one of the following values: Ethernet, Fiber Channel, SDH or SONET.  Refer-ence MEF 63 Section 8.1.2.'
+          enum:
+            - ETHERNET
+            - FIBERCHANNEL
+            - SDH
+            - SONET
+        l1CodingFunction:
+          type: string
+          description: ' The coding function value. Refer-ence MEF 63 Section 8.1.2.'
+          enum:
+            - 1000BASE-X
+            - 10GBASE-W
+            - 10GBASE-R
+            - 40GBASE-R
+            - 100GBASE-R
+            - FC-100
+            - FC-200
+            - FC-400
+            - FC-800
+            - FC-1200
+            - FC-1600
+            - FC-3200
+            - STM-1
+            - STM-4
+            - STM-16
+            - STM-64
+            - STM-256
+            - OC-3
+            - OC-12
+            - OC-48
+            - OC-192
+            - OC-768
+      discriminator:
+        propertyName: l1CodingFunction
+        mapping:
+          1000BASE-X: '#/components/schemas/Eth1000BaseXOpticalInterfaceFunction'
+          10GBASE-W: '#/components/schemas/Eth10GBaseWOpticalInterfaceFunction'
+          10GBASE-R: '#/components/schemas/Eth10GBaseROpticalInterfaceFunction'
+          100GBASE-R: '#/components/schemas/Eth100GBaseROpticalInterfaceFunction'
+          40GBASE-R: '#/components/schemas/Eth40GBaseROpticalInterfaceFunction'
+          FC-100: '#/components/schemas/Fc100OpticalInterfaceFunction'
+          FC-400: '#/components/schemas/Fc400OpticalInterfaceFunction'
+          FC-800: '#/components/schemas/Fc800OpticalInterfaceFunction'
+          FC-1200: '#/components/schemas/Fc1200OpticalInterfaceFunction'
+          FC-1600: '#/components/schemas/Fc1600OpticalInterfaceFunction'
+          FC-3200: '#/components/schemas/Fc3200OpticalInterfaceFunction'
+          STM-1: '#/components/schemas/Stm1OpticalInterfaceFunction'
+          STM-4: '#/components/schemas/Stm4OpticalInterfaceFunction'
+          STM-16: '#/components/schemas/Stm16OpticalInterfaceFunction'
+          STM-64: '#/components/schemas/Stm64OpticalInterfaceFunction'
+          STM-256: '#/components/schemas/Stm256OpticalInterfaceFunction'
+          OC-3: '#/components/schemas/Oc3OpticalInterfaceFunction'
+          OC-12: '#/components/schemas/Oc12OpticalInterfaceFunction'
+          OC-48: '#/components/schemas/Oc48OpticalInterfaceFunction'
+          OC-192: '#/components/schemas/Oc192OpticalInterfaceFunction'
+          OC-768: '#/components/schemas/Oc768OpticalInterfaceFunction'
+    Eth1000BaseXOpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - type: object
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SX-PMD
+                - LX-PMD
+                - LX10-PMD
+                - BX10-PMD
+    Eth10GBaseWOpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - type: object
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - LW-PMD
+                - EW-PMD
+    Eth10GBaseROpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - type: object
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - LR-PMD
+                - ER-PMD
+    Eth100GBaseROpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - LR4-PMD
+                - ER4-PMD
+    Eth40GBaseROpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - LR4-PMD
+                - ER4-PMD
+                - FR-PMD
+    Fc100OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-2-100-SM-LC-L
+    Fc200OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-2-200-SM-LC-L
+    Fc400OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-5-400-SM-LC-L
+                - FC-PI-5-400-SM-LC-M
+    Fc800OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-5-800-SM-LC-L
+                - FC-PI-5-800-SM-LC-I
+    Fc1200OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-10GFC-1200-SM-LL-L
+    Fc1600OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-5-1600-SM-LC-L
+                - FC-PI-5-1600-SM-LZ-I
+    Fc3200OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - FC-PI-6-3200-SM-LC-L
+    Stm1OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - I-1
+                - S-1.1
+                - S-1.2
+                - L-1.1
+                - L-1.2
+                - L-1.3
+    Stm4OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - I-4
+                - S-4.1
+                - S-4.2
+                - L-4.1
+                - L-4.2
+                - L-4.3
+    Stm16OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - I-16
+                - S-16.1
+                - S-16.2
+                - L-16.1
+                - L-16.2
+                - L-16.3
+    Stm64OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - I-64.LR
+                - I-64.I
+                - I-64.2R
+                - I-64.3
+                - I-64.5
+                - S-64.1
+                - S-64.2
+                - S-64.3
+                - S-64.5
+                - L-64.1
+                - L-64.2
+                - L-64.3
+    Stm256OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - VSR2000-3R1
+                - VSR2000-3R2
+                - VSR2000-3R3
+                - VSR2000-3R5
+                - VSR2000-3M1
+                - VSR2000-3M2
+                - VSR2000-3M3
+                - VSR2000-3M5
+                - VSR2000-3H2
+                - VSR2000-3H3
+                - VSR2000-3H5
+    Oc3OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SR-1
+                - IR-1
+                - IR-2
+                - LR-1
+                - LR-2
+                - LR-3
+    Oc12OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SR-1
+                - IR-1
+                - IR-2
+                - LR-1
+                - LR-2
+                - LR-3
+                - VR-1
+                - VR-2
+                - VR-3
+                - UR-2
+                - UR-3
+    Oc48OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SR-1
+                - IR-1
+                - IR-2
+                - LR-1
+                - LR-2
+                - LR-3
+                - VR-2
+                - VR-3
+                - UR-2
+                - UR-3
+    Oc192OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SR-1
+                - SR-2
+                - IR-1
+                - IR-2
+                - IR-3
+                - LR-1
+                - LR-2
+                - LR-2a
+                - LR-2b
+                - LR-2c
+                - LR-3
+                - VR-2a
+                - VR-2b
+                - VR-3
+    Oc768OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1PhysicalLayer'
+        - required:
+            - clientProtocol
+            - l1CodingFunction
+            - l1OpticalInterfaceFunction
+        - type: object
+        - properties:
+            l1OpticalInterfaceFunction:
+              type: string
+              description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+              enum:
+                - SR-1
+                - SR-2
+                - IR-1
+                - IR-2
+                - IR-3
+                - LR-1
+                - LR-2
+                - LR-3
+    HighOrderOdu4MultiplexingSequences:
+      type: string
+      enum:
+        - ODU0-ODU1-ODU2-ODU3-ODU4TO64
+        - ODU0-ODU1-ODU3-ODU4TO64
+        - ODU0-ODU1-ODU2-ODU4TO80
+        - ODU0-ODU1-ODU4TO80
+        - ODU0-ODU2-ODU3-ODU4TO64
+        - ODU0-ODU2-ODU4TO80
+        - ODU0-ODU3-ODU4TO64
+        - ODU0-ODU4TO80
+        - ODU1-ODU2-ODU3-ODU4TO32
+        - ODU1-ODU2-ODU4TO40
+        - ODU1-ODU3-ODU4TO32
+        - ODU1-ODU4TO40
+        - ODUFLEX-ODU2-ODU3-ODU4TO10G
+        - ODUFLEX-ODU2-ODU4TO10G
+        - ODUFLEX-ODU3-ODU4TO10G
+        - ODUFLEX-ODU4TO100G
+        - ODU2-ODU3-ODU4TO8
+        - ODU2-ODU4TO10
+        - ODU2E-ODU3-ODU4TO6
+        - ODU2E-ODU4TO10
+        - ODU3-ODU4TO2
+    HighOrderOdu3MultiplexingSequences:
+      type: string
+      enum:
+        - ODU0-ODU1-ODU2-ODU3TO32
+        - ODU0-ODU1-ODU3TO32
+        - ODU0-ODU2-ODU3TO32
+        - ODU0-ODU3TO32
+        - ODU1-ODU2-ODU3TO16_1.25TS
+        - ODU1-ODU2-ODU3TO16_2.5TS
+        - ODU1-ODU3TO16_1.25TS
+        - ODU1-ODU3TO16_2.5TS
+        - ODUFLEX-ODU2-ODU3TO10G
+        - ODUFLEX-ODU3TO40G
+        - ODU2-ODU3TO4_1.25TS
+        - ODU2-ODU3TO4_2.5TS
+        - ODU2E-ODU3TO3
+    HighOrderOdu2And2eMultiplexingSequences:
+      type: string
+      enum:
+        - ODU0-ODU1-ODU2TO8
+        - ODU0-ODU2TO8
+        - ODU1-ODU2TO4_1.25TS
+        - ODU1-ODU2TO4_2.5TS
+        - ODUFLEX-ODU2TO10G
+    HighOrderOdu1MultiplexingSequences:
+      type: string
+      enum:
+        - ODU0-ODU1TO2
+    Otu1OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1EnniCodingFunction'
+        - required:
+            - lineRate
+            - otukOverHead
+            - enniOpticalInterfaceFunction
+        - type: object
+        - properties:
+            enniOpticalInterfaceFunction:
+              type: string
+              description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+              enum:
+                - P16S1-1D2
+                - P32S1-1D2
+                - P16S1-1D5
+                - P32S1-1D5
+                - P16L1-1A2
+                - P16L1-1A5
+                - P1I1-1D1
+                - P1S1-1D1
+                - P1S1-1D2
+                - P1L1-1D1
+                - P1L1-1D2
+                - 1L1-1D2F
+                - P1U1-1A2
+                - 1U1-1B2F
+                - P1U1-1A3
+                - 1U1-1B3F
+                - P1U1-1A5
+                - 1U1-1B5F
+    Otu2And2EOpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1EnniCodingFunction'
+        - required:
+            - lineRate
+            - otukOverHead
+            - enniOpticalInterfaceFunction
+        - type: object
+        - properties:
+            enniOpticalInterfaceFunction:
+              type: string
+              description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+              enum:
+                - P4I1-2D1
+                - 4I1-2D1F
+                - P16I1-2D2
+                - P32I1-2D2
+                - P16I1-2D3
+                - P16I1-2D5
+                - P32I1-2D5
+                - P16S1-2B2
+                - P16S1-2C2
+                - P32S1-2B2
+                - P32S1-2C2
+                - P16S1-2C3
+                - P16S1-2B5
+                - P16S1-2C5
+                - P32S1-2B5
+                - P32S1-2C5
+                - P16L1-2A2
+                - P16L1-2A5
+                - P1I1-2D1R
+                - P1I1-2D1
+                - P1I1-2D2R
+                - P1I1-2D2
+                - P1I1-2D3
+                - P1I1-2D5
+                - P1S1-2D1
+                - P1S1-2D2AB
+                - 1S1-2D2BF
+                - P1S1-2D3AB
+                - 1S1-2D3BF
+                - P1S1-2D5AB
+                - 1S1-2D5BF
+                - P1L1-2D1
+                - P1L1-2D2
+                - 1L1-2D2F
+                - P1L1-2B2FE
+                - L1L-2D2FE
+                - P1V1-2C2
+                - 1V1-2C2F
+                - P1V1-2B2E
+                - 1V1-2B2FE
+                - P1V1-2B5
+                - 1V1-2B5F
+    Otu3OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1EnniCodingFunction'
+        - required:
+            - lineRate
+            - otukOverHead
+            - enniOpticalInterfaceFunction
+        - type: object
+        - properties:
+            enniOpticalInterfaceFunction:
+              type: string
+              description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+              enum:
+                - P1I1-3D1
+                - 1I1-3D1F
+                - P1I1-3D3
+                - P1I1-3D5
+                - P1S1-3D1
+                - 1S1-3D1F
+                - P1S1-3C2
+                - P1S1-3C3
+                - P1S1-3C5
+                - P1L1-3C1
+                - 1L1-3C1F
+                - P1L1-3A2
+                - 1L1-3C2F
+                - 1L1-3C2FD
+                - P1L1-3A3
+                - 1L1-3C3F
+                - 1L1-3C3FD
+                - P1L1-3A5
+                - 1L1-3C5F
+                - 1L1-3C5FD
+                - P1L1-7A2
+                - P1L1-7A3
+                - P1L1-7A5
+                - P4I1-2D1
+                - 4L1-2D1F
+                - P16I1-2D2
+                - P32I1-2D2
+                - P16I1-2D3
+                - P16I1-2D5
+                - P32I1-2D5
+                - P16S1-2B2
+                - P16S1-2C2
+                - P32S1-2B2
+                - P32S1-2C2
+                - P16S1-2C3
+                - P16S1-2B5
+                - P16S1-2C5
+                - P32S1-2B5
+                - P32S1-2C5
+                - P16L1-2A2
+                - P16L1-2A2
+                - P16L1-2A5
+                - C4S1-2D1
+                - C4L1-2D1
+    Otu4OpticalInterfaceFunction:
+      allOf:
+        - $ref: '#/components/schemas/L1EnniCodingFunction'
+        - required:
+            - lineRate
+            - otukOverHead
+            - enniOpticalInterfaceFunction
+        - type: object
+        - properties:
+            enniOpticalInterfaceFunction:
+              type: string
+              description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+              enum:
+                - 4I1-9D1F
+                - 4L1-9C1F
+                - 4L1-9D1F
+                - C4S1-9D1F
+    L1ServiceLevelSpecification:
+      type: object
+      required:
+        - startTime
+        - duration
+      description: 'The Subscriber L1VC Service Level Specification (SLS) Service Attribute is the technical speci-fication of aspects of the service performance agreed to by the Service Provider and the Sub-scriber. For any given SLS, a given Performance Metric may or may not be specified.'
+      properties:
+        startTime:
+          $ref: '#/components/schemas/TimeAndDate'
+          description: 'StartTime is a time that represents the date and time for the start of the SLS. MEF 63: [R22] t-start MUST be specified to the nearest second. MEF 64: [R30] t-start MUST be specified to the nearest second.'
+        duration:
+          $ref: '#/components/schemas/TimeIntervalT'
+          description: Duration is a duration that is used in conjunction with ts to specify a contiguous sequence of time inter-vals for determining when perfor-mance objectives are met. The units for T are not constrained.
+        sls1wDelayPerformanceMetric:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sls1wDelayPerformanceMetric'
+            description: The One-way Delay for the L1CI that ingresses at UNI 1 and that egresses at UNI 2 is defined as the time elapsed from the reception of the first bit of the ingress L1CI at UNI 1 until the re-ception of that first bit of the corresponding L1CI egressing at UNI 2.
+            minitems: 0
+            maxitems: 2
+        sls1wErroredSecondPerformanceMetric:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sls1wErroredSecondPerformanceMetric'
+            description: An errored second (ES) is defined as one second sigma-k in Available Time with at least one er-rored block (EB) and is not a SES. An EB is defined as a block in which one or more bits are in error.
+            minitems: 0
+            maxitems: 2
+        sls1wSeverelyErroredSecondPerformanceMetric:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sls1wSeverelyErroredSecondPerformanceMetric'
+            description: An errored second (ES) is defined as one second sigma-k in Available Time with at least one er-rored block (EB) and is not a SES. An EB is defined as a block in which one or more bits are in error.
+            minitems: 0
+            maxitems: 2
+        sls1wAvailabilityPerformanceMetric:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sls1wAvailabilityPerformanceMetric'
+            description: Availability is defined as the percentage of Available Time over a given interval T-l which does not include Maintenance Interval Time (MIT).
+            minitems: 0
+            maxitems: 2
+        sls1wUnavailableSecondPerformanceMetric:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sls1wUnavailableSecondPerformanceMetric'
+            description: An Unavailable Second (UAS) is defined as a second during Unavailable Time (UAT).
+            minitems: 0
+            maxitems: 2
+    Sls1wDelayPerformanceMetric:
+      type: object
+      required:
+        - percentile
+        - delayObjective
+        - orderedPair
+      properties:
+        percentile:
+          type: integer
+          description: 'MEF 63 & MEF 64: the Pd-percentile allows the One-way Delay Performance Metric Objective to be met although different delays may occur following a protection switch. To place an upper bound on any longer delays a second One-way Delay Performance Metric Objective for a higher Pd_percentile value (e.g., 100th) may be specified.'
+        delayObjective:
+          $ref: '#/components/schemas/TimeIntervalT'
+          description: 'MEF 63 & MEF 64: The value of the One-way Delay Performance Metric, time units>0'
+        orderedPair:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+    Sls1wErroredSecondPerformanceMetric:
+      type: object
+      required:
+        - erroredSecondObjective
+        - orderedPair
+      properties:
+        erroredSecondObjective:
+          type: integer
+          description: 'MEF 63 & MEF 64: The value of the One-way Errored Second Per-formance Metric, integer >=0'
+        orderedPair:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+    Sls1wSeverelyErroredSecondPerformanceMetric:
+      type: object
+      required:
+        - severelyErroredSecon
+        - orderedPair
+      properties:
+        severelyErroredSecon-dObjective:
+          type: integer
+          description: 'MEF 63 & MEF 64: The value of the MEF 63 & MEF 64: The value of the One-way Severely Errored Sec-ond Performance Metric, integer >=0'
+        orderedPair:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+    Sls1wAvailabilityPerformanceMetric:
+      type: object
+      required:
+        - availabilityObjective
+        - orderedPair
+      properties:
+        availabilityObjective:
+          type: integer
+          description: 'MEF 63 & MEF 64: The value of the One-way Availability Perfor-mance Metric, percentage > 0'
+        orderedPair:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+    Sls1wUnavailableSecondPerformanceMetric:
+      type: object
+      required:
+        - unavailableSecondObjective
+        - orderedPair
+      properties:
+        unavailableSecondObjective:
+          type: integer
+          description: 'MEF 63 & MEF 64: The value of the One-way Unavailable Second Performance Metric, integer >=0'
+        orderedPair:
+          type: array
+          items:
+            type: string
+            minLength: 45
+            minItems: 2
+            maxItems: 2
+          description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+    AdminState:
+      type: object
+      description: ''
+      properties:
+        state:
+          type: string
+          enum:
+            - LOCKED
+            - UNLOCKED
+    OperationalState:
+      type: object
+      description: ''
+      properties:
+        state:
+          type: string
+          enum:
+            - ENABLED
+            - DISABLED
+    TimeAndDate:
+      type: object
+      properties:
+        day:
+          type: integer
+          description: Denotes the day.
+        hour:
+          type: integer
+          description: Denotes the hour.
+        minute:
+          type: integer
+          description: Denotes the minute.
+        month:
+          type: integer
+          description: Denotes the month.
+        second:
+          type: integer
+          description: Denotes the second.
+        year:
+          type: integer
+          description: Denotes the year.
+      description: |-
+        This data type is for Time and Date in UTC. Used for CarrierEthernetSls
+        startTime attribute.
+    TimeIntervalT:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: This denotes the value (for the unit).
+        unit:
+          type: string
+          description: Time interval unit.
+          enum:
+            - second
+            - minute
+            - hour
+            - day
+            - month
+            - week
+            - year
+      description: |-
+        This attribute sets the time interval to evaluate the performance
+        for the SLS.  All performances of this SLS use the same time interval T, which
+        itself may not be constrained, e.g., 1 month.
+    ApiEntityRef:
+      description: The base class of all API Entities
+      allOf:
+        - $ref: '#/components/schemas/ApiEntityType'
+        - required:
+            - id
+          type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of an instance of this entity. The ID is invariant and is assigned by SOF. In other words this entity will have the same ID throught its lifetime.
+            href:
+              type: string
+              description: URI reference of an object instance of this entity class.
+              format: uri
+    ApiEntityType:
+      required:
+        - '@type'
+      type: object
+      description: The metadata that describes the class type of the API Entity (REST resource) instance.
+      properties:
+        '@type':
+          type: string
+          description: The class type of an instance of Api Entity (REST resource).
