@@ -1,0 +1,407 @@
+openapi: 3.0.3
+info:
+  title: Carrier Ethernet SLS Activation
+  description: JSON Schema for MEF Carrier Ethernet Service Level Specification used
+    for activation
+  version: 1.0.0-RC
+servers:
+- url: /
+paths: {}
+components:
+  schemas:
+    CarrierEthernetSls:
+      type: object
+      properties:
+        timeInterval:
+          $ref: '#/components/schemas/TimeIntervalT'
+        startTime:
+          $ref: '#/components/schemas/TimeAndDate'
+        slsCosNameEntry:
+          minItems: 1
+          type: array
+          description: Pointer to SlsCosNameEntry.
+          items:
+            $ref: '#/components/schemas/SlsCosNameEntry'
+      description: Data type that represents Carrier Ethernet Service Level Specification
+        that provides a list of Performance Metrics where each item in the list includes
+        the parameters and performance objective for the given Performance Metric.
+        It is associated with EVC or OVC and a list of SlsCosNameEntry(s). Reference
+        MEF 10.4 Section 8.8 EVC Service Specification Service Attribute and MEF 26.2
+        Section 12.13 OVC Service Level Specification Service Attribute.
+    SlsCosNameEntry:
+      type: object
+      properties:
+        cosName:
+          type: string
+          description: Class of Service name.
+        deltaT:
+          type: integer
+          description: This attribute denotes the delta-T, a time interval in seconds,
+            smaller than T (SLS time period).
+        thresholdC:
+          type: number
+          description: Denotes the threshold for PM, used to determine whether a given
+            time interval delta t has high loss.
+        consecutiveIntervalN:
+          type: integer
+          description: This attribute denotes n, used to identify how many consecutive
+            delta-T intervals must have high loss to trigger a change in Availability.
+        slsObjectiveAndParameterList:
+          minItems: 0
+          type: array
+          items:
+            $ref: '#/components/schemas/SlsObjectiveAndParameters'
+      description: The SlsCosNameEntry data type represents the CoS Name entry consisting
+        of a list of 5-tuples of the form <CoS Name, deltat, C, n, PM> where CoS Name
+        is Class of Service Name, deltat is a small time interval, C is a threshold
+        and n to identify consecutive deltat for high loss interval and PM is a non-empty
+        list where each element in the list consists of Performance Metrics. The SlsCosNameEntry
+        data type is associated with EVC or OVC and SlsObjectiveAndParameters. Reference
+        MEF 10.4 Section 8.8 EVC Service Level Specification Service Attribute and
+        MEF 26.2 Section 12.13 OVC Service Level Specification Service Attribute.
+    SlsObjectiveAndParameters:
+      type: object
+      properties:
+        oneWayFrameDelayPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Frame Delay Performance Management Metric.
+          items:
+            $ref: '#/components/schemas/OneWayFrameDelayPmMetric'
+        oneWayInterFrameDelayVariationPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Inter-Frame Delay Variation Performance
+            Management Metric.
+          items:
+            $ref: '#/components/schemas/OneWayInterFrameDelayVariationPmMetric'
+        oneWayMeanFrameDelayPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Mean Frame Delay Performance Management
+            Metric.
+          items:
+            $ref: '#/components/schemas/OneWayMeanFrameDelayPmMetric'
+        oneWayFrameLossRatioPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Frame Loss Ratio Performance Management
+            Metric.
+          items:
+            $ref: '#/components/schemas/OneWayFrameLossRatioPmMetric'
+        oneWayMeanFrameDelayRangePmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Frame Delay Range Performance Management
+            Metric.
+          items:
+            $ref: '#/components/schemas/OneWayMeanFrameDelayRangePmMetric'
+        oneWayAvailabilityPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Availability Performance Management Metric.
+          items:
+            $ref: '#/components/schemas/OneWayAvailabilityPmMetric'
+        oneWayHighLossIntervalPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way High Loss Interval Performance Management
+            Metric.
+          items:
+            $ref: '#/components/schemas/OneWayHighLossIntervalPmMetric'
+        oneWayConsecutiveHighLossIntervalPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Consecutive High Loss Interval Performance
+            Management Metric.
+          items:
+            $ref: '#/components/schemas/OneWayConsecutiveHighLossIntervalPmMetric'
+        oneWayCompositePmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Composite Performance Management Metric.
+          items:
+            $ref: '#/components/schemas/OneWayCompositePmMetric'
+        oneWayGroupAvailabilityPmMetric:
+          maxItems: 1
+          minItems: 0
+          type: array
+          description: Pointer to One-way Group Availability Performance Management
+            Metric.
+          items:
+            $ref: '#/components/schemas/OneWayGroupAvailabilityPmMetric'
+      description: The Service Level Specification (SLS) is the technical details
+        of the service level, in terms of Performance Objectives, agreed between the
+        Service Provider and the Subscriber (or Operator) as part of the Service Level
+        Agreement.  A given SLS might contain 0, 1, or more Performance Objectives
+        for each Performance Metric. The SlsObjectiveAndParameters data type associating
+        the set of performance parameters such as FD, MFD, FDR, IFDV, FLR, Availability,
+        HILI, CHLI, Composite and Group Availablity for Ordered Pairs. Reference MEF
+        10.4 Section 8.8 EVC Service Level Specification Service Attribute and MEF
+        26.2 Section 12.13 OVC Service Level Specification Service Attribute.
+    OneWayFrameDelayPmMetric:
+      type: object
+      properties:
+        orderedPairList:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayFdPercentile:
+          $ref: '#/components/schemas/Percentage'
+        oneWayFdObjective:
+          $ref: '#/components/schemas/Time'
+      description: Data type representing One-way Frame Delay Performance Metric.
+        Reference MEF 10.4 Section 8.8.2 One-way Frame Delay Performance Metric and
+        MEF 26.2 Section 12.13.2 One-way Frame Delay Performance Metric.
+    OneWayMeanFrameDelayPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayMfdObjective:
+          $ref: '#/components/schemas/Time'
+      description: Data type representing One-way Mean Frame Delay Performance Metric.
+        Reference MEF 10.4 Section 8.8.3 One-way Mean Frame Delay Performance Metric
+        and MEF 26.2 Section 12.13.3 One-way Mean Frame Delay Performance Metric.
+    OneWayMeanFrameDelayRangePmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayFdrPercentile:
+          $ref: '#/components/schemas/Percentage'
+        oneWayFdrObjective:
+          $ref: '#/components/schemas/Time'
+      description: Data type representing One-way Frame Delay Range Performance Metric.
+        Reference MEF 10.4 Section 8.8.4 One-way Frame Delay Range Performance Metric
+        and MEF 26.2 Section 12.13.4 One-way Frame Delay Range Performance Metric.
+    OneWayInterFrameDelayVariationPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        timeDuration:
+          $ref: '#/components/schemas/Time'
+        oneWayIfdvPercentile:
+          $ref: '#/components/schemas/Percentage'
+        oneWayIfdvObjective:
+          $ref: '#/components/schemas/Time'
+      description: Data type representing One-way Inter-Frame Delay Performance Metric.
+        Reference MEF 10.4 Section 8.8.5 One-way InterFrame Delay Performance Metric
+        and MEF 26.2 Section 12.13.5 One-way Inter-Frame Delay Performance Metric.
+    OneWayFrameLossRatioPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayFrameLossRatioObjective:
+          $ref: '#/components/schemas/Percentage'
+      description: Data type representing One-way Frame Loss Ratio Performance Metric.
+        Reference MEF 10.4 Section 8.8.6 One-way Frame Loss Ratio Performance Metric
+        and MEF 26.2 Section 12.13.6 One-way Frame Loss Performance Metric.
+    OneWayAvailabilityPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayAvailabilityObjective:
+          $ref: '#/components/schemas/Percentage'
+      description: Data type representing One-way Availability Performance Metric.
+        Reference MEF 10.4 Section 8.8.7 One-way Availability Performance Metric and
+        MEF 26.2 Section 12.13.7 One-way Availability Performance Metric.
+    OneWayHighLossIntervalPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        oneWayHighLossIntervalsObjective:
+          type: integer
+      description: Data type representing One-way Consecutive High Loss Intervals
+        Performance Metric. Reference MEF 10.4 Section 8.8.9 One-way Consecutive High
+        Loss Intervals Performance Metric and MEF 26.2 Section 12.13.9 One-way Consecutive
+        High Loss Intervals Performance Metric.
+    OneWayConsecutiveHighLossIntervalPmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        consecutiveNumberP:
+          type: integer
+        oneWayChliObjective:
+          type: integer
+      description: Data type representing One-way Consecutive High Loss Intervals
+        Performance Metric. Reference MEF 10.4 Section 8.8.9 One-way Consecutive High
+        Loss Intervals Performance Metric and MEF 26.2 Section 12.13.9 One-way Consecutive
+        High Loss Intervals Performance Metric.
+    OneWayCompositePmMetric:
+      type: object
+      properties:
+        orderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+        compositePerformanceIndicatorThreshold:
+          type: number
+          description: Composite Performance Indicator threshold which if exceeded
+            suggests an unacceptable time interval.
+        compositeFrameLoss:
+          maximum: 1
+          minimum: 0
+          type: integer
+          description: Composite indicator for One-way Frame Loss equal to 0 or 1.
+        compositeFrameDelay:
+          maximum: 1
+          minimum: 0
+          type: integer
+          description: Composite indicator for One-way Frame Delay equal to 0 or 1.
+        compositeFrameDelayVariation:
+          type: integer
+          description: Composite indicator for One-way Frame Delay Variation equal
+            to 0 or 1.
+        oneWayFdThreshold:
+          $ref: '#/components/schemas/Time'
+        oneWayIfdvThreshold:
+          $ref: '#/components/schemas/Time'
+        cpmObjective:
+          $ref: '#/components/schemas/Percentage'
+      description: Data type representing One-way Composite Performance Metric. Reference
+        MEF 10.4 Section 8.8.10 One-way Composite Performance Metric.
+    OneWayGroupAvailabilityPmMetric:
+      type: object
+      properties:
+        setOfOrderedPairs:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/SetOfOrderedPairs'
+        minimumNumberOfSetsAvailableK:
+          minimum: 1
+          type: integer
+          description: Specified number of sets of ordered EVC End Point Pair available
+            during characterized percentage of time of measurement.
+        oneWayGroupAvailabilityObjective:
+          $ref: '#/components/schemas/Percentage'
+      description: Data type representing One-way Group Availability Performance Metric.
+        Reference MEF 10.4 Section 8.8.11 One-way Group Availability Performance Metric
+        and MEF 26.2 Section 12.13.10 One-way Group Availability Performance Metric.
+    OrderedPair:
+      type: object
+      properties:
+        toUni:
+          type: string
+          description: 'NOTE: Need to point to schema reference.'
+        fromUni:
+          type: string
+          description: 'NOTE: Need to point to schema reference.'
+      description: The OrderedPair data type is an ordered pair of EVC/OVC End Points
+        for a specific performance metric for one way direction. It is associated
+        with one way performance metrics and a pair of  CarrierEthernetServiceEndPoints.
+    Percentage:
+      maximum: 100
+      minimum: 0
+      type: number
+    SetOfOrderedPairs:
+      type: object
+      properties:
+        orderedPairsList:
+          minItems: 1
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderedPair'
+      description: Data type representing a set of Ordered Pairs.
+    Time:
+      type: object
+      properties:
+        number:
+          type: number
+          description: Time as a float.
+        unit:
+          type: string
+          description: Time units as set of enumerations.
+          enum:
+          - nanoSeconds
+          - microSeconds
+          - milliSeconds
+          - seconds
+          - minutes
+          - hours
+          - days
+          - weeks
+          - months
+          - years
+      description: A data type used to represent time in various units.
+    TimeAndDate:
+      type: object
+      properties:
+        day:
+          type: integer
+          description: Denotes the day.
+        hour:
+          type: integer
+          description: Denotes the hour.
+        minute:
+          type: integer
+          description: Denotes the minute.
+        month:
+          type: integer
+          description: Denotes the month.
+        second:
+          type: integer
+          description: Denotes the second.
+        year:
+          type: integer
+          description: Denotes the year.
+      description: This data type is for Time and Date in UTC. Used for CarrierEthernetSls
+        startTime attribute.
+    TimeIntervalT:
+      type: object
+      properties:
+        number:
+          type: integer
+          description: This denotes the value (for the unit).
+        unit:
+          type: string
+          description: Time interval unit.
+          enum:
+          - second
+          - minute
+          - hour
+          - day
+          - month
+          - week
+          - year
+      description: This attribute sets the time interval to evaluate the performance
+        for the SLS.  All performances of this SLS use the same time interval T, which
+        itself may not be constrained, e.g., 1 month.

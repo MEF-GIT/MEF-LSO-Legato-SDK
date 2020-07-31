@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: MEF Hub and Notification API
+  version: 4.0.0-RC
+  description: |-
+    Provides the ability to subscribe to and unsubscribe from API 
+    notifications. In addition, the API supports the ability to send 
+    notifications to subscribers.
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 633/638/641 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+
+tags:
+  - name: HubCommon
+    description: Common schema components used by all Legato Hub APIs.
+
+paths: {}
+
+components:
+  schemas:
+    Notification:
+      description: Event is used to describe common information structure used for any notification.
+      allOf:
+        - $ref: 'apiSchema.openapi.yaml#/components/schemas/Extensible'
+        - type: object
+          required:
+            - eventId
+            - eventType
+            - eventTime
+          properties:
+            eventId:
+              description: Unique identifier for event.
+              type: string
+            eventType:
+              description: 'The specific type of the event being raised'
+              type: string
+            eventTime:
+              description: Time when event occured.
+              type: string
+              format: date-time
+            resourcePath:
+              description: |-
+                The path identifying the resource object associated with this 
+                notification
+              type: string
+              format: uri
+            fieldPath: 
+              type: string 
+              description: |-
+                The relative path (from the resource-path) identifying the resource property associated with this notification
+
+    EventSubscriptionInput:
+      description: |-
+        The information needed to create a Hub.
+      required:
+        - query
+        - callback
+      type: object
+      properties:
+        query:
+          description: |-
+            The query must have an eventType= information.
+            Optionally a ? could be added to reduce hub.
+            query”:”eventType = ServiceOrderStateChangeNotification”&serviceOrder.state=COMPLETED
+          type: string
+        callback:
+          description: URL where notification must be send
+          type: string
+
+    EventSubscription:
+      description: |-
+        Resource used to manage notification subscription.
+      allOf:
+        - $ref: '#/components/schemas/EventSubscriptionInput'
+        - type: object
+          required:
+            - id
+          properties:
+            id:
+              description: Unique identifier of Hub
+              type: string
