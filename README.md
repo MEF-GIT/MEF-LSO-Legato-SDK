@@ -1,5 +1,7 @@
 # MEF-LSO-Legato-SDK (RC4)
 
+## Overview
+
 This repository contains the Release Candidate 4 of the Legato SDK. The SDK includes Service Provisioning APIs describe the Application Programming Interfaces for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
 It includes API definitions for the following functional areas:
