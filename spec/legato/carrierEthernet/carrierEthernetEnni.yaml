@@ -1,0 +1,88 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:CarrierEthernetEnni:v2.0.0:all
+title: MEF LSO Legato - Carrier Ethernet ENNI Service Provisioning Specification
+description: 
+  The ENNI is a reference point representing the boundary between two or more Operator CENs that are operated as separate administrative domains.
+properties:
+  peeringIdentifier:
+    maxLength: 45
+    type: string
+    description: An identifier for the ENNI intended for operations purposes by the interconnecting Operators at the ENNI. Reference MEF 26.2 Section 9.1 ENNI Peering Identifier Common Attribute.
+  numberOfLinks:
+    minimum: 1
+    type: integer
+    description: The number of physical links in the ENNI. Reference MEF 26.2 Section 9.4 ENNI Number of Links Common Attribute.
+  taggedL2cpFrameProcessing:
+    $ref: '#/definitions/TaggedL2cpProcessing'
+  physicalLayer:
+    minItems: 0
+    type: array
+    description: The physical layer of each of the links supporting the ENNI. Reference MEF 26.1 Section 9.2 ENNI Physical Layer Common Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+  enniService:
+    minItems: 1
+    type: array
+    description: Attribute pointing to CarrierEthernetEnniService.
+    items:
+      $ref: '#/definitions/CarrierEthernetEnniService'
+allOf:
+  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetExternalInterface'
+definitions: 
+  CarrierEthernetEnniService:
+    type: object
+    properties:
+      operatorEnnIdentifier:
+        maxLength: 45
+        type: string
+        description: An identifier for the ENNI intended for management purposes. Reference MEF 26.2 Section 13.1 Operator ENNI Identifier Service Attribute.
+      svlanIdControl:
+        $ref: '#/definitions/SvlanIdControl'
+      maximumNumberOfOvcs:
+        type: integer
+        description: The maximum number of OVCs that the Operator CEN can support at the ENNI. Reference MEF 26.2 Section 13.3 Maximum Number of OVCs Service Attribute.
+      maximumNumberOfOvcEndPointsPerOvc:
+        type: integer
+        description: The maximum number of OVC End Points that the Operator CEN can support at the ENNI for an OVC. Reference MEF 26.2 Section 13.4 Maximum Number of OVC End Points per OVC Service Attribute.
+      tokenShare:
+        type: string
+        description: An indication of the support of mapping more than one Bandwidth Profile Flow to an Envelope at the ENNI. Reference MEF 26.2 Section 13.5 ENNI Token Share Service Attribute.
+        enum:
+        - ENABLED
+        - DISABLED
+      envelopes:
+        minItems: 0
+        type: array
+        items:
+          $ref: 'carrierEthernetCommon.yaml#/definitions/Envelope'
+      vuniList:
+        minItems: 0
+        type: array
+        description: Pointer to CarrierEthernetVirtualUnit(s).
+        items:
+          $ref: 'carrierEthernetOvc.yaml#/definitions/CarrierEthernetVirtualUniRef'
+      ovcEndPoint:
+        minItems: 0
+        type: array
+        description: Pointer to CarrierEthernetOvcEnd-Point(s).
+        items:
+          $ref: 'carrierEthernetOvc.yaml#/definitions/CarrierEthernetOvcEndPointRef'
+    description: This class represents the ENNI Service Attributes for an ENNI used by a particular SP/SO. For each instance of an ENNI, there can be multiple sets of ENNI Service Attributes. For each instance of an ENNI, there are multiple sets of ENNI Service Attributes. The value for each ENNI Service Attribute in a set for an Operator CEN is specific to a SP/SO that is using the ENNI. Reference MEF 26.2 Section 13 ENNI Service Attributes.
+  SvlanIdControl:
+    type: object
+    properties:
+      value:
+        type: string
+        enum:
+        - FULL
+        - PARTIAL
+    description: When the value is Full, the Operator can support only a single SP/SO at the ENNI.
+  TaggedL2cpProcessing:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - 802_1_COMPLIANT
+        - 802_1_NON_COMPLIANT
+    description: Either 802.1 compliant or not. Reference MEF 45.1 Section 8.3 ENNI Tagged L2CP Frame Processing Multilateral Attribute.

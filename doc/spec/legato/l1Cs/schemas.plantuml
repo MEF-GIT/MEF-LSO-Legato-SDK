@@ -1,0 +1,379 @@
+@startuml
+
+title L1 Connectivity Service Schema - Test API Schemas Diagram
+
+entity AdminState { 
+    state: String
+}
+
+entity ClientProtocol { 
+}
+
+entity EnabledDisabled { 
+}
+
+entity Eth1000BaseXOpticalInterfaceFunction { 
+}
+
+entity Eth100GBaseROpticalInterfaceFunction { 
+}
+
+entity Eth10GBaseROpticalInterfaceFunction { 
+}
+
+entity Eth10GBaseWOpticalInterfaceFunction { 
+}
+
+entity Eth40GBaseROpticalInterfaceFunction { 
+}
+
+entity Fc100OpticalInterfaceFunction { 
+}
+
+entity Fc1200OpticalInterfaceFunction { 
+}
+
+entity Fc1600OpticalInterfaceFunction { 
+}
+
+entity Fc200OpticalInterfaceFunction { 
+}
+
+entity Fc3200OpticalInterfaceFunction { 
+}
+
+entity Fc400OpticalInterfaceFunction { 
+}
+
+entity Fc800OpticalInterfaceFunction { 
+}
+
+entity HighOrderOdu1MultiplexingSequences { 
+}
+
+entity HighOrderOdu2And2eMultiplexingSequences { 
+}
+
+entity HighOrderOdu3MultiplexingSequences { 
+}
+
+entity HighOrderOdu4MultiplexingSequences { 
+}
+
+entity HighOrderOduKOverHead { 
+    superHighOrderHighOrderOdukTti: EnabledDisabled
+    superHighOrderHighOrderOdukGcc1: EnabledDisabled
+    superHighOrderHighOrderOdukGcc2: EnabledDisabled
+    superHighOrderHighOrderOdukAps: EnabledDisabled
+}
+
+entity L1EndPoint { 
+    administrativeState: AdminState
+    operationalState: OperationalState
+}
+
+entity L1Enni { 
+}
+
+entity L1EnniService { 
+    identifier: String
+    pathOverhead: PathOverHead
+    operatorL1VcEndPoint: OperatorL1VcEndPointRef
+    multiplexingCapabilityList: OneOf<HighOrderOdu4MultiplexingSequences,HighOrderOdu3MultiplexingSequences,HighOrderOdu2And2eMultiplexingSequences,HighOrderOdu1MultiplexingSequences>
+}
+
+entity L1EnniServiceRef { 
+    id: UUID
+    href: URI
+}
+
+entity L1ExternalInterface { 
+    administrativeState: AdminState
+    operationalState: OperationalState
+}
+
+entity L1NniCodingFunction { 
+    otukOverHead: List<OtuKOverHead>
+    highOrderOdukOverhead: List<HighOrderOduKOverHead>
+    lineRate: LineRate
+}
+
+entity L1NniOpticalInterfaceFunction { 
+}
+
+entity L1NniPhysicalLayer { 
+    l1NniOpticalInterfaceFunction: L1NniOpticalInterfaceFunction
+    l1NniCodingFunction: L1NniCodingFunction
+}
+
+entity L1OperatorUni { 
+}
+
+entity L1OperatorUniRef { 
+    id: UUID
+    href: URI
+}
+
+entity L1OperatorVc { 
+}
+
+entity L1Sls { 
+    startTime: TimeAndDate
+    duration: TimeIntervalT
+    sls1wDelayPerformanceMetric: List<Sls1wDelayPerformanceMetric>
+    sls1wErroredSecondPerformanceMetric: List<Sls1wErroredSecondPerformanceMetric>
+    sls1wSeverelyErroredSecondPerformanceMetric: List<Sls1wSeverelyErroredSecondPerformanceMetric>
+    sls1wAvailabilityPerformanceMetric: List<Sls1wAvailabilityPerformanceMetric>
+    sls1wUnavailableSecondPerformanceMetric: List<Sls1wUnavailableSecondPerformanceMetric>
+}
+
+entity L1SubscriberUni { 
+}
+
+entity L1SubscriberUniRef { 
+    id: UUID
+    href: URI
+}
+
+entity L1SubscriberVc { 
+}
+
+entity L1Uni { 
+}
+
+entity L1UniCodingfunction { 
+}
+
+entity L1UniOpticalInterfaceFunction { 
+}
+
+entity L1UniPhysicalLayer { 
+    clientProtocol: ClientProtocol
+    l1UniCodingFunction: L1UniCodingfunction
+    l1UniOpticalInterfaceFunction: L1UniOpticalInterfaceFunction
+}
+
+entity L1Vc { 
+    administrativeState: AdminState
+    operationalState: OperationalState
+    l1ServiceLevelSpecification: L1Sls
+}
+
+entity L1VcEndPointMap { 
+    lineRate: LineRate
+    tributarySlotRate: TributarySlotRate
+    tributarySlots: List<Integer>
+}
+
+entity L1VcEndPointRef { 
+    vcRef: L1VcRef
+    id: UUID
+}
+
+entity L1VcRef { 
+    id: UUID
+    href: URI
+}
+
+entity LineRate { 
+}
+
+entity NniProtection { 
+}
+
+entity Oc12OpticalInterfaceFunction { 
+}
+
+entity Oc192OpticalInterfaceFunction { 
+}
+
+entity Oc3OpticalInterfaceFunction { 
+}
+
+entity Oc48OpticalInterfaceFunction { 
+}
+
+entity Oc768OpticalInterfaceFunction { 
+}
+
+entity OperationalState { 
+    state: String
+}
+
+entity OperatorL1VcEndPoint { 
+}
+
+entity OperatorL1VcEndPointRef { 
+    ovcRef: OperatorL1VcRef
+    id: UUID
+}
+
+entity OperatorL1VcRef { 
+    id: UUID
+    href: URI
+}
+
+entity Otu1OpticalInterfaceFunction { 
+}
+
+entity Otu2And2EOpticalInterfaceFunction { 
+}
+
+entity Otu3OpticalInterfaceFunction { 
+}
+
+entity Otu4OpticalInterfaceFunction { 
+}
+
+entity OtuKOverHead { 
+    otukTti: EnabledDisabled
+    otukGcc0: EnabledDisabled
+    otukOsmc: EnabledDisabled
+}
+
+entity PathOverHead { 
+    oduTti: EnabledDisabled
+    oduGcc1: EnabledDisabled
+    oduGcc2: EnabledDisabled
+    oduAps: EnabledDisabled
+}
+
+entity Sls1wAvailabilityPerformanceMetric { 
+    availabilityObjective: Integer
+    orderedPairSrc: L1VcEndPointRef
+    orderedPairDst: L1VcEndPointRef
+}
+
+entity Sls1wDelayPerformanceMetric { 
+    percentile: Integer
+    delayObjective: Time
+    orderedPairSrc: L1VcEndPointRef
+    orderedPairDst: L1VcEndPointRef
+}
+
+entity Sls1wErroredSecondPerformanceMetric { 
+    erroredSecondObjective: Integer
+    orderedPairSrc: L1VcEndPointRef
+    orderedPairDst: L1VcEndPointRef
+}
+
+entity Sls1wSeverelyErroredSecondPerformanceMetric { 
+    severelyErroredSecon-dObjective: Integer
+    orderedPairSrc: L1VcEndPointRef
+    orderedPairDst: L1VcEndPointRef
+}
+
+entity Sls1wUnavailableSecondPerformanceMetric { 
+    unavailableSecondObjective: Integer
+    orderedPairSrc: L1VcEndPointRef
+    orderedPairDst: L1VcEndPointRef
+}
+
+entity Stm16OpticalInterfaceFunction { 
+}
+
+entity Stm1OpticalInterfaceFunction { 
+}
+
+entity Stm256OpticalInterfaceFunction { 
+}
+
+entity Stm4OpticalInterfaceFunction { 
+}
+
+entity Stm64OpticalInterfaceFunction { 
+}
+
+entity SubscriberL1VcEndPoint { 
+}
+
+entity SubscriberL1VcEndPointRef { 
+    evcRef: SubscriberL1VcRef
+    id: UUID
+}
+
+entity SubscriberL1VcRef { 
+    id: UUID
+    href: URI
+}
+
+entity Time { 
+    time: Integer
+    timeUnits: String
+}
+
+entity TimeAndDate { 
+    day: Integer
+    hour: Integer
+    minute: Integer
+    month: Integer
+    second: Integer
+    year: Integer
+}
+
+entity TimeIntervalT { 
+    number: Integer
+    unit: String
+}
+
+entity TributarySlotRate { 
+}
+
+L1ExternalInterface <|--- L1Enni
+L1Uni <|--- L1OperatorUni
+L1Vc <|--- L1OperatorVc
+L1Uni <|--- L1SubscriberUni
+L1Vc <|--- L1SubscriberVc
+L1ExternalInterface <|--- L1Uni
+L1EndPoint <|--- OperatorL1VcEndPoint
+L1EndPoint <|--- SubscriberL1VcEndPoint
+
+HighOrderOduKOverHead -- EnabledDisabled : superHighOrderHighOrderOdukTti
+HighOrderOduKOverHead -- EnabledDisabled : superHighOrderHighOrderOdukGcc1
+HighOrderOduKOverHead -- EnabledDisabled : superHighOrderHighOrderOdukGcc2
+HighOrderOduKOverHead -- EnabledDisabled : superHighOrderHighOrderOdukAps
+L1ExternalInterface -- AdminState : administrativeState
+L1ExternalInterface -- OperationalState : operationalState
+Sls1wSeverelyErroredSecondPerformanceMetric -- L1VcEndPointRef : orderedPairSrc
+Sls1wSeverelyErroredSecondPerformanceMetric -- L1VcEndPointRef : orderedPairDst
+L1UniPhysicalLayer -- L1UniOpticalInterfaceFunction : l1UniOpticalInterfaceFunction
+L1EnniService -- PathOverHead : pathOverhead
+L1EnniService -- OperatorL1VcEndPointRef : operatorL1VcEndPoint
+L1EnniService -- OneOf<HighOrderOdu4MultiplexingSequences,HighOrderOdu3MultiplexingSequences,HighOrderOdu2And2eMultiplexingSequences,HighOrderOdu1MultiplexingSequences> : multiplexingCapabilityList
+OperatorL1VcEndPointRef -- OperatorL1VcRef : ovcRef
+Sls1wDelayPerformanceMetric -- Time : delayObjective
+Sls1wDelayPerformanceMetric -- L1VcEndPointRef : orderedPairSrc
+Sls1wDelayPerformanceMetric -- L1VcEndPointRef : orderedPairDst
+PathOverHead -- EnabledDisabled : oduTti
+PathOverHead -- EnabledDisabled : oduGcc1
+PathOverHead -- EnabledDisabled : oduGcc2
+PathOverHead -- EnabledDisabled : oduAps
+Sls1wUnavailableSecondPerformanceMetric -- L1VcEndPointRef : orderedPairSrc
+Sls1wUnavailableSecondPerformanceMetric -- L1VcEndPointRef : orderedPairDst
+L1NniCodingFunction -- "0..*" OtuKOverHead : otukOverHead
+L1NniCodingFunction -- "0..*" HighOrderOduKOverHead : highOrderOdukOverhead
+Sls1wAvailabilityPerformanceMetric -- L1VcEndPointRef : orderedPairSrc
+Sls1wAvailabilityPerformanceMetric -- L1VcEndPointRef : orderedPairDst
+SubscriberL1VcEndPointRef -- SubscriberL1VcRef : evcRef
+L1EndPoint -- AdminState : administrativeState
+L1EndPoint -- OperationalState : operationalState
+OtuKOverHead -- EnabledDisabled : otukTti
+OtuKOverHead -- EnabledDisabled : otukGcc0
+OtuKOverHead -- EnabledDisabled : otukOsmc
+L1Vc -- AdminState : administrativeState
+L1Vc -- OperationalState : operationalState
+L1Vc -- L1Sls : l1ServiceLevelSpecification
+L1Sls -- TimeAndDate : startTime
+L1Sls -- TimeIntervalT : duration
+L1Sls -- "0..*" Sls1wDelayPerformanceMetric : sls1wDelayPerformanceMetric
+L1Sls -- "0..*" Sls1wErroredSecondPerformanceMetric : sls1wErroredSecondPerformanceMetric
+L1Sls -- "0..*" Sls1wSeverelyErroredSecondPerformanceMetric : sls1wSeverelyErroredSecondPerformanceMetric
+L1Sls -- "0..*" Sls1wAvailabilityPerformanceMetric : sls1wAvailabilityPerformanceMetric
+L1Sls -- "0..*" Sls1wUnavailableSecondPerformanceMetric : sls1wUnavailableSecondPerformanceMetric
+L1VcEndPointRef -- L1VcRef : vcRef
+L1NniPhysicalLayer -- L1NniOpticalInterfaceFunction : l1NniOpticalInterfaceFunction
+L1NniPhysicalLayer -- L1NniCodingFunction : l1NniCodingFunction
+Sls1wErroredSecondPerformanceMetric -- L1VcEndPointRef : orderedPairSrc
+Sls1wErroredSecondPerformanceMetric -- L1VcEndPointRef : orderedPairDst
+
+@enduml

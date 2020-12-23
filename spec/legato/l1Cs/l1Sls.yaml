@@ -1,0 +1,194 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1Sls:v2.0.0:all
+title: MEF LSO Legato - L1 SLS Specification
+description:
+  The Subscriber L1VC Service Level Specification (SLS) Service Attribute is the technical speci-fication of aspects of the service performance agreed to by the Service Provider and the Sub-scriber. For any given SLS, a given Performance Metric may or may not be specified.
+type: object
+properties:
+  startTime:
+    $ref: '#/definitions/TimeAndDate'
+    description: 'StartTime is a time that represents the date and time for the start of the SLS. MEF 63: [R22] t-start MUST be specified to the nearest second. MEF 64: [R30] t-start MUST be specified to the nearest second.'
+  duration:
+    $ref: '#/definitions/TimeIntervalT'
+    description: Duration is a duration that is used in conjunction with ts to specify a contiguous sequence of time inter-vals for determining when perfor-mance objectives are met. The units for T are not constrained.
+  sls1wDelayPerformanceMetric:
+    type: array
+    items:
+      $ref: '#/definitions/Sls1wDelayPerformanceMetric'
+      description: The One-way Delay for the L1CI that ingresses at UNI 1 and that egresses at UNI 2 is defined as the time elapsed from the reception of the first bit of the ingress L1CI at UNI 1 until the re-ception of that first bit of the corresponding L1CI egressing at UNI 2.
+      minitems: 0      
+  sls1wErroredSecondPerformanceMetric:
+    type: array
+    items:
+      $ref: '#/definitions/Sls1wErroredSecondPerformanceMetric'
+      description: An errored second (ES) is defined as one second sigma-k in Available Time with at least one er-rored block (EB) and is not a SES. An EB is defined as a block in which one or more bits are in error.
+      minitems: 0
+      maxitems: 2
+  sls1wSeverelyErroredSecondPerformanceMetric:
+    type: array
+    items:
+      $ref: '#/definitions/Sls1wSeverelyErroredSecondPerformanceMetric'
+      description: An errored second (ES) is defined as one second sigma-k in Available Time with at least one er-rored block (EB) and is not a SES. An EB is defined as a block in which one or more bits are in error.
+      minitems: 0
+      maxitems: 2
+  sls1wAvailabilityPerformanceMetric:
+    type: array
+    items:
+      $ref: '#/definitions/Sls1wAvailabilityPerformanceMetric'
+      description: Availability is defined as the percentage of Available Time over a given interval T-l which does not include Maintenance Interval Time (MIT).
+      minitems: 0
+      maxitems: 2
+  sls1wUnavailableSecondPerformanceMetric:
+    type: array
+    items:
+      $ref: '#/definitions/Sls1wUnavailableSecondPerformanceMetric'
+      description: An Unavailable Second (UAS) is defined as a second during Unavailable Time (UAT).
+      minitems: 0
+      maxitems: 2
+definitions:
+  L1VcEndPointRef:
+    type: object
+    properties:
+      vcRef:
+        $ref: '#/definitions/L1VcRef'
+      id:
+        type: string
+        description: Points to L1VcEndPoint
+        format: uuid
+    description: First reference VC, then specific VC End Point
+  L1VcRef:
+    description: Reference to a L1 Virtual Connection Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  Sls1wDelayPerformanceMetric:
+    type: object
+    properties:
+      percentile:
+        type: integer
+        description: 'MEF 63 & MEF 64: the Pd-percentile allows the One-way Delay Performance Metric Objective to be met although different delays may occur following a protection switch. To place an upper bound on any longer delays a second One-way Delay Performance Metric Objective for a higher Pd_percentile value (e.g., 100th) may be specified.'
+      delayObjective:
+        $ref: '#/definitions/Time'
+        description: 'MEF 63 & MEF 64: The value of the One-way Delay Performance Metric, time units>0'
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+  Sls1wErroredSecondPerformanceMetric:
+    type: object
+    properties:
+      erroredSecondObjective:
+        type: integer
+        description: 'MEF 63 & MEF 64: The value of the One-way Errored Second Per-formance Metric, integer >=0'
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'          
+  Sls1wSeverelyErroredSecondPerformanceMetric:
+    type: object
+    properties:
+      severelyErroredSecon-dObjective:
+        type: integer
+        description: 'MEF 63 & MEF 64: The value of the MEF 63 & MEF 64: The value of the One-way Severely Errored Sec-ond Performance Metric, integer >=0'
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'          
+  Sls1wAvailabilityPerformanceMetric:
+    type: object    
+    properties:
+      availabilityObjective:
+        type: integer
+        description: 'MEF 63 & MEF 64: The value of the One-way Availability Perfor-mance Metric, percentage > 0'
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'          
+  Sls1wUnavailableSecondPerformanceMetric:
+    type: object
+    properties:
+      unavailableSecondObjective:
+        type: integer
+        description: 'MEF 63 & MEF 64: The value of the One-way Unavailable Second Performance Metric, integer >=0'
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: 'MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator L1VC EPs.'
+  Time:
+    type: object
+    properties:
+      time:
+        type: integer
+        description: This denotes the value (for the unit).
+      timeUnits:
+        type: string
+        description: Time unit.
+        enum:
+          - nanoSeconds
+          - milliSeconds
+          - seconds
+          - hours
+          - days
+          - weeks
+          - microSeconds
+          - months
+          - years
+  TimeAndDate:
+    type: object
+    properties:
+      day:
+        type: integer
+        description: Denotes the day.
+      hour:
+        type: integer
+        description: Denotes the hour.
+      minute:
+        type: integer
+        description: Denotes the minute.
+      month:
+        type: integer
+        description: Denotes the month.
+      second:
+        type: integer
+        description: Denotes the second.
+      year:
+        type: integer
+        description: Denotes the year.
+    description: |-
+      This data type is for Time and Date in UTC. Used for CarrierEthernetSls
+      startTime attribute.
+  TimeIntervalT:
+    type: object
+    properties:
+      number:
+        type: integer
+        description: This denotes the value (for the unit).
+      unit:
+        type: string
+        description: Time interval unit.
+        enum:
+          - second
+          - minute
+          - hour
+          - day
+          - month
+          - week
+          - year
+    description: |-
+      This attribute sets the time interval to evaluate the performance
+      for the SLS.  All performances of this SLS use the same time interval T, which
+      itself may not be constrained, e.g., 1 month.

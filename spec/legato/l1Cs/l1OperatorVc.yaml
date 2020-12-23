@@ -1,0 +1,90 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1OperatorVc:v2.0.0:all
+title: MEF LSO Legato - L1 Operator Virtual Connection Service Specifications
+description:
+  An Operator L1VC is an association of two Operator L1VC End Points. Reference MEF 63 Sec-tion 8.4 Operator L1VC Service Attributes.
+type: object
+properties:
+  identifier:
+    type: string
+    minLength: 45
+    description: An identifier for the Operator L1VC is a string that is used to allow the SP/SO and operator to uniquely identify an Operator L1VC. Reference MEF 64 Sec-tion 8.4.1 Operator L1VC Identi-fier Service Attribute.
+  operatorL1VcEndPoint:
+    $ref: '#/definitions/OperatorL1VcEndPoint'
+allOf:
+  - $ref: 'l1CsCommon.yaml#/definitions/L1Vc'
+definitions:
+  OperatorL1VcEndPoint:
+    type: object
+    description: An Operator L1VC End Point represents the logical attachment of an Operator L1VC to an EI. Reference MEF 64 Section 8.5 Operator L1VC End Point Service Attributes.
+    properties:
+      identifier:
+        type: string
+        minLength: 45
+        description: An identifier for the Operator L1VC End Point is a string that is used to allow the SP/SO and operator to uniquely identify the Operator L1VC End Point. Ref-erence MEF 64 Section 8.5.1 Operator L1VC End Point Iden-tifier Service Attribute.
+      l1VcEndPointMap:
+        $ref: '#/definitions/L1VcEndPointMap'
+      l1EnniService:
+        $ref: '#/definitions/L1EnniServiceRef'
+      l1OperatorUni:
+        $ref: '#/definitions/L1OperatorUniRef'
+      operatorL1Vc:
+        $ref: '#/definitions/OperatorL1VcRef'
+    allOf:
+      - $ref: 'l1CsCommon.yaml#/definitions/L1EndPoint'
+  L1OperatorUniRef:
+    description: Reference to a L1 Operator UNI Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  OperatorL1VcRef:
+    description: Reference to a L1 Operator Virtual Connection Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  OperatorL1VcEndPointRef:
+    type: object
+    properties:
+      ovcRef:
+        $ref: '#/definitions/OperatorL1VcRef'
+      id:
+        type: string
+        description: Points to OperatorL1VcEndPoint
+        format: uuid
+    description: First reference OVC, then specific OVC End Point
+  L1EnniServiceRef:
+    description: Reference to a L1 Enni Service Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  L1VcEndPointMap:
+    type: object
+    description: Either Not Applicable or non-empty list of tuples of attributes in Table 16. Reference MEF 64 Section 8.5.4 Operator L1VC End Point Map Service Attribute.
+    properties:
+      lineRate:
+        $ref: 'l1CsCommon.yaml#/definitions/LineRate'
+      tributarySlotRate:
+        $ref: '#/definitions/TributarySlotRate'
+      tributarySlots:
+        type: array
+        items:
+          type: integer
+        description: Tributary Slot is list of integers that represents Tributary Slots occupied in a HO ODUi.       
+  TributarySlotRate:
+    description: 'Enumeration representing tributary slot rate in Gb/s'
+    type: string
+    enum:
+      - 1.25
+      - 2.5      

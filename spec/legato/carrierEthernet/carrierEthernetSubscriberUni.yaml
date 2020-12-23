@@ -1,0 +1,59 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:CarrierEthernetSubscriberUni:v2.0.0:all
+title: MEF LSO Legato - Carrier Ethernet Subscriber UNI Service Provisioning Specifications
+description:
+  The Ethernet User Network Interface demarcation point between the responsibility of the Service Provider and the responsibility of the Subscriber. Reference MEF 10.4 Section 9. Subscriber UNI Service Attributes.
+version: 1.0.0
+properties:
+  identifier:
+    maxLength: 45
+    type: string
+    description: String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI for operations purposes. Reference MEF 10.4 Section 9.1 Subscriber UNI ID Service Attribute.
+  instantiation:
+    type: string
+    description: The value is either Physical or Virtual. Reference MEF 10.4 Section 9.2 Subscriber UNI Instantiation Service Attribute.
+    enum:
+    - PHYSICAL
+    - VIRTUAL
+  listOfPhyLinks:
+    minItems: 0
+    type: array
+    items:
+      $ref: '#/definitions/SubscriberUniPhysicalLinks'
+  virtualFrameMap:
+    maxItems: 1
+    minItems: 0
+    type: array
+    items:
+      $ref: '#/definitions/VirtualFrameMap'
+  evcEndPoint:
+    minItems: 0
+    type: array
+    items:
+      $ref: 'carrierEthernetEvc.yaml#/definitions/CarrierEthernetEvcEndPointRef'
+allOf:
+- $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
+definitions:
+  SubscriberUniPhysicalLinks:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Identifier of link.
+      physicalLink:
+        description: Physical layer type.
+        allOf:
+        - $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+      synchronousEthernet:
+        description: Synchronous Ethernet enabled or disabled.
+        allOf:
+        - $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+      precisionTiming:
+        description: Precision timing enabled or disabled.
+        allOf:
+        - $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+    description: The value of the Subscriber UNI List of Physical Links Service Attribute is a list of 4-tuples (which may be empty if Virtual UNI is used) of the form <id,pl,fs,pt>, with one list item for each physical link. The The value of id is an identifier for the physical link. The value of pl specifies a physical layer. fs indicates if synchronous Ethernet is used on the physical link corresponding to the 4-tuple and has the value either Enabled or Disabled. The value of pt indicates if the Precision Time Protocol is used on the physical link corresponding to the 4-tuple and has the value either En-abled or Disabled. Reference MEF 10.4 Section 9.4 Subscriber UNI List of Physical Links Service Attribute.
+  VirtualFrameMap:
+    type: object
+    properties: {}
+    description: A map for virtual frame mapping.   The absence of this attribute corresponds to a Service Attribute value of Not Applicable. Reference MEF 10.4 Section 9.3 Subscriber UNI Virtual Frame Map Service Attribute.

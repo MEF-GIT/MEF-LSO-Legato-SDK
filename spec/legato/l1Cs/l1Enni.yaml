@@ -1,0 +1,325 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1Enni:v2.0.0:all
+title: MEF LSO Legato - L1 ENNI Service Specifications
+description:
+  The L1 ENNI class controls Operator Network behaviors that enable Operator Networks to be interconnected and exchanged OTUk frames. The interconnection is achieved by the Operators agreeing on the value for each ENNI attributes. Reference MEF 64 Section 8.1 ENNI Common Attributes.
+type: object
+properties:
+  peeringIdentifier:
+    type: string
+    minLength: 45
+    description: The ENNI Peering Identifier value is a string used to allow the Operators at ENNI to uniquely identify the ENNI. Reference MEF 64 Section 8.1.1 ENNI Peering Identifier Com-mon Attribute.
+  listOfPhysicalLayer:
+    type: array
+    description: The list of coding function and wavelength structure supporting the ENNI. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers Common At-tribute.
+    items:
+      $ref: '#/definitions/L1NniPhysicalLayer'
+  protection:
+    $ref: '#/definitions/NniProtection'
+  l1EnniService:
+    $ref: '#/definitions/L1EnniService'
+allOf:
+  - $ref: 'l1CsCommon.yaml#/definitions/L1ExternalInterface'
+definitions:
+  L1EnniService:
+    type: object
+    description: 'For each instance of an ENNI, there are multiple sets of ENNI Service Attributes. The value for each ENNI Service Attribute in a set for an Operator network is specific to the SP/SO that is us-ing the ENNI. Reference MEF 64 Section 8.2 ENNI Service Attributes.'
+    properties:
+      identifier:
+        type: string
+        minLength: 45
+        description: The Operator ENNI Identifier Service Attribute value is a string used to allow the SP/SO and Operator to uniquely identify the ENNI. Reference MEF 64 Sec-tion 8.2.1 Operator ENNI Identi-fier Service Attribute.
+      pathOverhead:
+        $ref: '#/definitions/PathOverHead'
+      operatorL1VcEndPoint:
+        $ref: 'l1OperatorVc.yaml#/definitions/OperatorL1VcEndPointRef'
+      multiplexingCapabilityList:
+        oneOf:
+          - $ref: '#/definitions/HighOrderOdu4MultiplexingSequences'
+          - $ref: '#/definitions/HighOrderOdu3MultiplexingSequences'
+          - $ref: '#/definitions/HighOrderOdu2And2eMultiplexingSequences'
+          - $ref: '#/definitions/HighOrderOdu1MultiplexingSequences'
+  L1NniPhysicalLayer:
+    type: object
+    description: The L1 NNI Physical layer Service Attribute is a list of 2-tuples of the ENNI Coding Function and ENNI Optical Interface Function. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers Common Attribute.
+    properties:
+      l1NniOpticalInterfaceFunction:
+        $ref: '#/definitions/L1NniOpticalInterfaceFunction'
+      l1NniCodingFunction:
+        $ref: '#/definitions/L1NniCodingFunction'
+  L1NniOpticalInterfaceFunction:
+    description: The L1 NNI Physical layer Service Attribute is a list of 2-tuples of the ENNI Coding Function and ENNI Optical Interface Function. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers Common Attribute.  
+    oneOf:
+      - $ref: '#/definitions/Otu1OpticalInterfaceFunction'
+      - $ref: '#/definitions/Otu2And2EOpticalInterfaceFunction'
+      - $ref: '#/definitions/Otu3OpticalInterfaceFunction'
+      - $ref: '#/definitions/Otu4OpticalInterfaceFunction'    
+  L1NniCodingFunction:
+    type: object
+    description: 'ENNI Coding function is a 3-tuple of the <k, OTUk OH, HO ODUk OH>. k is an index repre-senting the physical layer line rate. OTUk OH is a list of overhead values corresponding to the terminated OTUk. HO ODUk OH is either None or List where the value represents the overhead values corresponding to the terminated HO ODUk.'
+    properties:
+      otukOverHead:
+        type: array
+        items:
+          $ref: '#/definitions/OtuKOverHead'
+          minItems: 1
+        description: A list of overhead values corre-sponding to the terminated OTUk.
+      highOrderOdukOverhead:
+        type: array
+        items:
+          $ref: '#/definitions/HighOrderOduKOverHead'
+        description: 'The overhead values corresponding to the terminated HO ODUk (or SHO ODUk), where each entry in the list has the value Disabled or Enabled.'
+      lineRate:
+        $ref: 'l1CsCommon.yaml#/definitions/LineRate'
+  OtuKOverHead:
+    type: object
+    description: 'OTUk Overhead must be a list of three pairs {field,values} with each field and corresponding values in Table 13 - OTUk Overhead Data Type Attributes.'
+    properties:
+      otukTti:        
+        description: OTUk Trail Trace Identifier.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      otukGcc0:
+        description: OTUk General Communications Channel.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      otukOsmc:        
+        description: ' OTUk OTN Synchronization Mes-saging Channel.'
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+  HighOrderOduKOverHead:
+    type: object
+    description: 'The value of HO ODUk OH is either None or List of overhead values corresponding to the ter-minated HO ODUk, where each entry in the list has the value Disabled or Enabled.'
+    properties:
+      superHighOrderHighOrderOdukTti:        
+        description: Super High Order/High Order ODUk Trail Trace Identifier.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      superHighOrderHighOrderOdukGcc1:        
+        description: Super High Order/High Order ODUk General Communications Channel 1.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      superHighOrderHighOrderOdukGcc2:        
+        description: Super High Order/High Order ODUk General Communications Channel 2.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      superHighOrderHighOrderOdukAps:        
+        description: Super High Order/High Order ODUk Automatic Protection Switching.
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+  PathOverHead:
+    type: object
+    description: 'An ODU path is the connectivity between the locations where the path overhead is terminated. Either None or List. When the value of the Operator Path Overhead Service Attribute is List, the entries are the overhead values corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI which is terminated in an Operator’s network. Reference MEF 64 Section 8.2.3 Operator Path Overhead Service Attribute.'
+    properties:
+      oduTti:        
+        description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU TTI is enabled or disabled.'
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      oduGcc1:        
+        description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU GCC1 is enabled or disabled.'
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      oduGcc2:        
+        description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU GCC2 is enabled or disabled.'
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+      oduAps:        
+        description: 'Overhead value, corresponding to each of the SHO/HO/LO ODU paths carried across an ENNI, ODU APS is enabled or disabled.'
+        allOf:
+        - $ref: 'l1CsCommon.yaml#/definitions/EnabledDisabled'
+  HighOrderOdu4MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU2-ODU4TO80
+      - ODU0-ODU1-ODU4TO80
+      - ODU0-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU2-ODU4TO80
+      - ODU0-ODU3-ODU4TO64
+      - ODU0-ODU4TO80
+      - ODU1-ODU2-ODU3-ODU4TO32
+      - ODU1-ODU2-ODU4TO40
+      - ODU1-ODU3-ODU4TO32
+      - ODU1-ODU4TO40
+      - ODUFLEX-ODU2-ODU3-ODU4TO10G
+      - ODUFLEX-ODU2-ODU4TO10G
+      - ODUFLEX-ODU3-ODU4TO10G
+      - ODUFLEX-ODU4TO100G
+      - ODU2-ODU3-ODU4TO8
+      - ODU2-ODU4TO10
+      - ODU2E-ODU3-ODU4TO6
+      - ODU2E-ODU4TO10
+      - ODU3-ODU4TO2
+  HighOrderOdu3MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2-ODU3TO32
+      - ODU0-ODU1-ODU3TO32
+      - ODU0-ODU2-ODU3TO32
+      - ODU0-ODU3TO32
+      - ODU1-ODU2-ODU3TO16_1.25TS
+      - ODU1-ODU2-ODU3TO16_2.5TS
+      - ODU1-ODU3TO16_1.25TS
+      - ODU1-ODU3TO16_2.5TS
+      - ODUFLEX-ODU2-ODU3TO10G
+      - ODUFLEX-ODU3TO40G
+      - ODU2-ODU3TO4_1.25TS
+      - ODU2-ODU3TO4_2.5TS
+      - ODU2E-ODU3TO3
+  HighOrderOdu2And2eMultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2TO8
+      - ODU0-ODU2TO8
+      - ODU1-ODU2TO4_1.25TS
+      - ODU1-ODU2TO4_2.5TS
+      - ODUFLEX-ODU2TO10G
+  HighOrderOdu1MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1TO2
+  Otu1OpticalInterfaceFunction:
+    type: string
+    description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+    enum:
+      - P16S1-1D2
+      - P32S1-1D2
+      - P16S1-1D5
+      - P32S1-1D5
+      - P16L1-1A2
+      - P16L1-1A5
+      - P1I1-1D1
+      - P1S1-1D1
+      - P1S1-1D2
+      - P1L1-1D1
+      - P1L1-1D2
+      - 1L1-1D2F
+      - P1U1-1A2
+      - 1U1-1B2F
+      - P1U1-1A3
+      - 1U1-1B3F
+      - P1U1-1A5
+      - 1U1-1B5F
+  Otu2And2EOpticalInterfaceFunction:
+    type: string
+    description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+    enum:
+      - P4I1-2D1
+      - 4I1-2D1F
+      - P16I1-2D2
+      - P32I1-2D2
+      - P16I1-2D3
+      - P16I1-2D5
+      - P32I1-2D5
+      - P16S1-2B2
+      - P16S1-2C2
+      - P32S1-2B2
+      - P32S1-2C2
+      - P16S1-2C3
+      - P16S1-2B5
+      - P16S1-2C5
+      - P32S1-2B5
+      - P32S1-2C5
+      - P16L1-2A2
+      - P16L1-2A5
+      - P1I1-2D1R
+      - P1I1-2D1
+      - P1I1-2D2R
+      - P1I1-2D2
+      - P1I1-2D3
+      - P1I1-2D5
+      - P1S1-2D1
+      - P1S1-2D2A
+      - P1S1-2D2B
+      - 1S1-2D2BF
+      - P1S1-2D3A
+      - P1S1-2D3B
+      - 1S1-2D3BF
+      - P1S1-2D5A
+      - P1S1-2D5B
+      - 1S1-2D5BF
+      - P1L1-2D1
+      - P1L1-2D2
+      - 1L1-2D2F
+      - P1L1-2B2FE
+      - L1L-2D2FE
+      - P1V1-2C2
+      - 1V1-2C2F
+      - P1V1-2B2E
+      - 1V1-2B2FE
+      - P1V1-2B5
+      - 1V1-2B5F
+  Otu3OpticalInterfaceFunction:
+    type: string
+    description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+    enum:
+      - P1I1-3D1
+      - 1I1-3D1F
+      - P1I1-3D3
+      - P1I1-3D5
+      - P1S1-3D1
+      - 1S1-3D1F
+      - P1S1-3C2
+      - P1S1-3C3
+      - P1S1-3C5
+      - P1L1-3C1
+      - 1L1-3C1F
+      - P1L1-3A2
+      - 1L1-3C2F
+      - 1L1-3C2FD
+      - P1L1-3A3
+      - 1L1-3C3F
+      - 1L1-3C3FD
+      - P1L1-3A5
+      - 1L1-3C5F
+      - 1L1-3C5FD
+      - P1L1-7A2
+      - P1L1-7A3
+      - P1L1-7A5
+      - P4I1-2D1
+      - 4L1-2D1F
+      - P16I1-2D2
+      - P32I1-2D2
+      - P16I1-2D3
+      - P16I1-2D5
+      - P32I1-2D5
+      - P16S1-2B2
+      - P16S1-2C2
+      - P32S1-2B2
+      - P32S1-2C2
+      - P16S1-2C3
+      - P16S1-2B5
+      - P16S1-2C5
+      - P32S1-2B5
+      - P32S1-2C5
+      - P16L1-2A2
+      - P16L1-2A3
+      - P16L1-2A5
+      - C4S1-2D1
+      - C4L1-2D1
+  Otu4OpticalInterfaceFunction:
+    type: string
+    description: 'The values of L1 ENNI Optical Interface Function are grouped into Classes defined in G.959.1 [5]. Within a class there are several possible values for the L1 ENNI Optical Interface Function.'
+    enum:
+      - 4I1-9D1F
+      - 4L1-9C1F
+      - 4L1-9D1F
+      - C4S1-9D1F
+  NniProtection:    
+    description: 'Enumeration representing the protection protocol employed at ENNI for the ODU container exchanged by the operator. The enumeration value is either None or one of the rows as specified in G.873'
+    type: string
+    enum:
+      - 1_PLUS_1_UNIDIR_SNC_I
+      - 1_PLUS_1_BIDIR_SNC_I
+      - 1_TO_N_BIDIR_SNC_I
+      - 1_PLUS_1_UNIDIR_SNC_NE
+      - 1_PLUS_1_BIDIR_SNC_NE
+      - 1_PLUS_1_UNIDIR_SNC_NS
+      - 1_PLUS_1_BIDIR_SNC_NS
+      - 1_PLUS_1_UNIDIR_SNC_S
+      - 1_PLUS_1_BIDIR_SNC_S
+      - 1_TO_N_BIDIR_SNC_S
+      - 1_PLUS_1_UNIDIR_CL-SNCG_1
+      - 1_PLUS_1_BIDIR_CL-SNCG_1
+      - 1_TO_1_BIDIR_CL-SNCG_1  

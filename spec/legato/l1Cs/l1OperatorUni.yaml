@@ -1,0 +1,16 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1OperatorUni:v2.0.0:all
+title: MEF LSO Legato - L1 Operator UNI Service Specifications
+description:
+  The L1 Operator UNI Service Attribute values are agreed to by the SP/SO and the Operator.
+type: object
+properties:
+  identifier:
+    type: string
+    minLength: 45
+    description: An identifier for the UNI intended for SP/SO and Operator to uniquely identify the UNI. Reference MEF 64 Section 8.3.1 Operator UNI Identifier Service Attribute.
+  operatorL1VcEndPoint:
+    $ref: 'l1OperatorVc.yaml#/definitions/OperatorL1VcEndPointRef'
+allOf:
+  - $ref: 'l1CsCommon.yaml#/definitions/L1Uni'
+  

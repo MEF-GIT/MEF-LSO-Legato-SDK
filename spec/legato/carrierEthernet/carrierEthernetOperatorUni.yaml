@@ -1,0 +1,59 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:CarrierEthernetOperatorUni:v2.0.0:all
+title: MEF LSO Legato - Carrier Ethernet Operator UNI Service Provisioning Specifications
+description:
+  This class represents the Operator UNI Service Attributes that are agreed on by the SP/SO and the Operator for each UNI.
+properties:
+  identifier:
+    maxLength: 45
+    type: string
+    description: An identifier for the UNI intended for management purposes. Reference MEF 26.2 Section 14.1 Operator UNI Identifier Service Attribute.
+  synchronousMode:
+    minItems: 1
+    type: array
+    items:
+      $ref: '#/definitions/SyncModePerLink'
+  numberOfLinks:
+    minimum: 1
+    type: integer
+    description: The number of physical links at the UNI. Reference MEF 26.2 Section 14.4 Operator UNI Number of Links Service Attribute.
+  physicalLayer:
+    minItems: 0
+    type: array
+    description: The physical layer of each of the links supporting the Operator UNI. Reference MEF 26.2 Section 14.2 Operator UNI Physical Layer Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+  defaultCeVlanId:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+  ingressBandwidthProfile:
+    maxItems: 1
+    minItems: 0
+    type: array
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+  egressBandwidthProfile:
+    maxItems: 1
+    minItems: 0
+    type: array
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+  elmi:
+    type: string
+    enum:
+    - ENABLED
+    - DISABLED
+  ovcEndPoint:
+    minItems: 0
+    type: array
+    items:
+      $ref: 'carrierEthernetOvc.yaml#/definitions/CarrierEthernetOvcEndPointRef'
+allOf:
+  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
+definitions: 
+  SyncModePerLink:
+    type: object
+    properties:
+      syncModeEnabled:
+        type: boolean
+        description: This attribute denotes whether the Synchronous Mode is enabled on the link with the Link ID.
+    description: A link may consist of one or more physical ports.  This data type includes the link ID and sync mode of the physical port associated to the link id. Reference MEF 26.4 Section 14.2 Operator UNI Physical Layer Service Attribute.

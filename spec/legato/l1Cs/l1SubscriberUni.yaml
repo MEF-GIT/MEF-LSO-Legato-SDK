@@ -1,0 +1,15 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1SubscriberUni:v2.0.0:all
+title: MEF LSO Legato - L1 Subscriber UNI Service Specifications
+description:
+  The UNI is the physical demarcation point between the responsibility of the L1 Service Provider and the responsibility of the L1 Subscriber. Reference MEF 63 Section 8.
+type: object
+properties:
+  identifier:
+    type: string
+    minLength: 45
+    description: The value of the UNI ID Service Attribute is a string that is used to allow Subscriber and Service Provider to uniquely identify the UNI. Reference MEF 64 Section 8.1.1 UNI ID Service Attribute.
+  subscriberL1VcEndPoint:
+    $ref: 'l1SubscriberVc.yaml#/definitions/SubscriberL1VcEndPointRef'
+allOf:
+  - $ref: 'l1CsCommon.yaml#/definitions/L1Uni'

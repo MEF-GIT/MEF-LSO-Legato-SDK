@@ -1,0 +1,353 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:l1CsCommon:v2.0.0:all
+title: MEF LSO Legato - Common L1 Connectivity Service Specifications
+description:
+  Common L1 Connectivity Service schema specifications for LSO Legato API payload
+definitions:
+  L1ExternalInterface:
+    type: object
+    description: The L1ExternalInterface represents the physical interface used for L1 services. This is an abstract class and the superclass. It contains the common attributes of three classes- L1SubscriberUni, L1OperatorUni and L1Enni defined in MEF 63 and MEF 64.
+    properties:
+      administrativeState:
+        $ref: '#/definitions/AdminState'
+      operationalState:
+        $ref: '#/definitions/OperationalState'            
+  L1EndPoint:
+    type: object
+    description: The L1EndPoint represents the Subscriber L1 End Point or the Operator L1 End Point. This is an abstract class and the superclass of SubscriberL1EndPoint and OperatorL1EndPoint. It contains the common attributes of SubscriberL1EndPoint and OperatorL1EndPoint defined in MEF 63 and MEF 64.      
+    properties:
+      administrativeState:
+        $ref: '#/definitions/AdminState'
+      operationalState:
+        $ref: '#/definitions/OperationalState'      
+  L1Vc:
+    type: object
+    description: The L1Vc represents the SubscriberL1Vc or Operator L1Vc. This is an abstract class and the su-perclass of SubscriberL1Vc and OperatorL1Vc. It contains the common attributes of Subscrib-erL1Vc and OperatorL1Vc classes defined in MEF 63 and MEF 64.
+    properties:
+      administrativeState:
+        $ref: '#/definitions/AdminState'
+      operationalState:
+        $ref: '#/definitions/OperationalState' 
+      l1ServiceLevelSpecification:
+        $ref: 'l1Sls.yaml'
+        description: The Subscriber L1VC Service Level Specification (SLS) Ser-vice Attribute is the technical specification of aspects of the service performance agreed to by the Service Provider and Subscriber.  Reference MEF 63 Section 8.2.3.
+  L1Uni:
+    type: object
+    description: The L1Uni represents the physical interface used for L1 services with common attributes. This is an abstract class and the supper class. It contains the common attributes of L1SubscriberUni and L1OperatorUni not included in L1ExternalInterface superclass as defined in MEF 63 and MEF 64. 
+    properties:
+      physicalLayer:
+        type: object
+        description: The Physical Layer Service At-tribute specifies the Client Proto-col, the Coding Function and the optical interface Function.  Ref-erence MEF 63 Section 8.1.2 Physical Layer Service Attribute.
+        $ref: '#/definitions/L1UniPhysicalLayer'
+    allOf:
+      - $ref: '#/definitions/L1ExternalInterface'
+  AdminState:
+    type: object
+    description: ''
+    properties:
+      state:
+        type: string
+        enum:
+          - LOCKED
+          - UNLOCKED
+  OperationalState:
+    type: object
+    description: ''
+    properties:
+      state:
+        type: string
+        enum:
+          - ENABLED
+          - DISABLED
+  EnabledDisabled:
+    type: string
+    description: Enumeration used to indicate state as ENABLED or DISABLED.
+    enum:
+    - ENABLED
+    - DISABLED       
+  L1VcEndPointExternalInterfaceType:
+    description: 'Enumeration used to indicate if the L1VC end point is either UNI or ENNI'
+    type: string
+    enum:
+      - UNI
+      - ENNI
+  L1UniPhysicalLayer:
+    type: object
+    description: 'The L1 Physical Layer Service Attribute specifies the Client Protocol, the Coding Function and the Optical Interface Function.  Reference MEF 63 Section 8.1.2 Physical Layer Service Attribute.'
+    properties:
+      clientProtocol:
+        $ref: '#/definitions/ClientProtocol'
+      l1UniCodingFunction:
+        $ref: '#/definitions/L1UniCodingfunction'
+      l1UniOpticalInterfaceFunction:
+        $ref: '#/definitions/L1UniOpticalInterfaceFunction'
+  ClientProtocol:
+    description: 'Enumeration representing client protocol of L1 physical layer'
+    type: string
+    enum:
+      - ETHERNET
+      - FIBERCHANNEL
+      - SDH
+      - SONET 
+  L1UniCodingfunction:
+    type: string
+    description: 'MEF 63 Coding Function <c>, functionality which encodes bits for transmission and corresponding decode upon reception'
+    enum:
+      - 1000BASE-X
+      - 10GBASE-W
+      - 10GBASE-R
+      - 40GBASE-R
+      - 100GBASE-R
+      - FC-100
+      - FC-200
+      - FC-400
+      - FC-800
+      - FC-1200
+      - FC-1600
+      - FC-3200
+      - STM-1
+      - STM-4
+      - STM-16
+      - STM-64
+      - STM-256
+      - OC-3
+      - OC-12
+      - OC-48
+      - OC-192
+      - OC-768 
+  L1UniOpticalInterfaceFunction:
+    description: 'Optical Interface Function value. Reference MEF 63 Section 8.1.2.'
+    oneOf:
+      - $ref: '#/definitions/Eth1000BaseXOpticalInterfaceFunction'
+      - $ref: '#/definitions/Eth10GBaseWOpticalInterfaceFunction'
+      - $ref: '#/definitions/Eth10GBaseROpticalInterfaceFunction'
+      - $ref: '#/definitions/Eth100GBaseROpticalInterfaceFunction'
+      - $ref: '#/definitions/Eth40GBaseROpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc100OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc200OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc400OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc800OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc1200OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc1600OpticalInterfaceFunction'
+      - $ref: '#/definitions/Fc3200OpticalInterfaceFunction'
+      - $ref: '#/definitions/Stm1OpticalInterfaceFunction'
+      - $ref: '#/definitions/Stm4OpticalInterfaceFunction'
+      - $ref: '#/definitions/Stm16OpticalInterfaceFunction'
+      - $ref: '#/definitions/Stm64OpticalInterfaceFunction'
+      - $ref: '#/definitions/Stm256OpticalInterfaceFunction'
+      - $ref: '#/definitions/Oc3OpticalInterfaceFunction'
+      - $ref: '#/definitions/Oc12OpticalInterfaceFunction'
+      - $ref: '#/definitions/Oc48OpticalInterfaceFunction'
+      - $ref: '#/definitions/Oc192OpticalInterfaceFunction'
+      - $ref: '#/definitions/Oc768OpticalInterfaceFunction'         
+  Eth1000BaseXOpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SX-PMD
+      - LX-PMD
+      - LX10-PMD
+      - BX10-PMD
+  Eth10GBaseWOpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - LW-PMD
+      - EW-PMD
+  Eth10GBaseROpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - LR-PMD
+      - ER-PMD
+  Eth100GBaseROpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - LR4-PMD
+      - ER4-PMD
+  Eth40GBaseROpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - LR4-PMD
+      - ER4-PMD
+      - FR-PMD
+  Fc100OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-PI-2-100-SM-LC-L
+  Fc200OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-PI-2-200-SM-LC-L
+  Fc400OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-PI-5-400-SM-LC-L
+      - FC-PI-5-400-SM-LC-M
+  Fc800OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-PI-5-800-SM-LC-L
+      - FC-PI-5-800-SM-LC-I
+  Fc1200OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-10GFC-1200-SM-LL-L
+  Fc1600OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - FC-PI-5-1600-SM-LC-L
+      - FC-PI-5-1600-SM-LZ-I
+  Fc3200OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+       - FC-PI-6-3200-SM-LC-L
+  Stm1OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - I-1
+      - S-1.1
+      - S-1.2
+      - L-1.1
+      - L-1.2
+      - L-1.3
+  Stm4OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - I-4
+      - S-4.1
+      - S-4.2
+      - L-4.1
+      - L-4.2
+      - L-4.3
+  Stm16OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - I-16
+      - S-16.1
+      - S-16.2
+      - L-16.1
+      - L-16.2
+      - L-16.3
+  Stm64OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - I-64.LR
+      - I-64.I
+      - I-64.2R
+      - I-64.3
+      - I-64.5
+      - S-64.1
+      - S-64.2
+      - S-64.3
+      - S-64.5
+      - L-64.1
+      - L-64.2
+      - L-64.3
+  Stm256OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - VSR2000-3R1
+      - VSR2000-3R2
+      - VSR2000-3R3
+      - VSR2000-3R5
+      - VSR2000-3M1
+      - VSR2000-3M2
+      - VSR2000-3M3
+      - VSR2000-3M5
+      - VSR2000-3H2
+      - VSR2000-3H3
+      - VSR2000-3H5
+  Oc3OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+  Oc12OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+      - VR-1
+      - VR-2
+      - VR-3
+      - UR-2
+      - UR-3
+  Oc48OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+      - VR-2
+      - VR-3
+      - UR-2
+      - UR-3
+  Oc192OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SR-1
+      - SR-2
+      - IR-1
+      - IR-2
+      - IR-3
+      - LR-1
+      - LR-2
+      - LR-2a
+      - LR-2b
+      - LR-2c
+      - LR-3
+      - VR-2a
+      - VR-2b
+      - VR-3
+  Oc768OpticalInterfaceFunction:
+    type: string
+    description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+    enum:
+      - SR-1
+      - SR-2
+      - IR-1
+      - IR-2
+      - IR-3
+      - LR-1
+      - LR-2
+      - LR-3    
+  LineRate:
+    description: 'Enumeration representing physical line rate'
+    type: string
+    enum:
+      - OTU1
+      - OTU2
+      - OTU2E
+      - OTU3
+      - OTU4         
+          

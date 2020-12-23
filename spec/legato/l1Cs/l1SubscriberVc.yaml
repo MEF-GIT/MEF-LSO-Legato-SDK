@@ -1,0 +1,59 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:l1Cs:L1SubscriberVc:v2.0.0:all
+title: MEF LSO Legato - L1 Subscriber Virtual Connection Service Specifications
+description:
+  A subscriber L1VC represents the logical attachment of a Subscriber L1VC to two SubscriberL1VCEndPoint. Reference MEF 63 Section 8.2.
+properties:
+  identifier:
+    type: string
+    minLength: 45
+    description: The value of the Subscriber L1VC ID service attribute is a string that is used to identify the Subscriber L1VC within the service provider network. Reference MEF 63 Section 8.2.1.
+  subscriberL1VcEndPoint:
+    type: array
+    items:
+      $ref: '#/definitions/SubscriberL1VcEndPoint'
+allOf:
+  - $ref: 'l1CsCommon.yaml#/definitions/L1Vc'
+definitions:
+  SubscriberL1VcEndPoint:
+    type: object
+    description: A Subscriber L1VC End Point is a logical entity at a given UNI that is associated with L1CI passing over that UNI. Reference MEF 63 Section 8.3.
+    properties:
+      identifier:
+        type: string
+        minLength: 45
+        description: The value of the Subscriber L1VC End Point identifier Service Attribute is a string that is used to allow the Subscriber and Service Provider to uniquely identify the Subscriber L1VC End Point. Reference MEF 63 Section 8.3.1.
+      l1SubscriberUni:
+        $ref: '#/definitions/L1SubscriberUniRef'
+      subscriberL1Vc:
+        $ref: '#/definitions/SubscriberL1VcRef'
+    allOf:
+      - $ref: 'l1CsCommon.yaml#/definitions/L1EndPoint'
+  L1SubscriberUniRef:
+    description: Reference to a L1 Subscriber UNI Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  SubscriberL1VcRef:
+    description: Reference to a L1 Subscriber Virtual Connection Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  SubscriberL1VcEndPointRef:
+    type: object
+    properties:
+      evcRef:
+        $ref: '#/definitions/SubscriberL1VcRef'
+      id:
+        type: string
+        description: Points to SubscriberL1VcEndPoint
+        format: uuid
+    description: First reference EVC, then specific EVC End Point

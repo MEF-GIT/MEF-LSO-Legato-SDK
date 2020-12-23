@@ -1,8 +1,23 @@
-# MEF-LSO-Legato-SDK (RC4)
+# MEF-LSO-Legato-SDK Aretha Release
+
+## Download Link
+
+Download the entire repository by clicking
+[here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/aretha/MEF-LSO-Legato-SDK-aretha.zip)
 
 ## Overview
 
-This repository contains the Release Candidate 4 of the Legato SDK. The SDK includes Service Provisioning APIs describe the Application Programming Interfaces for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
+This repository contains the Aretha release of the Legato SDK. The SDK includes Service Provisioning APIs describing the Application Programming Interfaces for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
+
+This version updates the payload schemas for:
+
+* Carrier Ethernet (based on MEF 7.4),
+* SD-WAN (based on MEF 82) and
+* L1CS (based on MEF 111).
+
+Future versions will include full API Developer Guides for each of the service types listed above.
+
+## Scope
 
 It includes API definitions for the following functional areas:
 
@@ -67,11 +82,12 @@ This SDK contains the following items:
 * `COPYRIGHT` - Copyright 2020 MEF Forum
 * `LICENSE` - Contains a copy of the Apache 2.0 license
 * `README` - This file
-* `api` - Definitions of the API are found in this directory
+* `api\legato\serviceProvisioning` - Definitions of the API are found in this directory
   * `serviceCatalog` - Contains the API definitions for querying and retrieving _Service-Specification_ instances from the service catalog system in the SOF.
   * `serviceInventory` - Contains the API definitions for querying and retrieving _Service_ instances from the service inventory system in the SOF.
   * `serviceOrdering` - Contains the API definitions for posting _Service-Order_ request to the service order system in the SOF. Each _Service-Order_ contains one or more _Service-Order-Items_, each of which specifies the Service instance (and its characteristics) to be added/updated/deleted.
   * `serviceCommon` - Contains the API definitions for registering _Notification-Listeners_ to be called-back when the specified condition occurs. Also common API resources and error definition can be found here.
+* `doc` – automatically generated documentation.
 * `spec` – Contains OpenAPI 3.0 Specification files for SD-WAN,Carrier Ethernet Services and L1 Connectivity Services.
 
 ## Issues, questions, and Feedback

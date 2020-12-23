@@ -1,0 +1,57 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:CarrierEthernetVirtualUni:v2.0.0:all
+title: MEF LSO Legato - Carrier Ethernet Virtual UNI Service Provisioning Specifications
+description:
+  This class represents the Virtual UNI Service Attributes that are agreed on by the SP/SO and the Operator for each UNI.
+version: 1.0.0
+properties:
+  adminState:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/AdminState'
+  operationalState:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/OperationalState'
+  identifier:
+    maxLength: 45
+    type: string
+    description: An identifier for the instance of the VUNI intended for operations purposes.
+  sVlanId:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+  defaultEnniCeVlanId:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+  maximumNumberOfOvcEndPoints:
+    minimum: 0
+    type: integer
+    description: The maximum number of OVC End Points that can be in the VUNI.
+  maximumNumberOfEnniCeVlanIdsPerOvcEndPoint:
+    minimum: 0
+    type: integer
+    description: The maximum number of ENNI CE-VLAN ID values that can be mapped to an OVC End Point that is in the VUNI.
+  ingressBandwidthProfile:
+    maxItems: 1
+    minItems: 0
+    type: array
+    description: A Bandwidth Profile Flow for all ingress Frames mapped to the VUNI. Reference MEF 26.2 Section 15.1.6 VUNI Ingress Bandwidth Profile Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+  egressBandwidthProfile:
+    maxItems: 1
+    minItems: 0
+    type: array
+    description: A Bandwidth Profile Flow for all egress Frames mapped to the VUNI.  Reference MEF 26.2 Section 15.1.7 VUNI Egress Bandwidth Profile Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+  l2cpAddressSet:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
+  l2cpPeering:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpPeering'
+  mepList:
+    minItems: 0
+    type: array
+    description: The indication of the instantiation of a MEP. A list with each item specifying the MEG Level. Reference MEF 26.2 Section 15.1.10 VUNI Maintenance End Point List Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/MepLevelAndDirection'
+  ovcEndPoint:
+    minItems: 0
+    type: array
+    description: Reference to CarrierEthernetOvcEndPoint.
+    items:
+      $ref: 'carrierEthernetOvc.yaml#/definitions/CarrierEthernetOvcEndPointRef'

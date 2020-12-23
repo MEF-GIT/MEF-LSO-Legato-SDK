@@ -1,0 +1,138 @@
+@startuml
+
+title Legato Service Catalog API Schemas Diagram
+
+entity Addressable { 
+    id: String
+    href: URI
+    name: String
+}
+
+entity AttachmentRef { 
+    description: String
+    url: URI
+}
+
+entity Error { 
+    * code: Integer
+    * reason: String
+    message: List<String>
+    status: List<String>
+    referenceError: List<String>
+}
+
+entity EventSubscription { 
+    * id: String
+}
+
+entity EventSubscriptionInput { 
+    * query: String
+    * callback: String
+}
+
+entity Extensible { 
+    * @type: String
+    @baseType: String
+    @schemaLocation: URI
+}
+
+entity Referenceable { 
+    * @referredType: String
+}
+
+entity RelatedPartyRef { 
+    role: String
+}
+
+entity ServiceLevelSpecificationRef { 
+}
+
+entity ServiceSpecCharacteristic { 
+    @valueSchemaLocation: String
+    valueType: String
+    description: String
+    extensible: Boolean
+    isUnique: Boolean
+    maxCardinality: Integer
+    minCardinality: Integer
+    regex: String
+    validFor: TimePeriod
+    serviceSpecCharRelationship: List<ServiceSpecificationRelationship>
+    serviceSpecCharacteristicValue: List<ServiceSpecCharacteristicValue>
+}
+
+entity ServiceSpecCharacteristicValue { 
+    isDefault: Boolean
+    rangeInterval: String
+    regex: String
+    unitOfMeasure: String
+    valueFrom: Integer
+    valueTo: Integer
+    valueType: String
+    validFor: TimePeriod
+    value: Map
+}
+
+entity ServiceSpecification { 
+    category: String
+    subcategory: String
+    version: String
+    description": String
+    isBundle: Boolean
+    lastUpdate: Date
+    validFor: TimePeriod
+    lifecycleStatus: ServiceSpecificationState
+    attachment: List<AttachmentRef>
+    relatedParty: List<RelatedPartyRef>
+    serviceLevelSpecification: List<ServiceLevelSpecificationRef>
+    serviceSpecRelationship: List<ServiceSpecificationRelationship>
+    serviceSpecCharacteristic: List<ServiceSpecCharacteristic>
+    targetServiceSchema: TargetServiceSchema
+}
+
+entity ServiceSpecificationRelationship { 
+    relationshipType: ServiceSpecificationRelationshipType
+    role: String
+    validFor: TimePeriod
+}
+
+entity ServiceSpecificationRelationshipType { 
+}
+
+entity ServiceSpecificationState { 
+}
+
+entity TargetServiceSchema { 
+}
+
+entity TimePeriod { 
+    endDateTime: Date
+    startDateTime: Date
+}
+
+Extensible <|--- Addressable
+Referenceable <|--- AttachmentRef
+EventSubscriptionInput <|--- EventSubscription
+Addressable <|--- Referenceable
+Referenceable <|--- RelatedPartyRef
+Referenceable <|--- ServiceLevelSpecificationRef
+Addressable <|--- ServiceSpecCharacteristic
+Addressable <|--- ServiceSpecCharacteristicValue
+Addressable <|--- ServiceSpecification
+Referenceable <|--- ServiceSpecificationRelationship
+Extensible <|--- TargetServiceSchema
+
+ServiceSpecificationRelationship -- TimePeriod : validFor
+ServiceSpecification -- TimePeriod : validFor
+ServiceSpecification -- "0..*" AttachmentRef : attachment
+ServiceSpecification -- "0..*" RelatedPartyRef : relatedParty
+ServiceSpecification -- "0..*" ServiceLevelSpecificationRef : serviceLevelSpecification
+ServiceSpecification -- "0..*" ServiceSpecificationRelationship : serviceSpecRelationship
+ServiceSpecification -- "0..*" ServiceSpecCharacteristic : serviceSpecCharacteristic
+ServiceSpecification -- TargetServiceSchema : targetServiceSchema
+ServiceSpecCharacteristic -- TimePeriod : validFor
+ServiceSpecCharacteristic -- "0..*" ServiceSpecificationRelationship : serviceSpecCharRelationship
+ServiceSpecCharacteristic -- "0..*" ServiceSpecCharacteristicValue : serviceSpecCharacteristicValue
+ServiceSpecCharacteristicValue -- TimePeriod : validFor
+
+@enduml

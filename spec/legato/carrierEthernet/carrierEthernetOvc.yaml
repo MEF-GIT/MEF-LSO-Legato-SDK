@@ -1,0 +1,365 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:CarrierEthernetOvc:v2.0.0:all
+title: MEF LSO Legato - Carrier Ethernet OVC Service Provisioning Specifications
+description:
+  The Operator Virtual Connection (OVC) is the building block for constructing an EVC spanning multiple Operator CENs.  Reference MEF 26.2 Section 8.8 Operator Virtual Connection.
+properties:
+  identifier:
+    maxLength: 45
+    type: string
+    description: An identifier for the OVC intended for managment purposes. Reference MEF 26.2 Section 12.1 OVC Identifier Service Attribute.
+  ovcType:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/ConnectionType'
+  endPointList:
+    minItems: 2
+    type: array
+    description: A list of OVC End Points associated by the OVC. Reference MEF 26.2 Section 12.3 OVC End Point List Service Attribute.
+    items:
+      $ref: '#/definitions/CarrierEthernetOvcEndPoint'
+  maximumNumberOfUniOvcEndPoints:
+    minimum: 0
+    type: integer
+    description: The bound on the number of OVC End Points at different UNIs that can be associated by the OVC. Reference MEF 26.2 Section 12.4 Maximum Number of UNI OVC End Points Service Attribute.
+  maximumNumberOfEnniOvcEndPoints:
+    minimum: 1
+    type: integer
+    description: The bound on the number of OVC End Points at ENNIs that can be associated by the OVC.
+  maximumFrameSize:
+    type: integer
+    description: This attributes denotes the maximum frame size in bytes. For EVC it is >=1522. For OVC it is >=1526.
+  ovcCeVlanIdPreservation:
+    $ref: '#/definitions/VlanIdPreservation'
+  ovcCeVlanPcpPreservation:
+    type: string
+    enum:
+    - ENABLED
+    - DISABLED
+  ovcCeVlanDeiPreservation:
+    type: string
+    enum:
+    - ENABLED
+    - DISABLED
+  ovcSvlanPcpPreservation:
+    type: string
+    enum:
+    - ENABLED
+    - DISABLED
+  ovcSvlanDeiPreservation:
+    type: string
+    enum:
+    - ENABLED
+    - DISABLED
+  listOfClassOfServiceNames:
+    minItems: 1
+    type: array
+    description: A list of Class of Service Names. Reference MEF 26.2 Section 12.12 OVC List of Class of Service Names Service Attribute.
+    items:
+      type: string
+  frameDelivery:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/FrameDisposition'
+  ovcL2cpAddressSet:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
+allOf:
+- $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetService'
+definitions:
+  AggLinkDepth:
+    type: object
+    properties:
+      linkDepth:
+        minimum: 1
+        type: integer
+        description: The number of links for the aggregation link.
+      vlanId:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+    description: This is a pair of <VLAN ID, link depth> indicating that a given VLAN ID maps to a given number of links in the Port Conversation ID to Aggregation Link Map. Reference MEF-Types.
+  BandwidthProfilePerEquivalenceClassName:
+    type: object
+    properties:
+      egressEquivalenceClassName:
+        type: string
+        description: Egress Equivalence Class Name. Reference MEF 26.2 Section 16.13 Egress Bandwidth Profile per Egress Equiva-lence Class Name Service Attribute.
+      bwpFlow:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+    description: List of pairs of the form <x,y> where x is an Egress Equivalence Class Name and y has the value  BwpFlow.  Reference MEF 26.2 Section 16.13 Egress Bandwidth Profile per Egress Equivalence Class Name Service Attribute.
+  CarrierEthernetEnniServiceRef:
+    type: object
+    properties:
+      href:
+        type: string
+        format: uri
+      id:
+        type: string
+        format: uuid
+  CarrierEthernetOvcRef:
+    type: object
+    properties:
+      href:
+        type: string
+        format: uri
+      id:
+        type: string
+        format: uuid
+  CarrierEthernetOvcEndPointRef:
+    type: object
+    properties:
+      ovcRef:
+        $ref: '#/definitions/CarrierEthernetOvcRef'
+      id:
+        type: string
+        description: Points to CarrierEthernetOvcEndPoint
+        format: uuid
+    description: First reference OVC, then specific OVC End Point
+  CarrierEthernetOperatorUniRef:
+    type: object
+    properties:
+      href:
+        type: string
+        format: uri
+      id:
+        type: string
+        format: uuid
+  CarrierEthernetVirtualUniRef:
+    type: object
+    properties:
+      href:
+        type: string
+        format: uri
+      id:
+        type: string
+        format: uuid
+  CarrierEthernetOvcEndPoint:
+    type: object
+    properties:
+      identifier:
+        maxLength: 45
+        type: string
+        description: An identifier for the OVC End Point intended for operating purposes. Reference MEF 26.2 Section 16.1 OVC End Point Identfier Service Attribute.
+      role:
+        $ref: '#/definitions/OvcEndPointRole'
+      endPointMap:
+        $ref: '#/definitions/OvcEndPointMap'
+      egressMap:
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/OvcEpEgressMap'
+      egressEquivalenceClassIdentifier:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/EecMap'
+      egressBandwidthProfilePerEndPoint:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: Bandwidth Profile Flow parameters for all egress EI Frames mapped to the OVC End Point Reference MEF 26.2 Section 16.11 Egress Bandwidth Profile per OVC End Point Service Attribute.
+        items:
+          $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+      egressBandwidthProfilePerEec:
+        minItems: 0
+        type: array
+        description: For each EEC Name listed, Bandwidth Profile Flow parameters, for all egress EI Frames mapped to that EEC Name at the OVC End Point. Reference MEF 26.2 Section 16.13 Egress Bandwidth Profile per Egress Equivalence Class Name Service Attribute.
+        items:
+          $ref: '#/definitions/BandwidthProfilePerEquivalenceClassName'
+      aggregationLinkDepth:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: The number of ENNI links that can carry ENNI Frames for each S-VLAN ID mapped to the OVC End Point.  Reference MEF 26.2 Section 16.14 OVC End Point Aggregation Link Depth Service Attribute.
+        items:
+          $ref: '#/definitions/AggLinkDepth'
+      maintenanceIntermediatePoint:
+        type: string
+        enum:
+        - ENABLED
+        - DISABLED
+      maintenanceEndPointList:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: The MEPs enable for the OVC End Point.  Reference MEF 26.2 Section 16.17 OVC End Point Maintenance End Point List Service Attribute.
+        items:
+          $ref: 'carrierEthernetCommon.yaml#/definitions/MepLevelAndDirection'
+      virtualUni:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/CarrierEthernetVirtualUniRef'
+      operatorUni:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/CarrierEthernetOperatorUniRef'
+      enniService:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/CarrierEthernetEnniServiceRef'
+      ovc:
+        $ref: '#/definitions/CarrierEthernetOvcRef'
+    description: An OVC End Point is a logical entity at a given External Interface that is associated with a distinct set of frames passing over the External Interface. Reference MEF 26.2 Section 16 OVC End Point Service Attributes.
+    allOf:
+    - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetServiceEndPoint'
+  CosNameAndColorToDeiPac:
+    type: object
+    properties:
+      ingressCosName:
+        type: string
+      ingressColor:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/FrameColor'
+      deiValue:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/DeiOrDiscard'
+    description: The CosNameAndColorToDeiPac represents the Egress Map that maps from CoS Name and In-gress Color to DEI. Reference MEF 26.2 Section 16.8.2 OVC End Point Egress Map Service At-tribute Form CC->S-Tag DEI and Section 16.8.5 OVC End Point Egress Map Form CC->C-Tag DEI.
+  CosNameAndColorToPcpPac:
+    type: object
+    properties:
+      ingressCosName:
+        type: string
+      ingressColor:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/FrameColor'
+      pcpValue:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/PcpOrDiscard'
+    description: The CosNameAndColorToPcpPac represents the Egress Map that maps from CoS Name and In-gress Color to PCP. Reference MEF 26.2 Section 16.8.3 OVC End Point Egress Map Service At-tribute Form CC->S-Tag PCP and 16.8.6 OVC End Point Egress Map Form CC->C-Tag PCP.
+  CosNameToPcpPac:
+    type: object
+    properties:
+      ingressCosName:
+        type: string
+      pcpValue:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/PcpOrDiscard'
+    description: The CosNameToPcpPac represents the Egress Map that maps from CoS Name to PCP. Reference MEF 26.2 Section 16.8.1 OVC End Point Egress Map Service Attribute Form CN->S-Tag PCP and Section 16.8.4 OVC End Point Egress Map Form CN->C-Tag PCP.
+  OvcEpEgressMap:
+    type: object
+    properties:
+      egressMapType:
+        description: This attribute determines which form to take to apply frame color indication, among CoS name and Ingress Color to C-Tag PCP, or CoS name and Ingress Color to S-Tag PCP, or CoS Name and Ingress Color to C-Tag DEI, or CoS Name to C-Tag PCP or CoS Name to S-Tag PCP.
+        allOf:
+        - $ref: '#/definitions/OvcEgressMapType'
+      cosNameAndColorToDeiPacList:
+        minItems: 0
+        type: array
+        description: This attribute represents the relationship between the EgressMap and the CosNameAndColorToDeiPac (representing the attribute set for using CoS Name and ingress color to egress DEI mapping).
+        items:
+          $ref: '#/definitions/CosNameAndColorToDeiPac'
+      cosNameToPcpPacList:
+        minItems: 0
+        type: array
+        description: This attribute represents the Egress Map that maps from CoS name to PCP.
+        items:
+          $ref: '#/definitions/CosNameToPcpPac'
+      cosNameAndColorToPcpPacList:
+        minItems: 0
+        type: array
+        description: This attribute represents the relation between the EgressMap and the CosNameAndColorToPcpPac (representing the attribute using the CoS Name and ingress color to egress PCP mapping).
+        items:
+          $ref: '#/definitions/CosNameAndColorToPcpPac'
+    description: This lists the Egress Map types, either CoS Name to PCP, or CoS Name and Ingress Color to PCP, or CoS Name and Ingress Color to DEI for S-Tag or C-Tag. Reference MEF 26.2 Section 16.8 OVC End Point Egress Map Service Attribute.
+  OvcEgressMapType:
+    type: object
+    properties:
+      type:
+        type: string
+        enum:
+        - CN_C_TAG_PCP
+        - CC_C_TAG_PCP
+        - CC_C_TAG_DEI
+        - CN_S_TAG_PCP
+        - CC_S_TAG_PCP
+        - CC_S_TAG_DEI
+    description: This lists the Egress Map types, either CoS Name to PCP, or CoS Name and Ingress Color to PCP, or CoS Name and Ingress Color to DEI for S-Tag or C-Tag. Reference MEF 26.2 Section 16.8 OVC End Point Egress Map Service Attribute.
+  OvcEndPointMap:
+    type: object
+    properties:
+      ovcEndPointMapForm:
+        type: string
+        enum:
+        - FORM_E
+        - FORM_V
+        - FORM_U
+        - FORM_T
+      ovcEndPointMapFormT:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/OvcEndPointMapFormT'
+      ovcEndPointMapFormV:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/OvcEndPointMapFormV'
+      ovcEndPointMapFormU:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/OvcEndPointMapFormU'
+      ovcEndPointMapFormE:
+        maxItems: 1
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/OvcEndPointMapFormE'
+    description: The information that determines which EI Frames are mapped to the OVC End Point. Reference MEF 26.2 Section 16.5 OVC End Point Map Service Attribute.
+  OvcEndPointMapFormE:
+    type: object
+    properties:
+      sVlanIdList:
+        $ref: '#/definitions/VlanIdListing'
+    description: The OvcEndPointMapFormE object class represents the OVC End Point Map Form E (E for ENNI) that consists of a list of one or more S-VLAN ID values. An S-Tagged ENNI Frame whose S-VLAN ID value matches an entry in the list maps to the OVC End Point.
+  OvcEndPointMapFormT:
+    type: object
+    properties:
+      rootSVlan:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+      leafSVlan:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+    description: The OvcEndPointMapFormT object class represents the OVC End Point Map Form T (T for Trunk) that consists of a pair of S-VLAN ID values, <r,l>. r is called the Root S-VLAN ID value and l is called the Leaf S-VLAN ID value. An S-Tagged ENNI Frame whose S-VLAN ID value matches one of the two S-VLAN ID values in the OVC End Point Map Form T maps to the OVC End Point.
+  OvcEndPointMapFormV:
+    type: object
+    properties:
+      sVlan:
+        $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+      enniCeVlanIdList:
+        $ref: '#/definitions/VlanIdListing'
+    description: The OvcEndPointMapFormV object class represents the OVC End Point Map Form V (V for VUNI) that lists one or more ENNI CE-VLAN ID values. An S-Tagged ENNI Frame whose S-VLAN ID value matches the S-VLAN ID value specified in VUNI and whose ENNI CE-VLAN ID value matches one of the ENNI CE-VLAN ID values in the map, maps to the OVC End Point.
+  OvcEndPointMapFormU:
+    type: object
+    properties:
+      ceVlanIdList:
+        $ref: '#/definitions/VlanIdListing'
+    description: The OvcEndPointMapFormU object class represents the OVC End Point Map Form U (U for UNI). It is a list of one or more CE-VLAN ID values. A Service Frame is mapped to the OVC End Point if the CE-VLAN ID value of the Service Frame is in the list.
+  OvcEndPointRole:
+    type: string
+    description: String enumeration representing OVC End Point Role. Reference MEF 26.2 Section 16.4 OVC End Point Role Service Attribute.
+    enum:
+    - ROOT
+    - LEAF
+    - TRUNK
+  VlanIdListing:
+    type: object
+    properties:
+      type:
+        $ref: '#/definitions/VlanIdMappingType'
+      vlanIdList:
+        minItems: 0
+        type: array
+        description: This is a list of VLAN IDs.
+        items:
+          $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+    description: The list VLAN IDs, either when type=LIST, or when type=EXCEPT (which means the VLAN IDs except the listed).  When type=ALL, the VLAN ID list is not applicable. Reference MEF 26.2 Section 16.5.4 OVC End Point Map Form U.
+  VlanIdMappingType:
+    type: string
+    description: 'Enumeration for VLAN ID types, ALL for all VLAN IDs, LIST for a list of VLAN IDs, EXCEPT for all VLAN IDs except the listed: ALL-All VLAN IDs, EXCEPT- All VLAN IDs excepted the listed, LIST-List of VLAN IDs.'
+    enum:
+    - ALL
+    - EXCEPT
+    - LIST
+  VlanIdPreservation:
+    type: string
+    description: Enumeration for VLAN ID Preservation. Reference MEF 26.2 Section 12.7 OVC CE-VLAN ID Preservation Service Attribute.
+    enum:
+    - PRESERVE
+    - RETAIN
+    - STRIP
