@@ -1,0 +1,380 @@
+openapi: 3.0.3
+info:
+  title: Legato Service Ordering API
+  version: 4.0.0-RC
+  description: |-
+    The Service Order API provides a standardized mechanism for managing 
+    *ServiceOrders*. Using these APIs Business Applications (BUS) systems post 
+    *ServiceOrder* requests to the **Service Order Management** system within 
+    the Service Orchestration Function (SOF).
+
+    Additionally, the APIs also allow the BUS to query and retrieve 
+    *ServiceOrders* in  SOF and to register listeners to be notified of changes 
+    to the *ServiceOrders*.  
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 641 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+
+tags:
+  - name: ServiceOrder
+    description: |-
+      Mechanisms for BUS to create, query & retrieve *ServiceOrders*.
+  - name: EventSubscriptionHub
+    description: |-
+      Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
+
+servers:
+  - url: https://{server}:{port}{basePath}
+    variables:
+      server:
+        default: 'mef.net' 
+      port:
+        enum:
+          - '8443'
+          - '443'
+        default: '8443'
+      basePath:
+        default: /mefApi/legato/serviceOrdering/v4
+  
+paths:
+  /serviceOrder:
+    post:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderCreate
+      summary: Create a service order
+      description: |-
+        This operation creates a Service Order instance in the Service Order
+        management system maintained by the SOF. A Service Order is used to
+        request operations on a Service instance. A Service Order groups one
+        or more one Service Order Items - one per specific action on a Service
+        instance. The Action associated with the Service Order Item describes
+        the operation (add, remove, update) to be applied on the specified
+        Service instance. The Service Order Item and its associated Action can
+        operate on both existing (remove, update) as well as future (add)
+        Service instance. The Service Order is triggered from the Business
+        Application (BA) system in charge of the Product Order management to
+        the Service Orchestration Function (SOF) system that will orchestrate
+        the Service fulfillment. The assumption is that the Service
+        Specifications describing the Service instance in the Service Order
+        Item are already available (to both BA & SOF). If an exception is
+        encountered, then appropriate returnCode and error information is
+        populated and returned as specified.
+      deprecated: false
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: 'serviceOrderingSchema.openapi.yaml#/components/schemas/ServiceOrderCreate'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'serviceOrderingSchema.openapi.yaml#/components/schemas/ServiceOrder'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+    get:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderFind
+      summary: List service orders
+      description: |-
+        This operation returns a list of Service Order instances matching the
+        query parameters from the Service Order management system maintained by
+        the SOF. Attribute selection is possible using the ''fields'' parameter
+        to filter retrieved attribute(s) for each Service Order instance.
+        If an exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      deprecated: false
+      parameters:
+        - name: externalId
+          required: false
+          in: query
+          description: "
+            Filter by externalId"
+          schema:
+            type: string
+        - name: state
+          required: false
+          in: query
+          description: "
+            State of the order(s) to be retrieved"
+          schema:
+            $ref: 'serviceOrderingSchema.openapi.yaml#/components/schemas/ServiceOrderStateType'
+        - name: category
+          required: false
+          in: query
+          description: |
+            Category of the service order to be retrieved
+          schema:
+            type: string
+        - name: orderDate.gt
+          required: false
+          in: query
+          description: |-
+            Service Order date (creation) greather than
+          schema:
+            type: string
+            format: date-time
+        - name: orderDate.lt
+          required: false
+          in: query
+          description: |-
+            Service Order date (creation) lower than
+          schema:
+            type: string
+            format: date-time
+        - name: fields
+          required: false
+          in: query
+          description: |- 
+            Comma-separated properties of the Service Order to be included in 
+            the returned response
+          schema:
+            type: string
+        - name: offset
+          required: false
+          in: query
+          description: |-
+            Requested start index in a ordered list (sorted by id property) of 
+            matching Service Orders to be provided in response. 
+          schema:
+            type: integer
+        - name: limit
+          required: false
+          in: query
+          description: |-
+            Requested maximum number of Service Orders to be provided 
+            in the response
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          headers:
+            X-Total-Count:
+              description: ''
+              schema:
+                type: integer
+                format: int32
+            X-Result-Count:
+              description: ''
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: 'serviceOrderingSchema.openapi.yaml#/components/schemas/ServiceOrder'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  '/serviceOrder/{id}':
+    get:
+      tags:
+        - ServiceOrder
+      operationId: serviceOrderGet
+      summary: Retrieve a service order
+      description: |-
+        This operation retrieves a Service Order instance identified by the Id
+        parameter from the Service Order managment system maintained by the SOF.
+        Attribute selection is possible using the ''fields'' parameter to filter
+        retrieved attribute(s) for the returned Service Order instance. If an
+        exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      deprecated: false
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: "Identifier of the ServiceOrder"
+          schema:
+            type: string
+        - name: fields
+          required: false
+          in: query
+          description: |- 
+            Comma-separated properties of the Service Order to be included in 
+            the returned response
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'serviceOrderingSchema.openapi.yaml#/components/schemas/ServiceOrder'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  /hub:
+    post:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubCreate
+      summary: Create Hub
+      description: Structure used to create a hub (to subscribe to notification
+      deprecated: false
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscriptionInput'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscription'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '409':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Conflict'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  '/hub/{hubId}':
+    get:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubGet
+      summary: get hub
+      description: ''
+      deprecated: false
+      parameters:
+        - name: hubId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscription'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+    delete:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubDelete
+      summary: Delete Hub
+      description: Delete an existing Hub
+      deprecated: false
+      parameters:
+        - name: hubId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'

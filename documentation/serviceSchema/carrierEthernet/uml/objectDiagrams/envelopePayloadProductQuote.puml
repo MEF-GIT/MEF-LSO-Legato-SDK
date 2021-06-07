@@ -1,0 +1,64 @@
+@startuml
+
+title Envelope and Payload UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+rectangle Payload {
+
+        class AccessElineOvcQuote {
+            <<... attributes are skipped ...>>
+        }
+
+        class AccessElineOvcEndPoint_A {
+            <<... attributes are skipped ...>>
+        }
+
+        AccessElineOvcQuote "1" *-->"2..*" AccessElineOvcEndPoint_A
+
+        class AccessElineOvcEndPoint_Z {
+            <<... attributes are skipped ...>>
+        }
+
+        AccessElineOvcQuote "1" *-->"2..*" AccessElineOvcEndPoint_Z
+
+    class Enni {
+        <<... attributes are skipped ...>>
+    }
+
+        AccessElineOvcEndPoint_Z "*" <--o "1" Enni
+
+    class OperatorUNIQuote {
+        <<... attributes are skipped ...>>
+    }
+
+    AccessElineOvcEndPoint_A "*" <--o "1" OperatorUNIQuote
+
+}
+rectangle Envelope {
+    class ProductQuote  {
+        <<... attributes are skipped ...>>
+    }
+
+    class ProductQuoteItem_A  {
+        <<... attributes are skipped ...>>
+    }
+
+    ProductQuote "1" *--> "*" ProductQuoteItem_A
+
+    class ProductQuoteItem_B  {
+        <<... attributes are skipped ...>>
+    }
+
+    ProductQuote "1" *--> "*" ProductQuoteItem_B
+
+}
+
+ProductQuoteItem_A <-->  AccessElineOvcQuote
+ProductQuoteItem_B <--> OperatorUNIQuote
+
+@enduml

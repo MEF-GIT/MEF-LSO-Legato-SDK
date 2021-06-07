@@ -1,0 +1,71 @@
+@startuml
+
+title Envelope and Payload UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+rectangle Payload {
+
+        class OperatorL1Vc {
+            <<... attributes are skipped ...>>
+        }
+
+        class OperatorL1VcEndPoint_A {
+            <<... attributes are skipped ...>>
+        }
+
+        OperatorL1Vc "1" *-->"2" OperatorL1VcEndPoint_A
+
+        class OperatorL1VcEndPoint_Z {
+            <<... attributes are skipped ...>>
+        }
+
+        OperatorL1Vc "1" *-->"2" OperatorL1VcEndPoint_Z
+
+
+
+    class L1OperatorUni {
+        <<... attributes are skipped ...>>
+    }
+
+    OperatorL1VcEndPoint_A "1" <--o "1" L1OperatorUni
+
+    class L1Enni  {
+        <<... attributes are skipped ...>>
+    }
+
+    OperatorL1VcEndPoint_Z "*" <--o "1" L1Enni
+}
+rectangle Envelope {
+    class ServiceOrder  {
+        <<... attributes are skipped ...>>
+    }
+
+    class ServiceOrderItem_A  {
+        <<... attributes are skipped ...>>
+    }
+
+    ServiceOrder "1" *--> "*" ServiceOrderItem_A
+
+    class ServiceOrderItem_B  {
+        <<... attributes are skipped ...>>
+    }
+
+    ServiceOrder "1" *--> "*" ServiceOrderItem_B
+
+    class ServiceOrderItem_C  {
+        <<... attributes are skipped ...>>
+    }
+
+    ServiceOrder "1" *--> "*" ServiceOrderItem_C
+}
+
+ServiceOrderItem_A <-->  OperatorL1Vc
+ServiceOrderItem_B <--> L1OperatorUni
+ServiceOrderItem_C <--> L1Enni
+
+@enduml

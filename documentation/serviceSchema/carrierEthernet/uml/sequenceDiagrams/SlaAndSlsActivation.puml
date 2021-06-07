@@ -1,0 +1,45 @@
+@startuml
+title MEF SLA and SLS Provisioning Flow
+
+entity CACListener
+participant CAC
+
+participant BA
+entity BAHub
+
+participant SOF
+
+
+== CAC Subscribes Product Order Notifications ==
+
+activate CAC#LightGray
+activate BA #LightGray
+CAC -> CACListener: <<listenerCreate>>
+CAC -> BA: POST /hub (listener, filterQuery)
+BA -> BAHub: <<hubCreate>> (listener, filterQuery)
+
+CAC -> BA: GET /ProductSlsCatalog
+BA -> CAC: 200 OK [SlsCatalog]
+CAC -> CAC: <<determineSlsFromCatalog>>
+
+note left of CAC
+Customer selects abstracted SLS
+end note
+CAC -> BA: POST /productOrder
+BA -> CAC: 200 OK
+
+BA -> BAHub: <<eventUpdate:productOrderActivation>>
+BAHub -> CACListener: POST /listener/productOrderCreated
+
+BA -> BA: <<mapSls>>
+note right of BA
+BA maps Product SLS to Service SLS
+end note
+BA -> SOF: POST /serviceOrder
+SOF -> BA: 200 OK
+
+deactivate CAC #LightGray
+deactivate BA #LightGray
+deactivate SOF #LightGray
+
+@enduml

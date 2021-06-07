@@ -1,0 +1,1858 @@
+openapi: 3.0.3
+info:
+  description: "The Service Order API provides a standardized mechanism for managing\
+    \ \n*ServiceOrders*. Using these APIs Business Applications (BUS) systems post\
+    \ \n*ServiceOrder* requests to the **Service Order Management** system within\
+    \ \nthe Service Orchestration Function (SOF).\n\nAdditionally, the APIs also allow\
+    \ the BUS to query and retrieve \n*ServiceOrders* in  SOF and to register listeners\
+    \ to be notified of changes \nto the *ServiceOrders*.  \n\n- MEF Developer Guide\
+    \ Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 641 v18.5.1\n\nCopyright\
+    \ © MEF 2020. All Rights Reserved"
+  title: Legato Service Ordering API
+  version: 4.0.0-RC
+servers:
+- url: "https://{server}:{port}{basePath}"
+  variables:
+    server:
+      default: mef.net
+    port:
+      default: "8443"
+      enum:
+      - "8443"
+      - "443"
+    basePath:
+      default: /mefApi/legato/serviceOrdering/v4
+tags:
+- description: "Mechanisms for BUS to create, query & retrieve *ServiceOrders*."
+  name: ServiceOrder
+- description: Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
+  name: EventSubscriptionHub
+paths:
+  /serviceOrder:
+    get:
+      deprecated: false
+      description: |-
+        This operation returns a list of Service Order instances matching the
+        query parameters from the Service Order management system maintained by
+        the SOF. Attribute selection is possible using the ''fields'' parameter
+        to filter retrieved attribute(s) for each Service Order instance.
+        If an exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      operationId: serviceOrderFind
+      parameters:
+      - description: ' Filter by externalId'
+        explode: true
+        in: query
+        name: externalId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' State of the order(s) to be retrieved'
+        explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          $ref: '#/components/schemas/ServiceOrderStateType'
+        style: form
+      - description: |
+          Category of the service order to be retrieved
+        explode: true
+        in: query
+        name: category
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Service Order date (creation) greather than
+        explode: true
+        in: query
+        name: orderDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Service Order date (creation) lower than
+        explode: true
+        in: query
+        name: orderDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Comma-separated properties of the Service Order to be included\
+          \ in \nthe returned response"
+        explode: true
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Requested start index in a ordered list (sorted by id property)\
+          \ of \nmatching Service Orders to be provided in response. "
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Requested maximum number of Service Orders to be provided \n\
+          in the response"
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ServiceOrder'
+                type: array
+          description: Ok
+          headers:
+            X-Total-Count:
+              explode: false
+              schema:
+                format: int32
+                type: integer
+              style: simple
+            X-Result-Count:
+              explode: false
+              schema:
+                format: int32
+                type: integer
+              style: simple
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: List service orders
+      tags:
+      - ServiceOrder
+    post:
+      deprecated: false
+      description: |-
+        This operation creates a Service Order instance in the Service Order
+        management system maintained by the SOF. A Service Order is used to
+        request operations on a Service instance. A Service Order groups one
+        or more one Service Order Items - one per specific action on a Service
+        instance. The Action associated with the Service Order Item describes
+        the operation (add, remove, update) to be applied on the specified
+        Service instance. The Service Order Item and its associated Action can
+        operate on both existing (remove, update) as well as future (add)
+        Service instance. The Service Order is triggered from the Business
+        Application (BA) system in charge of the Product Order management to
+        the Service Orchestration Function (SOF) system that will orchestrate
+        the Service fulfillment. The assumption is that the Service
+        Specifications describing the Service instance in the Service Order
+        Item are already available (to both BA & SOF). If an exception is
+        encountered, then appropriate returnCode and error information is
+        populated and returned as specified.
+      operationId: serviceOrderCreate
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ServiceOrderCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Create a service order
+      tags:
+      - ServiceOrder
+  /serviceOrder/{id}:
+    get:
+      deprecated: false
+      description: |-
+        This operation retrieves a Service Order instance identified by the Id
+        parameter from the Service Order managment system maintained by the SOF.
+        Attribute selection is possible using the ''fields'' parameter to filter
+        retrieved attribute(s) for the returned Service Order instance. If an
+        exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      operationId: serviceOrderGet
+      parameters:
+      - description: Identifier of the ServiceOrder
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Comma-separated properties of the Service Order to be included\
+          \ in \nthe returned response"
+        explode: true
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: Ok
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Retrieve a service order
+      tags:
+      - ServiceOrder
+  /hub:
+    post:
+      deprecated: false
+      description: Structure used to create a hub (to subscribe to notification
+      operationId: hubCreate
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Create Hub
+      tags:
+      - EventSubscriptionHub
+  /hub/{hubId}:
+    delete:
+      deprecated: false
+      description: Delete an existing Hub
+      operationId: hubDelete
+      parameters:
+      - explode: false
+        in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Delete Hub
+      tags:
+      - EventSubscriptionHub
+    get:
+      deprecated: false
+      operationId: hubGet
+      parameters:
+      - explode: false
+        in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Ok
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: get hub
+      tags:
+      - EventSubscriptionHub
+components:
+  schemas:
+    ActionType:
+      description: Action type to be described on the order item.
+      enum:
+      - add
+      - modify
+      - delete
+      - noChange
+      type: string
+    Addressable:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          name:
+            description: Name of the API schema object instance.
+            type: string
+          id:
+            description: "Unique identifier of the API schema object instance. The\
+              \ \nID is invariant and is assigned by the server. In other words \n\
+              this entity will have the same ID throught its lifetime."
+            readOnly: true
+            type: string
+          href:
+            description: URI reference of the API schema object instance.
+            format: uri
+            type: string
+        type: object
+      description: Base schema for all adressable API schema objects.
+      required:
+      - id
+    AdministrativeState:
+      description: MEF Core Model (MCM) defined Administraive State.
+      enum:
+      - ERROR
+      - INIT
+      - ENABLED_FOR_USE
+      - LOCKED
+      - IN_TEST
+      - UNKNOWN
+      readOnly: true
+      type: string
+    Any: {}
+    ApplicationFlow:
+      description: "A subset of the IP packets that arrive at an Ingress SD-WAN UNI,\
+        \ identified by a set of Application Flow Criteria, and distinct from the\
+        \ subset for any other Application Flow at that SD-WAN UNI. Reference MEF\
+        \ 70 Table 1-Terminology and Abbreviations."
+      properties:
+        appName:
+          description: Identifier String that is used to refer to Application Flow.
+          type: string
+        applicationFlowCriteria:
+          $ref: '#/components/schemas/ApplicationFlowCriteria'
+      type: object
+    ApplicationFlowCriteria:
+      description: "ApplicationFlowCriterion is a class used to describe Application\
+        \ Flow MUST include the Criteria. Reference MEF 70 Section 8.7 SWVC List of\
+        \ Application Flows Service Attribute [R46] Table 4 - Required Application\
+        \ Flow Criteria."
+      properties:
+        ethertype:
+          description: Ethertype. Integer in the range 0x600 to 0xffff. Reference
+            MEF 70 Section 8.7 Table-4 Required Application Flow Criteria.
+          items:
+            type: integer
+          maxItems: 1
+          minItems: 0
+          type: array
+        ipv4DestinationAddress:
+          description: IPv4 Destination Address. Reference MEF 70 Section 8.7 Table-4
+            Required Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv4Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        tcpUdpSourcePortList:
+          description: TCP/UDP Source Port List. Reference MEF 70 Section 8.7 Table-4
+            Required Application Flow Criteria.
+          items:
+            maximum: 65535
+            minimum: 0
+            type: integer
+          minItems: 0
+          type: array
+        any:
+          description: Match Any IP Packet. Reference MEF 70 Section 8.7 Table-4 Required
+            Application Flow Criteria.
+          type: boolean
+        applicationIdentifier:
+          items:
+            $ref: '#/components/schemas/ApplicationIdentifier'
+          minItems: 0
+          type: array
+        ipv4ProtocolList:
+          description: IPv4 Destination Address. Reference MEF 70 Section 8.7 Table-4
+            Required Application Flow Criteria.
+          items:
+            maximum: 255
+            minimum: 0
+            type: integer
+          type: array
+        ipv6SourceAddress:
+          description: IPv6 Source Address. Reference MEF 70 Section 8.7 Table-4 Required
+            Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        ipv4SourceAddress:
+          description: IPv4 Source Address. Reference MEF 70 Section 8.7 Table-4 Required
+            Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv4Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        cVlans:
+          description: C-VLAN ID List. Integer in range 0 to 4096. Reference MEF 70
+            Section 8.7 Table-4 Required Application Flow Criteria.
+          items:
+            maximum: 4094
+            minimum: 0
+            type: integer
+          minItems: 0
+          type: array
+        tcpUdpDestinationPortList:
+          description: TCP/UDP Destination Port List. Reference MEF 70 Section 8.7
+            Table-4 Required Application Flow Criteria.
+          items:
+            maximum: 65535
+            minimum: 0
+            type: integer
+          minItems: 0
+          type: array
+        ipv6DestinationAddress:
+          description: IPv6 Destination Address. Reference MEF 70 Section 8.7 Table-4
+            Required Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        nextHeadV6:
+          description: IPv6 Next Header List. Reference MEF 70 Section 8.7 Table-4
+            Required Application Flow Criteria.
+          items:
+            maximum: 255
+            minimum: 0
+            type: integer
+          minItems: 0
+          type: array
+        ipv4SourceOrDestinationAddress:
+          description: IPv4 Source or Destination Address. Reference MEF 70 Section
+            8.7 Table-4 Required Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv4Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        ipv6SourceOrDestinationAddress:
+          description: IPv6 Source or Destination Address. Reference MEF 70 Section
+            8.7 Table-4 Required Application Flow Criteria.
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          maxItems: 1
+          minItems: 0
+          type: array
+        tcpUdpSourceOrDestinationPortList:
+          description: TCP/UDP Source or Destination Port List. Reference MEF 70 Section
+            8.7 Table-4 Required Application Flow Criteria.
+          items:
+            maximum: 65535
+            minimum: 0
+            type: integer
+          minItems: 0
+          type: array
+      type: object
+    ApplicationFlowGroup:
+      description: An aggregation of Application Flows at an SD-WAN UNI that can be
+        used to assign a common Policy to the Application Flows and/or share bandwidth
+        commitments and limitations amoung Application Flows. Reference MEF 70 Table
+        1-Terminology and Abbreviations.
+      properties:
+        name:
+          description: Application Flow Group name.
+          type: string
+        applicationFlows:
+          description: Associated Application Flows.
+          items:
+            $ref: '#/components/schemas/ApplicationFlow'
+          minItems: 0
+          type: array
+      type: object
+    ApplicationIdentifier:
+      description: Abstract class intended to be extended (subclassed) to Service
+        Provider defined Application Identifier. Reference MEF 70 Section 8.7 Table-4
+        Required Application Flow Criteria.
+      properties:
+        appId:
+          description: "Application Identfier as a String. Reference MEF 70 Section\
+            \ 8.7 [R47]."
+          type: string
+      type: object
+    Backup:
+      description: Represents a Policy Criterion when at least one non-Backup UCS
+        available at an SD-WAN Edge. Reference MEF 70 Section 8.5.6 BACKUP Policy
+        Criterion.
+      enum:
+      - "YES"
+      - "NO"
+      type: string
+    BandwidthPolicyCriterion:
+      description: BandwidthPolicyCriterion is a data type that specifies a rate (bandwidth)
+        limit on an Application Flow or Application Flow Group. Reference MEF 70 Section
+        8.5.7 BANDWIDTH Policy Criterion.
+      properties:
+        max:
+          description: Limit on the average information rate in bits per second that
+            can be used by the Application Flow or none.  Reference MEF 70 Section
+            8.5.7.
+          items:
+            type: integer
+          maxItems: 1
+          minItems: 0
+          type: array
+        commit:
+          description: Average information rate in bits per second that is committed
+            to the Application Flow or none. Reference MEF 70 Section 8.5.7.
+          items:
+            type: integer
+          maxItems: 1
+          minItems: 0
+          type: array
+      type: object
+    BillingMethod:
+      description: Represents a Policy Criterion that provides control over the charge
+        type of the network that can be used to forward an Application Flow. Reference
+        MEF 70 Section 8.5.5 BILLING-METHOD Policy Criterion.
+      enum:
+      - FLAT_RATE_ONLY
+      - EITHER
+      type: string
+    Characteristic:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          valueType:
+            description: Data type of the value of the characteristic. This may be
+              a primitive type name or an schema object class name.
+            type: string
+          name:
+            description: Name of the characteristic
+            type: string
+          value:
+            $ref: '#/components/schemas/Any'
+        required:
+        - name
+        type: object
+      description: Describes the characteristic of an API schema object.
+    Encryption:
+      description: Represents a Policy Criterion used to specify whether or not encryption
+        is required. Reference MEF 70 Section 8.5.2 ENCRYPTION Policy Criterion.
+      enum:
+      - "YES"
+      - EITHER
+      type: string
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \     response-code (3xx, 4xx, 5xx)"
+      properties:
+        reason:
+          description: |-
+            Text that explains the reason for error. This can be shown to a
+            client user.
+          type: string
+        code:
+          description: |-
+            Application related code.
+            List of supported error codes are defined below:
+
+            **400: Bad Request**
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+
+            **401: Unauthorized**
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+
+            **403: Forbidden**
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+
+            **404: Not Found**
+            - 60: Resource not found
+
+            **405: Method Not Allowed**
+            - 61: Method not allowed
+
+            **408: Request Timeout**
+            - 63: Request time-out
+
+            **409: Conflict**
+            - 64: Resource Conflict
+
+            **422: Unprocessable Entity**
+            - Functional Error codes specific to operation
+
+            **500: Internal Server Error**
+            - 1: Internal Error
+
+            **501: Not Implemented**
+
+            **503: Service Unavailable**
+          format: int32
+          type: integer
+        message:
+          description: |-
+            Text that provides more details and corrective actions related to
+            the error. This can be shown to a client user.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+        referenceError:
+          description: URI pointing to (external) documentation describing the error.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+        status:
+          description: HTTP error code extension like 400-2.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+      required:
+      - code
+      - reason
+      type: object
+    EventSubscription:
+      allOf:
+      - $ref: '#/components/schemas/EventSubscriptionInput'
+      - properties:
+          id:
+            description: Unique identifier of Hub
+            type: string
+        required:
+        - id
+        type: object
+      description: Resource used to manage notification subscription.
+    EventSubscriptionInput:
+      description: The information needed to create a Hub.
+      properties:
+        query:
+          description: |-
+            The query must have an eventType= information.
+            Optionally a ? could be added to reduce hub.
+            query”:”eventType = ServiceOrderStateChangeNotification”&serviceOrder.state=COMPLETED
+          type: string
+        callback:
+          description: URL where notification must be send
+          type: string
+      required:
+      - callback
+      - query
+      type: object
+    Extensible:
+      description: "Base schema for all API schema objects that support polymorphic\
+        \ \nextensions of its defined schema."
+      properties:
+        '@baseType':
+          description: "When sub-classing, this defines the super/base class type\
+            \ (if \napplicable) of the API schema object."
+          type: string
+        '@type':
+          description: The concrete (non-abstract) class type of the API schema object.
+          type: string
+        '@schemaLocation':
+          description: A URI refernce to the schema file that defines the attributes
+            and relationships of the API schema object.
+          format: uri
+          type: string
+      required:
+      - '@type'
+      type: object
+    InternetBreakout:
+      description: Represents a Policy Criterion indicating whether the Application
+        Flow should be forwarded directly to the Internet using Internet Breakout.
+        Reference MEF 70 Section 8.5.4 INTERNET-BREAKOUT Policy Criterion.
+      enum:
+      - "YES"
+      - "NO"
+      type: string
+    Ipv4AddressType:
+      description: "IPv4 Connection Address mechanism. Possible values are None, Static\
+        \ or DHCP."
+      enum:
+      - DHCP
+      - STATIC
+      type: string
+    Ipv4ConnectionAddressing:
+      description: Ipv4ConnectionAddressing is a data type representing how IPv4 addresses
+        are allocated to the devices on the Subscriber side of the UNI. For DHCP and
+        Static the Primary Subnet and Secondary Subnet List must be included. Reference
+        MEF 70 Section 10.4 SD-WAN UNI IPv4 Connection Addressing Service Attribute.
+      properties:
+        ipv4AddressType:
+          $ref: '#/components/schemas/Ipv4AddressType'
+        ipv4SecondarySubnetList:
+          description: Secondary IPv4 Subnet List. Includes IPv4 Prefix and Service
+            Provider IPv4 Addresses.
+          items:
+            $ref: '#/components/schemas/Ipv4Subnet'
+          minItems: 0
+          type: array
+        ipv4PrimarySubnet:
+          description: Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider
+            IPv4 Addresses.
+          items:
+            $ref: '#/components/schemas/Ipv4Subnet'
+          maxItems: 1
+          minItems: 0
+          type: array
+      type: object
+    Ipv4Prefix:
+      description: Ipv4Prefix is a data type representing an IPv4 prefix using slash
+        notation.
+      properties:
+        prefixLength:
+          description: IPv4 prefix length with range 0-31.
+          type: integer
+        ipv4Address:
+          description: IPv4 address represented as a string.
+          type: string
+      type: object
+    Ipv4Subnet:
+      description: Ipv4Subnet is a data type representing an IPv4 subnet logical partition
+        of an IP network. Included is list of Service Provider IPv4 addresses.
+      properties:
+        serviceProviderIpv4Addresses:
+          description: List of Service Provider IPv4 addresses.
+          items:
+            type: string
+          minItems: 1
+          type: array
+        ipv4Prefix:
+          $ref: '#/components/schemas/Ipv4Prefix'
+      type: object
+    Ipv6AddressType:
+      description: "IPv6 Connection Address mechanism. Possible values are None, DHCP,\
+        \ SLAAC, Static or LL-only."
+      enum:
+      - DHCP
+      - SLAAC
+      - STATIC
+      - LL_ONLY
+      type: string
+    Ipv6ConnectionAddressing:
+      description: "IPv6ConnectionAddressing is a data type that specifies how IPv6\
+        \ addresses are allocated to the devices on the Subscriber side of the UNI.\
+        \ For DHCP, SLAAC and Static, IPv6 Prefix and Service Provider IPv6 Addresses\
+        \ are needed. Reference MEF 70 Section 10.5 SD-WAN UNI IPv6 Connection Addressing\
+        \ Service Attribute."
+      properties:
+        ipv6AddressType:
+          $ref: '#/components/schemas/Ipv6AddressType'
+        ipv6SubnetList:
+          items:
+            $ref: '#/components/schemas/Ipv6Subnet'
+          minItems: 0
+          type: array
+      type: object
+    Ipv6Prefix:
+      description: Ipv6Prefix is a data type representing an IPv6 prefix using slash
+        notation.
+      properties:
+        prefixLength:
+          description: IPv6 prefix length.
+          type: integer
+        ipv6Address:
+          description: IPv6 address represented as a string.
+          type: string
+      type: object
+    Ipv6Subnet:
+      description: IPv6Subnet is a data type representing an IPv6 subnet logical partition
+        of an IP network. Included is list of Service Provider IPv6 addresses.
+      properties:
+        serviceProviderIpv6Addresses:
+          description: List of IPv6 Service Provider addresses.
+          items:
+            type: string
+          minItems: 1
+          type: array
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+      type: object
+    L2Interface:
+      description: L2Interface is a data type that describes the underlying network
+        layer that carries IP Packets across the UNI. The possible values are UT/PT
+        and CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service
+        Attribute.
+      properties:
+        vlanId:
+          description: VLAN ID.
+          items:
+            type: integer
+          maxItems: 1
+          minItems: 0
+          type: array
+        l2InterfaceType:
+          $ref: '#/components/schemas/L2InterfaceType'
+      type: object
+    L2InterfaceType:
+      description: L2InterfaceType is an enumeration that describes the underlying
+        network layer that carries IP Packets across the UNI. The possible values
+        are UT/PT and CVLANx. Reference MEF 70 Section 10.2.
+      enum:
+      - UT_PT
+      - CVLANX
+      type: string
+    MefServiceConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      description: Describes the characteristic of an MEF Service schema object.
+      discriminator:
+        mapping:
+          urn:mef:lso:spec:legato:SdWanUni:v2.0.0:all: '#/components/schemas/SdWanUni'
+          urn:mef:lso:spec:legato:SdWanVc:v2.0.0:all: '#/components/schemas/SdWanVc'
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: Used as a discriminator to support polymorphic definitions
+          type: string
+    Note:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          date:
+            description: Date of the note
+            format: date-time
+            type: string
+          system:
+            description: Describes the system from which the action related to this
+              note was done
+            type: string
+          author:
+            description: Author of the note
+            type: string
+          text:
+            description: Text of the note
+            type: string
+        type: object
+      description: Extra information about a given entity.
+    OperationalState:
+      description: |-
+        MEF Core Model (MCM) defined Operational State.
+        * INSTALLED_AND_NOT_OPERATING_CORRECTLY means that the object installed but has one or more pending alarms that have not been cleared.
+        * INSTALLED_BUT_NOT_OPERATING means that the object is in a shutdown, powered-off, or similar state.
+        * IN_TEST means that the object can only respond to testing commands and communications.
+        * LOCKED means that the object is prohibited from being used.
+        * UNKNOWN means that this object was unable to report its status when communication was last attempted.
+      enum:
+      - ERROR
+      - INIT
+      - INSTALLED_AND_OPERATING_CORRECTLY
+      - INSTALLED_AND_NOT_OPERATING_CORRECTLY
+      - INSTALLED_BUT_NOT_OPERATING
+      - NOT_INSTALLED
+      - IN_TEST
+      - LOCKED
+      - UNKNOWN
+      readOnly: true
+      type: string
+    OrderItemRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    OrderRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    Period:
+      description: Data type for Time and Date in UTC. Reference MEF-Types.
+      properties:
+        units:
+          $ref: '#/components/schemas/TimeUnits'
+        value:
+          description: Time value represented as an integer.
+          minimum: 0
+          type: integer
+      type: object
+    Place:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          role:
+            description: "Role of the place, such as: [home delivery], [shop retrieval]."
+            type: string
+        type: object
+      description: "Place reference. Place defines the places where the products are\
+        \ sold \nor delivered."
+    Policy:
+      description: Policy that has Policy Name (polName) and Policy Criterion (polCl).
+        A Policy is a list of Policy Criteria. Policies are assigned to Application
+        Flows and Application Flow Groups at each SWVC End Point.
+      properties:
+        polName:
+          description: An identifier String that specifies the name of Policy. polName
+            cannot be 'block'.
+          type: string
+        policyCriteria:
+          $ref: '#/components/schemas/PolicyCriteria'
+        serviceProviderPolicyCriterion:
+          description: Pointer to Service Provider Policy Criteria.
+          items:
+            $ref: '#/components/schemas/ServiceProviderPolicyCriterion'
+          minItems: 0
+          type: array
+      type: object
+    PolicyCriteria:
+      description: PolicyCriteria is a class representing listed name Policies that
+        can be applied to Application Flows and Application Flow Groups at SWVC End
+        Points.  Reference MEF 70 Section 8.5 SWVC List of Policies Service Attribute.
+      properties:
+        encyrption:
+          items:
+            $ref: '#/components/schemas/Encryption'
+          maxItems: 1
+          minItems: 0
+          type: array
+        publicPrivate:
+          items:
+            $ref: '#/components/schemas/PublicPrivate'
+          maxItems: 1
+          minItems: 0
+          type: array
+        backUp:
+          items:
+            $ref: '#/components/schemas/Backup'
+          maxItems: 1
+          minItems: 0
+          type: array
+        bandwidthPolicyCriterion:
+          items:
+            $ref: '#/components/schemas/BandwidthPolicyCriterion'
+          maxItems: 1
+          minItems: 0
+          type: array
+        billingMethod:
+          items:
+            $ref: '#/components/schemas/BillingMethod'
+          maxItems: 1
+          minItems: 0
+          type: array
+        internetBreakout:
+          items:
+            $ref: '#/components/schemas/InternetBreakout'
+          maxItems: 1
+          minItems: 0
+          type: array
+      type: object
+    PolicyMap:
+      description: Specifies the Policies that are assigned to Application Flows and
+        Application Flow Groups at the SWVC End Point. Reference MEF 70 Section 9.3
+        SWVC End Point Policy Map.
+      properties:
+        applicationFlow:
+          description: Pointer to Application Flow.
+          items:
+            $ref: '#/components/schemas/ApplicationFlow'
+          maxItems: 1
+          minItems: 0
+          type: array
+        applicationFlowGroup:
+          description: Pointer to Application Flow Group.
+          items:
+            $ref: '#/components/schemas/ApplicationFlowGroup'
+          maxItems: 1
+          minItems: 0
+          type: array
+        policy:
+          $ref: '#/components/schemas/Policy'
+      type: object
+    PublicPrivate:
+      description: Represents a Policy Criterion that provides control over whether
+        or not an Application Flow can traverse a public Internet Underlay Connectivity
+        Service. Reference MEF 70 Section 8.5.3 PUBLIC-PRIVATE Policy Criterion.
+      enum:
+      - PRIVATE_ONLY
+      - EITHER
+      type: string
+    Referenceable:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          '@referredType':
+            description: The class type of the target API schema object instance.
+            type: string
+        required:
+        - '@referredType'
+        type: object
+      description: Base schema for all adressable API schema object references.
+    RelatedPartyRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          role:
+            description: "The role of the related party (e.g. Owner, requester)."
+            type: string
+        type: object
+      description: |-
+        A related party defines a party and its role, that is linked to a
+        specific entity such as ServiceSpecification, ServiceOrder, Service, etc
+    ResourceRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: Resource
+            type: string
+        type: object
+      description: Provides reference to the Resource supporting the Service instance.
+    SdWanUni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: "SdWanUni is a class that represents the boundary between the\
+          \ responsibility of the Subscriber and the responsibility of the Service\
+          \ Provider. Reference MEF 70, Section 6.4 SD-WAN UNI."
+        properties:
+          maxL2FrameSize:
+            description: "Specifies the maximum length L2 frame that is accepted by\
+              \ the Service Provider. Reference MEF 70, Section 10.3 SD-WAN UNI Maximum\
+              \ L2 Frame Size Service Attribute."
+            type: integer
+          administrativeState:
+            $ref: '#/components/schemas/AdministrativeState'
+          ipv4ConnectionAddressing:
+            $ref: '#/components/schemas/Ipv4ConnectionAddressing'
+          ipv6ConnectionAddressing:
+            $ref: '#/components/schemas/Ipv6ConnectionAddressing'
+          uniIdentifier:
+            description: "Identification of the UNI for management purposes. Reference\
+              \ MEF 70, Section 10.1 SD-WAN UNI Identifier Service Attribute."
+            type: string
+          l2Interface:
+            $ref: '#/components/schemas/L2Interface'
+          operationalState:
+            $ref: '#/components/schemas/OperationalState'
+          swVcEndPoint:
+            items:
+              $ref: '#/components/schemas/SwVcEndPointRef'
+            maxItems: 1
+            minItems: 0
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:SdWanUni:v2.0.0:all
+    SdWanUniRef:
+      description: Reference to a SD-WAN UNI.
+      properties:
+        href:
+          format: uri
+          type: string
+        id:
+          format: uuid
+          type: string
+      type: object
+    SdWanVc:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: SdWanVc is a class that represents a SD-WAN Virtual Connection.
+          Reference MEF 70 Section 6.8 SD-WAN Virtual Connection.
+        properties:
+          listOfApplicationFlowGroups:
+            description: A list (possibly empty) of Application Flow Group names.
+              Reference MEF 70 Section 8.6 SWVC List of Application Flow Groups Service
+              Attribute.
+            items:
+              $ref: '#/components/schemas/ApplicationFlowGroup'
+            minItems: 0
+            type: array
+          ipv4ReservedPrefixes:
+            description: Specifies a list of IPv4 Prefixes that the Service Provider
+              reserves for use for the SWVC within their own network or for distribution
+              to the Subscriber via DHCP. Reference MEF 70 Section 8.4 SWVC Reserved
+              Prefixes Service Attribute.
+            items:
+              $ref: '#/components/schemas/Ipv4Prefix'
+            minItems: 0
+            type: array
+          listOfApplicationFlows:
+            description: Specifies the Application Flows that can be recognized by
+              the SD-WAN service and information about how to identify IP packets
+              in each Application Flow. Reference MEF 70 Section 8.7 SWVC List of
+              Application Flows Service Attribute.
+            items:
+              $ref: '#/components/schemas/ApplicationFlow'
+            minItems: 1
+            type: array
+          administrativeState:
+            $ref: '#/components/schemas/AdministrativeState'
+          serviceUptimeObjective:
+            $ref: '#/components/schemas/ServiceUptimeObjective'
+          swVcIdentifier:
+            description: "Identification of the SWVC for management purposes. Reference\
+              \ MEF 70, Section 8.1."
+            type: string
+          operationalState:
+            $ref: '#/components/schemas/OperationalState'
+          listOfPolicies:
+            description: A list of the Policies that can be applied to Application
+              Flows carried by the SWVC End Points. Reference MEF 10.4 Section 8.5
+              SWVC List of Policies Service Attribute.
+            items:
+              $ref: '#/components/schemas/Policy'
+            minItems: 1
+            type: array
+          swVcEndPointList:
+            description: The SWVC End Point that are connected by the SWVC. Reference
+              MEF 70 Section 8.2 SWVC End Point List Service Attribute.
+            items:
+              $ref: '#/components/schemas/SwVcEndPoint'
+            minItems: 2
+            type: array
+          ipv6ReservedPrefixes:
+            description: Specifies a list of IPv6 Prefixes that the Service Provider
+              reserves for use for the SWVC within their own network or for distribution
+              to the Subscriber via DHCP or SLAAC. Reference MEF 70 Section 8.4 SWVC
+              Reserved Prefixes Service Attribute.
+            items:
+              $ref: '#/components/schemas/Ipv6Prefix'
+            minItems: 0
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:SdWanVc:v2.0.0:all
+    ServiceCreate:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          serviceType:
+            description: 'Business type of the service '
+            type: string
+          note:
+            items:
+              $ref: '#/components/schemas/Note'
+            type: array
+          supportingResource:
+            items:
+              $ref: '#/components/schemas/ResourceRef'
+            readOnly: true
+            type: array
+          mefServiceConfiguration:
+            $ref: '#/components/schemas/MefServiceConfiguration'
+          serviceSpecification:
+            $ref: '#/components/schemas/ServiceSpecificationRef'
+          description:
+            description: Free-text description of the service
+            type: string
+          supportingService:
+            description: "A list of supporting services (SupportingService [*]). A\
+              \ \ncollection of services that support this service (bundling, \nlink\
+              \ CFS to RFS)."
+            items:
+              $ref: '#/components/schemas/ServiceRef'
+            type: array
+          relatedParty:
+            items:
+              $ref: '#/components/schemas/RelatedPartyRef'
+            type: array
+          serviceRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceRelationship'
+            type: array
+          place:
+            items:
+              $ref: '#/components/schemas/Place'
+            type: array
+          state:
+            $ref: '#/components/schemas/ServiceStateType'
+          category:
+            description: Is it a customer facing or resource facing service
+            type: string
+          serviceCharacteristic:
+            items:
+              $ref: '#/components/schemas/Characteristic'
+            type: array
+        type: object
+      description: "In the context of a service order, and depending of the action\
+        \ requested (add/modify/delete/noChange) this data structure captures the\
+        \ configuration to apply to an existing subscribed service or to a new one"
+    ServiceOrder:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrderCreate'
+      - properties:
+          expectedCompletionDate:
+            description: Expected delivery date set by the provider.
+            format: date-time
+            type: string
+          completionDate:
+            description: Date when the order was completed
+            format: date-time
+            type: string
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+          orderDate:
+            description: Date when the order was created.
+            format: date-time
+            type: string
+          startDate:
+            description: Date when the order processing was started
+            format: date-time
+            type: string
+        type: object
+      description: |-
+        A Service Order is used to request operations on a Service instance.
+        A Service Order groups one or more one Service Order Items - one per
+        specific action on a Service instance. The Action associated with the
+        Service Order Item describes the operation (add, remove, update) to be
+        applied on the specified Service instance.The Service Order Item and
+        its associated Action can operate on both existing (remove, update) as
+        well as future (add) Service instance.The Service Order is triggered
+        from the Business Application (BA) system in charge of the Product Order
+        management to the Service Orchestration Function (SOF) system that will
+        orchestrate the Service fulfillment.
+    ServiceOrderCreate:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          note:
+            items:
+              $ref: '#/components/schemas/Note'
+            type: array
+          notificationContact:
+            description: "Contact attached to the order to send back information \n\
+              regarding this order"
+            type: string
+          orderItem:
+            items:
+              $ref: '#/components/schemas/ServiceOrderItem'
+            minItems: 1
+            type: array
+          externalId:
+            description: |-
+              ID given by the consumer and only understandable by client
+              (to facilitate client searches)
+            type: string
+          description:
+            description: A free-text description of the service order
+            type: string
+          category:
+            description: |-
+              Used to categorize the order that can be useful for OM system
+              (e.g. “broadband”, “TVOption”, ...)'
+            type: string
+          priority:
+            description: |-
+              A way that can be used by consumers to prioritize orders in
+              Service Order Management system (from 0 to 4 : 0 is the highest
+              priority, and 4 the lowest
+            type: integer
+          relatedParty:
+            items:
+              $ref: '#/components/schemas/RelatedPartyRef'
+            type: array
+          orderRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceOrderRelationship'
+            type: array
+          requestedStartDate:
+            description: Order start date wished by the requestor
+            format: date-time
+            type: string
+          requestedCompletionDate:
+            description: Requested delivery date from the requestor perspective
+            format: date-time
+            type: string
+        type: object
+      description: This structure is used in the operation POST for a serviceOrder
+        request
+    ServiceOrderItem:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          service:
+            $ref: '#/components/schemas/ServiceCreate'
+          action:
+            $ref: '#/components/schemas/ActionType'
+          orderItemRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceOrderItemRelationship'
+            maxItems: 1
+            minItems: 0
+            type: array
+          id:
+            description: Identifier of the line item
+            type: string
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+        required:
+        - id
+        - service
+        type: object
+      description: |-
+        An identified part of the order. A service order is decomposed into one
+        or more order items.
+    ServiceOrderItemRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: ServiceOrderItem
+            type: string
+        type: object
+      description: Reference to a Service Order Item instance.
+    ServiceOrderItemRelationship:
+      description: Reference to an related Service Order Item and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/OrderItemRelationshipType'
+        serviceOrder:
+          $ref: '#/components/schemas/ServiceOrderItemRef'
+      required:
+      - relationshipType
+      - serviceOrder
+      type: object
+    ServiceOrderRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: ServiceOrder
+            type: string
+        type: object
+      description: Reference to a Service Order instance.
+    ServiceOrderRelationship:
+      description: Reference to an related Service Order and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/OrderRelationshipType'
+        serviceOrder:
+          $ref: '#/components/schemas/ServiceOrderRef'
+      required:
+      - relationshipType
+      - serviceOrder
+      type: object
+    ServiceOrderStateType:
+      description: "List of possible state for the Service Order. \n* ACKNOWLEDGED\
+        \ - Order has been received and has passed message\n  validation.\n* IN_PROGRESS\
+        \ - Service Fulfillment has started.\n* PENDING - Order is currently in a\
+        \ waiting stage for an explicitly\n  action/activity to be completed before\
+        \ the order can progress further,\n  pending order amend or cancel assessment.\
+        \ A pending stage can lead\n  into auto cancellation of an order, if no action\
+        \ is take within the\n  defined timeframes to be described under the Agreement.\n\
+        * HELD - Order cannot be progressed due to a temporary issue. For\n  example,\
+        \ processing is temporarily delayed to resolve an\n  infrastructure shortfall\
+        \ to facilitate supply of order. Upon\n  resolution of the issue, the order\
+        \ will continue to progress.\n* CANCELLED - In-Flight Order has been successfully\
+        \ cancelled.\n* COMPLETED - Provisioning completed and the Service is now\
+        \ active.\n* FAILED - All of the Order items have failed which results in\
+        \ the\n  entire Order to be Failed.\n* PARTIAL - Some of the Order items processing\
+        \ have failed and some have\n  succeeded so the entire Order is in a Partial\
+        \ state. This provides\n  support for partial Failure of an Order.\n* REJECTED\
+        \ - An order failed the Order Feasibility checks. Service\n  technical eligibility\
+        \ is not done throught service order API but with\n  dedicated serviceQualification\
+        \ API (from preOrdering domain) invalid\n  information is provided through\
+        \ the order request. The order request\n  fails to meet business rules for\
+        \ ordering."
+      enum:
+      - ACKNOWLEDGED
+      - IN_PROGRESS
+      - PENDING
+      - HELD
+      - CANCELLED
+      - COMPLETED
+      - FAILED
+      - PARTIAL
+      - REJECTED
+      type: string
+    ServiceProviderPolicyCriterion:
+      description: "Abstract class representing Service Provider defined policy criteria\
+        \ in form of <pcName,pcParam>. Reference MEF 70 Section 8.5 SWVC List of Policies\
+        \ Service Attribute."
+      properties:
+        policyCriteria:
+          items:
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    ServiceRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: Service
+            type: string
+        type: object
+      description: Reference to a Service instance.
+    ServiceRelationship:
+      description: Reference to an related Service and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/ServiceRelationshipType'
+        service:
+          $ref: '#/components/schemas/ServiceRef'
+      required:
+      - relationshipType
+      - service
+      type: object
+    ServiceRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    ServiceSpecificationRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          targetServiceSchema:
+            $ref: '#/components/schemas/TargetServiceSchema'
+          version:
+            description: Service specification version.
+            type: string
+        type: object
+      description: Reference to a ServiceSpecification instance.
+    ServiceStateType:
+      description: List of possible state for the Service.
+      enum:
+      - feasibilityChecked
+      - designed
+      - reserved
+      - active
+      - inactive
+      - terminated
+      type: string
+    ServiceUptimeObjective:
+      description: "ServiceUptimeObject is a data type that represents the SWVC service\
+        \ up time objective. It defines that proportion of time, during a given time\
+        \ period Tk, that the service is working from the perspective of the Subscriber,\
+        \ excluding an pre-agreed exceptions. Reference MEF 70 Section 8.3 SWVC Service\
+        \ Uptime Objective Service Attribute."
+      properties:
+        period:
+          $ref: '#/components/schemas/Period'
+        startTime:
+          $ref: '#/components/schemas/TimeAndDate'
+        uptimeObjective:
+          description: Objective for Service Uptime expressed as a percentage.
+          maximum: 100
+          minimum: 0
+          type: integer
+      type: object
+    SwVcEndPoint:
+      description: "SwVcEndPoint is a class that represents a logical construct at\
+        \ an SD-WAN UNI that partitions Ingress IP Packets into Applications, applies\
+        \ Policy to each IP Packet based on the associated Application, and selets\
+        \ an appropriate path to transport the IP Packet over the SWVC. Reference\
+        \ MEF 70, Section 9 SD-WAN Virtual Connection (SWVC) End Point."
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdministrativeState'
+        policyMap:
+          description: Maps Policies to Application Flows and Application Flow Groups.
+            Reference MEF 70 Section 9.3 SWVC End Point Policy Map.
+          items:
+            $ref: '#/components/schemas/PolicyMap'
+          minItems: 0
+          type: array
+        swvc:
+          $ref: '#/components/schemas/SwVcRef'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        sdWanUni:
+          $ref: '#/components/schemas/SdWanUniRef'
+        endPointIdentifier:
+          description: Identfication of the SWVC End Point for management purposes.
+            Reference MEF 70 Section 9.1 SWVC End Point Identifier Service Attribute.
+          maxLength: 45
+          type: string
+      type: object
+    SwVcEndPointRef:
+      description: Reference to a SD-WAN VC End Point.
+      properties:
+        swvcref:
+          $ref: '#/components/schemas/SwVcRef'
+        id:
+          description: Points to SwVcEndPoint
+          format: uuid
+          type: string
+      type: object
+    SwVcRef:
+      description: Reference to a SD-WAN VC.
+      properties:
+        href:
+          format: uri
+          type: string
+        id:
+          format: uuid
+          type: string
+      type: object
+    TargetServiceSchema:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      description: The reference to the schema and type of target service which is
+        described by service specification
+    TimeAndDate:
+      description: Data type for Time and Date in UTC. Reference MEF-Types.
+      properties:
+        hour:
+          description: This denotes the hour.
+          type: integer
+        month:
+          description: This denotes the month.
+          type: integer
+        year:
+          description: This denotes the year.
+          type: integer
+        day:
+          description: This denotes the day.
+          type: integer
+        minute:
+          description: This denotes the minute.
+          type: integer
+        second:
+          description: This denotes the second.
+          type: integer
+      type: object
+    TimeUnits:
+      description: TimeUnits is an enumeration representing time units.
+      enum:
+      - MINUTE
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+      - YEAR
+      readOnly: true
+      type: string

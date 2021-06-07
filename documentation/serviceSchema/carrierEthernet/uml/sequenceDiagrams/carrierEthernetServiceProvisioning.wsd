@@ -1,0 +1,37 @@
+@startuml
+title MEF Carrier Ethernet Service Provisioning Flow
+
+entity BAListener
+participant BA
+
+participant SOF
+entity SOFHub
+
+
+== Legato Service Provisioning ==
+
+activate BA#LightGray
+activate SOF #LightGray
+BA -> BAListener: <<listenerCreate>> ()
+BA -> SOF: POST /hub (listener, filterQuery)
+SOF -> SOFHub: <<hubCreate>> (listener, filterQuery)
+
+== Requests ==
+
+BA->BA: <<createServiceOrderCreate>>
+BA->BA: <<createServiceOrderItemCreate>>
+BA->BA: <<setServiceOrderAction>>
+BA->BA: <<createMefServiceRefOrValueForOrder>>
+BA->BA: <<create[OrderItem]>>
+
+
+BA -> SOF: POST /serviceOrder ()
+SOF -> BA: 200 OK
+SOF -> SOFHub: <<eventUpdate:serviceOrderActivation>>
+SOFHub -> BAListener: POST /listener/serviceOrderCreated
+
+
+deactivate BA #LightGray
+deactivate SOF #LightGray
+
+@enduml

@@ -1,0 +1,69 @@
+@startuml
+
+title Subscriber Ethernet E-Line UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+class AlternateServiceOfferingProposal {
+}
+
+AlternateServiceOfferingProposal *-->"1" MefAlternateService : alternateService
+
+class MefAlternateService {
+    serviceOffering * : string
+    serviceSpecification: string
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+MefAlternateService *-->"1" MefServiceConfiguration : serviceConfiguration
+
+
+class MefServiceRefOrValue {
+
+    @type*: string <<discriminator>>
+    href: string 
+    id: string 
+    serviceOffering: string
+    serviceSpecification: string
+}
+
+MefServiceRefOrValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+rectangle EPL {
+  class EplSubscriberUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EplSubscriberUniServiceOrder
+
+  class EplEvcServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EplEvcServiceOrder
+
+}
+
+rectangle EVPL {
+  class EvplSubscriberUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+
+
+  MefServiceConfiguration <|-- EvplSubscriberUniServiceOrder
+
+  class EvplEvcServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EvplEvcServiceOrder
+}
+@enduml

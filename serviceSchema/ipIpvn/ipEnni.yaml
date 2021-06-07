@@ -1,0 +1,51 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:IpEnni:v2.0.0:all
+title: MEF LSO Legato - IP ENNI Service Specifications
+description:
+  An External Network Network Interface (ENNI) is the demarcation point between the responsibility of one Operator and another -
+  in other words, it is the interface where the two Operators interconnect. Reference MEF 61.1 Section 8.2 ENNI and ENNI Links.
+type: object
+properties:
+  administrativeState:
+    $ref: 'ipCommon.yaml#/definitions/AdministrativeState'
+  operationalState:
+    $ref: 'ipCommon.yaml#/definitions/OperationalState'
+  identifier:
+    type: string
+    maxLength: 53
+    description: Unique identifier for the ENNI for management purposes. Reference MEF 61.1 Section 14.1 ENNI Identifier Service Attribute.
+  enniYype:
+    $ref: '#/definitions/EnniType'
+  routingInformation:
+    $ref: '#/definitions/RoutingInformation'
+  ingressBandwidthProfileEnvelopes:
+    $ref: 'ipCommon.yaml#/definitions/IpBandwidthProfileFlowEnvelope'
+  egressBandwidthProfileEnvelopes:
+    $ref: 'ipCommon.yaml#/definitions/IpBandwidthProfileFlowEnvelope'
+  ipvcEndPoint:
+    $ref: '#/definitions/PrefixDelegation'
+  ipEnniLink:
+    $ref: '#/definitions/Bfd'
+  ipEnniCommon:
+    $ref: 'ipCommon.yaml#/definitions/IpEnniCommon'
+definitions:
+  EnniType:
+    type: string
+    description: Indication of the type of BGP Peering at the ENNI. Reference MEF 61.1 Section 14 ENNI Service Attributes.
+    enum:
+    - OPTION_A
+    - OPTION_B
+    - OPTION_C
+  Ipv6Subnet:
+    type: object
+    properties:
+      ipv6Prefix:
+        $ref: 'sdWanCommon.yaml#/definitions/Ipv6Prefix'
+      serviceProviderIpv6Addresses:
+        minItems: 1
+        type: array
+        description: List of IPv6 Service Provider addresses.
+        items:
+          type: string
+    description: IPv6Subnet is a data type representing an IPv6 subnet logical partition of an IP network. Included is list of Service Provider IPv6 addresses.
+

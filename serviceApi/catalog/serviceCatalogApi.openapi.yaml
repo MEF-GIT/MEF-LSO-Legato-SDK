@@ -1,0 +1,277 @@
+openapi: 3.0.3
+info:
+  title: Legato Service Catalog API
+  version: 4.0.0-RC
+  description: |-
+    The Service Catalog API provides a standardized mechanism for retrieving 
+    *ServiceSpecifications*. Using these APIs Business Applications (BUS) 
+    systems query the **Service Catalog** for *ServiceSpecifications* supported 
+    by the Service Orchestration Function (SOF).
+
+    Additionally, the APIs also allow the BUS to register listeners to be 
+    notified of the changes to the *ServiceSpecifications*.  
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 633 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+  
+tags:
+  - name: ServiceSpecification
+    description: |-
+      Mechanisms for BUS to query and retrieve *ServiceSpecifications*.
+  - name: EventSubscriptionHub
+    description: |-
+      Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
+
+servers:
+  - url: https://{server}:{port}{basePath}
+    variables:
+      server:
+        default: 'mef.net' 
+      port:
+        enum:
+          - '8443'
+          - '443'
+        default: '8443'
+      basePath:
+        default: /mefApi/legato/serviceCatalog/v4
+
+paths:
+  /serviceSpecification:
+    get:
+      tags:
+        - ServiceSpecification
+      operationId: serviceSpecificationFind
+      summary: List service specifications
+      description: >-
+        This operation returns service specifications from a catalog
+
+      deprecated: false
+      parameters:
+        - name: category
+          required: false
+          in: query
+          description: Service Category
+          schema:
+            type: string
+        - name: lifecycleStatus
+          required: false
+          in: query
+          description: Service Specification status
+          schema:
+            $ref: 'serviceCatalogSchema.openapi.yaml#/components/schemas/ServiceSpecificationState'
+        - name: fields
+          required: false
+          in: query
+          description: |- 
+            Comma-separated properties of the Service Specification to be 
+            included in the returned response
+          schema:
+            type: string
+        - name: offset
+          required: false
+          in: query
+          description: |-
+            Requested start index in a ordered list (sorted by id property) of 
+            matching Service Specifications to be provided in response. 
+          schema:
+            type: integer
+        - name: limit
+          required: false
+          in: query
+          description: |-
+            Requested maximum number of Service Specifications to be provided 
+            in the response
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: 'serviceCatalogSchema.openapi.yaml#/components/schemas/ServiceSpecification'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  '/serviceSpecification/{id}':
+    get:
+      tags:
+        - ServiceSpecification
+      operationId: serviceSpecificationGet
+      summary: Retrieve a service specification
+      description: >-
+        This operation returns a service specification by its id from a catalog.
+        Attribute selection is enabled using the fields attribute.
+      deprecated: false
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: "Identifier of the ServiceSpecification"
+          schema:
+            type: string
+        - name: fields
+          required: false
+          in: query
+          description: |- 
+            Comma-separated properties of the Service Specification to be 
+            included in the returned response
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: 'serviceCatalogSchema.openapi.yaml#/components/schemas/ServiceSpecification'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  /hub:
+    post:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubCreate
+      summary: Create Hub
+      description: Structure used to create a hub (to subscribe to notification
+      deprecated: false
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscriptionInput'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscription'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '409':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Conflict'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+  '/hub/{hubId}':
+    get:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubGet
+      summary: get hub
+      description: ''
+      deprecated: false
+      parameters:
+        - name: hubId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '../common/hubSchema.openapi.yaml#/components/schemas/EventSubscription'
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'
+
+    delete:
+      tags:
+        - EventSubscriptionHub
+      operationId: hubDelete
+      summary: Delete Hub
+      description: Delete an existing Hub
+      deprecated: false
+      parameters:
+        - name: hubId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/BadRequest'
+        '401':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Unauthorized'
+        '403':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/Forbidden'
+        '404':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/NotFound'
+        '405':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/MethodNotAllowed'
+        '408':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/RequestTimeout'
+        '422':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/InternalServerError'
+        '503':
+          $ref: '../common/errorSchema.openapi.yaml#/components/responses/ServiceUnavailable'

@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  title: Legato Service Specification Components
+  version: 4.0.0-RC
+  description: >+
+    This OAS document contains the schema defintions of Service Specification 
+    components that are reused/referenced by different Legato API 
+    specifications. This includes common schemas, parameters, etc
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 633 v18.5.1
+
+
+    Copyright © MEF 2020. All Rights Reserved
+
+tags:
+  - name: ServiceSpecificationSchema
+    description: Service Specification components used by all Legato APIs.
+    
+paths: {}
+components:
+  schemas:               
+    AttachmentRef:
+      description: |-
+        An attachment represents a file that is used to complement the
+        description of an entity through video, pictures, etc..
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Referenceable'
+        - type: object
+          properties:
+            description:
+              description: A narrative text describing the content of the attachment
+              type: string
+            url:
+              description: 'Link to the attachment media/content'
+              type: string
+              format: uri
+
+    ServiceLevelSpecificationRef:
+      description: |-
+        A Service Level Specification represents a pre-defined or negotiated set
+        of Service Level Objectives. In addition, certain consequences are 
+        associated with not meeting the Service Level Objectives. Service Level 
+        Agreements are expressed in terms of Service Level Specifications.
+      allOf:
+          - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Referenceable'
+
+    ServiceSpecification:
+      description: |-
+        ServiceSpecification offers the ability to describe the characteristics
+        of a specific type of service. Functionally, it acts as a template by
+        which Services may be instantiated. By sharing the same specification,
+        these services would therefore share the same set of characteristics.
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Addressable'
+        - type: object
+          properties:
+            category:
+              description: |-
+                The category is used to group service specifications in logical
+                containers. Categories can be further sub-categorized into other
+                categories.
+              type: string
+            subcategory:
+              description: |-
+                Categories can be further sub-categorized into other categories.
+              type: string
+            version: 
+              type: string
+              description: Service specification version
+            description":
+              type: string
+              description: |-
+                A narrative that explains  details of the service specification.
+            isBundle:
+              type: boolean 
+              description: |-
+                Determines whether a ServiceSpecification represents a single 
+                ServiceSpecification (false), or a bundle of 
+                ServiceSpecification (true).
+            lastUpdate:
+              type: string
+              format: date-time 
+              description: |-
+                Date and time of the last update of the service specification
+            validFor: 
+              allOf: 
+                - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/TimePeriod'
+              description: |-
+                The period for which the service specification is valid
+            lifecycleStatus:
+              $ref: '#/components/schemas/ServiceSpecificationState'
+            attachment:
+              type: array
+              items:
+                $ref: '#/components/schemas/AttachmentRef'
+              minItems: 0
+              maxItems: 1
+              description: |-
+                A list of attachments (Attachment [*]). Complements 
+                the description of the specification through video, pictures...
+            relatedParty:
+              type: array
+              items:
+                $ref: '../common/apiSchema.openapi.yaml#/components/schemas/RelatedPartyRef'
+              minItems: 0
+            serviceLevelSpecification:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceLevelSpecificationRef'
+              description: |-
+                A list of service level specifications related to this service specification, and which will need to be satisifiable for corresponding service instances; e.g. Gold, Platinum
+            serviceSpecRelationship:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceSpecificationRelationship'
+              description: |-
+                A list of service specifications related to this specification, e.g. migration, substitution, dependency or exclusivity relationship
+            serviceSpecCharacteristic:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceSpecCharacteristic'
+              description: |-
+                A list of service spec characteristics (ServiceSpecCharacteristic [*]). This class represents the key features of this service specification.
+            targetServiceSchema:
+              $ref: "#/components/schemas/TargetServiceSchema" 
+
+    ServiceSpecificationRef:
+      description: |-
+        Reference to a ServiceSpecification instance.
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Referenceable'
+        - type: object
+          properties:
+            version:
+              description: Service specification version.
+              type: string
+            targetServiceSchema:
+              $ref: '#/components/schemas/TargetServiceSchema'
+
+    ServiceSpecificationRelationship:
+      description: |-
+        Reference to a ServiceSpecification instance.
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Referenceable'
+        - type: object
+          properties:
+            relationshipType:
+              $ref: '#/components/schemas/ServiceSpecificationRelationshipType'
+            role:
+              description: The association role for this service specification.
+              type: string
+            validFor:
+              allOf:
+                - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/TimePeriod'
+
+    ServiceSpecificationState:
+      description: |-
+        List of possible states that represents the entire Service 
+        Specification lifecycle. This includes all the processes required to 
+        design, build, deploy, maintain and ultimately retire the catalog 
+        element.
+      type: string
+      enum:
+        - IN_STUDY
+        - IN_DESIGN
+        - IN_TEST
+        - LAUNCHED
+        - ACTIVE
+        - RETIRED
+        - OBSOLETE
+        - REJECTED
+
+    ServiceSpecificationRelationshipType:
+      description: Relationship type.
+      type: string
+      enum:
+        - reliesOn
+        - dependency
+        - migration
+        - substitution
+        - exclusivity
+    
+    ServiceSpecCharacteristic:
+      description: |-
+        This class represents the key features of this service specification. 
+        For example, bandwidth is a characteristic of many different types of
+        services; if bandwidth is a relevant characteristic (e.g., from the
+        point-of-view of a Customer obtaining this Service via a Product) then
+        bandwidth would be a ServiceSpecCharacteristic for that particular
+        Service.
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Addressable'
+        - type: object
+          properties:
+            '@valueSchemaLocation':
+              type: string
+              description: |-
+                This (optional) field provides a link to the schema describing 
+                the value type.
+            valueType:
+              type: string
+              description: |-
+                A kind of value that the characteristic can take on, such as numeric,
+                text and so forth
+            description:
+              type: string
+              description: |-
+                A narrative that explains in details the nature of the serviceSpecCharacteristic
+            extensible:
+              type: boolean
+              description: |-
+                An indicator that specifies that the values for the 
+                characteristic can be extended by adding new values when 
+                instantiating a characteristic for an Entity.
+            isUnique:
+              type: boolean
+              description: |-
+                An indicator that specifies if a value is unique for the
+                specification. Possible values are; "unique while value is in effect" and "unique whether value is in effect or not"
+            maxCardinality:
+              type: integer
+              description: |-
+                The maximum number of instances a CharacteristicValue can take on. For example, zero to five phone numbers in a group calling plan, where five is the value for the maxCardinality.
+            minCardinality:
+              type: integer
+              description: |-
+                The minimum number of instances a CharacteristicValue can take on. For example, zero to five phone numbers in a group calling plan, where  zero is the value for the minCardinality.
+            regex:
+              type: string
+              description: |-
+                A rule or principle represented in regular expression used to derive the value of a characteristic value.
+            validFor:
+              allOf: 
+                - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/TimePeriod'
+              description: |-
+                The period for which the serviceSpecCharacteristic is valid
+            serviceSpecCharRelationship:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceSpecificationRelationship'
+              description: |-
+                A list of service spec char relationships. An aggregation, migration, substitution, dependency or exclusivity relationship between/among Specification Characteristics.
+            serviceSpecCharacteristicValue:
+              type: array
+              items:
+                $ref: '#/components/schemas/ServiceSpecCharacteristicValue'
+              description: |-
+                A list of service spec characteristic values. A 
+                ServiceSpecCharacteristicValue object is used to define a set 
+                of attributes, each of which can be assigned to a corresponding 
+                set of attributes in a ServiceSpecCharacteristic object. The 
+                values of the attributes in the ServiceSpecCharacteristicValue 
+                object describe the values of the attributes that a 
+                corresponding ServiceSpecCharacteristic object can take on.
+
+    ServiceSpecCharacteristicValue:
+      description: >-
+        A ServiceSpecCharacteristicValue object is used to define a set of
+        attributes, each of which can be assigned to a corresponding set of
+        attributes in a ServiceSpecCharacteristic object. The values of the
+        attributes in the ServiceSpecCharacteristicValue object describe the
+        values of the attributes that a corresponding ServiceSpecCharacteristic
+        object can take on.
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Addressable'
+        - type: object
+          properties:
+            isDefault:
+              type: boolean
+              description: Indicates if the value is the default value for a characteristic
+            rangeInterval:
+              type: string
+              description: |-
+                An indicator that specifies the inclusion or exclusion of the
+                valueFrom and valueTo attributes. If applicable, possible 
+                values are "open", "closed", "closedBottom" and "closedTop".
+            regex:
+              type: string
+              description: A regular expression constraint for given value
+            unitOfMeasure:
+              type: string
+              description: |-
+                A length, surface, volume, dry measure, liquid measure, money, 
+                weight, time, and the like. In general, a determinate quantity 
+                or magnitude of the kind designated, taken as a standard of 
+                comparison for others of the same kind, in assigning to them 
+                numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot.
+            valueFrom:
+              type: integer
+              description: The low range value that a characteristic can take on
+            valueTo:
+              type: integer
+              description: |-
+                The upper range value that a characteristic can take on
+            valueType:
+              type: string
+              description: |-
+                A kind of value that the characteristic can take on, such as numeric,  text, and so forth
+            validFor:
+              allOf: 
+                - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/TimePeriod'
+              description: The period of time for which a value is applicable
+            value:
+              description: |-
+                A discrete value that the characteristic can take on, or the actual value of the characteristic
+              type: "object"
+              additionalProperties:
+                type: "object"
+
+    TargetServiceSchema:
+      description: |-
+        The reference to the schema and type of target service which is described by service specification
+      allOf:
+        - $ref: '../common/apiSchema.openapi.yaml#/components/schemas/Extensible'
+
+    ServiceSpecificationCreateNotification:
+      description: "ServiceSpecification create notification"
+      allOf:
+        - $ref: '../common/hubSchema.openapi.yaml#/components/schemas/Notification'
+        - type: object
+          properties:
+            event:
+              $ref: '#/components/schemas/ServiceSpecificationEvent'
+
+    ServiceSpecificationDeleteNotification:
+      description: "ServiceSpecification delete notification"
+      allOf:
+        - $ref: '../common/hubSchema.openapi.yaml#/components/schemas/Notification'
+        - type: object
+          properties:
+            event:
+              $ref: '#/components/schemas/ServiceSpecificationEvent'
+
+    ServiceSpecificationChangeNotification:
+      description: "ServiceSpecification Change notification"
+      allOf:
+        - $ref: '../common/hubSchema.openapi.yaml#/components/schemas/Notification'
+        - type: object
+          properties:
+            event:
+              $ref: '#/components/schemas/ServiceSpecificationEvent'
+
+    ServiceSpecificationEvent:
+      type: object 
+      description: The ServiceSpecification event data structure 
+      properties: 
+          serviceSpecification: 
+            $ref: "#/components/schemas/ServiceSpecification"

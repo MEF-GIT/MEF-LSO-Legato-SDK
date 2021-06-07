@@ -1,0 +1,39 @@
+@startuml
+title Legato API SD-WAN Service Order Create Flow
+box ProductOrderClient
+entity ProductOrderListener
+entity ProductOrderClient
+end box
+box ProductOrderServer
+entity ProductOrderServer
+entity ProductOrderHub
+end box
+
+activate ProductOrderClient #LightGray
+
+ProductOrderClient -> ProductOrderListener : <<createListener>>
+ProductOrderClient -> ProductOrderServer: hubCreate (listener, filterQuery)
+
+alt success
+    ProductOrderServer -> ProductOrderHub: <<createHub>>
+    ProductOrderServer --> ProductOrderClient: 204 : CompletedResponse
+else invalidRequest
+    ProductOrderServer --> ProductOrderClient: 40x/50x : ErrorResponse
+end
+
+ProductOrderClient -> ProductOrderClient: ProductOrder_Create()
+ProductOrderClient -> ProductOrderClient: ProductOrderItem_Create()
+
+note right: Instantiate EPL EVC
+ProductOrderClient -> ProductOrderClient: EplEvcProductOrder() eplevc = new EplEvcProductOrder()
+
+note right: Instantiate EPL Subscriber UNI
+ProductOrderClient -> ProductOrderClient: EplSubscriberUniProductOrder() eplsuni = new EplSubscriberUniProductOrder()
+
+note right: Associate EPL Subscriber UNI to Envelope Order Item
+ProductOrderClient -> ProductOrderClient: ProductOrder.addItem()
+
+ProductOrderClient -> ProductOrderServer: POST https://[uri]/productOrdering[BODY]
+ProductOrderServer -> ProductOrderClient: 202 Accepted [ProductOrder_Response]
+
+@enduml

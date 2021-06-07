@@ -1,0 +1,62 @@
+@startuml
+
+title Carrier Ethernet UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+class MefServiceRefOrValue {
+    id: string 
+    href: string
+    place: RelatedPlaceRefOrValue 
+    serviceOffering: ServiceOfferingRef
+    serviceSpecification: ServiceSpecificationRef
+}
+
+MefServiceRefOrValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+
+  class SubscriberUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- SubscriberUniServiceOrder
+
+  class EvcServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EvcServiceOrder
+
+    class OperatorUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- OperatorUniServiceOrder
+
+  class EnniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EnniServiceOrder
+
+  class VuniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- VuniServiceOrder
+
+  class OvcServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- OvcServiceOrder
+
+@enduml

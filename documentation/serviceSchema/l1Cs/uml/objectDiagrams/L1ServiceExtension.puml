@@ -1,0 +1,57 @@
+@startuml
+
+title L1CS UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+class MefServiceRefOrValue {
+    id: string 
+    href: string
+    place: RelatedPlaceRefOrValue 
+    serviceOffering: ServiceOfferingRef
+    serviceSpecification: ServiceSpecificationRef
+}
+
+MefServiceRefOrValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+
+  class L1SubscriberUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- L1SubscriberUniServiceOrder
+
+  class SubscriberL1ServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- SubscriberL1ServiceOrder
+
+    class L1OperatorUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- L1OperatorUniServiceOrder
+
+  class L1EnniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- L1EnniServiceOrder
+
+
+  class OperatorL1ServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- OperatorL1ServiceOrder
+
+@enduml

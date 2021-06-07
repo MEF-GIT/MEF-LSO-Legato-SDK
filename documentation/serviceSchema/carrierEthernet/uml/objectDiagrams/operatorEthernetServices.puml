@@ -1,0 +1,57 @@
+@startuml
+
+title Operator Ethernet UML Diagram
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+class AlternateServiceOfferingProposal {
+}
+
+AlternateServiceOfferingProposal *-->"1" MefAlternateService : alternateService
+
+class MefAlternateService {
+    serviceOffering * : string
+    serviceSpecification: string
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+MefAlternateService *-->"1" MefServiceConfiguration : serviceConfiguration
+
+
+class MefServiceRefOrValue {
+
+    @type*: string <<discriminator>>
+    href: string 
+    id: string 
+    serviceOffering: string
+    serviceSpecification: string
+}
+
+MefServiceRefOrValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+  class OperatorUniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- OperatorUniServiceOrder
+
+  class EnniServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- EnniServiceOrder
+
+  class OvcServiceOrder <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+  }
+  MefServiceConfiguration <|-- OvcServiceOrder
+
+@enduml
