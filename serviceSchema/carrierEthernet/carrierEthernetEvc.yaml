@@ -5,7 +5,7 @@ description:
   An EVC is an association of two or more EVC End Points (EVC EPs). Reference MEF 10.4 Section 7.8 Ethernet Virtual Connection, EVC End Point and EVC EP Map Service Attribute.
 properties:
   identifier:
-    minLength: 45
+    maxLength: 45
     type: string
     description: Used to identify an EVC within the SP Network. Reference MEF 10.4 Section 8.1 EVC ID Service Attribute.
   evcEndPoints:
@@ -156,4 +156,4 @@ definitions:
     - ALL
     - EXCEPT
     - LIST
-    - UNTAGGED   
+    - UNTAGGED
