@@ -81,13 +81,13 @@ open that aims to deliver:
   - API Developer Guide as GFM file **(To be delivered)**
 - LSO Legato Service Provisioning Specification - SD-WAN (MEF W100)
   - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(To be delivered)**
+  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
 - LSO Legato Service Provisioning Specification - Carrier Ethernet (MEF W101)
   - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(To be delivered)**
+  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
 - LSO Legato Service Provisioning Specification - L1 (MEF W103)
   - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(To be delivered)**
+  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
 
 ## Contents
 
