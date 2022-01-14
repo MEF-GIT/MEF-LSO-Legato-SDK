@@ -1,32 +1,35 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:SdWanUni:v2.0.0:all
-title: MEF LSO Legato - Common SD-WAN UNI Service Specifications
+$id: urn:mef:lso:spec:legato:IpUni:v2.0.0:all
+title: MEF LSO Legato - IP UNI Service Specifications
 description:
-  SdWanUni is a class that represents the boundary between the responsibility of the Subscriber and the responsibility of the Service Provider. Reference MEF 70, Section 6.4 SD-WAN UNI.
+  An individual connection between the Subscriber and the SP that forms part of a UNI. Reference MEF 61.1 Section 7.3 UNIs and UNI Access Link.
 type: object
 properties:
   administrativeState:
-    $ref: 'sdWanCommon.yaml#/definitions/AdministrativeState'
+    $ref: 'ipCommon.yaml#/definitions/AdministrativeState'
   operationalState:
-    $ref: 'sdWanCommon.yaml#/definitions/OperationalState'
-  uniIdentifier:
+    $ref: 'ipCommon.yaml#/definitions/OperationalState'
+  identifier:
     type: string
-    description: Identification of the UNI for management purposes. Reference MEF 70, Section 10.1 SD-WAN UNI Identifier Service Attribute.
-  l2Interface:
-    $ref: '#/definitions/L2Interface'
-  maxL2FrameSize:
-    type: integer
-    description: Specifies the maximum length L2 frame that is accepted by the Service Provider. Reference MEF 70, Section 10.3 SD-WAN UNI Maximum L2 Frame Size Service Attribute.
+    description: Unique identifier for the UNI Access Link for management purposes. Reference MEF 61.1 Section 13.1 UNI Access Link Identifier Service Attribute.
+  l2Technology:
+    $ref: '#/definitions/L2Technology'
   ipv4ConnectionAddressing:
     $ref: '#/definitions/Ipv4ConnectionAddressing'
   ipv6ConnectionAddressing:
     $ref: '#/definitions/Ipv6ConnectionAddressing'
-  swVcEndPoint:
-    maxItems: 1
-    minItems: 0
-    type: array
-    items:
-      $ref: 'sdWanVc.yaml#/definitions/SwVcEndPointRef'
+  dhcpRelay:
+    $ref: '#/definitions/DhcpRelay'
+  prefixDelegation:
+    $ref: '#/definitions/PrefixDelegation'
+  bfd:
+    $ref: '#/definitions/Bfd'
+  ipMtu:
+    $ref: '#/definitions/IpMtu'
+  ingressBandwidthProfileEnvelope:
+    $ref: '#/definitions/IpBandwidthProfileFlowEnvelope'
+  egressBandwidthProfileEnvelope:
+    $ref: '#/definitions/IpBandwidthProfileFlowEnvelope'
 definitions:
   Ipv4ConnectionAddressing:
     type: object
@@ -38,6 +41,9 @@ definitions:
         - DHCP
         - STATIC
       ipv4PrimarySubnet:
+        maxItems: 1
+        minItems: 0
+        type: array
         description: Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider IPv4 Addresses.
         items:
           $ref: '#/definitions/Ipv4Subnet'
@@ -106,3 +112,4 @@ definitions:
         items:
           type: integer
     description: L2Interface is a data type that describes the underlying network layer that carries IP Packets across the UNI. The possible values are UT/PT and CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service Attribute.
+    

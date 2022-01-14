@@ -1,20 +1,20 @@
-# MEF-LSO-Legato-SDK Billie Release
+# MEF-LSO-Legato-SDK Celine Release
 
 ## Download Link
 
-Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/billie-final/MEF-LSO-Legato-SDK-billie.zip)
+Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/celine/MEF-LSO-Legato-SDK-celine.zip)
 
 ## Overview
 
-This repository contains the Billie release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
+This repository contains the Celine release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
 This version updates the payload schemas for:
 
-- Carrier Ethernet (based on MEF 7.4),
-- SD-WAN (based on MEF 82) and
-- L1CS (based on MEF 111).
+- IP/IP-VPN (based on MEF 112)
 
-**NOTE:** Some parts of the release are for MEF Members only, such as the draft, in-progress versions of the API Developer Guides for each of the service types listed above.
+Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
+
+**NOTE:** Some parts of the release are for MEF Members only, such as the draft, in-progress versions of the API Developer Guides for each of the service types listed above
 
 ## Scope
 
@@ -48,6 +48,7 @@ In addition to the Service Provisioning APIs, the SDK includes the following MEF
 - SD-WAN Services
 - Carrier Ethernet Services
 - L1 Connectivity Services
+- IP/IP-VPN Services
 
 The MEF LSO Legato SDK is released under the Apache 2.0 license.
 
@@ -59,11 +60,11 @@ https://wiki.mef.net/display/CESG/LSO+Legato
 
 The API files contained in this SDK are evolving and subject to change. They are based on documents that are either work in progress or draft standards that have not yet completed the review cycles and approvals necessary to achieve the status as a MEF standard. MEF is making these publicly available at this time to invite wider industry review.
 
-There is currently [LSO Legato Service Provisioning Project](https://wiki.mef.net/display/LSO/LSO+Legato+Service+API+-+Project+Home+Page) open that aims to  deliver:
+There is currently [LSO Legato Service Provisioning Project](https://wiki.mef.net/display/LSO/LSO+Legato+Service+API+-+Project+Home+Page) open that aims to deliver:
 
 - LSO Legato Service Provisioning API (MEF W99)
   - OAS3 API/Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - API Developer Guide as GFM file **(To be delivered)**
+  - API Developer Guide as GFM file **(DRAFT, part of this SDK release)**
 - LSO Legato Service Provisioning Specification - SD-WAN (MEF W100)
   - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
   - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
@@ -90,6 +91,7 @@ This SDK contains the following items:
   - SD-WAN Services
   - Carrier Ethernet Services
   - L1 Connectivity Services.
+  - IP/IP-VPN Services
 - `documentation` - documentation including API/Schema developer guides and openapi-tools generated API descriptions in markdown format
 - `generated\staticBinding` - contains automatically generated (with help of the open source [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not normative static bindings of envelope APIs with Service payloads.
 
@@ -107,7 +109,7 @@ https://wiki.onap.org/display/DW/External+API+Framework+Project
 
 ## Copyright
 
-© MEF Forum 2021. All Rights Reserved.
+© MEF Forum 2022. All Rights Reserved.
 
 ## Disclaimer
 
@@ -117,7 +119,7 @@ The information contained herein is intended to be used without modification by 
 
 The receipt or any use of this document or its contents does not in any way create, by implication or otherwise:
 
-(a) any express or implied license or right to or under any patent, copyright, trademark or trade secret rights held or claimed by any MEF member which are or may be associated with the ideas, techniques, concepts or expressions contained herein; nor
+(a) any express or implied license or right to or under any patent, copyright, trademark or trade secret rights held or claimed by any MEF member which are  or may be associated with the ideas, techniques, concepts or expressions contained herein; nor
 
 (b) any warranty or representation that any MEF member will announce any product(s) and/or service(s) related thereto, or if such announcements are made, that such announced product(s) and/or service(s) embody any or all of the ideas, technologies, or concepts contained herein; nor
 

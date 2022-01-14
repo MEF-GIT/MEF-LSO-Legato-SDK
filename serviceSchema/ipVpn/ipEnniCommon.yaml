@@ -1,0 +1,38 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:IpEnniCommon:v2.0.0:all
+title: MEF LSO Legato - IP ENNI Common Service Specifications
+description:
+  ENNI Common Attributes that apply to each ENNI agreed between two LLOs (Lowest Level Operators). Reference MEF 61.1 Section 15 ENNI Common Attributes.
+type: object
+properties:
+  peeringIdentifier: 
+    type: string
+    description: Unique identifier for the ENNI for management purposes. Reference MEF 61.1 Section 15.1 ENNI Peering Common Attribute.
+  listOfEnniLinks:
+    minItems: 1
+    type: array
+    description: List of IPv6 Service Provider addresses.
+    items:
+      $ref: '#/definitions/EnniList'
+  listOfControlProtocols:
+    minItems: 0
+    type: array
+    items:
+      $ref: 'ipCommon.yaml#/definitions/ControlProtocols'
+  enniType:
+    $ref: '#/definitions/EnniType'
+  routingProtocols:
+    minItems: 1
+    type: array
+    items:
+      $ref: 'ipCommon.yaml#/definitions/RoutingProtocols'
+  serviceMap:
+    $ref: 'ipCommon.yaml#/definitions/ServiceMap'
+definitions:
+  EnniType:
+    type: string
+    description: Indication of the type of BGP Peering at the ENNI. Reference MEF 61.1 Section 14 ENNI Service Attributes.
+    enum:
+    - OPTION_A
+    - OPTION_B
+    - OPTION_C

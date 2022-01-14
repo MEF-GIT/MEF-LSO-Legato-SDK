@@ -1,0 +1,16 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:IpEnniLink:v2.0.0:all
+title: MEF LSO Legato - IP ENNI Link Service Specifications
+description:
+  Unique identfier for the ENNI or UNI for management purposes. Reference MEF 61.1 Section 14.1 ENNI Identifier Service Attribute and MEF 61.1 Section 12.1 UNI Identifier Service Attribute.
+type: object
+properties:
+  administrativeState:
+    $ref: 'ipCommon.yaml#/definitions/AdministrativeState'
+  operationalState:
+    $ref: 'ipCommon.yaml#/definitions/OperationalState'
+  identifier:
+    type: string
+    description: Unique identifier for the UNI Access Link for management purposes. Reference MEF 61.1 Section 13.1 UNI Access Link Identifier Service Attribute.
+allOf:
+- $ref: 'ipCommon.yaml#/definitions/IpServicesExternalInterface'

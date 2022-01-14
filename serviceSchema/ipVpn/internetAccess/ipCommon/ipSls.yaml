@@ -1,0 +1,186 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:sonata-cantata:ipSls:v0.1.0:all
+title: MEF LSO Cantata-Sonata Internet Access UNI Access Link Service Specifications
+description: The IPVC Service Level Specificaiton (SLS) describes the performance objectives for the performance of conformant IP Data Packets that flow over the IPVC. The IPVC Service Level Specification Attribute is either None, or a four-tuple of the form (s,T,E,L) where s is the start time, T is a period of time, E is a set of SLS entries and L is a set of the CoS Name and number of other parameters specific to the Performance Metric. Reference MEF 61.1 Section 10.9 IPVC Service Level Specification Service Attribute.
+type: object
+properties:
+  startTime:
+    $ref: '#/definitions/TimeAndDate'
+  periodOfTime:
+    $ref: '#/definitions/TimeIntervalT'
+  oneWayPacketDelayPercentile:
+    minItems: 0
+    type: array
+    description: Pointer to One-Way Packet Delay Percentile metric objective.
+    items:
+      $ref: '#/definitions/OneWayPacketDelayPercentile'
+  oneWayMeanPacketDelay:
+    minItems: 0
+    type: array
+    description: Pointer to One-Way Packet Delay metric objective.
+    items:
+      $ref: '#/definitions/OneWayMeanPacketDelay'
+  oneWayInterPacketDelayVariation:
+    minItems: 0
+    type: array
+    description: Pointer to One-Way Packet Delay Variation metric objective.
+    items:
+      $ref: '#/definitions/OneWayInterPacketDelayVariation'
+  oneWayPacketDelayRange:
+    minItems: 0
+    type: array
+    description: Pointer to One-Way Packet Delay Percentile metric objective.
+    items:
+      $ref: '#/definitions/OneWayPacketDelayRange'
+  oneWayPacketLossRatio:
+    minItems: 0
+    type: array
+    description: Pointer to One-Way Packet Loss Ratio metric objective.
+    items:
+      $ref: '#/definitions/OneWayPacketLossRatio'
+  serviceUpTime:
+    minItems: 0
+    type: array
+    description: Pointer to Service Up Time objective.
+    items:
+      $ref: '#/definitions/ServiceUpTime'
+  locationList:
+    minItems: 1
+    type: array
+    description: Pointer to Location list.
+    items:
+      $ref: '#/definitions/Location'
+
+definitions:
+  Location:
+    type: object
+    properties:
+      day:
+        type: integer
+        description: 
+  TimeAndDate:
+    type: object
+    properties:
+      day:
+        type: integer
+        description: Denotes the day.
+      hour:
+        type: integer
+        description: Denotes the hour.
+      minute:
+        type: integer
+        description: Denotes the minute.
+      month:
+        type: integer
+        description: Denotes the month.
+      second:
+        type: integer
+        description: Denotes the second.
+      year:
+        type: integer
+        description: Denotes the year.
+    description: 
+      This data type is for Time and Date in UTC. Used for CarrierEthernetSls startTime attribute.
+  TimeIntervalT:
+    type: object
+    properties:
+      unit:
+        $ref: '#/definitions/TimeIntervalUnit'
+      number:
+        type: integer
+  SlsPair:
+    type: object
+    properties:
+      toSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'
+      fromSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'  
+  OneWayPacketDelayPercentile:
+    description: The One-way Packet Delay Percentile Performance Metric is the maximum, over all the order pairs of SLS-RPs in a given set S, of the pth percentile of one-way packet delay for Qualified Packets for a given order pair of SLS-RPs, a given CoS Name and a given time period Tk. Reference MEF 61.1 Section 10.9.4 One-way Packet Delay Percentile Performance Metric.
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: One of the values in the IPVC List of Class of Service Names Service Attribute. Reference MEF 61.1 Section 10.9.4 One-way Packet Delay Percentile Performance Metric, Table-4.
+      packetDelayPercentile:
+        type: float
+        description: Packet Delay Percentile. Reference MEF 61.1 Section 10.9.4 One-way Packet Delay Percentile Performance Metric, Table-4.
+      packetDelayObject:
+        type: float
+        description: 
+      slsPair:
+        description: Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.4 One-way Packet Delay Percentile Performance Metric, Table-4.
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
+  OneWayMeanPacketDelay:
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: 
+      meanPackDelayObjective:
+        type: float
+        description:
+      slsPair:
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
+  OneWayInterPacketDelayVariation:
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: 
+      meanPackDelayObjective:
+        type: float
+        description:
+      slsPair:
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
+  OneWayPacketDelayRange:
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: 
+      meanPackDelayObjective:
+        type: float
+        description:
+      slsPair:
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
+  OneWayPacketLossRatio:
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: 
+      meanPackDelayObjective:
+        type: float
+        description:
+      slsPair:
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
+  ServiceUpTime:
+    type: object
+    properties:
+      cosName:
+        type: string
+        description: 
+      meanPackDelayObjective:
+        type: float
+        description:
+      slsPair:
+        minItems: 1
+        type: array
+        items:
+        $ref: '#/definitions/SlsPair'
