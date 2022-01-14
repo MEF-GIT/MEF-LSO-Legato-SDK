@@ -14,7 +14,7 @@ This version updates the payload schemas for:
 - SD-WAN (based on MEF 82) and
 - L1CS (based on MEF 111).
 
-Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
+**NOTE:** Some parts of the release are for MEF Members only, such as the draft, in-progress versions of the API Developer Guides for each of the service types listed above.
 
 ## Scope
 
