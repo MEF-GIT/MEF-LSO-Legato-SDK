@@ -1,0 +1,52 @@
+@startuml
+title ServiceCatalog, ServiceOrder, ServiceInventory Query Flow
+actor BUS
+participant SOF
+collections Repository as "ServiceSpecification | ServiceOrder | Service"
+
+BUS -> SOF : find(retrieveIdOnly?, filterCriteria, paginationCriteria)
+activate BUS #LightGray
+activate SOF #LightCyan
+alt retrieveIdOnly=true
+    SOF -> Repository : retrieveIds
+    activate Repository #LightBlue
+    return 200 : List.instanceId
+    alt success 
+        SOF --> BUS: 200 : List.instanceId
+    else failure 
+        SOF --> BUS: 40x/50x : ErrorResponse
+    end
+    loop List.instanceId
+        BUS -> SOF : get (instanceId)
+        activate BUS #LightSeaGreen
+        activate SOF #LightSeaGreen
+        note right BUS #LightSeaGreen : ServiceSpec|ServiceOrder|Service instanceId
+        SOF -> Repository : retrieveProperties 
+        activate Repository #LightBlue
+        return 200 : properties
+        alt success 
+            SOF --> BUS: 200 : properties (ServiceSpec|ServiceOrder|Service)
+        else failure 
+            SOF --> BUS: 40x/50x : ErrorResponse
+        end
+        deactivate BUS
+        deactivate SOF
+    end
+else retrieveIdOnly=false
+    SOF -> Repository : retrieveProperties
+    activate Repository #LightBlue
+    return 200 : List.properties
+    alt success 
+        SOF --> BUS: 200 : List.properties (ServiceSpec|ServiceOrder|Service)
+    else failure 
+        SOF --> BUS: 40x/50x : ErrorResponse
+    end
+    loop Pagination.pages
+        ref over BUS,SOF,Repository : queryRepository (retrieveIdOnly=false, filterCriteria, pageOffset, pageLimit)
+    end
+end
+deactivate BUS
+deactivate SOF
+
+
+@enduml

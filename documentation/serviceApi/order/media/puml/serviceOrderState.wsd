@@ -1,0 +1,39 @@
+@startuml
+
+hide empty description
+state Acknowledged : Basic validation done
+state InProgress : Service configuration and activation started
+state Completed : Service configuration and activation complete
+state Rejected : Basic validation failed
+state Pending : Waiting for an action/activity
+state Held : Temporarily delayed due to an issue
+state Cancelled : In-Flight Order cancelled
+state Failed : All Order items have failed
+state Partial : Some Order items have failed\nand some have succeeded
+state IsAccepted <<choice>>
+
+[*] --> IsAccepted : orderReceived
+IsAccepted -> Acknowledged : orderAccepted
+IsAccepted -> Rejected : validationFailed
+
+Acknowledged --> InProgress : processingStarted
+
+InProgress --> Completed : processingComplete
+InProgress --> Failed : processingFailed
+InProgress --> Partial : partiallyCompleted
+InProgress --> Pending : actionRequired
+InProgress --> Held : orderFallOut
+
+Pending --> Cancelled : actionCancel
+Pending --> InProgress : actionCompleted
+
+Held --> Cancelled : timeframeExceeded
+Held --> InProgress : issueResolved
+
+Completed --> [*] : archived
+Failed --> [*] : archived
+Partial --> [*] : archived
+Rejected --> [*] : archived
+Cancelled --> [*] : archived
+
+@enduml

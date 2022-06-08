@@ -1,20 +1,16 @@
-# MEF-LSO-Legato-SDK Celine Release
+# MEF-LSO-Legato-SDK Dolly Release
 
 ## Download Link
 
-Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/celine/MEF-LSO-Legato-SDK-celine.zip)
+Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/dolly/MEF-LSO-Legato-SDK-dolly.zip)
 
 ## Overview
 
-This repository contains the Celine release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
-
-This version updates the payload schemas for:
-
-- IP/IP-VPN (based on MEF 112)
+This repository contains the Dolly release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
 Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
 
-**NOTE:** Some parts of the release are for MEF Members only, such as the draft, in-progress versions of the API Developer Guides for each of the service types listed above
+This version does not bring any update.
 
 ## Scope
 
