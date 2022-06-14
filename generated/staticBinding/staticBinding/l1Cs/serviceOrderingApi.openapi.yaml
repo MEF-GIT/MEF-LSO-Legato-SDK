@@ -1,0 +1,2412 @@
+openapi: 3.0.3
+info:
+  description: "The Service Order API provides a standardized mechanism for managing\
+    \ \n*ServiceOrders*. Using these APIs Business Applications (BUS) systems post\
+    \ \n*ServiceOrder* requests to the **Service Order Management** system within\
+    \ \nthe Service Orchestration Function (SOF).\n\nAdditionally, the APIs also allow\
+    \ the BUS to query and retrieve \n*ServiceOrders* in  SOF and to register listeners\
+    \ to be notified of changes \nto the *ServiceOrders*.  \n\n- MEF Developer Guide\
+    \ Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 641 v18.5.1\n\nCopyright\
+    \ � MEF 2020. All Rights Reserved"
+  title: Legato Service Ordering API
+  version: 4.0.0-RC
+servers:
+- url: "https://{server}:{port}{basePath}"
+  variables:
+    server:
+      default: mef.net
+    port:
+      default: "8443"
+      enum:
+      - "8443"
+      - "443"
+    basePath:
+      default: /mefApi/legato/serviceOrdering/v4
+tags:
+- description: "Mechanisms for BUS to create, query & retrieve *ServiceOrders*."
+  name: ServiceOrder
+- description: Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
+  name: EventSubscriptionHub
+paths:
+  /serviceOrder:
+    get:
+      deprecated: false
+      description: |-
+        This operation returns a list of Service Order instances matching the
+        query parameters from the Service Order management system maintained by
+        the SOF. Attribute selection is possible using the ''fields'' parameter
+        to filter retrieved attribute(s) for each Service Order instance.
+        If an exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      operationId: serviceOrderFind
+      parameters:
+      - description: ' Filter by externalId'
+        explode: true
+        in: query
+        name: externalId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: ' State of the order(s) to be retrieved'
+        explode: true
+        in: query
+        name: state
+        required: false
+        schema:
+          $ref: '#/components/schemas/ServiceOrderStateType'
+        style: form
+      - description: |
+          Category of the service order to be retrieved
+        explode: true
+        in: query
+        name: category
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Service Order date (creation) greather than
+        explode: true
+        in: query
+        name: orderDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Service Order date (creation) lower than
+        explode: true
+        in: query
+        name: orderDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "Comma-separated properties of the Service Order to be included\
+          \ in \nthe returned response"
+        explode: true
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "Requested start index in a ordered list (sorted by id property)\
+          \ of \nmatching Service Orders to be provided in response. "
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "Requested maximum number of Service Orders to be provided \n\
+          in the response"
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ServiceOrder'
+                type: array
+          description: Ok
+          headers:
+            X-Total-Count:
+              explode: false
+              schema:
+                format: int32
+                type: integer
+              style: simple
+            X-Result-Count:
+              explode: false
+              schema:
+                format: int32
+                type: integer
+              style: simple
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: List service orders
+      tags:
+      - ServiceOrder
+    post:
+      deprecated: false
+      description: |-
+        This operation creates a Service Order instance in the Service Order
+        management system maintained by the SOF. A Service Order is used to
+        request operations on a Service instance. A Service Order groups one
+        or more one Service Order Items - one per specific action on a Service
+        instance. The Action associated with the Service Order Item describes
+        the operation (add, remove, update) to be applied on the specified
+        Service instance. The Service Order Item and its associated Action can
+        operate on both existing (remove, update) as well as future (add)
+        Service instance. The Service Order is triggered from the Business
+        Application (BA) system in charge of the Product Order management to
+        the Service Orchestration Function (SOF) system that will orchestrate
+        the Service fulfillment. The assumption is that the Service
+        Specifications describing the Service instance in the Service Order
+        Item are already available (to both BA & SOF). If an exception is
+        encountered, then appropriate returnCode and error information is
+        populated and returned as specified.
+      operationId: serviceOrderCreate
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ServiceOrderCreate'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Create a service order
+      tags:
+      - ServiceOrder
+  /serviceOrder/{id}:
+    get:
+      deprecated: false
+      description: |-
+        This operation retrieves a Service Order instance identified by the Id
+        parameter from the Service Order managment system maintained by the SOF.
+        Attribute selection is possible using the ''fields'' parameter to filter
+        retrieved attribute(s) for the returned Service Order instance. If an
+        exception is encountered, then appropriate returnCode and error
+        information is populated and returned as specified.
+      operationId: serviceOrderGet
+      parameters:
+      - description: Identifier of the ServiceOrder
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Comma-separated properties of the Service Order to be included\
+          \ in \nthe returned response"
+        explode: true
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: Ok
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Retrieve a service order
+      tags:
+      - ServiceOrder
+  /hub:
+    post:
+      deprecated: false
+      description: Structure used to create a hub (to subscribe to notification
+      operationId: hubCreate
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Create Hub
+      tags:
+      - EventSubscriptionHub
+  /hub/{hubId}:
+    delete:
+      deprecated: false
+      description: Delete an existing Hub
+      operationId: hubDelete
+      parameters:
+      - explode: false
+        in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "204":
+          description: No Content
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: Delete Hub
+      tags:
+      - EventSubscriptionHub
+    get:
+      deprecated: false
+      operationId: hubGet
+      parameters:
+      - explode: false
+        in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Ok
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Not Found
+        "405":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Method Not Allowed
+        "408":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Request Time-out
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unprocessable entity
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal Server Error
+        "503":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Service Unavailable
+      summary: get hub
+      tags:
+      - EventSubscriptionHub
+components:
+  responses:
+    BadRequest:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad Request
+    Unauthorized:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized
+    Forbidden:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+    NotFound:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not Found
+    MethodNotAllowed:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Method Not Allowed
+    RequestTimeout:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Request Time-out
+    UnprocessableEntity:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unprocessable entity
+    InternalServerError:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal Server Error
+    ServiceUnavailable:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Service Unavailable
+    Conflict:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Conflict
+  schemas:
+    ActionType:
+      description: Action type to be described on the order item.
+      enum:
+      - add
+      - modify
+      - delete
+      - noChange
+      type: string
+    Addressable:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          name:
+            description: Name of the API schema object instance.
+            type: string
+          id:
+            description: "Unique identifier of the API schema object instance. The\
+              \ \nID is invariant and is assigned by the server. In other words \n\
+              this entity will have the same ID throught its lifetime."
+            readOnly: true
+            type: string
+          href:
+            description: URI reference of the API schema object instance.
+            format: uri
+            type: string
+        type: object
+      description: Base schema for all adressable API schema objects.
+      required:
+      - id
+    AdminState:
+      properties:
+        state:
+          $ref: '#/components/schemas/AdminStateState'
+      type: object
+    AdminStateState:
+      enum:
+      - LOCKED
+      - UNLOCKED
+      type: string
+    ClientProtocol:
+      description: Enumeration representing client protocol of L1 physical layer
+      enum:
+      - ETHERNET
+      - FIBERCHANNEL
+      - SDH
+      - SONET
+      type: string
+    EnabledDisabled:
+      description: Enumeration used to indicate state as ENABLED or DISABLED.
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    Error:
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \     response-code (3xx, 4xx, 5xx)"
+      properties:
+        reason:
+          description: |-
+            Text that explains the reason for error. This can be shown to a
+            client user.
+          type: string
+        code:
+          description: |-
+            Application related code.
+            List of supported error codes are defined below:
+
+            **400: Bad Request**
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+
+            **401: Unauthorized**
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+
+            **403: Forbidden**
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+
+            **404: Not Found**
+            - 60: Resource not found
+
+            **405: Method Not Allowed**
+            - 61: Method not allowed
+
+            **408: Request Timeout**
+            - 63: Request time-out
+
+            **409: Conflict**
+            - 64: Resource Conflict
+
+            **422: Unprocessable Entity**
+            - Functional Error codes specific to operation
+
+            **500: Internal Server Error**
+            - 1: Internal Error
+
+            **501: Not Implemented**
+
+            **503: Service Unavailable**
+          format: int32
+          type: integer
+        message:
+          description: |-
+            Text that provides more details and corrective actions related to
+            the error. This can be shown to a client user.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+        referenceError:
+          description: URI pointing to (external) documentation describing the error.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+        status:
+          description: HTTP error code extension like 400-2.
+          items:
+            type: string
+          maxItems: 1
+          minItems: 0
+          type: array
+      required:
+      - code
+      - reason
+      type: object
+    Eth1000BaseXOpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SX-PMD
+      - LX-PMD
+      - LX10-PMD
+      - BX10-PMD
+      type: string
+    Eth100GBaseROpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - LR4-PMD
+      - ER4-PMD
+      type: string
+    Eth10GBaseROpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - LR-PMD
+      - ER-PMD
+      type: string
+    Eth10GBaseWOpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - LW-PMD
+      - EW-PMD
+      type: string
+    Eth40GBaseROpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - LR4-PMD
+      - ER4-PMD
+      - FR-PMD
+      type: string
+    EventSubscription:
+      allOf:
+      - $ref: '#/components/schemas/EventSubscriptionInput'
+      - properties:
+          id:
+            description: Unique identifier of Hub
+            type: string
+        required:
+        - id
+        type: object
+      description: Resource used to manage notification subscription.
+    EventSubscriptionInput:
+      description: The information needed to create a Hub.
+      properties:
+        query:
+          description: |-
+            The query must have an eventType= information.
+            Optionally a ? could be added to reduce hub.
+            query�:�eventType = ServiceOrderStateChangeNotification�&serviceOrder.state=COMPLETED
+          type: string
+        callback:
+          description: URL where notification must be send
+          type: string
+      required:
+      - callback
+      - query
+      type: object
+    Extensible:
+      description: "Base schema for all API schema objects that support polymorphic\
+        \ \nextensions of its defined schema."
+      properties:
+        '@baseType':
+          description: "When sub-classing, this defines the super/base class type\
+            \ (if \napplicable) of the API schema object."
+          type: string
+        '@type':
+          description: The concrete (non-abstract) class type of the API schema object.
+          type: string
+        '@schemaLocation':
+          description: A URI refernce to the schema file that defines the attributes
+            and relationships of the API schema object.
+          format: uri
+          type: string
+      required:
+      - '@type'
+      type: object
+    Fc100OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-2-100-SM-LC-L
+      type: string
+    Fc1200OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-10GFC-1200-SM-LL-L
+      type: string
+    Fc1600OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-5-1600-SM-LC-L
+      - FC-PI-5-1600-SM-LZ-I
+      type: string
+    Fc200OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-2-200-SM-LC-L
+      type: string
+    Fc3200OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-6-3200-SM-LC-L
+      type: string
+    Fc400OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-5-400-SM-LC-L
+      - FC-PI-5-400-SM-LC-M
+      type: string
+    Fc800OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - FC-PI-5-800-SM-LC-L
+      - FC-PI-5-800-SM-LC-I
+      type: string
+    HighOrderOdu:
+      oneOf:
+      - $ref: '#/components/schemas/HighOrderOdu4MultiplexingSequences'
+      - $ref: '#/components/schemas/HighOrderOdu3MultiplexingSequences'
+      - $ref: '#/components/schemas/HighOrderOdu2And2eMultiplexingSequences'
+      - $ref: '#/components/schemas/HighOrderOdu1MultiplexingSequences'
+    HighOrderOdu1MultiplexingSequences:
+      enum:
+      - ODU0-ODU1TO2
+      type: string
+    HighOrderOdu2And2eMultiplexingSequences:
+      enum:
+      - ODU0-ODU1-ODU2TO8
+      - ODU0-ODU2TO8
+      - ODU1-ODU2TO4_1.25TS
+      - ODU1-ODU2TO4_2.5TS
+      - ODUFLEX-ODU2TO10G
+      type: string
+    HighOrderOdu3MultiplexingSequences:
+      enum:
+      - ODU0-ODU1-ODU2-ODU3TO32
+      - ODU0-ODU1-ODU3TO32
+      - ODU0-ODU2-ODU3TO32
+      - ODU0-ODU3TO32
+      - ODU1-ODU2-ODU3TO16_1.25TS
+      - ODU1-ODU2-ODU3TO16_2.5TS
+      - ODU1-ODU3TO16_1.25TS
+      - ODU1-ODU3TO16_2.5TS
+      - ODUFLEX-ODU2-ODU3TO10G
+      - ODUFLEX-ODU3TO40G
+      - ODU2-ODU3TO4_1.25TS
+      - ODU2-ODU3TO4_2.5TS
+      - ODU2E-ODU3TO3
+      type: string
+    HighOrderOdu4MultiplexingSequences:
+      enum:
+      - ODU0-ODU1-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU2-ODU4TO80
+      - ODU0-ODU1-ODU4TO80
+      - ODU0-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU2-ODU4TO80
+      - ODU0-ODU3-ODU4TO64
+      - ODU0-ODU4TO80
+      - ODU1-ODU2-ODU3-ODU4TO32
+      - ODU1-ODU2-ODU4TO40
+      - ODU1-ODU3-ODU4TO32
+      - ODU1-ODU4TO40
+      - ODUFLEX-ODU2-ODU3-ODU4TO10G
+      - ODUFLEX-ODU2-ODU4TO10G
+      - ODUFLEX-ODU3-ODU4TO10G
+      - ODUFLEX-ODU4TO100G
+      - ODU2-ODU3-ODU4TO8
+      - ODU2-ODU4TO10
+      - ODU2E-ODU3-ODU4TO6
+      - ODU2E-ODU4TO10
+      - ODU3-ODU4TO2
+      type: string
+    HighOrderOduKOverHead:
+      description: "The value of HO ODUk OH is either None or List of overhead values\
+        \ corresponding to the ter-minated HO ODUk, where each entry in the list has\
+        \ the value Disabled or Enabled."
+      properties:
+        superHighOrderHighOrderOdukTti:
+          description: Super High Order/High Order ODUk Trail Trace Identifier.
+          $ref: '#/components/schemas/EnabledDisabled'
+        superHighOrderHighOrderOdukGcc1:
+          description: Super High Order/High Order ODUk General Communications Channel
+            1.
+          $ref: '#/components/schemas/EnabledDisabled'
+        superHighOrderHighOrderOdukGcc2:
+          description: Super High Order/High Order ODUk General Communications Channel
+            2.
+          $ref: '#/components/schemas/EnabledDisabled'
+        superHighOrderHighOrderOdukAps:
+          description: Super High Order/High Order ODUk Automatic Protection Switching.
+          $ref: '#/components/schemas/EnabledDisabled'
+      type: object
+    L1EndPoint:
+      description: The L1EndPoint represents the Subscriber L1 End Point or the Operator
+        L1 End Point. This is an abstract class and the superclass of SubscriberL1EndPoint
+        and OperatorL1EndPoint. It contains the common attributes of SubscriberL1EndPoint
+        and OperatorL1EndPoint defined in MEF 63 and MEF 64.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+      type: object
+    L1Enni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/L1ExternalInterface'
+      - description: The L1 ENNI class controls Operator Network behaviors that enable
+          Operator Networks to be interconnected and exchanged OTUk frames. The interconnection
+          is achieved by the Operators agreeing on the value for each ENNI attributes.
+          Reference MEF 64 Section 8.1 ENNI Common Attributes.
+        properties:
+          listOfPhysicalLayer:
+            description: The list of coding function and wavelength structure supporting
+              the ENNI. Reference MEF 64 Section 8.1.2 ENNI List of Physical Layers
+              Common At-tribute.
+            items:
+              $ref: '#/components/schemas/L1NniPhysicalLayer'
+            type: array
+          l1EnniService:
+            $ref: '#/components/schemas/L1EnniService'
+          peeringIdentifier:
+            description: The ENNI Peering Identifier value is a string used to allow
+              the Operators at ENNI to uniquely identify the ENNI. Reference MEF 64
+              Section 8.1.1 ENNI Peering Identifier Com-mon Attribute.
+            minLength: 45
+            type: string
+          protection:
+            $ref: '#/components/schemas/NniProtection'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1Enni:v2.0.0:all
+    L1EnniService:
+      description: "For each instance of an ENNI, there are multiple sets of ENNI\
+        \ Service Attributes. The value for each ENNI Service Attribute in a set for\
+        \ an Operator network is specific to the SP/SO that is us-ing the ENNI. Reference\
+        \ MEF 64 Section 8.2 ENNI Service Attributes."
+      properties:
+        identifier:
+          description: The Operator ENNI Identifier Service Attribute value is a string
+            used to allow the SP/SO and Operator to uniquely identify the ENNI. Reference
+            MEF 64 Sec-tion 8.2.1 Operator ENNI Identi-fier Service Attribute.
+          minLength: 45
+          type: string
+        multiplexingCapabilityList:
+          $ref: '#/components/schemas/HighOrderOdu'
+        pathOverhead:
+          $ref: '#/components/schemas/PathOverHead'
+        operatorL1VcEndPoint:
+          $ref: '#/components/schemas/OperatorL1VcEndPointRef'
+      type: object
+    L1EnniServiceRef:
+      description: Reference to a L1 Enni Service Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    L1ExternalInterface:
+      description: "The L1ExternalInterface represents the physical interface used\
+        \ for L1 services. This is an abstract class and the superclass. It contains\
+        \ the common attributes of three classes- L1SubscriberUni, L1OperatorUni and\
+        \ L1Enni defined in MEF 63 and MEF 64."
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+      type: object
+    L1NniCodingFunction:
+      description: "ENNI Coding function is a 3-tuple of the <k, OTUk OH, HO ODUk\
+        \ OH>. k is an index repre-senting the physical layer line rate. OTUk OH is\
+        \ a list of overhead values corresponding to the terminated OTUk. HO ODUk\
+        \ OH is either None or List where the value represents the overhead values\
+        \ corresponding to the terminated HO ODUk."
+      properties:
+        lineRate:
+          $ref: '#/components/schemas/LineRate'
+        otukOverHead:
+          description: A list of overhead values corre-sponding to the terminated
+            OTUk.
+          items:
+            $ref: '#/components/schemas/OtuKOverHead'
+          type: array
+        highOrderOdukOverhead:
+          description: "The overhead values corresponding to the terminated HO ODUk\
+            \ (or SHO ODUk), where each entry in the list has the value Disabled or\
+            \ Enabled."
+          items:
+            $ref: '#/components/schemas/HighOrderOduKOverHead'
+          type: array
+      type: object
+    L1NniOpticalInterfaceFunction:
+      description: The L1 NNI Physical layer Service Attribute is a list of 2-tuples
+        of the ENNI Coding Function and ENNI Optical Interface Function. Reference
+        MEF 64 Section 8.1.2 ENNI List of Physical Layers Common Attribute.
+      oneOf:
+      - $ref: '#/components/schemas/Otu1OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Otu2And2EOpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Otu3OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Otu4OpticalInterfaceFunction'
+    L1NniPhysicalLayer:
+      description: The L1 NNI Physical layer Service Attribute is a list of 2-tuples
+        of the ENNI Coding Function and ENNI Optical Interface Function. Reference
+        MEF 64 Section 8.1.2 ENNI List of Physical Layers Common Attribute.
+      properties:
+        l1NniOpticalInterfaceFunction:
+          $ref: '#/components/schemas/L1NniOpticalInterfaceFunction'
+        l1NniCodingFunction:
+          $ref: '#/components/schemas/L1NniCodingFunction'
+      type: object
+    L1OperatorUni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/L1Uni'
+      - description: The L1 Operator UNI Service Attribute values are agreed to by
+          the SP/SO and the Operator.
+        properties:
+          identifier:
+            description: An identifier for the UNI intended for SP/SO and Operator
+              to uniquely identify the UNI. Reference MEF 64 Section 8.3.1 Operator
+              UNI Identifier Service Attribute.
+            minLength: 45
+            type: string
+          operatorL1VcEndPoint:
+            $ref: '#/components/schemas/OperatorL1VcEndPointRef'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1OperatorUni:v2.0.0:all
+    L1OperatorUniRef:
+      description: Reference to a L1 Operator UNI Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    L1OperatorVc:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/L1Vc'
+      - description: An Operator L1VC is an association of two Operator L1VC End Points.
+          Reference MEF 63 Sec-tion 8.4 Operator L1VC Service Attributes.
+        properties:
+          identifier:
+            description: An identifier for the Operator L1VC is a string that is used
+              to allow the SP/SO and operator to uniquely identify an Operator L1VC.
+              Reference MEF 64 Sec-tion 8.4.1 Operator L1VC Identi-fier Service Attribute.
+            minLength: 45
+            type: string
+          operatorL1VcEndPoint:
+            $ref: '#/components/schemas/OperatorL1VcEndPoint'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1OperatorVc:v2.0.0:all
+    L1Sls:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: "The Subscriber L1VC Service Level Specification (SLS) Service\
+          \ Attribute is the technical speci-fication of aspects of the service performance\
+          \ agreed to by the Service Provider and the Sub-scriber. For any given SLS,\
+          \ a given Performance Metric may or may not be specified."
+        properties:
+          duration:
+            description: Duration is a duration that is used in conjunction with ts
+              to specify a contiguous sequence of time inter-vals for determining
+              when perfor-mance objectives are met. The units for T are not constrained.
+            $ref: '#/components/schemas/TimeIntervalT'
+          sls1wDelayPerformanceMetric:
+            items:
+              description: The One-way Delay for the L1CI that ingresses at UNI 1
+                and that egresses at UNI 2 is defined as the time elapsed from the
+                reception of the first bit of the ingress L1CI at UNI 1 until the
+                re-ception of that first bit of the corresponding L1CI egressing at
+                UNI 2.
+              $ref: '#/components/schemas/Sls1wDelayPerformanceMetric'
+            type: array
+          sls1wAvailabilityPerformanceMetric:
+            items:
+              description: Availability is defined as the percentage of Available
+                Time over a given interval T-l which does not include Maintenance
+                Interval Time (MIT).
+              $ref: '#/components/schemas/Sls1wAvailabilityPerformanceMetric'
+            type: array
+          startTime:
+            description: "StartTime is a time that represents the date and time for\
+              \ the start of the SLS. MEF 63: [R22] t-start MUST be specified to the\
+              \ nearest second. MEF 64: [R30] t-start MUST be specified to the nearest\
+              \ second."
+            $ref: '#/components/schemas/TimeAndDate'
+          sls1wSeverelyErroredSecondPerformanceMetric:
+            items:
+              description: An errored second (ES) is defined as one second sigma-k
+                in Available Time with at least one er-rored block (EB) and is not
+                a SES. An EB is defined as a block in which one or more bits are in
+                error.
+              $ref: '#/components/schemas/Sls1wSeverelyErroredSecondPerformanceMetric'
+            type: array
+          sls1wErroredSecondPerformanceMetric:
+            items:
+              description: An errored second (ES) is defined as one second sigma-k
+                in Available Time with at least one er-rored block (EB) and is not
+                a SES. An EB is defined as a block in which one or more bits are in
+                error.
+              $ref: '#/components/schemas/Sls1wErroredSecondPerformanceMetric'
+            type: array
+          sls1wUnavailableSecondPerformanceMetric:
+            items:
+              description: An Unavailable Second (UAS) is defined as a second during
+                Unavailable Time (UAT).
+              $ref: '#/components/schemas/Sls1wUnavailableSecondPerformanceMetric'
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1Sls:v2.0.0:all
+    L1SubscriberUni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/L1Uni'
+      - description: The UNI is the physical demarcation point between the responsibility
+          of the L1 Service Provider and the responsibility of the L1 Subscriber.
+          Reference MEF 63 Section 8.
+        properties:
+          identifier:
+            description: The value of the UNI ID Service Attribute is a string that
+              is used to allow Subscriber and Service Provider to uniquely identify
+              the UNI. Reference MEF 64 Section 8.1.1 UNI ID Service Attribute.
+            minLength: 45
+            type: string
+          subscriberL1VcEndPoint:
+            $ref: '#/components/schemas/SubscriberL1VcEndPointRef'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1SubscriberUni:v2.0.0:all
+    L1SubscriberUniRef:
+      description: Reference to a L1 Subscriber UNI Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    L1SubscriberVc:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/L1Vc'
+      - description: A subscriber L1VC represents the logical attachment of a Subscriber
+          L1VC to two SubscriberL1VCEndPoint. Reference MEF 63 Section 8.2.
+        properties:
+          identifier:
+            description: The value of the Subscriber L1VC ID service attribute is
+              a string that is used to identify the Subscriber L1VC within the service
+              provider network. Reference MEF 63 Section 8.2.1.
+            minLength: 45
+            type: string
+          subscriberL1VcEndPoint:
+            items:
+              $ref: '#/components/schemas/SubscriberL1VcEndPoint'
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:legato:L1SubscriberVc:v2.0.0:all
+    L1Uni:
+      allOf:
+      - $ref: '#/components/schemas/L1ExternalInterface'
+      description: The L1Uni represents the physical interface used for L1 services
+        with common attributes. This is an abstract class and the supper class. It
+        contains the common attributes of L1SubscriberUni and L1OperatorUni not included
+        in L1ExternalInterface superclass as defined in MEF 63 and MEF 64.
+      properties:
+        physicalLayer:
+          description: "The Physical Layer Service At-tribute specifies the Client\
+            \ Proto-col, the Coding Function and the optical interface Function. \
+            \ Ref-erence MEF 63 Section 8.1.2 Physical Layer Service Attribute."
+          $ref: '#/components/schemas/L1UniPhysicalLayer'
+      type: object
+    L1UniCodingfunction:
+      description: "MEF 63 Coding Function <c>, functionality which encodes bits for\
+        \ transmission and corresponding decode upon reception"
+      enum:
+      - 1000BASE-X
+      - 10GBASE-W
+      - 10GBASE-R
+      - 40GBASE-R
+      - 100GBASE-R
+      - FC-100
+      - FC-200
+      - FC-400
+      - FC-800
+      - FC-1200
+      - FC-1600
+      - FC-3200
+      - STM-1
+      - STM-4
+      - STM-16
+      - STM-64
+      - STM-256
+      - OC-3
+      - OC-12
+      - OC-48
+      - OC-192
+      - OC-768
+      type: string
+    L1UniOpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      oneOf:
+      - $ref: '#/components/schemas/Eth1000BaseXOpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Eth10GBaseWOpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Eth10GBaseROpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Eth100GBaseROpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Eth40GBaseROpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc100OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc200OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc400OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc800OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc1200OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc1600OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Fc3200OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Stm1OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Stm4OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Stm16OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Stm64OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Stm256OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Oc3OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Oc12OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Oc48OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Oc192OpticalInterfaceFunction'
+      - $ref: '#/components/schemas/Oc768OpticalInterfaceFunction'
+    L1UniPhysicalLayer:
+      description: "The L1 Physical Layer Service Attribute specifies the Client Protocol,\
+        \ the Coding Function and the Optical Interface Function.  Reference MEF 63\
+        \ Section 8.1.2 Physical Layer Service Attribute."
+      properties:
+        l1UniCodingFunction:
+          $ref: '#/components/schemas/L1UniCodingfunction'
+        clientProtocol:
+          $ref: '#/components/schemas/ClientProtocol'
+        l1UniOpticalInterfaceFunction:
+          $ref: '#/components/schemas/L1UniOpticalInterfaceFunction'
+      type: object
+    L1Vc:
+      description: The L1Vc represents the SubscriberL1Vc or Operator L1Vc. This is
+        an abstract class and the su-perclass of SubscriberL1Vc and OperatorL1Vc.
+        It contains the common attributes of Subscrib-erL1Vc and OperatorL1Vc classes
+        defined in MEF 63 and MEF 64.
+      properties:
+        administrativeState:
+          $ref: '#/components/schemas/AdminState'
+        operationalState:
+          $ref: '#/components/schemas/OperationalState'
+        l1ServiceLevelSpecification:
+          description: The Subscriber L1VC Service Level Specification (SLS) Ser-vice
+            Attribute is the technical specification of aspects of the service performance
+            agreed to by the Service Provider and Subscriber.  Reference MEF 63 Section
+            8.2.3.
+          $ref: '#/components/schemas/l1Sls'
+      type: object
+    L1VcEndPointMap:
+      description: Either Not Applicable or non-empty list of tuples of attributes
+        in Table 16. Reference MEF 64 Section 8.5.4 Operator L1VC End Point Map Service
+        Attribute.
+      properties:
+        tributarySlots:
+          description: Tributary Slot is list of integers that represents Tributary
+            Slots occupied in a HO ODUi.
+          items:
+            type: integer
+          type: array
+        lineRate:
+          $ref: '#/components/schemas/LineRate'
+        tributarySlotRate:
+          $ref: '#/components/schemas/TributarySlotRate'
+      type: object
+    L1VcEndPointRef:
+      description: "First reference VC, then specific VC End Point"
+      properties:
+        vcRef:
+          $ref: '#/components/schemas/L1VcRef'
+        id:
+          description: Points to L1VcEndPoint
+          format: uuid
+          type: string
+      type: object
+    L1VcRef:
+      description: Reference to a L1 Virtual Connection Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    LineRate:
+      description: Enumeration representing physical line rate
+      enum:
+      - OTU1
+      - OTU2
+      - OTU2E
+      - OTU3
+      - OTU4
+      type: string
+    MefServiceConfiguration:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      description: Describes the characteristic of an MEF Service schema object.
+      discriminator:
+        mapping:
+          urn:mef:lso:spec:legato:L1SubscriberUni:v2.0.0:all: '#/components/schemas/L1SubscriberUni'
+          urn:mef:lso:spec:legato:L1Sls:v2.0.0:all: '#/components/schemas/L1Sls'
+          urn:mef:lso:spec:legato:L1OperatorUni:v2.0.0:all: '#/components/schemas/L1OperatorUni'
+          urn:mef:lso:spec:legato:L1Enni:v2.0.0:all: '#/components/schemas/L1Enni'
+          urn:mef:lso:spec:legato:L1SubscriberVc:v2.0.0:all: '#/components/schemas/L1SubscriberVc'
+          urn:mef:lso:spec:legato:L1OperatorVc:v2.0.0:all: '#/components/schemas/L1OperatorVc'
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: Used as a discriminator to support polymorphic definitions
+          type: string
+    NniProtection:
+      description: Enumeration representing the protection protocol employed at ENNI
+        for the ODU container exchanged by the operator. The enumeration value is
+        either None or one of the rows as specified in G.873
+      enum:
+      - 1_PLUS_1_UNIDIR_SNC_I
+      - 1_PLUS_1_BIDIR_SNC_I
+      - 1_TO_N_BIDIR_SNC_I
+      - 1_PLUS_1_UNIDIR_SNC_NE
+      - 1_PLUS_1_BIDIR_SNC_NE
+      - 1_PLUS_1_UNIDIR_SNC_NS
+      - 1_PLUS_1_BIDIR_SNC_NS
+      - 1_PLUS_1_UNIDIR_SNC_S
+      - 1_PLUS_1_BIDIR_SNC_S
+      - 1_TO_N_BIDIR_SNC_S
+      - 1_PLUS_1_UNIDIR_CL-SNCG_1
+      - 1_PLUS_1_BIDIR_CL-SNCG_1
+      - 1_TO_1_BIDIR_CL-SNCG_1
+      type: string
+    Note:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          date:
+            description: Date of the note
+            format: date-time
+            type: string
+          system:
+            description: Describes the system from which the action related to this
+              note was done
+            type: string
+          author:
+            description: Author of the note
+            type: string
+          text:
+            description: Text of the note
+            type: string
+        type: object
+      description: Extra information about a given entity.
+    Oc12OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+      - VR-1
+      - VR-2
+      - VR-3
+      - UR-2
+      - UR-3
+      type: string
+    Oc192OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SR-1
+      - SR-2
+      - IR-1
+      - IR-2
+      - IR-3
+      - LR-1
+      - LR-2
+      - LR-2a
+      - LR-2b
+      - LR-2c
+      - LR-3
+      - VR-2a
+      - VR-2b
+      - VR-3
+      type: string
+    Oc3OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+      type: string
+    Oc48OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SR-1
+      - IR-1
+      - IR-2
+      - LR-1
+      - LR-2
+      - LR-3
+      - VR-2
+      - VR-3
+      - UR-2
+      - UR-3
+      type: string
+    Oc768OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - SR-1
+      - SR-2
+      - IR-1
+      - IR-2
+      - IR-3
+      - LR-1
+      - LR-2
+      - LR-3
+      type: string
+    OperationalState:
+      properties:
+        state:
+          $ref: '#/components/schemas/State'
+      type: object
+    OperatorL1VcEndPoint:
+      allOf:
+      - $ref: '#/components/schemas/L1EndPoint'
+      description: An Operator L1VC End Point represents the logical attachment of
+        an Operator L1VC to an EI. Reference MEF 64 Section 8.5 Operator L1VC End
+        Point Service Attributes.
+      properties:
+        identifier:
+          description: An identifier for the Operator L1VC End Point is a string that
+            is used to allow the SP/SO and operator to uniquely identify the Operator
+            L1VC End Point. Ref-erence MEF 64 Section 8.5.1 Operator L1VC End Point
+            Iden-tifier Service Attribute.
+          minLength: 45
+          type: string
+        l1EnniService:
+          $ref: '#/components/schemas/L1EnniServiceRef'
+        l1OperatorUni:
+          $ref: '#/components/schemas/L1OperatorUniRef'
+        operatorL1Vc:
+          $ref: '#/components/schemas/OperatorL1VcRef'
+        l1VcEndPointMap:
+          $ref: '#/components/schemas/L1VcEndPointMap'
+      type: object
+    OperatorL1VcEndPointRef:
+      description: "First reference OVC, then specific OVC End Point"
+      properties:
+        ovcRef:
+          $ref: '#/components/schemas/OperatorL1VcRef'
+        id:
+          description: Points to OperatorL1VcEndPoint
+          format: uuid
+          type: string
+      type: object
+    OperatorL1VcRef:
+      description: Reference to a L1 Operator Virtual Connection Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    OrderItemRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    OrderRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    Otu1OpticalInterfaceFunction:
+      description: "The values of L1 ENNI Optical Interface Function are grouped into\
+        \ Classes defined in G.959.1 [5]. Within a class there are several possible\
+        \ values for the L1 ENNI Optical Interface Function."
+      enum:
+      - P16S1-1D2
+      - P32S1-1D2
+      - P16S1-1D5
+      - P32S1-1D5
+      - P16L1-1A2
+      - P16L1-1A5
+      - P1I1-1D1
+      - P1S1-1D1
+      - P1S1-1D2
+      - P1L1-1D1
+      - P1L1-1D2
+      - 1L1-1D2F
+      - P1U1-1A2
+      - 1U1-1B2F
+      - P1U1-1A3
+      - 1U1-1B3F
+      - P1U1-1A5
+      - 1U1-1B5F
+      type: string
+    Otu2And2EOpticalInterfaceFunction:
+      description: "The values of L1 ENNI Optical Interface Function are grouped into\
+        \ Classes defined in G.959.1 [5]. Within a class there are several possible\
+        \ values for the L1 ENNI Optical Interface Function."
+      enum:
+      - P4I1-2D1
+      - 4I1-2D1F
+      - P16I1-2D2
+      - P32I1-2D2
+      - P16I1-2D3
+      - P16I1-2D5
+      - P32I1-2D5
+      - P16S1-2B2
+      - P16S1-2C2
+      - P32S1-2B2
+      - P32S1-2C2
+      - P16S1-2C3
+      - P16S1-2B5
+      - P16S1-2C5
+      - P32S1-2B5
+      - P32S1-2C5
+      - P16L1-2A2
+      - P16L1-2A5
+      - P1I1-2D1R
+      - P1I1-2D1
+      - P1I1-2D2R
+      - P1I1-2D2
+      - P1I1-2D3
+      - P1I1-2D5
+      - P1S1-2D1
+      - P1S1-2D2A
+      - P1S1-2D2B
+      - 1S1-2D2BF
+      - P1S1-2D3A
+      - P1S1-2D3B
+      - 1S1-2D3BF
+      - P1S1-2D5A
+      - P1S1-2D5B
+      - 1S1-2D5BF
+      - P1L1-2D1
+      - P1L1-2D2
+      - 1L1-2D2F
+      - P1L1-2B2FE
+      - L1L-2D2FE
+      - P1V1-2C2
+      - 1V1-2C2F
+      - P1V1-2B2E
+      - 1V1-2B2FE
+      - P1V1-2B5
+      - 1V1-2B5F
+      type: string
+    Otu3OpticalInterfaceFunction:
+      description: "The values of L1 ENNI Optical Interface Function are grouped into\
+        \ Classes defined in G.959.1 [5]. Within a class there are several possible\
+        \ values for the L1 ENNI Optical Interface Function."
+      enum:
+      - P1I1-3D1
+      - 1I1-3D1F
+      - P1I1-3D3
+      - P1I1-3D5
+      - P1S1-3D1
+      - 1S1-3D1F
+      - P1S1-3C2
+      - P1S1-3C3
+      - P1S1-3C5
+      - P1L1-3C1
+      - 1L1-3C1F
+      - P1L1-3A2
+      - 1L1-3C2F
+      - 1L1-3C2FD
+      - P1L1-3A3
+      - 1L1-3C3F
+      - 1L1-3C3FD
+      - P1L1-3A5
+      - 1L1-3C5F
+      - 1L1-3C5FD
+      - P1L1-7A2
+      - P1L1-7A3
+      - P1L1-7A5
+      - P4I1-2D1
+      - 4L1-2D1F
+      - P16I1-2D2
+      - P32I1-2D2
+      - P16I1-2D3
+      - P16I1-2D5
+      - P32I1-2D5
+      - P16S1-2B2
+      - P16S1-2C2
+      - P32S1-2B2
+      - P32S1-2C2
+      - P16S1-2C3
+      - P16S1-2B5
+      - P16S1-2C5
+      - P32S1-2B5
+      - P32S1-2C5
+      - P16L1-2A2
+      - P16L1-2A3
+      - P16L1-2A5
+      - C4S1-2D1
+      - C4L1-2D1
+      type: string
+    Otu4OpticalInterfaceFunction:
+      description: "The values of L1 ENNI Optical Interface Function are grouped into\
+        \ Classes defined in G.959.1 [5]. Within a class there are several possible\
+        \ values for the L1 ENNI Optical Interface Function."
+      enum:
+      - 4I1-9D1F
+      - 4L1-9C1F
+      - 4L1-9D1F
+      - C4S1-9D1F
+      type: string
+    OtuKOverHead:
+      description: "OTUk Overhead must be a list of three pairs {field,values} with\
+        \ each field and corresponding values in Table 13 - OTUk Overhead Data Type\
+        \ Attributes."
+      properties:
+        otukOsmc:
+          description: ' OTUk OTN Synchronization Mes-saging Channel.'
+          $ref: '#/components/schemas/EnabledDisabled'
+        otukGcc0:
+          description: OTUk General Communications Channel.
+          $ref: '#/components/schemas/EnabledDisabled'
+        otukTti:
+          description: OTUk Trail Trace Identifier.
+          $ref: '#/components/schemas/EnabledDisabled'
+      type: object
+    PathOverHead:
+      description: "An ODU path is the connectivity between the locations where the\
+        \ path overhead is terminated. Either None or List. When the value of the\
+        \ Operator Path Overhead Service Attribute is List, the entries are the overhead\
+        \ values corresponding to each of the SHO/HO/LO ODU paths carried across an\
+        \ ENNI which is terminated in an Operator�s network. Reference MEF 64 Section\
+        \ 8.2.3 Operator Path Overhead Service Attribute."
+      properties:
+        oduGcc1:
+          description: "Overhead value, corresponding to each of the SHO/HO/LO ODU\
+            \ paths carried across an ENNI, ODU GCC1 is enabled or disabled."
+          $ref: '#/components/schemas/EnabledDisabled'
+        oduGcc2:
+          description: "Overhead value, corresponding to each of the SHO/HO/LO ODU\
+            \ paths carried across an ENNI, ODU GCC2 is enabled or disabled."
+          $ref: '#/components/schemas/EnabledDisabled'
+        oduAps:
+          description: "Overhead value, corresponding to each of the SHO/HO/LO ODU\
+            \ paths carried across an ENNI, ODU APS is enabled or disabled."
+          $ref: '#/components/schemas/EnabledDisabled'
+        oduTti:
+          description: "Overhead value, corresponding to each of the SHO/HO/LO ODU\
+            \ paths carried across an ENNI, ODU TTI is enabled or disabled."
+          $ref: '#/components/schemas/EnabledDisabled'
+      type: object
+    Place:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          role:
+            description: "Role of the place, such as: [home delivery], [shop retrieval]."
+            type: string
+        type: object
+      description: "Place reference. Place defines the places where the products are\
+        \ sold \nor delivered."
+    Referenceable:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          '@referredType':
+            description: The class type of the target API schema object instance.
+            type: string
+        required:
+        - '@referredType'
+        type: object
+      description: Base schema for all adressable API schema object references.
+    RelatedPartyRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          role:
+            description: "The role of the related party (e.g. Owner, requester)."
+            type: string
+        type: object
+      description: |-
+        A related party defines a party and its role, that is linked to a
+        specific entity such as ServiceSpecification, ServiceOrder, Service, etc
+    ResourceRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: Resource
+            type: string
+        type: object
+      description: Provides reference to the Resource supporting the Service instance.
+    ServiceCreate:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          serviceType:
+            description: 'Business type of the service '
+            type: string
+          note:
+            items:
+              $ref: '#/components/schemas/Note'
+            type: array
+          serviceRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceRelationship'
+            type: array
+          supportingResource:
+            items:
+              $ref: '#/components/schemas/ResourceRef'
+            readOnly: true
+            type: array
+          mefServiceConfiguration:
+            $ref: '#/components/schemas/MefServiceConfiguration'
+          serviceSpecification:
+            $ref: '#/components/schemas/ServiceSpecificationRef'
+          description:
+            description: Free-text description of the service
+            type: string
+          supportingService:
+            description: "A list of supporting services (SupportingService [*]). A\
+              \ \ncollection of services that support this service (bundling, \nlink\
+              \ CFS to RFS)."
+            items:
+              $ref: '#/components/schemas/ServiceRef'
+            type: array
+          place:
+            items:
+              $ref: '#/components/schemas/Place'
+            type: array
+          state:
+            $ref: '#/components/schemas/ServiceStateType'
+          category:
+            description: Is it a customer facing or resource facing service
+            type: string
+          relatedParty:
+            items:
+              $ref: '#/components/schemas/RelatedPartyRef'
+            type: array
+        type: object
+      description: "In the context of a service order, and depending of the action\
+        \ requested (add/modify/delete/noChange) this data structure captures the\
+        \ configuration to apply to an existing subscribed service or to a new one"
+    ServiceOrder:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrderCreate'
+      - properties:
+          expectedCompletionDate:
+            description: Expected delivery date set by the provider.
+            format: date-time
+            type: string
+          completionDate:
+            description: Date when the order was completed
+            format: date-time
+            type: string
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+          orderDate:
+            description: Date when the order was created.
+            format: date-time
+            type: string
+          startDate:
+            description: Date when the order processing was started
+            format: date-time
+            type: string
+        type: object
+      description: |-
+        A Service Order is used to request operations on a Service instance.
+        A Service Order groups one or more one Service Order Items - one per
+        specific action on a Service instance. The Action associated with the
+        Service Order Item describes the operation (add, remove, update) to be
+        applied on the specified Service instance.The Service Order Item and
+        its associated Action can operate on both existing (remove, update) as
+        well as future (add) Service instance.The Service Order is triggered
+        from the Business Application (BA) system in charge of the Product Order
+        management to the Service Orchestration Function (SOF) system that will
+        orchestrate the Service fulfillment.
+    ServiceOrderCreate:
+      allOf:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          note:
+            items:
+              $ref: '#/components/schemas/Note'
+            type: array
+          notificationContact:
+            description: "Contact attached to the order to send back information \n\
+              regarding this order"
+            type: string
+          orderItem:
+            items:
+              $ref: '#/components/schemas/ServiceOrderItem'
+            minItems: 1
+            type: array
+          externalId:
+            description: |-
+              ID given by the consumer and only understandable by client
+              (to facilitate client searches)
+            type: string
+          description:
+            description: A free-text description of the service order
+            type: string
+          category:
+            description: |-
+              Used to categorize the order that can be useful for OM system
+              (e.g. �broadband�, �TVOption�, ...)'
+            type: string
+          priority:
+            description: |-
+              A way that can be used by consumers to prioritize orders in
+              Service Order Management system (from 0 to 4 : 0 is the highest
+              priority, and 4 the lowest
+            type: integer
+          relatedParty:
+            items:
+              $ref: '#/components/schemas/RelatedPartyRef'
+            type: array
+          orderRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceOrderRelationship'
+            type: array
+          requestedStartDate:
+            description: Order start date wished by the requestor
+            format: date-time
+            type: string
+          requestedCompletionDate:
+            description: Requested delivery date from the requestor perspective
+            format: date-time
+            type: string
+        type: object
+      description: This structure is used in the operation POST for a serviceOrder
+        request
+    ServiceOrderItem:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          service:
+            $ref: '#/components/schemas/ServiceCreate'
+          action:
+            $ref: '#/components/schemas/ActionType'
+          orderItemRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceOrderItemRelationship'
+            maxItems: 1
+            minItems: 0
+            type: array
+          id:
+            description: Identifier of the line item
+            type: string
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+        required:
+        - id
+        - service
+        type: object
+      description: |-
+        An identified part of the order. A service order is decomposed into one
+        or more order items.
+    ServiceOrderItemRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: ServiceOrderItem
+            type: string
+        type: object
+      description: Reference to a Service Order Item instance.
+    ServiceOrderItemRelationship:
+      description: Reference to an related Service Order Item and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/OrderItemRelationshipType'
+        serviceOrder:
+          $ref: '#/components/schemas/ServiceOrderItemRef'
+      required:
+      - relationshipType
+      - serviceOrder
+      type: object
+    ServiceOrderRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: ServiceOrder
+            type: string
+        type: object
+      description: Reference to a Service Order instance.
+    ServiceOrderRelationship:
+      description: Reference to an related Service Order and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/OrderRelationshipType'
+        serviceOrder:
+          $ref: '#/components/schemas/ServiceOrderRef'
+      required:
+      - relationshipType
+      - serviceOrder
+      type: object
+    ServiceOrderStateType:
+      description: "List of possible state for the Service Order. \n* ACKNOWLEDGED\
+        \ - Order has been received and has passed message\n  validation.\n* IN_PROGRESS\
+        \ - Service Fulfillment has started.\n* PENDING - Order is currently in a\
+        \ waiting stage for an explicitly\n  action/activity to be completed before\
+        \ the order can progress further,\n  pending order amend or cancel assessment.\
+        \ A pending stage can lead\n  into auto cancellation of an order, if no action\
+        \ is take within the\n  defined timeframes to be described under the Agreement.\n\
+        * HELD - Order cannot be progressed due to a temporary issue. For\n  example,\
+        \ processing is temporarily delayed to resolve an\n  infrastructure shortfall\
+        \ to facilitate supply of order. Upon\n  resolution of the issue, the order\
+        \ will continue to progress.\n* CANCELLED - In-Flight Order has been successfully\
+        \ cancelled.\n* COMPLETED - Provisioning completed and the Service is now\
+        \ active.\n* FAILED - All of the Order items have failed which results in\
+        \ the\n  entire Order to be Failed.\n* PARTIAL - Some of the Order items processing\
+        \ have failed and some have\n  succeeded so the entire Order is in a Partial\
+        \ state. This provides\n  support for partial Failure of an Order.\n* REJECTED\
+        \ - An order failed the Order Feasibility checks. Service\n  technical eligibility\
+        \ is not done throught service order API but with\n  dedicated serviceQualification\
+        \ API (from preOrdering domain) invalid\n  information is provided through\
+        \ the order request. The order request\n  fails to meet business rules for\
+        \ ordering."
+      enum:
+      - ACKNOWLEDGED
+      - IN_PROGRESS
+      - PENDING
+      - HELD
+      - CANCELLED
+      - COMPLETED
+      - FAILED
+      - PARTIAL
+      - REJECTED
+      type: string
+    ServiceRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          '@type':
+            default: Service
+            type: string
+        type: object
+      description: Reference to a Service instance.
+    ServiceRelationship:
+      description: Reference to an related Service and the type of association.
+      properties:
+        relationshipType:
+          $ref: '#/components/schemas/ServiceRelationshipType'
+        service:
+          $ref: '#/components/schemas/ServiceRef'
+      required:
+      - relationshipType
+      - service
+      type: object
+    ServiceRelationshipType:
+      description: Relationship type.
+      enum:
+      - reliesOn
+      - dependency
+      - crossRef
+      type: string
+    ServiceSpecificationRef:
+      allOf:
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          targetServiceSchema:
+            $ref: '#/components/schemas/TargetServiceSchema'
+          version:
+            description: Service specification version.
+            type: string
+        type: object
+      description: Reference to a ServiceSpecification instance.
+    ServiceStateType:
+      description: List of possible state for the Service.
+      enum:
+      - feasibilityChecked
+      - designed
+      - reserved
+      - active
+      - inactive
+      - terminated
+      type: string
+    Sls1wAvailabilityPerformanceMetric:
+      properties:
+        availabilityObjective:
+          description: "MEF 63 & MEF 64: The value of the One-way Availability Perfor-mance\
+            \ Metric, percentage > 0"
+          type: integer
+        orderedPairSrc:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+        orderedPairDst:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+      type: object
+    Sls1wDelayPerformanceMetric:
+      properties:
+        percentile:
+          description: "MEF 63 & MEF 64: the Pd-percentile allows the One-way Delay\
+            \ Performance Metric Objective to be met although different delays may\
+            \ occur following a protection switch. To place an upper bound on any\
+            \ longer delays a second One-way Delay Performance Metric Objective for\
+            \ a higher Pd_percentile value (e.g., 100th) may be specified."
+          type: integer
+        delayObjective:
+          description: "MEF 63 & MEF 64: The value of the One-way Delay Performance\
+            \ Metric, time units>0"
+          $ref: '#/components/schemas/Time'
+        orderedPairSrc:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+        orderedPairDst:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+      type: object
+    Sls1wErroredSecondPerformanceMetric:
+      properties:
+        erroredSecondObjective:
+          description: "MEF 63 & MEF 64: The value of the One-way Errored Second Per-formance\
+            \ Metric, integer >=0"
+          type: integer
+        orderedPairSrc:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+        orderedPairDst:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+      type: object
+    Sls1wSeverelyErroredSecondPerformanceMetric:
+      properties:
+        severelyErroredSecon-dObjective:
+          description: "MEF 63 & MEF 64: The value of the MEF 63 & MEF 64: The value\
+            \ of the One-way Severely Errored Sec-ond Performance Metric, integer\
+            \ >=0"
+          type: integer
+        orderedPairSrc:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+        orderedPairDst:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+      type: object
+    Sls1wUnavailableSecondPerformanceMetric:
+      properties:
+        orderedPairSrc:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+        unavailableSecondObjective:
+          description: "MEF 63 & MEF 64: The value of the One-way Unavailable Second\
+            \ Performance Metric, integer >=0"
+          type: integer
+        orderedPairDst:
+          description: "MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered\
+            \ pair of Operator L1VC EPs."
+          $ref: '#/components/schemas/L1VcEndPointRef'
+      type: object
+    State:
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    Stm16OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - I-16
+      - S-16.1
+      - S-16.2
+      - L-16.1
+      - L-16.2
+      - L-16.3
+      type: string
+    Stm1OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - I-1
+      - S-1.1
+      - S-1.2
+      - L-1.1
+      - L-1.2
+      - L-1.3
+      type: string
+    Stm256OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - VSR2000-3R1
+      - VSR2000-3R2
+      - VSR2000-3R3
+      - VSR2000-3R5
+      - VSR2000-3M1
+      - VSR2000-3M2
+      - VSR2000-3M3
+      - VSR2000-3M5
+      - VSR2000-3H2
+      - VSR2000-3H3
+      - VSR2000-3H5
+      type: string
+    Stm4OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - I-4
+      - S-4.1
+      - S-4.2
+      - L-4.1
+      - L-4.2
+      - L-4.3
+      type: string
+    Stm64OpticalInterfaceFunction:
+      description: Optical Interface Function value. Reference MEF 63 Section 8.1.2.
+      enum:
+      - I-64.LR
+      - I-64.I
+      - I-64.2R
+      - I-64.3
+      - I-64.5
+      - S-64.1
+      - S-64.2
+      - S-64.3
+      - S-64.5
+      - L-64.1
+      - L-64.2
+      - L-64.3
+      type: string
+    SubscriberL1VcEndPoint:
+      allOf:
+      - $ref: '#/components/schemas/L1EndPoint'
+      description: A Subscriber L1VC End Point is a logical entity at a given UNI
+        that is associated with L1CI passing over that UNI. Reference MEF 63 Section
+        8.3.
+      properties:
+        identifier:
+          description: The value of the Subscriber L1VC End Point identifier Service
+            Attribute is a string that is used to allow the Subscriber and Service
+            Provider to uniquely identify the Subscriber L1VC End Point. Reference
+            MEF 63 Section 8.3.1.
+          minLength: 45
+          type: string
+        l1SubscriberUni:
+          $ref: '#/components/schemas/L1SubscriberUniRef'
+        subscriberL1Vc:
+          $ref: '#/components/schemas/SubscriberL1VcRef'
+      type: object
+    SubscriberL1VcEndPointRef:
+      description: "First reference EVC, then specific EVC End Point"
+      properties:
+        id:
+          description: Points to SubscriberL1VcEndPoint
+          format: uuid
+          type: string
+        subscriberL1vcRef:
+          $ref: '#/components/schemas/SubscriberL1VcRef'
+      type: object
+    SubscriberL1VcRef:
+      description: Reference to a L1 Subscriber Virtual Connection Instance
+      properties:
+        id:
+          format: uuid
+          type: string
+        href:
+          format: uri
+          type: string
+    TargetServiceSchema:
+      allOf:
+      - $ref: '#/components/schemas/Extensible'
+      description: The reference to the schema and type of target service which is
+        described by service specification
+    Time:
+      properties:
+        time:
+          description: This denotes the value (for the unit).
+          type: integer
+        timeUnits:
+          description: Time unit.
+          $ref: '#/components/schemas/TimeUnits'
+      type: object
+    TimeAndDate:
+      description: |-
+        This data type is for Time and Date in UTC. Used for CarrierEthernetSls
+        startTime attribute.
+      properties:
+        hour:
+          description: Denotes the hour.
+          type: integer
+        month:
+          description: Denotes the month.
+          type: integer
+        year:
+          description: Denotes the year.
+          type: integer
+        day:
+          description: Denotes the day.
+          type: integer
+        minute:
+          description: Denotes the minute.
+          type: integer
+        second:
+          description: Denotes the second.
+          type: integer
+      type: object
+    TimeIntervalT:
+      description: |-
+        This attribute sets the time interval to evaluate the performance
+        for the SLS.  All performances of this SLS use the same time interval T, which
+        itself may not be constrained, e.g., 1 month.
+      properties:
+        number:
+          description: This denotes the value (for the unit).
+          type: integer
+        unit:
+          description: Time interval unit.
+          $ref: '#/components/schemas/Unit'
+      type: object
+    TimeUnits:
+      description: Time unit.
+      enum:
+      - nanoSeconds
+      - milliSeconds
+      - seconds
+      - hours
+      - days
+      - weeks
+      - microSeconds
+      - months
+      - years
+      type: string
+    TributarySlotRate:
+      description: Enumeration representing tributary slot rate in Gb/s
+      enum:
+      - "1.25"
+      - "2.5"
+      type: string
+    Unit:
+      description: Time interval unit.
+      enum:
+      - second
+      - minute
+      - hour
+      - day
+      - month
+      - week
+      - year
+      type: string
+    l1Sls:
+      description: "The Subscriber L1VC Service Level Specification (SLS) Service\
+        \ Attribute is the technical speci-fication of aspects of the service performance\
+        \ agreed to by the Service Provider and the Sub-scriber. For any given SLS,\
+        \ a given Performance Metric may or may not be specified."
+      properties:
+        duration:
+          description: Duration is a duration that is used in conjunction with ts
+            to specify a contiguous sequence of time inter-vals for determining when
+            perfor-mance objectives are met. The units for T are not constrained.
+          $ref: '#/components/schemas/TimeIntervalT'
+        sls1wDelayPerformanceMetric:
+          items:
+            description: The One-way Delay for the L1CI that ingresses at UNI 1 and
+              that egresses at UNI 2 is defined as the time elapsed from the reception
+              of the first bit of the ingress L1CI at UNI 1 until the re-ception of
+              that first bit of the corresponding L1CI egressing at UNI 2.
+            $ref: '#/components/schemas/Sls1wDelayPerformanceMetric'
+          type: array
+        sls1wAvailabilityPerformanceMetric:
+          items:
+            description: Availability is defined as the percentage of Available Time
+              over a given interval T-l which does not include Maintenance Interval
+              Time (MIT).
+            $ref: '#/components/schemas/Sls1wAvailabilityPerformanceMetric'
+          type: array
+        startTime:
+          description: "StartTime is a time that represents the date and time for\
+            \ the start of the SLS. MEF 63: [R22] t-start MUST be specified to the\
+            \ nearest second. MEF 64: [R30] t-start MUST be specified to the nearest\
+            \ second."
+          $ref: '#/components/schemas/TimeAndDate'
+        sls1wSeverelyErroredSecondPerformanceMetric:
+          items:
+            description: An errored second (ES) is defined as one second sigma-k in
+              Available Time with at least one er-rored block (EB) and is not a SES.
+              An EB is defined as a block in which one or more bits are in error.
+            $ref: '#/components/schemas/Sls1wSeverelyErroredSecondPerformanceMetric'
+          type: array
+        sls1wErroredSecondPerformanceMetric:
+          items:
+            description: An errored second (ES) is defined as one second sigma-k in
+              Available Time with at least one er-rored block (EB) and is not a SES.
+              An EB is defined as a block in which one or more bits are in error.
+            $ref: '#/components/schemas/Sls1wErroredSecondPerformanceMetric'
+          type: array
+        sls1wUnavailableSecondPerformanceMetric:
+          items:
+            description: An Unavailable Second (UAS) is defined as a second during
+              Unavailable Time (UAT).
+            $ref: '#/components/schemas/Sls1wUnavailableSecondPerformanceMetric'
+          type: array
+      title: MEF LSO Legato - L1 SLS Specification
+      type: object

@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:l1Cs:L1SubscriberUni:v2.0.0:all
+$id: urn:mef:lso:spec:legato:L1SubscriberUni:v2.0.0:all
 title: MEF LSO Legato - L1 Subscriber UNI Service Specifications
 description:
   The UNI is the physical demarcation point between the responsibility of the L1 Service Provider and the responsibility of the L1 Subscriber. Reference MEF 63 Section 8.

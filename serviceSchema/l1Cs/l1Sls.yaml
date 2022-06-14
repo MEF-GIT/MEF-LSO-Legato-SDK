@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:l1Cs:L1Sls:v2.0.0:all
+$id: urn:mef:lso:spec:legato:L1Sls:v2.0.0:all
 title: MEF LSO Legato - L1 SLS Specification
 description:
   The Subscriber L1VC Service Level Specification (SLS) Service Attribute is the technical speci-fication of aspects of the service performance agreed to by the Service Provider and the Sub-scriber. For any given SLS, a given Performance Metric may or may not be specified.

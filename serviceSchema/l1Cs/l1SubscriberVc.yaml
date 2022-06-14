@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:l1Cs:L1SubscriberVc:v2.0.0:all
+$id: urn:mef:lso:spec:legato:L1SubscriberVc:v2.0.0:all
 title: MEF LSO Legato - L1 Subscriber Virtual Connection Service Specifications
 description:
   A subscriber L1VC represents the logical attachment of a Subscriber L1VC to two SubscriberL1VCEndPoint. Reference MEF 63 Section 8.2.

@@ -10,7 +10,11 @@ This repository contains the Dolly release of the Legato SDK. The SDK includes A
 
 Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
 
-This version does not bring any update.
+## High-level release notes
+
+- New documents:
+  - MEF W112 - Draft Release 1 MEF Services Model Information Model for IP and IP VPN
+  - MEF W128 - Draft Release 2 LSO API Security Profile
 
 ## Scope
 
@@ -89,6 +93,7 @@ This SDK contains the following items:
   - L1 Connectivity Services.
   - IP/IP-VPN Services
 - `documentation` - documentation including API/Schema developer guides and openapi-tools generated API descriptions in markdown format
+  - `supportingStandards` - The rest of documents and standards.
 - `generated\staticBinding` - contains automatically generated (with help of the open source [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not normative static bindings of envelope APIs with Service payloads.
 
 ## Issues, questions, and Feedback

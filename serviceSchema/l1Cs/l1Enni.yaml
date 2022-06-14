@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:l1Cs:L1Enni:v2.0.0:all
+$id: urn:mef:lso:spec:legato:L1Enni:v2.0.0:all
 title: MEF LSO Legato - L1 ENNI Service Specifications
 description:
   The L1 ENNI class controls Operator Network behaviors that enable Operator Networks to be interconnected and exchanged OTUk frames. The interconnection is achieved by the Operators agreeing on the value for each ENNI attributes. Reference MEF 64 Section 8.1 ENNI Common Attributes.

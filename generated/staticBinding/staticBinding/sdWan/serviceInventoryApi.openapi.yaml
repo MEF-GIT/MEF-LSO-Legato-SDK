@@ -1,14 +1,14 @@
 openapi: 3.0.3
 info:
-  description: "The Service Order API provides a standardized mechanism for managing\
-    \ \n*ServiceOrders*. Using these APIs Business Applications (BUS) systems post\
-    \ \n*ServiceOrder* requests to the **Service Order Management** system within\
-    \ \nthe Service Orchestration Function (SOF).\n\nAdditionally, the APIs also allow\
-    \ the BUS to query and retrieve \n*ServiceOrders* in  SOF and to register listeners\
-    \ to be notified of changes \nto the *ServiceOrders*.  \n\n- MEF Developer Guide\
-    \ Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 641 v18.5.1\n\nCopyright\
-    \ © MEF 2020. All Rights Reserved"
-  title: Legato Service Ordering API
+  description: "The Service Inventory API provides a standardized mechanism for retrieving\
+    \ \n*ServiceInstances*. Using these APIs Business Applications (BUS) systems \n\
+    query the **Service Inventory** system for *ServiceInstances* that were \ncreated\
+    \ by the **Service Order Management** system in the Service \nOrchestration Function\
+    \ (SOF).\n\nAdditionally, the APIs also allow the BUS to register listeners to\
+    \ be \nnotified of the changes to the *ServiceInstances*.  \n\n- MEF Developer\
+    \ Guide Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 633 v18.5.1\n\n\
+    Copyright � MEF 2020. All Rights Reserved"
+  title: Legato Service Inventory API
   version: 4.0.0-RC
 servers:
 - url: "https://{server}:{port}{basePath}"
@@ -21,70 +21,43 @@ servers:
       - "8443"
       - "443"
     basePath:
-      default: /mefApi/legato/serviceOrdering/v4
+      default: /mefApi/legato/serviceInventory/v4
 tags:
-- description: "Mechanisms for BUS to create, query & retrieve *ServiceOrders*."
-  name: ServiceOrder
+- description: Mechanisms for BUS to query and retrieve *ServiceInstances*.
+  name: Service
 - description: Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
   name: EventSubscriptionHub
 paths:
-  /serviceOrder:
+  /service:
     get:
       deprecated: false
-      description: |-
-        This operation returns a list of Service Order instances matching the
-        query parameters from the Service Order management system maintained by
-        the SOF. Attribute selection is possible using the ''fields'' parameter
-        to filter retrieved attribute(s) for each Service Order instance.
-        If an exception is encountered, then appropriate returnCode and error
-        information is populated and returned as specified.
-      operationId: serviceOrderFind
+      description: This operation list service entities.  Attribute selection is restricted.  fields
+        attribute may be used to filter retrieved attribute(s) for each service
+      operationId: serviceFind
       parameters:
-      - description: ' Filter by externalId'
-        explode: true
+      - explode: true
         in: query
-        name: externalId
+        name: relatedParty.id
         required: false
         schema:
           type: string
         style: form
-      - description: ' State of the order(s) to be retrieved'
-        explode: true
+      - explode: true
         in: query
-        name: state
-        required: false
-        schema:
-          $ref: '#/components/schemas/ServiceOrderStateType'
-        style: form
-      - description: |
-          Category of the service order to be retrieved
-        explode: true
-        in: query
-        name: category
+        name: serviceSpecification.id
         required: false
         schema:
           type: string
         style: form
-      - description: Service Order date (creation) greather than
-        explode: true
+      - explode: true
         in: query
-        name: orderDate.gt
+        name: serviceSpecification.name
         required: false
         schema:
-          format: date-time
           type: string
         style: form
-      - description: Service Order date (creation) lower than
-        explode: true
-        in: query
-        name: orderDate.lt
-        required: false
-        schema:
-          format: date-time
-          type: string
-        style: form
-      - description: "Comma-separated properties of the Service Order to be included\
-          \ in \nthe returned response"
+      - description: "Comma-separated properties of the Service instance to be included\
+          \ \nin the returned response"
         explode: true
         in: query
         name: fields
@@ -93,7 +66,7 @@ paths:
           type: string
         style: form
       - description: "Requested start index in a ordered list (sorted by id property)\
-          \ of \nmatching Service Orders to be provided in response. "
+          \ of \nmatching Service instances to be provided in response. "
         explode: true
         in: query
         name: offset
@@ -101,8 +74,8 @@ paths:
         schema:
           type: integer
         style: form
-      - description: "Requested maximum number of Service Orders to be provided \n\
-          in the response"
+      - description: "Requested maximum number of Service instances to be provided\
+          \ \nin the response"
         explode: true
         in: query
         name: limit
@@ -116,20 +89,20 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/ServiceOrder'
+                  $ref: '#/components/schemas/Service'
                 type: array
           description: Ok
           headers:
             X-Total-Count:
+              description: Total number of items matching criteria
               explode: false
               schema:
-                format: int32
                 type: integer
               style: simple
             X-Result-Count:
+              description: Actual number of items returned in the response body
               explode: false
               schema:
-                format: int32
                 type: integer
               style: simple
         "400":
@@ -186,112 +159,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
-      summary: List service orders
+      summary: List services
       tags:
-      - ServiceOrder
-    post:
-      deprecated: false
-      description: |-
-        This operation creates a Service Order instance in the Service Order
-        management system maintained by the SOF. A Service Order is used to
-        request operations on a Service instance. A Service Order groups one
-        or more one Service Order Items - one per specific action on a Service
-        instance. The Action associated with the Service Order Item describes
-        the operation (add, remove, update) to be applied on the specified
-        Service instance. The Service Order Item and its associated Action can
-        operate on both existing (remove, update) as well as future (add)
-        Service instance. The Service Order is triggered from the Business
-        Application (BA) system in charge of the Product Order management to
-        the Service Orchestration Function (SOF) system that will orchestrate
-        the Service fulfillment. The assumption is that the Service
-        Specifications describing the Service instance in the Service Order
-        Item are already available (to both BA & SOF). If an exception is
-        encountered, then appropriate returnCode and error information is
-        populated and returned as specified.
-      operationId: serviceOrderCreate
-      requestBody:
-        content:
-          application/json;charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/ServiceOrderCreate'
-        required: true
-      responses:
-        "201":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/ServiceOrder'
-          description: Created
-        "400":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Bad Request
-        "401":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Unauthorized
-        "403":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Forbidden
-        "404":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Not Found
-        "405":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Method Not Allowed
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Request Time-out
-        "422":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Unprocessable entity
-        "500":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Internal Server Error
-        "503":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Service Unavailable
-      summary: Create a service order
-      tags:
-      - ServiceOrder
-  /serviceOrder/{id}:
+      - Service
+  /service/{id}:
     get:
       deprecated: false
-      description: |-
-        This operation retrieves a Service Order instance identified by the Id
-        parameter from the Service Order managment system maintained by the SOF.
-        Attribute selection is possible using the ''fields'' parameter to filter
-        retrieved attribute(s) for the returned Service Order instance. If an
-        exception is encountered, then appropriate returnCode and error
-        information is populated and returned as specified.
-      operationId: serviceOrderGet
+      description: "This operation retrieves a service entity. \nAttribute selection\
+        \ is enabled for all first level attributes."
+      operationId: serviceGet
       parameters:
-      - description: Identifier of the ServiceOrder
+      - description: Identifier of the Service instance
         explode: false
         in: path
         name: id
@@ -299,8 +177,8 @@ paths:
         schema:
           type: string
         style: simple
-      - description: "Comma-separated properties of the Service Order to be included\
-          \ in \nthe returned response"
+      - description: "Comma-separated properties of the Service instance to be included\
+          \ \nin the returned response"
         explode: true
         in: query
         name: fields
@@ -313,7 +191,7 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/ServiceOrder'
+                $ref: '#/components/schemas/Service'
           description: Ok
         "400":
           content:
@@ -339,18 +217,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        "405":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Method Not Allowed
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Request Time-out
         "422":
           content:
             application/json;charset=utf-8:
@@ -369,9 +235,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
-      summary: Retrieve a service order
+      summary: Retrieve a service
       tags:
-      - ServiceOrder
+      - Service
   /hub:
     post:
       deprecated: false
@@ -596,15 +462,68 @@ paths:
       tags:
       - EventSubscriptionHub
 components:
+  responses:
+    BadRequest:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Bad Request
+    Unauthorized:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized
+    Forbidden:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+    NotFound:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Not Found
+    MethodNotAllowed:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Method Not Allowed
+    RequestTimeout:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Request Time-out
+    UnprocessableEntity:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unprocessable entity
+    InternalServerError:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Internal Server Error
+    ServiceUnavailable:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Service Unavailable
+    Conflict:
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Conflict
   schemas:
-    ActionType:
-      description: Action type to be described on the order item.
-      enum:
-      - add
-      - modify
-      - delete
-      - noChange
-      type: string
     Addressable:
       allOf:
       - $ref: '#/components/schemas/Extensible'
@@ -637,7 +556,6 @@ components:
       - UNKNOWN
       readOnly: true
       type: string
-    Any: {}
     ApplicationFlow:
       description: "A subset of the IP packets that arrive at an Ingress SD-WAN UNI,\
         \ identified by a set of Application Flow Criteria, and distinct from the\
@@ -840,23 +758,6 @@ components:
       - FLAT_RATE_ONLY
       - EITHER
       type: string
-    Characteristic:
-      allOf:
-      - $ref: '#/components/schemas/Extensible'
-      - properties:
-          valueType:
-            description: Data type of the value of the characteristic. This may be
-              a primitive type name or an schema object class name.
-            type: string
-          name:
-            description: Name of the characteristic
-            type: string
-          value:
-            $ref: '#/components/schemas/Any'
-        required:
-        - name
-        type: object
-      description: Describes the characteristic of an API schema object.
     Encryption:
       description: Represents a Policy Criterion used to specify whether or not encryption
         is required. Reference MEF 70 Section 8.5.2 ENCRYPTION Policy Criterion.
@@ -968,7 +869,7 @@ components:
           description: |-
             The query must have an eventType= information.
             Optionally a ? could be added to reduce hub.
-            query”:”eventType = ServiceOrderStateChangeNotification”&serviceOrder.state=COMPLETED
+            query�:�eventType = ServiceOrderStateChangeNotification�&serviceOrder.state=COMPLETED
           type: string
         callback:
           description: URL where notification must be send
@@ -1018,6 +919,8 @@ components:
         MEF 70 Section 10.4 SD-WAN UNI IPv4 Connection Addressing Service Attribute.
       properties:
         ipv4AddressType:
+          description: "IPv4 Connection Address mechanism. Possible values are None,\
+            \ Static or DHCP."
           $ref: '#/components/schemas/Ipv4AddressType'
         ipv4SecondarySubnetList:
           description: Secondary IPv4 Subnet List. Includes IPv4 Prefix and Service
@@ -1031,8 +934,6 @@ components:
             IPv4 Addresses.
           items:
             $ref: '#/components/schemas/Ipv4Subnet'
-          maxItems: 1
-          minItems: 0
           type: array
       type: object
     Ipv4Prefix:
@@ -1076,6 +977,8 @@ components:
         \ Service Attribute."
       properties:
         ipv6AddressType:
+          description: "IPv6 Connection Address mechanism. Possible values are None,\
+            \ DHCP, SLAAC, Static or LL-only."
           $ref: '#/components/schemas/Ipv6AddressType'
         ipv6SubnetList:
           items:
@@ -1121,6 +1024,9 @@ components:
           minItems: 0
           type: array
         l2InterfaceType:
+          description: L2InterfaceType is an enumeration that describes the underlying
+            network layer that carries IP Packets across the UNI. The possible values
+            are UT/PT and CVLANx. Reference MEF 70 Section 10.2.
           $ref: '#/components/schemas/L2InterfaceType'
       type: object
     L2InterfaceType:
@@ -1183,20 +1089,6 @@ components:
       - LOCKED
       - UNKNOWN
       readOnly: true
-      type: string
-    OrderItemRelationshipType:
-      description: Relationship type.
-      enum:
-      - reliesOn
-      - dependency
-      - crossRef
-      type: string
-    OrderRelationshipType:
-      description: Relationship type.
-      enum:
-      - reliesOn
-      - dependency
-      - crossRef
       type: string
     Period:
       description: Data type for Time and Date in UTC. Reference MEF-Types.
@@ -1451,6 +1343,48 @@ components:
             type: array
         type: object
       x-discriminator-value: urn:mef:lso:spec:legato:SdWanVc:v2.0.0:all
+    Service:
+      allOf:
+      - $ref: '#/components/schemas/ServiceCreate'
+      - properties:
+          serviceDate:
+            description: Date when the service was created (whatever its status).
+            type: string
+          endDate:
+            description: |
+              Date when the service ends
+            format: date-time
+            type: string
+          startMode:
+            description: "This attribute is an enumerated integer that indicates how\
+              \ the \nService is started, such as: 0: Unknown; 1: Automatically by\
+              \ \nthe managed environment; 2: Automatically by the owning device;\
+              \ \n3: Manually by the Provider of the Service; 4: Manually by a \n\
+              Customer of the Provider; 5: Any of the above "
+            type: string
+          hasStarted:
+            description: "If TRUE, this Service has already been started   "
+            type: boolean
+          serviceOrder:
+            items:
+              $ref: '#/components/schemas/ServiceOrderRef'
+            type: array
+          startDate:
+            description: Date when the service starts
+            format: date-time
+            type: string
+          isServiceEnabled:
+            description: "If FALSE, this particular Service has NOT been enabled for\
+              \ use "
+            type: boolean
+          isStateful:
+            description: |-
+              If TRUE, this Service can be changed without affecting any
+              other services
+            type: boolean
+        type: object
+      description: "The Service instance managed by SOF and retrievable by an BA over\
+        \ the \nLegato IRP via the Service Invertory API."
     ServiceCreate:
       allOf:
       - $ref: '#/components/schemas/Extensible'
@@ -1461,6 +1395,10 @@ components:
           note:
             items:
               $ref: '#/components/schemas/Note'
+            type: array
+          serviceRelationship:
+            items:
+              $ref: '#/components/schemas/ServiceRelationship'
             type: array
           supportingResource:
             items:
@@ -1481,14 +1419,6 @@ components:
             items:
               $ref: '#/components/schemas/ServiceRef'
             type: array
-          relatedParty:
-            items:
-              $ref: '#/components/schemas/RelatedPartyRef'
-            type: array
-          serviceRelationship:
-            items:
-              $ref: '#/components/schemas/ServiceRelationship'
-            type: array
           place:
             items:
               $ref: '#/components/schemas/Place'
@@ -1498,149 +1428,14 @@ components:
           category:
             description: Is it a customer facing or resource facing service
             type: string
-          serviceCharacteristic:
+          relatedParty:
             items:
-              $ref: '#/components/schemas/Characteristic'
+              $ref: '#/components/schemas/RelatedPartyRef'
             type: array
         type: object
       description: "In the context of a service order, and depending of the action\
         \ requested (add/modify/delete/noChange) this data structure captures the\
         \ configuration to apply to an existing subscribed service or to a new one"
-    ServiceOrder:
-      allOf:
-      - $ref: '#/components/schemas/ServiceOrderCreate'
-      - properties:
-          expectedCompletionDate:
-            description: Expected delivery date set by the provider.
-            format: date-time
-            type: string
-          completionDate:
-            description: Date when the order was completed
-            format: date-time
-            type: string
-          state:
-            $ref: '#/components/schemas/ServiceOrderStateType'
-          orderDate:
-            description: Date when the order was created.
-            format: date-time
-            type: string
-          startDate:
-            description: Date when the order processing was started
-            format: date-time
-            type: string
-        type: object
-      description: |-
-        A Service Order is used to request operations on a Service instance.
-        A Service Order groups one or more one Service Order Items - one per
-        specific action on a Service instance. The Action associated with the
-        Service Order Item describes the operation (add, remove, update) to be
-        applied on the specified Service instance.The Service Order Item and
-        its associated Action can operate on both existing (remove, update) as
-        well as future (add) Service instance.The Service Order is triggered
-        from the Business Application (BA) system in charge of the Product Order
-        management to the Service Orchestration Function (SOF) system that will
-        orchestrate the Service fulfillment.
-    ServiceOrderCreate:
-      allOf:
-      - $ref: '#/components/schemas/Addressable'
-      - properties:
-          note:
-            items:
-              $ref: '#/components/schemas/Note'
-            type: array
-          notificationContact:
-            description: "Contact attached to the order to send back information \n\
-              regarding this order"
-            type: string
-          orderItem:
-            items:
-              $ref: '#/components/schemas/ServiceOrderItem'
-            minItems: 1
-            type: array
-          externalId:
-            description: |-
-              ID given by the consumer and only understandable by client
-              (to facilitate client searches)
-            type: string
-          description:
-            description: A free-text description of the service order
-            type: string
-          category:
-            description: |-
-              Used to categorize the order that can be useful for OM system
-              (e.g. “broadband”, “TVOption”, ...)'
-            type: string
-          priority:
-            description: |-
-              A way that can be used by consumers to prioritize orders in
-              Service Order Management system (from 0 to 4 : 0 is the highest
-              priority, and 4 the lowest
-            type: integer
-          relatedParty:
-            items:
-              $ref: '#/components/schemas/RelatedPartyRef'
-            type: array
-          orderRelationship:
-            items:
-              $ref: '#/components/schemas/ServiceOrderRelationship'
-            type: array
-          requestedStartDate:
-            description: Order start date wished by the requestor
-            format: date-time
-            type: string
-          requestedCompletionDate:
-            description: Requested delivery date from the requestor perspective
-            format: date-time
-            type: string
-        type: object
-      description: This structure is used in the operation POST for a serviceOrder
-        request
-    ServiceOrderItem:
-      allOf:
-      - $ref: '#/components/schemas/Extensible'
-      - properties:
-          service:
-            $ref: '#/components/schemas/ServiceCreate'
-          action:
-            $ref: '#/components/schemas/ActionType'
-          orderItemRelationship:
-            items:
-              $ref: '#/components/schemas/ServiceOrderItemRelationship'
-            maxItems: 1
-            minItems: 0
-            type: array
-          id:
-            description: Identifier of the line item
-            type: string
-          state:
-            $ref: '#/components/schemas/ServiceOrderStateType'
-        required:
-        - id
-        - service
-        type: object
-      description: |-
-        An identified part of the order. A service order is decomposed into one
-        or more order items.
-    ServiceOrderItemRef:
-      allOf:
-      - $ref: '#/components/schemas/Referenceable'
-      - properties:
-          '@type':
-            default: ServiceOrderItem
-            type: string
-        type: object
-      description: Reference to a Service Order Item instance.
-    ServiceOrderItemRelationship:
-      description: Reference to an related Service Order Item and the type of association.
-      properties:
-        relationshipType:
-          $ref: '#/components/schemas/OrderItemRelationshipType'
-        serviceOrder:
-          $ref: '#/components/schemas/ServiceOrderItemRef'
-      required:
-      - relationshipType
-      - serviceOrder
-      type: object
     ServiceOrderRef:
       allOf:
       - $ref: '#/components/schemas/Referenceable'
@@ -1650,50 +1445,6 @@ components:
             type: string
         type: object
       description: Reference to a Service Order instance.
-    ServiceOrderRelationship:
-      description: Reference to an related Service Order and the type of association.
-      properties:
-        relationshipType:
-          $ref: '#/components/schemas/OrderRelationshipType'
-        serviceOrder:
-          $ref: '#/components/schemas/ServiceOrderRef'
-      required:
-      - relationshipType
-      - serviceOrder
-      type: object
-    ServiceOrderStateType:
-      description: "List of possible state for the Service Order. \n* ACKNOWLEDGED\
-        \ - Order has been received and has passed message\n  validation.\n* IN_PROGRESS\
-        \ - Service Fulfillment has started.\n* PENDING - Order is currently in a\
-        \ waiting stage for an explicitly\n  action/activity to be completed before\
-        \ the order can progress further,\n  pending order amend or cancel assessment.\
-        \ A pending stage can lead\n  into auto cancellation of an order, if no action\
-        \ is take within the\n  defined timeframes to be described under the Agreement.\n\
-        * HELD - Order cannot be progressed due to a temporary issue. For\n  example,\
-        \ processing is temporarily delayed to resolve an\n  infrastructure shortfall\
-        \ to facilitate supply of order. Upon\n  resolution of the issue, the order\
-        \ will continue to progress.\n* CANCELLED - In-Flight Order has been successfully\
-        \ cancelled.\n* COMPLETED - Provisioning completed and the Service is now\
-        \ active.\n* FAILED - All of the Order items have failed which results in\
-        \ the\n  entire Order to be Failed.\n* PARTIAL - Some of the Order items processing\
-        \ have failed and some have\n  succeeded so the entire Order is in a Partial\
-        \ state. This provides\n  support for partial Failure of an Order.\n* REJECTED\
-        \ - An order failed the Order Feasibility checks. Service\n  technical eligibility\
-        \ is not done throught service order API but with\n  dedicated serviceQualification\
-        \ API (from preOrdering domain) invalid\n  information is provided through\
-        \ the order request. The order request\n  fails to meet business rules for\
-        \ ordering."
-      enum:
-      - ACKNOWLEDGED
-      - IN_PROGRESS
-      - PENDING
-      - HELD
-      - CANCELLED
-      - COMPLETED
-      - FAILED
-      - PARTIAL
-      - REJECTED
-      type: string
     ServiceProviderPolicyCriterion:
       description: "Abstract class representing Service Provider defined policy criteria\
         \ in form of <pcName,pcParam>. Reference MEF 70 Section 8.5 SWVC List of Policies\

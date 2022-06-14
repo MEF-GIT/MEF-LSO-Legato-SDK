@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:l1Cs:L1OperatorUni:v2.0.0:all
+$id: urn:mef:lso:spec:legato:L1OperatorUni:v2.0.0:all
 title: MEF LSO Legato - L1 Operator UNI Service Specifications
 description:
   The L1 Operator UNI Service Attribute values are agreed to by the SP/SO and the Operator.
