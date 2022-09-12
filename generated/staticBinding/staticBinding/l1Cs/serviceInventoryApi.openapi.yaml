@@ -1,13 +1,26 @@
 openapi: 3.0.3
 info:
-  description: "The Service Inventory API provides a standardized mechanism for retrieving\
-    \ \n*ServiceInstances*. Using these APIs Business Applications (BUS) systems \n\
-    query the **Service Inventory** system for *ServiceInstances* that were \ncreated\
-    \ by the **Service Order Management** system in the Service \nOrchestration Function\
-    \ (SOF).\n\nAdditionally, the APIs also allow the BUS to register listeners to\
-    \ be \nnotified of the changes to the *ServiceInstances*.  \n\n- MEF Developer\
-    \ Guide Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 633 v18.5.1\n\n\
-    Copyright � MEF 2020. All Rights Reserved"
+  description: |-
+    The Service Inventory API provides a standardized mechanism for retrieving 
+    *ServiceInstances*. Using these APIs Business Applications (BUS) systems 
+    query the **Service Inventory** system for *ServiceInstances* that were 
+    created by the **Service Order Management** system in the Service 
+    Orchestration Function (SOF).
+
+    Additionally, the APIs also allow the BUS to register listeners to be 
+    notified of the changes to the *ServiceInstances*.  
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 638 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+  
+    This file includes content based on the TM Forum Service Inventory Management API
+    (TMF638 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF638_ServiceInventory, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
   title: Legato Service Inventory API
   version: 4.0.0-RC
 servers:
