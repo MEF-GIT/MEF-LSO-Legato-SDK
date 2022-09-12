@@ -16,6 +16,11 @@ info:
 
     Copyright © MEF 2020. All Rights Reserved
 
+    This file includes content based on the TM Forum Service Order Management API
+    (TMF641 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF641_ServiceOrder, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
 tags:
   - name: ServiceOrderSchema
     description: Common Service Order schema components used by all Legato APIs.

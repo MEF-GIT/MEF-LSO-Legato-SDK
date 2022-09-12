@@ -1,13 +1,26 @@
 openapi: 3.0.3
 info:
-  description: "The Service Order API provides a standardized mechanism for managing\
-    \ \n*ServiceOrders*. Using these APIs Business Applications (BUS) systems post\
-    \ \n*ServiceOrder* requests to the **Service Order Management** system within\
-    \ \nthe Service Orchestration Function (SOF).\n\nAdditionally, the APIs also allow\
-    \ the BUS to query and retrieve \n*ServiceOrders* in  SOF and to register listeners\
-    \ to be notified of changes \nto the *ServiceOrders*.  \n\n- MEF Developer Guide\
-    \ Reference : MEF_W99 v1.0\n\n- TMF API Reference : TMF 641 v18.5.1\n\nCopyright\
-    \ © MEF 2020. All Rights Reserved"
+  description: |-
+    The Service Order API provides a standardized mechanism for managing 
+    *ServiceOrders*. Using these APIs Business Applications (BUS) systems post 
+    *ServiceOrder* requests to the **Service Order Management** system within 
+    the Service Orchestration Function (SOF).
+
+    Additionally, the APIs also allow the BUS to query and retrieve 
+    *ServiceOrders* in  SOF and to register listeners to be notified of changes 
+    to the *ServiceOrders*.  
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 641 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+
+    This file includes content based on the TM Forum Service Order Management API
+    (TMF641 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF641_ServiceOrder, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
   title: Legato Service Ordering API
   version: 4.0.0-RC
 servers:

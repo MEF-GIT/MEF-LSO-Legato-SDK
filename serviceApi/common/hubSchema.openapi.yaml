@@ -12,7 +12,24 @@ info:
     - TMF API Reference : TMF 633/638/641 v18.5.1
 
     Copyright © MEF 2020. All Rights Reserved
+  
+    This file includes content based on the TM Forum Service Catalog Management API
+    (TMF633 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF633_ServiceCatalog, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
 
+    This file includes content based on the TM Forum Service Inventory Management API
+    (TMF638 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF638_ServiceInventory, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
+    
+    This file includes content based on the TM Forum Service Order Management API
+    (TMF641 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF641_ServiceOrder, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
 tags:
   - name: HubCommon
     description: Common schema components used by all Legato Hub APIs.
