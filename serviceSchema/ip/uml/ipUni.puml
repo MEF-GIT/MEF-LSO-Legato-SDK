@@ -1,0 +1,66 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+abstract class IpServicesExternalInterface {
+
+    identifier: Identifier53 [1]
+    administrativeState: AdminState [1]
+    operationalState: OperationalState [1]
+
+}
+
+class IpUni {
+    managementType: UniManagementType [1]
+    ingressBwpProfileEnvelope: IpUniIngressBwpEnvelope [0..1]
+    egressBwpProfileEnvelope: IpIniEgressBwpEnvelope [0..1]
+    listOfControlProtocols: ControlProtocols [0..*]
+    routingProtocols: RoutingProtocols [0..1]
+    reversePathForwarding: EnabledDisabled [1]
+}
+
+IpServicesExternalInterface <|-- IpUni
+
+IpUni "1" *--> "0..1" IpUniIngressBwpEnvelope : ingressBwpProfileEnvelope
+IpUni "1" *--> "0..1" IpUniEgressBwpEnvelope : egressBwpProfileEnvelope
+IpUni "1" *-->"*" ControlProtocol : listOfControlProtocols
+IpUni "1" *--> "0..1" RoutingProtocols : routingProtocols
+
+class IpUniIngressBwpEnvelope << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class IpUniEgressBwpEnvelope << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class ControlProtocol << (D, Gray) >> {
+    reference: string
+    addressing: Addressing
+    protocolName: string
+}
+
+class RoutingProtocols << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class Static << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class Bgp << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class Ospf << (D, Gray) >> {
+    "attributes not shown"
+}
+
+RoutingProtocols *-->"*" Static : static
+RoutingProtocols *-->"*" Bgp : bgp
+RoutingProtocols *-->"*" Ospf : ospf
+
+
+@enduml

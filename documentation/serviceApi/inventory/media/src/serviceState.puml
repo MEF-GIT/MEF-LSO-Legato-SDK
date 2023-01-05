@@ -1,0 +1,42 @@
+@startuml
+
+skinparam {
+    StateBackgroundColor White
+}
+state feasibilityChecked : Resources have been checked\nfor availability
+state designed : Resources have been identified/allocated 
+state reserved : Resources have been reserved/blocked
+state inactive : Resources have been provisioned\nbut Service is not yet ready
+state active : Resources have been activated and\nService is ready for use
+state terminated : Service is shut down
+
+
+[*] --> feasibilityChecked : checkFeasibility
+[*] --> inactive : provisionService
+[*] --> designed : designService
+[*] --> reserved : reserveService
+[*] --> active : activateService
+
+feasibilityChecked --> designed : designService
+feasibilityChecked --> reserved : reserveService
+feasibilityChecked --> inactive : provisionService
+feasibilityChecked --> active : activateService
+
+designed -> reserved : reserveService
+designed --> inactive : provisionService
+designed --> active : activateService
+
+reserved -> designed : designService
+reserved --> inactive : provisionService
+reserved --> active : activateService
+
+inactive -right-> active : activateService
+inactive --> terminated : terminateService
+
+active -left-> inactive : deactivateService
+active --> terminated : terminateService
+
+
+terminated --> [*] : retireService
+
+@enduml

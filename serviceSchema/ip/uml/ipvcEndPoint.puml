@@ -1,0 +1,54 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class IpvcEndPoint {
+    administrativeState: AdminState [1]
+    operationalState: OperationalState [1]
+    identifier: Identifier53 [1]
+    eiType:ExternalInterfaceType [1]
+    role: IpvcEndPointRole [1]
+    prefixMapping: Ipv4Ipv6Prefixes [1]
+    enniServiceMappingIdentifier: Identifier [0..1]
+    maximumNumberOfIpv4Routes: Integer [0..1]
+    maximumNumberOfIpv6Routes: Integer [0..1]
+    ingressClassOfServiceMap: IngressClassOfServiceMap [1]
+    egressClassOfServiceMap: EgressClassOfServiceMap [1]
+    ingressBandwidthProfileEnvelope: IpvcEpIngressBwpEnvelope [0..1]
+    egressBandwidthProfileEnvelope: IpvcEpEgressBwpEnvelope [0..1]
+    }
+
+enum ExternalInterfaceType {
+    UNI
+    ENNI
+}
+
+enum IpvcEndPointRole {
+    ROOT
+    LEAF
+    TRUNK
+}
+
+IpvcEndPoint "1" *--> "1" ExternalInterfaceType
+IpvcEndPoint "1" *--> "1" IpvcEndPointRole
+
+class Ipv4Ipv6Prefixes << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class IngressClassOfServiceMap << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class EgressClassOfServiceMap << (D, Gray) >> {
+    "attributes not shown"
+}
+
+IpvcEndPoint "1" *--> "1" Ipv4Ipv6Prefixes
+IpvcEndPoint "1" *--> "1" IngressClassOfServiceMap
+IpvcEndPoint "1" *--> "1" EgressClassOfServiceMap
+
+
+@enduml

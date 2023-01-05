@@ -1,0 +1,35 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+abstract class IpServicesExternalInterfaceLink {
+
+    identifier: Identifier53 [1]
+    administrativeState: AdminState [1]
+    operationalState: OperationalState [1]
+    l2Technology; L2Technology [1]
+    mtu: Integer [1]
+    bfd: AccessLinkBfd [1]
+}
+
+class IpEnniLink {
+    ipv4ConnectionAddressing: EnniIpv4ConnectionAddressing [0..1]
+    ipv6ConnectionAddressing: EnniIpv6ConnectionAddressing [0..1]
+}
+
+IpServicesExternalInterfaceLink <|-- IpEnniLink
+
+IpEnniLink "1" *--> "0..1" EnniIpv4ConnectionAddressing
+IpEnniLink "1" *--> "0..1" EnniIpv6ConnectionAddressing
+
+class EnniIpv4ConnectionAddressing << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class EnniIpv6ConnectionAddressing << (D, Gray) >> {
+    "attributes not shown"
+}
+
+@enduml

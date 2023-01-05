@@ -1,0 +1,17 @@
+@startuml
+
+hide footbox
+
+participant BUS
+participant SOF
+
+BUS -> SOF : GET {{baseUrl}}/service
+
+SOF -> SOF : validate Request
+
+alt success
+    BUS <-- SOF : 200 Service[]
+else validation or internal problem
+    BUS <-- SOF: 4xx/5xx : error response
+end
+@enduml

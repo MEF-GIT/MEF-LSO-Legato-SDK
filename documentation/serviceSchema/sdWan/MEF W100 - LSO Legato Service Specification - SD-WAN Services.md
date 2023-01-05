@@ -5,14 +5,14 @@
 <p style="text-align:center; font-family:verdana; font-size:300%"> <strong>Working Draft <br /> MEF W100 v0.1</strong> </p>
 <br />
 <p style="text-align:center; font-family:verdana; font-size:300%"> <strong>LSO Legato Service Provisioning Specification — <br />SD-WAN Schema Guide</strong> </p>
-<p style="text-align:center; font-family:verdana; font-size:250%"> <strong>May 2021</strong> </p>
+<p style="text-align:center; font-family:verdana; font-size:250%"> <strong>April 2022</strong> </p>
 <br />
 <p style="text-align:center; font-family:verdana; font-size:175%; color:red"> <strong>This draft represents MEF work in progress and is subject to change.</strong> </p>
 
 <p style="page-break-before:always;"></p>
 
 Disclaimer
-© MEF Forum 2021. All Rights Reserved.
+© MEF Forum 2022. All Rights Reserved.
 
 The information in this publication is freely available for reproduction and use by any recipient and is believed to be accurate as of its publication date. Such information is subject to change without notice and MEF Forum (MEF) is not responsible for any errors. MEF does not assume responsibility to update or correct any information in this publication. No representation or warranty, expressed or implied, is made by MEF concerning the completeness, accuracy, or applicability of any information contained herein and no liability of any kind shall be assumed by MEF as a result of reliance upon such information.
 The information contained herein is intended to be used without modification by the recipient or user of this document. MEF is not responsible or liable for any modifications to this document made by any other party.

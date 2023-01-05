@@ -1,0 +1,30 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class CarrierEthernetServiceEndPoint {
+    administrativeState: AdminState[1]
+    operationalState: OperationalState[1]
+    ingressClassOfServiceMap: CosMap[1]
+    colorMap: ColorIdentifier[1]
+    ingressBandwidthProfilePerEndPoint: BwpFlow[0..1]
+    ingressBandwidthProfilePerCosName: BandwidthProfilePerClassOfServiceName[*]
+    sourceMacAddressLimit: SourceMacAddressLimit[0..1]
+}
+
+
+class CarrierEthernetEvcEndPoint {
+    "...attributes are not shown"
+}
+
+class CarrierEthernetOvcEndPoint {
+    "...attributes are not shown"
+}
+
+
+CarrierEthernetServiceEndPoint <|-- CarrierEthernetEvcEndPoint
+CarrierEthernetServiceEndPoint <|-- CarrierEthernetOvcEndPoint
+
+@enduml

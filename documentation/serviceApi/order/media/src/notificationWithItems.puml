@@ -1,0 +1,70 @@
+@startuml
+
+hide footbox
+
+participant BUS
+participant SOF
+
+BUS -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
+SOF --> BUS: 201 confirmation with {{id}}
+...
+BUS -> SOF : POST {{baseUrl}}/serviceOrder
+SOF -> SOF : basic validation
+SOF -> SOF : assign ServiceOrder.id
+
+alt succesful inquiry
+  SOF --> BUS : 201 ServiceOrder with {{id}} in `acknowledged` state \nServiceOrderItems in `acknowledged` state
+  SOF -> BUS: {{callbackUrl}}/listener/serviceOrderCreateEvent {{id}}
+  BUS --> SOF : 204 confirmation  
+  ...
+
+  note over BUS, SOF : First ServiceOrderItem moves to `inProgress`
+  SOF -> BUS: {{callbackUrl}}/listener/serviceOrderItemStateChangeEvent {{id}}, {{ServiceOrderItem.id}}
+  BUS --> SOF : 204 confirmation
+  
+  note over BUS, SOF : ServiceOrder moves to `inProgress`
+  SOF -> BUS: {{callbackUrl}}/listener/serviceOrderStateChangeEvent {{id}}
+      BUS --> SOF : 204 confirmation
+
+  ...
+
+  group loop [for each of remaining ServiceOrderItems that move to `inProgress`]
+      SOF -> BUS:  {{callbackUrl}}/listener/serviceOrderItemStateChangeEvent {{id}}, {{ServiceOrderItem.id}}
+      BUS --> SOF : 204 confirmation
+  end
+
+  ...
+  note over BUS, SOF : Processing without any issues
+  group loop [for each ServiceOrderItem that moves to `completed`]
+      SOF -> BUS:  {{callbackUrl}}/listener/serviceOrderItemStateChangeEvent {{id}}, {{ServiceOrderItem.id}}
+      BUS --> SOF : 204 confirmation
+  end
+
+  ...
+
+  note over BUS, SOF : All ServiceOrderItems in `completed` state
+  SOF -> BUS: {{callbackUrl}}/listener/serviceOrderStateChangeEvent {{id}}
+  BUS --> SOF : 204 confirmation
+  BUS -> SOF : GET {{baseUrl}}/serviceOrder/{{id}}
+  return 200 ServiceOrder in  `completed` state
+
+  ...
+
+  group optional [if ServiceOrder moves to accepted, declined, or expired]
+    SOF -> BUS: {{callbackUrl}}/listener/serviceOrderStateChangeEvent ({{id}})
+    BUS --> SOF : 204 confirmation
+    BUS -> SOF : GET {{baseUrl}}/serviceOrder/{{id}}
+    return 200 ServiceOrder in current state
+  end
+
+
+else validation or internal problem
+  SOF --> BUS : 4xx or 5xx errorresponse
+end 
+
+...
+
+BUS -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  BUS : 204 confirmation
+
+@enduml

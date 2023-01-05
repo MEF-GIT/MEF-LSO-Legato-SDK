@@ -1,38 +1,81 @@
+$id: urn:mef:lso:spec:legato:carrier-ethernet-subscriber-uni:v0.0.1:all
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:CarrierEthernetSubscriberUni:v2.0.0:all
-title: MEF LSO Legato - Carrier Ethernet Subscriber UNI Service Provisioning Specifications
+title: 
+    MEF LSO Legato - Carrier Ethernet Subscriber UNI Provisioning Specifications
+    # MEF Forum - Date: 20221114  Edit-level: 
+    # File: carrierEthernet/carrierEthernetSubscriberUni.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2022. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
 description:
   The Ethernet User Network Interface demarcation point between the responsibility of the Service Provider and the responsibility of the Subscriber. Reference MEF 10.4 Section 9. Subscriber UNI Service Attributes.
-version: 1.0.0
-properties:
-  identifier:
-    maxLength: 45
-    type: string
-    description: String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI for operations purposes. Reference MEF 10.4 Section 9.1 Subscriber UNI ID Service Attribute.
-  instantiation:
-    type: string
-    description: The value is either Physical or Virtual. Reference MEF 10.4 Section 9.2 Subscriber UNI Instantiation Service Attribute.
-    enum:
-    - PHYSICAL
-    - VIRTUAL
-  listOfPhyLinks:
-    minItems: 0
-    type: array
-    items:
-      $ref: '#/definitions/SubscriberUniPhysicalLinks'
-  virtualFrameMap:
-    maxItems: 1
-    minItems: 0
-    type: array
-    items:
-      $ref: '#/definitions/VirtualFrameMap'
-  evcEndPoint:
-    minItems: 0
-    type: array
-    items:
-      $ref: 'carrierEthernetEvc.yaml#/definitions/CarrierEthernetEvcEndPointRef'
 allOf:
-- $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
+  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
+  - properties:
+      identifier:
+        maxLength: 45
+        type: string
+        description: String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI for operations purposes. Reference MEF 10.4 Section 9.1 Subscriber UNI ID Service Attribute.
+      instantiation:
+        type: string
+        description: The value is either Physical or Virtual. Reference MEF 10.4 Section 9.2 Subscriber UNI Instantiation Service Attribute.
+        enum:
+        - PHYSICAL
+        - VIRTUAL
+      virtualFrameMap:
+        $ref: '#/definitions/VirtualFrameMap'
+      listOfPhyLinks:
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/SubscriberUniPhysicalLinks'
+    required:
+      - identifier
+      - instantiation
 definitions:
   SubscriberUniPhysicalLinks:
     type: object
@@ -42,16 +85,13 @@ definitions:
         description: Identifier of link.
       physicalLink:
         description: Physical layer type.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+        $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
       synchronousEthernet:
         description: Synchronous Ethernet enabled or disabled.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+        $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
       precisionTiming:
         description: Precision timing enabled or disabled.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+        $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
     description: The value of the Subscriber UNI List of Physical Links Service Attribute is a list of 4-tuples (which may be empty if Virtual UNI is used) of the form <id,pl,fs,pt>, with one list item for each physical link. The The value of id is an identifier for the physical link. The value of pl specifies a physical layer. fs indicates if synchronous Ethernet is used on the physical link corresponding to the 4-tuple and has the value either Enabled or Disabled. The value of pt indicates if the Precision Time Protocol is used on the physical link corresponding to the 4-tuple and has the value either En-abled or Disabled. Reference MEF 10.4 Section 9.4 Subscriber UNI List of Physical Links Service Attribute.
   VirtualFrameMap:
     type: object

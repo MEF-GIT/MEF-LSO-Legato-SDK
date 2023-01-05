@@ -1,0 +1,37 @@
+@startuml
+
+hide footbox
+
+participant BUS
+participant SOF
+
+BUS -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} details
+SOF --> BUS: 201 confirmation with {{id}}
+...
+BUS -> SOF : POST {{baseUrl}}/serviceOrder (ServiceOrder_Create)
+SOF -> SOF : basic validation
+
+alt succesful inquiry
+  SOF --> BUS : 201 ServiceOrder with {{id}}, `acknowledged` state 
+  SOF -> BUS: {{callbackUrl}}/listener/serviceOrderCreateEvent ({{id}})
+  BUS --> SOF : 204 confirmation
+
+  ...
+
+  group loop [until Service Order in terminal state]
+      SOF -> BUS: {{callbackUrl}}/listener/serviceOrderStateChangeEvent ({{id}})
+      BUS --> SOF : 204 confirmation
+      BUS -> SOF :   GET {{baseUrl}}/serviceOrder/{{id}}
+      return 200 ServiceOrder in current state
+  end
+
+else validation or internal problem
+  SOF --> BUS : 4xx or 5xx error response
+end 
+
+...
+
+BUS -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  BUS : 204 confirmation
+
+@enduml

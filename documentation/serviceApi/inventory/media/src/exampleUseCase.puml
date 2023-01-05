@@ -1,0 +1,42 @@
+@startuml
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor<<INV>>  Black
+    ClassBorderColor Red
+    
+}
+hide  <<INV>> stereotype
+
+class Ipvc {
+}
+class IpvcEndPoint {}
+
+Ipvc "1" <-d-o "0..*" IpvcEndPoint : IPUNI_ENDPOINT_OF_IPVC
+
+
+class IpUni <<INV>> {
+
+}
+IpvcEndPoint "0..*" o-d-> "1" IpUni : CONNECTS_TO_IPUNI
+
+
+
+class IpUniAccessLink <<INV>> {
+
+}
+IpUniAccessLink "0..*" o-l-> "1" IpUni : PART_OF_IPUNI
+
+class IpUniAccessLinkTrunk <<INV>> {
+
+}
+  IpUniAccessLink "0..*" o-r-> "1" IpUniAccessLinkTrunk : PROVIDED_BY
+
+class RelatedPlaceRefOrValue <<INV>> {
+
+}
+
+IpUniAccessLinkTrunk "0..*" o-d-> "1" RelatedPlaceRefOrValue : INSTALL_LOCATION
+
+
+@enduml

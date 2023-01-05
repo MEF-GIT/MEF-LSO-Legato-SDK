@@ -1,0 +1,148 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: 
+    MEF LSO Legato - IP ENNI Common Specification
+    # MEF Forum - Date: 20221114  Edit-level: 
+    # File: ip/ipEnniCommon.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2022. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+description: |
+  ENNI Common Attributes that apply to each ENNI agreed between two LLOs 
+  (Lowest Level Op-erators). Reference MEF 61.1[1] Section 15 ENNI Common Attributes.
+type: object
+properties:
+  peeringIdentifier:
+    type: string
+    maxLength: 53
+    description: Unique identifier for the ENNI for management purposes. Reference MEF 61.1 Section 14.1 ENNI Identifier Service Attribute.
+  peeringType:
+    $ref: '#/definitions/EnniPeeringType'
+  controlProtocolsList:
+    items:
+      $ref: './ipCommon.yaml#/definitions/ControlProtocols'
+      type: array
+    minItems: 0
+  routingProtocols:
+    $ref: './ipCommon.yaml#/definitions/RoutingProtocols'
+  serviceMap:
+    $ref: '#/definitions/EnniServiceMap'
+required:
+  - peeringIdentifier
+  - routingProtocols
+  - serviceMap
+  - peeringType
+definitions:
+  EnniPeeringType:
+    type: string
+    description: |
+      Attribute indicates the type of BGP Peering used across the ENNI. The possible values 
+      are Option A, Option B, Option C or Option B and C. They refer to the options described 
+      in RFC 4364. Reference MEF 61.1 Section 15.2 ENNI Peering Type Common Attribute. For 
+      Options refer-ence MEF 61.1 Section 8.6 Connecting Services across an ENNI.
+      OPTION_A is a separate eBGP session is used across each ENNI Link and each session 
+      carries routes for one service. This results in packets for different services being 
+      sent over different ENNI Links. The packets can be plain IP Packets since it is the 
+      different links that distinguish them.
+      OPTION_B is for when one or more eBGP sessions are used across the ENNI, each exchanging 
+      labelled VPN routes for multiple services. The routes for different services are 
+      distinguished by attributes such a Route Distinguishers and Route Targets. This results 
+      in IP Packets across the ENNI being encapsulated in MPLS where IP Packets for different 
+      services have different MPLS labels. Typically, each packet has a single MPLS label, that 
+      identifies both the egress PE and the service.
+      OPTION_C is for when one or more eBGP sessions are used across the ENNI only to distribute 
+      labeled unicast routes (and labels) towards each Operator's own routers; furthermore, 
+      multi-hop eBGP sessions are used between the ingress PE and the egress PE (or equivalent 
+      route reflectors) to exchange labelled VPN routes for each service.  This results in IP 
+      Packets across the ENNI being encapsulated in MPLS, typically with two MPLS labels, one 
+      representing the egress PE, and the second that (roughly speaking) identifies the service.
+      OPTIONS_B_AND_C is a combination of Options B and C.
+    enum:
+    - OPTION_A
+    - OPTION_B
+    - OPTION_C
+    - OPTIONS_B_AND_C
+  EnniServiceMap:
+    type: object
+    properties:
+      enniServiceMappingContext:
+        $ref: "#/definitions/EnniServiceMappingContext"
+      enniLinks:
+        description: Pointer to ENNI Link list.
+        items:
+          $ref: '#/definitions/EnniList'
+        minItems: 1
+        type: array  
+    description: | 
+      For an ENNI using Option A, the ENNI Service Map Common Attribute is a mapping from ENNI Service Mapping Contexts a set of ENNI Link Identifiers for ENNI Links in the ENNI. Reference MEF 61.1[1] Section 15.6.1 ENNI Service Map for Option A.
+  EnniList:
+    type: object
+    properties:
+      identifier:
+        type: string
+      l1Technology:
+        $ref: './ipCommon.yaml#/definitions/L1Technology'
+      enniIdentifier:
+        type: array
+        items:
+          type: string
+        minItems: 1
+    description: | 
+      The ENNI List of ENNI Links Common Attribute is a list of 3-tuples of the form (ID, L1, Links). Each entry in the list corresponds to a distinct L1 link across the ENNI – in most cases, this means a separate physical link (although virtual or logical links are not precluded). The first element in the 3-tuple, ID, is the identifier of the L1 link. The second element, L1, contains the details of the L1 technology used for the link. The third element, Links, is a list (possibly empty) of ENNI Link Identifiers (see section 16.1) for the ENNI Links in this ENNI that traverse the L1 link. Reference MEF 61.1 Section 15.3 ENNI List of ENNI Links Common Attribute.
+  EnniServiceMappingContext:
+    type: object
+    properties:
+      serviceProvider:
+        description: Service Provider identifier.
+        type: string
+      serviceOperator:
+        description: Service Operator identifier.
+        type: string
+      enniServiceMappingIdentifier:
+        description: ENNI Service Mapping identifier
+        type: string
+    description: | 
+      A pair of SP/SO, ENNI Service Mapping Identifier. It uniquely identifies services for a given SP/SO on either side of the ENNI that have been assigned the same ENNI Service Mapping Iden-tifier. Reference MEF 61.1 Section 15.6.1 ENNI Service Map for Option A.

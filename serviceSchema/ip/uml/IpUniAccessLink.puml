@@ -1,0 +1,79 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+abstract class IpServicesExternalInterfaceLink {
+
+    identifier: Identifier53 [1]
+    administrativeState: AdminState [1]
+    operationalState: OperationalState [1]
+    l2Technology: L2Technology [1]
+    mtu: Integer [1]
+    bfd: AccessLinkBfd [1]
+}
+
+IpServicesExternalInterfaceLink <|-- IpUniAccessLink
+
+class IpUniAccessLink {
+
+    connectionType: ConnectionType [1]
+    ipv4ConnectionAddressing: UniIpv4ConnectionAddressing [0..1]
+    ipv6ConnectionAddressing: UniIpv6ConnectionAddressing [0..1]
+    dhcpRelay: DhcpRelay [0..1]
+    prefixDelegation: EnabledDisabled [1]
+    ingressBwpProfileEnvelope: IpUniAccessLinkIngressBwpEnvelope [0..1]
+    egressBwpProfileEnvelope: IpUniAccessLinkEgressBwpEnvelope [0..1]
+    reservedVrids: Vrid [0..*]
+}
+
+enum ConnectionType {
+    P2P
+    MULTIPOINT
+}
+
+IpUniAccessLink "1" *--> "1" ConnectionType: connectionType
+IpUniAccessLink "1" *--> "0..1" UniIpv4ConnectionAddressing : ipv4ConnectionAddressing
+IpUniAccessLink "1" *--> "0..1" UniIpv6ConnectionAddressing : ipv6ConnectionAddressing
+IpUniAccessLink "1" *--> "0..1" DhcpRelay : dhcpRelay
+IpUniAccessLink "1" *--> "0..1" IpUniAccessLinkEgressBwpEnvelope : egressBandwidthProfileEnvelope
+IpUniAccessLink "1" *--> "0..1" IpUniAccessLinkIngressBwpEnvelope : ingressBandwidthProfileEnvelope
+IpUniAccessLink "1" *-->"*" Vrid : reservedVrids
+
+class DhcpRelay << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class Vrid << (D, Gray) >>  {
+
+    "attributes not shown"
+
+}
+class IpUniAccessLinkIngressBwpEnvelope << (D, Gray) >> {
+
+    "attributes not shown"
+
+}
+
+class IpUniAccessLinkEgressBwpEnvelope << (D, Gray) >> {
+
+    "attributes not shown"
+
+}
+
+class UniIpv4ConnectionAddressing << (D, Gray) >> {
+
+    "attributes not shown"
+
+}
+
+
+class UniIpv6ConnectionAddressing << (D, Gray) >> {
+
+    "attributes not shown"
+
+}
+
+
+@enduml

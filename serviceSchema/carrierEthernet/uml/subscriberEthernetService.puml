@@ -1,0 +1,24 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class CarrierEthernetEvc {
+    "...attributes are not shown"
+}
+
+class CarrierEthernetEvcEndPoint {
+    "...attributes are not shown"
+}
+
+class CarrierEthernetSubscriberUni {
+    "...attributes are not shown"
+}
+
+
+
+CarrierEthernetEvc "1" *-->"2..*" CarrierEthernetEvcEndPoint
+CarrierEthernetSubscriberUni "1" o-->"*" CarrierEthernetEvcEndPoint
+
+@enduml

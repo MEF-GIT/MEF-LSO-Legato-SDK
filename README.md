@@ -1,20 +1,24 @@
-# MEF-LSO-Legato-SDK Dolly Release
+# MEF-LSO-Legato-SDK Ella Release
 
 ## Download Link
 
-Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/dolly/MEF-LSO-Legato-SDK-dolly.zip)
+Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/ella/MEF-LSO-Legato-SDK-ella.zip)
 
 ## Overview
 
-This repository contains the Dolly release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
+This repository contains the release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
 Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
 
 ## High-level release notes
 
-- New documents:
-  - MEF W112 - Draft Release 1 MEF Services Model Information Model for IP and IP VPN
-  - MEF W128 - Draft Release 2 LSO API Security Profile
+- Service Ordering and Service Inventory APIs are updated to match all Sonata API patterns and have API Developer Guide documents provided (MEF W99 and MEF W135).
+- Carrier Ethernet and IP service schemas are revised and updated, together with their guide documents (MEF W101, MEF W102)
+- Following documents have been published as MEF Standards:
+  - MEF 112 - Draft Release 1 MEF Services Model Information Model for IP and IP VPN
+  - MEF 128 - Draft Release 2 LSO API Security Profile
+- New document:
+  - MEF W133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
 
 ## Scope
 
@@ -62,18 +66,14 @@ The API files contained in this SDK are evolving and subject to change. They are
 
 There is currently [LSO Legato Service Provisioning Project](https://wiki.mef.net/display/LSO/LSO+Legato+Service+API+-+Project+Home+Page) open that aims to deliver:
 
-- LSO Legato Service Provisioning API (MEF W99)
-  - OAS3 API/Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - API Developer Guide as GFM file **(DRAFT, part of this SDK release)**
-- LSO Legato Service Provisioning Specification - SD-WAN (MEF W100)
-  - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
-- LSO Legato Service Provisioning Specification - Carrier Ethernet (MEF W101)
-  - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
-- LSO Legato Service Provisioning Specification - L1 (MEF W103)
-  - JSON Schema definitions as YAML files **(DRAFT, part of this SDK release)**
-  - Schema Guide as GFM file **(DRAFT, part of this SDK release)**
+- *LSO Legato Service Ordering Management API (MEF W99) - **work in progress - ready for CfC#2**
+- *LSO Legato Service Inventory Management API - Developer Guide (MEF W135) - **work in progress - ready for CfC#2**
+- LSO Legato Service Provisioning Specification - SD-WAN (MEF W100) - **DRAFT version**
+- *LSO Legato Carrier Ethernet Service Schemas and Developer Guide (MEF W101) - **work in progress - ready for CfC#2**
+- *LSO Legato Internet Protocol Service Schemas and Developer Guide (MEF W102) - **work in progress - ready for CfC#2**
+- LSO Legato Service Provisioning Specification - L1 (MEF W103) - **DRAFT version**
+
+(*) is used to mark item that changes their maturity comparing to previous release.
 
 ## Contents
 
@@ -82,19 +82,13 @@ This SDK contains the following items:
 - `COPYRIGHT` - Copyright 2020 MEF Forum
 - `LICENSE` - Contains a copy of the Apache 2.0 license
 - `README` - This file
-- `serviceApi` - Definitions of the API are found in this directory
-  - `catalog` - Contains the API definitions for querying and retrieving _Service-Specification_ instances from the service catalog system in the SOF.
-  - `inventory` - Contains the API definitions for querying and retrieving _Service_ instances from the service inventory system in the SOF.
-  - `order` - Contains the API definitions for posting _Service-Order_ request to the service order system in the SOF. Each _Service-Order_ contains one or more _Service-Order-Items_, each of which specifies the Service instance (and its characteristics) to be added/updated/deleted.
-  - `common` - Contains the API definitions for registering _Notification-Listeners_ to be called-back when the specified condition occurs. Also common API resources and error definition can be found here.
-- `serviceSchema` - Contains JSON schema (draft 7) files for
-  - SD-WAN Services
-  - Carrier Ethernet Services
-  - L1 Connectivity Services.
-  - IP/IP-VPN Services
+- `serviceApi` - Definitions of the APIs are found in this directory, provided as yaml files.
+- `serviceSchema` - Contains JSON schema (draft 7) files for service specifications.
 - `documentation` - documentation including API/Schema developer guides and openapi-tools generated API descriptions in markdown format
   - `supportingStandards` - The rest of documents and standards.
-- `generated\staticBinding` - contains automatically generated (with help of the open source [Sonata Blending Tool](https://github.com/Amartus/SonataBlendingTool)), not normative static bindings of envelope APIs with Service payloads.
+- `generated`
+  - `staticBinding` - No longer provided - please visit [LSO Marketplace](http://lso.mef.net) to use self-blending possibility.
+  - `security` - A not normative version of the standard APIs including the security profiles as required by MEF 128. Provided for evaluation.
 
 ## Issues, questions, and Feedback
 
@@ -110,7 +104,7 @@ https://wiki.onap.org/display/DW/External+API+Framework+Project
 
 ## Copyright
 
-© MEF Forum 2022. All Rights Reserved.
+© MEF Forum 2023. All Rights Reserved.
 
 ## Disclaimer
 

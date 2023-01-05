@@ -1,0 +1,41 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+abstract class IpServicesExternalInterface {
+
+    identifier: Identifier53 [1]
+    administrativeState: AdminState [1]
+    operationalState: OperationalState [1]
+
+}
+
+class IpEnni {
+    ipEnniCommon: IpEnniCommon [1]
+    enniType: EnniType [1]
+    routingInformation: EnniRoutingInformation [1]
+    ingressBandwidthProfileEnvelopes: IpEnniIngressBwpEnvelopePerEnniLink [1]
+    egressBandwidthProfileEnvelopes: IpEnniEgressBwpEnvelopePerEnniLink [1]
+}
+
+IpServicesExternalInterface <|-- IpEnni
+
+IpEnni "1" *--> "1" EnniRoutingInformation
+IpEnni "1" *--> "1" IpEnniIngressBwpEnvelopePerEnniLink
+IpEnni "1" *--> "1" IpEnniEgressBwpEnvelopePerEnniLink
+
+class EnniRoutingInformation << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class IpEnniIngressBwpEnvelopePerEnniLink << (D, Gray) >> {
+    "attributes not shown"
+}
+
+class IpEnniEgressBwpEnvelopePerEnniLink << (D, Gray) >> {
+    "attributes not shown"
+}
+
+@enduml

@@ -38,6 +38,9 @@ definitions:
         - DHCP
         - STATIC
       ipv4PrimarySubnet:
+        maxItems: 1
+        minItems: 0
+        type: array
         description: Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider IPv4 Addresses.
         items:
           $ref: '#/definitions/Ipv4Subnet'

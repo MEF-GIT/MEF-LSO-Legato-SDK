@@ -1,0 +1,98 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor<<API>>  Black
+    ClassBorderColor Red
+    
+}
+hide  <<API>> stereotype
+class OperationalState {
+
+    state: State
+}
+
+
+
+class IpvcEndPoint {
+
+    identifier: string
+    eiType: ExternalInterfaceType
+    role: IpvcEndPointRole
+    enniServiceMappingIdentifier: string
+    maximumNumberOfIpv4Routes: integer
+    maximumNumberOfIpv6Routes: integer
+}
+MefServiceConfiguration <|-- IpvcEndPoint
+
+IpvcEndPoint *--> AdminState : administrativeState
+IpvcEndPoint *--> OperationalState : operationalState
+IpvcEndPoint *--> Ipv4Ipv6Prefixes : prefixMapping
+IpvcEndPoint *--> IngressClassOfServiceMap : ingressClassOfServiceMap
+IpvcEndPoint *--> EgressClassOfServiceMap : egressClassOfServiceMap
+IpvcEndPoint *--> IpvcEpIngressBwpEnvelope : ingressBwpEnvelope
+IpvcEndPoint *--> IpvcEpEgressBwpEnvelope : egressBwpEnvelope
+
+
+class AdminState {
+
+    state: AdminStateState
+}
+
+
+
+enum State {
+
+    ENABLED
+    DISABLED
+}
+enum AdminStateState {
+
+    LOCKED
+    UNLOCKED
+}
+
+
+class MefServiceConfiguration<<API>> {
+
+    @type*: string
+}
+
+
+
+class IngressClassOfServiceMap {
+
+    <<skipeed>>
+}
+
+class IpvcEpIngressBwpEnvelope {
+
+    <<skipeed>>
+}
+class IpvcEpEgressBwpEnvelope {
+
+    <<skipeed>>
+}
+class EgressClassOfServiceMap {
+
+    <<skipeed>>
+}
+class Ipv4Ipv6Prefixes {
+
+    <<skipeed>>
+}
+
+
+
+enum ExternalInterfaceType {
+
+    UNI
+    ENNI
+}
+
+enum IpvcEndPointRole {
+
+    ROOT
+    LEAF
+    TRUNK
+}
+@enduml

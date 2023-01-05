@@ -1,0 +1,22 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class IpUniAccessLinkTrunk {
+    identifier: Identifer53 [1]
+    trunkType: UniAccessLinkTrunkType [1]
+    ethernetUniAccessLinkTrunk: EthernetUniAccessLinkTrunk [0..1]
+}
+
+class EthernetUniAccessLinkTrunk {
+    ethernetPhysicalLinks: EthernetPhysicalLink [1..*]
+    ethernetLinkAggregation: UniAccessLinkEthernetLinkAggregation [1]
+    ethernetLinkOam: EnabledDisabled [1]
+}
+
+IpUniAccessLinkTrunk "1" *-->"0..1" EthernetUniAccessLinkTrunk
+
+
+@enduml

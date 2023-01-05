@@ -1,0 +1,79 @@
+@startjson
+    {
+    "Ipvc": {
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/MefServiceConfiguration"
+        },
+        {
+          "properties": {
+            "maximumNumberOfIpv4Routes": {
+              "type": "integer"
+            },
+            "pathMtuDiscovery": {
+              "$ref": "#/components/schemas/EnabledDisabled"
+            },
+            "ipvcTopology": {
+              "$ref": "#/components/schemas/ServiceTopology"
+            },
+            "dscpPreservation": {
+              "$ref": "#/components/schemas/EnabledDisabled"
+            },
+            "serviceLevelSpecification": {
+              "$ref": "#/components/schemas/IpSls"
+            },
+            "ipvcIdentifier": {
+              "maxLength": 53,
+              "type": "string"
+            },
+            "reservedPrefixes": {
+              "$ref": "#/components/schemas/Ipv4Ipv6Prefixes"
+            },
+            "maximumNumberOfIpv6Routes": {
+              "type": "integer"
+            },
+            "maximumTransferUnit": {
+              "type": "integer"
+            },
+            "fragmentation": {
+              "$ref": "#/components/schemas/EnabledDisabled"
+            },
+            "cloud": {
+              "$ref": "#/components/schemas/IpvcCloud"
+            },
+            "administrativeState": {
+              "$ref": "#/components/schemas/AdminState"
+            },
+            "listOfClassOfServiceNames": {
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "operationalState": {
+              "$ref": "#/components/schemas/OperationalState"
+            },
+            "packetDelivery": {
+              "$ref": "#/components/schemas/PacketDelivery"
+            }
+          },
+          "required": [
+            "administrativeState",
+            "dscpPreservation",
+            "fragmentation",
+            "ipvcIdentifier",
+            "ipvcTopology",
+            "listOfClassOfServiceNames",
+            "maximumTransferUnit",
+            "operationalState",
+            "packetDelivery",
+            "reservedPrefixes"
+          ],
+          "type": "object"
+        }
+      ],
+      "x-discriminator-value": "urn:mef:lso:spec:legato:Ipvc:v0.0.1:all"
+    }
+  }
+@endjson

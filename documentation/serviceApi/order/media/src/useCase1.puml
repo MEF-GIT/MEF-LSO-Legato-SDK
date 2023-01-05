@@ -1,0 +1,19 @@
+@startuml
+
+
+hide footbox
+
+participant BUS
+participant SOF
+
+BUS -> SOF : POST {{baseUrl}}/serviceOrder (ServiceOrder_Create)
+
+SOF -> SOF : basic validation
+SOF -> SOF : assign id
+SOF -> SOF : state: acknowledged
+alt successful inquiry
+    BUS <-- SOF : 201 ServiceOrder with {{id}}
+else validation or internal problem
+    BUS <-- SOF: 4xx/5xx : error response
+end
+@enduml

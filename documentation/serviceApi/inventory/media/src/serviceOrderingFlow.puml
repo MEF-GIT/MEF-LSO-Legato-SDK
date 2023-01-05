@@ -1,0 +1,104 @@
+@startuml
+title E2E Service Ordering Flow
+actor BUS
+collections ServiceCatalog as "SOF:ServiceCatalog"
+collections ServiceOrdering as "SOF:ServiceOrdering"
+entity ServiceOrder
+collections ServiceInventory as "SOF:ServiceInventory"
+entity Service
+entity Hub
+
+activate BUS #LightGray
+BUS -> Hub : registerListener (ServiceOrderNotification)
+BUS -> Hub : registerListener (ServiceNotification)
+deactivate BUS
+
+[-> BUS: ProductOrder
+activate BUS #LightGray
+BUS -> ServiceCatalog : serviceSpecificationFind
+activate ServiceCatalog #LightSlateGrey
+BUS <- ServiceCatalog : List.ServiceSpecification
+deactivate ServiceCatalog
+
+hnote over BUS #Aqua: map ProductSpec-to-ServiceSpec
+hnote over BUS #LightSalmon
+    populate
+      ServiceOrderConfiguration
+        |..ServiceOrderItemConfiguration
+            |..ServiceConfiguration 
+end hnote
+
+BUS -> ServiceOrdering: serviceOrderCreate (ServiceOrderConfiguration)
+activate ServiceOrdering #LightSlateGrey
+    create ServiceOrder
+    ServiceOrdering -> ServiceOrder: <<create>>
+    BUS <-- ServiceOrdering: Response (ServiceOrder)
+deactivate ServiceOrdering
+deactivate BUS
+
+ServiceOrdering -> ServiceOrdering : onSchedule
+activate ServiceOrdering #LightCyan
+    ServiceOrdering ->> ServiceOrder : processOrder
+activate ServiceOrder #LightBlue
+deactivate ServiceOrdering
+
+loop List.OrderItem
+    ServiceOrder ->> ServiceOrder : processOrderItem
+    activate ServiceOrder #LightSeaGreen
+    note over ServiceOrder #LightSeaGreen : OrderItem 
+
+    opt action.add
+        create Service
+        ServiceOrder -> Service : <<create>>
+    end
+    opt action.add | action.modify
+        ServiceOrder -> Service : configureService (state, properties)
+        note right
+            **state**: designed|reserved|inactive|active|terminated
+        end note
+        activate Service #LightSkyBlue
+            Service ->>] : configureResources
+            Service -> Hub : createEvent | changeEvent
+        deactivate Service
+        activate Hub #aqua
+    end
+    Hub -> BUS : notifyListeners (serviceCreateEvent | serviceStateChangeEvent)
+    deactivate Hub
+
+    activate BUS #Violet
+        BUS -> ServiceInventory : serviceGet
+        activate ServiceInventory #Violet
+        ServiceInventory -> Service : retrieve
+        return Response (Service)
+    deactivate BUS
+
+    opt action.delete
+        ServiceOrder -> Service : retire|cancel
+        activate Service #LightCoral
+        destroy Service
+    end
+    activate Hub #aqua
+    deactivate Hub
+
+    ServiceOrder -> Hub : changeEvent
+    deactivate ServiceOrder
+
+    activate Hub #aqua
+    Hub -> BUS : notifyListeners (serviceOrderItemStateChangeEvent)
+    deactivate Hub
+end
+ServiceOrder -> Hub : changeEvent
+deactivate ServiceOrder
+
+activate Hub #aqua
+Hub -> BUS : notifyListeners (serviceOrderStateChangeEvent)
+deactivate Hub
+
+activate BUS #Violet
+    BUS -> ServiceOrdering : serviceOrderGet
+    activate ServiceOrdering #Violet
+    ServiceOrdering -> ServiceOrder : retrieve
+    return Response (ServiceOrder)
+deactivate BUS
+
+@enduml

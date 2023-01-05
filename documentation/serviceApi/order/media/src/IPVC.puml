@@ -1,0 +1,85 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor<<API>>  Black
+    ClassBorderColor Red
+    
+}
+hide  <<API>> stereotype
+class MefServiceConfiguration<<API>> {
+
+    @type*: string
+}
+
+
+class AdminState {
+
+    state: State
+}
+
+
+class Ipvc {
+
+    ipvcIdentifier*: string
+    ipvcTopology*: ServiceTopology
+    packetDelivery*: PacketDelivery
+    maximumNumberOfIpv4Routes: integer
+    maximumNumberOfIpv6Routes: integer
+    dscpPreservation*: EnabledDisabled
+    maximumTransferUnit*: integer
+    pathMtuDiscovery: EnabledDisabled
+    fragmentation*: EnabledDisabled
+    listOfClassOfServiceNames*: string
+}
+MefServiceConfiguration <|-- Ipvc
+
+Ipvc *-->"1" AdminState : administrativeState
+Ipvc *-->"1" OperationalState : operationalState
+Ipvc *--> IpSls : serviceLevelSpecification
+Ipvc *--> IpvcCloud : cloud
+Ipvc *-->"1" Ipv4Ipv6Prefixes : reservedPrefixes
+
+
+enum ServiceTopology {
+
+    MULTIPOINT
+    ROUTED_MULTIPOINT
+    CLOUD_ACCESS
+}
+
+
+enum PacketDelivery {
+
+    STANDARD_ROUTING
+    POLICY_BASED_ROUTING
+}
+class OperationalState {
+
+    state: OperationalStateState
+}
+
+class IpSls {
+
+    <<skipped>>
+}
+class IpvcCloud {
+
+    <<skipped>>
+}
+
+class Ipv4Ipv6Prefixes {
+
+    <<skipped>>
+}
+
+enum State {
+
+    LOCKED
+    UNLOCKED
+}
+enum OperationalStateState {
+
+    ENABLED
+    DISABLED
+}
+@enduml

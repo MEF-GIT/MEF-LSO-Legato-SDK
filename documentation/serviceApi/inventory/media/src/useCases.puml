@@ -1,0 +1,15 @@
+@startuml
+
+left to right direction
+actor SOF
+actor BUS
+
+rectangle {
+  BUS --> (1. Retrieve Service by Identifier)
+  BUS --> (2. Retrieve Service List)
+  BUS --> (3: Register for Notifications)
+  (4. Send Notifications) <-- SOF
+}
+SOF -[hidden]up-> (1. Retrieve Service by Identifier)
+
+@enduml

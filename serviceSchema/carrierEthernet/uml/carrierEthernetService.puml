@@ -1,0 +1,33 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class CarrierEthernetService {
+    administrativeState: AdminState[1]
+    operationalState: OperationalState[1]
+    cTagPcpPreservation: EnabledDisabled[1]
+    cTagDeiPreservation: EnabledDisabled[1]
+    connectionType: ConnectionType[1]
+    frameDisposition: FrameDisposition[1]
+    listOfCosNames: String[1..*]
+    maximumFrameSize: PositiveInteger[1]
+    availableMegLevel: AvailableMegLevel[0..1]
+    carrierEthernetSls: CarrierEthernetSls[0..1]
+}
+
+
+class CarrierEthernetEvc {
+    "...attributes are not shown"
+}
+
+class CarrierEthernetOvc {
+    "...attributes are not shown"
+}
+
+
+CarrierEthernetService <|-- CarrierEthernetEvc
+CarrierEthernetService <|-- CarrierEthernetOvc
+
+@enduml

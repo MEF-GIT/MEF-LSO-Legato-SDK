@@ -1,0 +1,40 @@
+@startuml
+
+skinparam {
+    StateBackgroundColor White
+}
+
+hide empty description
+state acknowledged : Basic validation done
+state inProgress : Service configuration and activation started
+state completed : Service configuration and activation complete
+state rejected : Basic validation failed
+state pending : Waiting for an action/activity
+state held : Temporarily delayed due to an issue
+state failed : All Order items have failed
+state partial : Some Order items have failed\nand some have succeeded
+state IsAccepted <<choice>>
+
+[*] --> acknowledged: orderAccepted
+note right of IsAccepted : issues detected?
+acknowledged -d-> IsAccepted
+IsAccepted -d-> inProgress : processingStarted
+IsAccepted -d-> rejected : validationFailed
+
+
+inProgress --> completed : processingComplete
+inProgress --> failed : processingFailed
+inProgress --> partial : partiallyCompleted
+inProgress -l-> pending : actionRequired
+inProgress -l-> held : orderFallOut
+
+pending -r-> inProgress : actionCompleted
+
+held -r-> inProgress : issueResolved
+
+completed --> [*] : archived
+failed --> [*] : archived
+partial --> [*] : archived
+rejected --> [*] : archived
+
+@enduml

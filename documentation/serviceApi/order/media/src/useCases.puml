@@ -1,0 +1,23 @@
+@startuml
+
+left to right direction
+actor SOF
+actor BUS
+
+rectangle {
+BUS --> (1: Create Service Order)
+(1: Create Service Order) --> (1c: Service Order Item to Delete Existing Service)
+(1: Create Service Order) --> (1b: Service Order Item to Modify Existing Service)
+(1: Create Service Order) --> (1a: Service Order Item to Add New Service)
+
+BUS --> (2: Retrieve List of Service Orders)
+BUS --> (3: Retrieve Service Order by Service Order Identifier)
+
+BUS --> (4: Register for Notifications)
+(5. Send Notifications) <-- SOF
+
+' SOF -[hidden]l-> (1a: Service Order Item to Add New Service)
+
+}
+
+@enduml

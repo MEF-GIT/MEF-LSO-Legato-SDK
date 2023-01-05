@@ -1,0 +1,34 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Ipvc {
+    "...attributes are not shown"
+}
+
+class IpvcEndPoint {
+    "...attributes are not shown"
+}
+
+class IpUni {
+    "...attributes are not shown"
+}
+
+class IpUniAccessLink {
+    "...attributes are not shown"
+}
+
+class IpUniAccessLinkTrunk {
+    "...attributes are not shown"
+}
+
+
+Ipvc "1" *-->"1..*" IpvcEndPoint
+IpUni "0..1" o-->"*" IpvcEndPoint
+IpUni "1" *-->"1..*" IpUniAccessLink
+IpUniAccessLinkTrunk "1..*" *--> "1..*" IpUniAccessLink
+
+
+@enduml

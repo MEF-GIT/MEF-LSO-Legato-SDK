@@ -313,7 +313,7 @@ This document defines the service-specific payload, shown as Data Model in the f
 
 # 5. Superclasses and Resources in support of Subscriber and Operator L1 Services
 
-There are common attributes shared between each of the three main resources across Subscriber and Operator L1 services. The MEF Service Model Information Model - L1CS [[MEF 111]](https://www.mef.net/resources/mef-111-mef-services-model-information-model-for-layer-1-connectivity-service/) defines three super classes:
+There are common attributes shared between each of the three main resources across Subscriber and Operator L1 services. The MEF Service Model Information Model - L1CS [[MEF 111]](https://www.mef.net/resources/mef-111-mef-services-model-information-model-for-layer-1-connectivity-service/) defines four super classes:
 
 - L1ExternalInterface
 - L1EndPoint
@@ -965,10 +965,10 @@ MEF 63 Coding Function <c>, functionality which encodes bits for transmission an
 
 Enumeration represents the possible multiplexing sequences for a given LO ODU into HO ODU using nomenclature. The set of enumeration list varies depending on the selection of lineRate in the L1Enni as follows:
 
-- Enumeration list in section 14.22.1 when lineRate = OTU1
-- Enumeration list in section 14.22.2 when lineRate = OTU2 or OTU2E
-- Enumeration list in section 14.22.3 when lineRate = OTU3
-- Enumeration list in section 14.22.4 when lineRate = OTU4
+- Enumeration list in section 14.22.1 when lineRate = OTU4
+- Enumeration list in section 14.22.2 when lineRate = OTU 3
+- Enumeration list in section 14.22.3 when lineRate = OTU2 or OTU2E
+- Enumeration list in section 14.22.4 when lineRate = OTU1
 
 
 ### 14.22.1 HighOrderODU4MultiplexingSequences
@@ -1047,17 +1047,16 @@ Enumeration representing the Optical Interface Function value for L1UniPhysicalL
 - Enumeration list in section 14.23.10 when L1UniCodingFunction = FC-1200
 - Enumeration list in section 14.23.11 when L1UniCodingFunction = FC-1600
 - Enumeration list in section 14.23.12 when L1UniCodingFunction = FC-3200
-- Enumeration list in section 14.23.13 when L1UniCodingFunction = FC-3200
-- Enumeration list in section 14.23.14 when L1UniCodingFunction = STM-1
-- Enumeration list in section 14.23.15 when L1UniCodingFunction = STM-4
-- Enumeration list in section 14.23.16 when L1UniCodingFunction = STM-16
-- Enumeration list in section 14.23.17 when L1UniCodingFunction = STM-64
-- Enumeration list in section 14.23.18 when L1UniCodingFunction = STM-256
-- Enumeration list in section 14.23.19 when L1UniCodingFunction = OC-3
-- Enumeration list in section 14.23.20 when L1UniCodingFunction = OC-12
-- Enumeration list in section 14.23.21 when L1UniCodingFunction = OC-48
-- Enumeration list in section 14.23.22 when L1UniCodingFunction = OC-192
-- Enumeration list in section 14.23.23 when L1UniCodingFunction = OC-768
+- Enumeration list in section 14.23.13 when L1UniCodingFunction = STM-1
+- Enumeration list in section 14.23.14 when L1UniCodingFunction = STM-4
+- Enumeration list in section 14.23.15 when L1UniCodingFunction = STM-16
+- Enumeration list in section 14.23.16 when L1UniCodingFunction = STM-64
+- Enumeration list in section 14.23.17 when L1UniCodingFunction = STM-256
+- Enumeration list in section 14.23.18 when L1UniCodingFunction = OC-3
+- Enumeration list in section 14.23.19 when L1UniCodingFunction = OC-12
+- Enumeration list in section 14.23.20 when L1UniCodingFunction = OC-48
+- Enumeration list in section 14.23.21 when L1UniCodingFunction = OC-192
+- Enumeration list in section 14.23.22 when L1UniCodingFunction = OC-768
 
 
 ### 14.23.1 Eth1000BaseXOpticalInterfaceFunction
@@ -1443,16 +1442,10 @@ The figure below illustrates the sequencing of coding operations used in buildin
 
 | <img src="media/provisioning.png" alt="T_M Forum" name="T_M Forum_Envelope" /> |
 |:--:|
-| <i>Figure 9 - MEF Service Provisioning Flow</i> |
+| <i>Figure 9 - MEF Layer 1 Service Provisioning Flow</i> |
 
 
 # 16. References
-[ITU-T Recommendation G.707/Y.1322](https://www.itu.int/rec/T-REC-G.707-200701-I/en), *Network node interface for the synchronous digital hierarchy (SDH)*, January 2007
-
-[ITU-T Recommendation G.709/Y.1331](https://www.itu.int/rec/T-REC-G.709-202006-I/en), *Interfaces for the optical transport network, Amendment 3*, March 2019
-
-[ITU-T Recommendation G.959.1](https://www.itu.int/rec/T-REC-G.959.1-201807-I/en), *Optical transport network physical layer interfaces*, July 2018
-
 [MEF 55](https://wiki.mef.net/display/CESG/MEF+55+-+LSO+Reference+Architecture), *Lifecycle Service Orchestration (LSO): Reference Architecture and Framework*, March 2016
 
 [MEF 63](https://wiki.mef.net/display/CESG/MEF+63+-+Subscriber+Layer+1+Service+Attributes), *Subscriber Layer 1 Service Attributes and Services*, August 2018

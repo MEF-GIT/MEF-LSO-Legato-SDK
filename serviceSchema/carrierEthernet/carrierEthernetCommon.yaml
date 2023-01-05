@@ -1,6 +1,55 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:CarrierEthernetCommon:v2.0.0:all
-title: MEF LSO Legato - Common Carrier Ethernet Service Provisioning Specifications
+title: 
+    MEF LSO Legato - Common Carrier Ethernet Specification
+    # MEF Forum - Date: 20221114  Edit-level: 
+    # File: carrierEthernet/carrierEthernetCommon.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2022. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
 description:
   Common Carrier Ethernet Service schema specifications for LSO Legato API payload
 definitions:
@@ -26,29 +75,17 @@ definitions:
     type: object
     properties:
       cir:
-        minimum: 0
-        type: integer
-        description: Attribute represents Committed Information Rate. When added to unused committed bandwidth provided from higher-ranked Bandwidth Profile Flows (depending on the value of CF for the higher-ranked Bandwidth Profile Flows), limits the average rate in bits per second at which Service Frames for this Bandwidth Profile Flow can be declared Green.
+        $ref: '#/definitions/InformationRate'
       cirMax:
-        minimum: 0
-        type: integer
-        description: Attribute represents Maximum Committed Information Rate. Limits the average rate in bits per second at which Service Frames for this Bandwidth Profile Flow can be declared Green (regardless of unused committed bandwidth from higher ranked Bandwidth Profile Flows).
+        $ref: '#/definitions/InformationRate'
       cbs:
-        minimum: 0
-        type: integer
-        description: Attribute represents Committed Burst Size. Limits by how much, and for how long, the amount of traffic declared Green for this Bandwidth Profile Flow in the short term can exceed the committed bandwidth made available to this Band-width Profile Flow over the long term in bytes.
+        $ref: '#/definitions/DataSize'
       eir:
-        minimum: 0
-        type: integer
-        description: 'Attribute represents Excess Information Rate. When added to unused excess bandwidth from higher-ranked Bandwidth Profile Flows, and to un- used committed bandwidth* (depending on the value of CF for this Bandwidth Profile Flow and CF0 for the Envelope), limits the average rate in bits per second at which Service Frames for this Bandwidth Pro- file Flow can be declared Yellow. '
+        $ref: '#/definitions/InformationRate'
       eirMax:
-        minimum: 0
-        type: integer
-        description: Attribute represents Maximum Excess Information Rate. Limits the average rate in bits per second at which Service Frames for this Bandwidth Profile Flow can be declared Yellow (regardless of unused excess bandwidth from higher-ranked Bandwidth Profile Flows or unused committed bandwidth).
+        $ref: '#/definitions/InformationRate'
       ebs:
-        minimum: 0
-        type: integer
-        description: Attribute represents Excess Burst Size. Limits by how much, and for how long, the amount of traffic declared Yellow for this Bandwidth Profile Flow in the short term can exceed the excess band- width made available to this Bandwidth Profile Flow over the long term.
+        $ref: '#/definitions/DataSize'
       couplingFlag:
         type: boolean
         description: Attribute represents coupling flag. Determines whether unused committed bandwidth for this Bandwidth Profile Flow is made available as excess bandwidth for this Bandwidth Profile Flow or as commit-ted bandwidth for the next lower-ranked Bandwidth Profile Flow. 0/FALSE means overflow green tokens are used as green tokens in the next lowest BWP Flow in the Envelope. 1/TRUE means they are used as yellow tokens for this BWP Flow.
@@ -71,16 +108,14 @@ definitions:
   CarrierEthernetExternalInterface:
     type: object
     properties:
-      admininstrativeState:
+      administrativeState:
         $ref: '#/definitions/AdminState'
       operationalState:
         $ref: '#/definitions/OperationalState'
-      externalInterfaceframeFormat:
+      externalInterfaceFrameFormat:
         $ref: '#/definitions/EthernetFrameFormat'
       linkOam:
-        description: Controls when and how Link OAM per IEEE Std 802.3-2015 is run on the physi-cal links in the External Interface. Refer-ence MEF 10.4 Section 9.13 Subscriber UNI Link OAM Service Attribute, MEF 26.2 Section 9.9 ENNI Link OAM Common Attribute and MEF 26.2 Section 14.14 Operator UNI Link OAM Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
       l2cpPeering:
         minItems: 0
         type: array
@@ -88,13 +123,9 @@ definitions:
         items:
           $ref: '#/definitions/L2cpPeering'
       lagLinkMeg:
-        description: Indicates whether a LAG link MEG is instantiated on each physical link in the EI, if the EI has more than one physical link. Reference MEF 10.4 Section 9.15 Subscriber UNI LAG Link MEG Service Attribute, MEF 26.2 Section 9.8 ENNI LAG Link MEG Common Attribute and MEF 26.2 Section 14.16 Operator UNI LAG Link MEG Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
       meg:
-        description: Indicates whether a MEP is instantiated at the EI for the UNI MEG or ENNI MEG. Reference MEF 10.4 Section 9.14 Sub-scriber UNI MEG Service Attribute, MEF 26.2 Section 9.7 ENNI MEG Common Attribute and MEF 26.2 Section 14.15 Operator UNI MEG Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
       aggregationLinkMap:
         minItems: 0
         type: array
@@ -105,8 +136,18 @@ definitions:
         description: Specifies the maximum size of EI Frames that can be transmitted across EI. Reference MEF 10.4 Section 9.8 Subscriber UNI Maximum Service Frame Size Service Attribute. Reference MEF 26.2 Section 14.8 Operator UNI Maximum Service Frame Size Service Attribute. Reference MEF 26.2 Section 10.3 ENNI Maximum Frame Size Multilateral Attribute.
       linkAggregation:
         $ref: '#/definitions/LinkAggregation'
+    required: 
+      - administrativeState
+      - operationalState
+      - externalInterfaceFrameFormat
+      - linkOam
+      - lagLinkMeg
+      - meg
+      - maximumFrameSize
+      - linkAggregation
     description: The CarrierEthernetExternalInterface represents the Physical Interface used for EVC and OVC services. This is an abstract class and the super class. It contains the common attributes of ENNI, Subscriber UNI.
   CarrierEthernetService:
+    description: The CarrierEthernetService represents the EVC or the OVC.  This is an abstract class and the super class of EVC and OVC.  It contains the common attributes of EVC and OVC.
     type: object
     properties:
       administrativeState:
@@ -114,13 +155,11 @@ definitions:
       operationalState:
         $ref: '#/definitions/OperationalState'
       cTagPcpPreservation:
-        description: Whether the value of the PCP field in the C-Tag in Ingress EI Frames is preserved when the Egress EI Frame also has a C-Tag. Reference MEF 26.2 Section 12.8 OVC CE-VLAN PCP Preservation Service Attribute and MEF 10.4 Section 8.5 EVC C-Tag PCP Preservation Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
       cTagDeiPreservation:
-        description: Whether the value of the DEI field in the C-Tag in Ingress Frames is preserved when the Egress EI Frame also has C-Tag. Reference MEF 26.2 Section 12.9 OVC CE-VLAN ID DEI Preservation Service Attribute and MEF 10.4 Section 8.6 EVC C-Tag DEI Preservation Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
+      carrierEthernetSls:
+        $ref: 'carrierEthernetSls.yaml'  
       connectionType:
         $ref: '#/definitions/ConnectionType'
       frameDisposition:
@@ -135,21 +174,18 @@ definitions:
         type: integer
         description: Maximum size of EI frames that can be carried over the EVC or OVC. Reference MEF 10.4 Section 8.10 EVC Maximum Service Frame Size Service Attribute and MEF 26.2 Section 12.6 OVC Maximum Frame Size Service Attribute.
       availableMegLevel:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: The lowest MEG level for which SOAM Frames are not peered or discarded by the SP or Operator. If this attribute is not present there is no such level (that is, SOAM frames are all MEG levels may be peered or discarded by the SP or Opera-tor). Reference MEF 10.4 Section 8.11 EVC Available MEG Level Service Attribute and MEF 26.2 Section 12.15 OVC Available MEF Level Service Attribute.
-        items:
-          $ref: '#/definitions/MegLevel'
-      carrierEthernetSls:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: Technical details of the service level in terms of Performance Objectives, agreed between the Service Provider and the Subscriber or between Service Provider and the Operator as part of the Service Level Agreement. A given SLS might contain 0,1 or more Performance Objec-tives for each Performance Metric.  Ref-erence MEF 10.4 Section 8.8 EVC Ser-vice Level Specification Service Attribute and MEF 26.2 Section 12.13 OVC Service Level Specification Service Attribute.
-        items:
-          $ref: 'carrierEthernetSls.yaml'
-    description: The CarrierEthernetService represents the EVC or the OVC.  This is an abstract class and the super class of Evc and Ovc.  It contains the common attributes of Evc and Ovc.
+        $ref: '#/definitions/MegLevel'
+    required:
+      - adminState
+      - operationalState
+      - cTagPcpPreservation
+      - cTagDeiPreservation
+      - connectionType
+      - frameDisposition
+      - listOfCosNames
+      - maximumFrameSize
   CarrierEthernetServiceEndPoint:
+    description: The CarrierEthernetServiceEndPoint represents the EVC End Point or the OVC End Point.  This is an abstract class and the super class of EvcEndPoint and OvcEndPoint.  It contains the common attributes of EvcEndPoint and OvcEndPoint.
     type: object
     properties:
       administrativeState:
@@ -161,12 +197,7 @@ definitions:
       colorMap:
         $ref: '#/definitions/ColorIdentifier'
       ingressBandwidthProfilePerEndPoint:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: Bandwidth Profile Flow parameters for all ingress EI Frames mapped to the OVC End Point or EVC End Point. Reference MEF 26.2 Section 16.10 Ingress Band-width Profile per OVC End Point Service Attribute. Reference MEF 10.4 Section 10.8 EVC EP Ingress Bandwidth Profile Service Attribute. The absence of this attribute corresponds to a Service Attrib-ute of None.
-        items:
-          $ref: '#/definitions/BwpFlow'
+        $ref: '#/definitions/BwpFlow'
       ingressBandwidthProfilePerCosName:
         minItems: 0
         type: array
@@ -174,14 +205,14 @@ definitions:
         items:
           $ref: '#/definitions/BandwidthProfilePerClassOfServiceName'
       sourceMacAddressLimit:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: Specifies a limit on the number of differ-ent Source MAC address for which in-gress EI Frames at this EVC End Point or OVC End Point will be delivered. The absence of this attribute corresponds to a Service Attribute value of None. Refer-ence MEF 10.4 Section 10.12 EVC EP Source MAC Address Limit Service At-tribute and MEF 26.2 Section 16.15 OVC End Point Source MAC Address Limit Service Attribute.
-        items:
-          $ref: '#/definitions/SourceMacAddressLimit'
-    description: The CarrierEthernetServiceEndPoint represents the EVC End Point or the OVC End Point.  This is an abstract class and the super class of EvcEndPoint and OvcEndPoint.  It contains the common attributes of EvcEndPoint and OvcEndPoint.
+        $ref: '#/definitions/SourceMacAddressLimit'
+    required:
+      - adminState
+      - operationalState
+      - ingressClassOfServiceMap
+      - colorMap
   CarrierEthernetUni:
+    description: The UNI represents the Physical Interface used for EVC and OVC services with common attributes. This is an abstract class and the super class. It contains the common attributes of Operator UNI and Subscriber UNI.
     type: object
     properties:
       maximumNumberOfEndPoints:
@@ -194,9 +225,7 @@ definitions:
         type: integer
         description: An integer greater than or equal to 1 that limits the number of C-Tag VLAN IDs that can map to each EVC End Point. Reference MEF 10.4 Section 9.10 Subscriber UNI Maximum Number of C-Tag VLAN IDs per EVC EP Service Attribute. The maximum number of CE-VLAN ID values that can be mapped to an OVC End Point by the Operator CEN at the UNI. Reference MEF 26.2 Section 14.11 Operator UNI Maximum Number of CE-VLAN IDs per OVC End Point Service Attribute.
       tokenShare:
-        description: An attribute that indicates whether Band-width Profile Envelopes containing more than one Bandwidth Profile Flow are supported by the Service Provider at the Subscriber UNI or Operator UNI. Reference MEF 10.4 Section 9.11 Subscriber UNI Token Share Service Attribute or MEF 26.2 Section 14.18 Operator UNI Token Share Service Attribute.
-        allOf:
-        - $ref: '#/definitions/EnabledDisabled'
+        $ref: '#/definitions/EnabledDisabled'
       envelopes:
         minItems: 0
         type: array
@@ -204,12 +233,14 @@ definitions:
         items:
           $ref: '#/definitions/Envelope'
       l2cpAddressSet:
-        description: L2CP Address Set Service Attribute is defined in MEF 45.1. Reference MEF 10.4 Section 9.16 Subscriber UNI L2CP Address Set Ser-vice Attribute and MEF 26.2 Section 14.20 Operator UNI L2CP Address Set Service Attribute.
-        allOf:
-        - $ref: '#/definitions/L2cpAddressSet'
-    description: The Uni represents the Physical Interface used for EVC and OVC services with common attributes. This is an abstract class and the super class. It contains the common attributes of Operator UNI and Subscriber UNI.
+        $ref: '#/definitions/L2cpAddressSet'
+    required:
+      - maximumNumberOfEndPoints
+      - maxNumOfCtagVlanIdsPerEndPoint
+      - tokenShare
+      - l2cpAddressSet
     allOf:
-    - $ref: '#/definitions/CarrierEthernetExternalInterface'
+      - $ref: '#/definitions/CarrierEthernetExternalInterface'
   ColorFieldType:
     type: object
     properties:
@@ -227,26 +258,11 @@ definitions:
       colorFieldType:
         $ref: '#/definitions/ColorFieldType'
       deiColorPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the ColorIdentifier and the DeiColorIdPac (representing the choice that maps VLAN Tag DEI to Color).
-        items:
-          $ref: '#/definitions/DeiColorIdPac'
+        $ref: '#/definitions/DeiColorIdPac'
       pcpColorPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the ColorIdentifier and the PcpColorIdPac (representing the choice that maps VLAN tag PCPs to Color).
-        items:
-          $ref: '#/definitions/PcpColorIdPac'
+        $ref: '#/definitions/PcpColorIdPac'
       sepColorPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the ColorIdentifier and theh SepColorIdPac (representing the choice that maps EVC End Point or OVC End Point to Color).
-        items:
-          $ref: '#/definitions/SepColorIdPac'
+        $ref: '#/definitions/SepColorIdPac'
       dscpColorPac:
         maxItems: 2
         minItems: 0
@@ -255,6 +271,8 @@ definitions:
         items:
           $ref: '#/definitions/DscpColorIdPac'
     description: Represents the Color Identifier. The Color Identifier is a pair of the form <F,M> where F is a field in the ingress EI Frame and M is a mapping between each possible value of the field F and a Color.  The ColorIdentifier object class is associated with CarrierEthernetServiceEndPoint (EvcEndPoint or OvcEndPoint), in addition to the different field F, such as SepColorIdPac, PcpColorIdPac, Dei-ColorIdPac and DscpColorIdPac. When the OVC End Point is at an ENNI but not in a VUNI the value of F is either S-Tag DEI or S-Tag PCP, and hence the DeiColorIdPac and PcpColorIdPac refer to the value of the S-Tag DEI and PCP fields. When the OVC End Point is in a VUNI or at a UNI, the value of F MUST be is one of OVC End Point, C-Tag DEI, PCP or DSCP, and hence the DeiColorIdPac and PcpColorIdPac refer to the value of the C-Tag DEI and PCP fields. Refer-ence MEF 10.4 Section 10.6 EVC EP Color Map Service Attribute and MEF 26.2 Section 16.7 OVC End Point Color Identifier Service Attribute.
+    required:
+      - colorFieldType
   ColorMode:
     type: object
     properties:
@@ -301,19 +319,9 @@ definitions:
         items:
           $ref: '#/definitions/L2cpProtocol'
       sepCosIdPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the CosName and the SepCosId-Pac when the cosMappingType in Cos-Map is END_POINT and the cosName is not only for L2CP.
-        items:
-          $ref: '#/definitions/SepCosIdPac'
+        $ref: '#/definitions/SepCosIdPac'
       pcpCosIdPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the CosName and the PcpCosId-Pac when cosMappingType in CosMap is PCP and the cosName is not only for L2CP.
-        items:
-          $ref: '#/definitions/PcpCosIdPac'
+        $ref: '#/definitions/PcpCosIdPac'
       dscpCosIdPac:
         maxItems: 2
         minItems: 0
@@ -322,6 +330,8 @@ definitions:
         items:
           $ref: '#/definitions/DscpCosIdPac'
     description: The CosIdentifier represents the Class of Service Identifier. Each ingress EI Frame mapped to the given EVC/OVC End Point has a single Class of Service.  The Class of Service can be determined from inspection of the content of the ingress EI Frame. It is associated with the SepCosIdPac, or the PcpCosIdPac or the DscpCosIdPac (when the Class of Service Identifier mapping type is Ser-vice End Point or PCP values or DSCP values respectively). In the case of PCP, when an OVC End Point is at an ENNI but not in a VUNI, the PcpCosIdPac refers to the value of the S-Tag PCP field.  When an OVC End Point is at a UNI or in a VUNI, or for any EVC End Point, the Pcp-CosIdPac refers to the value of the C-Tag PCP field.  EI Frames of L2CP protocols may be identi-fied by a Class of Service Identifier, mapping to specified CoS Name. Reference MEF 10.4 Sec-tion 10.5 EVC EP Ingress Class of Service Map Service Attribute and MEF 26.2 Section 16.6 OVC End Point Class of Service Identifier Service Attribute.
+    required:
+      - cosName
   CosMap:
     type: object
     properties:
@@ -346,6 +356,32 @@ definitions:
         - END_POINT
         - PCP
     description: This enumeration is for selecting which frame field is being used in the Class of Service Map. Ref-erence MEF 10.4 Section 10.5 EVC EP Ingress Class of Service Map Service Attribute and MEF 26.2 Section 16.6 OVC End Point Class of Service Identifier Service Attribute.
+  DataSize:
+    type: object
+    description:  >-
+      A value and a unit of measure that specifies a data size for example for a buffer or a burst size.
+    properties:
+      dataSizeValue:
+        description:  >-
+          The value in the data size. For example, if a burst size is
+          40 KBYTES, this element is 40.
+        type: integer
+      dataSizeUnits:
+        description:  >-
+          The unit of measure in the data size. For example, if a burst
+          size is 40 KBYTES, this element is KBYTES. Note that the units
+          indicate binary values, e.g., KBYTES is 1024 bytes.
+        type: string
+        enum:
+              - "BYTES"
+              - "KBYTES"
+              - "MBYTES"
+              - "GBYTES"
+              - "TBYTES"
+              - "PBYTES"
+              - "EBYTES"
+              - "ZBYTES"
+              - "YBYTES"
   DeiColorIdPac:
     type: object
     properties: {}
@@ -491,12 +527,7 @@ definitions:
         items:
           $ref: '#/definitions/L2cpProtocol'
       pcpEecIdPac:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: This attribute represents the relationship between the EecIdentifier and a PcpEecIdPac if the eecMappingType in EecMap is PCP and the eecName is not only for L2CP.
-        items:
-          $ref: '#/definitions/PcpEecIdPac'
+        $ref: '#/definitions/PcpEecIdPac'
       dscpEecIdPac:
         maxItems: 2
         minItems: 0
@@ -573,15 +604,41 @@ definitions:
         $ref: '#/definitions/FrameDelivery'
       multicast:
         $ref: '#/definitions/FrameDelivery'
-      broadbast:
+      broadcast:
         $ref: '#/definitions/FrameDelivery'
+  InformationRate:
+    type: object
+    description: A value and a unit of measure that specifies an Information Rate.
+    properties:
+      irValue:
+        description:  >-
+          The value in the information rate. For example if the information
+          rate is 70 kbps this element is 70.
+        type: number
+        minimum: 0
+      irUnits:
+        description:  >-
+          The unit of measure for the Information Rate. For example if
+          the Information Rate is 70KBPS this element is KBPS. Note that
+          the values are decimal values. 1 KBPS is 1000 bits per second and
+          1MBPS is 1,000,000 bits per second.
+        type: string
+        enum:
+          - "BPS"
+          - "KBPS"
+          - "MBPS"
+          - "GBPS"
+          - "TBPS"
+          - "PBPS"
+          - "EBPS"
+          - "ZBPS"
+          - "YBPS"
   IpVersion:
     type: string
-    description: This enumeration lists the IP versions, including IPv4, IPv6 and both.
+    description: Enumeration used for IP versions.
     enum:
-    - IPV4
-    - IPV6
-    - IPV4_AND_IPV6
+    - IPv4
+    - IPv6  
   L2cpAddressSet:
     type: object
     properties:
@@ -618,11 +675,7 @@ definitions:
         minimum: 0
         type: integer
       subType:
-        maxItems: 1
-        minItems: 0
-        type: array
-        items:
-          type: integer
+        type: integer
     description: Defines a L2CP protocol (LLC address type or EtherType) with possible subtype. Reference MEF 45.1 Section 8.2 L2CP Peering Service Attribute.
   L2cpProtocolType:
     type: object
@@ -821,7 +874,7 @@ definitions:
     type: object
     properties:
       color:
-        description: This attribute denotes the color of the EI frame, green or yello.
+        description: This attribute denotes the color of the EI frame, green or yellow.
         allOf:
         - $ref: '#/definitions/FrameColor'
   SepCosIdPac:
@@ -837,11 +890,14 @@ definitions:
         type: integer
         description: This attribute denotes the time interval in milliseconds.
     description: This limits the number of source MAC addresses that can be used in ingress external interface frame mapped to the End Point of all types over a time interval. Reference MEF 26.2 Section 16.15 OVC End Point Source MAC Address Limit Service Attribute and MEF 10.4 Section 10.12 EVC EP Source MAC Address Limit Service Attribute.
+  TaggedL2cpProcessing:
+    type: string
+    description: Enumeration representing either 802.1 compliant or not compliant. Reference MEF 45.1 Section 8.3 ENNI Tagged L2CP Frame Processing Multilateral Attribute.
+    enum:
+    - 802_1_COMPLIANT
+    - 802_1_NON_COMPLIANT
   VlanId:
-    type: object
-    properties:
-      vlanId:
-        maximum: 4094
-        minimum: 1
-        type: integer
-    description: Data type with single attribute, vlanId which is defined as a PostiveInteger. Value 1 to 4094. Ref-erence MEF 10.4 Section 10.4 EVC EP Map Service Attribute and MEF 26.2 Section 14.9 Opera-tor UNI Default CE-VLAN ID Service Attribute.
+    maximum: 4094
+    minimum: 1
+    type: integer
+    description: Data type with single attribute, vlanId which is defined as a PositiveInteger. Value 1 to 4094.

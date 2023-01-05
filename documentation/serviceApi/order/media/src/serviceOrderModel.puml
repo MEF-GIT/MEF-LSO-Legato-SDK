@@ -1,0 +1,184 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class ServiceOrder_Common {
+
+    coordinatedAction: OrderCoordinatedAction
+    description: string
+    externalId: string
+    requestedCompletionDate*: date-time
+    requestedStartDate*: date-time
+}
+
+
+class ServiceOrder_Create {
+
+}
+ServiceOrder_Common <|-- ServiceOrder_Create
+
+' ServiceOrder_Common *-->"*" OrderCoordinatedAction : coordinatedAction
+ServiceOrder_Common *-->"*" Note_BusSof : note
+ServiceOrder_Common *-->"*" ServiceOrderRelationship : orderRelationship
+ServiceOrder_Common *-->"*" RelatedContactInformation : relatedContactInformation
+
+
+class ServiceOrder {
+
+    href: uri
+    id*: string
+    completionDate: date-time
+    expectedCompletionDate: date-time
+    startDate: date-time
+    state*: ServiceOrderStateType
+    orderDate*: date-time
+}
+ServiceOrder_Common <|-- ServiceOrder
+
+ServiceOrder *-->"1..*" ServiceOrderItem : serviceOrderItem
+
+ServiceOrder_Create *-->"1..*" ServiceOrderItem_Create : serviceOrderItem
+
+
+class Note_BusSof {
+
+    author*: string
+    date*: date-time
+    id*: string
+    source*: BusSofType
+    text*: string
+}
+
+class ServiceOrderRef {
+
+    href: string
+    id*: string
+}
+
+
+
+class ServiceOrderRelationship {
+
+    relationshipType*: string
+}
+
+ServiceOrderRelationship *-->"1" ServiceOrderRef : serviceOrder
+
+
+class ServiceOrderItem_Common {
+
+    id*: string
+    action*: ServiceActionType
+    coordinatedAction: OrderItemCoordinatedAction
+}
+
+' ServiceOrderItem_Common *-->"*" OrderItemCoordinatedAction : coordinatedAction
+ServiceOrderItem_Common *-->"*" Note_BusSof : note
+ServiceOrderItem_Common *-->"1" ServiceValue : service
+ServiceOrderItem_Common *-->"*" ServiceOrderItemRelationship : serviceOrderItemRelationship
+
+
+class ServiceOrderItem_Create {
+
+}
+ServiceOrderItem_Common <|-- ServiceOrderItem_Create
+
+
+
+class ServiceOrderItem {
+
+    state*: ServiceOrderStateType
+}
+ServiceOrderItem *-->"*" TerminationError : terminationError
+ServiceOrderItem_Common <|-- ServiceOrderItem
+
+
+class TerminationError {
+
+    code: Error422Code
+    propertyPath: string
+    value: string
+}
+
+
+class RelatedContactInformation {
+
+    emailAddress*: string
+    name*: string
+    number*: string
+    numberExtension: string
+    organization: string
+    postalAddress: FieldedAddressValue
+    role*: string
+}
+
+class ServiceOrderItemRelationship {
+
+    relationshipType*: string
+}
+
+ServiceOrderItemRelationship *-->"1" ServiceOrderItemRef : orderItem
+
+
+class ServiceOrderItemRef {
+
+    itemId*: string
+    serviceOrderHref: string
+    serviceOrderId: string
+}
+
+
+class ServiceRef {
+
+    href: string
+    id*: string
+}
+
+
+
+class ServiceValue {
+
+    href: string
+    id: string
+    description: string
+    externalId: string
+    startDate: date-time
+    endDate: date-time
+    state: ServiceStateType
+    serviceType: string
+    name: string
+}
+
+ServiceValue *-->"*" Note_BusSof : note
+ServiceValue *-->"*" ServiceRelationship : serviceRelationship
+ServiceValue *-->"*" RelatedContactInformation : relatedContactInformation
+ServiceValue *-->"*" RelatedPlaceRefOrValue : place
+ServiceValue *--> MefServiceConfiguration : serviceConfiguration
+
+
+class ServiceRelationship {
+
+    relationshipType*: string
+}
+
+ServiceRelationship *--> "1" ServiceRef : service
+
+
+class RelatedPlaceRefOrValue {
+
+    @type*: string
+    @schemaLocation: uri
+    role*: string
+}
+
+
+
+class MefServiceConfiguration {
+
+    @type*: string
+}
+
+
+@enduml

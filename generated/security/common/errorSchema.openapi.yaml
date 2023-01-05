@@ -1,0 +1,190 @@
+openapi: 3.0.3
+info:
+  title: Legato Error Components
+  version: 4.0.0-RC
+  description: |-
+    This OAS document contains the schema definitions of error components that
+    are reused/referenced by different Legato API specifications.
+    This includes common schemas, parameters, responses, headers, etc
+
+    - MEF Developer Guide Reference : MEF_W99 v1.0
+
+    - TMF API Reference : TMF 633/638/641 v18.5.1
+
+    Copyright © MEF 2020. All Rights Reserved
+  
+    This file includes content based on the TM Forum Service Catalog Management API
+    (TMF633 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF633_ServiceCatalog, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
+
+    This file includes content based on the TM Forum Service Inventory Management API
+    (TMF638 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF638_ServiceInventory, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
+
+    This file includes content based on the TM Forum Service Order Management API
+    (TMF641 v3.0.0) available at
+    https://github.com/tmforum-apis/TMF641_ServiceOrder, which is licensed
+    by the TM Forum under the Apache License version 2.0. Such content has been
+    modified by the MEF Forum and its contributors.
+tags:
+  - name: ServiceErrorSchema
+    description: Common Error components used by all Legato APIs.
+    
+paths: {}
+components:
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: Not Found           
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    MethodNotAllowed:
+      description: Method Not Allowed           
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RequestTimeout:
+      description: Request Time-out
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Conflict
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+    ServiceUnavailable:
+      description: Service Unavailable
+      content:
+        application/json;charset=utf-8:
+          schema:
+            $ref: '#/components/schemas/Error'
+            
+  schemas:
+    Error:
+      description: |-
+        Used when an API throws an Error, typically with a HTTP error     response-code (3xx, 4xx, 5xx)
+      type: object
+      required:
+        - code
+        - reason
+      properties:
+        code:
+          description: |-
+            Application related code.
+            List of supported error codes are defined below:
+
+            **400: Bad Request**
+            - 20: Invalid URL parameter value
+            - 21: Missing body
+            - 22: Invalid body
+            - 23: Missing body field
+            - 24: Invalid body field
+            - 25: Missing header
+            - 26: Invalid header value
+            - 27: Missing query-string parameter
+            - 28: Invalid query-string parameter value
+
+            **401: Unauthorized**
+            - 40: Missing credentials
+            - 41: Invalid credentials
+            - 42: Expired credentials
+
+            **403: Forbidden**
+            - 50: Access denied
+            - 51: Forbidden requester
+            - 52: Forbidden user
+            - 53: Too many requests
+
+            **404: Not Found**
+            - 60: Resource not found
+
+            **405: Method Not Allowed**
+            - 61: Method not allowed
+
+            **408: Request Timeout**
+            - 63: Request time-out
+
+            **409: Conflict**
+            - 64: Resource Conflict
+
+            **422: Unprocessable Entity**
+            - Functional Error codes specific to operation
+
+            **500: Internal Server Error**
+            - 1: Internal Error
+
+            **501: Not Implemented**
+            
+            **503: Service Unavailable**
+            
+          type: integer
+          format: int32
+        reason:
+          description: |-
+            Text that explains the reason for error. This can be shown to a
+            client user.
+          type: string
+        message:
+          description: |-
+            Text that provides more details and corrective actions related to
+            the error. This can be shown to a client user.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1
+        status:
+          description: |-
+            HTTP error code extension like 400-2.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1
+        referenceError:
+          description: |-
+            URI pointing to (external) documentation describing the error.
+          type: array
+          items:
+            type: string
+          minItems: 0
+          maxItems: 1

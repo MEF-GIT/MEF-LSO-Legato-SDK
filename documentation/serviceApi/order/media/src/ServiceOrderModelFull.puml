@@ -1,0 +1,394 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class ServiceOrder_Common {
+
+    description: string
+    externalId: string
+    requestedCompletionDate*: date-time
+    requestedStartDate*: date-time
+}
+
+ServiceOrder_Common *-->"*" OrderCoordinatedAction : coordinatedAction
+ServiceOrder_Common *-->"*" Note_BusSof : note
+ServiceOrder_Common *-->"*" ServiceOrderRelationship : orderRelationship
+ServiceOrder_Common *-->"*" RelatedContactInformation : relatedContactInformation
+
+
+class ServiceOrder {
+
+    href: uri
+    id*: string
+    completionDate: date-time
+    expectedCompletionDate: date-time
+    startDate: date-time
+    state*: ServiceOrderStateType
+    orderDate*: date-time
+}
+ServiceOrder_Common <|-- ServiceOrder
+
+ServiceOrder *-->"1..*" ServiceOrderItem : serviceOrderItem
+
+
+class ServiceOrder_Create {
+
+}
+ServiceOrder_Common <|-- ServiceOrder_Create
+
+ServiceOrder_Create *-->"1..*" ServiceOrderItem_Create : serviceOrderItem
+
+
+class Note_BusSof {
+
+    author*: string
+    date*: date-time
+    id*: string
+    source*: BusSofType
+    text*: string
+}
+
+
+
+enum BusSofType {
+
+    bus
+    sof
+}
+class ServiceOrderRef {
+
+    href: string
+    id*: string
+}
+
+
+
+class ServiceOrderRelationship {
+
+    relationshipType*: string
+}
+
+ServiceOrderRelationship *-->"1" ServiceOrderRef : serviceOrder
+
+
+class ServiceOrderItem_Common {
+
+    id*: string
+    action*: ServiceActionType
+}
+
+ServiceOrderItem_Common *-->"*" OrderItemCoordinatedAction : coordinatedAction
+ServiceOrderItem_Common *-->"*" Note_BusSof : note
+ServiceOrderItem_Common *-->"1" ServiceValue : service
+ServiceOrderItem_Common *-->"*" ServiceOrderItemRelationship : serviceOrderItemRelationship
+
+
+class ServiceOrderItem_Create {
+
+}
+ServiceOrderItem_Common <|-- ServiceOrderItem_Create
+
+
+
+class ServiceOrderItem {
+
+    state*: ServiceOrderStateType
+}
+ServiceOrderItem_Common <|-- ServiceOrderItem
+
+ServiceOrderItem *-->"*" TerminationError : terminationError
+
+
+class RelatedContactInformation {
+
+    emailAddress*: string
+    name*: string
+    number*: string
+    numberExtension: string
+    organization: string
+    role*: string
+}
+
+RelatedContactInformation *--> FieldedAddressValue : postalAddress
+
+
+class FieldedAddressValue {
+
+    city*: string
+    country*: string
+    locality: string
+    postcode: string
+    postcodeExtension: string
+    stateOrProvince: string
+    streetName*: string
+    streetNr: string
+    streetNrLast: string
+    streetNrLastSuffix: string
+    streetNrSuffix: string
+    streetSuffix: string
+    streetType: string
+}
+
+FieldedAddressValue *--> GeographicSubAddress : geographicSubAddress
+
+
+class ServiceOrderItemRelationship {
+
+    relationshipType*: string
+}
+
+ServiceOrderItemRelationship *-->"1" ServiceOrderItemRef : orderItem
+
+
+class ServiceOrderItemRef {
+
+    itemId*: string
+    serviceOrderHref: string
+    serviceOrderId: string
+}
+
+
+
+enum ServiceOrderStateType {
+
+    acknowledged
+    rejected
+    pending
+    held
+    inProgress
+    completed
+    failed
+    partial
+}
+enum ServiceStateType {
+
+    feasibilityChecked
+    designed
+    reserved
+    inactive
+    active
+    terminated
+}
+class ServiceRef {
+
+    href: string
+    id*: string
+}
+
+
+
+class ServiceValue {
+
+    href: string
+    id: string
+    description: string
+    externalId: string
+    startDate: date-time
+    endDate: date-time
+    state: ServiceStateType
+    serviceType: string
+    name: string
+}
+
+ServiceValue *-->"*" Note_BusSof : note
+ServiceValue *-->"*" ServiceRelationship : serviceRelationship
+ServiceValue *-->"*" RelatedContactInformation : relatedContactInformation
+ServiceValue *-->"*" RelatedPlaceRefOrValue : place
+ServiceValue *--> MefServiceConfiguration : serviceConfiguration
+
+
+class ServiceRelationship {
+
+    relationshipType: string
+}
+
+ServiceRelationship *--> ServiceRef : service
+
+
+class RelatedPlaceRefOrValue {
+
+    @type*: string
+    @schemaLocation: uri
+    role*: string
+}
+
+
+
+class FieldedAddress {
+
+    city*: string
+    country*: string
+    locality: string
+    postcode: string
+    postcodeExtension: string
+    stateOrProvince: string
+    streetName*: string
+    streetNr: string
+    streetNrLast: string
+    streetNrLastSuffix: string
+    streetNrSuffix: string
+    streetSuffix: string
+    streetType: string
+}
+RelatedPlaceRefOrValue <|-- FieldedAddress
+
+FieldedAddress *--> GeographicSubAddress : geographicSubAddress
+
+
+class FormattedAddress {
+
+    addrLine1*: string
+    addrLine2: string
+    city*: string
+    country*: string
+    locality: string
+    postcode: string
+    postcodeExtension: string
+    stateOrProvince: string
+}
+RelatedPlaceRefOrValue <|-- FormattedAddress
+
+
+
+class GeographicAddressLabel {
+
+    externalReferenceId*: string
+    externalReferenceType*: string
+}
+RelatedPlaceRefOrValue <|-- GeographicAddressLabel
+
+
+
+class GeographicAddressRef {
+
+    href: string
+    id*: string
+}
+RelatedPlaceRefOrValue <|-- GeographicAddressRef
+
+
+
+class GeographicSiteRef {
+
+    href: string
+    id*: string
+}
+RelatedPlaceRefOrValue <|-- GeographicSiteRef
+
+
+
+class GeographicSubAddress {
+
+    buildingName: string
+    levelNumber: string
+    levelType: string
+    privateStreetName: string
+    privateStreetNumber: string
+}
+
+GeographicSubAddress *-->"*" GeographicSubAddressUnit : subUnit
+
+
+class GeographicPoint {
+
+    spatialRef*: string
+    x*: string
+    y*: string
+    z: string
+}
+RelatedPlaceRefOrValue <|-- GeographicPoint
+
+
+
+class GeographicSubAddressUnit {
+
+    subUnitNumber*: string
+    subUnitType*: string
+}
+
+
+
+class MefServiceConfiguration {
+
+    @type*: string
+}
+
+
+
+enum ServiceActionType {
+
+    add
+    modify
+    delete
+}
+class EventSubscription {
+
+    callback*: string
+    id*: string
+    query: string
+}
+
+
+
+class EventSubscriptionInput {
+
+    callback*: string
+    query: string
+}
+
+
+class OrderCoordinatedAction {
+
+    coordinationDependency*: OrderItemCoordinationDependencyType
+    orderId*: string
+}
+
+OrderCoordinatedAction *-->"1" Duration : coordinatedActionDelay
+
+
+class OrderItemCoordinatedAction {
+
+    coordinationDependency*: OrderItemCoordinationDependencyType
+    itemId*: string
+}
+
+OrderItemCoordinatedAction *-->"1" Duration : coordinatedActionDelay
+
+
+enum OrderItemCoordinationDependencyType {
+
+    startToStart
+    startToFinish
+    finishToStart
+    finishToFinish
+}
+class Duration {
+
+    amount*: integer
+    units*: TimeUnit
+}
+
+
+
+enum TimeUnit {
+
+    calendarMonths
+    calendarDays
+    calendarHours
+    calendarMinutes
+    businessDays
+    businessHours
+    businessMinutes
+}
+class TerminationError {
+
+    code: Error422Code
+    propertyPath: string
+    value: string
+}
+
+
+
+@enduml
