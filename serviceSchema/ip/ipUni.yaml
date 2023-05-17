@@ -91,5 +91,5 @@ required:
   - managementType
   - reversePathForwarding
 allOf:
-  - $ref: "./IpServicesExternalInterface.yaml"
+  - $ref: "./ipServicesExternalInterface.yaml"
   - type: object

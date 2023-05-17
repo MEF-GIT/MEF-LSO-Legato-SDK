@@ -5,25 +5,23 @@ description:
   Common SD-WAN Service schema specifications for LSO Legato API payload
 definitions:
   Ipv4Prefix:
-    type: object
+    description: Ipv4 Prefix
     properties:
       ipv4Address:
+        description: IPv4 address
         type: string
-        description: IPv4 address represented as a string.
       prefixLength:
         type: integer
-        description: IPv4 prefix length with range 0-31.
-    description: Ipv4Prefix is a data type representing an IPv4 prefix using slash notation.
-  Ipv6Prefix:
     type: object
+  Ipv6Prefix:
+    description: Ipv6 prefix
     properties:
       ipv6Address:
+        description: Ipv6 Address
         type: string
-        description: IPv6 address represented as a string.
       prefixLength:
         type: integer
-        description: IPv6 prefix length.
-    description: Ipv6Prefix is a data type representing an IPv6 prefix using slash notation.
+    type: object
   PolicyMap:
     type: object
     properties:
@@ -317,7 +315,7 @@ definitions:
     - LOCKED
     - IN_TEST
     - UNKNOWN
-  OperationalState:
+  SdWanOperationalState:
     type: string
     description: |-
       MEF Core Model (MCM) defined Operational State.
@@ -352,23 +350,25 @@ definitions:
     properties:
       day:
         type: integer
-        description: This denotes the day.
+        description: Denotes the day.
       hour:
         type: integer
-        description: This denotes the hour.
+        description: Denotes the hour.
       minute:
         type: integer
-        description: This denotes the minute.
+        description: Denotes the minute.
       month:
         type: integer
-        description: This denotes the month.
+        description: Denotes the month.
       second:
         type: integer
-        description: This denotes the second.
+        description: Denotes the second.
       year:
         type: integer
-        description: This denotes the year.
-    description: Data type for Time and Date in UTC. Reference MEF-Types.
+        description: Denotes the year.
+    description: |-
+      This data type is for Time and Date in UTC. Used for CarrierEthernetSls
+      startTime attribute.
   TimeUnits:
     type: string
     description: TimeUnits is an enumeration representing time units.

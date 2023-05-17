@@ -76,7 +76,7 @@ properties:
   dscpPreservation:
     $ref: 'ipCommon.yaml#/definitions/EnabledDisabled'
   serviceLevelSpecification:
-    $ref: "./IpSls.yaml#/definitions/IpSls"
+    $ref: "./ipSls.yaml#/definitions/IpSls"
   maximumTransferUnit:
     type: integer
     description: Indicates the maximum size (in octets) of an IP packet that can traverse the IPVC without fragmentation.  Reference MEF 61.1 Section 10.10 IPVC MTU Service Attribute.
