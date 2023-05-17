@@ -1,5 +1,12 @@
 # Service Inventory Management: Release notes
 
+## Release Fergie:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary** - No changes.
+
 ## Release Ella:
 
 **Readiness status**: Starting Call for Comments Ballot #1
@@ -9,7 +16,6 @@
 - Changed files' organization to align with Sonata patterns. Mow there are only 2 individual files:
   - `serviceInventoryManagement.api.yaml`
   - `serviceInventoryNotification.api.yaml`
-- TODO
 
 ### List of changes in the API:
 

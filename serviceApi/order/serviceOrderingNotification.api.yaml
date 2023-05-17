@@ -1,11 +1,8 @@
 openapi: 3.0.1
 info:
   title: Legato Service Ordering Notification API
-  description: >-
-    **This file forms part of MEF W99** 
-
-    **This specification represents MEF work in progress and is subject to
-    change.** 
+  description: |
+    **This file forms part of MEF 99** 
 
     Supported use cases:
     - Send Notifications
@@ -16,264 +13,245 @@ info:
     v4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
-  version: 5.0.0-RC
+  version: 5.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/serviceOrderingNotification/v5/'
+  - url: "https://{serverBase}/mefApi/legato/serviceOrderingNotification/v5/"
     variables:
       serverBase:
-        default: mef.net
         description: The base of BUS's URL.
+        default: mef.net
 tags:
-  - description: |
+  - name: Notification listeners
+    description: |
       The SOF's endpoint to send particular event types notifications to.
-    name: Notification listeners
 paths:
   /listener/serviceOrderCreateEvent:
     post:
-      summary: Service Order Create Notification endpoint
       tags:
         - Notification listeners
-      description: >-
-        This endpoint is used to receive notifications on Service Order Create
+      summary: Service Order Create Notification endpoint
+      description: This endpoint is used to receive notifications on Service Order Create
       operationId: serviceOrderCreateEvent
       requestBody:
+        description: The ProductOrder to be created
         content:
           application/json;charset=utf-8:
             schema:
               $ref: "#/components/schemas/ServiceOrderEvent"
-        description: The ProductOrder to be created
         required: true
       responses:
-        '204':
-          description:
-            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
           description: Bad Request
-        '401':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
-        '403':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
-        '408':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error408'
+                $ref: "#/components/schemas/Error403"
+        "408":
           description: Request Time-out
-        '500':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
+                $ref: "#/components/schemas/Error408"
+        "500":
           description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
   /listener/serviceOrderStateChangeEvent:
     post:
-      summary: Service Order State Change Notification endpoint
       tags:
         - Notification listeners
+      summary: Service Order State Change Notification endpoint
       description: >-
-        This endpoint is used to receive notifications on Service Order State Change
+        This endpoint is used to receive notifications on Service Order State
+        Change
       operationId: serviceOrderStateChangeEvent
       requestBody:
+        description: The ProductOrder to be created
         content:
           application/json;charset=utf-8:
             schema:
               $ref: "#/components/schemas/ServiceOrderEvent"
-        description: The ProductOrder to be created
         required: true
       responses:
-        '204':
-          description:
-            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
           description: Bad Request
-        '401':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
-        '403':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
-        '408':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error408'
+                $ref: "#/components/schemas/Error403"
+        "408":
           description: Request Time-out
-        '500':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
+                $ref: "#/components/schemas/Error408"
+        "500":
           description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
   /listener/serviceOrderInformationRequiredEvent:
     post:
-      summary: Service Order Information Required Notification endpoint
       tags:
         - Notification listeners
+      summary: Service Order Information Required Notification endpoint
       description: >-
-        This endpoint is used to receive notifications on Service Order Information Required
+        This endpoint is used to receive notifications on Service Order
+        Information Required
       operationId: serviceOrderInformationRequiredEvent
       requestBody:
+        description: The ProductOrder to be created
         content:
           application/json;charset=utf-8:
             schema:
               $ref: "#/components/schemas/ServiceOrderEvent"
-        description: The ProductOrder to be created
         required: true
       responses:
-        '204':
-          description:
-            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
           description: Bad Request
-        '401':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
-        '403':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
-        '408':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error408'
+                $ref: "#/components/schemas/Error403"
+        "408":
           description: Request Time-out
-        '500':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
+                $ref: "#/components/schemas/Error408"
+        "500":
           description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
   /listener/serviceOrderItemStateChangeEvent:
     post:
-      summary: Service Order Item State Change Notification endpoint
       tags:
         - Notification listeners
+      summary: Service Order Item State Change Notification endpoint
       description: >-
-        This endpoint is used to receive notifications on Service Order Item State Change
+        This endpoint is used to receive notifications on Service Order Item
+        State Change
       operationId: serviceOrderItemStateChangeEvent
       requestBody:
+        description: The ProductOrder to be created
         content:
           application/json;charset=utf-8:
             schema:
               $ref: "#/components/schemas/ServiceOrderEvent"
-        description: The ProductOrder to be created
         required: true
       responses:
-        '204':
-          description:
-            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
           description: Bad Request
-        '401':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error401'
+                $ref: "#/components/schemas/Error400"
+        "401":
           description: Unauthorized
-        '403':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error403'
+                $ref: "#/components/schemas/Error401"
+        "403":
           description: Forbidden
-        '408':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error408'
+                $ref: "#/components/schemas/Error403"
+        "408":
           description: Request Time-out
-        '500':
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error500'
+                $ref: "#/components/schemas/Error408"
+        "500":
           description: Internal Server Error
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
 components:
   schemas:
-    Error400Code:
-      description: >-
-        One of the following error codes:
-
-        - missingQueryParameter: The URI is missing a required query-string
-        parameter
-
-        - missingQueryValue: The URI is missing a required query-string
-        parameter value
-
-        - invalidQuery: The query section of the URI is invalid.
-
-        - invalidBody: The request has an invalid body
-      enum:
-        - missingQueryParameter
-        - missingQueryValue
-        - invalidQuery
-        - invalidBody
-      type: string
     Error:
       description: >
         Standard Class used to describe API response error
 
         Not intended to be use directly. The `code` in the HTTP header is used
         as a discriminator for the type of error returned in runtime.
+      type: object
       properties:
         reason:
           description: >-
             Text that explains the reason for error. This can be shown to a
             client user.
-          maxLength: 255
           type: string
+          maxLength: 255
         message:
           description: >-
-            Text that provide mode details and corrective actions related to
-            the error. This can be shown to a client user.
+            Text that provide mode details and corrective actions related to the
+            error. This can be shown to a client user.
           type: string
         referenceError:
           description: url pointing to documentation describing the error
-          format: uri
           type: string
+          format: uri
       required:
         - reason
-      type: object
     Error400:
+      description: "Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)"
       allOf:
-        - $ref: '#/components/schemas/Error'
-        - properties:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
             code:
               description: >-
                 One of the following error codes:
@@ -287,16 +265,34 @@ components:
                 - invalidQuery: The query section of the URI is invalid.
 
                 - invalidBody: The request has an invalid body
-              $ref: '#/components/schemas/Error400Code'
+              $ref: "#/components/schemas/Error400Code"
           required:
             - code
-          type: object
-      description:
-        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+    Error400Code:
+      description: >-
+        One of the following error codes:
+
+        - missingQueryParameter: The URI is missing a required query-string
+        parameter
+
+        - missingQueryValue: The URI is missing a required query-string
+        parameter value
+
+        - invalidQuery: The query section of the URI is invalid.
+
+        - invalidBody: The request has an invalid body
+      type: string
+      enum:
+        - missingQueryParameter
+        - missingQueryValue
+        - invalidQuery
+        - invalidBody
     Error401:
+      description: "Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)"
       allOf:
-        - $ref: '#/components/schemas/Error'
-        - properties:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
             code:
               description: >-
                 One of the following error codes:
@@ -305,25 +301,24 @@ components:
 
                 - invalidCredentials: Provided credentials are invalid or
                 expired
-              $ref: '#/components/schemas/Error401Code'
+              $ref: "#/components/schemas/Error401Code"
           required:
             - code
-          type: object
-      description:
-        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |-
         One of the following error codes:
         - missingCredentials: No credentials provided.
         - invalidCredentials: Provided credentials are invalid or expired
+      type: string
       enum:
         - missingCredentials
         - invalidCredentials
-      type: string
     Error403:
+      description: "Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)"
       allOf:
-        - $ref: '#/components/schemas/Error'
-        - properties:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
             code:
               description: |-
                 This code indicates that the server understood
@@ -332,12 +327,9 @@ components:
                 - accessDenied: Access denied
                 - forbiddenRequester: Forbidden requester
                 - tooManyUsers: Too many users
-              $ref: '#/components/schemas/Error403Code'
+              $ref: "#/components/schemas/Error403Code"
           required:
             - code
-          type: object
-      description:
-        'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
     Error403Code:
       description: |-
         This code indicates that the server understood
@@ -346,15 +338,17 @@ components:
         - accessDenied: Access denied
         - forbiddenRequester: Forbidden requester
         - tooManyUsers: Too many users
+      type: string
       enum:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-      type: string
     Error408:
+      description: "Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)"
       allOf:
-        - $ref: '#/components/schemas/Error'
-        - properties:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
             code:
               description: >-
                 List of supported error codes:
@@ -362,18 +356,19 @@ components:
                 - timeOut: Request Time-out - indicates that the server did not
                 receive a complete request message within the time that it was
                 prepared to wait.
+              type: string
               enum:
                 - timeOut
-              type: string
           required:
             - code
-          type: object
-      description:
-        'Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)'
     Error500:
+      description: >-
+        Internal Server Error.
+        (https://tools.ietf.org/html/rfc7231#section-6.6.1)
       allOf:
-        - $ref: '#/components/schemas/Error'
-        - properties:
+        - $ref: "#/components/schemas/Error"
+        - type: object
+          properties:
             code:
               description: >-
                 One of the following error codes:
@@ -381,57 +376,55 @@ components:
                 - internalError: Internal server error - the server encountered
                 an unexpected condition that prevented it from fulfilling the
                 request.
+              type: string
               enum:
                 - internalError
-              type: string
           required:
             - code
-          type: object
-      description: >-
-        Internal Server Error.
-        (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
       description: >-
         Event class is used to describe information structure used for
         notification.
+      type: object
       properties:
         eventId:
           description: Id of the event
           type: string
         eventTime:
           description: Date-time when the event occurred
-          format: date-time
           type: string
+          format: date-time
       required:
         - eventId
         - eventTime
-      type: object
     ServiceOrderEvent:
       allOf:
-        - $ref: '#/components/schemas/Event'
-        - properties:
+        - $ref: "#/components/schemas/Event"
+        - type: object
+          properties:
             eventType:
               description: |
                 Indicates the type of the event.
-              $ref: '#/components/schemas/ServiceOrderEventType'
+              $ref: "#/components/schemas/ServiceOrderEventType"
             event:
               description: >
                 A reference to the Service Order that is source of the
                 notification.
-              $ref: '#/components/schemas/ServiceOrderEventPayload'
+              $ref: "#/components/schemas/ServiceOrderEventPayload"
           required:
             - event
             - eventType
-          type: object
     ServiceOrderEventPayload:
       description: >-
-        The identifier of the Service Order and Order Item being subject of
-        this event.
+        The identifier of the Service Order and Order Item being subject of this
+        event.
+      type: object
       properties:
         orderItemId:
           description: >-
             ID of the Service Order Item (within the Service Order) which state
-            change triggered the event. Mandatory for `serviceOrderItemStateChangeEvent`
+            change triggered the event. Mandatory for
+            `serviceOrderItemStateChangeEvent`
           type: string
         id:
           description: ID of the Service Order
@@ -441,12 +434,11 @@ components:
           type: string
       required:
         - id
-      type: object
     ServiceOrderEventType:
       description: Indicates the type of Service Order event.
+      type: string
       enum:
         - serviceOrderCreateEvent
         - serviceOrderStateChangeEvent
         - serviceOrderItemStateChangeEvent
         - serviceOrderInformationRequiredEvent
-      type: string

@@ -1,5 +1,12 @@
 # Service Order Management: Release notes
 
+## Release Fergie:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary** - No changes.
+
 ## Release Ella:
 
 **Readiness status**: Starting Call for Comments Ballot #3
