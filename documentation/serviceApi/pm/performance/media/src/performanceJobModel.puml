@@ -1,0 +1,52 @@
+@startuml performanceJobModel
+
+class PerformanceJob {
+
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    rejectionReason: string
+    state*: PerformanceJobStateType
+}
+PerformanceJob_Common <|-- PerformanceJob
+
+
+
+enum PerformanceJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    in-progress
+    pending
+    rejected
+    resource-unavailable
+    scheduled
+    suspended
+}
+class PerformanceJob_Common {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    description: string
+    producingApplicationId: string
+}
+
+class PerformanceJob_Create {
+
+}
+PerformanceJob_Common <|-- PerformanceJob_Create
+
+
+PerformanceJob_Common *-l-> FileTransferData : fileTransferData
+PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Common *-l-> ScheduleDefinition : scheduleDefinition
+PerformanceJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class ServicePayloadSpecificAttributes {
+
+    @type*: string
+}
+
+@enduml

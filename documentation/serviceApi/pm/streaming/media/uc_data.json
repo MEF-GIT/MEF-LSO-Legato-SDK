@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Retrieve Available Topics List",
+    "description": "A request initiated by the Client to list of all available topics.",
+    "mapping": "UC 44"
+  },
+  {
+    "id": "2",
+    "title": "Retrieve Available Topic by an Identifier",
+    "description": "A request initiated by the Client retrieve details for selected available topic",
+    "mapping": "UC 43"
+  },
+  {
+    "id": "3",
+    "title": "Subscribe To a Topic",
+    "description": "A request initiated by the Client to create a new subscription for the topic of interest.",
+    "mapping": "UC 46"
+  },
+  {
+    "id": "4",
+    "title": "Unsubscribe From a Topic",
+    "description": "A request initiated by the Client to remove subscription to the topic of interest.",
+    "mapping": "UC 47"
+  },
+  {
+    "id": "5",
+    "title": "Retrieve Topic Subscriptions List",
+    "description": "A request initiated by the Client to list of all existing subscriptions to the topics.",
+    "mapping": "UC 45"
+  },
+  {
+    "id": "6",
+    "title": "Retrieve Topic Subscription By an Identifier",
+    "description": "A request initiated by the Client retrieve details for selected subscription",
+    "mapping": "n/a"
+  }
+]

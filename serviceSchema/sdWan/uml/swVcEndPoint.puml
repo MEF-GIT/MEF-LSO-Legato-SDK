@@ -1,0 +1,52 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+datatype(SwVcEndPoint) {
+    swVcEndPointdentifier: SwVcEndPointIdentifier [1]
+    sdWanUni: SdWanUni [1]
+    ucsEndPointList: UcsEndPoint [1..*]
+    policyMap: PolicyMap [*]
+    networkAddressTranslation: NetworkAddressTranslation [0..1]
+}
+
+datatype(SdWanUni) {
+    uniIdentifier: Identifier45 [1]
+    l2Interface: L2Interface [1]
+    maxL2FrameSize: Integer [1]
+    ip4ConnectionAddressing: Ipv4ConnectionAddressing [0..1]
+    ipv6ConnectionAddressing: Ipv6ConnectionAddressing [0..1]
+    swVcEndPoint: SwVcEndPoint [0..1]
+    routingPrototocols: RoutingProtocols [*]
+}
+
+SwVcEndPoint "1" *-->"1..*" UcsEndPoint
+SwVcEndPoint "1" *--> "*" PolicyMap
+SdWanUni "1" o--> "0..1" SwVcEndPoint 
+
+
+datatype(UcsEndPoint) {
+
+    identifier: String [1]
+    endPointBackup: EnabledDisabled [1]
+    endPointBreakout: EnabledDisabled [1]
+}
+
+datatype(PolicyMap) {
+
+    zone: Zone [1]
+    applicationFlowSpecification: ApplicationFlowSpecification [0..1]
+    applicationFlowSpecificationGroup: ApplicationFlowSpecificationGroup [0..1]
+    ingressPolicy: IngressPolicy [0..1]
+    egressPolicy: EgressPolicy [0..1]
+    
+}
+
+@enduml

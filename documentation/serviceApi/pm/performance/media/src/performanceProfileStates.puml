@@ -1,0 +1,31 @@
+@startuml performanceProfileStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state validation_successful <<choice>> 
+ note right of validation_successful : Validation successful?
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> validation_successful
+
+validation_successful -l-> rejected: No
+
+validation_successful -d-> active: Yes
+
+active -d-> active: Modify
+
+active --> deleted: Delete
+
+rejected -d-> [*]
+deleted -d-> [*]
+
+@enduml

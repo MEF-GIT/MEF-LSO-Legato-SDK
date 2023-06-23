@@ -16,7 +16,7 @@ info:
     by the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
   title: Legato Service Inventory Notification API
-  version: 5.0.0-RC
+  version: 5.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/legato/serviceInventoryNotification/v5/'
     variables:

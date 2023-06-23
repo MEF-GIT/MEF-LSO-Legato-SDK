@@ -1,0 +1,26 @@
+asyncapi: '2.0.0'
+id: <<Add Your specific ID for seler produer app      >>
+info:
+  title: MEF W133 streaming template
+  version: 0.0.1
+channels:
+  performance/statistics/{uuid}:
+    publish:
+      summary: A
+
+      message:
+        payload:
+          $ref: '#/components/schemas/Event'
+components:
+  schemas:
+    Envelope:
+      $ref: 'models/Event.yaml'
+
+  messages:
+    PerformanceMessage:
+      name: Generic message that conveys notification data
+      title: Generic Performance Message
+      summary: Inform about a new user registration in the system
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/Payload'

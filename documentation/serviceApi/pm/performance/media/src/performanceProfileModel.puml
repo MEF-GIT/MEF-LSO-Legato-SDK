@@ -1,0 +1,43 @@
+@startuml performanceProfileModel
+
+class PerformanceProfile {
+
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    rejectionReason: string
+    state*: PerformanceProfileStateType
+}
+PerformanceProfile_Common <|-- PerformanceProfile
+
+
+
+
+enum PerformanceProfileStateType {
+
+    acknowledged
+    active
+    deleted
+    rejected
+}
+class PerformanceProfile_Common {
+
+    buyerProfileId: string
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod: Interval
+    resultFormat*: ResultFormat
+}
+
+
+
+class PerformanceProfile_Create {
+
+}
+PerformanceProfile_Common <|-- PerformanceProfile_Create
+
+@enduml

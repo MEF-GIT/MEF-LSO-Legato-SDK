@@ -1,0 +1,18 @@
+@startuml
+
+' title Retrieve Available Topics List
+
+hide footbox
+
+participant Client
+participant Server
+
+Client -> Server : GET {{baseUrl}}/topic \n(query criteria)
+
+Server -> Server : validation
+alt successful inquiry
+    Client <-- Server : 200 list of available ""Topic""
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+@enduml

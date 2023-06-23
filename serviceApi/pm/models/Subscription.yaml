@@ -1,0 +1,40 @@
+$schema: http://json-schema.org/draft-07/schema#
+type: object
+description: Provides stream metadata information that allows for data consumption.
+properties:
+  id:
+    type: string
+    description: A unique identifier for the stream.
+  description:
+    type: string
+    description: An explanatory description of the stream.
+  priority:
+    type: string
+    description: The priority level of the stream. Can be high, medium, or low.
+  connectionConfig:
+    $ref: '#/definitions/ConnectionConfig'
+required:
+  - id
+
+definitions:
+  ConnectionConfig:
+    type: object
+    properties:
+      servers:
+        $ref: 'http://asyncapi.com/definitions/2.6.0/servers.json'
+        description: List of the servers through which the subscription is available
+      channel:
+        $ref: '#/definitions/Channel'
+    description: Configuration settings for establishing a connection to the stream.
+
+  Channel:
+    type: object
+    properties:
+      name:
+        type: string
+        format: uri-template
+        minLength: 1
+        description: The name of the channel through which the stream data is transmitted.
+      bindings:
+        $ref: 'http://asyncapi.com/definitions/2.6.0/bindingsObject.json'
+        description: Defines the specific protocol bindings and configurations for the channel.

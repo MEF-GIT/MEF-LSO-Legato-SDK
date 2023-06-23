@@ -1,0 +1,23 @@
+@startuml zone.puml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+    !define datatype(x) class x << (D,#FF7700) DataType>>
+    datatype(Zone) {
+        zoneName: String: {not} SELF,INTERNET,ALL
+        zonePrefixes: Ipv4Ipv6Prefixes[1..*]
+        zoneIngressPolicy: ZoneIngressPolicy[*]
+        }
+
+    datatype(ZoneIngressPolicy) {
+        zoneIngressAfs: String
+        zonePolicy: String
+        }
+
+    Zone "1" *--> "*" ZoneIngressPolicy
+
+@enduml

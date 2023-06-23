@@ -1,0 +1,113 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class GcEvent {
+
+    eventId: string
+    eventTime: date-time
+    eventType: string
+    event: object
+}
+Extensible <|-- GcEvent
+
+
+
+class Extensible {
+
+    @type*: string
+    @baseType: string
+    @schemaLocation: string
+}
+
+
+
+class TMF.CharacteristicRelationship {
+
+}
+Extensible <|-- TMF.CharacteristicRelationship
+GcCharacteristicRelationship <|-- TMF.CharacteristicRelationship
+
+
+
+class GcRelatedParty {
+
+    role: string
+}
+Reference <|-- GcRelatedParty
+
+
+
+class Reference {
+
+    id*: string
+    name: string
+    @referredType: string
+}
+
+
+
+class TMF.Characteristic {
+
+    id: string
+    valueType: string
+}
+GcCharacteristic <|-- TMF.Characteristic
+
+TMF.Characteristic *-->"*" TMF.CharacteristicRelationship : characteristicRelationship
+
+
+class GcCharacteristicRelationship {
+
+    id*: string
+    relationshipType*: string
+}
+
+
+
+class TMF.RelatedParty {
+
+}
+Extensible <|-- TMF.RelatedParty
+GcRelatedParty <|-- TMF.RelatedParty
+EntityRef <|-- TMF.RelatedParty
+
+
+
+class TMF.Event {
+
+    href: string
+    id: string
+    correlationId: string
+    domain: string
+    title: string
+    description: string
+    priority: string
+    timeOccurred: date-time
+}
+GcEvent <|-- TMF.Event
+
+TMF.Event *--> TMF.EntityRef : source
+TMF.Event *--> TMF.EntityRef : reportingSystem
+TMF.Event *-->"*" TMF.RelatedParty : relatedParty
+TMF.Event *-->"*" TMF.Characteristic : analyticCharacteristic
+
+
+class TMF.EntityRef {
+
+    href: string
+}
+
+
+
+class GcCharacteristic {
+
+    name: string
+}
+Extensible <|-- GcCharacteristic
+
+
+
+@enduml

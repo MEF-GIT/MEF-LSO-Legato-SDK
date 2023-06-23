@@ -1,0 +1,26 @@
+@startuml
+
+skinparam actorStyle awesome
+
+
+left to right direction
+actor Client
+
+!$clientUCs = %load_json("../uc_data.json")
+
+
+rectangle SOF {
+!foreach $item in $clientUCs
+!$ucID="UC"+$item.id
+usecase $ucID as "
+<b>UC $item.id</b>. $item.title
+--
+MEF W133.1 <b> $item.mapping </b>
+"   
+Client --> $ucID
+    
+!endfor
+}
+
+
+@enduml

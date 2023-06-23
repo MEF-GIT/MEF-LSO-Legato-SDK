@@ -1,0 +1,25 @@
+@startuml useCase22
+
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+alt Performance Job generates report
+  S -> S : collect data
+  S -> S : create PerformanceReport
+else
+  B -> S : POST {{baseUrl}}/performanceJob (PerformanceJob_Create)
+  S -> S : basic validation
+  S -> S : assign id
+  S -> S : state: acknowledged
+  ...
+  alt successful inquiry
+    B <-- S : 201 PerformanceJob with {{id}}
+  else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+  end
+end
+
+@enduml

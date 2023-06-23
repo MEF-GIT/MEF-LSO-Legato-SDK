@@ -1,0 +1,9 @@
+type: object
+properties:
+  protocol:
+    description: Name of technical protocol allowing for consumption
+    type: string
+  description:
+    description: Human friendly description of the protocol
+    type: string
+required: [protocol]

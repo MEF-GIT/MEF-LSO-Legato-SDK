@@ -1,0 +1,53 @@
+@startuml
+
+
+
+class BindingsObject<AsyncApi> {
+    ...
+}
+
+class Channel {
+    name: String
+}
+
+class ConnectionConfig {
+
+}
+
+class Server<AsyncApi> {
+    * url: String
+    description: String
+    * protocol: String
+    protocolVersion: String
+    variables: Map
+    security: List<Map>
+    bindings: BindingsObject
+    tags: List<Tag>
+}
+
+class TopicSubscription << Response >> {
+    * id: String
+    description: String
+    priority: String
+}
+
+
+class TopicSubscription << Response >>  {
+}
+
+class TopicSubscriptionRequest << Request >>  {
+    * protocol: String
+    * topicId: String
+}
+
+TopicSubscription *--> "1..1" ConnectionConfig : connectionConfig
+TopicSubscription o-> "1..1" TopicSubscriptionRequest : requestData
+
+
+ConnectionConfig *--> Channel : channel
+
+ConnectionConfig *--> Server : servers
+
+Channel *--> BindingsObject: bindings
+
+@enduml

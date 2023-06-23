@@ -1,0 +1,77 @@
+@startuml performanceJobComplexQueryModel
+
+class PerformanceJobComplexQuery {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate: date-time
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    producingApplicationId: string
+    reportingPeriod: Interval
+    state: PerformanceJobStateType
+}
+
+PerformanceJobComplexQuery *--> PerformanceJobRef : performanceJob
+PerformanceJobComplexQuery *--> PerformanceProfileRef : performanceProfile
+PerformanceJobComplexQuery *--> ScheduleDefinition : scheduleDefinition
+PerformanceJobComplexQuery *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceJobComplexQuery_Create {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    producingApplicationId: string
+    reportingPeriod: Interval
+    state: PerformanceJobStateType
+}
+
+PerformanceJobComplexQuery_Create *--> PerformanceProfileRef : performanceProfile
+PerformanceJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
+PerformanceJobComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+enum PerformanceJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    in-progress
+    pending
+    rejected
+    resource-unavailable
+    scheduled
+    suspended
+}
+
+enum Interval {
+
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 second
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+    not applicable
+}
+enum JobType {
+
+    proactive
+    on-demand
+    passive
+}
+
+@enduml

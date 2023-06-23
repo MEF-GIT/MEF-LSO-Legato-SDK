@@ -1,0 +1,19 @@
+@startuml useCase1
+
+
+hide footbox
+
+participant Administrator as A
+participant "Seller/Server" as S
+
+A -> S : POST {{baseUrl}}/performanceProfile (PerformanceProfile_Create)
+
+S -> S : basic validation
+S -> S : assign id
+S -> S : state: acknowledged
+alt successful inquiry
+    A <-- S : 201 PerformanceProfile with {{id}}
+else validation or internal problem
+    A <-- S: 4xx/5xx : error response
+end
+@enduml

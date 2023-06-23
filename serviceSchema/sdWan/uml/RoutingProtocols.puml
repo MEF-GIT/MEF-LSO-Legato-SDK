@@ -1,0 +1,82 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+datatype(RoutingProtocols) {
+
+}
+
+
+RoutingProtocols *--> RoutingProtocolsBgpOptions : bgp
+RoutingProtocols *--> RoutingProtocolsOspfOptions : ospf
+RoutingProtocols *--> RoutingProtocolsStaticOptions : static
+
+datatype(RoutingProtocolsBgpOptions) {
+
+}
+
+RoutingProtocolsBgpOptions *-->"1" Bgp : ipv4
+RoutingProtocolsBgpOptions *-->"1" Bgp : ipv6
+RoutingProtocolsBgpOptions *-->"1" RoutingProtocolsBgpIpv4AndIpv6 : ipv4AndIpv6
+RoutingProtocolsBgpOptions *-->"1" Bgp : both
+
+datatype(RoutingProtocolsBgpIpv4AndIpv6) {
+
+}
+
+RoutingProtocolsBgpIpv4AndIpv6 *-->"1" Bgp : ipv4
+RoutingProtocolsBgpIpv4AndIpv6 *-->"1" Bgp : ipv6
+
+datatype(RoutingProtocolsOspfIpv4AndIpv6) {
+
+}
+
+RoutingProtocolsOspfIpv4AndIpv6 *-->"1" Ospf : ipv4
+RoutingProtocolsOspfIpv4AndIpv6 *-->"1" Ospf : ipv6
+
+
+datatype(RoutingProtocolsOspfOptions) {
+
+}
+
+RoutingProtocolsOspfOptions *-->"1" Ospf : ipv4
+RoutingProtocolsOspfOptions *-->"1" Ospf : ipv6
+RoutingProtocolsOspfOptions *-->"1" RoutingProtocolsOspfIpv4AndIpv6 : ipv4AndIpv6
+RoutingProtocolsOspfOptions *-->"1" Ospf : both
+
+
+datatype(RoutingProtocolsStaticIpv4AndIpv6) {
+
+}
+
+RoutingProtocolsStaticIpv4AndIpv6 *-->"1" Static : ipv4
+RoutingProtocolsStaticIpv4AndIpv6 *-->"1" Static : ipv6
+
+
+datatype(RoutingProtocolsStaticOptions) {
+
+}
+
+RoutingProtocolsStaticOptions *-->"1" Static : ipv4
+RoutingProtocolsStaticOptions *-->"1" Static : ipv6
+RoutingProtocolsStaticOptions *-->"1" RoutingProtocolsStaticIpv4AndIpv6 : ipv4AndIpv6
+RoutingProtocolsStaticOptions *-->"1" Static : both
+
+datatype(Bgp) {
+  <<skipped>>
+}
+
+datatype(Ospf) {
+  <<skipped>>
+}
+
+datatype(Static) {
+  <<skipped>>
+}
+@enduml

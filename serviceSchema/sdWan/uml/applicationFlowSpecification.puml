@@ -1,0 +1,45 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+!define datatype(x) class x << (D,#FF7700) DataType>>
+!define enum(x) class x << (E,#ADD1B2) Enum>>
+
+datatype(ApplicationFlowSpecification) {
+    applicationFlowName: String [1]
+    applicationFlowCriteria: ApplicationFlowCriteria [1]
+    applicationFlowSpecificationGroup: ApplicationFlowSpecificationGroup[1]
+}
+
+datatype(ApplicationFlowCriteria) {
+    sav4: Ipv4Prefix [0..*]
+    dav4: Ipv4Prefix [0..*]
+    protv4: Integer [0..*]
+    sav6: Ipv6Prefix [0..*]
+    dav6: Ipv6Prefix [0..*]
+    nextHeadV6: Integer [0..*]
+    dscp: Integer [0..*]
+    tcpUdpSourcePortList: Integer [0..*]
+    tcpUdpDestinationPortList: Integer [0..*]
+    applicationIdentifier: AppicationIdentifier [0..*]
+    any: Boolean [1]
+    ethertype: Integer [0..*]
+    sdav4: Ipv4Prefix[0..*]
+    sdav6: Ipv6Prefix [0..*]
+    tcpUdpSourceOrDestinationPortList: Integer [0..*]
+}
+
+datatype(ApplicationFlowSpecificationGroup) {
+    applicationFlowSpecifications: ApplicationFlowSpecification [0..*]
+    name: String [1]
+}
+
+ApplicationFlowSpecification *-->"1" ApplicationFlowCriteria: applicationFlowCriteria
+ApplicationFlowSpecification *-->"1" ApplicationFlowSpecificationGroup: applicationFlowSpecificationGroup
+
+@enduml

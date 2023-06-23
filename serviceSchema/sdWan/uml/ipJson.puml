@@ -1,0 +1,174 @@
+@startjson
+{
+    "coordinatedAction": null,
+    "description": null,
+    "externalId": null,
+    "note": null,
+    "orderRelationship": null,
+    "relatedContactInformation": null,
+    "requestedCompletionDate": null,
+    "requestedStartDate": "2023-02-28T11:09:11.78-06:00",
+    "href": null,
+    "id": "Lumen-NaaS-SO-1",
+    "completionDate": null,
+    "expectedCompletionDate": null,
+    "serviceOrderItem": [
+        {
+            "id": "Lumen_NaaS_SOI-100",
+            "action": null,
+            "coordinatedAction": null,
+            "note": null,
+            "service": {
+                "href": null,
+                "id": null,
+                "description": null,
+                "externalId": null,
+                "startDate": null,
+                "endDate": null,
+                "state": null,
+                "note": null,
+                "serviceType": null,
+                "name": null,
+                "serviceRelationship": null,
+                "relatedContactInformation": null,
+                "place": null,
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:legato:ip-uni-access-link:0.0.1:all",
+                    "atType": null,
+                    "administrativeState": {
+                        "state": "UNLOCKED"
+                    },
+                    "operationalState": null,
+                    "identifier": null,
+                    "bfd": null,
+                    "l2Technology": null,
+                    "mtu": 2000,
+                    "connectionType": null,
+                    "ipv4ConnectionAddressing": {
+                        "uniAccessLinkIpv4AddressType": "STATIC",
+                        "ipv4PrimarySubnet": {
+                            "ipv4Prefix": {
+                                "ipv4Address": "192.168.1.0",
+                                "prefixLength": 24
+                            },
+                            "serviceProviderIpv4Addresses": [
+                                "192.168.1.254"
+                            ]
+                        },
+                        "ipv4SecondarySubnet": {
+                            "ipv4Prefix": {
+                                "ipv4Address": "172.128.1.0",
+                                "prefixLength": 24
+                            },
+                            "serviceProviderIpv4Addresses": [
+                                "172.28.1.254"
+                            ]
+                        }
+                    },
+                    "ipv6ConnectionAddressing": null,
+                    "dhcpRelay": null,
+                    "prefixDelegation": null,
+                    "ingressBwpEnvelope": null,
+                    "egressBwpEnvelope": null,
+                    "reservedVrids": null
+                }
+            },
+            "serviceOrderItemRelationship": [
+                {
+                    "orderItem": {
+                        "itemId": "UNI",
+                        "serviceOrderHref": null,
+                        "serviceOrderId": null
+                    },
+                    "relationshipType": "CONNECTS"
+                }
+            ],
+            "state": null,
+            "terminationError": null
+        },
+        {
+            "id": null,
+            "action": null,
+            "coordinatedAction": null,
+            "note": null,
+            "service": {
+                "href": null,
+                "id": null,
+                "description": null,
+                "externalId": null,
+                "startDate": null,
+                "endDate": null,
+                "state": null,
+                "note": null,
+                "serviceType": null,
+                "name": null,
+                "serviceRelationship": null,
+                "relatedContactInformation": null,
+                "place": null,
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:legato:ip-uni:v0.0.1:all",
+                    "atType": null,
+                    "administrativeState": null,
+                    "operationalState": null,
+                    "identifier": null,
+                    "managementType": null,
+                    "ingressBwpEnvelope": {
+                        "te": null,
+                        "maxIrE": {
+                            "irValue": 500,
+                            "irUnits": "GBPS"
+                        },
+                        "tE": null,
+                        "ipUniIngressBwpAccessLink": null,
+                        "ipUniIngressBwpIpvcEp": null,
+                        "ipUniIngressBwpIpvcEpAccessLink": null,
+                        "ipUniIngressBwpIpvcEpCos": null,
+                        "ipUniIngressBwpIpvcEpCosAccessLink": null,
+                        "ipUniIngressBwpUni": null
+                    },
+                    "egressBwpEnvelope": null,
+                    "listOfControlProtocols": null,
+                    "routingProtocols": {
+                        "static": null,
+                        "bgp": [
+                            {
+                                "administrativeDistance": null,
+                                "asOverride": null,
+                                "authentication": null,
+                                "bgpCommunityList": null,
+                                "bgpExtendedCommunityList": null,
+                                "connectionAddressFamily": null,
+                                "damping": {
+                                    "cutoffThreshold": 10,
+                                    "decayHalfLifeWhileReachable": null,
+                                    "decayHalfLifeWhileUnReachable": null,
+                                    "decayMemoryLimit": null,
+                                    "maxHoldDownTime": null,
+                                    "numberOfReuseLists": null,
+                                    "reuseListMemoryReuseListMax": null,
+                                    "reuseListTimeGranularity": null,
+                                    "reuseThreshold": null,
+                                    "timeGranularity": null
+                                },
+                                "holdTime": null,
+                                "ipPrefixes": null,
+                                "peerAsNumber": null,
+                                "peeringAddresses": null,
+                                "subscriberAsNumber": null
+                            }
+                        ],
+                        "ospf": null
+                    },
+                    "reversePathForwarding": null
+                }
+            },
+            "serviceOrderItemRelationship": null,
+            "state": null,
+            "terminationError": null
+        }
+    ],
+    "startDate": null,
+    "state": "completed",
+    "orderDate": "2023-02-28T11:09:11.78-06:00"
+}
+@endjson

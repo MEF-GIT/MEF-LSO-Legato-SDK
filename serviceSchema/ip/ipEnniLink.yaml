@@ -63,4 +63,4 @@ properties:
   ipv6ConnectionAddressing:
     $ref: './ipCommon.yaml#/definitions/EnniIpv6ConnectionAddressing'
 allOf:
-  - $ref: './ipServicesExternalInterfaceLink.yaml'
+  - $ref: './IpServicesExternalInterfaceLink.yaml'

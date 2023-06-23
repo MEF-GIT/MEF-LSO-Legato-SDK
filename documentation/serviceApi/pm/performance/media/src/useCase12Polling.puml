@@ -1,0 +1,26 @@
+@startuml useCase12Polling
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+B -> S : POST {{baseUrl}}/cancelPerformanceJob (CancelPerformanceJob_Create)
+S -> S : basic validation
+
+alt succesful inquiry
+  S --> B : 201 CancelPerformanceJob with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until CancelPerformanceJob in active state
+      B -> S :   GET {{baseUrl}}/cancelPerformanceJob/{{id}}
+      return 200 CancelPerformanceJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+
+@enduml

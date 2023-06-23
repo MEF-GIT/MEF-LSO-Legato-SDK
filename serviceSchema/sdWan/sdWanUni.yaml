@@ -1,111 +1,83 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:SdWanUni:v2.0.0:all
-title: MEF LSO Legato - Common SD-WAN UNI Service Specifications
+$id: urn:mef:lso:spec:legato:sdWanUni:v0.0.1:all
+title: MEF LSO Legato SD-WAN UNI Service Specifications
+    # MEF Forum - Date: 20230124  Edit-level: 
+    # File: sdWan/sdWanUni.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2023. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
 description:
-  SdWanUni is a class that represents the boundary between the responsibility of the Subscriber and the responsibility of the Service Provider. Reference MEF 70, Section 6.4 SD-WAN UNI.
+  SdWanUni is a resource that represents the boundary between the responsibility of the Subscriber and the responsibility of the Service Provider. Reference MEF 70.2, Section 7.4 SD-WAN UNI.
 type: object
 properties:
-  administrativeState:
-    $ref: 'sdWanCommon.yaml#/definitions/AdministrativeState'
-  operationalState:
-    $ref: 'sdWanCommon.yaml#/definitions/OperationalState'
   uniIdentifier:
     type: string
-    description: Identification of the UNI for management purposes. Reference MEF 70, Section 10.1 SD-WAN UNI Identifier Service Attribute.
+    description: A String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI. Reference MEF 70.2, Section 11.1 SD-WAN UNI Identifier Service Attribute.
+    maxLength: 53
+    pattern: "[\x20-\x7F]+"
   l2Interface:
-    $ref: '#/definitions/L2Interface'
+    $ref: 'sdWanCommon.yaml#/definitions/L2Interface'
   maxL2FrameSize:
     type: integer
-    description: Specifies the maximum length L2 frame that is accepted by the Service Provider. Reference MEF 70, Section 10.3 SD-WAN UNI Maximum L2 Frame Size Service Attribute.
+    description: Specifies the maximum length L2 frame that is accepted by the Service Provider at the UNI. Reference MEF 70.2, Section 11.3 SD-WAN UNI Maximum L2 Frame Size Service Attribute.
+    minimum: 1522
   ipv4ConnectionAddressing:
-    $ref: '#/definitions/Ipv4ConnectionAddressing'
+    $ref: './common/ipCommon.yaml#/definitions/Ipv4ConnectionAddressing'
+    nullable: true
   ipv6ConnectionAddressing:
-    $ref: '#/definitions/Ipv6ConnectionAddressing'
-  swVcEndPoint:
-    maxItems: 1
-    minItems: 0
-    type: array
-    items:
-      $ref: 'sdWanVc.yaml#/definitions/SwVcEndPointRef'
-definitions:
-  Ipv4ConnectionAddressing:
-    type: object
-    properties:
-      ipv4AddressType:
-        type: string
-        description: IPv4 Connection Address mechanism. Possible values are None, Static or DHCP.
-        enum:
-        - DHCP
-        - STATIC
-      ipv4PrimarySubnet:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider IPv4 Addresses.
-        items:
-          $ref: '#/definitions/Ipv4Subnet'
-      ipv4SecondarySubnetList:
-        minItems: 0
-        type: array
-        description: Secondary IPv4 Subnet List. Includes IPv4 Prefix and Service Provider IPv4 Addresses.
-        items:
-          $ref: '#/definitions/Ipv4Subnet'
-    description: Ipv4ConnectionAddressing is a data type representing how IPv4 addresses are allocated to the devices on the Subscriber side of the UNI. For DHCP and Static the Primary Subnet and Secondary Subnet List must be included. Reference MEF 70 Section 10.4 SD-WAN UNI IPv4 Connection Addressing Service Attribute.
-  Ipv4Subnet:
-    type: object
-    properties:
-      ipv4Prefix:
-        $ref: 'sdWanCommon.yaml#/definitions/Ipv4Prefix'
-      serviceProviderIpv4Addresses:
-        minItems: 1
-        type: array
-        description: List of Service Provider IPv4 addresses.
-        items:
-          type: string
-    description: Ipv4Subnet is a data type representing an IPv4 subnet logical partition of an IP network. Included is list of Service Provider IPv4 addresses.
-  Ipv6ConnectionAddressing:
-    type: object
-    properties:
-      ipv6AddressType:
-        type: string
-        description: IPv6 Connection Address mechanism. Possible values are None, DHCP, SLAAC, Static or LL-only.
-        enum:
-        - DHCP
-        - SLAAC
-        - STATIC
-        - LL_ONLY
-      ipv6SubnetList:
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/Ipv6Subnet'
-    description: IPv6ConnectionAddressing is a data type that specifies how IPv6 addresses are allocated to the devices on the Subscriber side of the UNI. For DHCP, SLAAC and Static, IPv6 Prefix and Service Provider IPv6 Addresses are needed. Reference MEF 70 Section 10.5 SD-WAN UNI IPv6 Connection Addressing Service Attribute.
-  Ipv6Subnet:
-    type: object
-    properties:
-      ipv6Prefix:
-        $ref: 'sdWanCommon.yaml#/definitions/Ipv6Prefix'
-      serviceProviderIpv6Addresses:
-        minItems: 1
-        type: array
-        description: List of IPv6 Service Provider addresses.
-        items:
-          type: string
-    description: IPv6Subnet is a data type representing an IPv6 subnet logical partition of an IP network. Included is list of Service Provider IPv6 addresses.
-  L2Interface:
-    type: object
-    properties:
-      l2InterfaceType:
-        type: string
-        description: L2InterfaceType is an enumeration that describes the underlying network layer that carries IP Packets across the UNI. The possible values are UT/PT and CVLANx. Reference MEF 70 Section 10.2.
-        enum:
-        - UT_PT
-        - CVLANX
-      vlanId:
-        maxItems: 1
-        minItems: 0
-        type: array
-        description: VLAN ID.
-        items:
-          type: integer
-    description: L2Interface is a data type that describes the underlying network layer that carries IP Packets across the UNI. The possible values are UT/PT and CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service Attribute.
+    $ref: './common/ipCommon.yaml#/definitions/Ipv6ConnectionAddressing'
+    nullable: true
+  routingProtocols:
+    $ref: './common/ipCommon.yaml#/definitions/RoutingProtocols'
+  availabilityObjective:
+    $ref: './sdWanCommon.yaml#/definitions/Percentage'
+  meanTimeToRepairObjective:
+    $ref: './sdWanCommon.yaml#/definitions/TimeDuration'
+  required:
+    - uniIdentifier
+    - l2Interface
+    - maxL2FrameSize

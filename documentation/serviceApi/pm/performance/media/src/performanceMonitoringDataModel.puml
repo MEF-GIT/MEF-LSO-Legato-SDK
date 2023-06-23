@@ -1,0 +1,792 @@
+@startuml performanceMonitoringDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class AttachmentURL {
+
+    url*: string
+}
+
+
+
+class CancelPerformanceJob {
+
+    cancellationDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+CancelPerformanceJob_Common <|-- CancelPerformanceJob
+
+
+
+class CancelPerformanceJob_Common {
+
+    cancellationReason: string
+}
+
+CancelPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+
+
+class CancelPerformanceJob_Create {
+
+}
+CancelPerformanceJob_Common <|-- CancelPerformanceJob_Create
+
+
+
+class CancelPerformanceJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+
+CancelPerformanceJob_Find *-->"1" PerformanceJobRef : performanceJob
+
+
+class DayOfMonth {
+
+}
+
+
+
+class DayOfWeek {
+
+}
+
+
+
+class Error {
+
+    message: string
+    reason*: string
+    referenceError: uri
+}
+
+
+
+class Error400 {
+
+    code*: Error400Code
+}
+Error <|-- Error400
+
+
+
+enum Error400Code {
+
+    missingQueryParameter
+    missingQueryValue
+    invalidQuery
+    invalidBody
+}
+class Error401 {
+
+    code*: Error401Code
+}
+Error <|-- Error401
+
+
+
+enum Error401Code {
+
+    missingCredentials
+    invalidCredentials
+}
+class Error403 {
+
+    code*: Error403Code
+}
+Error <|-- Error403
+
+
+
+enum Error403Code {
+
+    accessDenied
+    forbiddenRequester
+    tooManyUsers
+}
+class Error404 {
+
+    code*: string
+}
+Error <|-- Error404
+
+
+
+class Error409 {
+
+    code*: string
+}
+Error <|-- Error409
+
+
+
+class Error422 {
+
+    code*: Error422Code
+    propertyPath: string
+}
+Error <|-- Error422
+
+
+
+enum Error422Code {
+
+    missingProperty
+    invalidValue
+    invalidFormat
+    referenceNotFound
+    unexpectedProperty
+    tooLargeDataset
+    tooManyRecords
+    tooManyRequests
+    performanceProfileInUse
+    otherIssue
+}
+class Error500 {
+
+    code*: string
+}
+Error <|-- Error500
+
+
+
+class Error501 {
+
+    code*: string
+}
+Error <|-- Error501
+
+
+
+class EventSubscription {
+
+    callback*: string
+    id*: string
+    query: string
+}
+
+
+
+class EventSubscriptionInput {
+
+    callback*: string
+    query: string
+}
+
+
+
+class FileTransferData {
+
+    fileFormat: string
+    fileLocation: uri
+    transportProtocol: string
+    compressionType: string
+    packingType: string
+    retentionPeriod: string
+}
+
+
+
+class HourRange {
+
+    start: date-time
+    end: date-time
+}
+
+
+
+enum Interval {
+
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 second
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+    not applicable
+}
+enum JobType {
+
+    proactive
+    on-demand
+    passive
+}
+class MeasurementTime {
+
+    measurementStartDate*: date-time
+    measurementEndDate*: date-time
+    measurementInterval*: Interval
+}
+
+
+
+class ModifyPerformanceJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    modificationDeniedReason: string
+    state*: PerformanceJobProcessStateType
+}
+ModifyPerformanceJob_Common <|-- ModifyPerformanceJob
+
+
+
+class ModifyPerformanceJob_Common {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    description: string
+    modificationReason: string
+    producingApplicationId: string
+}
+
+ModifyPerformanceJob_Common *--> FileTransferData : fileTransferData
+ModifyPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+ModifyPerformanceJob_Common *--> ModifyPerformanceJob_ProfileValue : performanceProfile
+ModifyPerformanceJob_Common *--> ScheduleDefinition : scheduleDefinition
+ModifyPerformanceJob_Common *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class ModifyPerformanceJob_Create {
+
+}
+ModifyPerformanceJob_Common <|-- ModifyPerformanceJob_Create
+
+
+
+class ModifyPerformanceJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+
+ModifyPerformanceJob_Find *-->"1" PerformanceJobRef : performanceJob
+
+
+class ModifyPerformanceJob_ProfileValue {
+
+    granularity: Interval
+    jobPriority: integer
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+
+
+class MonthlyScheduleDayOfWeekDefinition {
+
+}
+
+MonthlyScheduleDayOfWeekDefinition *-->"*" DayOfWeek : recurringDaySequence
+MonthlyScheduleDayOfWeekDefinition *-->"*" DayOfMonth : dayOfMonthRecurrence
+
+
+enum OutputFormat {
+
+    json
+    xml
+    avro
+    csv
+}
+class PerformanceJob {
+
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    rejectionReason: string
+    state*: PerformanceJobStateType
+}
+PerformanceJob_Common <|-- PerformanceJob
+
+
+
+class PerformanceJobComplexQuery {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate: date-time
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    producingApplicationId: string
+    reportingPeriod: Interval
+    state: PerformanceJobStateType
+}
+
+PerformanceJobComplexQuery *--> PerformanceJobRef : performanceJob
+PerformanceJobComplexQuery *--> PerformanceProfileRef : performanceProfile
+PerformanceJobComplexQuery *--> ScheduleDefinition : scheduleDefinition
+PerformanceJobComplexQuery *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceJobComplexQuery_Create {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    producingApplicationId: string
+    reportingPeriod: Interval
+    state: PerformanceJobStateType
+}
+
+PerformanceJobComplexQuery_Create *--> PerformanceProfileRef : performanceProfile
+PerformanceJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
+PerformanceJobComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+enum PerformanceJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+}
+class PerformanceJobRefOrValue {
+
+    @type*: string
+}
+
+
+
+class PerformanceJobRef {
+
+    href: string
+    id*: string
+}
+PerformanceJobRefOrValue <|-- PerformanceJobRef
+
+
+
+class PerformanceJobValue {
+
+    consumingApplicationId: string
+    granularity: Interval
+    outputFormat*: OutputFormat
+    producingApplicationId: string
+    resultFormat*: ResultFormat
+}
+PerformanceJobRefOrValue <|-- PerformanceJobValue
+
+PerformanceJobValue *--> FileTransferData : fileTransferData
+PerformanceJobValue *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+enum PerformanceJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    in-progress
+    pending
+    rejected
+    resource-unavailable
+    scheduled
+    suspended
+}
+class PerformanceJob_Common {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    description: string
+    producingApplicationId: string
+}
+
+PerformanceJob_Common *--> FileTransferData : fileTransferData
+PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Common *--> ScheduleDefinition : scheduleDefinition
+PerformanceJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceJob_Create {
+
+}
+PerformanceJob_Common <|-- PerformanceJob_Create
+
+
+
+class PerformanceJob_Find {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate*: date-time
+    description: string
+    id*: string
+    producingApplicationId: string
+    state*: PerformanceJobStateType
+}
+
+PerformanceJob_Find *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Find *--> ScheduleDefinition : scheduleDefinition
+
+
+class PerformanceProfile {
+
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    rejectionReason: string
+    state*: PerformanceProfileStateType
+}
+PerformanceProfile_Common <|-- PerformanceProfile
+
+
+
+class PerformanceProfileRefOrValue {
+
+    @type*: string
+}
+
+
+
+class PerformanceProfileRef {
+
+    href: string
+    id*: string
+}
+PerformanceProfileRefOrValue <|-- PerformanceProfileRef
+
+
+
+class PerformanceProfileValue {
+
+    granularity: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod: Interval
+    resultFormat*: ResultFormat
+}
+PerformanceProfileRefOrValue <|-- PerformanceProfileValue
+
+
+
+enum PerformanceProfileStateType {
+
+    acknowledged
+    active
+    deleted
+    rejected
+}
+class PerformanceProfile_Common {
+
+    buyerProfileId: string
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod: Interval
+    resultFormat*: ResultFormat
+}
+
+
+
+class PerformanceProfile_Create {
+
+}
+PerformanceProfile_Common <|-- PerformanceProfile_Create
+
+
+
+class PerformanceProfile_Find {
+
+    buyerProfileId: string
+    creationDate*: date-time
+    description: string
+    granularity: Interval
+    id*: string
+    jobPriority: integer
+    jobType*: JobType
+    reportingPeriod: Interval
+    state*: PerformanceProfileStateType
+}
+
+
+
+class PerformanceProfile_Update {
+
+    buyerProfileId: string
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+
+
+class PerformanceReport {
+
+    creationDate*: date-time
+    failureReason: string
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: PerformanceReportStateType
+}
+PerformanceReport_Common <|-- PerformanceReport
+
+PerformanceReport *--> PerformanceJobRefOrValue : performanceJob
+PerformanceReport *-->"*" ReportContentItem : reportContent
+PerformanceReport *--> AttachmentURL : reportUrl
+
+
+class PerformanceReportComplexQuery {
+
+    consumingApplicationId: string
+    creationDate: date-time
+    description: string
+    granularity: Interval
+    outputFormat: OutputFormat
+    producingApplicationId: string
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
+}
+
+PerformanceReportComplexQuery *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery *--> PerformanceReportRef : performanceReport
+PerformanceReportComplexQuery *--> ReportingTimeframe : reportingTimeframe
+PerformanceReportComplexQuery *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceReportComplexQuery_Create {
+
+    consumingApplicationId: string
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    outputFormat: OutputFormat
+    producingApplicationId: string
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
+}
+
+PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceReportRef {
+
+    href: string
+    id*: string
+}
+
+
+
+enum PerformanceReportStateType {
+
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+class PerformanceReport_Common {
+
+    description: string
+}
+
+PerformanceReport_Common *--> ReportingTimeframe : reportingTimeframe
+
+
+class PerformanceReport_Create {
+
+}
+PerformanceReport_Common <|-- PerformanceReport_Create
+
+PerformanceReport_Create *-->"1" PerformanceJobValue : performanceJob
+
+
+class PerformanceReport_Find {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    state*: PerformanceReportStateType
+}
+
+PerformanceReport_Find *--> PerformanceJobRefOrValue : performanceJob
+PerformanceReport_Find *--> ReportingTimeframe : reportingTimeframe
+
+
+class RecurringFrequency {
+
+    recurringFrequencyValue*: integer
+    recurringFrequencyUnits*: string
+}
+
+
+
+class ReportContentItem {
+
+}
+
+ReportContentItem *-->"1" MeasurementTime : measurementTime
+ReportContentItem *-->"*" ResultPayload : measurementDataPoints
+
+
+class ReportingTimeframe {
+
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+
+
+enum ResultFormat {
+
+    payload
+    attachment
+}
+class ResultPayload {
+
+    @type*: string
+}
+
+
+
+class ResumePerformanceJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    resumptionDeniedReason: string
+    state*: PerformanceJobProcessStateType
+}
+ResumePerformanceJob_Common <|-- ResumePerformanceJob
+
+
+
+class ResumePerformanceJob_Common {
+
+    resumptionReason: string
+}
+
+ResumePerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+
+
+class ResumePerformanceJob_Create {
+
+}
+ResumePerformanceJob_Common <|-- ResumePerformanceJob_Create
+
+
+
+class ResumePerformanceJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+
+ResumePerformanceJob_Find *-->"1" PerformanceJobRef : performanceJob
+
+
+class ScheduleDefinition {
+
+    scheduleDefinitionStartTime: date-time
+    scheduleDefinitionEndTime: date-time
+    scheduleDefinitionHourRange: object
+}
+
+ScheduleDefinition *--> RecurringFrequency : recurringFrequency
+ScheduleDefinition *--> MonthlyScheduleDayOfWeekDefinition : monthlyScheduleDayOfWeekDefinition
+ScheduleDefinition *-->"*" DayOfWeek : weeklyScheduledDefinition
+
+
+class ServicePayloadSpecificAttributes {
+
+    @type*: string
+}
+
+
+
+class SuspendPerformanceJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: PerformanceJobProcessStateType
+    suspensionDeniedReason: string
+}
+SuspendPerformanceJob_Common <|-- SuspendPerformanceJob
+
+
+
+class SuspendPerformanceJob_Common {
+
+    suspensionReason: string
+}
+
+SuspendPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+
+
+class SuspendPerformanceJob_Create {
+
+}
+SuspendPerformanceJob_Common <|-- SuspendPerformanceJob_Create
+
+
+
+class SuspendPerformanceJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+
+SuspendPerformanceJob_Find *-->"1" PerformanceJobRef : performanceJob
+
+
+class TrackingRecord {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    request: string
+    system: string
+    user: string
+}
+
+
+
+class TrackingRecord_Find {
+
+    creationDate*: date-time
+    description: string
+    relatedObjectId*: string
+    user: string
+}
+
+
+
+@enduml

@@ -1,0 +1,23 @@
+@startuml useCase23Model
+
+class PerformanceReport_Find {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    state*: PerformanceReportStateType
+}
+
+PerformanceReport_Find *--> PerformanceJobRefOrValue : performanceJob
+PerformanceReport_Find *--> ReportingTimeframe : reportingTimeframe
+
+enum PerformanceReportStateType {
+
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+@enduml

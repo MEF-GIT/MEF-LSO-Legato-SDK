@@ -1,0 +1,65 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+datatype(SdWanUni) {
+
+    uniIdentifier: String [1]: maxLength: 53
+    l2Interface: L2Interface [1]
+    maxL2FrameSize: Integer [1]
+    ipv4ConnectionAddressing: Ipv4ConnectionAddressing [0..1]
+    ipv6ConnectionAddressing: Ipv6ConnectionAddressing [0..1]
+    routingProtocols: RoutingProtocols [*]
+    availabilityObjective: Percentage [0..1]
+    meanTimeToRepairObjective: TimeDuration [1]
+}
+
+SdWanUni *-->"0..1" Ipv4ConnectionAddressing : ipv4ConnectionAddressing
+SdWanUni *--> "0..1" Ipv6ConnectionAddressing : ipv6ConnectionAddressing
+SdWanUni *--> "*" RoutingProtocols : routingProtocols
+
+datatype(Ipv4ConnectionAddressing) {
+    ipv4AddressType: Ipv4AddressType [1]
+    ipv4PrimarySubnet: Ipv4PrimarySubnet [1]
+    ipv4SecondarySubnet: Ipv4Subnet [0..1]
+}
+
+datatype(Ipv6ConnectionAddressing) {
+    ipv6AddressType: Ipv6AddressType [1]
+    subscriberIpv6Address: Ipv6Address [1]
+    ipv6Subnet: Ipv6Subnet [0..*]
+}
+
+datatype(RoutingProtocols) {
+    bgp: Bgp [*]
+    ospf: Ospf [*]
+    static: Static [0..1]
+}
+
+
+
+datatype(Static) {
+    <<skipped>>
+}
+
+datatype(Bgp) {
+    <<skipped>>
+}
+
+datatype(Ospf) {
+    <<skipped>>
+}
+
+RoutingProtocols *-->"0..1" Static : static
+RoutingProtocols *-->"*" Bgp : bgp
+RoutingProtocols *-->"*" Ospf : ospf
+
+
+@enduml

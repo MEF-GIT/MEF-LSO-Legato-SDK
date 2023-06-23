@@ -1,0 +1,76 @@
+@startuml
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+package "MEF Generic" {
+
+class e as "Message" {
+    * eventId: UUID
+    * eventTime: ZonedDateTime
+    priority: Priority
+    * eventType: String
+    event: Any
+}
+}
+
+
+
+package CarrierEthernetPerformanceMonitoring {
+    class CePerformanceMonitoringMessage {
+          eventType = "CePerformanceMonitoringEvent"
+    }
+
+
+    class CePE as "CePerformanceMonitoringEvent"  {}
+
+    e <|-- CePerformanceMonitoringMessage
+    CePerformanceMonitoringMessage *-> CePE : event
+
+
+
+    
+    class Key as "OrderedPair" {
+        * serviceId: String
+        * fromCarrierEthernetServiceEndPoint: String
+        * toCarrierEthernetServiceEndPoint: String
+    }
+    class CePerformanceMetrics {
+
+    }
+    class OneWayAvailability {
+        * oneWayAvailability: Percentage
+    }
+    class OneWayConsecutiveHighLossIntervals {
+        * consecutiveNumberP: Int
+        * measuredOneWayChli: Int
+    }
+    class OneWayFrameDelay {
+        * measuredOneWayFd: Int
+        * oneWayFdPercentile: Percentage
+    }
+    class OneWayFrameLostRatio {
+        * measuredOneWayFlr: Percentage
+    }
+    class Percentage {
+        * value: Double
+    }
+
+
+    CePE *-> Key : key
+    CePE *--> CePerformanceMetrics : metrics
+
+    CePerformanceMetrics *--> OneWayConsecutiveHighLossIntervals : oneWayHighLossIntervals
+    CePerformanceMetrics *--> OneWayFrameDelay :  oneWayFrameDelay
+    CePerformanceMetrics *--> OneWayAvailability  : oneWayAvailability
+    CePerformanceMetrics *--> OneWayFrameLostRatio :  oneWayFrameLossRatio
+    OneWayAvailability *--> Percentage
+    OneWayFrameDelay *--> Percentage
+    OneWayFrameLostRatio *--> Percentage
+
+    remove Percentage
+}
+
+@enduml

@@ -1,0 +1,26 @@
+@startuml useCase5DeleteFlow
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+entity "Performance Profile" as PP
+activate PP
+
+autonumber
+
+note over PP: Performance Profile in `active` state
+B -> S : DELETE /performanceProfile/{{id}} request
+
+S -> S: find Performance Profile by id
+S -> S: check Performance Profile state
+S -> S: check if any Performance Job refers to Performance Profile
+
+S -> PP: (causes status change)
+PP -> PP: status: deleted
+S --> B: DELETE /performanceProfile/{{id}} response
+PP -> B: POST performanceProfileDeleteEvent
+
+@enduml

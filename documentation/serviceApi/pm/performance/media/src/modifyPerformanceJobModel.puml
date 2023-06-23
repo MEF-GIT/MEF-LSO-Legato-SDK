@@ -1,0 +1,50 @@
+@startuml modifyPerformanceJobModel
+
+class ModifyPerformanceJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    modificationDeniedReason: string
+    state*: PerformanceJobProcessStateType
+}
+ModifyPerformanceJob_Common <|-- ModifyPerformanceJob
+
+class ModifyPerformanceJob_Common {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    description: string
+    modificationReason: string
+    producingApplicationId: string
+}
+
+ModifyPerformanceJob_Common *--> FileTransferData : fileTransferData
+ModifyPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+ModifyPerformanceJob_Common *--> ModifyPerformanceJob_ProfileValue : performanceProfile
+ModifyPerformanceJob_Common *--> ScheduleDefinition : scheduleDefinition
+ModifyPerformanceJob_Common *-r-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class ModifyPerformanceJob_Create {
+
+}
+ModifyPerformanceJob_Common <|-l- ModifyPerformanceJob_Create
+
+class ModifyPerformanceJob_ProfileValue {
+
+    granularity: Interval
+    jobPriority: integer
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+enum PerformanceJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+}
+
+@enduml

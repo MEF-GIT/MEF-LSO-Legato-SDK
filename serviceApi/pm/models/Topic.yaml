@@ -1,0 +1,36 @@
+type: object
+description: >
+  Provides metadata describing a topic available for subscription.
+  This object is used to define available consumption mechanisms and the data model.
+required:
+  - id
+properties:
+  id:
+    type: string
+    description: >
+      An identifier for the topic. This can be used to uniquely identify the topic within the Server system.
+  category:
+    type: string
+    enum:
+      - Layer 1
+      - Ethernet
+      - IP
+      - SD-WAN
+      - Computing
+      - Storage
+      - Memory
+    description: >
+      The category of the topic. This can be used to group topics based on their characteristics.
+  modelRef:
+    type: string
+    format: uri
+    description: >
+      A reference to a model that describes the structure of the data associated with the topic.
+  availableChannels:
+    type: array
+    items:
+      $ref: ChannelDescription.yaml
+    minItems: 1
+    description: >
+      An array of channel descriptions that provide information about the channels through which the topic can be accessed.
+additionalProperties: true

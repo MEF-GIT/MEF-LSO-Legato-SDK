@@ -1,0 +1,21 @@
+@startuml
+
+' title Retrieve Topic Subscriptions List
+
+hide footbox
+
+participant Client
+participant Server
+
+Client -> Server : GET {{baseUrl}}/subscription (query criteria)
+
+
+Server -> Server : validation
+alt successful inquiry
+    Client <-- Server : 200 : list of Subscriptions (list of objects)
+else alternative success response
+    Client <-- Server : 200 : reference of the AsyncApi contract definition (that covers all subsribed topics)
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+@enduml

@@ -1,0 +1,39 @@
+@startuml performanceReportStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state validation_successful <<choice>> 
+ note right of validation_successful : Validation successful?
+
+state processing_successful <<choice>> 
+ note right of processing_successful : Processing successful?
+
+state "in-progress" as in_progress
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> validation_successful
+
+validation_successful -l-> rejected: No
+
+validation_successful -d-> in_progress: Yes
+
+in_progress --> processing_successful
+
+processing_successful -r-> completed: Yes
+processing_successful -d-> failed: No
+
+rejected -d-> [*]
+failed -d-> [*]
+completed -d-> [*]
+
+
+@enduml

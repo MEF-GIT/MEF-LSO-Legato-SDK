@@ -1,0 +1,41 @@
+@startuml
+
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+    !define datatype(x) class x << (D,#FF7700) DataType>>
+
+    datatype(SdWanUni) {
+            <<...attributes are not shown...>>
+        }
+
+    datatype(SwVcEndPoint) {
+            <<...attributes are not shown...>>
+        }
+
+    datatype(SwVc) {
+            <<...attributes are not shown...>>
+        }
+
+    datatype(Ucs) {
+            <<...attributes are not shown...>>
+        }
+
+    datatype(UcsEndPoint) {
+            <<...attributes are not shown...>>
+        }  
+    datatype(UcsUni){
+            <<...attributes are not shown...>>
+        }  
+
+    SwVcEndPoint "2..*" <--* "1" SwVc
+    SwVcEndPoint  *-right-> "1..*" UcsEndPoint
+    SwVc *-right-> "1..*" Ucs
+    SdWanUni "1" o--> "0..1" SwVcEndPoint
+    UcsEndPoint o-right-> "1" UcsUni
+
+@enduml

@@ -1,0 +1,31 @@
+@startuml useCase7Model
+
+class PerformanceJob_Find {
+
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDate*: date-time
+    description: string
+    id*: string
+    producingApplicationId: string
+    state*: PerformanceJobStateType
+}
+
+PerformanceJob_Find *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Find *--> ScheduleDefinition : scheduleDefinition
+
+
+enum PerformanceJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    in-progress
+    pending
+    rejected
+    resource-unavailable
+    scheduled
+    suspended
+}
+
+@enduml

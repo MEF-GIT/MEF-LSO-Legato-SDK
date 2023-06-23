@@ -79,4 +79,4 @@ properties:
 required:
   - prefixDelegation
 allOf:
-  - $ref: './ipServicesExternalInterfaceLink.yaml'  
+  - $ref: './IpServicesExternalInterfaceLink.yaml'  

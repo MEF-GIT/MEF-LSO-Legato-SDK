@@ -13,14 +13,14 @@ img
 <div style="font-weight:bold; font-size:33pt; font-family: sensation;  text-align:center">
 Working Draft
 </br>
-MEF W135 v0.1
+MEF W135 v0.2
 </br>
 </br>
 LSO Legato Service Inventory Management API - Developer Guide
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">This draft represents MEF work in progress and is subject to change.</p>
 </br>
-January 2023
+June 2023
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
 </div>
@@ -156,6 +156,7 @@ contained herein.
     - [7.3.3. Type ServiceEventPayload](#733-type-serviceeventpayload)
     - [7.3.4. `enum` ServiceEventType](#734-enum-serviceeventtype)
 - [8. References](#8-references)
+- [Appendix A Acknowledgments](#appendix-a-acknowledgments)
 
 <div class="page"/>
 
@@ -164,12 +165,16 @@ contained herein.
 The following members of the MEF participated in the development of this
 document and have requested to be included in this list.
 
-| Member |
-| ------ |
-|        |
-|        |
+| Member   |
+| -------- |
+| Amartus  |
+| Cisco    |
+| Lumen    |
+| Verizon  |
 
 **Table 1. Contributing Members**
+
+<div class="page"/>
 
 # 1. Abstract
 
@@ -180,14 +185,18 @@ Legato Interface Reference Point is defined in the MEF 55.1
 [[MEF55.1](#8-references)] at the interface between the Business Application
 Systems layer and Service Orchestration Functionality layer.
 
-This Standard normatively incorporates the following OpenAPI 3.0 definitions by
-reference as if they were part of this document, from the MEF-GIT GitHub
-repository _working_draft_ branch:
+This standard normatively incorporates the following files by reference as if
+they were part of this document from the GitHub repository:
 
-<https://github.com/MEF-GIT/MEF-LSO-Legato-SDK>
+[MEF-LSO-Legato-SDK](<https://github.com/MEF-GIT/MEF-LSO-Legato-SDK>)
 
-- `serviceApi\inventory\serviceInventoryManagement.api.yaml`
-- `serviceApi\inventory\serviceInventoryNotification.api.yaml`
+commit id:
+[0e83943f529e87c036a083926a1b28a0a3523c5e](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/0e83943f529e87c036a083926a1b28a0a3523c5e)
+
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/blob/0e83943f529e87c036a083926a1b28a0a3523c5e/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/blob/0e83943f529e87c036a083926a1b28a0a3523c5e/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+
+<div class="page"/>
 
 # 2. Terminology and Abbreviations
 
@@ -225,6 +234,8 @@ document by reference, and are not repeated in the table below.
 
 **Table 3. Abbreviations**
 
+<div class="page"/>
+
 # 3. Compliance Levels
 
 The key words **"MUST"**, **"MUST NOT"**, **"REQUIRED"**, **"SHALL"**, **"SHALL
@@ -239,6 +250,8 @@ labeled as **[Rx]** for required. Items that are **RECOMMENDED** (contain the
 words **SHOULD** or **SHOULD NOT**) are labeled as **[Dx]** for desirable. Items
 that are **OPTIONAL** (contain the words MAY or OPTIONAL) are labeled as
 **[Ox]** for optional.
+
+<div class="page"/>
 
 # 4. Introduction
 
@@ -591,8 +604,8 @@ The Legato SDK contains service specification definitions, from which IPVC and
 IPVC End Point are used in the payload samples in this section. The schemas are
 located in the SDK package at:
 
-- `serviceSchema\ip\ipvc.yaml`
-- `serviceSchema\ip\ipvcEndPoint.yaml`
+- `serviceSchema/ip/ipvc.yaml`
+- `serviceSchema/ip/ipvcEndPoint.yaml`
 
 The service specification data model definitions are available as JsonSchema
 (version `draft 7`) documents. Figures 6 and 7 depict simplified UML views on
@@ -603,7 +616,7 @@ these data models in which:
 - some relations and attributes that are not essential to the understanding of
   the service specification model are omitted.
 
-The red color in figures 6 and 7 below highlights the data model of services.
+The red color in Figures 6 and 7 below highlights the data model of services.
 Some parts of the model are skipped for examples clarity. This is denoted by the
 `<<skipped>>` text in diagrams and in json snippets later in the document.
 Please note that this document uses service specifications just for the sake of
@@ -705,7 +718,7 @@ The flow is a simple request-response pattern, as presented in Figure 9:
 
 **Figure 9. Use case 1: Retrieve Service by Service Identifier flow**
 
-The model taking part in this use case is presented in Figure 10
+The model taking part in this use case is presented in Figure 10:
 
 ![Use case 1](media/useCase1Model.png)
 
@@ -779,7 +792,7 @@ Additions and changes to Services in the Service Inventory can be performed with
 use of Service Orders and the Service Order Management API, or by the request of
 the SOF.
 
-A detailed description of each state can be found in the table below.
+A detailed description of each state can be found in the Table 7 below.
 
 | State              | Description                                                                                                           |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -1131,7 +1144,7 @@ the API: `POST /hub`. The request contains only 2 attributes:
   notified to,
 - `query` - optional, to provide the required types of event.
 
-The figure below shows all entities involved in the Notification use cases.
+Figure 14 shows all entities involved in the Notification use cases.
 
 ![Figure 14](media/ServiceNotificationModel.png)
 
@@ -2675,6 +2688,8 @@ Inherits from:
     </tbody>
 </table>
 
+<div class="page"/>
+
 # 8. References
 
 - [JSON Schema draft 7](https://json-schema.org/specification-links.html#draft-7),
@@ -2729,3 +2744,20 @@ Inherits from:
   TMF630 API Design Guidelines 4.2.0
 - [TMF638](https://www.tmforum.org/resources/specification/tmf638-service-inventory-api-user-guide-v4-0-0/)
   TMF638 Service Inventory API User Guide, May 2020
+
+<div class="page"/>
+
+# Appendix A Acknowledgments
+
+The following contributors participated in the development of this document and
+have requested to be included in this list.
+
+Mike **BENCHECK**
+
+Michał **ŁĄCZYŃSKI**
+
+Jack **PUGACZEWSKI**
+
+Karthik  **SETHURAMAN**
+
+Mehmet **TOY**

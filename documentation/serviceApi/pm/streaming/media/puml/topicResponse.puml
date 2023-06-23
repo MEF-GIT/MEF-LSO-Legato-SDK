@@ -1,0 +1,17 @@
+@startuml
+
+class Topic << Response >> {
+    id: String
+    category: String
+    modelRef: URI
+    availableChannels: List<ChannelDescription>
+}
+
+class ChannelDescription {
+    * protocol: String
+    description: String
+}
+
+Topic *--> "1..*" ChannelDescription : availableChannels
+
+@enduml

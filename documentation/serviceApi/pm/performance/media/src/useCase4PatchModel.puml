@@ -1,0 +1,45 @@
+@startuml useCase4PatchModel
+
+class PerformanceProfile_Update {
+
+    buyerProfileId: string
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+enum Interval {
+
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 second
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+    not applicable
+}
+
+enum OutputFormat {
+
+    json
+    xml
+    avro
+    csv
+}
+
+enum ResultFormat {
+
+    payload
+    attachment
+}
+
+@enduml

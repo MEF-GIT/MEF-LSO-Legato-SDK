@@ -1,0 +1,19 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+datatype(Ucs) {
+
+    identifier: String [1]
+    ucsType: UcsType [1]
+    ucsBillingMethod: UcsBillingMethod [1]
+}
+
+@enduml

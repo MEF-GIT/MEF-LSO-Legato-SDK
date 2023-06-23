@@ -1,0 +1,96 @@
+@startuml pmProvisioningInServiceOrder
+autonumber
+
+actor "Buyer/Client" as B
+
+collections "SOF:ServiceOrdering" as SO
+collections "SOF:PerformanceMonitoring" as PM
+
+entity Hub 
+
+opt
+  B -> Hub: registerListener (PerformanceJobNotification)
+  B -> Hub: registerListener (PerformanceReportNotification)
+end
+
+[-> B: ProdutOrder
+
+note over B,SO: Simplification
+B-> SO: ServiceOrder
+
+Note right of SO: SLS attached
+
+SO -> PM: createPerformanceJob
+create entity PerformanceJob as PJ
+PM -> PJ: <<create>>
+PM --> SO: Response(PerformanceJob)
+
+
+activate PJ
+
+opt
+  PJ -> Hub: createEvent
+  Hub -> B: notifyListeners (performanceJobCreateEvent)
+end
+
+note right of PJ: On scheduled date
+PJ -> PJ: state: in-progress
+
+opt
+  PJ -> Hub: stateChangeEvent
+  Hub -> B: notifyListeners (performanceJobStateChangeEvent)
+end
+
+PJ -> PJ: generateData
+
+note right of PJ: reportingPeriod elapses
+
+create entity PerformanceReport as PR
+PJ -> PR: <<create>>
+
+activate PR
+
+opt
+  PR -> Hub: createEvent
+  Hub -> B: notifyListeners (performanceReportCreateEvent)
+end 
+
+PR -> PR: state: in-progress
+
+opt
+  PR -> Hub: stateChangeEvent
+  Hub -> B: notifyListeners (performanceReportStateChangeEvent)
+end
+
+PR -> PR: collectData
+
+PR -> PR: state: completed
+
+opt
+  PR -> Hub: stateChangeEvent
+  Hub -> B: notifyListeners (performanceReportStateChangeEvent)
+end
+
+PR --> PJ: (report completed)
+
+opt 
+  PJ -> Hub: reportReadyEvent
+  Hub -> B: notifyListeners (performanceJobReportReadyEvent)
+end 
+
+note right of PJ: Schedule elapses
+
+PJ -> PJ: state: completed|scheduled
+
+opt
+  PJ -> Hub: stateChangeEvent
+  Hub -> B: notifyListeners (performanceJobStateChangeEvent)
+end
+
+B -> PM: getReport
+PM -> PR: <<retrieve>>
+PM --> B: Response (PerformanceReport)
+
+entity Hub
+
+@enduml

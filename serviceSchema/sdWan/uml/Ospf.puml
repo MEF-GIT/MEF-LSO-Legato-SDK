@@ -1,0 +1,35 @@
+@startuml
+
+skinparam {
+    FontName Times
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+
+datatype(Ospf) {
+
+    deadInterval: Integer [0..1]
+    areaId: Integer [0..1]
+    retransmissionInterval: Integer [0..1]
+    areaType: OspfAreaType [0..1]
+    helloInterval: Integer [0..1]
+    authenticationType: OspfAuthenticationType [0..1]
+    administrativeDistance: Integer[0..1]
+}
+
+enum OspfAreaType {
+    - NORMAL 
+    - STUB
+    - NSSA 
+    }
+
+enum OspfAuthenticationType {
+    - NONE 
+    - PASSWORD
+    - MESSAGE_DIGEST 
+    }    
+
+@enduml

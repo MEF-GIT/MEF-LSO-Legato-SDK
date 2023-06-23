@@ -1,0 +1,25 @@
+type: object
+description: >
+  The Message is produced by the server and consumed by the client.
+  The object is meant to be extended. By convention specific should introduce `event` attribute whose structure conforms to definition 
+  indicated by `eventType`
+required:
+  - eventId
+  - eventType
+properties:
+  eventId:
+    type: string
+    description: The unique identifier of the message
+  eventTime:
+    type: string
+    description: Time of the event occurrence
+    format: date-time
+  eventType:
+    type: string
+    description: Event type - discriminator that allows for de-marshaling of the event specific data, which is added by event specialization objects
+  priority:
+    type: string
+    enum: [low, medium, high]
+  description:
+    type: string
+    description: Free text that might be associated with the event

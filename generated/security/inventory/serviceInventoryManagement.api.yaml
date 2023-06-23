@@ -30,7 +30,7 @@ info:
 
     content has been modified by the MEF Forum and its contributors.
   title: Legato Service Inventory Management API
-  version: 5.0.0-RC
+  version: 5.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/legato/serviceInventory/v5/'
     variables:

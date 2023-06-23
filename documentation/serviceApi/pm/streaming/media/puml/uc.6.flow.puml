@@ -1,0 +1,19 @@
+@startuml
+
+' title Retrieve Topic Subscription By an Identifier
+
+hide footbox
+
+participant Client
+participant Server
+
+Client -> Server : GET {{baseUrl}}/subscription/{{id}}
+
+
+Server -> Server : validation
+alt successful inquiry
+    Client <-- Server : 200 : Subscriptions
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+@enduml

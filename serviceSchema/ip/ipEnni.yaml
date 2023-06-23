@@ -65,7 +65,7 @@ properties:
   egressBwpEnvelopes:
     $ref: './ipCommon.yaml#/definitions/IpEnniEgressBwpEnvelopePerEnniLink'
   enniCommon:
-    $ref: './ipEnniCommon.yaml'
+    $ref: './IpEnniCommon.yaml'
   required: 
     - enniType
     - routingInformation
@@ -101,4 +101,4 @@ definitions:
         type: array  
     description: For an ENNI Option A, the ENNI Routing Information Service Attribute is a mapping of ENNI Service Mapping Identifiers to four-tuples of the form (Administrative Distance, Route Flap Damping, AS Override, Static Routes). Each four-tuple applies to the corresponding ENNI Service Mapping Identifier. Reference MEF 61.1 Section 14.3.1 ENNI Routing Protocols for Option A.
 allOf:
-  - $ref: './ipServicesExternalInterface.yaml'
+  - $ref: './IpServicesExternalInterface.yaml'

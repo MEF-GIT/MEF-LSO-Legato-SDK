@@ -1,0 +1,76 @@
+@startuml notificationsForPerformanceJob
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant SOF
+
+B -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
+SOF --> B: 201 confirmation with {{id}}
+...
+B -> SOF : POST {{baseUrl}}/performanceJob
+SOF -> SOF : basic validation
+SOF -> SOF : assign performanceJob.id
+
+alt succesful inquiry
+  SOF --> B : 201 PerformanceJob with {{id}} in `acknowledged` state
+  SOF -> B: {{callbackUrl}}/listener/performanceJobCreateEvent {{id}}
+  B --> SOF : 204 confirmation  
+  ...
+
+  note over B, SOF : PerformanceJob moves to `scheduled`
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+      B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : Schedule start time is reached\n PerformanceJob moves to `in-progress`
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : Schedule start time is reached\nPerformanceJob moves to `in-progress`
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+  
+  note over B, SOF : PerformanceReport is generated
+  SOF -> B: {{callbackUrl}}/listener/performanceJobReportReadyEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : SuspendPerformanceJob request is completed
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyPerformanceJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyPerformanceJob request is completed
+  SOF -> B: {{callbackUrl}}/listener/performanceJobAttributeValueChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  note over B, SOF : PerformanceReport generation failed\n
+  SOF -> B: {{callbackUrl}}/listener/performanceJobReportPreparationErrorEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  note over B, SOF : PerformanceJob is not recurring
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+
+else validation or internal problem
+  SOF --> B : 4xx or 5xx errorresponse
+end 
+
+...
+
+B -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  B : 204 confirmation
+
+@enduml

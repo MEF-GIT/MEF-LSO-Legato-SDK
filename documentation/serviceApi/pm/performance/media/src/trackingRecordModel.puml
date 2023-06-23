@@ -1,0 +1,22 @@
+@startuml trackingRecordModel
+
+class TrackingRecord {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    request: string
+    system: string
+    user: string
+}
+
+class TrackingRecord_Find {
+
+    creationDate*: date-time
+    description: string
+    relatedObjectId*: string
+    user: string
+}
+
+@enduml

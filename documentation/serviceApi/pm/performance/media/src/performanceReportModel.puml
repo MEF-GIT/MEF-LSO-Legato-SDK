@@ -1,0 +1,55 @@
+@startuml performanceReportModel
+
+class PerformanceReport {
+
+    creationDate*: date-time
+    failureReason: string
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: PerformanceReportStateType
+}
+PerformanceReport_Common <|-- PerformanceReport
+
+PerformanceReport *--> PerformanceJobRefOrValue : performanceJob
+PerformanceReport *-->"*" ReportContentItem : reportContent
+PerformanceReport *--> AttachmentURL : reportUrl
+
+class PerformanceReport_Common {
+
+    description: string
+}
+
+PerformanceReport_Common *--> ReportingTimeframe : reportingTimeframe
+
+
+class PerformanceReport_Create {
+
+}
+PerformanceReport_Common <|-- PerformanceReport_Create
+
+PerformanceReport_Create *-->"1" PerformanceJobValue : performanceJob
+
+enum PerformanceReportStateType {
+
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+class ReportContentItem {
+
+}
+
+ReportContentItem *-->"1" MeasurementTime : measurementTime
+ReportContentItem *-->"*" ResultPayload : measurementDataPoints
+
+class ResultPayload {
+
+    @type*: string
+}
+
+
+@enduml

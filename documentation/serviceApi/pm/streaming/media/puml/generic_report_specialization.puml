@@ -1,0 +1,54 @@
+@startuml PMReportOutput
+
+
+class pr as "PerformanceReport" {
+  granularity: Enum<Granularity>
+  servicePayloadSpecificAttributes: Any
+}
+
+class p as "Period" {
+  start: ZonedDateTime
+  end: ZonedDateTime
+}
+
+class rr as "ReportContentRow" 
+
+class rp as "MeasurementPoint"
+
+pr *--> "*" rr : reportContent
+pr *-->  p : reportingPeriod
+rr *-> p : measurementTime
+rr *--> "*" rp : measurementPoints
+
+
+package "specific payload definition" {
+
+  class k as "Key" {
+    component_1: String
+    component_2: String
+    ...
+    component_N: String
+  }
+
+  class ch1 as "SomeQuantity" {
+    value: Double
+    unit: String
+  }
+
+  class ch2 as "SomeMeasurement" {
+    value: Double
+  }
+
+  class s as "Metrics"
+  class m as "SpecificMeasurementPoint"
+
+  rp <|-- m
+  m *-> k : key
+  m *--> s : metrics
+  s *--> ch1 : metric_1
+  s *--> ch1 : metric_K
+  s *--> ch2 : metric_2
+
+}
+
+@enduml

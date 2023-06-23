@@ -1,0 +1,36 @@
+@startuml cancelPerformanceJobModel
+
+class CancelPerformanceJob {
+
+    cancellationDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
+CancelPerformanceJob_Common <|-- CancelPerformanceJob
+
+
+
+class CancelPerformanceJob_Common {
+
+    cancellationReason: string
+}
+
+CancelPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+
+
+class CancelPerformanceJob_Create {
+
+}
+CancelPerformanceJob_Common <|-- CancelPerformanceJob_Create
+
+enum PerformanceJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+}
+
+@enduml

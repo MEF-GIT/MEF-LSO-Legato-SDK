@@ -1,0 +1,61 @@
+@startuml extensionPattern
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+class PerformanceJob {
+
+    id: string 
+    href: string 
+    jobType: JobType
+    reportingPeriod: ReportingPeriod
+    scheduleDefinition: ScheduleDefinition
+    <<... attributes are skipped ...>>
+}
+
+
+class ServicePayloadSpecificAttributes {
+    @type*: string <<discriminator>>
+}
+
+
+PerformanceJob *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all <<ServicePayloadSpecificAttributes>> {
+
+    <<... attributes are skipped ...>>
+}
+ServicePayloadSpecificAttributes <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
+
+
+
+class PerformanceReport {
+
+    id: string 
+    href: string 
+    <<... attributes are skipped ...>>
+}
+
+class ReportContent {
+
+}
+
+class ResultPayload {
+    @type*: string <<discriminator>>
+}
+
+PerformanceReport *-->"0..1" ReportContent : reportContent
+ReportContent *-->"*" ResultPayload : measurementDataPoints
+
+class urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all <<ResultPayload>> {
+
+    <<... attributes are skipped ...>>
+}
+ResultPayload <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all"
+
+
+@enduml

@@ -1,0 +1,158 @@
+@startuml performanceMonitoringNotificationModel
+
+class Event {
+
+    eventId*: string
+    eventTime*: date-time
+}
+
+
+
+class PerformanceJobEvent {
+
+    eventType*: PerformanceJobEventType
+}
+Event <|-- PerformanceJobEvent
+
+PerformanceJobEvent *-->"1" PerformanceJobEventPayload : event
+
+
+class PerformanceJobEventPayload {
+
+    href: string
+    id*: string
+    state: string
+}
+
+
+
+class PerformanceJobReportReadyEvent {
+
+    eventType*: PerformanceJobReportReadyEventType
+}
+Event <|-- PerformanceJobReportReadyEvent
+
+PerformanceJobReportReadyEvent *-->"1" PerformanceJobReportReadyEventPayload : event
+
+
+class PerformanceJobReportReadyEventPayload {
+
+    href: string
+    id*: string
+    reportHref: string
+    reportId*: string
+}
+
+
+
+class PerformanceJobReportPreparationErrorEvent {
+
+    eventType*: PerformanceJobReportPreparationErrorEventType
+}
+Event <|-- PerformanceJobReportPreparationErrorEvent
+
+PerformanceJobReportPreparationErrorEvent *-->"1" PerformanceJobReportPreparationErrorEventPayload : event
+
+
+class PerformanceJobReportPreparationErrorEventPayload {
+
+    href: string
+    id*: string
+    reportPreparationFailedReason: string
+}
+
+
+
+
+class PerformanceJobProcessEvent {
+
+    eventType*: PerformanceJobProcessEventType
+}
+Event <|-- PerformanceJobProcessEvent
+
+PerformanceJobProcessEvent *-->"1" PerformanceJobProcessEventPayload : event
+
+
+class PerformanceJobProcessEventPayload {
+
+    href: string
+    id*: string
+}
+
+
+
+class PerformanceProfileEvent {
+
+    eventType*: PerformanceProfileEventType
+}
+Event <|-- PerformanceProfileEvent
+
+PerformanceProfileEvent *-->"1" PerformanceProfileEventPayload : event
+
+
+class PerformanceProfileEventPayload {
+
+    href: string
+    id*: string
+}
+
+
+
+
+class PerformanceReportEvent {
+
+    eventType*: PerformanceReportEventType
+}
+Event <|-- PerformanceReportEvent
+
+PerformanceReportEvent *-->"1" PerformanceReportEventPayload : event
+
+
+class PerformanceReportEventPayload {
+
+    href: string
+    id*: string
+}
+
+
+
+enum PerformanceReportEventType {
+
+    performanceReportCreateEvent
+    performanceReportStateChangeEvent
+}
+
+enum PerformanceJobProcessEventType {
+
+    cancelPerformanceJobStateChangeEvent
+    modifyPerformanceJobStateChangeEvent
+    resumePerformanceJobStateChangeEvent
+    suspendPerformanceJobStateChangeEvent
+}
+
+enum PerformanceProfileEventType {
+
+    performanceProfileCreateEvent
+    performanceProfileStateChangeEvent
+    performanceProfileDeleteEvent
+    performanceProfileAttributeValueChangeEvent
+}
+
+enum PerformanceJobEventType {
+
+    performanceJobCreateEvent
+    performanceJobStateChangeEvent
+    performanceJobAttributeValueChangeEvent
+}
+
+
+enum PerformanceJobReportReadyEventType {
+
+    performanceJobReportReadyEvent
+}
+
+enum PerformanceJobReportPreparationErrorEventType {
+
+    performanceJobReportPreparationErrorEvent
+}
+@enduml

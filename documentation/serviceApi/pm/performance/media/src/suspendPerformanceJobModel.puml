@@ -1,0 +1,36 @@
+@startuml suspendPerformanceJobModel
+
+class SuspendPerformanceJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: PerformanceJobProcessStateType
+    suspensionDeniedReason: string
+}
+SuspendPerformanceJob_Common <|-- SuspendPerformanceJob
+
+
+
+class SuspendPerformanceJob_Common {
+
+    suspensionReason: string
+}
+
+SuspendPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
+
+
+class SuspendPerformanceJob_Create {
+
+}
+SuspendPerformanceJob_Common <|-- SuspendPerformanceJob_Create
+
+enum PerformanceJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+}
+
+@enduml

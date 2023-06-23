@@ -1,0 +1,29 @@
+@startuml resumePerformanceJobStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state request_accepted <<choice>> 
+ note bottom of request_accepted : Is request accepted?
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> request_accepted
+
+request_accepted -l-> declined: No
+
+request_accepted -r-> accepted: Yes
+
+accepted -d-> completed
+
+declined -d-> [*]
+completed -d-> [*]
+
+@enduml

@@ -1,0 +1,71 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Legato - SD-WAN Types
+definitions:
+  AdministrativeState:
+    type: string
+    description: >-
+      MEF Core Model (MCM) defined Administraive State.
+    readOnly: true
+    enum:
+        - ERROR
+        - INIT
+        - ENABLED_FOR_USE
+        - LOCKED
+        - IN_TEST
+        - UNKNOWN
+  EnabledDisabled:
+    description: Enumeration to indicate Enabled/Disabled state of an attribute
+    type: string
+    enum:
+        - "ENABLED"
+        - "DISABLED"
+  InternetBreakout:
+    type: string
+    description: Represents a Policy Criterion indicating whether the Application Flow should be forwarded directly to the Internet using Internet Breakout. Reference MEF 70 Section 8.5.4 INTERNET-BREAKOUT Policy Criterion.
+    enum:
+        - "YES"
+        - "NO"
+  Encryption:
+    type: string
+    description: Represents a Policy Criterion used to specify whether or not encryption is required. Reference MEF 70 Section 8.5.2 ENCRYPTION Policy Criterion.
+    enum:
+        - "YES"
+        - EITHER
+  PublicPrivate:
+    type: string
+    description: Represents a Policy Criterion that provides control over whether or not an Application Flow can traverse a public Internet Underlay Connectivity Service. Reference MEF 70 Section 8.5.3 PUBLIC-PRIVATE Policy Criterion.
+    enum:
+        - PRIVATE_ONLY
+        - EITHER
+  BillingMethod:
+    type: string
+    description: Represents a Policy Criterion that provides control over the charge type of the network that can be used to forward an Application Flow. Reference MEF 70 Section 8.5.5 BILLING-METHOD Policy Criterion.
+    enum:
+        - FLAT_RATE_ONLY
+        - EITHER
+  Backup:
+    type: string
+    description: Represents a Policy Criterion when at least one non-Backup UCS available at an SD-WAN Edge. Reference MEF 70 Section 8.5.6 BACKUP Policy Criterion.
+    enum:
+        - "YES"
+        - "NO"
+  OperationalState:
+    type: string
+    description: |-
+        MEF Core Model (MCM) defined Operational State.
+        * INSTALLED_AND_NOT_OPERATING_CORRECTLY means that the object installed but has one or more pending alarms that have not been cleared.
+        * INSTALLED_BUT_NOT_OPERATING means that the object is in a shutdown, powered-off, or similar state.
+        * IN_TEST means that the object can only respond to testing commands and communications.
+        * LOCKED means that the object is prohibited from being used.
+        * UNKNOWN means that this object was unable to report its status when communication was last attempted.
+    readOnly: true
+    enum:
+            - ERROR
+            - INIT
+            - INSTALLED_AND_OPERATING_CORRECTLY
+            - INSTALLED_AND_NOT_OPERATING_CORRECTLY
+            - INSTALLED_BUT_NOT_OPERATING
+            - NOT_INSTALLED
+            - IN_TEST
+            - LOCKED
+            - UNKNOWN

@@ -1,0 +1,46 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+set namespaceSeparator none
+
+class MefServiceRefOrValueOrder {
+
+    id: string 
+    href: string 
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationshipWithGrouping
+   
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+MefServiceRefOrValueOrder *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+
+
+class urn:mef:lso:spec:legato:UcsUni:0.0.1:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:legato:UcsUni:0.0.1:order"
+
+class urn:mef:lso:spec:legato:Ucs:0.0.1:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:legato:Ucs:0.0.1:order"
+
+class urn:mef:lso:spec:legato:UcsEndPoint:0.0.1:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:legato:UcsEndPoint:0.0.1:order"
+
+@enduml

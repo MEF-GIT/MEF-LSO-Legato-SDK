@@ -1,0 +1,39 @@
+@startuml
+
+' title Retrieve Available Topics List
+
+hide footbox
+
+participant Client
+box "Server" 
+participant "API Gateway" as Server
+participant Broker
+participant Producer
+end box
+
+activate Broker 
+
+== Subscribe ==
+
+Client -> Server : browse avilable  ""Topic""s
+...
+Client -> Server   : subscribe to selected  ""Topic""
+Server -> Producer : configure producer 
+activate Producer
+Client <-- Server  : {subscription details}
+
+== Consume ==
+
+loop periodicaly send & receive data 
+  Producer ->> Broker : metric 
+  ...
+  Client ->> Broker : read metric
+end 
+
+
+== Unsubscribe ==
+
+Client -> Server   : unsubscribe
+Server -> Producer : cleanup producer
+destroy Producer
+@enduml

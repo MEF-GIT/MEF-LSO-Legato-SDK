@@ -1,0 +1,18 @@
+@startuml
+
+' title Get Available Topic by an Identifier
+
+hide footbox
+
+participant Client
+participant Server
+
+Client -> Server : GET {{baseUrl}}/topic/{{id}}
+
+Server -> Server : validation
+alt successful inquiry
+    Client <-- Server : 200  available ""Topic""
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+@enduml

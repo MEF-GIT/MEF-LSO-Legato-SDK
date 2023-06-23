@@ -19,7 +19,7 @@ info:
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
   title: Legato Service Ordering Management API
-  version: 5.0.0-RC
+  version: 5.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/legato/serviceOrderingManagement/v5/'
     variables:

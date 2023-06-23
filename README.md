@@ -1,24 +1,24 @@
-# MEF-LSO-Legato-SDK Ella Release
+# MEF-LSO-Legato-SDK Fergie Release
 
 ## Download Link
 
-Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/ella/MEF-LSO-Legato-SDK-ella.zip)
+Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/fergie/MEF-LSO-Legato-SDK-fergie.zip)
 
 ## Overview
 
-This repository contains the release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory and Service Notification functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
+This repository contains the release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, and Service Inventory functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
-Also included are draft, in-progress versions of the API Developer Guides for each of the service types listed above.
+Also included are Service schemas and Performance Monitoring definitions .
 
 ## High-level release notes
 
-- Service Ordering and Service Inventory APIs are updated to match all Sonata API patterns and have API Developer Guide documents provided (MEF W99 and MEF W135).
-- Carrier Ethernet and IP service schemas are revised and updated, together with their guide documents (MEF W101, MEF W102)
+- SD-WAN service schemas are revised and updated, together with their guide documents (MEF W100)
 - Following documents have been published as MEF Standards:
-  - MEF 112 - Draft Release 1 MEF Services Model Information Model for IP and IP VPN
-  - MEF 128 - Draft Release 2 LSO API Security Profile
+  - MEF 133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
+  - MEF 136 - Service Function Testing Business Requirements and Use Cases
 - New document:
-  - MEF W133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
+  - MEF W128.1 - LSO API Security Profile
+  - MEF W133.1 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
 
 ## Scope
 
@@ -37,15 +37,6 @@ It includes API definitions for the following functional areas:
   - Service - Retrieve operations only
   - Not in scope
     - Service - Create, Amend/Modify, Delete operations
-- Service Notification - This includes support for
-  - Hub - Create, Delete, Retrieve operations
-  - Service Specification - Create, Delete, StateChange event notifications
-  - Service Order/OrderItem - Create, StateChange event notifications
-  - Service events - Create, Delete, StateChange event notifications
-  - Not in scope
-    - Hub - Modify operations
-    - Retrieve Notification records history/log
-    - AttributeValueChange event notifications
 
 In addition to the Service Provisioning APIs, the SDK includes the following MEF Service Specification schemas:
 
@@ -64,22 +55,37 @@ https://wiki.mef.net/display/CESG/LSO+Legato
 
 The API files contained in this SDK are evolving and subject to change. They are based on documents that are either work in progress or draft standards that have not yet completed the review cycles and approvals necessary to achieve the status as a MEF standard. MEF is making these publicly available at this time to invite wider industry review.
 
-There is currently [LSO Legato Service Provisioning Project](https://wiki.mef.net/display/LSO/LSO+Legato+Service+API+-+Project+Home+Page) open that aims to deliver:
-
-- *LSO Legato Service Ordering Management API (MEF W99) - **work in progress - ready for CfC#2**
-- *LSO Legato Service Inventory Management API - Developer Guide (MEF W135) - **work in progress - ready for CfC#2**
-- LSO Legato Service Provisioning Specification - SD-WAN (MEF W100) - **DRAFT version**
-- *LSO Legato Carrier Ethernet Service Schemas and Developer Guide (MEF W101) - **work in progress - ready for CfC#2**
-- *LSO Legato Internet Protocol Service Schemas and Developer Guide (MEF W102) - **work in progress - ready for CfC#2**
-- LSO Legato Service Provisioning Specification - L1 (MEF W103) - **DRAFT version**
+The maturity per functionality presents as follows:
 
 (*) is used to mark item that changes their maturity comparing to previous release.
+
+APIs and Developer Guides:
+
+- Service Catalog API - **early draft version, on hold**
+- MEF W99 - LSO Service Ordering Management API - Developer Guide W99 - **work in progress - requested LB**
+- MEF W135 - LSO Legato Service Inventory Management API - Developer Guide - **work in progress - requested LB**
+
+Service Schemas:
+
+- *SD-WAN (MEF W100) - **work in progress - CfC#2**
+- Carrier Ethernet (MEF W101) - **work in progress - CfC#2**
+- Internet Protocol (MEF W102) - **work in progress - CfC#2**
+- LSO Legato Service Provisioning Specification - L1 (MEF W103) - **work in progress - CfC#3 - on hold**
+
+SOAM:
+
+- *MEF 133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **Published Standard**
+- *MEF W133.1 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **early draft version**
+- *MEF 136 - Service Function Testing Business Requirements and Use Cases - **Published Standard**
+- *MEF W143 - Performance Monitoring Profiles, Jobs, Notifications and Collection API and Developer Guide	- **work in progress - CfC#1**
+- *MEF W147 - Streaming Management API and Developer Guide - **work in progress - CfC#1**
+- Performance Monitoring reports and statistics definitions for Carrier Ethernet adn IP - **early draft version**
 
 ## Contents
 
 This SDK contains the following items:
 
-- `COPYRIGHT` - Copyright 2020 MEF Forum
+- `COPYRIGHT` - Copyright 2023 MEF Forum
 - `LICENSE` - Contains a copy of the Apache 2.0 license
 - `README` - This file
 - `serviceApi` - Definitions of the APIs are found in this directory, provided as yaml files.

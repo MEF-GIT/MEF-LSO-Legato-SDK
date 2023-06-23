@@ -1,0 +1,13 @@
+type: object
+
+properties:
+  protocol:
+    description: >+
+      Name of the protocol consumer is intended to use to consume data from `topicId`. 
+      The name of protocol must be one of the defined for the topic.
+    type: string
+  topicId:
+    description: Identifier of the topic consumer wants to subscribe to
+    type: string
+required: ['topicId', 'protocol']
+additionalProperties: true

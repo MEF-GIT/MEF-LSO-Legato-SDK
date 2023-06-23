@@ -1,0 +1,41 @@
+@startuml performanceReportComplexQueryModel
+
+class PerformanceReportComplexQuery {
+
+    consumingApplicationId: string
+    creationDate: date-time
+    description: string
+    granularity: Interval
+    outputFormat: OutputFormat
+    producingApplicationId: string
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
+}
+
+PerformanceReportComplexQuery *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery *--> PerformanceReportRef : performanceReport
+PerformanceReportComplexQuery *--> ReportingTimeframe : reportingTimeframe
+PerformanceReportComplexQuery *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceReportComplexQuery_Create {
+
+    consumingApplicationId: string
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    outputFormat: OutputFormat
+    producingApplicationId: string
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
+}
+
+PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+@enduml

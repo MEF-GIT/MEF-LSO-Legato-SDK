@@ -1,0 +1,24 @@
+@startuml performanceJobRefOrValue
+
+class PerformanceJobRefOrValue {
+    @type*: string
+}
+
+class PerformanceJobRef {
+
+    href: string
+    id*: string
+}
+PerformanceJobRefOrValue <|-- PerformanceJobRef
+
+class PerformanceJobValue {
+
+    consumingApplicationId: string
+    granularity: Interval
+    outputFormat*: OutputFormat
+    producingApplicationId: string
+    resultFormat*: ResultFormat
+}
+PerformanceJobRefOrValue <|-- PerformanceJobValue
+
+@enduml

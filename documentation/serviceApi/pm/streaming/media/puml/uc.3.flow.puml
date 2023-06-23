@@ -1,0 +1,46 @@
+@startuml
+
+' title Subscribe To a Topic and consume it
+
+hide footbox
+
+participant Client
+box "Server" 
+participant "API Gateway" as Server
+participant Broker
+participant Producer
+end box
+
+Client -> Server : POST {{baseUrl}}/subscription 
+
+Server -> Server : validation
+alt configure Stream
+  Server -> Broker  : create and configure infrastructure resources for streaming (e.g., topic/queue)
+  Server <-- Broker : {{stream information}}
+  Server -> Producer: configure producer to push data to the stream 
+  activate Producer
+
+
+else find stream
+  Server -> Broker  : create and configure infrastructure resource (e.g., topic/queue)
+end 
+
+loop periodicaly send data
+  Producer ->> Broker : metric 
+  ...
+end
+
+alt successful inquiry
+    Client <-- Server : 201 : Subscription 
+else alternative success response
+    Client <-- Server : 201 : AsyncApi contract definition
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+...
+
+
+loop [if subscription was successful] periodicaly read data
+Client ->> Broker: get message(s)
+end 
+@enduml

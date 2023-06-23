@@ -1,0 +1,55 @@
+@startuml
+
+
+class e as "Event" {
+    eventId: UUID
+    eventTime: ZonedDateTime
+    priority: Priority
+    eventType: String
+    event: Any
+}
+
+enum Priority {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+package "specific payload definition" {
+
+
+  class mm as "SpecificMetricMessage" {
+    eventType = "Specific Metric"
+  }
+
+
+  class k as "Key" {
+    component_1: String
+    component_2: String
+    ...
+    component_N: String
+  }
+
+  class ch1 as "SomeQuantity" {
+    value: Double
+    unit: String
+  }
+
+  class ch2 as "SomeMeasurement" {
+    value: Double
+  }
+
+  class s as "Statistics"
+  class m as "SpecificMetric"
+
+  e  <|-- mm
+  mm *-> m : event
+  m *-> k : key
+  m *--> s : statistics
+  s *--> ch1 : metric_1
+  s *--> ch1 : metric_K
+  s *--> ch2 : metric_2
+
+}
+
+@enduml

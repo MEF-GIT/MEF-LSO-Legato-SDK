@@ -1,0 +1,61 @@
+@startuml pmEntities
+autonumber
+
+actor "Administrator" as A
+
+entity PerformanceProfile as PP
+
+entity PerformanceJob as PJ
+entity PerformanceReport as PR
+
+actor "Buyer/Client" as B
+
+A -> PP: POST /performanceProfile request
+activate PP
+note right of PP: Performance Profile is created 
+PP --> A: Created
+
+A -> PP: GET /performanceProfile request
+PP --> A: List Performance Profiles
+
+A -> PP: PATCH /performanceProfile/{id} request
+note right of PP: Performance Profile is updated
+PP --> A: Updated
+
+note left of B: Buyer/Client is getting list of Performance Profiles
+B -> PP: GET /performanceProfile request
+
+PP --> B: List Performance Profiles
+
+note left of PJ: Buyer/Client is creating \na Performance Job based on \nPerformance Profile
+B -> PJ: POST /performanceJob request
+activate PJ
+PJ --> B: Created
+
+note right of PJ: On scheduled date
+
+PJ -> PJ: state: in-progress
+
+PJ -> PJ: generate data
+
+PJ --> PR: (causes report creation)
+
+activate PR
+
+PR -> PR: state: in-progress
+
+PR -> PR: collect data
+
+PR -> PR: state: completed
+
+PR --> PJ: (report completed)
+
+PJ -> B: POST /performanceJobReportReadyEvent
+
+note right of PJ: non-recurring Job
+PJ -> PJ: state: completed
+
+B -> PR: GET /performanceReport
+PR --> B: Performance Report content
+
+@enduml

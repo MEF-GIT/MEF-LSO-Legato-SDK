@@ -1,0 +1,86 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Extensible {
+
+    @type*: string
+    @baseType: string
+    @schemaLocation: string
+}
+
+
+class GcEvent {
+
+    eventId: string
+    eventTime: date-time
+    eventType: string
+    ' --event--: object
+    **description** : string
+    **priority** : Priority
+}
+
+
+note left of GcEvent
+  ""eventType"" discriminates 
+  ""EventPayload"" content
+end note
+
+enum Priority {
+    LOW
+    MEDIUM
+    HIGH
+}
+
+class EventPayload 
+
+GcEvent *-> EventPayload : event
+
+Extensible <|-- GcEvent
+
+package TMF {
+  class Event {
+    href: string
+
+    id: string
+    correlationId: string
+    domain: string
+    title: string
+    timeOccurred: date-time
+  }
+  class EntityRef {
+    href: string
+  }
+
+GcEvent <|-- Event
+Event *--> EntityRef : reportingSystem
+Event *--> EntityRef : source
+}
+
+package MEF {
+  class MEFEvent as "Message" {
+    streamIdentifier: UUID  
+
+    id: string
+    correlationId: string
+    domain: string
+    title: string
+  }
+  GcEvent <|-- MEFEvent
+  MEFEvent *--> EntityRef : source
+}
+
+' package External as "3pp" {
+'   class ExtEvent {
+'   }
+
+'   GcEvent <|-- ExtEvent
+' }
+
+note bottom of MEFEvent
+  from W133.1_WD Table 66
+end note
+
+@enduml

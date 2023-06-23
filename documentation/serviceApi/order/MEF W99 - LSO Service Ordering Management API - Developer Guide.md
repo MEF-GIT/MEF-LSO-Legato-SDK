@@ -13,20 +13,19 @@ img
 <div style="font-weight:bold; font-size:33pt; font-family: sensation;  text-align:center">
 Working Draft
 </br>
-MEF W99 v0.91
+MEF W99 v0.99
+</br>
 </br>
 LSO Service Ordering Management API - Developer Guide
 </br>
-<p style="color:red;font-weight:bold; font-size:18pt">This draft represents MEF work in progress and is subject to change.</p>
 </br>
-January 2023
+June 2023
+</br>
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
 </div>
 
 <div class="page"/>
-
-<!-- TODO - check page formatting -->
 
 **Disclaimer**
 
@@ -154,8 +153,8 @@ contained herein.
       - [7.2.3.1. Type ServiceValue](#7231-type-servicevalue)
       - [7.2.3.2. Type MefServiceConfiguration](#7232-type-mefserviceconfiguration)
       - [7.2.3.3. Type ServiceRelationship](#7233-type-servicerelationship)
-      - [7.2.3.3. `enum` ServiceStateType](#7233-enum-servicestatetype)
-      - [7.2.3.3. Type ServiceRef](#7233-type-serviceref)
+      - [7.2.3.4. `enum` ServiceStateType](#7234-enum-servicestatetype)
+      - [7.2.3.5. Type ServiceRef](#7235-type-serviceref)
     - [7.2.4. Place representation](#724-place-representation)
       - [7.2.4.1. Type RelatedPlaceRefOrValue](#7241-type-relatedplacereforvalue)
       - [7.2.4.2. Type FieldedAddress](#7242-type-fieldedaddress)
@@ -173,17 +172,18 @@ contained herein.
     - [7.2.6. Common](#726-common)
       - [7.2.6.1. Type OrderCoordinatedAction](#7261-type-ordercoordinatedaction)
       - [7.2.6.2. Type OrderItemCoordinatedAction](#7262-type-orderitemcoordinatedaction)
-      - [7.2.6.2. `enum` OrderItemCoordinationDependencyType](#7262-enum-orderitemcoordinationdependencytype)
-      - [7.2.6.11. Type Note\_BusSof](#72611-type-note_bussof)
-      - [7.2.6.13. Type RelatedContactInformation](#72613-type-relatedcontactinformation)
-      - [7.2.6.14. Type TerminationError](#72614-type-terminationerror)
-      - [7.2.6.15. `enum` TimeUnit](#72615-enum-timeunit)
+      - [7.2.6.3. `enum` OrderItemCoordinationDependencyType](#7263-enum-orderitemcoordinationdependencytype)
+      - [7.2.6.4. Type Note\_BusSof](#7264-type-note_bussof)
+      - [7.2.6.5. Type RelatedContactInformation](#7265-type-relatedcontactinformation)
+      - [7.2.6.6. Type TerminationError](#7266-type-terminationerror)
+      - [7.2.6.7. `enum` TimeUnit](#7267-enum-timeunit)
   - [7.3. Notification API Data model](#73-notification-api-data-model)
     - [7.3.1. Type Event](#731-type-event)
     - [7.3.2. Type ServiceOrderEvent](#732-type-serviceorderevent)
     - [7.3.3. Type ServiceOrderEventPayload](#733-type-serviceordereventpayload)
     - [7.3.4. `enum` ServiceOrderEventType](#734-enum-serviceordereventtype)
 - [8. References](#8-references)
+- [Appendix A Acknowledgments](#appendix-a-acknowledgments)
 
 <!-- /code_chunk_output -->
 
@@ -194,8 +194,12 @@ contained herein.
 The following members of the MEF participated in the development of this
 document and have requested to be included in this list.
 
-| **Member** |
-| ---------- |
+| Member  |
+| ------- |
+| Amartus |
+| Cisco   |
+| Lumen   |
+| Verizon |
 
 **Table 1. Contributing Members**
 
@@ -210,14 +214,18 @@ Point. The Legato Interface Reference Point is defined in the MEF 55.1
 [[MEF55.1](#8-references)] at the interface between the Business Application
 Systems layer and Service Orchestration Functionality layer.
 
-This Standard normatively incorporates the following OpenAPI 3.0 definitions by
-reference as if they were part of this document, from the MEF-GIT GitHub
-repository _working_draft_ branch:
+This standard normatively incorporates the following files by reference as if
+they were part of this document from the GitHub repository:
 
-<https://github.com/MEF-GIT/MEF-LSO-Legato-SDK>
+[MEF-LSO-Legato-SDK](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK)
 
-- `serviceApi\order\serviceOrderingManagement.api.yaml`
-- `serviceApi\order\serviceOrderingNotification.api.yaml`
+commit id:
+[0e83943f529e87c036a083926a1b28a0a3523c5e](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/0e83943f529e87c036a083926a1b28a0a3523c5e)
+
+- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/blob/0e83943f529e87c036a083926a1b28a0a3523c5e/serviceApi/order/serviceOrderingManagement.api.yaml)
+- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/blob/0e83943f529e87c036a083926a1b28a0a3523c5e/serviceApi/order/serviceOrderingNotification.api.yaml)
+
+<div class="page"/>
 
 # 2. Terminology and Abbreviations
 
@@ -666,7 +674,7 @@ these data models in which:
 - some relations and attributes that are not essential to the understanding of
   the service specification model are omitted.
 
-The red color in figures 7 and 8 below highlights the data model of services.
+The red color in Figures 7 and 8 below highlights the data model of services.
 Some parts of the model are skipped for examples clarity. This is denoted by
 the `<<skipped>>` text in diagrams and in json snippets later in the document.
 Please note that this document uses service specifications just for the sake of
@@ -1622,7 +1630,7 @@ from the API: `POST /hub`. The request contains only 2 attributes:
   notified to,
 - `query` - optional, to provide the required types of event.
 
-The figure below shows all entities involved in the Notification use cases.
+Figure 16 shows all entities involved in the Notification use cases.
 
 ![Service Order Management Notification Data Model](media/ServiceOrderNotificationModel.png)
 
@@ -1776,7 +1784,7 @@ of the `Service` itself and how to manage it with the Service Ordering.
 
 **Figure 18. Service Lifecycle**
 
-Figure 19 depicts the Service available states and their transitions.
+Figure 18 depicts the Service available states and their transitions.
 
 The service lifecycle starts with the `state` provided in the add request. All
 but `terminated` can be the initial state.
@@ -1819,6 +1827,8 @@ Table 10 summarizes the states and their descriptions:
 
 **Table 10. Service states**
 
+<div class="page"/>
+
 # 7. API Details
 
 ## 7.1. API patterns
@@ -1836,7 +1846,7 @@ case, the error message body structure might be aligned with the `Error`.
 
 ![Error response data model](media/errorEntities.png)
 
-**Figure 20. Data model types to represent an erroneous response**
+**Figure 19. Data model types to represent an erroneous response**
 
 #### 7.1.1.1. Type Error
 
@@ -2179,12 +2189,12 @@ Inherits from:
 
 ## 7.2. Management API Data model
 
-Figure 21 presents the whole Service Order Management data model. The data
+Figure 20 presents the whole Service Order Management data model. The data
 types are discussed later in this section.
 
 ![Service Order Management Data Model](media/ServiceOrderModelFull.png)
 
-**Figure 21. Service Order Management Data Model**
+**Figure 20. Service Order Management Data Model**
 
 ### 7.2.1. ServiceOrder
 
@@ -2792,7 +2802,7 @@ Service Specification.
     </tbody>
 </table>
 
-#### 7.2.3.3. `enum` ServiceStateType
+#### 7.2.3.4. `enum` ServiceStateType
 
 **Description:** Valid values for the lifecycle state of the Service.
 
@@ -2805,7 +2815,7 @@ Service Specification.
 | active             | The service is fully available and active                                                                             |
 | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
 
-#### 7.2.3.3. Type ServiceRef
+#### 7.2.3.5. Type ServiceRef
 
 **Description:** Reference to a Service instance.
 
@@ -3487,7 +3497,7 @@ Items that this Order Item can be started or completed
     </tbody>
 </table>
 
-#### 7.2.6.2. `enum` OrderItemCoordinationDependencyType
+#### 7.2.6.3. `enum` OrderItemCoordinationDependencyType
 
 **Description:** Possible values of the Order Item Coordination Dependency
 
@@ -3498,7 +3508,7 @@ Items that this Order Item can be started or completed
 | finishToStart                       | Work on the Related Order Items begins after the completion of the Specified Order Item            |
 | finishToFinish                      | Work on the Related Order Items completes at the same time as the Specified Order Item             |
 
-#### 7.2.6.11. Type Note_BusSof
+#### 7.2.6.4. Type Note_BusSof
 
 **Description:** Extra information about a given entity. Only useful in
 processes involving human interaction. Not applicable for an automated process.
@@ -3542,7 +3552,7 @@ processes involving human interaction. Not applicable for an automated process.
     </tbody>
 </table>
 
-#### 7.2.6.13. Type RelatedContactInformation
+#### 7.2.6.5. Type RelatedContactInformation
 
 **Description:** Contact information of an individual or organization playing a
 role for this Order Item. The rule for mapping a represented attribute value to
@@ -3607,7 +3617,7 @@ _lowerCamelCase_ pattern e.g.
 - BUS Contact: `role` equal to `busInformation`
 - SOF Contact: `role` equal to `sofContact`
 
-#### 7.2.6.14. Type TerminationError
+#### 7.2.6.6. Type TerminationError
 
 **Description:** This indicates an error that caused an Item to be terminated.
 The code and propertyPath should be used like in Error422.
@@ -3647,7 +3657,7 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
     </tbody>
 </table>
 
-#### 7.2.6.15. `enum` TimeUnit
+#### 7.2.6.7. `enum` TimeUnit
 
 **Description:** Represents a unit of time.
 
@@ -3678,11 +3688,11 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
 
 ## 7.3. Notification API Data model
 
-Figure 22 presents the Service Order Management Notification data model.
+Figure 21 presents the Service Order Management Notification data model.
 
 ![Service Order Management Notification Data Model](media/ServiceOrderNotificationModel.png)
 
-**Figure 22. Service Order Management Notification Data Model**
+**Figure 21. Service Order Management Notification Data Model**
 
 This data model is used to construct requests and responses of the API
 endpoints described in
@@ -3808,6 +3818,8 @@ subject of this event.
     </tbody>
 </table>
 
+<div class="page"/>
+
 # 8. References
 
 - [JSON Schema draft 7](https://json-schema.org/specification-links.html#draft-7),
@@ -3861,4 +3873,21 @@ subject of this event.
 - [TMF630](https://www.tmforum.org/resources/specification/tmf630-rest-api-design-guidelines-4-2-0/)
   TMF630 API Design Guidelines 4.2.0
 - [TMF641](https://www.tmforum.org/resources/specification/tmf641-service-ordering-api-user-guide-v4-1-0/)
-TMF641 Service Order Management API REST Specification v4.1.0
+  TMF641 Service Order Management API REST Specification v4.1.0
+
+<div class="page"/>
+
+# Appendix A Acknowledgments
+
+The following contributors participated in the development of this document and
+have requested to be included in this list.
+
+Mike **BENCHECK**
+
+Michał **ŁĄCZYŃSKI**
+
+Jack **PUGACZEWSKI**
+
+Karthik **SETHURAMAN**
+
+Mehmet **TOY**

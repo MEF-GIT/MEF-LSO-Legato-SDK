@@ -1,0 +1,30 @@
+@startuml
+
+
+class TopicSubscriptionRequest << Request >>  {
+    * protocol: String = "kafka"
+    * topicId: String = "UID"
+}
+
+class CePerformanceMonitoringSubscription {
+    performanceAttirbuteNames : Set<String>
+}
+
+
+
+class Key as "OrderedPair" "0..*" {
+    * serviceId: String
+    * fromCarrierEthernetServiceEndPoint: String
+    * toCarrierEthernetServiceEndPoint: String
+}
+
+class Configuration {
+    partitions: Int
+    clientId: String
+    groupId: String
+}
+
+CePerformanceMonitoringSubscription *->  Key : keys
+CePerformanceMonitoringSubscription *-l->  Configuration : protocolConfiguration
+TopicSubscriptionRequest <|-- CePerformanceMonitoringSubscription
+@enduml

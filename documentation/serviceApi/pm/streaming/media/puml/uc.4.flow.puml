@@ -1,0 +1,37 @@
+@startuml
+
+' title Unsubscribe From a Topic
+
+hide footbox
+
+participant Client
+box "Server" 
+participant "API Gateway" as Server
+participant Broker
+participant Producer
+end box
+
+activate Producer
+
+Client -> Server : DELETE {{baseUrl}}/subscription/{{sid}} 
+
+
+
+Server -> Server : validation
+alt tear down stream
+
+  Server -> Producer !! : cleanup producer
+
+end 
+Server -> Broker  : cleanup infrastructure resources for streaming (e.g., topic/queue)
+Server <-- Broker
+
+
+alt successful inquiry
+    Client <-- Server : 204 : unsubscribe confirmation
+else validation or internal problem
+    Client <-- Server: 4xx/5xx : error response
+end
+...
+
+@enduml

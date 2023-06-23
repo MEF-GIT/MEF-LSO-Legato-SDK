@@ -1,0 +1,26 @@
+@startuml useCase1Polling
+hide footbox
+
+participant Administrator as A
+participant SOF
+
+
+A -> SOF : POST {{baseUrl}}/performanceProfile (PerformanceProfile_Create)
+SOF -> SOF : basic validation
+
+alt succesful inquiry
+  SOF --> A : 201 PerformanceProfile with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until PerformanceProfile in active state
+      A -> SOF :   GET {{baseUrl}}/performanceProfile/{{id}}
+      return 200 PerformanceProfile in current state
+  end
+
+else validation or internal problem
+  SOF --> A : 4xx or 5xx error response
+end
+
+
+@enduml
