@@ -22,25 +22,25 @@ img {
 
 ![MEF_LOGO](media/mefLogo.png)
 
-<div style="font-weight:bold; font-size:33pt; font-family: sensation;  text-align:center">
+<div style="font-weight:bold; font-size:33pt; font-family: Sansation;  text-align:center">
 Working Draft
 </br>
-MEF W147 v0.1
+MEF W147 v0.2
 </br>
 </br>
-MEF W147 - Allegro, Interlude, and Legato Streaming Management - Developer Guide
+LSO Allegro, LSO Interlude, and LSO Legato Streaming Management - Developer Guide
 </br>
 </br>
-
+</br>
+December 2023
 </br>
 </br>
-June 2023
-</div>
-
 <p class="remark">
 This draft represents MEF work in progress and is subject to change.
 </p>
-
+</br>
+</br>
+</br>
 <p class="remark">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
 </div>
 
@@ -114,8 +114,8 @@ contained herein.
   - [5.2. API Endpoint and Operation Description](#52-api-endpoint-and-operation-description)
   - [5.3. Integration of the Service-Specific Models](#53-integration-of-the-service-specific-models)
     - [5.3.1. Streaming Management API Extension](#531-streaming-management-api-extension)
-      - [5.3.1.1 Response extension](#5311-response-extension)
-      - [5.3.1.2 Request extension](#5312-request-extension)
+      - [5.3.1.1. Response extension](#5311-response-extension)
+      - [5.3.1.2. Request extension](#5312-request-extension)
     - [5.3.2. Message Data Model Extension](#532-message-data-model-extension)
   - [5.4. Model Structural Validation](#54-model-structural-validation)
   - [5.5. Security Considerations](#55-security-considerations)
@@ -151,7 +151,7 @@ contained herein.
       - [7.1.3.10. `enum` Error422Code](#71310-enum-error422code)
       - [7.1.3.11. Type Error500](#71311-type-error500)
   - [7.2. Message model](#72-message-model)
-    - [7.2.1 Message](#721-message)
+    - [7.2.1. Message](#721-message)
 - [8. References](#8-references)
 - [Appendix A. Channel binding examples](#appendix-a-channel-binding-examples)
   - [Kafka binding example](#kafka-binding-example)
@@ -181,7 +181,7 @@ This standard is intended to assist implementation of the Streaming Management
 functionality defined for the LSO Allegro, Legato, and Interlude Interface Reference
 Points (IRPs), for which requirements and use cases are defined in MEF 133.1 (WD)
 _Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC_
-[[MEF133.1](#8-references)].
+[[MEFW133.1](#8-references)].
 This standard normatively incorporates the following files by reference
 as if they were part of this document, from the GitHub
 repository:
@@ -190,10 +190,12 @@ repository:
 
 - [`serviceApi/pm/streamingManagement.api.yaml`](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK-extended/blob/working-draft/serviceApi/pm/streamingManagement.api.yaml)
 
-**Note:** The repository contains `serviceApi/pm/streamingManagement.api.all-in-one.yaml` version of the OAS spec. This version is self contain and do not use references to external resources.
+**Note:** The repository contains `serviceApi/pm/streamingManagement.api.all-in-one.yaml` version of the OAS spec. This version is self-contained and does not use references to external resources.
 
 The Streaming Management API is defined using OpenAPI 3.0 Specification
 [[OAS-V3](#8-references)].
+
+<div class="page"/>
 
 # 2. Terminology and Abbreviations
 
@@ -210,17 +212,17 @@ MEF or external documents.
 </tr>
 <tr>
   <td>Application Program Interface (API)</td>
-  <td>In the context of LSO, API describes one of the Management Interface Reference Points based on the requirements specified in an Interface Profile, along with a data model, the protocol that defines operations on the data and the encoding format used to encode data according to the data model. In this document, API is used synonymously with REST API.</td>
+  <td>In the context of LSO, API describes one of the Management Interface Reference Points based on the requirements specified in an Interface Profile, along with a data model, the protocol that defines operations on the data, and the encoding format used to encode data according to the data model. In this document, API is used synonymously with REST API.</td>
   <td><a href="#8-references">[MEF55.1]</td>
 </tr>
 <tr>
   <td>API Gateway</td>
-  <td>An API gateway is a software pattern or component that acts as an intermediary between Clients and backend services of the Server.</td>
+  <td>An API gateway is a software pattern or component that acts as an intermediary between clients and the backend services of the server.</td>
   <td>This document</td>
 </tr>
 <tr>
   <td>Buyer</td>
-  <td>In the context of this document, denotes the organization or individual acting as the customer in a transaction over a Cantata (Customer <-> Service Provider) or Sonata (Service Provider <-> Partner) Interface.</td>
+  <td>In the context of this document denotes the organization or individual acting as the customer in a transaction over a Cantata (Customer <-> Service Provider) or Sonata (Service Provider <-> Partner) Interface. The Buyer consumes streaming management API exposed through Allegro and Interlude respectively.</td>
   <td>This document; adapted from <a href="#8-references">[MEF80]</td>
 </tr>
 <tr>
@@ -229,20 +231,35 @@ MEF or external documents.
   <td>This document</td>
 </tr>
 <tr>
+  <td>Consumer</td>
+  <td>A component that consumes messages from a data stream. In the scope of this document, synonymous to `Client`</td>
+  <td>This document</td>
+</tr>
+<tr>
   <td>Event</td>
-  <td>A specific occurrence or a change in state that is note-worthy to the system administrator.</td>
-  <td><a href="#8-references">[ITU X.734]</td>
+  <td>A specific occurrence or a state change that is note-worthy to the system administrator.</td>
+  <td><a href="#8-references">[MEFW133.1]</td>
 </tr>
 <tr>
   <td>Message</td>
-  <td>Typically defined as a unit of information exchanged between components or services in a distributed sys-tem. In context of this standard, we scope this defini-tion to an unit of information, that is a manifestation on an event, exchanged between producer and consumer using event drive architectural pattern.</td>
-  <td><a href="#8-references">[MEF133.1]</td>
+  <td>Typically defined as a unit of information exchanged between components or services in a distributed system. In the context of this standard, a unit of information, that is a manifestation of an event exchanged between producer and consumer using an event-driven architectural pattern.</td>
+  <td><a href="#8-references">[MEFW133.1]</td>
 </tr>
-
+<tr>
+  <td>Producer</td>
+  <td>A component that produces messages and exposes them via message stream to the consumers</td>
+  <td><a href="#8-references">This document</a> </td>
+</tr>
 <tr>
   <td>REST API</td>
   <td>Representational State Transfer. REST provides a set of architectural constraints that, when applied as a whole, emphasizes the scalability of component interactions, the generality of interfaces, the independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.</td>
   <td><a href="#8-references">[REST]</a> </td>
+</tr>
+<tr>
+  <td>Seller</td>
+  <td>In the context of this document, denotes the organization or individual acting as the supplier in a transaction over a Cantata (Customer <-> Service Provider) or Sonata (Service Provider <-> Partner) Interface. The Seller exposes streaming management API through Allegro and Interlude respectively.
+  </td>
+  <td>This document; adapted from <a href="#8-references">[MEF80]</td>
 </tr>
 <tr>
   <td>Server</td>
@@ -251,6 +268,8 @@ MEF or external documents.
 </tr>
 
 </table>
+
+<div class="page"/>
 
 # 3. Compliance Levels
 
@@ -277,6 +296,8 @@ have been met. A paragraph preceded by **[COc]<**specifies a Conditional
 Optional Requirement that **MAY** be followed if the condition(s) following the
 "<" have been met.
 
+<div class="page"/>
+
 # 4. Introduction
 
 This standard specification document describes the Application Programming
@@ -300,18 +321,18 @@ This document is structured as follows:
 
 ## 4.1 Description
 
-This standard is scoped to cover APIs for the management of Streaming Management.
+This standard is scoped to cover APIs for Streaming Management.
 Although the management API might be used in different contexts we restrict the
 description in this standard to use cases that allow for exchanging performance
 data as defined in MEF W133.1.
 
 This document supports interactions over the Legato interface within a single
-operator as well as interaction with Partner Domain and Customer Domain
-through Interlude and Allegro interfaces respectively.
+operator as well as interaction with the Customer Domain and Partner Domain
+through Allegro and Interlude interfaces respectively.
 
 Streaming Management API is used to:
 
-- discover available Performance Monitoring models exposed by the server as Topics
+- discover available `Topics` exposed by the `Server`
 - manage subscriptions to these topics
 - list existing subscriptions
 
@@ -331,7 +352,7 @@ Streaming Management API is used to:
 ## 4.3. Relation to Other Documents
 
 This API implements the Performance Monitoring Streaming requirements and use
-cases that are defined in [[MEF133.1](#8-references)].
+cases that are defined in [[MEFW133.1](#8-references)].
 
 ## 4.4. Approach
 
@@ -356,7 +377,7 @@ that are applied across all Allegro, Interlude, and Legato APIs.
 Secondly, the service-independent information of the framework focuses on a
 model of a particular Allegro, Interlude, or Legato functionality and is agnostic
 to any of the service specifications.
-For example, this standard is describing
+For example, this standard describes
 the Streaming Management model and operations that allow subscribing
 to streams of any service.
 
@@ -376,15 +397,17 @@ Figure 3 presents a high-level flow in which a `Client`:
 
 ![End-to-end flow](streaming/media/e2eFlow.png)
 
-**Figure 3. End to end high-level flow**
+**Figure 3. End-to-end high-level flow**
 
 The _Consume_ section of this flow is not supported by management API as
 it is specific to the selected data exchange protocol.
-However, MEF W133.1[[MEF133.1](#8-references)] defines requirements for
+However, MEF W133.1[[MEFW133.1](#8-references)] defines requirements for
 this part of the end-to-end flow.
 
 Please note that the consumption of the data might be realized by various protocols
-leveraging broker or broker-less communication patterns.
+leveraging broker (e.g., Kafka, AMQP) or broker-less (e.g., Web Socket, SSE) communication patterns.
+
+<div class="page"/>
 
 # 5. API Description
 
@@ -395,11 +418,11 @@ case mapping. Next, it gives an overview of the API resource model.
 ## 5.1. High-level use cases
 
 Figure 4 presents a high-level use case diagram that is relevant for
-streaming management API. The mapping to MEF
-W133.1 use cases is provided in the bottom part of each use case's shape.
+streaming management API. The mapping to appropriate MEF
+W133.1 use cases is provided in the bottom part of the ellipse shape representing the use case.
 
 A full list of the use cases for streaming can be found in MEF W133.1
-[[MEF133.1](#8-references)] in section 14.
+[[MEFW133.1](#8-references)] in section 14.
 Use cases from Figure 4 are described extensively in [Chapter 6](#6-api-interactions-and-flows).
 
 ![Use cases](streaming/media/useCases.png)
@@ -428,27 +451,27 @@ to retrieve information about available topics and manage subscriptions.
 
 `serviceApi/pm/streamingManagement.api.yaml`.
 
-Streaming Management API to use cases mapping:
+Streaming Management API to use case mapping:
 
 | API endpoint                   | Description                                                           | Use Case mapping                                   |
 | ---------------------------    | --------------------------------------------------------------------- | -------------------------------------------------- |
-| `GET    /topic`                | List Topics available for Subscription  | UC 1: Retrieve Available Topics List               |
+| `GET    /topic`                | List Topics available for Subscription                                | UC 1: Retrieve Available Topics List               |
 | `GET    /topic/{{id}}`         | Retrieve Topic information by identifier                              | UC 2: Retrieve Available Topic by an Identifier    |
 | `POST   /subscription`         | Subscribe to a Topic                                                  | UC 3: Subscribe To a Topic                         |
 | `DELETE /subscription/{{id}}`  | Remove a Subscription for a Topic                                     | UC 4: Unsubscribe From a Topic                     |
-| `GET    /subscription`         | List all the Subscriptions to the Topics                          | UC 5: Retrieve Topic Subscriptions List            |
+| `GET    /subscription`         | List all the Subscriptions to the Topics                              | UC 5: Retrieve Topic Subscriptions List            |
 | `GET    /subscription/{{id}}`  | Retrieve information about Subscription to a Topic                    | UC 6: Retrieve Topic Subscription By an Identifier |
 
 **Table 2. Server-side mandatory Streaming Management API endpoints**
 
 **[R1]** The `Server` **MUST** support Streaming Management API endpoints listed
-in Table 2. 
+in Table 2.
 
 ## 5.3. Integration of the Service-Specific Models
 
 This section provides details on the extension mechanism available
 for Streaming Management API
-as well as the data payload that is exchanged between the `Server` and `Client``.
+as well as the data payload that is exchanged between the `Server` and `Client`.
 
 ### 5.3.1. Streaming Management API Extension
 
@@ -461,16 +484,16 @@ The subscription models for request and response are depicted in Figure 5.
 
 **Figure 5. Subscription data model**
 
-This data model allows for two types of extensions.
+This data model allows for two types of extensions in the response and request of the API call for UC 3.
 
-#### 5.3.1.1 Response extension
+#### 5.3.1.1. Response extension
 
 Response extension allows specifying additional information that is
 required to consume data from the stream using the selected protocol.
 The extension point for this information is `BindingsObject`. However,
 this standard does not specify how the extension should be introduced
 into the model. We recommend using _AsyncAPI Specification_ [[AsyncAPI](#8-references)] channel
-binding for well-known asynchronous protocols, as defined in _AsyncApi binding definitions at github_ [[AsyncApiB](#8-references)].
+binding for well-known asynchronous protocols, as defined in _AsyncApi binding definitions at GitHub_ [[AsyncApiB](#8-references)].
 
 For example, to provide additional information for _Kafka_ channel configuration [[AsyncApiBKC](#8-references)]
 can be used.
@@ -504,7 +527,7 @@ bindings configuration and the Kafka documentation.
 [Appendix A.](#appendix-a-channel-binding-examples)
 contains examples of bindings for additional protocols.
 
-#### 5.3.1.2 Request extension
+#### 5.3.1.2. Request extension
 
 The baseline request payload is very simple as it allows for the
 selection of a protocol from the list
@@ -519,8 +542,8 @@ The extension of the `TopicSubscriptionRequest` serves two purposes:
 1. to allow for fine-grained specification
    of the subject and performance attributes.
 1. to allow for the specification of protocol-specific parameters.
-   For example, `Server` may allow
-   the `Client` to specify the consumer group name for _Kafka_.
+   For example, a `Server` may allow
+   a `Client` to specify the consumer group name for _Kafka_.
 
 An example model definition that accommodates both purposes is shown in Figure 6.
 The model demonstrates the extension to protocol configuration and
@@ -537,27 +560,27 @@ attribute becomes the discriminator for the protocol configuration part.
 
 ### 5.3.2. Message Data Model Extension
 
-In this document, we use the term `Message` to describe the whole data payload
-exchanged through a stream.
+In this document, we use the term `Message` to define a unit of information
+exchanged via streaming.
 The `Message` is a vessel for `Event` data and additional meta information.
 The `Message` is defined in [[MEF 133.1](#8-references)] and based on [[TMF688](#8-references)].
 
+This section uses a simplified Carrier Ethernet Performance Monitoring data model to illustrate the extension mechanism.
+
 The Message is open for extension using a variant of the TMF extension pattern.
 The discriminator attribute name is `eventType`.
-Figure 7 demonstrates a message extension example
-with a simplified version of
-the Carrier Ethernet Performance Monitoring data model.
+Figure 7 demonstrates how the generic `Message` is specialized to represent a Carrier Ethernet Performance Monitoring model.
 In this model, `eventType` discriminates a specialized `event` content.
-The event defines two distinct components. The identifier of an observation subject (`OrderedPair`) which describes what do we monitor.
-In this example it is an ordered pair of endpoint for of a given service. The set of performance measurements (`CePerformanceMetrics`) which defines what type of measurements we are interested in for that subject.
+The event content defines two distinct components. The identifier of an observation subject (`OrderedPair`) which describes what do we monitor.
+In this example, it is an ordered pair of endpoints for a given service. The set of performance measurements (`CePerformanceMetrics`) defines what type of measurements we are interested in for that subject.
 
 ![Event extension example](streaming/media/eventSpecializationCePerformance.png)
 
-**Figure 7. Message specialization with example event model**
+**Figure 7. Message specialization with an example event model**
 
 The listing below presents an example of a simple payload that conforms
 to the model defined in Figure 7.
-In this case, data is encoded using JSON data format.
+In this case, data is encoded using JSON data format. All the attributes of the data model are sent as part of the payload.
 
 ```json
 {
@@ -591,6 +614,9 @@ In this case, data is encoded using JSON data format.
 }
 ```
 
+The payload represents a single message taken at a given time for an ordered pair of endpoints for `service1`.
+The message contains four performance-related metrics with their values.  
+
 Please note that JSON is one of many possible data formats and the use of
 a particular one depends on the particular technology selected for a given subscription.
 For example, in the case of _Kafka_ transport, another popular format is Apache Avro [[Avro](#8-references)].
@@ -615,27 +641,29 @@ worked on by a separate MEF Project (MEF W128).
 Please note that to secure access production or consumption of the performance events
 might require measures that are not in scope for MEF W128.
 
+<div class="page"/>
+
 # 6. API Interactions and Flows
 
 This section provides a detailed insight into the API functionality, use cases, and flows.
 It starts with Table 6 presenting a list and short description of all
 business use cases then examples for each of them.
 
-| Use Case # | Use Case Name                                | Use Case Description                                                                      | MEF W133.1 mapping |
-| ---------- | -------------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------ |
-| UC 1       | Retrieve Available Topics List               | A request initiated by the Client to list of all available topics.                        | UC 44              |
-| UC 2       | Retrieve Available Topic by an Identifier    | A request initiated by the Client retrieve details for selected available topic.          | UC 43              |
-| UC 3       | Subscribe To a Topic                         | A request initiated by the Client to create a new subscription for the topic of interest. | UC 46              |
-| UC 4       | Unsubscribe From a Topic                     | A request initiated by the Client to remove subscription to the topic of interest.        | UC 47              |
-| UC 5       | Retrieve Topic Subscriptions List            | A request initiated by the Client to list of all existing subscriptions to the topics.    | UC 45              |
-| UC 6       | Retrieve Topic Subscription By an Identifier | A request initiated by the Client to retrieve details for selected subscription.             | n/a                |
+| Use Case # | Use Case Name                                | Use Case Description                                                                        | MEF W133.1 mapping |
+| ---------- | -------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------ |
+| UC 1       | Retrieve Available Topics List               | A request initiated by the Client to list of all available topics.                          | UC 44              |
+| UC 2       | Retrieve Available Topic by an Identifier    | A request initiated by the Client to retrieve details for the selected available topic.     | UC 43              |
+| UC 3       | Subscribe To a Topic                         | A request initiated by the Client to create a new subscription for the topic of interest.   | UC 46              |
+| UC 4       | Unsubscribe From a Topic                     | A request initiated by the Client to remove a subscription to the topic of interest.        | UC 47              |
+| UC 5       | Retrieve Topic Subscriptions List            | A request initiated by the Client to list of all existing subscriptions to the topics.      | UC 45              |
+| UC 6       | Retrieve Topic Subscription By an Identifier | A request initiated by the Client to retrieve details for a selected subscription.          | n/a                |
 
 **Table 6. Use cases description**
 
 The detailed business requirements of each of the use cases are described
-in section 14 of MEF W133.1.1 [[MEF133.1](#8-references)].
-The requirements from R132 to R146 are covered by this standard as explained in detail in the next sections.
-The requirements from R147 to R153 are
+in section 14 of MEF W133.1.1 [[MEFW133.1](#8-references)].
+The requirements from R131 to R145 are covered by this standard as explained in detail in the next sections.
+The requirements from R146 to R150 are
 not covered in the Streaming Management API.
 
 **[R3]** The `Server` **MUST** support `application/json` format of information exchange for all the use cases.
@@ -651,12 +679,12 @@ The flow is a simple request-response pattern, as presented in Figure 8:
 
 **Figure 8. Use case 1: Retrieve Service by Service Identifier flow**
 
-**[R4]** Server **MUST** return all results matching the filtering criteria [MEF W133.1 R134]
+**[O1]** Server **MAY** return all results matching the filtering criteria [MEF W133.1 R133]
 
-**[R5]** Server **MUST** return an empty list of Topic entities if there is
-no topic matching filtering criteria [MEF W133.1 R135]
+**[R4]** Server **MUST** return an empty list of Topic entities if there is
+no topic matching filtering criteria [MEF W133.1 R133]
 
-The response is a list of `Topic`s where the Topic data model is presented in Figure 10.
+The response is a list of `Topic`s where the topic data model is presented in Figure 10.
 
 ![Topic response mode](streaming/media/topicResponse.png)
 
@@ -664,7 +692,7 @@ The response is a list of `Topic`s where the Topic data model is presented in Fi
 
 An example response payload is presented below. There are three available channels
 defined by the `Server`. Each topic can be consumed
-by a _Kafka_ or _WebSocket_ -capable `Client`
+by a _Kafka_ or _WebSocket_-capable `Client`
 after a successful subscription.
 
 In this example, it is assumed that `modelRef` URI points to the JsonSchema resource
@@ -720,7 +748,7 @@ that describes the data model introduced in the [section above](#53-integration-
 ]
 ```
 
-**[R6]** The `id` **MUST** be unique within the `Server` domain.
+**[R5]** The `id` **MUST** be unique within the `Server` domain.
 
 ## 6.2. Use case 2: Retrieve Available Topic by an Identifier
 
@@ -775,28 +803,31 @@ A subscription request might trigger various configurations of broker
 and/or message producer infrastructure.
 
 In this version of the standard, it is assumed that the configuration is
-finished before `Server` returns a response to the `Client`.
+finished before the `Server` returns a response to the `Client`.
 The model extension mechanism might be used to provide additional
-information that allows to handle the delayed initialization of the infrastructure.
+information that allows for handling the delayed initialization of the infrastructure.
 
 ![Use case 3](streaming/media/uc.3.flow.png)
 
 **Figure 11. Use case 3: Subscribe To a Topic flow**
 
+**[R6]** The Client request **MUST** include the topic identifier and the protocol to be used for the subscription.
+
+**[O2]** The Client request **MAY** include additional attributes that are necessary to configure the communication channel for the specified protocol.
+
 **[R7]** The Server **MUST** indicate whether the request was accepted or declined with
-appropriate error code [MEF 133.1 R139, R141]
+the appropriate error code [MEF 133.1 R137]
 
 **[R8]** The response to the subscription query **MUST** include all details
-required to consume messages from the configured communication channel. [MEF 133.1 R142]
+required to consume messages from the configured communication channel. [MEF 133.1 R140]
 
-**[R9]** The Server **MUST** start streaming if subscribe operation was successful [MEF 133.1 R142]
+**[R9]** The Server **MUST** start streaming if the subscribe operation was successful [MEF 133.1 R140]
 
-<div class="editor_comment"> 
-Not supported requirements
+<div class="editor_comment">
+Not supported requirements from MEFW133.1
 <ul>
 <li>
-  R138		The Buyer/Client's Subscribe to Topic request MUST include the attributes 
-  shown in the Subscribe Topic Attributes table.
+  R136 The Buyer/Client's Subscribe to Topic request MUST include the attributes (with the exception of those set by Seller/Server) shown in Subscribe Topic Attributes Table 70.
 </li>
 </ul>
 </div>
@@ -862,9 +893,9 @@ finished before the `Server` returns a response to the `Client`.
 **Figure 12. Use case 4: Unsubscribe From a Topic flow**
 
 **[R10]** The Server **MUST** indicate whether a request was accepted or declined with
-appropriate error code [MEF 133.1 R134, R145]
+the appropriate error code [MEF 133.1 R142, R143]
 
-**[R11]** The Server **MUST** stop streaming if an unsubscribe operation was successful [MEF 133.1 R146]
+**[R11]** The Server **MUST** stop streaming if an unsubscribe operation was successful [MEF 133.1 R144]
 
 ## 6.5. Use case 5: Retrieve Topic Subscriptions List
 
@@ -878,12 +909,12 @@ The flow is a simple request-response pattern, as presented in Figure 13:
 
 **Figure 13. Use case 5: Retrieve Topic Subscriptions List flow**
 
-**[R12]** Server **MUST** return all results matching the filtering criteria [MEF W133.1 R136]
+**[R12]** Server **MUST** return all results matching the filtering criteria [MEF W133.1 R134]
 
 **[R13]** Server **MUST** return an empty list of subscriptions if there are
-no subscriptions matching filtering criteria [MEF W133.1 R137]
+no subscriptions matching filtering criteria [MEF W133.1 R135]
 
-**[O1]** Server **MAY** support responses in AsyncAPI response (`application/vnd.aai.asyncapi+json`)
+**[O3]** Server **MAY** support responses in AsyncAPI response (`application/vnd.aai.asyncapi+json`)
 
 Example JSON response:
 
@@ -919,6 +950,11 @@ Example JSON response:
   }
 ]
 ```
+
+The above response may be represented as an Async API specification.
+The Async API response includes all channels subscribed by the `Client` and full model definitions.
+To retrieve that AsyncAPI response the `Client` sends a request using `GET /subscription` operation with `Accept` header set to `application/vnd.aai.asyncapi+json`.
+If the `Server` does not support AsyncAPI response it returns `406 Not Acceptable` response. 
 
 The above response as Async API payload (JSON encoded):
 
@@ -1008,6 +1044,9 @@ The above response as Async API payload (JSON encoded):
 ```
 
 The model used in the above JSON listing is described in [section 5.3.2](#532-message-data-model-extension).
+Please note that there are two possible renderings of the base [Message Data Model](#72-message-model) that might be used in AsyncAPI.
+The first (presented above) renders all attributes as part of the AsyncAPI message payload.
+The second renders some of these attributes (e.g. `eventId`) in the header part of the AsyncAPI message.
 
 ## 6.6. Use case 6: Retrieve Topic Subscription By an Identifier
 
@@ -1021,6 +1060,8 @@ The flow is a simple request-response pattern, as presented in Figure 14.
 ![Use case 6](streaming/media/uc.6.flow.png)
 
 **Figure 14. Use case 6: Retrieve Topic Subscription By an Identifier flow**
+
+<div class="page"/>
 
 # 7. API Details
 
@@ -1092,7 +1133,7 @@ The topic model exposes information about the available topics.
         <td>description</td>
             <td>string</td>
             <td>O</td>
-            <td>Human friendly description of the protocol</td>
+            <td>Human-friendly description of the protocol</td>
             <td>n/a</td>
         </tr>
     </tbody>
@@ -1211,7 +1252,7 @@ and configurations for the channel.
         <td>servers</td>
             <td><a href="http://asyncapi.com/definitions/2.6.0/servers.json">servers</a></td>
             <td>M</td>
-            <td>List of the servers through which the subscription is available. We reuse AsyncAPI definition of this type</td>
+            <td>List of the servers through which the subscription is available. We reuse the AsyncAPI definition of this type</td>
             <td>n/a</td>
         </tr><tr>
         <td>channel</td>
@@ -1294,7 +1335,7 @@ Inherits from:
         <td>protocol</td>
             <td>string</td>
             <td>M</td>
-            <td>Name of the protocol consumer is intended to use to consume data from &#x60;topicId&#x60;.  The name of protocol must be one of the defined for the topic.
+            <td>Name of the protocol consumer is intended to use to consume data from &#x60;topicId&#x60;.  The name of the protocol must be one of the defined for the topic.
 </td>
             <td>n/a</td>
         </tr><tr>
@@ -1340,7 +1381,7 @@ Inherits from:
 
 #### 7.1.3.2. Type Error400
 
-**Description:** Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+**Description:** Bad Request. (<https://tools.ietf.org/html/rfc7231#section-6.5.1>)
 
 Inherits from:
 
@@ -1398,7 +1439,7 @@ Inherits from:
 
 #### 7.1.3.4. Type Error401
 
-**Description:** Unauthorized. (https://tools.ietf.org/html/rfc7235#section-3.1)
+**Description:** Unauthorized. (<https://tools.ietf.org/html/rfc7235#section-3.1>)
 
 Inherits from:
 
@@ -1448,7 +1489,7 @@ Inherits from:
 
 #### 7.1.3.6. Type Error403
 
-**Description:** Forbidden. This code indicates that the server understood the request but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+**Description:** Forbidden. This code indicates that the server understood the request but refuses to authorize it. (<https://tools.ietf.org/html/rfc7231#section-6.5.3>)
 
 Inherits from:
 
@@ -1502,7 +1543,7 @@ Inherits from:
 
 #### 7.1.3.8. Type Error404
 
-**Description:** Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+**Description:** Resource for the requested path not found. (<https://tools.ietf.org/html/rfc7231#section-6.5.4>)
 
 Inherits from:
 
@@ -1528,7 +1569,7 @@ Inherits from:
 
 #### 7.1.3.9. Type Error422
 
-**Description:** Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
+**Description:** Unprocessable entity due to a business validation problem. (<https://tools.ietf.org/html/rfc4918#section-11.2>)
 
 Inherits from:
 
@@ -1611,7 +1652,7 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
 
 #### 7.1.3.11. Type Error500
 
-**Description:** Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+**Description:** Internal Server Error. (<https://tools.ietf.org/html/rfc7231#section-6.6.1>)
 
 Inherits from:
 
@@ -1639,16 +1680,17 @@ Inherits from:
 
 The Message model is not part of the Stream Management API specification.
 Instead, it is a model that describes the whole data payload
-exchanged through a stream Client is subscribed to.
+exchanged through a stream the Client is subscribed to.
 
 The Message is open for extension. The details of the extension mechanism are described [above](#531-streaming-management-api-extension).
 
-### 7.2.1 Message
+### 7.2.1. Message
 
 The Message is produced by the `Server` and consumed by the `Client`.
-The object is meant to be extended. By convention, a specialization of the `Message` should introduce an `event` attribute which structure conforms to the data model definition indicated by `eventType`.
+The object is meant to be extended. By convention, a specialization of the `Message` should introduce an `event` attribute whose structure conforms to the data model definition indicated by `eventType`. 
 
-**_Note_**: The `eventType` is a discriminator and plays an analogous role to `@type` attribute used in other MEF API. We use `eventType` to be compatible with model definition from [[TMF688](#8-references)].
+
+**_Note_**: The `eventType` is a discriminator and plays an analogous role to `@type` attribute used in other MEF API. We use `eventType` to be compatible with the model definition from [[TMF688](#8-references)].
 
 <table id="T_Message">
     <thead style="font-weight:bold;">
@@ -1694,7 +1736,19 @@ The object is meant to be extended. By convention, a specialization of the `Mess
     </tbody>
 </table>
 
-**[R16]** The Message **MUST** contain mandatory attributes from the table above [MEF 133.1 R148]
+**[R16]** The Message **MUST** contain mandatory attributes from the table above.
+
+<div class="editor_comment">
+Not supported requirements from MEF W133.1
+<ul>
+<li>
+  R134 "The Buyer/Client's Subscribe to Topic request MUST include the attributes
+  shown in the Subscribe Topic Attributes table." </b> The API standard do not currently support Stream Identifier and Correlation ID in the payload
+</li>
+</ul>
+</div>
+
+<div class="page"/>
 
 # 8. References
 
@@ -1715,10 +1769,9 @@ The object is meant to be extended. By convention, a specialization of the `Mess
   Requirements and Use Cases, November 2019
 - [MEF80] [MEF 80](https://www.mef.net/wp-content/uploads/MEF-80.pdf), Quote
   Management Requirements and Use Cases, July 2021
-- [MEF133.1]
-  [MEF W133.1](https://wiki.mef.net/download/attachments/159974367/MEF%20W134%20wd%203.docx?version=1&modificationDate=1645724743000&api=v2),
-  Invoice Business Requirements and Use Cases, January 2022, Draft
-  Standard (R3)
+- [MEFW133.1]
+  [MEF W133.1](https://wiki.mef.net/download/attachments/230622323/L87011_001_MEF%20W133.1_Cfc1_Pugaczewski.docx?version=1&modificationDate=1695038673000&api=v2),
+  Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC, June 2023, Working Draft
 - [REST]
   [Chapter 5: Representational State Transfer (REST)](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm),
   Fielding, Roy Thomas, Architectural Styles and the Design of Network-based
@@ -1732,6 +1785,8 @@ The object is meant to be extended. By convention, a specialization of the `Mess
 - [TMF688] [TMF688](https://www.tmforum.org/resources/standard/tmf688-event-management-api-user-guide-v4-0-0/),
   TMF688 Event Management API User Guide v4.0.0
 
+<div class="page"/>
+
 # Appendix A. Channel binding examples
 
 Appendix A. provides selected examples of binding definitions
@@ -1739,7 +1794,7 @@ for various transport protocols.
 
 ## Kafka binding example
 
-_Data model_: https://github.com/asyncapi/bindings/blob/master/kafka/json_schemas/channel.json
+_Data model_: <https://github.com/asyncapi/bindings/blob/master/kafka/json_schemas/channel.json>
 
 ```json
 {
@@ -1759,7 +1814,7 @@ _Data model_: https://github.com/asyncapi/bindings/blob/master/kafka/json_schema
 
 ## AMQP binding example
 
-_Data model_: https://github.com/asyncapi/bindings/blob/master/amqp/json_schemas/channel.json
+_Data model_: <https://github.com/asyncapi/bindings/blob/master/amqp/json_schemas/channel.json>
 
 ```json
 {
@@ -1779,7 +1834,7 @@ _Data model_: https://github.com/asyncapi/bindings/blob/master/amqp/json_schemas
 
 ## Web Socket binding example
 
-_Data model_: https://github.com/asyncapi/bindings/blob/master/websockets/json_schemas/channel.json
+_Data model_: <https://github.com/asyncapi/bindings/blob/master/websockets/json_schemas/channel.json>
 
 ```json
 {
@@ -1792,4 +1847,4 @@ _Data model_: https://github.com/asyncapi/bindings/blob/master/websockets/json_s
 }
 ```
 
-The concrete URL for the POST is provided in `servers` section not shown in this Appendix.
+The concrete URL for the POST is provided in the `servers` section not shown in this Appendix.

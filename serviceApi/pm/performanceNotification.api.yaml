@@ -3,7 +3,8 @@ info:
   description: |
     **This file forms part of MEF W143**
 
-    **This API implements Business Requirements described in MEF W133.**
+    **This API implements part of Business Requirements & Use Cases described 
+    in MEF W133.1**
 
     **This specification represents MEF work in progress and is subject to
     change.**
@@ -19,14 +20,14 @@ info:
 
     Copyright 2022 MEF Forum and its contributors
 
-    This file includes content based on the TM Forum Performance Management API (TMF678
-    v4.0.0) available at https://github.com/tmforum-apis/TMF678_PerformanceManagement,
+    This file includes content based on the TM Forum Performance Management API (TMF628
+    v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,
     which is licensed by the TM Forum under the Apache License version 2.0.
     Such content has been modified by the MEF Forum and its contributors.
   title: Performance Monitoring Notification
-  version: 1.0.0-RC
+  version: 2.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v1/'
+  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v2/'
     variables:
       serverBase:
         default: mef.net
@@ -894,7 +895,7 @@ components:
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
       description: >-
-        Event class is used to describe information structure used for
+        Event class is used to describe the information structure used for
         notification.
       properties:
         eventId:
@@ -922,7 +923,7 @@ components:
           type: object
     PerformanceJobEventPayload:
       description: >-
-        The identifier of the Performance Job being subject of
+        The identifier of the Performance Job being the subject to
         this event and its state.
       properties:
         href:
@@ -968,7 +969,7 @@ components:
           type: object
     PerformanceJobReportReadyEventPayload:
       description: >-
-        The identifier of the Performance Job and Report ID being subjects of
+        The identifier of the Performance Job and Report ID being the subjects of
         this event.
       properties:
         href:
@@ -1006,7 +1007,7 @@ components:
           type: object
     PerformanceJobReportPreparationErrorEventPayload:
       description: >-
-        The identifier of the Performance Job being subject of
+        The identifier of the Performance Job being the subject of
         this event and reason for report preparation failure.
       properties:
         href:
@@ -1020,6 +1021,7 @@ components:
           type: string
       required:
         - id
+        - reportPreparationFailedReason
       type: object
     PerformanceJobReportPreparationErrorEventType:
       description: Indicates the type of Performance Job event.
@@ -1040,12 +1042,12 @@ components:
           type: object
     PerformanceJobProcessEventPayload:
       description: |-
-        The identifier of the Performance Job Process including: 
+        The identifier of the Performance Job Process, including: 
           - Modify Performance Monitoring Job
           - Cancel Performance Monitoring Job
           - Suspend Performance Monitoring Job
           - Resume Performance Monitoring Job
-        being subject of this event.
+        being the subject of this event.
       properties:
         href:
           description: Hyperlink to access the Performance Job Process
@@ -1079,7 +1081,7 @@ components:
           type: object
     PerformanceProfileEventPayload:
       description: >-
-        The identifier of the Performance Profile being subject of
+        The identifier of the Performance Profile being the subject of
         this event.
       properties:
         href:
@@ -1113,7 +1115,7 @@ components:
           type: object
     PerformanceReportEventPayload:
       description: >-
-        The identifier of the Performance Report being subject of
+        The identifier of the Performance Report being the subject of
         this event.
       properties:
         href:

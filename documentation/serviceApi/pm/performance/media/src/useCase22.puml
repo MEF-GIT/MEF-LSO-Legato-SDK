@@ -10,13 +10,13 @@ alt Performance Job generates report
   S -> S : collect data
   S -> S : create PerformanceReport
 else
-  B -> S : POST {{baseUrl}}/performanceJob (PerformanceJob_Create)
+  B -> S : POST {{baseUrl}}/performanceReport (PerformanceReport_Create)
   S -> S : basic validation
   S -> S : assign id
   S -> S : state: acknowledged
   ...
   alt successful inquiry
-    B <-- S : 201 PerformanceJob with {{id}}
+    B <-- S : 201 PerformanceReport with {{id}}
   else validation or internal problem
     B <-- S: 4xx/5xx : error response
   end

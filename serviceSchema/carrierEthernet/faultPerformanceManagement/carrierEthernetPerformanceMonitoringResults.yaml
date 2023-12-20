@@ -124,7 +124,7 @@ properties:
     $ref: '#/definitions/Percentage'
 definitions:
   Percentage:
-    description: This is a number of percent - a floating point number between 0 and 100.
+    description: This is a number of percent - a number between 0 and 100.
     maximum: 100
     minimum: 0
     type: number

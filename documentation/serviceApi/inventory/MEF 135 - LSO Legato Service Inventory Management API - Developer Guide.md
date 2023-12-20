@@ -10,19 +10,18 @@ img
 
 ![MEF_LOGO](media/mefLogo.png)
 
-<div style="font-weight:bold; font-size:33pt; font-family: sensation;  text-align:center">
-Working Draft
+<div style="font-weight:bold; font-size:33pt; font-family: Sansation;  text-align:center">
+MEF Standard
 </br>
-MEF W135 v0.2
+MEF 135
 </br>
 </br>
 LSO Legato Service Inventory Management API - Developer Guide
 </br>
-<p style="color:red;font-weight:bold; font-size:18pt">This draft represents MEF work in progress and is subject to change.</p>
 </br>
-June 2023
 </br>
-<p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
+October 2023
+</br>
 </div>
 
 <div class="page"/>

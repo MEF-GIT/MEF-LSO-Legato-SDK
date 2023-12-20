@@ -1,14 +1,14 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:ip-enni-link:v0.0.1:all
+$id: urn:mef:lso:spec:legato:ip-enni-link:v0.0.4:all
 title: 
     MEF LSO Legato - IP ENNI Link Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipEnniLink.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -63,4 +63,4 @@ properties:
   ipv6ConnectionAddressing:
     $ref: './ipCommon.yaml#/definitions/EnniIpv6ConnectionAddressing'
 allOf:
-  - $ref: './IpServicesExternalInterfaceLink.yaml'
+  - $ref: './ipServicesExternalInterfaceLink.yaml'

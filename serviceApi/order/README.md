@@ -1,5 +1,11 @@
 # Service Order Management: Release notes
 
+## Release Grace:
+
+**Readiness status**: MEF Published Standard
+
+**Summary** - No changes.
+
 ## Release Fergie:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
@@ -13,7 +19,8 @@ as a standard without further changes.
 
 **Summary** - Synchronization with Sonata API patterns
 
-- Changed files' organization to align with Sonata patterns. Now there are only 2 individual files:
+- Changed files' organization to align with Sonata patterns. Now there are only
+  2 individual files:
   - `serviceInventoryManagement.api.yaml`
   - `serviceInventoryNotification.api.yaml`
 - applied API patterns used in Sonata and Cantata APIs
@@ -109,9 +116,12 @@ as a standard without further changes.
 **serviceOrderingNotification.api.yaml:**
 
 - paths:
-  - `/listener/serviceOrderCreateNotification` - renamed to `/listener/serviceOrderCreateEvent`
-  - `/listener/serviceOrderStateChangeNotification` - renamed to `/listener/serviceOrderStateChangeEvent`
-  - `/listener/serviceOrderItemStateChangeNotification` - renamed to `/listener/serviceOrderItemStateChangeEvent`
+  - `/listener/serviceOrderCreateNotification` - renamed to
+    `/listener/serviceOrderCreateEvent`
+  - `/listener/serviceOrderStateChangeNotification` - renamed to
+    `/listener/serviceOrderStateChangeEvent`
+  - `/listener/serviceOrderItemStateChangeNotification` - renamed to
+    `/listener/serviceOrderItemStateChangeEvent`
   - `/listener/serviceOrderInformationRequiredEvent` - added
 - `ServiceOrderCreateNotification` - replaced with `ServiceOrderEvent`
 - `ServiceOrderStateChangeNotification` - replaced with `ServiceOrderEvent`

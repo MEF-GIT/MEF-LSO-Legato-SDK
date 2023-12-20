@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   description: |
-    **This file forms part of MEF W143**
+    **This file forms part of MEF W147**
 
     **This API implements part of the Business Requirements & Use Cases described 
     in MEF W133 section 14.**
@@ -25,7 +25,7 @@ info:
 
     Copyright 2023 MEF Forum and its contributors
 
-  title: Performance Monitoring
+  title: Streaming Management
   version: 1.0.0-RC
   contact:
     email: editor@mef.net
@@ -189,6 +189,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/TopicSubscription'
+            'application/vnd.aai.asyncapi+json':
+              schema:
+                $ref: '#/components/schemas/AsyncAPIModel'
         '400':
           $ref: '#/components/responses/400'
         '401':
@@ -312,6 +315,8 @@ components:
         format: int32
         type: integer
   schemas:
+    AsyncAPIModel:
+      $ref: 'http://asyncapi.com/definitions/2.6.0/asyncapi.json'
     Error:
       type: object
       description: >-

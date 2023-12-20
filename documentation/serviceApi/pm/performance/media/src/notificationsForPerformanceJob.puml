@@ -27,11 +27,6 @@ alt succesful inquiry
   SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
   ...
-
-  note over B, SOF : Schedule start time is reached\nPerformanceJob moves to `in-progress`
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
-  B --> SOF : 204 confirmation
-  ...
   
   note over B, SOF : PerformanceReport is generated
   SOF -> B: {{callbackUrl}}/listener/performanceJobReportReadyEvent {{id}}

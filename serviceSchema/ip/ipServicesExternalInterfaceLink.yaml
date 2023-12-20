@@ -1,13 +1,13 @@
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IpServicesExternalInterfaceLink Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipServicesExternalInterfaceLink.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -54,10 +54,6 @@ description:
   Represents the Link Interface used for IP services. This is an abstract class and the super class. It contains the common attributes of IpEnniLink and IpUniAccessLink.
 type: object
 properties:
-  administrativeState:
-    $ref: './ipCommon.yaml#/definitions/AdminState'
-  operationalState:
-    $ref: './ipCommon.yaml#/definitions/OperationalState'
   identifier:
     type: string
     maxLength: 53
@@ -70,8 +66,6 @@ properties:
     type: integer
     description: Maximum size, in octets of an IP Packet that can traverse the IpServicesExternalInterfaceLink. Reference MEF 61.1 Section 16.6 ENNI Link IP MTU Attribute and MEF 61.1 Section 13.9 UNI Ac-cess Link IP MTU Service Attribute.
   required:
-    - administrativeState
-    - operationalState
     - identifier
     - bfd
     - l2Technology

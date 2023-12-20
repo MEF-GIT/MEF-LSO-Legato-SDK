@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:ip-enni:v0.0.1:all
+$id: urn:mef:lso:spec:legato:ip-enni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IP ENNI Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipEnni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -65,7 +65,7 @@ properties:
   egressBwpEnvelopes:
     $ref: './ipCommon.yaml#/definitions/IpEnniEgressBwpEnvelopePerEnniLink'
   enniCommon:
-    $ref: './IpEnniCommon.yaml'
+    $ref: './ipEnniCommon.yaml'
   required: 
     - enniType
     - routingInformation
@@ -101,4 +101,4 @@ definitions:
         type: array  
     description: For an ENNI Option A, the ENNI Routing Information Service Attribute is a mapping of ENNI Service Mapping Identifiers to four-tuples of the form (Administrative Distance, Route Flap Damping, AS Override, Static Routes). Each four-tuple applies to the corresponding ENNI Service Mapping Identifier. Reference MEF 61.1 Section 14.3.1 ENNI Routing Protocols for Option A.
 allOf:
-  - $ref: './IpServicesExternalInterface.yaml'
+  - $ref: './ipServicesExternalInterface.yaml'

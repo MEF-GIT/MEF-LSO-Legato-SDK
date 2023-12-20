@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:ip-uni:v0.0.1:all
+$id: urn:mef:lso:spec:legato:ip-uni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IP UNI Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipUni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -91,5 +91,5 @@ required:
   - managementType
   - reversePathForwarding
 allOf:
-  - $ref: "./IpServicesExternalInterface.yaml"
+  - $ref: "./ipServicesExternalInterface.yaml"
   - type: object

@@ -50,7 +50,9 @@ PR -> PR: state: completed
 
 PR --> PJ: (report completed)
 
-PJ -> B: POST /performanceJobReportReadyEvent
+opt
+    PJ -> B: POST /performanceJobReportReadyEvent
+end
 
 note right of PJ: non-recurring Job
 PJ -> PJ: state: completed

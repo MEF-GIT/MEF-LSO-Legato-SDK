@@ -1,8 +1,8 @@
-# MEF-LSO-Legato-SDK Fergie Release
+# MEF-LSO-Legato-SDK Grace Release
 
 ## Download Link
 
-Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/fergie/MEF-LSO-Legato-SDK-fergie.zip)
+Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/grace/MEF-LSO-Legato-SDK-grace.zip)
 
 ## Overview
 
@@ -12,13 +12,17 @@ Also included are Service schemas and Performance Monitoring definitions .
 
 ## High-level release notes
 
-- SD-WAN service schemas are revised and updated, together with their guide documents (MEF W100)
+- Internet Protocol schemas are revised and updated, together with their guide documents (MEF W102)
 - Following documents have been published as MEF Standards:
-  - MEF 133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
-  - MEF 136 - Service Function Testing Business Requirements and Use Cases
+  - MEF 99 - LSO Service Ordering Management API - Developer Guide
+  - MEF 135 - LSO Legato Service Inventory Management API - Developer Guide
 - New document:
+  - MEF 55.1.1 Amendment to MEF 55.1: Reference Architecture and Framework - Terminology
+- Updated documents:
   - MEF W128.1 - LSO API Security Profile
   - MEF W133.1 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC
+  - MEF W143 - Performance Monitoring API and Developer Guide
+  - MEF W147 - Streaming Management API and Developer Guide
 
 ## Scope
 
@@ -62,24 +66,24 @@ The maturity per functionality presents as follows:
 APIs and Developer Guides:
 
 - Service Catalog API - **early draft version, on hold**
-- MEF W99 - LSO Service Ordering Management API - Developer Guide W99 - **work in progress - requested LB**
-- MEF W135 - LSO Legato Service Inventory Management API - Developer Guide - **work in progress - requested LB**
+- MEF 99 - LSO Service Ordering Management API - Developer Guide W99 - **Published Standard**
+- MEF 135 - LSO Legato Service Inventory Management API - Developer Guide - **Published Standard**
 
 Service Schemas:
 
-- *SD-WAN (MEF W100) - **work in progress - CfC#2**
+- SD-WAN (MEF W100) - **work in progress - CfC#2**
 - Carrier Ethernet (MEF W101) - **work in progress - CfC#2**
-- Internet Protocol (MEF W102) - **work in progress - CfC#2**
+- *Internet Protocol (MEF W102) - **work in progress - CfC#4**
 - LSO Legato Service Provisioning Specification - L1 (MEF W103) - **work in progress - CfC#3 - on hold**
 
 SOAM:
 
-- *MEF 133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **Published Standard**
-- *MEF W133.1 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **early draft version**
-- *MEF 136 - Service Function Testing Business Requirements and Use Cases - **Published Standard**
-- *MEF W143 - Performance Monitoring Profiles, Jobs, Notifications and Collection API and Developer Guide	- **work in progress - CfC#1**
-- *MEF W147 - Streaming Management API and Developer Guide - **work in progress - CfC#1**
-- Performance Monitoring reports and statistics definitions for Carrier Ethernet adn IP - **early draft version**
+- MEF 133 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **Published Standard**
+- *MEF W133.1 - Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC - **early draft version, CfC#1**
+- MEF 136 - Service Function Testing Business Requirements and Use Cases - **Published Standard**
+- *MEF W143 - Performance Monitoring API and Developer Guide - **work in progress - CfC#2**
+- *MEF W147 - Streaming Management API and Developer Guide - **work in progress - CfC#2**
+- Performance Monitoring reports and statistics definitions for Carrier Ethernet adn IP - **early draft version, schemas only**
 
 ## Contents
 
@@ -92,13 +96,11 @@ This SDK contains the following items:
 - `serviceSchema` - Contains JSON schema (draft 7) files for service specifications.
 - `documentation` - documentation including API/Schema developer guides and openapi-tools generated API descriptions in markdown format
   - `supportingStandards` - The rest of documents and standards.
-- `generated`
-  - `staticBinding` - No longer provided - please visit [LSO Marketplace](http://lso.mef.net) to use self-blending possibility.
-  - `security` - A not normative version of the standard APIs including the security profiles as required by MEF 128. Provided for evaluation.
+- `generated` - No longer provided - please visit [LSO Marketplace](http://lso.mef.net) to use self-blending possibility.
 
 ## Issues, questions, and Feedback
 
-Issues should be reported with the use of GitHub issues. Questions and feedback should be asked either at [Legato SDK Community](https://github.com/orgs/MEF-GIT/teams/mef-lso-legato-sdk-community) or directly to community_manager@mef.net.
+Issues should be reported with the use of GitHub issues. Questions and feedback should be asked either at [Legato SDK Discussions](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/discussions) or directly to community_manager@mef.net.
 
 **NOTE:** All artifacts included in this repository have line numbers. When referring to specific content in any of these artifacts, please quote the line numbers to which you are referring.
 

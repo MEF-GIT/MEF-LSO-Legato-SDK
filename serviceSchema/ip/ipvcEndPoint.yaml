@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:ipvc-end-point:v0.0.1:all
+$id: urn:mef:lso:spec:legato:ipvc-end-point:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IPVC End Point Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipvcEndPoint.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -55,10 +55,6 @@ description:
    An IPVC End Point is a logical entity at an EI, to which a subset of packets that traverse the EI is mapped. Reference MEF 61.1 Section 7.4 IP Virtual Connections and IPVC End Points.
 type: object
 properties:
-  administrativeState:
-    $ref: './ipCommon.yaml#/definitions/AdminState'
-  operationalState:
-    $ref: 'ipCommon.yaml#/definitions/OperationalState'
   identifier:
     type: string
     maxLength: 53
@@ -69,7 +65,7 @@ properties:
     $ref: './ipCommon.yaml#/definitions/IpvcEndPointRole'
   prefixMapping:
     description: Is a list, possibly empty of IP Pre-fixes. It is used to specify which subnets with the Subscriber Net-work can access the IPVC via this IPVC EP. Reference MEF 61.1 Section 11.5 IPVC EP Prefix Mapping Service Attribute.
-    $ref: './ipCommon.yaml#/definitions/Ipv4Ipv6Prefixes'
+    $ref: './ipCommon.yaml#/definitions/Ipv4OrIpv6Prefix'
   enniServiceMappingIdentifier:
     type: string
     maxLength: 53
@@ -89,8 +85,6 @@ properties:
   egressBwpEnvelope:
     $ref: './ipCommon.yaml#/definitions/IpvcEpEgressBwpEnvelope'
   required:
-      - operationalState
-      - administrativeState
       - eiType
       - role
       - prefixMapping

@@ -339,8 +339,7 @@ definitions:
               $ref: "#/definitions/IpvcEndPointRef"
             minItems: 1
   Percentage:
-    description:
-      This is a number of percent - a floating point number between 0 and 100.
-    type: number
-    minimum: 0
+    description: This is a number of percent - a number between 0 and 100.
     maximum: 100
+    minimum: 0
+    type: number

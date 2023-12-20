@@ -1,13 +1,13 @@
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IpServicesExternalInterface Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipServicesExternalInterface.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -54,15 +54,9 @@ description:
   Represents the physical interface used for IP services.
 type: object
 properties:
-  administrativeState:
-    $ref: "./ipCommon.yaml#/definitions/AdminState"
-  operationalState:
-    $ref: "./ipCommon.yaml#/definitions/OperationalState"
   identifier:
     type: string
     maxLength: 53
     description: Unique identfier for the ENNI or UNI for management purposes. Reference MEF 61.1 Section 14.1 ENNI Identifier Service Attribute and MEF 61.1 Section 12.1 UNI Identifier Service Attribute.
 required:
-  - administrativeState
-  - operationalState
   - identfier

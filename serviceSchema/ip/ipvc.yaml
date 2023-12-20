@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:ipvc:v0.0.1:all
+$id: urn:mef:lso:spec:legato:ipvc:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IPVC Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipvc.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -55,10 +55,6 @@ description:
   An IP Service is formed of an IP Virtual Connection (IPVC) that links together IPVC End Points at External Interfaces (EIs). Reference MEF 61.1 Section 7.4 IP Virtual Connections and IPVC End Points.
 type: object
 properties:
-  administrativeState:
-    $ref: './ipCommon.yaml#/definitions/AdminState'
-  operationalState:
-    $ref: 'ipCommon.yaml#/definitions/OperationalState'
   ipvcIdentifier:
     type: string
     maxLength: 53
@@ -76,7 +72,7 @@ properties:
   dscpPreservation:
     $ref: 'ipCommon.yaml#/definitions/EnabledDisabled'
   serviceLevelSpecification:
-    $ref: "./IpSls.yaml#/definitions/IpSls"
+    $ref: "./ipSls.yaml#/definitions/IpSls"
   maximumTransferUnit:
     type: integer
     description: Indicates the maximum size (in octets) of an IP packet that can traverse the IPVC without fragmentation.  Reference MEF 61.1 Section 10.10 IPVC MTU Service Attribute.
@@ -87,7 +83,13 @@ properties:
   cloud:
     $ref: 'ipCommon.yaml#/definitions/IpvcCloud'
   reservedPrefixes:
-    $ref: 'ipCommon.yaml#/definitions/Ipv4Ipv6Prefixes'
+      type: array
+      items:
+        $ref: 'ipCommon.yaml#/definitions/Ipv4OrIpv6Prefix'
+      description: >-
+        Reference - MEF 61.1 Section 10.14. For an Internet Access Service,
+        IPVC Reserved Prefixes MUST be either empty, or free from any public
+        address prefixes. (Reference MEF 69.1 Section 9.1 [R14])
   listOfClassOfServiceNames:
     description: The list of CoS Names supported by the IPVC. Reference MEF 61.1 Section 10.8 IPVC List of Class of Service Names Service Attribute.
     type: array
@@ -95,8 +97,6 @@ properties:
       type: string
     minItems: 1
 required:
-  - administrativeState
-  - operationalState
   - ipvcIdentifier
   - ipvcTopology
   - packetDelivery

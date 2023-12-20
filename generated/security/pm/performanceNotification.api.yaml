@@ -1,44 +1,33 @@
 openapi: 3.0.1
 info:
-  description: |
-    **This file forms part of MEF W143**
-
-    **This API implements Business Requirements described in MEF W133.**
-
-    **This specification represents MEF work in progress and is subject to
-    change.**
-
-    Performance monitoring allows the Buyer/Client to provision entities that
-    define performance objectives (Performance Profile, Performance Job),
-    collect monitoring data (Performance Report), as well as receive
-    notifications about these objects. This allows managing issues and situations that
-    are not part of normal operations of the Service provided by the Seller.
-
-    List of supported use cases:
-    - Send Event Notification
-
-    Copyright 2022 MEF Forum and its contributors
-
-    This file includes content based on the TM Forum Performance Management API (TMF678
-    v4.0.0) available at https://github.com/tmforum-apis/TMF678_PerformanceManagement,
-    which is licensed by the TM Forum under the Apache License version 2.0.
-    Such content has been modified by the MEF Forum and its contributors.
+  description: "**This file forms part of MEF W143**\n\n**This API implements part\
+    \ of Business Requirements & Use Cases described \nin MEF W133.1**\n\n**This specification\
+    \ represents MEF work in progress and is subject to\nchange.**\n\nPerformance\
+    \ monitoring allows the Buyer/Client to provision entities that\ndefine performance\
+    \ objectives (Performance Profile, Performance Job),\ncollect monitoring data\
+    \ (Performance Report), as well as receive\nnotifications about these objects.\
+    \ This allows managing issues and situations that\nare not part of normal operations\
+    \ of the Service provided by the Seller.\n\nList of supported use cases:\n- Send\
+    \ Event Notification\n\nCopyright 2022 MEF Forum and its contributors\n\nThis\
+    \ file includes content based on the TM Forum Performance Management API (TMF628\n\
+    v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,\n\
+    which is licensed by the TM Forum under the Apache License version 2.0.\nSuch\
+    \ content has been modified by the MEF Forum and its contributors.\n"
   title: Performance Monitoring Notification
-  version: 1.0.0-RC
+  version: 2.0.0-RC
 servers:
-  - url: "https://{serverBase}/mefApi/legato/performanceNotification/v1/"
-    variables:
-      serverBase:
-        default: mef.net
-        description: The base of Buyer/Client's URL.
+- url: "https://{serverBase}/mefApi/legato/performanceNotification/v2/"
+  variables:
+    serverBase:
+      default: mef.net
+      description: The base of Buyer/Client's URL.
 security:
-  - oauth2MEFLSOAPI:
-      - default
+- oauth2MEFLSOAPI:
+  - default
 tags:
-  - description:
-      The Buyer/Client's endpoint to send particular event types notifications
-      to.
-    name: Notification listeners
+- description: The Buyer/Client's endpoint to send particular event types notifications
+    to.
+  name: Notification listeners
 paths:
   /listener/performanceJobCreateEvent:
     post:
@@ -48,7 +37,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobEvent"
+              $ref: '#/components/schemas/PerformanceJobEvent'
         description: The event data
         required: true
       responses:
@@ -58,49 +47,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceJobCreateEvent
+      - oauth2MEFLSOAPI:
+        - performanceJobCreateEvent
       summary: Performance Job Create Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceJobStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the performanceJobStateChangeEvent
+      description: Client listener for receiving the performanceJobStateChangeEvent
         notification
       operationId: performanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobEvent"
+              $ref: '#/components/schemas/PerformanceJobEvent'
         description: The event data
         required: true
       responses:
@@ -110,49 +98,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceJobStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - performanceJobStateChangeEvent
       summary: Performance Job State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceJobAttributeValueChangeEvent:
     post:
-      description:
-        Client listener for receiving the performanceJobAttributeValueChangeEvent
+      description: Client listener for receiving the performanceJobAttributeValueChangeEvent
         notification
       operationId: performanceJobAttributeValueChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobEvent"
+              $ref: '#/components/schemas/PerformanceJobEvent'
         description: The event data
         required: true
       responses:
@@ -162,49 +149,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceJobAttributeValueChangeEvent
+      - oauth2MEFLSOAPI:
+        - performanceJobAttributeValueChangeEvent
       summary: Performance Job Attribute Value Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceJobReportReadyEvent:
     post:
-      description:
-        Client listener for receiving the performanceJobReportReadyEvent
+      description: Client listener for receiving the performanceJobReportReadyEvent
         notification
       operationId: performanceJobReportReadyEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobReportReadyEvent"
+              $ref: '#/components/schemas/PerformanceJobReportReadyEvent'
         description: The event data
         required: true
       responses:
@@ -214,49 +200,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceJobReportReadyEvent
+      - oauth2MEFLSOAPI:
+        - performanceJobReportReadyEvent
       summary: Performance Job Report Ready Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceJobReportPreparationErrorEvent:
     post:
-      description:
-        Client listener for receiving the performanceJobReportPreparationErrorEvent
+      description: Client listener for receiving the performanceJobReportPreparationErrorEvent
         notification
       operationId: performanceJobReportPreparationErrorEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobReportPreparationErrorEvent"
+              $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEvent'
         description: The event data
         required: true
       responses:
@@ -266,49 +251,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceJobReportPreparationErrorEvent
+      - oauth2MEFLSOAPI:
+        - performanceJobReportPreparationErrorEvent
       summary: Performance Job Report Preparation Error Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/cancelPerformanceJobStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the cancelPerformanceJobStateChangeEvent
+      description: Client listener for receiving the cancelPerformanceJobStateChangeEvent
         notification
       operationId: cancelPerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobProcessEvent"
+              $ref: '#/components/schemas/PerformanceJobProcessEvent'
         description: The event data
         required: true
       responses:
@@ -318,49 +302,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - cancelPerformanceJobStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - cancelPerformanceJobStateChangeEvent
       summary: Cancel Performance Job State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/modifyPerformanceJobStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the modifyPerformanceJobStateChangeEvent
+      description: Client listener for receiving the modifyPerformanceJobStateChangeEvent
         notification
       operationId: modifyPerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobProcessEvent"
+              $ref: '#/components/schemas/PerformanceJobProcessEvent'
         description: The event data
         required: true
       responses:
@@ -370,49 +353,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - modifyPerformanceJobStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - modifyPerformanceJobStateChangeEvent
       summary: Modify Performance Job State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/resumePerformanceJobStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the resumePerformanceJobStateChangeEvent
+      description: Client listener for receiving the resumePerformanceJobStateChangeEvent
         notification
       operationId: resumePerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobProcessEvent"
+              $ref: '#/components/schemas/PerformanceJobProcessEvent'
         description: The event data
         required: true
       responses:
@@ -422,49 +404,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - resumePerformanceJobStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - resumePerformanceJobStateChangeEvent
       summary: Resume Performance Job State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/suspendPerformanceJobStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the suspendPerformanceJobStateChangeEvent
+      description: Client listener for receiving the suspendPerformanceJobStateChangeEvent
         notification
       operationId: suspendPerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceJobProcessEvent"
+              $ref: '#/components/schemas/PerformanceJobProcessEvent'
         description: The event data
         required: true
       responses:
@@ -474,49 +455,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - suspendPerformanceJobStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - suspendPerformanceJobStateChangeEvent
       summary: Suspend Performance Job State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceProfileCreateEvent:
     post:
-      description:
-        Client listener for receiving the performanceProfileCreateEvent
+      description: Client listener for receiving the performanceProfileCreateEvent
         notification
       operationId: performanceProfileCreateEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceProfileEvent"
+              $ref: '#/components/schemas/PerformanceProfileEvent'
         description: The event data
         required: true
       responses:
@@ -526,49 +506,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceProfileCreateEvent
+      - oauth2MEFLSOAPI:
+        - performanceProfileCreateEvent
       summary: Performance Profile Create Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceProfileStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the performanceProfileStateChangeEvent
+      description: Client listener for receiving the performanceProfileStateChangeEvent
         notification
       operationId: performanceProfileStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceProfileEvent"
+              $ref: '#/components/schemas/PerformanceProfileEvent'
         description: The event data
         required: true
       responses:
@@ -578,49 +557,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceProfileStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - performanceProfileStateChangeEvent
       summary: Performance Profile State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceProfileAttributeValueChangeEvent:
     post:
-      description:
-        Client listener for receiving the performanceProfileAttributeValueChangeEvent
+      description: Client listener for receiving the performanceProfileAttributeValueChangeEvent
         notification
       operationId: performanceProfileAttributeValueChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceProfileEvent"
+              $ref: '#/components/schemas/PerformanceProfileEvent'
         description: The event data
         required: true
       responses:
@@ -630,49 +608,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceProfileAttributeValueChangeEvent
+      - oauth2MEFLSOAPI:
+        - performanceProfileAttributeValueChangeEvent
       summary: Performance Profile Attribute Value Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceProfileDeleteEvent:
     post:
-      description:
-        Client listener for receiving the performanceProfileDeleteEvent
+      description: Client listener for receiving the performanceProfileDeleteEvent
         notification
       operationId: performanceProfileDeleteEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceProfileEvent"
+              $ref: '#/components/schemas/PerformanceProfileEvent'
         description: The event data
         required: true
       responses:
@@ -682,49 +659,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceProfileDeleteEvent
+      - oauth2MEFLSOAPI:
+        - performanceProfileDeleteEvent
       summary: Performance Profile Delete Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceReportCreateEvent:
     post:
-      description:
-        Client listener for receiving the performanceReportCreateEvent
+      description: Client listener for receiving the performanceReportCreateEvent
         notification
       operationId: performanceReportCreateEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceReportEvent"
+              $ref: '#/components/schemas/PerformanceReportEvent'
         description: The event data
         required: true
       responses:
@@ -734,49 +710,48 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceReportCreateEvent
+      - oauth2MEFLSOAPI:
+        - performanceReportCreateEvent
       summary: Performance Report Create Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
   /listener/performanceReportStateChangeEvent:
     post:
-      description:
-        Client listener for receiving the performanceReportStateChangeEvent
+      description: Client listener for receiving the performanceReportStateChangeEvent
         notification
       operationId: performanceReportStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/PerformanceReportEvent"
+              $ref: '#/components/schemas/PerformanceReportEvent'
         description: The event data
         required: true
       responses:
@@ -786,38 +761,38 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error400"
+                $ref: '#/components/schemas/Error400'
           description: Bad Request
         "401":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error401"
+                $ref: '#/components/schemas/Error401'
           description: Unauthorized
         "403":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error403"
+                $ref: '#/components/schemas/Error403'
           description: Forbidden
         "408":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error408"
+                $ref: '#/components/schemas/Error408'
           description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: "#/components/schemas/Error500"
+                $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-        - oauth2MEFLSOAPI:
-            - performanceReportStateChangeEvent
+      - oauth2MEFLSOAPI:
+        - performanceReportStateChangeEvent
       summary: Performance Report State Change Notification endpoint
       tags:
-        - Notification listeners
+      - Notification listeners
 components:
   schemas:
     Error:
@@ -828,30 +803,28 @@ components:
       properties:
         reason:
           type: string
-          description:
-            Text that explains the reason for error. This can be shown
+          description: Text that explains the reason for error. This can be shown
             to a client user.
           maxLength: 255
         message:
           type: string
-          description:
-            Text that provide mode details and corrective actions related
+          description: Text that provide mode details and corrective actions related
             to the error. This can be shown to a client user.
         referenceError:
           type: string
           format: uri
           description: url pointing to documentation describing the error
       required:
-        - reason
+      - reason
     Error400:
       allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              $ref: "#/components/schemas/Error400Code"
-          required:
-            - code
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            $ref: '#/components/schemas/Error400Code'
+        required:
+        - code
       description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
     Error400Code:
       type: string
@@ -862,19 +835,19 @@ components:
         - invalidQuery: The query section of the URI is invalid.
         - invalidBody: The request has an invalid body
       enum:
-        - missingQueryParameter
-        - missingQueryValue
-        - invalidQuery
-        - invalidBody
+      - missingQueryParameter
+      - missingQueryValue
+      - invalidQuery
+      - invalidBody
     Error401:
       allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              $ref: "#/components/schemas/Error401Code"
-          required:
-            - code
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            $ref: '#/components/schemas/Error401Code'
+        required:
+        - code
       description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
     Error401Code:
       type: string
@@ -883,17 +856,17 @@ components:
         - missingCredentials: No credentials provided.
         - invalidCredentials: Provided credentials are invalid or expired
       enum:
-        - missingCredentials
-        - invalidCredentials
+      - missingCredentials
+      - invalidCredentials
     Error403:
       allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              $ref: "#/components/schemas/Error403Code"
-          required:
-            - code
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            $ref: '#/components/schemas/Error403Code'
+        required:
+        - code
       description: Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
     Error403Code:
       type: string
@@ -905,44 +878,43 @@ components:
         - forbiddenRequester: Forbidden requester
         - tooManyUsers: Too many users
       enum:
-        - accessDenied
-        - forbiddenRequester
-        - tooManyUsers
+      - accessDenied
+      - forbiddenRequester
+      - tooManyUsers
     Error408:
       allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              type: string
-              description: |-
-                List of supported error codes:
-                - timeOut: Request Time-out - indicates that the server did not receive a complete request message within the time that it was prepared to wait.
-              enum:
-                - timeOut
-          required:
-            - code
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: |-
+              List of supported error codes:
+              - timeOut: Request Time-out - indicates that the server did not receive a complete request message within the time that it was prepared to wait.
+            enum:
+            - timeOut
+        required:
+        - code
       description: Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)
     Error500:
       allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              type: string
-              description: |-
-                One of the following error codes:
-                - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
-              enum:
-                - internalError
-          required:
-            - code
+      - $ref: '#/components/schemas/Error'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: |-
+              One of the following error codes:
+              - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
+            enum:
+            - internalError
+        required:
+        - code
       description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
       type: object
-      description:
-        Event class is used to describe information structure used for
-        notification.
+      description: Event class is used to describe the information structure used
+        for notification.
       properties:
         eventId:
           type: string
@@ -952,25 +924,24 @@ components:
           format: date-time
           description: Date-time when the event occurred
       required:
-        - eventId
-        - eventTime
+      - eventId
+      - eventTime
     PerformanceJobEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceJobEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceJobEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceJobEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceJobEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceJobEventPayload:
       type: object
-      description:
-        The identifier of the Performance Job being subject of this event
-        and its state.
+      description: The identifier of the Performance Job being the subject to this
+        event and its state.
       properties:
         href:
           type: string
@@ -979,33 +950,32 @@ components:
           type: string
           description: ID of the Performance Job
         state:
-          $ref: "#/components/schemas/State"
+          $ref: '#/components/schemas/State'
           description: State of the Performance Job
       required:
-        - id
+      - id
     PerformanceJobEventType:
       type: string
       description: Indicates the type of Performance Job event.
       enum:
-        - performanceJobCreateEvent
-        - performanceJobStateChangeEvent
-        - performanceJobAttributeValueChangeEvent
+      - performanceJobCreateEvent
+      - performanceJobStateChangeEvent
+      - performanceJobAttributeValueChangeEvent
     PerformanceJobReportReadyEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceJobReportReadyEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceJobReportReadyEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceJobReportReadyEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceJobReportReadyEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceJobReportReadyEventPayload:
       type: object
-      description:
-        The identifier of the Performance Job and Report ID being subjects
+      description: The identifier of the Performance Job and Report ID being the subjects
         of this event.
       properties:
         href:
@@ -1021,30 +991,29 @@ components:
           type: string
           description: ID of generated Performance Report
       required:
-        - id
-        - reportId
+      - id
+      - reportId
     PerformanceJobReportReadyEventType:
       type: string
       description: Indicates the type of Performance Job event.
       enum:
-        - performanceJobReportReadyEvent
+      - performanceJobReportReadyEvent
     PerformanceJobReportPreparationErrorEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceJobReportPreparationErrorEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceJobReportPreparationErrorEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceJobReportPreparationErrorEventPayload:
       type: object
-      description:
-        The identifier of the Performance Job being subject of this event
-        and reason for report preparation failure.
+      description: The identifier of the Performance Job being the subject of this
+        event and reason for report preparation failure.
       properties:
         href:
           type: string
@@ -1056,31 +1025,31 @@ components:
           type: string
           description: Reason for Report preparation failure
       required:
-        - id
+      - id
+      - reportPreparationFailedReason
     PerformanceJobReportPreparationErrorEventType:
       type: string
       description: Indicates the type of Performance Job event.
       enum:
-        - performanceJobReportPreparationErrorEvent
+      - performanceJobReportPreparationErrorEvent
     PerformanceJobProcessEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceJobProcessEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceJobProcessEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceJobProcessEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceJobProcessEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceJobProcessEventPayload:
       type: object
-      description:
-        "The identifier of the Performance Job Process including: \n  -\
-        \ Modify Performance Monitoring Job\n  - Cancel Performance Monitoring Job\n\
+      description: "The identifier of the Performance Job Process, including: \n \
+        \ - Modify Performance Monitoring Job\n  - Cancel Performance Monitoring Job\n\
         \  - Suspend Performance Monitoring Job\n  - Resume Performance Monitoring\
-        \ Job\nbeing subject of this event."
+        \ Job\nbeing the subject of this event."
       properties:
         href:
           type: string
@@ -1089,32 +1058,31 @@ components:
           type: string
           description: ID of the Performance Job Process
       required:
-        - id
+      - id
     PerformanceJobProcessEventType:
       type: string
       description: Indicates the type of Performance Job Process event.
       enum:
-        - cancelPerformanceJobStateChangeEvent
-        - modifyPerformanceJobStateChangeEvent
-        - resumePerformanceJobStateChangeEvent
-        - suspendPerformanceJobStateChangeEvent
+      - cancelPerformanceJobStateChangeEvent
+      - modifyPerformanceJobStateChangeEvent
+      - resumePerformanceJobStateChangeEvent
+      - suspendPerformanceJobStateChangeEvent
     PerformanceProfileEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceProfileEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceProfileEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceProfileEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceProfileEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceProfileEventPayload:
       type: object
-      description:
-        The identifier of the Performance Profile being subject of this
-        event.
+      description: The identifier of the Performance Profile being the subject of
+        this event.
       properties:
         href:
           type: string
@@ -1123,31 +1091,30 @@ components:
           type: string
           description: ID of the Performance Profile
       required:
-        - id
+      - id
     PerformanceProfileEventType:
       type: string
       description: Indicates the type of Performance Profile event.
       enum:
-        - performanceProfileCreateEvent
-        - performanceProfileStateChangeEvent
-        - performanceProfileDeleteEvent
-        - performanceProfileAttributeValueChangeEvent
+      - performanceProfileCreateEvent
+      - performanceProfileStateChangeEvent
+      - performanceProfileDeleteEvent
+      - performanceProfileAttributeValueChangeEvent
     PerformanceReportEvent:
       allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              $ref: "#/components/schemas/PerformanceReportEventType"
-            event:
-              $ref: "#/components/schemas/PerformanceReportEventPayload"
-          required:
-            - event
-            - eventType
+      - $ref: '#/components/schemas/Event'
+      - type: object
+        properties:
+          eventType:
+            $ref: '#/components/schemas/PerformanceReportEventType'
+          event:
+            $ref: '#/components/schemas/PerformanceReportEventPayload'
+        required:
+        - event
+        - eventType
     PerformanceReportEventPayload:
       type: object
-      description:
-        The identifier of the Performance Report being subject of this
+      description: The identifier of the Performance Report being the subject of this
         event.
       properties:
         href:
@@ -1157,26 +1124,26 @@ components:
           type: string
           description: ID of the Performance Report
       required:
-        - id
+      - id
     PerformanceReportEventType:
       type: string
       description: Indicates the type of Performance Report event.
       enum:
-        - performanceReportCreateEvent
-        - performanceReportStateChangeEvent
+      - performanceReportCreateEvent
+      - performanceReportStateChangeEvent
     State:
       type: string
       description: State of the Performance Job
       enum:
-        - acknowledged
-        - cancelled
-        - completed
-        - in-progress
-        - pending
-        - rejected
-        - resource-unavailable
-        - scheduled
-        - suspended
+      - acknowledged
+      - cancelled
+      - completed
+      - in-progress
+      - pending
+      - rejected
+      - resource-unavailable
+      - scheduled
+      - suspended
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code

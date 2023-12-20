@@ -341,6 +341,7 @@ definitions:
     description:
       The OrderedPair data type is an ordered pair of EVC/OVC End Points for a specific performance metric for one way direction. It is associated with one way performance metrics and a pair of CarrierEthernetServiceEndPoints.
   Percentage:
+    description: This is a number of percent - a number between 0 and 100.
     maximum: 100
     minimum: 0
     type: number

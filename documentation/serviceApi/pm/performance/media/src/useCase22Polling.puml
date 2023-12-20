@@ -15,7 +15,7 @@ end
 
 ...
 
-loop periodically until PerformanceReport in active state
+loop periodically until PerformanceReport in terminal state
   B -> S :   GET {{baseUrl}}/performanceReport/{{id}}
   return 200 PerformanceReport in current state
 end

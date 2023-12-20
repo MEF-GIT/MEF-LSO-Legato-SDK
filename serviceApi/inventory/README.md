@@ -1,5 +1,11 @@
 # Service Inventory Management: Release notes
 
+## Release Grace:
+
+**Readiness status**: MEF Published Standard
+
+**Summary** - No changes.
+
 ## Release Fergie:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published

@@ -1,13 +1,13 @@
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IP Common Types
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231009  Edit-level: 
     # File: ip/ipCommon.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -66,20 +66,28 @@ definitions:
         $ref: "#/definitions/BfdAuthenticationType"
       activeEnd:
         $ref: "#/definitions/BfdActiveEnd"
+  AddressFamilyIpv4Ipv6:
+    description: >-
+      Specifies whether the session is established over IPv4 or IPv6.
+    enum:
+      - IPV4
+      - IPV6
+    type: string
+  AddressFamilyIpv4Ipv6Both:
+    description: >-
+      Specifies whether the session is established over IPv4 or IPv6 or whether
+      two separate session are established using IPv4 and IPv6.
+    enum:
+      - IPV4
+      - IPV6
+      - BOTH
+    type: string
   Addressing:
     description: Enumeration representing the Address type for the Control Protocols data type. SP_OPERATOR_ADDRESSES If the addressing information is SP/Operator Addresses, then Ingress IP Packets for the specified  protocol that have a multicast or broadcast destination address, or a unicast destination address  that is reachable within the SP's or Operator's network, are considered to be IP Control Protocol  Packets, and Egress IP Packets for the specified protocol that have a source address that is reachable  within the SP's or Operator's network are considered to be IP Control Protocol Packets. ANY - If the addressing information is Any, then all IP Packets for the specified protocol that cross the UNI are considered to be  IP Control Protocol Packets.
     enum:
       - "SP_OPERATOR_ADDRESSES"
       - "ANY"
     type: string
-  AdminState:
-    type: object
-    properties:
-      state:
-        type: string
-        enum:
-        - "LOCKED"
-        - "UNLOCKED"
   BfdActiveEnd:
     description: |
       At least one end of the BFD session must have an active role, meaning that
@@ -154,24 +162,34 @@ definitions:
   Bgp:
     description: >-
       When an entry in the UNI Routing Protocol is for BGP, BGP as specified in
-      RFC 4271 is used across the UNI to exchange information. Reference MEF
-      61.1 Section 12.7.3 BGP.
+      RFC 4271 is used across the UNI to exchange information. Reference - MEF
+      61.1 Section 12.7.3.
     properties:
-      administrativeDistance:
-        description: BGP Administrative Distance.
-        type: integer
-      asOverride:
-        description: Autonomous System Override.
-        $ref: "#/definitions/EnabledDisabled"
+      subscriberAsNumber:
+        description: BGP Subscriber Autonomous System number.
+        $ref: "#/definitions/FourOctetInteger"
+      peerAsNumber:
+        description: BGP Peer Autonomous System Number.
+        $ref: "#/definitions/FourOctetInteger"
+      connectionAddressFamily:
+        description: Connection Address Family (IPv4 or IPv6).
+        $ref: "#/definitions/AddressFamilyIpv4Ipv6"
+      peeringAddresses:
+        description: Peering Addresses.
+        $ref: "#/definitions/PeeringAddress"
       authentication:
-        description: BGP Authentication (None or MD5 plus a password).
-        $ref: "#/definitions/BgpAuthentication"
+        description:
+          BGP Authentication. It is either null or if present is it a value of
+          MD5 Password. It is assumed that an encrypted channel is used when
+          this data is passed across the API so that the password is protected.
+        type: string
+        nullable: true
       bgpCommunityList:
         description:
           Used to control which routers are accepted, preferred, distributed, or
           advertised.
         items:
-          $ref: "#/definitions/BgpCommunityListItem"
+          $ref: "#/definitions/BgpCommunity"
         type: array
       bgpExtendedCommunityList:
         description:
@@ -179,118 +197,83 @@ definitions:
           enhancement over existing BGP Community Attribute an extended range,
           the addition of type field.
         items:
-          $ref: "#/definitions/BgpExtendedCommunityListItem"
+          $ref: "#/definitions/BgpExtendedCommunity"
         type: array
-      connectionAddressFamily:
-        description: Connection Address Family (IPv4 or IPv6).
-        $ref: "#/definitions/ConnectionAddressFamily"
-      damping:
-        $ref: "#/definitions/Damping"
-        description: >-
-          Route flap damping. When the Damping parameter is NONE, the attribute
-          is not set. When not NONE a single set of parameters described in
-          Section 4.3 of RFC 2430 MUST be agreed.
       holdTime:
         description:
           Hold time in seconds. Indicates the agreed Hold Time used for BGP
           sessions. The possible values are 0 or an integer in the range
           3-65535.
+        $ref: "#/definitions/TwoOctetInteger"
+      damping:
+        $ref: "#/definitions/Damping"
+        description: >-
+          Route flap damping. When the Damping parameter is null, the attribute
+          is not set. When not null a single set of parameters described in
+          Section 4.3 of RFC 2430 MUST be agreed.
+        nullable: true
+      asOverride:
+        description:
+          Autonomous System Override. The SP (or Operator) can overwrite
+          instances of the Subscriber's AS Number in the AS Path with their own
+          AS Number, when advertising routes to the Subscriber. This needs to be
+          explicitly agreed between the SP and the Subscriber, and/or between an
+          SP/SO and an Operator.
+        $ref: "#/definitions/EnabledDisabled"
+      administrativeDistance:
+        description: BGP Administrative Distance.
+        type: integer
+        minimum: 1
+    type: object
+  BgpCommunity:
+    description: >
+      A community is a group of destinations which share some common property.
+      Each autonomous system administrator may define which communities a
+      destination belongs to.
+    properties:
+      autonomousSystemNumber:
+        description: The first two octets encoding the Autonomous System value.
+        $ref: "#/definitions/TwoOctetInteger"
+      autonomousSystemDefined:
+        description: The remaining octets.
+        $ref: "#/definitions/TwoOctetInteger"
+      semantics:
+        description: Text describing how the Seller will handle routes tagged with this Community
+        type: string
+    type: object
+  BgpExtendedCommunity:
+    description: >-
+      This attribute provides a mechanism for labeling information carried in
+      BGP-4. These labels can be used to control the distribution of this
+      information, or for other applications.
+    properties:
+      regularType:
+        description: Regular Type Field, 1 octet length
         type: integer
         minimum: 0
-        maximum: 65535
-      ipPrefixes:
-        description: IPv4/IPv6 Prefixes that are advertised using BGP.
-        $ref: "#/definitions/Ipv4Ipv6Prefixes"
-      peerAsNumber:
-        description: BGP Peer Autonomous System Number.
+        maximum: 255
+      regularValue:
+        description:
+          Octets 2 - 8 of the value part of the address. Used in case only
+          Regular Type is provided.
         type: integer
-      peeringAddresses:
-        description: Peering Addresses.
-        $ref: "#/definitions/PeeringAddresses"
-      subscriberAsNumber:
-        description: BGP Subscriber Autonomous System number.
+        minimum: 0
+      extendedType:
+        description: Extended Type Field, 2 octets length
+        $ref: "#/definitions/TwoOctetInteger"
+      extendedValue:
+        description:
+          Octets 3 - 8 of the value part of the address. Used in case only
+          Extended Type is provided.
         type: integer
-    type: object
-    required:
-      - administrativeDistance
-      - asOverride
-      - authentication
-      - holdTime
-      - ipPrefixes
-      - peerAsNumber
-      - subscriberAsNumber
-      - connectionAddressFamily
-      - peeringAddresses
-  BgpAuthentication:
-    description: |
-      BGP Authentication options as an enumeration.
-      - NONE: No authentication for BGP.
-      - MD5_PASSWORD: BGP Authentication is MD5 plus a password.
-    enum:
-      - "NONE"
-      - "MD5_PASSWORD"
-    type: string
-  BgpCommunity:
-    description: |
-      Set of BGP Community enumerations.
-      - NO_ADVERTISE: When a No-Advertise community is attached to a route, the BGP speaker won't advertise the route to any internal or external BGP peers.
-      - NO_EXPORT: When a No-Export community is attached to a route, the router won't advertise the route to external peers--only to internal peers.
-      - LOCAL_AS: To avoid any BGP routing loops, there is an important rule regarding the internal BGP neighbors: an IBGP neighbor cannot advertise a route to an IBGP neighbor if it received that route from another IBGP neighbor.
-      - GRACEFUL_SHUTDOWN: The Graceful SHUTDOWN (65535:0) community is used to smoothly shut down paths a router might use when its peer router is about to be intentionally shut down.
-      - EXTENDED: An Extended community is an 8-byte value that is divided into two main sections:An extended community has three fields: type, administrator, assigned number (type:administrator:assigned-number). Based on the value of the high-order byte in the Type field, the administrator field can be an AS or an IP address.
-      - ROUTE_TARGET: The Route Target community is used in MPLS VPN environments to separate two customers routing tables.
-      - ROUTE_ORIGIN: In an MPLS VPN environment, the route origin community is used to identify where routes originated from, so that readvertisement back to that site is avoided.
-      - LARGE: A Large community is a 12-byte BGP community that was developed when the 4-byte AS began to be allocated. Since each of the standard or extended communi-ties use 2-byte values for the AS, a 4-byte AS would not fit into the standard 2-byte value.
-    enum:
-      - "NO_ADVERTISE"
-      - "NO_EXPORT"
-      - "LOCAL_AS"
-      - "GRACEFUL_SHUTDOWN"
-      - "EXTENDED"
-      - "ROUTE_TARGET"
-      - "ROUTE_ORIGIN"
-      - "LARGE"
-    type: string
-  BgpCommunityListItem:
-    description: Bgp Community List Item
-    properties:
-      communityId:
-        description: Unique identifier for BGP Community.
-        type: integer
-      communityName:
-        description: The name of BGP Community.
+        minimum: 0
+      semantics:
+        description: Text describing how the Seller will handle routes tagged with this Community
         type: string
-      communityPrefixes:
-        description: The prefixes that the BGP Community contains
-        $ref: "#/definitions/Ipv4Ipv6Prefixes"
-      communityValue:
-        description: BGP Community value.
-        $ref: "#/definitions/BgpCommunity"
-    required:
-      - communityId
-      - communityName
-      - communityPrefixes
-      - communityValue
-  BgpExtendedCommunityListItem:
-    description: BGP Extended Community List Item
-    properties:
-      routeDistinguisher:
-        description: The prefixes that the BGP Community contains
-        $ref: "#/definitions/RouteDistinguisherFields"
-      routeTargetImport:
-        description: BGP Community value.
-        $ref: "#/definitions/RouteDistinguisherFields"
-      routeTargetExport:
-        description: BGP Community value.
-        $ref: "#/definitions/RouteDistinguisherFields"
-      routeTargetOrigin:
-        description: BGP Community value.
-        $ref: "#/definitions/RouteDistinguisherFields"
-    required:
-      - routeDistinguisher
-      - routeTargetImport
-      - routeTargetExport
-      - routeTargetOrigin
+    oneOf:
+      - required: [regularType, regularValue]
+      - required: [extendedType, extendedValue]
+    type: object
   BurstBehavior:
     description: |
       Enumeration used to select the Bandwidth Profile Flow Burst Behavior
@@ -792,7 +775,12 @@ definitions:
     enum:
       - "UNI"
       - "ENNI"
-    type: string    
+    type: string
+  FourOctetInteger:
+    description: A four-octet value range integer 0-2147483647
+    maximum: 2147483647
+    minimum: 0
+    type: integer   
   ForwardingInformation:
     description: Forwarding information, consisting of either a nexthop IP address in the
       Subscriber Network (if the access medium is multipoint capable, e.g.,
@@ -1394,7 +1382,7 @@ definitions:
       networkAddressTranslation:
         $ref: "#/definitions/Ipv4Prefix"
       subscriberPrefixList:
-        $ref: "#/definitions/Ipv4Ipv6Prefixes"
+        $ref: "#/definitions/Ipv4OrIpv6Prefix"
     type: object
   IpvcEndPointRole:
     description: Indicates that the IPVC End Points carry traffic from both roots and leaves. Reference MEF 61.1 Section 8.7 Rooted Multipoint Services across an ENNI.
@@ -1403,50 +1391,131 @@ definitions:
       - LEAF
       - TRUNK
     type: string
-  Ipv4Ipv6Prefixes:
-    description: IPv4 and IPv6 prefix lists.  Includes subnet addresss and prefix length.
+  Ipv4Address:
+    description: Data type representing IPv4 address.
+    type: string
+    format: ipv4
+  Ipv4AddressingType:
+    description: |
+      Enumeration representing IPv4 Address Types specific for UNI Access Links.
+      - DHCP: Dynamic Host Configuration Protocol (DHCP) is used the Subscriber devices 
+      to request IPv4 addresses in a given subnet from the SP or Operator.
+      - STATIC: IPv4 addresses in a given IPv4 subnet are statically assigned to the 
+      SP or Operator and to the Subscriber.
+      - UNNUMBERED: The SP or Operator and the Subscriber each assigned an IPv4 address
+      (from their own address pools) independently. These addresses can be on different 
+      subnets, and so an interface-based routing protocol is needed to ensure reachability.
+    enum:
+      - "DHCP"
+      - "STATIC"
+      - "UNNUMBERED"
+    type: string
+  Ipv4OrIpv6Prefix:
+    description: IPv4 or IPv6 prefix. Includes subnet address and prefix length.
     properties:
-      listOfIpv4ReservedPrefixes:
-        description: List of IPv4 prefixes.
-        items:
-          $ref: "#/definitions/Ipv4Prefix"
-        type: array
-      listOfIpv6ReservedPrefixes:
-        description: List of IPv6 prefixes.
-        items:
-          $ref: "#/definitions/Ipv6Prefix"
-        type: array
+      ipv4Prefix:
+        description: IPv4 prefix.
+        $ref: "#/definitions/Ipv4Prefix"
+      ipv6Prefix:
+        description: IPv6 prefix.
+        $ref: "#/definitions/Ipv6Prefix"
+    oneOf:
+      - required: [ipv4Prefix]
+      - required: [ipv6Prefix]
     type: object
+  Ipv4OrIpv6Address:
+    description: Data type representing IPv4 or IPV6 address.
+    type: string
+    oneOf:
+      - format: ipv4
+      - format: ipv6 
   Ipv4Prefix:
-    description: Ipv4 Prefix
+    description:
+      Data type representing IPv4 address prefix and mask length between 0 and
+      31 bits.
     properties:
       ipv4Address:
-        description: IPv4 address
-        type: string
+        description: IPv4 address.
+        $ref: "#/definitions/Ipv4Address"
       prefixLength:
+        description: IPv4 address prefix. Length 0-31.
         type: integer
+        minimum: 0
+        maximum: 31
     type: object
-  Ipv4Subnet:
-    description: Ipv4Subnet is a data type representing an IPv4 subnet logical partition of
+  Ipv4PrimarySubnet:
+    allOf:
+      - $ref: "#/definitions/Ipv4SecondarySubnet"
+      - description: >-
+          IPv4 Subnet used in context of Primary Ipvc subnet. It adds the
+          subscriberIpv4Address attribute to the Ipv4SecondarySubnet.
+        properties:
+          subscriberIpv4Address:
+            description: Subscriber IPv4 Address
+            $ref: "#/definitions/Ipv4Address"
+            nullable: true
+        type: object
+  Ipv4SecondarySubnet:
+    description: >-
+      Data type representing an IPv4 subnet logical partition of
       an IP network. Included is list of Service Provider IPv4 addresses.
     properties:
       ipv4Prefix:
+        description:
+          IPv4 address prefix (IPv4 address prefix and mask length between 0 and
+          31 in bits).
         $ref: "#/definitions/Ipv4Prefix"
       serviceProviderIpv4Addresses:
-        description: List of Service Provider IPv4 addresses.
+        description: >
+          List of Service Provider IPv4 addresses. [R25] "If IPv4 Connection
+          Addressing is DHCP, the UNI Access Link IPv4 Connection Addressing
+          Primary Subnet parameter MUST contain only a single Service Provider
+          IPv4 Address." Reference - MEF 69.1 Section 9.4
         items:
-          type: string
+          $ref: "#/definitions/Ipv4Address"
         minItems: 1
         type: array
+      reservedPrefixes:
+        description: List of IPv4 Prefixes, possibly empty
+        items:
+          $ref: "#/definitions/Ipv4Prefix"
+        type: array
     type: object
+  Ipv6Address:
+    description: Data type representing IPv6 address.
+    type: string
+    format: ipv6
+  Ipv6AddressingType:
+    description: |
+      Enumeration representing IPv6 Address Types specific for UNI Access Links.
+      -DHCP: Dynamic Host Configuration Protocol (DHCP) is used by the Subscriber
+      devices to request IPv6 addresses in a given subnet from the SP or Operator.
+      -SLAAC: Stateless Address Autoconfiguration (SLAAC) is used by the Subscriber 
+      devices to create unique IPv6 global addresses within an IP Prefix advertised 
+      by the SP or Operator as describer in RFC 4862.
+      -STATIC: IPv6 addresses in a given IPv6 subnet are statically assigned to the 
+      SP or Operator and to the Subscriber.
+      - LL_ONLY: o	If the value is LL-only, these are only IPv6 addresses used on 
+      the UNI Access Link.
+    enum:
+      - "DHCP"
+      - "SLAAC"
+      - "STATIC"
+      - "LL_ONLY"
+    type: string
   Ipv6Prefix:
-    description: Ipv6 prefix
+    description:
+      Data type representing IPv6 address prefix and mask length between 0 and
+      127 in bits.
     properties:
       ipv6Address:
-        description: Ipv6 Address
-        type: string
+        description: IPv6 address.
+        $ref: "#/definitions/Ipv6Address"
       prefixLength:
+        description: IPv6 address prefix. Length 0-127.
         type: integer
+        minimum: 0
+        maximum: 127
     type: object
   Ipv6Subnet:
     description: >-
@@ -1454,12 +1523,20 @@ definitions:
       an IP network. Included is list of Service Provider IPv6 addresses.
     properties:
       ipv6Prefix:
+        description:
+          IPv6 Prefix (IPv6 address prefix and mask length between 0 and 127 in
+          bits).
         $ref: "#/definitions/Ipv6Prefix"
       serviceProviderIpv6Addresses:
         description: List of IPv6 Service Provider addresses.
         items:
-          type: string
+          $ref: "#/definitions/Ipv6Address"
         minItems: 1
+        type: array
+      reservedPrefixes:
+        description: List of IPv6 Prefixes, possibly empty
+        items:
+          $ref: "#/definitions/Ipv6Prefix"
         type: array
     type: object
   IpvcEpBwp:
@@ -1557,15 +1634,6 @@ definitions:
         type: string
       demux:
         $ref: "#/definitions/Demux"
-  OperationalState:
-    type: object
-    properties:
-      state:
-        type: string
-        enum:
-        - "ENABLED"
-        - "DISABLED"
-    description: This enumeration is for Operational states. Refer to ITU-T X.731. Reference MEF-Types.
   Ospf:
     description: >-
       When an entry in the UNI Routing Protocols is for OSPF, OSPF as specified
@@ -1590,7 +1658,7 @@ definitions:
         description: Hello interval (0-65535, in seconds)
         type: integer
       ipPrefixes:
-        $ref: "#/definitions/Ipv4Ipv6Prefixes"
+        $ref: "#/definitions/Ipv4OrIpv6Prefix"
       retransmissionInterval:
         description: Retransmit interval (integer greater than 0, in seconds)
         type: integer
@@ -1638,22 +1706,51 @@ definitions:
         minimum: 0
         type: integer
     type: object
-  PeeringAddresses:
+  PeeringAddress:
     description: >-
       Peering Addresses. Connection Addresses, or Loopbacks plus a list of pairs
-      of IP addresses. Reference MEF 61.1 Section 12.7.3 BGP.
+      of IP addresses. Reference - MEF 61.1 Section 12.7.3.
     properties:
-      connectionAddress:
-        $ref: "#/definitions/EnabledDisabled"
-      loopbacks:
-        $ref: "#/definitions/EnabledDisabled"
-      serviceProviderLoopback:
-        description: Service Provider IP Loopback address.
-        type: string
-      subscriberLoopback:
-        description: Subscriber IP Loopback address.
-        type: string
+      peeringAddressType:
+        description: |
+          If the Peering Addresses parameter is CONNECTION_ADDRESSES, a separate
+          BGP peering session is established over each UNI Access Link, using
+          the primary IPv4 addresses in the UNI Access Link IPv4 Connection
+          Addressing Service Attribute (section 13.4) or the first IPv6
+          addresses in the UNI Access Link IPv6 Connection Addressing Service
+          Attribute (section 13.5), as indicated by the Connection Address
+          Family parameter.
+          If the Peering Addresses parameter is LOOPBACKS, a list of pairs of IP
+          addresses is additionally specified, each pair containing the
+          Subscriber's loopback address and the SP's or Operator's loopback
+          address. A single BGP peering session is established for each pair of
+          addresses.
+        $ref: "#/definitions/PeeringAddressType"
+      subscriberAndSpLoopbackAddresses:
+        description:
+          A list of pairs of IP addresses, each pair containing the Subscriber's
+          loopback address and the SP's or Operator's loopback address. A single
+          BGP peering session is established for each pair of addresses.
+        items:
+          $ref: "#/definitions/SubscriberAndSpLoopbackAddresses"
+        type: array
     type: object
+  PeeringAddressType:
+    type: string
+    description: >
+      If the Peering Addresses parameter is CONNECTION_ADDRESSES, a separate BGP
+      peering session is established over each UNI Access Link, using the
+      primary IPv4 addresses in the UNI Access Link IPv4 Connection Addressing
+      Service Attribute (section 13.4) or the first IPv6 addresses in the UNI
+      Access Link IPv6 Connection Addressing Service Attribute (section 13.5),
+      as indicated by the Connection Address Family parameter. If the Peering
+      Addresses parameter is LOOPBACKS, a list of pairs of IP addresses is
+      additionally specified, each pair containing the Subscriber's loopback
+      address and the SP's or Operator's loopback address. A single BGP peering
+      session is established for each pair of addresses.
+    enum:
+      - CONNECTION_ADDRESSES
+      - LOOPBACKS
   PortMap:
     description: LACP Portmap as a 2-tuple <vid,lspl> where vid is VLAN ID and lslp is Link Selection Priority List. Reference MEF 61.1.1 Section A1-1.3.2 UNI Access Link Ethernet Link Aggregation Service Attribute.
     properties:
@@ -1722,11 +1819,11 @@ definitions:
       staticIpEntry:
         description: Static IP address entry.
         items:
-          $ref: "#/definitions/StaticEntry"
+          $ref: "#/definitions/StaticIpEntry"
         minItems: 1
         type: array
     type: object
-  StaticEntry:
+  StaticIpEntry:
     description: >-
       StaticIpEntry data type including IPv4/IPv6 prefixes, forwarding
       information and administrative distance.
@@ -1737,7 +1834,7 @@ definitions:
       forwardingInformation:
         $ref: "#/definitions/ForwardingInformation"
       staticPrefix:
-        $ref: "#/definitions/Ipv4Ipv6Prefixes"
+        $ref: "#/definitions/Ipv4OrIpv6Prefix"
     type: object
   StaticRoute:
     description: Data type representing IP static routes.
@@ -1752,6 +1849,19 @@ definitions:
       targetRole:
         $ref: "#/definitions/TargetRole"
     type: object
+  SubscriberAndSpLoopbackAddresses:
+    type: object
+    description: >-
+      A list of pairs of IP addresses, each pair containing the Subscriber's
+      loopback address and the SP's or Operator's loopback address. A single BGP
+      peering session is established for each pair of addresses.
+    properties:
+      subscriberLoopbackAddress:
+        description: Subscriber's loopback Address for BGP establishing a session
+        $ref: "#/definitions/Ipv4OrIpv6Address"
+      spLoopbackAddress:
+        description: Service Provider's loopback Address for BGP establishing a session
+        $ref: "#/definitions/Ipv4OrIpv6Address"
   SynchronousEthernet:
     description: Enumeration representing the value of fs which indicates if the physical link supports Synchronous Ethernet.
     type: string
@@ -1800,39 +1910,11 @@ definitions:
       - "WEEK"
       - "MONTH"
       - "YEAR"
-  UniAccessLinkIpv4AddressType:
-    description: | 
-      Enumeration representing IPv4 Address Types specific for UNI Access Links.
-      - DHCP: Dynamic Host Configuration Protocol (DHCP) is used the Subscriber devices 
-      to request IPv4 addresses in a given subnet from the SP or Operator.
-      - STATIC: IPv4 addresses in a given IPv4 subnet are statically assigned to the 
-      SP or Operator and to the Subscriber.
-      - UNNUMBERED: The SP or Operator and the Subscriber each assigned an IPv4 address
-      (from their own address pools) independently. These addresses can be on different 
-      subnets, and so an interface-based routing protocol is needed to ensure reachability.
-    enum:
-      - "DHCP"
-      - "STATIC"
-      - "UNNUMBERED"
-    type: string
-  UniAccessLinkIpv6AddressType:
-    description: |
-      Enumeration representing IPv6 Address Types specific for UNI Access Links.
-      -DHCP: Dynamic Host Configuration Protocol (DHCP) is used by the Subscriber
-      devices to request IPv6 addresses in a given subnet from the SP or Operator.
-      -SLAAC: Stateless Address Autoconfiguration (SLAAC) is used by the Subscriber 
-      devices to create unique IPv6 global addresses within an IP Prefix advertised 
-      by the SP or Operator as describer in RFC 4862.
-      -STATIC: IPv6 addresses in a given IPv6 subnet are statically assigned to the 
-      SP or Operator and to the Subscriber.
-      - LL_ONLY: o	If the value is LL-only, these are only IPv6 addresses used on 
-      the UNI Access Link.
-    enum:
-      - "DHCP"
-      - "SLAAC"
-      - "STATIC"
-      - "LL_ONLY"
-    type: string
+  TwoOctetInteger:
+    description: A two octet integer. Value range 0 - 65535
+    type: integer
+    minimum: 0
+    maximum: 65535
   UniAccessLinkEthernetLinkAggregation:
     description: Link Aggregation, as described in IEEE Std. 802.1AX-2020 allows one or more parallel instances of full-duplex point-to-point Ethernet links to be aggregated to form a Link Aggregation Group (LAG) such that the MAC Client (the UNI Access Link) can treat the LAG as if it were a single link. Reference MEF 61.1.1 Section A1-1.3.2 UNI Access Link Trunk Ethernet Link Aggregation Service Attribute.
     properties:
@@ -1843,35 +1925,47 @@ definitions:
     type: object   
   UniIpv4ConnectionAddressing:
     description: >-
-      UniIpv4ConnectionAddressing is a data type representing how IPv4 addresses are allocated
-      to the devices on the UNI Access Link.  Reference MEF 61 Section 13.4 UNI Access Link 
-      IPv4 Connection Addressing Service Attribute.
+      UniIpv4ConnectionAddressing is a data type representing how IPv4 addresses
+      are allocated to the devices on the UNI Access Link. Reference - MEF 61
+      Section 13.4. [R22] "At a UNI Access Link in a UNI with an IPVC EP for an
+      Advanced Internet Access Service, UNI Access Link IPv4 Connection
+      Addressing MUST be Static or null. Reference - MEF 69.1 Section 9.4.
     properties:
-      uniAccessLinkIpv4AddressType:
-        $ref: "#/definitions/UniAccessLinkIpv4AddressType"
+      ipv4AddressingType:
+        description: IPv4 Connection Addressing.
+        $ref: "#/definitions/Ipv4AddressingType"
       ipv4PrimarySubnet:
-        $ref: "#/definitions/Ipv4Subnet"
-      ipv4SecondarySubnet:
-        $ref: "#/definitions/Ipv4Subnet"
+        $ref: "#/definitions/Ipv4PrimarySubnet"
+        description: >-
+          Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider IPv4
+          Addresses.
+      ipv4SecondarySubnetList:
+        description: >-
+          Secondary IPv4 Subnet List. Includes IPv4 Prefix and Service Provider
+          IPv4 Addresses.
+        items:
+          $ref: "#/definitions/Ipv4SecondarySubnet"
+        type: array
     type: object
-    required:
-      - ipv4PrimarySubnet
   UniIpv6ConnectionAddressing:
     description: >-
-      UniIpv6ConnectionAddressing is a data type representing how IPv6 addresses are 
-      allocated to the devices on the UNI Access Link.  Reference MEF 61 Section 13.5 
-      UNI Access Link IPv6 Connection Addressing Service Attribute.
+      UniIpv6ConnectionAddressing is a data type representing how IPv6 addresses
+      are allocated to the devices on the UNI Access Link. Reference - MEF 61
+      Section 13.5. [R26] "At a UNI Access Link in a UNI with an IPVC EP for an
+      Advanced Internet Access Service, UNI Access Link IPv6 Connection
+      Addressing MUST be Static or null. Reference - MEF 69.1 Section 9.4.
     properties:
-      uniAccessLinkIpv6AddressType:
-        $ref: "#/definitions/UniAccessLinkIpv6AddressType"
+      ipv6AddressingType:
+        description: IPv6 Connection Addressing.
+        $ref: "#/definitions/Ipv6AddressingType"
       subscriberIpv6Address:
-        type: string
+        $ref: "#/definitions/Ipv6Address"
         description: Subscriber IPv6 address.
       ipv6Subnet:
+        description: Ipv6 Subnet
         items:
           $ref: "#/definitions/Ipv6Subnet"
         type: array
-        minItems: 0
     type: object
   UniManagementType:
     description: >-

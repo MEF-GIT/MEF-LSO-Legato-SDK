@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:ip-uni-access-link:0.0.1:all
+$id: urn:mef:lso:spec:legato:ip-uni-access-link:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     MEF LSO Legato - IP UNI Access Link Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    # MEF Forum - Date: 20231030  Edit-level: 
     # File: ip/ipUniAccessLink.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2023. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -79,4 +79,4 @@ properties:
 required:
   - prefixDelegation
 allOf:
-  - $ref: './IpServicesExternalInterfaceLink.yaml'  
+  - $ref: './ipServicesExternalInterfaceLink.yaml'  
