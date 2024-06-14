@@ -8,7 +8,7 @@ Download the entire repository by clicking [here](https://github.com/MEF-GIT/MEF
 
 This repository contains the release of the Legato SDK. The SDK includes APIs for Service Catalog, Service Order, Service Inventory, Performance Monitoring, and Streaming Management functions of the Service Orchestration Functionality (SOF) at the LSO Legato Interface Reference Point (IRP) as defined in the MEF LSO Reference Architecture.
 
-Also included are Service schemas and Performance Monitoring definitions .
+Also included are Service schemas and Performance Monitoring definitions.
 
 ## High-level release notes
 
@@ -25,7 +25,7 @@ It includes API definitions for the following functional areas:
     - Service Specifications - Create, Amend/Modify, Delete operations
     - Service Catalog, Service Category, Service Candidate, Job/Task
 - Service Ordering - This includes support for
-  - Service Order/OrderItem - Create, Retrieve operations only
+  - Service Order/OrderItem - Create and Retrieve operations only
   - Not in scope
     - Service Order/OrderItem - Amend/Modify/Cancel, Delete operations
 - Service Inventory - This includes support for
@@ -44,7 +44,7 @@ In addition to the Service Provisioning APIs, the SDK includes the following MEF
 
 The MEF LSO Legato SDK is released under the Apache 2.0 license.
 
-More information about the LSO Legato API reference point and it's roadmap can be found here:
+More information about the LSO Legato API reference point and its roadmap can be found here:
 
 https://wiki.mef.net/display/CESG/LSO+Legato
 
@@ -52,9 +52,9 @@ https://wiki.mef.net/display/CESG/LSO+Legato
 
 The API files contained in this SDK are evolving and subject to change. They are based on documents that are either work in progress or draft standards that have not yet completed the review cycles and approvals necessary to achieve the status as a MEF standard. MEF is making these publicly available at this time to invite wider industry review.
 
-The maturity per functionality presents as follows:
+The maturity per functionality is presented as follows:
 
-(*) is used to mark item that changes their maturity comparing to previous release.
+(*) is used to mark an item that changes its maturity compared to the previous release.
 
 APIs and Developer Guides:
 
@@ -76,7 +76,7 @@ SOAM:
 - MEF 136 - Service Function Testing Business Requirements and Use Cases - **Published Standard**
 - MEF W143 - Performance Monitoring API and Developer Guide - **work in progress - CfC#2**
 - MEF W147 - Streaming Management API and Developer Guide - **work in progress - CfC#2**
-- Performance Monitoring reports and statistics definitions for Carrier Ethernet adn IP - **early draft version, schemas only**
+- Performance Monitoring reports and statistics definitions for Carrier Ethernet and IP - **early draft version, schemas only**
 
 - Security:
   - *MEF 128.1 - **Published Standard**
@@ -91,7 +91,7 @@ This SDK contains the following items:
 - `serviceApi` - Definitions of the APIs are found in this directory, provided as yaml files.
 - `serviceSchema` - Contains JSON schema (draft 7) files for service specifications.
 - `documentation` - documentation including API/Schema developer guides and openapi-tools generated API descriptions in markdown format
-  - `supportingStandards` - The rest of documents and standards.
+  - `supportingStandards` - The rest of the documents and standards.
 - `generated`
   - `staticBinding` - No longer provided - please visit
     [LSO Marketplace](http://lso.mef.net) to use self-blending possibility.
