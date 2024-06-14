@@ -1,5 +1,11 @@
 # Performance Monitoring: Release notes
 
+## Release Haley:
+
+**Readiness status**: Call for Comments #2 completed
+
+**Summary** - No changes.
+
 ## Release Grace:
 
 **Readiness status**: Undergoing Call for Comments #1

@@ -1,5 +1,11 @@
 # Service Order Management: Release notes
 
+## Release Haley:
+
+**Readiness status**: MEF Published Standard
+
+**Summary** - No changes.
+
 ## Release Grace:
 
 **Readiness status**: MEF Published Standard

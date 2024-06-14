@@ -1,9 +1,16 @@
 # Streaming Management: Release notes
 
+## Release Haley:
+
+**Readiness status**: Call for Comments #2 completed
+
+**Summary** - No changes.
+
 ## Release Grace:
 
 **Readiness status**: Call for Comments #1 completed
-**Summary**: No API changes from Fergie release
+
+**Summary**: No changes
 
 ## Release Fergie:
 
