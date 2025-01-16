@@ -11,8 +11,8 @@ class PerformanceProfileRefOrValue {
 
 class PerformanceProfileRef {
 
-    href: string
-    id*: string
+    performanceProfileHref: string
+    performanceProfileId*: string
 }
 PerformanceProfileRefOrValue <|-- PerformanceProfileRef
 
@@ -20,11 +20,11 @@ PerformanceProfileRefOrValue <|-- PerformanceProfileRef
 
 class PerformanceProfileValue {
 
-    granularity: Interval
+    granularity*: Interval
     jobPriority: integer
     jobType*: JobType
     outputFormat*: OutputFormat
-    reportingPeriod: Interval
+    reportingPeriod*: Interval
     resultFormat*: ResultFormat
 }
 
@@ -44,5 +44,8 @@ PerformanceJob_Common <|-- PerformanceJob
 PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
 
 PerformanceJob_Find *-->"1" PerformanceProfileRefOrValue : performanceProfile
+
+class PerformanceJobComplexQuery {}
+PerformanceJobComplexQuery *-->"1" PerformanceProfileRefOrValue : performanceProfile
 
 @enduml

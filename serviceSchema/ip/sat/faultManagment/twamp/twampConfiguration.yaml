@@ -1,0 +1,377 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:service:twamp-configuration:v0.0.1:all
+x-mef-target: ServicePayloadSpecificAttributes
+description: TWAMP Performance Monitoring Configuration Schema
+title: 
+    MEF LSO - TWAMP Configuration
+    # MEF Forum - Date: 20241226  Edit-level: 
+    # File: ip/faultAndPerformanceManagement/twamp/twampConfiguration.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2024. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+type: object
+properties:
+  description: >-
+    Two-way Active Measurement Protocol (TWAMP) Light is a light version of
+    TWAMP. TWAMP Light measures the round-trip performance of an IP network
+    by using simplified control protocol to establishj test sessions.
+
+    +--------------------+                            +---------------------+
+    |   Session-Sender   |<--------TWAMP-Test-------->|  Session-Reflector  |
+    +--------------------+                            +---------------------+
+             /\                                                  /\
+             |                                                   |
+             |                                                   |
+             \/                                                  \/
+    +--------------------+                            +----------------------+
+    |   Control-Client   |<-------TWAMP-Control------>|        Server        |
+    +--------------------+                            +----------------------+
+                            Figure - TWAMP Architecture
+  controlClient: 
+   $ref: '#/definitions/TwampControlClient'
+  server:
+    $ref: '#/definitions/TwampServer' 
+  sessionReflector:
+    $ref: '#/definitions/TwampSessionReflector' 
+  sessionSender: 
+    $ref: '#/definitions/TwampSessionSender' 
+definitions:
+  TwampControlClient:
+    description: >-
+      Control-Client is responsible for setting up, starting and stopping
+      the TWAMP test sessions.
+    type: object
+    properties:
+      connectionName:
+        description: >-
+          Name for the TWAMP Control server connection. This name identifies
+          a TWAMP Control connection on the control client device.
+        type: string
+        maxLength: 63
+      serverIpv4Address:
+        description: >-
+          IPV4 address of the the peer node that reflects the probes initiated
+          by this node.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      serverIpv6Address:
+        description: >-
+          IPV6 address of the the peer node that reflects the probes initiated
+          by this node.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      serverTcpPort: 
+        description: >- 
+          TCP (Transmission Control Protocol) port number to use for the TWAMP 
+          Control connection. The TWAMP Control server listens on this port for 
+          incoming TWAMP connections.  Typicall the TCP port number is 862, which 
+          is a well-known TWAMP Control port number and is defined in RFC 5357. 
+          For security hardening, you can control a non-default port number in the
+          supported ranges.
+        type: integer
+        lowerRange: [1024, 1055]
+        upperRange: [49152, 65535]
+        default: 862
+      clientIpv4Address:
+        description: >-
+          IPV4 address of the local control client device to use in the source 
+          IP address field of the IP header in the TCP packets for control 
+          connection.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      clientIpv6Address:
+        description: >-
+          IPV4 address of the local control client device to use in the source 
+          IP address field of the IP header in the TCP packets for control 
+          connection.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      controlPacketDscp:
+        description: >-
+          The DSCP (Differentiated Services Code Point) value for control client
+          device to use in the source IP address field of the IP header in the 
+          TCP packets for the control connection.
+        type: integer
+        minimum: 1
+        maximum: 63
+        default: 0
+      clientTcpPort:
+        description: >- 
+          The TCP port to use for the control connection on the node.
+        type: integer
+        lowerRange: [1024, 1055]
+        upperRange: [49152, 57343]
+      maximumReconnect:
+        description: >-
+          The maximum number of times the client attempts to reconnect to the server.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+        default: 3
+      maximumReconnectContinuous:
+        description: >- 
+          Selected TRUE if Server should attempt continuous reconnect. If selected is 
+          TRUE then ignore maximumReconnect.
+        type: boolean
+      reconnectInterval:
+        description: >- 
+          Interval in seconds between subsequent client reconnection attempts to the 
+          server. NOTE: Consider low values may cause rejection because of Server is 
+          cleaning up TCP connections.
+        type: number
+        minimum: 1
+        maximum: 4293967294
+        default: 2
+      repeatInterval:
+        description: >-
+          The time interval when a test session is repeated, that is, when the value 
+          is greater than 0.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+      fragmentation:
+        description: >-
+          IP fragmentation - breaking IP packets into smaller pieces.
+        type: boolean
+      paddingBytes:
+        description: >-
+          IP/UDP MTU value.
+        type: integer
+  TwampSessionSender:
+    description: >-
+      Session-Sender is responsible for creating TWAMP test packets and sending
+      to the Session-Reflector in TWAMP server.
+    type: object
+    properties:
+      sessionName:
+        description: >- 
+          TWAMP Light sender test session.
+        type: string
+        maxLength: 63
+      reflectorIpv4Address:
+        description: >-
+          IPV4 address of peer node that reflects the probes initiated by this node.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      reflectorIpv6Address:
+        description: >-
+          IPV6 address of peer node that reflects the probes initiated by this node.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      reflectorUdpPort:
+        description: >-
+          The UDP port for the session reflector to use for this TWAMP test session.
+        type: integer
+        range: [49152, 57343]
+        default: 862
+      senderIpv4Address:
+        description: >-
+          IPV4 address of the remote session reflector device to which the TWAMP test 
+          session initiates. This value populates the Receiver Address field in the 
+          Request-TW-Session message.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      senderIpv6Address:
+        description: >-
+          IPV6 address of the remote session reflector device to which the TWAMP test 
+          session initiates. This value populates the Receiver Address field in the 
+          Request-TW-Session message.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      senderUdpPort:
+        description: >-
+          The UDP port for the session Sender to use for this TWAMP test session.
+        type: integer
+        range: [49152, 57343]
+        default: 862
+      interval: 
+        description: >-
+          Interval in milliseconds.
+        type: integer
+        minimum: 10000
+      dscpValue: 
+        description: >-
+          The DSCP (Differentiated Services Code Point) value for remote reflector
+          device to use in the source IP address field of the IP header in the 
+          TCP packets for the control connection.
+        type: integer
+        minimum: 1
+        maximum: 63
+        default: 0
+      numberOfPackets: 
+        description: >-
+          Number of packets.
+        type: integer
+      packetPaddingSize: 
+        description: >- 
+          Packet padding size.
+        type: integer
+      repeat: 
+        description: >-
+          The time interval when a test session is repeated, that is, when the value 
+          is greater than 0.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+      repeatInterval:
+        description: >-
+          The time interval when a test session is repeated, that is, when the value 
+          is greater than 0.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+      sessionTimeout: 
+        description: >-
+          The time interval for test session timeout.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+      measurementInterval:  
+        description: >-
+          The time interval for test session measurement interval.
+        type: number
+        minimum: 0
+        maximum: 4294967293
+  TwampServer:
+    description: >-
+      Server is responsible for managing one or more sessions with the TWAMP
+      client and listens for control messages on a TCP port.
+    type: object
+    properties:
+      connectionName:
+        description: >-
+          TWAMP control server connection.
+        type: string
+        maxLength: 80
+      securityMode:
+        description: >- 
+          Security mode is either enabled or disabled.
+        type: string
+        enum:
+          - ENABLED
+          - DISABLED
+      controlPacketDscp:
+        description: >-
+          IP DSCP value.
+        type: integer
+        minimum: 1
+        maximum: 63
+        default: 0
+  TwampSessionReflector:
+    description: >-
+      Session-Reflector is responsible for sendingn back a measurement packet
+      when a test packet is received, but does not maintain a record of such 
+      information.
+    type: object
+    properties:
+      sessionName:
+        description: >-
+          TWAMP session name.
+      reflectorIpv4Address:
+        description: >-
+          IPV4 address of the Reflector.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      reflectorIpv6Address:
+        description: >-
+          IPV6 address of the Reflector.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      senderIpv4Address:
+        description: >-
+          IPV4 address of the Sender.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv4Address'
+        minItems: 0
+        maxItems: 1
+      senderIpv6Address:
+        description: >-
+          IPV6 address of the Sender.
+        type: array
+        items: 
+          $ref: '../fmCommon.yaml#/definitions/Ipv6Address'
+        minItems: 0
+        maxItems: 1
+      reflectorUdpPort:
+        description: >-
+          The UDP port for the session reflector to use for this TWAMP test session.
+        type: integer
+      senderUdpPort:
+        description: >-
+          The UDP port for the session reflector to use for this TWAMP test session.
+        type: integer

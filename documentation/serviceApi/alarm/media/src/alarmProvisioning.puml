@@ -1,0 +1,22 @@
+@startuml alarmProvisioning
+autonumber
+
+participant Buyer as B
+participant Seller as S
+collections "SOF:Alarm" as SOF
+
+opt
+B -> S: POST {{baseUrl}}/hub with {{callbackUrl, eventType}}
+S --> B: 201 confirmation with{{id}}
+end
+
+SOF -> S: <<createAlarm>>
+
+opt
+S -> B:  POST {{callbackUrl}}/listener/createAlarm{{Alarm}}
+end
+
+B -> S: GET {{baseUrl}}/alarm{{id}}
+S --> B: 200 OK with {{Alarm}}
+
+@enduml

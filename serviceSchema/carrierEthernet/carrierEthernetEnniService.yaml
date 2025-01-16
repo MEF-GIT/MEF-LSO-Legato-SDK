@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-enni-service:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-enni-service:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet ENNI Service Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet ENNI Service Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetEnniService.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,30 +51,36 @@ title:
     # products or services.
     # ---------------------
     #
-description: 
-  The ENNI is a reference point representing the boundary between two or more Operator CENs that are operated as separate administrative domains.
+description: >-
+  The ENNI is a reference point representing the boundary between two or more Operator CENs 
+  that are operated as separate administrative domains.
 properties:
-  operatorEnnIdentifier:
+  operatorEnniIdentifier:
+    minLength: 1
     maxLength: 45
     type: string
-    description: An identifier for the ENNI intended for management purposes. Reference MEF 26.2 Section 13.1 Operator ENNI Identifier Service Attribute.
+    pattern: "[\x20-\x7F]+"
+    description: >-
+      An identifier for the ENNI intended for management purposes. Reference MEF 26.2 Section 
+      13.1 Operator ENNI Identifier Service Attribute.
   svlanIdControl:
     $ref: '#/definitions/SvlanIdControl'
   maximumNumberOfOvcs:
     type: integer
-    description: The maximum number of OVCs that the Operator CEN can support at the ENNI. Reference MEF 26.2 Section 13.3 Maximum Number of OVCs Service Attribute.
+    description: >-
+      The maximum number of OVCs that the Operator CEN can support at the ENNI. Reference MEF 
+      26.2 Section 13.3 Maximum Number of OVCs Service Attribute.
   maximumNumberOfOvcEndPointsPerOvc:
     type: integer
-    description: The maximum number of OVC End Points that the Operator CEN can support at the ENNI for an OVC. Reference MEF 26.2 Section 13.4 Maximum Number of OVC End Points per OVC Service Attribute.
+    description: >-
+      The maximum number of OVC End Points that the Operator CEN can support at the ENNI for 
+      an OVC. Reference MEF 26.2 Section 13.4 Maximum Number of OVC End Points per OVC Service 
+      Attribute.
   tokenShare:
-    type: string
-    description: An indication of the support of mapping more than one Bandwidth Profile Flow to an Envelope at the ENNI. Reference MEF 26.2 Section 13.5 ENNI Token Share Service Attribute.
-    enum:
-      - ENABLED
-      - DISABLED
+      $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
   envelopes:
-    minItems: 0
     type: array
+    minItems: 0
     items:
       $ref: 'carrierEthernetCommon.yaml#/definitions/Envelope'
 required:
@@ -83,11 +89,11 @@ required:
   - maximumNumberOfOvcs
   - maximumNumberOfOvcEndPointsPerOvc
   - tokenShare
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetExternalInterface'
-definitions:
+definitions:  
   SvlanIdControl:
-    description: When the value is Full, the Operator can support only a single SP/SO at the ENNI.
+    description: >-
+      When the value is Full, the Operator can support only a single SP/SO at the ENNI. Reference
+      MEF 26.2 Section 13.2 S-VLAN ID Control Service Attribute.
     type: object
     properties:
       value:

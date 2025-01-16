@@ -1,0 +1,67 @@
+<mxfile host="Electron" modified="2024-10-21T09:24:29.507Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.1.21 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="2aMegD2lMTGjFa7LFUI1" version="22.1.21" type="device">
+  <diagram id="xbJyrwv9yIP62h8_PHgp" name="Page-1">
+    <mxGraphModel dx="3354" dy="1924" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-1" value="&lt;b&gt;Service Function Testing Envelope&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="70" y="20" width="430" height="240" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-2" value="TestJob" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="125" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-3" value="TestProfile" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="330" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-4" value="TestMeasureAttributes" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="125" y="155" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-5" value="" style="endArrow=classic;html=1;startArrow=diamond;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-2" target="ltWMZJDPjPNoV4Ph2O7P-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="230" y="310" as="sourcePoint" />
+            <mxPoint x="280" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-6" value="" style="endArrow=classic;html=1;startArrow=diamond;startFill=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-2" target="ltWMZJDPjPNoV4Ph2O7P-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="195" y="130" as="sourcePoint" />
+            <mxPoint x="195" y="165" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-7" value="ServiceSpecific&lt;br&gt;TestProfileAttributes" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="330" y="155" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-8" value="" style="endArrow=classic;html=1;startArrow=diamond;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-3" target="ltWMZJDPjPNoV4Ph2O7P-7" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="195" y="260" as="sourcePoint" />
+            <mxPoint x="195" y="225" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-9" value="&lt;b&gt;Service Function Testing Payload&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="70" y="270" width="430" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-12" value="IP Ping" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;strokeColor=#007FFF;verticalAlign=top;" parent="1" vertex="1">
+          <mxGeometry x="100" y="300" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-13" value="IpPingReport" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeColor=#007FFF;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="134.5" y="330" width="101" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-14" value="IpPingConfiguration" style="rounded=1;whiteSpace=wrap;html=1;dashed=1;strokeColor=#007FFF;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="339.5" y="330" width="101" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-25" value="" style="endArrow=block;html=1;fontSize=11;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=8;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-13" target="ltWMZJDPjPNoV4Ph2O7P-4" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="70" y="530" as="sourcePoint" />
+            <mxPoint x="120" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="nzFjk0uRN22iCQyKMfL5-1" value="" style="endArrow=block;html=1;fontSize=11;endFill=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endSize=8;" edge="1" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-14">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="389.5" y="360" as="sourcePoint" />
+            <mxPoint x="389.5" y="215" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

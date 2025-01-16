@@ -3,17 +3,17 @@
 
 hide footbox
 
-participant Administrator as A
+participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
-A -> S : POST {{baseUrl}}/performanceProfile (PerformanceProfile_Create)
+B -> S : POST {{baseUrl}}/performanceProfile (PerformanceProfile_Create)
 
 S -> S : basic validation
 S -> S : assign id
-S -> S : state: acknowledged
+S -> S : state: active
 alt successful inquiry
-    A <-- S : 201 PerformanceProfile with {{id}}
+    B <-- S : 201 PerformanceProfile with {{id}}
 else validation or internal problem
-    A <-- S: 4xx/5xx : error response
+    B <-- S: 4xx/5xx : error response
 end
 @enduml

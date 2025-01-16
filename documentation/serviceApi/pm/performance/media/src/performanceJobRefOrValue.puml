@@ -6,19 +6,22 @@ class PerformanceJobRefOrValue {
 
 class PerformanceJobRef {
 
-    href: string
-    id*: string
+    performanceJobHref: string
+    performanceJobId*: string
 }
 PerformanceJobRefOrValue <|-- PerformanceJobRef
 
 class PerformanceJobValue {
 
     consumingApplicationId: string
-    granularity: Interval
+    granularity*: Interval
     outputFormat*: OutputFormat
     producingApplicationId: string
     resultFormat*: ResultFormat
 }
 PerformanceJobRefOrValue <|-- PerformanceJobValue
+
+PerformanceJobValue *-->"1" MonitoredObjectId : monitoredObjectId
+PerformanceJobValue *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
 
 @enduml

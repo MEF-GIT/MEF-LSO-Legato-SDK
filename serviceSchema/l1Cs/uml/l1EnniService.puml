@@ -1,0 +1,33 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class L1EnniService {
+    identifier: String[1]
+    pathOverHead: PathOverHead[1]
+    multiplexingCapabilityList: Union[
+        HighOrderOdu4MultiplexingSequences,
+        HighOrderOdu3MultiplexingSequences,
+        HighOrderOdu2And2eMultiplexingSequences,
+        HighOrderOdu1MultiplexingSequences]
+}
+
+MefServiceConfiguration <|-- L1EnniService
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

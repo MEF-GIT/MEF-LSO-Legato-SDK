@@ -1,0 +1,28 @@
+@startuml useCase13Model
+
+class FaultManagementReport_Find {
+    creationDate*: date-time
+    description: string
+    id*: string
+    state*: FaultManagementReportStateType
+}
+
+FaultManagementReport_Find *--> "1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport_Find *--> "1" ReportingTimeframe : reportingTimeframe
+
+enum FaultManagementReportStateType {
+
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+class FaultManagementJobRef {
+
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+}
+
+@enduml

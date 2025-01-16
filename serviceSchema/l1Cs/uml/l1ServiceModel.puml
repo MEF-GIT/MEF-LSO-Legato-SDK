@@ -1,0 +1,47 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class L1SubscriberVc {
+    "...attributes are not shown"
+}
+
+class L1SubscriberVcEndPoint {
+    "...attributes are not shown"
+}
+
+class L1SubscriberUni {
+    "...attributes are not shown"
+}
+
+class L1OperatorVc {
+    "...attributes are not shown"
+}
+
+class L1OperatorVcEndPoint {
+    "...attributes are not shown"
+}
+
+class L1OperatorUni {
+    "...attributes are not shown"
+}
+
+class L1Enni {
+    "...attributes are not shown"
+}
+
+class L1EnniService {
+    "...attributes are not shown"
+}
+
+L1SubscriberVc "1" *-->"2*" L1SubscriberVcEndPoint
+L1SubscriberUni "1" o-->"0..1" L1SubscriberVcEndPoint
+
+L1OperatorVc "1" *-->"2" L1OperatorVcEndPoint
+L1OperatorUni "1" o-->"0..1" L1OperatorVcEndPoint
+L1Enni "1" o-->"0..1" L1OperatorVcEndPoint
+L1Enni "1" *-->"1..*" L1EnniService
+
+@enduml

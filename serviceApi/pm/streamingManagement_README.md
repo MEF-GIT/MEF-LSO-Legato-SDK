@@ -1,5 +1,11 @@
 # Streaming Management: Release notes
 
+## Release Irene:
+
+**Readiness status**: Call for Comments #2 completed
+
+**Summary** - No changes.
+
 ## Release Haley:
 
 **Readiness status**: Call for Comments #2 completed

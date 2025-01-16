@@ -2,7 +2,7 @@
 
 class ModifyPerformanceJob_Find {
 
-    creationDate: date-time
+    creationDate*: date-time
     id*: string
     state*: PerformanceJobProcessStateType
 }
@@ -11,10 +11,10 @@ ModifyPerformanceJob_Find *-->"1" PerformanceJobRef : performanceJob
 
 enum PerformanceJobProcessStateType {
 
-    accepted
     acknowledged
     completed
-    declined
+    inProgress
+    rejected
 }
 
 @enduml

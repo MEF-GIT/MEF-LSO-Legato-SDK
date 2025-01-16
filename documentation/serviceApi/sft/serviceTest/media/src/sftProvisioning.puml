@@ -1,0 +1,80 @@
+@startuml sftProvisioning
+autonumber
+
+actor BUS as B
+collections "SOF:ServiceFunctionTesting" as PM
+
+entity Hub 
+opt
+B -> Hub: registerListener (TestJobNotification)
+B -> Hub: registerListener (TestProfileNotification)
+end
+
+' B -> PM: createTestProfile
+' create entity TestProfile as PP
+' PM -> PP: <<create>>
+' PM --> B: Response (TestProfile)
+' activate PP
+' opt
+' PM -> Hub: createEvent
+' Hub -> B: notifyListeners (testProfileCreateEvent)
+' end
+
+
+B -> PM: listTestProfile
+PM --> B: Response (List.TestProfile)
+
+B -> PM: createTestJob
+
+create entity TestJob as PJ
+PM -> PJ: <<create>>
+
+PM --> B: Response (TestJob)
+
+activate PJ
+
+opt
+PJ -> Hub: createEvent
+Hub -> B: notifyListeners (testJobCreateEvent)
+end
+
+note right of PJ: On scheduled date
+PJ -> PJ: state: in-progress
+
+opt
+PJ -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (testJobStateChangeEvent)
+end
+
+PJ -> PJ: TestMeasure available
+
+PJ -> PJ: state: completed
+
+' opt
+' PR -> Hub: stateChangeEvent
+' Hub -> B: notifyListeners (testJobStateChangeEvent)
+' end
+
+' PR --> PJ: (report completed)
+
+' opt
+' PJ -> Hub: reportReadyEvent
+' Hub -> B: notifyListeners (testJobReportReadyEvent)
+' end
+
+' note right of PJ: Schedule elapses
+
+' PJ -> PJ: state: completed|scheduled
+
+opt
+PJ -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (testJobStateChangeEvent)
+end
+
+B -> PM: getTestJob
+PM -> PJ: <<retrieve>>
+PM --> B: Response (TestJob)
+
+entity Hub
+
+@enduml

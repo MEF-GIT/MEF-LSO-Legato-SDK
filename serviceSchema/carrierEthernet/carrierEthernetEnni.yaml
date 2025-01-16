@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-enni:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-enni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet ENNI Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet ENNI Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetEnni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,29 +51,59 @@ title:
     # products or services.
     # ---------------------
     #
-description: 
-  The ENNI is a reference point representing the boundary between two or more Operator CENs that are operated as separate administrative domains.
+description:  >-
+    The ENNI is a reference point representing the boundary between two or more Operator CENs 
+    that are operated as separate administrative domains.
 properties:
   peeringIdentifier:
+    minLength: 1
     maxLength: 45
     type: string
-    description: An identifier for the ENNI intended for operations purposes by the interconnecting Operators at the ENNI. Reference MEF 26.2 Section 9.1 ENNI Peering Identifier Common Attribute.
-  numberOfLinks:
-    minimum: 1
-    type: integer
-    description: The number of physical links in the ENNI. Reference MEF 26.2 Section 9.4 ENNI Number of Links Common Attribute.
+    pattern: "[\x20-\x7F]+"
+    description: >-
+      An identifier for the ENNI intended for operations purposes by the interconnecting Operators
+      at the ENNI. Reference MEF 26.2 Section 9.1 ENNI Peering Identifier Common Attribute.
   physicalLayer:
     minItems: 1
     type: array
-    description: The physical layer of each of the links supporting the ENNI. Reference MEF 26.1 Section 9.2 ENNI Physical Layer Common Attribute.
+    description: >-
+      The physical layer of each of the links supporting the ENNI. Reference MEF 26.1 Section 9.2 
+      ENNI Physical Layer Common Attribute.
     items:
-      $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+      $ref: './carrierEthernetCommon.yaml#/definitions/CarrierEthernetPhysicalLink'
+  frameFormat:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EthernetFrameFormat'   
+  numberOfLinks:
+    minimum: 1
+    type: integer
+    description: >-
+      The number of physical links in the ENNI. Reference MEF 26.2 Section 9.4 ENNI Number of Links 
+      Common Attribute.
+  linkAggregation:
+    $ref: './carrierEthernetCommon.yaml#/definitions/LinkAggregation'
+  aggregationLinkMap:
+    minItems: 0
+    type: array
+    items:
+      $ref: './carrierEthernetCommon.yaml#/definitions/ConversationIdToAggregationLinkMap'
+  meg:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  lagLinkMeg:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  linkOam:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  l2cpPeering:
+    minItems: 0
+    type: array
+    description: >-
+      Specifies the Layer 2 Control Protocols that are peered at the EI, as described in MEF 45.1. 
+      Reference MEF 26.2 Section 10.1 ENNI L2CP Peering Multilateral Attribute.
+    items:
+      $ref: './carrierEthernetCommon.yaml#/definitions/L2cpPeering'
   taggedL2cpFrameProcessing:
-      $ref: 'carrierEthernetCommon.yaml#/definitions/TaggedL2cpProcessing'
-required:
-  - peeringIdentifier
-  - numberOfLinks
-  - physicalLayer
-  - taggedL2cpFrameProcessing
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetExternalInterface'
+    $ref: './carrierEthernetCommon.yaml#/definitions/TaggedL2cpProcessing'
+  maximumFrameSize:
+    type: integer
+    description: >-
+      Specifies the maximum size of EI Frames that can be transmitted across EI. Reference 
+      MEF 26.2 Section 10.3 ENNI Maximum Frame Size Multilateral Attribute.

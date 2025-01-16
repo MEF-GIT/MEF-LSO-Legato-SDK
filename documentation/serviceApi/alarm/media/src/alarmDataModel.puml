@@ -1,0 +1,241 @@
+@startuml alarmDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Alarm {
+
+    alarmRaisedTime: date-time
+    externalAlarmId: string
+    isRootCause: boolean
+    probableCause: ProbableCause
+    sourceSystemId: string
+    specificProblem: string
+}
+Alarm_Common <|-- Alarm
+
+Alarm *-->"*" AlarmedObjectRef : alarmedObject
+Alarm *-->"*" Comment : comment
+Alarm *--> AlarmRef : parentAlarm
+Alarm *--> AlarmSpecificAttributes : alarmSpecificAttributes
+
+
+class AlarmRef {
+
+    id*: string
+    href: string
+}
+
+
+
+class AlarmSpecificAttributes {
+
+    @type*: string
+}
+
+
+
+class AlarmSubscription {
+
+    id: string
+}
+AlarmSubscriptionInput <|-- AlarmSubscription
+
+
+
+class AlarmSubscriptionInput {
+
+    callback*: string
+    query: string
+}
+
+
+
+enum AlarmType {
+
+    communicationsAlarm
+    processingErrorAlarm
+    environmentalAlarm
+    qualityOfServiceAlarm
+    equipmentAlarm
+    integrityViolation
+    operationalViolation
+    physicalViolation
+    securityService
+    mechanismViolation
+    timeDomainViolation
+}
+class Alarm_Common {
+
+    id*: string
+    href: uri
+    alarmChangedTime: date-time
+    alarmClearedTime: date-time
+    alarmDetails*: string
+    alarmedObjectType: string
+    alarmReportingTime*: date-time
+    alarmType*: AlarmType
+    perceivedSeverity*: PerceivedSeverity
+    plannedOutageIndicator: PlannedOutageIndicator
+    reportingSystemId: string
+    serviceAffecting: boolean
+    state*: State
+}
+
+Alarm_Common *-->"*" ServiceRef : affectedService
+Alarm_Common *-->"*" AlarmRef : correlatedAlarm
+
+
+class Alarm_Find {
+
+}
+Alarm_Common <|-- Alarm_Find
+
+
+
+class AlarmedObjectRef {
+
+    id*: string
+    href: string
+    @referredType: string
+}
+
+
+
+class Comment {
+
+    description: string
+    systemIdentifier: string
+    time: date-time
+    userIdentifier: string
+}
+
+
+
+
+enum PerceivedSeverity {
+
+    cleared
+    critical
+    indeterminate
+    major
+    minor
+    warning
+}
+enum PlannedOutageIndicator {
+
+    inPlannedMaintenance
+    outOfService
+}
+enum ProbableCause {
+
+    adapterError
+    applicationSubsystemFailure
+    bandwidthReduced
+    callEstablishmentError
+    communicationsProtocolError
+    communicationsSubsystemFailure
+    configurationOrCustomizationError
+    congestion
+    corruptData
+    cpuCyclesLimitExceeded
+    datasetOrModemError
+    degradedSignal
+    dteDceInterfaceError
+    enclosureDoorOpen
+    equipmentMalfunction
+    excessiveVibration
+    fileError
+    fireDetected
+    floodDetected
+    framingError
+    heatingVentilationCoolingSystemProblem
+    humidityUnacceptable
+    ioDeviceError
+    inputDeviceError
+    lanError
+    leakDetected
+    localNodeTransmissionError
+    lossOfFrame
+    lossOfSignal
+    materialSupplyExhausted
+    multiplexerProblem
+    outOfMemory
+    outputDeviceError
+    performanceDegraded
+    powerProblem
+    pressureUnacceptable
+    processorProblem
+    pumpFailure
+    queueSizeExceeded
+    receiveFailure
+    receiverFailure
+    remoteNodeTransmissionError
+    resourceNearingCapacity
+    responseTimeExcessive
+    retransmissionRateExcessive
+    softwareError
+    softwareProgramTerminated
+    softwareProgramError
+    storageCapacityProblem
+    temperatureUnacceptable
+    thresholdCrossed
+    timingProblem
+    toxicLeakDetected
+    transmitFailure
+    transmitterFailure
+    underlyingResourceUnavailable
+    versionMismatch
+}
+class ServiceRef {
+
+    id*: string
+    href: string
+}
+
+
+
+enum State {
+
+    acknowledged
+    cleared
+    un-acknowledged
+}
+class TcaStatefulClearAlarm {
+
+    performanceMetricName: string
+    performanceMetricValue: number
+    tcaPerformanceThresholdValue: number
+    tcaWindowThresholdValue: number
+    tcaWindowSize: number
+}
+AlarmSpecificAttributes <|-- TcaStatefulClearAlarm
+
+
+
+class TcaStatefulSetAlarm {
+
+    performanceMetricName: string
+    performanceMetricValue: number
+    tcaPerformanceThresholdValue: number
+    tcaWindowThresholdValue: number
+    tcaWindowSize: number
+}
+AlarmSpecificAttributes <|-- TcaStatefulSetAlarm
+
+
+
+class TcaStatelessAlarm {
+
+    performanceMetricName: string
+    performanceMetricValue: number
+    tcaPerformanceThresholdValue: number
+    dampingFactor: number
+    numberOfPmMetricCalculationIntervals: number
+}
+AlarmSpecificAttributes <|-- TcaStatelessAlarm
+
+
+
+@enduml

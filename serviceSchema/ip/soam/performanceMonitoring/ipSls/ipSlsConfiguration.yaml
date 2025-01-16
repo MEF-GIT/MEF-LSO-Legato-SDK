@@ -1,0 +1,91 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Legato - IP Service Level Specification Configuration
+definitions:
+  IpSlsConfiguration:
+    description:
+      The IPVC Service Level Specification (SLS) describes the performance
+      objectives for the performance of conformant IP Data Packets that flow
+      over the IPVC. The IPVC Service Level Specification Attribute is either
+      None, or a four-tuple of the form (s,T,E,L) where s is the start time, T
+      is a period of time, E is a set of SLS entries and L is a set of the CoS
+      Name and number of other parameters specific to the Performance Metric.
+      Reference MEF 61.1 Section 10.9 IPVC Service Level Specification Service
+      Attribute.
+    type: object
+    properties:
+      slsRpPair:
+        description:
+          Set of ordered SLS-RP pairs. 
+        type: array
+        minItems: 1
+        items:
+          $ref: "#/definitions/SlsRpPair"
+      startTime:
+        type: string
+        format: date-time
+      periodOfTime:
+        $ref: "ipCommon.yaml#/definitions/TimeDuration"
+      oneWayMeanPacketDelay:
+        type: boolean
+      oneWayInterPacketDelayVariation:
+        type: boolean
+      oneWayPacketDelayPercentile:
+        type: boolean
+      oneWayPacketDelayRange:
+        type: boolean
+      oneWayPacketDelayLossRatio:
+        type: boolean
+      serviceUptime:
+        type: boolean
+      locationList:
+        type: array
+        minItems: 1
+        items:
+          $ref: "#/definitions/Location"
+  SlsReferencePoint:
+    type: object
+    description:
+      SlsReferencePoint is an abstract data type that can be subclassed to
+      IpvcEndPoint and Location. Reference MEF 61.1 Section 10.9.1 SLS Reference
+      Points.
+  SlsRpPair:
+    type: object
+    description:
+      Service Level Specification Reference Point Pair. In a multipoint or
+      rooted multipoint IPVC, performance objectives are ideally specified as
+      applying between pairs of IPVC EPs - in other words, they apply to the
+      performance that IP Data Packets experience as they flow from one EI to
+      another. The SlsRpPair is a representation of this association. Reference
+      MEF 61.1 Section 10.9.1
+    properties:
+      fromSlsReferencePoint:
+        description: Pointer to the "from" SLS Reference Point.
+        $ref: "#/definitions/SlsReferencePoint"
+      toSlsReferencePoint:
+        description: Pointer to the "to" SLS Reference Point.
+        $ref: "#/definitions/SlsReferencePoint"
+    required:
+      - fromSlsReferencePoint
+      - toSlsReferencePoint
+  Location:
+    allOf:
+      - $ref: "#/definitions/SlsReferencePoint"
+      - type: object
+        description: A subclass of a SlsReferencePoint.
+        properties:
+          name:
+            description: Location name
+            type: string
+          description:
+            description: Location description
+            type: string
+          cloudService:
+            description:
+              Attribute to indicate if associated with a cloud service.
+            type: boolean
+          ipvcEndpoint:
+            # TODO how to model this ref?
+            description: Pointer to IPVC End Point
+            type: array
+            items:
+              type: string

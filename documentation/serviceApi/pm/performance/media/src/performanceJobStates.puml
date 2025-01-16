@@ -24,8 +24,10 @@ state resources <<choice>>
 state recurring <<choice>> 
  note left of recurring : Recurring job?
 
-state "in-progress" as in_progress
-state "resource-unavailable" as resource_unavailable
+state "inProgress" as in_progress
+state "resourcesUnavailable" as resource_unavailable
+
+state "pendingCancel" as pending_cancel
 
 ''' diagram'''
 [*] -d-> acknowledged
@@ -37,7 +39,7 @@ validation_successful -d-> rejected: No
 validation_successful -r-> immediate: Yes
 
 immediate -r-> scheduled: No
-scheduled -d-> cancelled: Cancel
+scheduled -d-> pending_cancel: Cancel
 scheduled -d-> resources: schedule start time
 resources -d-> resource_unavailable: No
 resources -l-> in_progress: Yes
@@ -47,9 +49,12 @@ in_progress -d-> recurring
 recurring -d-> completed: No
 recurring -u-> immediate: Yes
 
-in_progress -d-> cancelled: Cancel
+in_progress -d-> pending_cancel: Cancel
 in_progress -u-> suspended: Suspend
 suspended -r-> in_progress: Resume
+suspended -r-> pending_cancel: Cancel
+
+pending_cancel -> cancelled
 
 suspended -u-> modification: Modify
 modification -d-> suspended: No

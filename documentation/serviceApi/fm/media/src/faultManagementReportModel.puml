@@ -1,0 +1,38 @@
+@startuml faultManagementReportModel
+
+class FaultManagementReport {
+
+    creationDate*: date-time
+    description: string
+    failureReason: string
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: FaultManagementReportStateType
+}
+FaultManagementReport *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport *-->"0..*" ReportContentItem : reportContent
+FaultManagementReport *-->"1" ReportingTimeframe : reportingTimeframe
+FaultManagementReport *-->"0..1" AttachmentURL : reportUrl
+
+enum FaultManagementReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+class ReportContentItem {
+
+}
+
+ReportContentItem *-->"1" MeasurementTime : measurementTime
+ReportContentItem *-->"1..*" ResultPayload : measurementDataPoints
+
+class ResultPayload {
+
+    @type*: string
+}
+
+@enduml

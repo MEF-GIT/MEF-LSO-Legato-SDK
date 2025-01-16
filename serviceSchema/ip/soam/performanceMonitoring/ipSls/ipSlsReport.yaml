@@ -1,0 +1,43 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Legato - IP Service Level Specification Report
+definitions:
+  IpSlsReport:
+    description:
+      The execution of the IP SLS test is reported by the IP SLS Report with the performance
+      objectives results.
+    type: object
+    properties:
+      reportingTimeFrame:
+        $ref: "ipCommon.yaml#/definitions/ReportingTimeFrame"
+      creationDate:
+        description: Date when Performance Report was created.
+        type: string
+        format: date-time
+      failureReason:
+        description: Reason in case report generation failed.
+        type: string
+      href:
+        description: Hyperlink to access the report.
+        type: string
+        format: uri
+      id:
+        description: Identifier of the report.
+        type: string
+      lastModifiedDate:
+        description: Date when Performance Report was last modified.
+        type: string
+        format: date-time
+      performanceJob:
+        $ref: "ipCommon.yaml#/definitions/PerformanceJobRefOrValue"
+      reportContent:
+        type: array
+        items:
+          $ref: "ipCommon.yaml#/definitions/ReportContentItem"
+      reportUrl:
+        $ref: "ipCommon.yaml#/definitions/AttachmentUrl"
+      state:
+        $ref: "ipCommon.yaml#/definitions/PerformanceReportStateType"
+    required:
+    - creationDate
+    - id
+    - state

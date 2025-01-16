@@ -19,27 +19,27 @@ alt succesful inquiry
   ...
 
   note over B, SOF : PerformanceJob moves to `scheduled`
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
-      B --> SOF : 204 confirmation
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`scheduled`
+  B --> SOF : 204 confirmation
   ...
 
-  note over B, SOF : Schedule start time is reached\n PerformanceJob moves to `in-progress`
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  note over B, SOF : Schedule start time is reached\nPerformanceJob moves to `inProgress`
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`inProgress`
   B --> SOF : 204 confirmation
   ...
   
   note over B, SOF : PerformanceReport is generated
-  SOF -> B: {{callbackUrl}}/listener/performanceJobReportReadyEvent {{id}}
+  SOF -> B: {{callbackUrl}}/listener/performanceJobReportReadyEvent {{id}}, {{reportId}}
   B --> SOF : 204 confirmation
   ...
 
-  note over B, SOF : SuspendPerformanceJob request is completed
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  note over B, SOF : PerformanceJob is suspended
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`suspended`
   B --> SOF : 204 confirmation
   ...
 
   note over B, SOF : ModifyPerformanceJob request is accepted
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`pending`
   B --> SOF : 204 confirmation
   ...
 
@@ -47,20 +47,20 @@ alt succesful inquiry
   SOF -> B: {{callbackUrl}}/listener/performanceJobAttributeValueChangeEvent {{id}}
   B --> SOF : 204 confirmation
 
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`inProgress`
   B --> SOF : 204 confirmation
 
-  note over B, SOF : PerformanceReport generation failed\n
-  SOF -> B: {{callbackUrl}}/listener/performanceJobReportPreparationErrorEvent {{id}}
+  note over B, SOF : PerformanceReport generation failed
+  SOF -> B: {{callbackUrl}}/listener/performanceJobReportPreparationErrorEvent {{id}}, failureReason
   B --> SOF : 204 confirmation
 
   note over B, SOF : PerformanceJob is not recurring
-  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}
+  SOF -> B: {{callbackUrl}}/listener/performanceJobStateChangeEvent {{id}}, state=`completed`
   B --> SOF : 204 confirmation
 
 
 else validation or internal problem
-  SOF --> B : 4xx or 5xx errorresponse
+  SOF --> B : 4xx or 5xx error response
 end 
 
 ...

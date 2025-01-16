@@ -1,0 +1,35 @@
+@startuml useCase12Notification
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S: POST {{baseUrl}}/hub with {{callbackUrl}} details
+S --> B: 201 confirmation with {{id}}
+...
+
+note over S: Report is generated\nby FM Job
+  S -> S : internal report processing
+
+...
+S -> B: {{callbackUrl}}/listener/faultManagementReportCreateEvent ({{id}})
+B --> S: 204 confirmation
+B -> S:   GET {{baseUrl}}/faultManagementReport/{{id}}
+return 200 FaultManagementReport in current state
+
+...
+
+group loop [until FaultManagement Report in terminal state]
+    S -> B: {{callbackUrl}}/listener/faultManagementReportStateChangeEvent ({{id}})
+    B --> S: 204 confirmation
+    B -> S:   GET {{baseUrl}}/faultManagementReport/{{id}}
+    return 200 FaultManagementReport in current state
+end
+
+...
+
+B -> S : DELETE {{baseUrl}}/hub/{{id}} 
+S --> B : 204 confirmation
+
+@enduml

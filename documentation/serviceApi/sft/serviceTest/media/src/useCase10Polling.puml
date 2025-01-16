@@ -1,0 +1,26 @@
+@startuml useCase10Polling
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+B -> S : POST {{baseUrl}}/modifyTestJob (ModifyTestJob_Create)
+S -> S : basic validation
+
+alt succesful inquiry
+  S --> B : 201 ModifyTestJob with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until ModifyTestJob in active state
+      B -> S :   GET {{baseUrl}}/modifyTestJob/{{id}}
+      return 200 ModifyTestJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+
+@enduml

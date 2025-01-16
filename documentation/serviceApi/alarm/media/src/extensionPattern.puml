@@ -1,0 +1,31 @@
+@startuml extensionPattern
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<AlarmSpecificAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+class Alarm {
+
+    id: string 
+    <<... attributes are skipped ...>>
+}
+
+
+class AlarmSpecificAttributes {
+    @type*: string <<discriminator>>
+}
+
+
+Alarm *-->"1" AlarmSpecificAttributes : alarmSpecificAttributes
+
+class urn:mef:lso:spec:legato:tca-stateless-alarm-configuration:v0.0.1:all <<AlarmSpecificAttributes>> {
+
+    <<... attributes are skipped ...>>
+}
+AlarmSpecificAttributes <|-- "urn:mef:lso:spec:legato:tca-stateless-alarm-configuration:v0.0.1:all"
+
+
+@enduml

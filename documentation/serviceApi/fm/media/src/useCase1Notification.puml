@@ -1,0 +1,37 @@
+@startuml useCase1Notification
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S: POST {{baseUrl}}/hub with {{callbackUrl}} details
+S --> B: 201 confirmation with {{id}}
+...
+B -> S: POST {{baseUrl}}/faultManagementJob (FaultManagementJob_Create)
+S -> S: basic validation
+
+alt successful inquiry
+  S --> B: 201 FaultManagementJob with {{id}}, `acknowledged` state 
+  S -> B: {{callbackUrl}}/listener/faultManagementJobCreateEvent ({{id}})
+  B --> S: 204 confirmation
+
+  ...
+
+  group loop [until FaultManagementJob in terminal state]
+      S -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent ({{id}})
+      B --> S: 204 confirmation
+      B -> S:   GET {{baseUrl}}/faultManagementJob/{{id}}
+      return 200 FaultManagementJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end 
+
+...
+
+B -> S : DELETE {{baseUrl}}/hub/{{id}} 
+S --> B : 204 confirmation
+
+@enduml

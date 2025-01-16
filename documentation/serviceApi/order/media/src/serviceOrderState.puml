@@ -1,9 +1,5 @@
 @startuml
 
-skinparam {
-    StateBackgroundColor White
-}
-
 hide empty description
 state acknowledged : Basic validation done
 state inProgress : Service configuration and activation started

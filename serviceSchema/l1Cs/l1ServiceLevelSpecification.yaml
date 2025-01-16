@@ -1,0 +1,304 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: 
+    MEF LSO Service - L1 Service Level Specification
+    # MEF Forum - Date: 20241115  Edit-level: 
+    # File: l1Cs/l1ServiceLevelSpecification.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2024. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+definitions:
+  L1ServiceLevelSpecification:
+    description: >-
+      The Subscriber L1VC Service Level Specification (SLS) Service Attribute is the technical
+      specification of aspects of the service performance agreed to by the Service Provider and
+      the Subscriber. For any given SLS, a given Performance Metric may or may not specified.
+    type: object
+    properties:
+      startTime:
+        $ref: '#/definitions/TimeAndDate'
+        description: >-
+          StartTime is a time that represents the date and time for the start of the SLS. 
+          MEF 63: [R22] t-start MUST be specified to the nearest second. MEF 64: [R30] 
+          t-start MUST be specified to the nearest second.
+      duration:
+        $ref: '#/definitions/TimeIntervalT'
+        description: >-
+          Duration is a duration that is used in conjunction with ts to specify a contiguous 
+          sequence of time intervals for determining when performance objectives are met. 
+          The units for T are not constrained.
+      sls1wDelayPerformanceMetric:
+        type: array
+        items:
+          $ref: '#/definitions/Sls1wDelayPerformanceMetric'
+          description: >-
+            The One-way Delay for the L1CI that ingresses at UNI 1 and that egresses at UNI 2 
+            is defined as the time elapsed from the reception of the first bit of the ingress 
+            L1CI at UNI 1 until the reception of that first bit of the corresponding L1CI 
+            egressing at UNI 2. Reference MEF 63 Section 8.2.3.3 One-way Delay Performance Metric.
+          minitems: 0
+          maxitems: 2      
+      sls1wErroredSecondPerformanceMetric:
+        type: array
+        items:
+          $ref: '#/definitions/Sls1wErroredSecondPerformanceMetric'
+          description: >-
+            An errored second (ES) is defined as one second sigma-k in Available Time with at 
+            least one errored block (EB) and is not a SES. An EB is defined as a block in which 
+            one or more bits are in error. Reference MEF 63 Section 8.2.3.4 One-way Errored
+            Second Performance Metric.
+          minitems: 0
+          maxitems: 2
+      sls1wSeverelyErroredSecondPerformanceMetric:
+        type: array
+        items:
+          $ref: '#/definitions/Sls1wSeverelyErroredSecondPerformanceMetric'
+          description: >-
+            An errored second (ES) is defined as one second sigma-k in Available Time with at least 
+            one errored block (EB) and is not a SES. An EB is defined as a block in which one or 
+            more bits are in error. Reference MEF 63 Section 8.2.3.5 One-way Severely Errored Second
+            Performance Metric.
+          minitems: 0
+          maxitems: 2
+      sls1wUnavailableSecondPerformanceMetric:
+        type: array
+        items:
+          $ref: '#/definitions/Sls1wUnavailableSecondPerformanceMetric'
+          description: >-
+            An Unavailable Second (UAS) is defined as a second during Unavailable Time (UAT). Reference
+            MEF 63 Section 8.3.2.6 One-way Unavailable Second Performance Metric.
+          minitems: 0
+          maxitems: 2
+      sls1wAvailabilityPerformanceMetric:
+        type: array
+        items:
+          $ref: '#/definitions/Sls1wAvailabilityPerformanceMetric'
+          description: >-
+            Availability is defined as the percentage of Available Time over a given interval T-l 
+            which does not include Maintenance Interval Time (MIT). Reference MEF 63 Section 8.2.3.7
+            One-way Availability Performance Metric.
+          minitems: 0
+          maxitems: 2
+  L1VcEndPointRef:
+    type: object
+    properties:
+      vcRef:
+        $ref: '#/definitions/L1VcRef'
+      id:
+        type: string
+        description: Points to L1VcEndPoint
+        format: uuid
+    description: First reference VC, then specific VC End Point
+  L1VcRef:
+    description: Reference to a L1 Virtual Connection Instance
+    properties:
+      id:
+        type: string
+        format: uuid
+      href:
+        type: string
+        format: uri
+  Sls1wDelayPerformanceMetric:
+    type: object
+    properties:
+      percentile:
+        type: integer
+        description: >-
+          MEF 63 & MEF 64: the Pd-percentile allows the One-way Delay Performance 
+          Metric Objective to be met although different delays may occur following 
+          a protection switch. To place an upper bound on any longer delays a second 
+          One-way Delay Performance Metric Objective for a higher Pd_percentile value 
+          (e.g., 100th) may be specified.
+      delayObjective:
+        $ref: '#/definitions/Time'
+        description: >-
+          MEF 63 & MEF 64: The value of the One-way Delay Performance Metric, time 
+          units>0.
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+  Sls1wErroredSecondPerformanceMetric:
+    type: object
+    properties:
+      erroredSecondObjective:
+        type: integer
+        description: >-
+          MEF 63 & MEF 64: The value of the One-way Errored Second Per-formance Metric, 
+          integer >=0.
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+  Sls1wSeverelyErroredSecondPerformanceMetric:
+    type: object
+    properties:
+      severelyErroredSecon-dObjective:
+        type: integer
+        description: >-
+          MEF 63 & MEF 64: The value of the MEF 63 & MEF 64: The value of the One-way 
+          Severely Errored Second Performance Metric, integer >=0.
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+  Sls1wAvailabilityPerformanceMetric:
+    type: object    
+    properties:
+      availabilityObjective:
+        type: integer
+        description: >-
+          MEF 63 & MEF 64: The value of the One-way Availability Performance Metric, 
+          percentage > 0.
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.     
+  Sls1wUnavailableSecondPerformanceMetric:
+    type: object
+    properties:
+      unavailableSecondObjective:
+        type: integer
+        description: >-
+          MEF 63 & MEF 64: The value of the One-way Unavailable Second Performance Metric, 
+          integer >=0.
+      orderedPairSrc:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+      orderedPairDst:
+        $ref: '#/definitions/L1VcEndPointRef'                  
+        description: >-
+          MEF 63: Ordered pair of Subscriber L1VC EPs. MEF 64: Ordered pair of Operator 
+          L1VC EPs.
+  Time:
+    type: object
+    properties:
+      time:
+        type: integer
+        description: This denotes the value (for the unit).
+      timeUnits:
+        type: string
+        description: Time unit.
+        enum:
+          - nanoSeconds
+          - milliSeconds
+          - seconds
+          - hours
+          - days
+          - weeks
+          - microSeconds
+          - months
+          - years
+  TimeAndDate:
+    type: object
+    properties:
+      day:
+        type: integer
+        description: Denotes the day.
+      hour:
+        type: integer
+        description: Denotes the hour.
+      minute:
+        type: integer
+        description: Denotes the minute.
+      month:
+        type: integer
+        description: Denotes the month.
+      second:
+        type: integer
+        description: Denotes the second.
+      year:
+        type: integer
+        description: Denotes the year.
+    description: |-
+      This data type is for Time and Date in UTC.
+  TimeIntervalT:
+    type: object
+    properties:
+      number:
+        type: integer
+        description: This denotes the value (for the unit).
+      unit:
+        type: string
+        description: Time interval unit.
+        enum:
+          - second
+          - minute
+          - hour
+          - day
+          - month
+          - week
+          - year
+    description: |-
+      This attribute sets the time interval to evaluate the performance
+      for the SLS.  All performances of this SLS use the same time interval T, which
+      itself may not be constrained, e.g., 1 month.

@@ -1,0 +1,31 @@
+@startuml useCase16
+
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+entity "PerformanceJob" as PJ
+activate PJ
+
+note over PJ: PerformanceJob in `suspended`
+
+B -> S : POST {{baseUrl}}/performanceJob/{{id}}/resume request
+
+S -> S : find PerformanceJob by id
+S -> S : check PerformanceJob status
+S -> PJ : (causes status change)
+alt Job starts immediately
+    PJ -> PJ: status: inProgress
+else Job starts according to schedule
+    PJ -> PJ: status: scheduled
+end
+
+B <-- S : 204 Resumed
+
+opt
+    PJ -> B: POST performanceJobStateChangeEvent
+end
+
+@enduml

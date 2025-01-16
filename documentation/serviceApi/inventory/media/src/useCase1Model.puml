@@ -1,9 +1,4 @@
 @startuml
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
-
 
 class MefServiceConfiguration {
 
@@ -25,7 +20,7 @@ class Service {
 }
 
 Service *-->"*" Note_BusSof : note
-Service *-->"*" RelatedPlaceRefOrValue : place
+Service *-->"*" RelatedPlaceRefOrQuery : place
 Service *-->"*" RelatedContactInformation : relatedContactInformation
 Service *--> MefServiceConfiguration : serviceConfiguration
 Service *-->"*" ServiceOrderItemRef : serviceOrderItem
@@ -65,38 +60,6 @@ enum ServiceStateType {
     inactive
     terminated
 }
-class RelatedContactInformation {
-
-    emailAddress*: string
-    name*: string
-    number*: string
-    numberExtension: string
-    organization: string
-    role*: string
-}
-
-RelatedContactInformation *--> FieldedAddressValue : postalAddress
-
-
-class FieldedAddressValue {
-
-    city*: string
-    country*: string
-    locality: string
-    postcode: string
-    postcodeExtension: string
-    stateOrProvince: string
-    streetName*: string
-    streetNr: string
-    streetNrLast: string
-    streetNrLastSuffix: string
-    streetNrSuffix: string
-    streetSuffix: string
-    streetType: string
-}
-
-FieldedAddressValue *--> GeographicSubAddress : geographicSubAddress
-
 
 class Note_BusSof {
 
@@ -114,106 +77,23 @@ enum BusSofType {
     bus
     sof
 }
-class RelatedPlaceRefOrValue {
 
-    @type*: string
-    @schemaLocation: uri
+class RelatedContactInformation {
+
+    role*: string
+    number*: string
+    emailAddress*: string
+    organization: string
+    name*: string
+    numberExtension: string
+    postalAddress: FieldedAddressRepresentation
+}
+
+
+class RelatedPlaceRefOrQuery {
+    contact: ContactInformation
+    place*: PlaceRefOrQuery
     role*: string
 }
-
-
-
-class FieldedAddress {
-
-    city*: string
-    country*: string
-    locality: string
-    postcode: string
-    postcodeExtension: string
-    stateOrProvince: string
-    streetName*: string
-    streetNr: string
-    streetNrLast: string
-    streetNrLastSuffix: string
-    streetNrSuffix: string
-    streetSuffix: string
-    streetType: string
-}
-RelatedPlaceRefOrValue <|-- FieldedAddress
-
-FieldedAddress *--> GeographicSubAddress : geographicSubAddress
-
-
-class FormattedAddress {
-
-    addrLine1*: string
-    addrLine2: string
-    city*: string
-    country*: string
-    locality: string
-    postcode: string
-    postcodeExtension: string
-    stateOrProvince: string
-}
-RelatedPlaceRefOrValue <|-- FormattedAddress
-
-
-
-class GeographicAddressLabel {
-
-    externalReferenceId*: string
-    externalReferenceType*: string
-}
-RelatedPlaceRefOrValue <|-- GeographicAddressLabel
-
-
-
-class GeographicAddressRef {
-
-    href: string
-    id*: string
-}
-RelatedPlaceRefOrValue <|-- GeographicAddressRef
-
-
-
-class GeographicSiteRef {
-
-    href: string
-    id*: string
-}
-RelatedPlaceRefOrValue <|-- GeographicSiteRef
-
-
-
-class GeographicSubAddress {
-
-    buildingName: string
-    levelNumber: string
-    levelType: string
-    privateStreetName: string
-    privateStreetNumber: string
-}
-
-GeographicSubAddress *-->"*" GeographicSubAddressUnit : subUnit
-
-
-class GeographicPoint {
-
-    spatialRef*: string
-    x*: string
-    y*: string
-    z: string
-}
-RelatedPlaceRefOrValue <|-- GeographicPoint
-
-
-
-class GeographicSubAddressUnit {
-
-    subUnitNumber*: string
-    subUnitType*: string
-}
-
 
 @enduml

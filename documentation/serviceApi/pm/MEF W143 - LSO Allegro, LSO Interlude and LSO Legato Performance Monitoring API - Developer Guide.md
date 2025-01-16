@@ -13,14 +13,14 @@ img
 <div style="font-weight:bold; font-size:33pt; font-family: Sansation;  text-align:center">
 Working Draft
 </br>
-MEF W143 v0.2
+MEF W143 v0.3
 </br>
 </br>
 LSO Allegro, LSO Interlude and LSO Legato Performance Monitoring API - Developer Guide
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">This draft represents MEF work in progress and is subject to change.</p>
 </br>
-December 2023
+December 2024
 <p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
 </div>
 
@@ -28,7 +28,7 @@ December 2023
 
 **Disclaimer**
 
-© MEF Forum 2023. All Rights Reserved.
+© MEF Forum 2024. All Rights Reserved.
 
 The information in this publication is freely available for reproduction and
 use by any recipient and is believed to be accurate as of its publication date.
@@ -68,7 +68,7 @@ endorse or promote any specific products or services.
 
 **Copyright**
 
-© MEF Forum 2023. Any reproduction of this document, or any portion thereof,
+© MEF Forum 2024. Any reproduction of this document, or any portion thereof,
 shall contain the following statement: "Reproduced with permission of MEF
 Forum." No user of this document is authorized to modify any of the information
 contained herein.
@@ -130,37 +130,25 @@ contained herein.
   - [6.13. Use Case 13: Retrieve Cancel Performance Monitoring Job List](#613-use-case-13-retrieve-cancel-performance-monitoring-job-list)
   - [6.14. Use Case 14: Retrieve Cancel Performance Monitoring Job by Identifier](#614-use-case-14-retrieve-cancel-performance-monitoring-job-by-identifier)
   - [6.15. Use Case 15: Suspend Performance Monitoring Job](#615-use-case-15-suspend-performance-monitoring-job)
-    - [6.15.1. Interaction flow](#6151-interaction-flow)
-    - [6.15.2. Suspend Performance Monitoring Job Request](#6152-suspend-performance-monitoring-job-request)
-    - [6.15.3. Suspend Performance Monitoring Job Response](#6153-suspend-performance-monitoring-job-response)
-    - [6.15.4. Suspend Performance Monitoring Job State Machine](#6154-suspend-performance-monitoring-job-state-machine)
-  - [6.16. Use Case 16: Retrieve Suspend Performance Monitoring Job List](#616-use-case-16-retrieve-suspend-performance-monitoring-job-list)
-  - [6.17. Use Case 17: Retrieve Suspend Performance Monitoring Job by Identifier](#617-use-case-17-retrieve-suspend-performance-monitoring-job-by-identifier)
-  - [6.18. Use Case 18: Resume Performance Monitoring Job](#618-use-case-18-resume-performance-monitoring-job)
+  - [6.16. Use Case 16: Resume Performance Monitoring Job](#616-use-case-16-resume-performance-monitoring-job)
+  - [6.17. Use Case 17: Create Performance Monitoring Job Complex Query](#617-use-case-17-create-performance-monitoring-job-complex-query)
+    - [6.17.1. Create Performance Monitoring Job Complex Query Request](#6171-create-performance-monitoring-job-complex-query-request)
+    - [6.17.2. Create Performance Monitoring Job Complex Query Response](#6172-create-performance-monitoring-job-complex-query-response)
+  - [6.18. Use Case 18: Create a Performance Monitoring Report](#618-use-case-18-create-a-performance-monitoring-report)
     - [6.18.1. Interaction flow](#6181-interaction-flow)
-    - [6.18.2. Resume Performance Monitoring Job Request](#6182-resume-performance-monitoring-job-request)
-    - [6.18.3. Resume Performance Monitoring Job Response](#6183-resume-performance-monitoring-job-response)
-    - [6.18.4. Resume Performance Monitoring Job State Machine](#6184-resume-performance-monitoring-job-state-machine)
-  - [6.19. Use Case 19: Retrieve Resume Performance Monitoring Job List](#619-use-case-19-retrieve-resume-performance-monitoring-job-list)
-  - [6.20. Use Case 20: Retrieve Resume Performance Monitoring Job by Identifier](#620-use-case-20-retrieve-resume-performance-monitoring-job-by-identifier)
-  - [6.21. Use Case 21: Create Performance Monitoring Job Complex Query](#621-use-case-21-create-performance-monitoring-job-complex-query)
-    - [6.21.1. Create Performance Monitoring Job Complex Query Request](#6211-create-performance-monitoring-job-complex-query-request)
-    - [6.21.2. Create Performance Monitoring Job Complex Query Response](#6212-create-performance-monitoring-job-complex-query-response)
-  - [6.22. Use Case 22: Create a Performance Measurement Report](#622-use-case-22-create-a-performance-measurement-report)
-    - [6.22.1. Interaction flow](#6221-interaction-flow)
-    - [6.22.2. Create Performance Measurement Report Request](#6222-create-performance-measurement-report-request)
-    - [6.22.3. Create Performance Measurement Report Response](#6223-create-performance-measurement-report-response)
-    - [6.22.4. Performance Measurement Report State Machine](#6224-performance-measurement-report-state-machine)
-    - [6.22.5. Relationship to Performance Monitoring Job](#6225-relationship-to-performance-monitoring-job)
-  - [6.23. Use Case 23: Retrieve Performance Measurement Report List](#623-use-case-23-retrieve-performance-measurement-report-list)
-  - [6.24. Use Case 24: Retrieve Performance Measurement Report by Report Identifier](#624-use-case-24-retrieve-performance-measurement-report-by-report-identifier)
-  - [6.25. Use Case 25: Create Performance Measurement Report Complex Query](#625-use-case-25-create-performance-measurement-report-complex-query)
-    - [6.25.1. Create Performance Measurement Report Complex Query Request](#6251-create-performance-measurement-report-complex-query-request)
-    - [6.25.2. Create Performance Monitoring Report Complex Query Response](#6252-create-performance-monitoring-report-complex-query-response)
-  - [6.26. Use Case 26: Retrieve Tracking Record List](#626-use-case-26-retrieve-tracking-record-list)
-  - [6.27. Use Case 27: Retrieve Tracking Record by Identifier](#627-use-case-27-retrieve-tracking-record-by-identifier)
-  - [6.28. Use Case 28: Register for Notifications](#628-use-case-28-register-for-notifications)
-  - [6.29. Use Case 29: Send Notification](#629-use-case-29-send-notification)
+    - [6.18.2. Create Performance Monitoring Report Request](#6182-create-performance-monitoring-report-request)
+    - [6.18.3. Create Performance Monitoring Report Response](#6183-create-performance-monitoring-report-response)
+    - [6.18.4. Performance Monitoring Report State Machine](#6184-performance-monitoring-report-state-machine)
+    - [6.18.5. Relationship to Performance Monitoring Job](#6185-relationship-to-performance-monitoring-job)
+  - [6.19. Use Case 19: Retrieve Performance Monitoring Report List](#619-use-case-19-retrieve-performance-monitoring-report-list)
+  - [6.20. Use Case 20: Retrieve Performance Monitoring Report by Report Identifier](#620-use-case-20-retrieve-performance-monitoring-report-by-report-identifier)
+  - [6.21. Use Case 21: Create Performance Monitoring Report Complex Query](#621-use-case-21-create-performance-monitoring-report-complex-query)
+    - [6.21.1. Create Performance Monitoring Report Complex Query Request](#6211-create-performance-monitoring-report-complex-query-request)
+    - [6.21.2. Create Performance Monitoring Report Complex Query Response](#6212-create-performance-monitoring-report-complex-query-response)
+  - [6.22. Use Case 22: Retrieve Tracking Record List](#622-use-case-22-retrieve-tracking-record-list)
+  - [6.23. Use Case 23: Retrieve Tracking Record by Identifier](#623-use-case-23-retrieve-tracking-record-by-identifier)
+  - [6.24. Use Case 24: Register for Notifications](#624-use-case-24-register-for-notifications)
+  - [6.25. Use Case 25: Send Notification](#625-use-case-25-send-notification)
 - [7. API Details](#7-api-details)
   - [7.1. API patterns](#71-api-patterns)
     - [7.1.1. Indicating errors](#711-indicating-errors)
@@ -203,7 +191,7 @@ contained herein.
       - [7.2.2.10. Type ModifyPerformanceJob\_Create](#72210-type-modifyperformancejob_create)
       - [7.2.2.11. Type ModifyPerformanceJob](#72211-type-modifyperformancejob)
       - [7.2.2.12. Type ModifyPerformanceJob\_Find](#72212-type-modifyperformancejob_find)
-      - [7.2.2.13. Type ModifyPerformanceJob\_ProfileValue](#72213-type-modifyperformancejob_profilevalue)
+      - [7.2.2.13. Type ModifyPerformanceJob\_PerformanceProfileValue](#72213-type-modifyperformancejob_performanceprofilevalue)
       - [7.2.2.14. Type PerformanceJobComplexQuery\_Create](#72214-type-performancejobcomplexquery_create)
       - [7.2.2.15. Type PerformanceJobComplexQuery](#72215-type-performancejobcomplexquery)
       - [7.2.2.16. `enum` PerformanceJobProcessStateType](#72216-enum-performancejobprocessstatetype)
@@ -211,14 +199,6 @@ contained herein.
       - [7.2.2.18. Type PerformanceJobRefOrValue](#72218-type-performancejobreforvalue)
       - [7.2.2.19. `enum` PerformanceJobStateType](#72219-enum-performancejobstatetype)
       - [7.2.2.20. Type PerformanceJobValue](#72220-type-performancejobvalue)
-      - [7.2.2.21. Type ResumePerformanceJob\_Common](#72221-type-resumeperformancejob_common)
-      - [7.2.2.22. Type ResumePerformanceJob\_Create](#72222-type-resumeperformancejob_create)
-      - [7.2.2.23. Type ResumePerformanceJob](#72223-type-resumeperformancejob)
-      - [7.2.2.24. Type ResumePerformanceJob\_Find](#72224-type-resumeperformancejob_find)
-      - [7.2.2.25. Type SuspendPerformanceJob\_Common](#72225-type-suspendperformancejob_common)
-      - [7.2.2.26. Type SuspendPerformanceJob\_Create](#72226-type-suspendperformancejob_create)
-      - [7.2.2.27. Type SuspendPerformanceJob](#72227-type-suspendperformancejob)
-      - [7.2.2.28. Type SuspendPerformanceJob\_Find](#72228-type-suspendperformancejob_find)
     - [7.2.3. PerformanceReport](#723-performancereport)
       - [7.2.3.1. Type PerformanceReport\_Common](#7231-type-performancereport_common)
       - [7.2.3.2. Type PerformanceReport\_Create](#7232-type-performancereport_create)
@@ -230,24 +210,23 @@ contained herein.
       - [7.2.3.8. `enum` PerformanceReportStateType](#7238-enum-performancereportstatetype)
     - [7.2.4. Common](#724-common)
       - [7.2.4.1. Type AttachmentURL](#7241-type-attachmenturl)
-      - [7.2.4.2. Type DayOfMonth](#7242-type-dayofmonth)
-      - [7.2.4.3. Type DayOfWeek](#7243-type-dayofweek)
-      - [7.2.4.4. Type FileTransferData](#7244-type-filetransferdata)
-      - [7.2.4.5. Type HourRange](#7245-type-hourrange)
-      - [7.2.4.6. `enum` Interval](#7246-enum-interval)
-      - [7.2.4.7. `enum` JobType](#7247-enum-jobtype)
-      - [7.2.4.8. Type MeasurementTime](#7248-type-measurementtime)
-      - [7.2.4.9. Type MonthlyScheduleDayOfWeekDefinition](#7249-type-monthlyscheduledayofweekdefinition)
-      - [7.2.4.10. `enum` OutputFormat](#72410-enum-outputformat)
-      - [7.2.4.11. Type RecurringFrequency](#72411-type-recurringfrequency)
-      - [7.2.4.12. Type ReportContentItem](#72412-type-reportcontentitem)
-      - [7.2.4.13. Type ReportingTimeframe](#72413-type-reportingtimeframe)
-      - [7.2.4.14. `enum` ResultFormat](#72414-enum-resultformat)
-      - [7.2.4.15. Type ResultPayload](#72415-type-resultpayload)
-      - [7.2.4.16. Type ScheduleDefinition](#72416-type-scheduledefinition)
-      - [7.2.4.17. Type ServicePayloadSpecificAttributes](#72417-type-servicepayloadspecificattributes)
-      - [7.2.4.18. Type TrackingRecord](#72418-type-trackingrecord)
-      - [7.2.4.19. Type TrackingRecord\_Find](#72419-type-trackingrecord_find)
+      - [7.2.4.2. Type EntityId](#7242-type-entityid)
+      - [7.2.4.3. Type HourRange](#7243-type-hourrange)
+      - [7.2.4.4. `enum` Interval](#7244-enum-interval)
+      - [7.2.4.5. `enum` JobType](#7245-enum-jobtype)
+      - [7.2.4.6. Type MeasurementTime](#7246-type-measurementtime)
+      - [7.2.4.7. Type MonitoredObjectId](#7247-type-monitoredobjectid)
+      - [7.2.4.8. `enum` OutputFormat](#7248-enum-outputformat)
+      - [7.2.4.9. Type RecurringSchedule](#7249-type-recurringschedule)
+      - [7.2.4.10. Type ReportContentItem](#72410-type-reportcontentitem)
+      - [7.2.4.11. Type ReportingTimeframe](#72411-type-reportingtimeframe)
+      - [7.2.4.12. `enum` ResultFormat](#72412-enum-resultformat)
+      - [7.2.4.13. Type ResultPayload](#72413-type-resultpayload)
+      - [7.2.4.14. Type ScheduleDefinition](#72414-type-scheduledefinition)
+      - [7.2.4.15. Type ServiceId](#72415-type-serviceid)
+      - [7.2.4.16. Type ServicePayloadSpecificAttributes](#72416-type-servicepayloadspecificattributes)
+      - [7.2.4.17. Type TrackingRecord](#72417-type-trackingrecord)
+      - [7.2.4.18. Type TrackingRecord\_Find](#72418-type-trackingrecord_find)
     - [7.2.5. Notification Registration](#725-notification-registration)
       - [7.2.5.1. Type EventSubscriptionInput](#7251-type-eventsubscriptioninput)
       - [7.2.5.2. Type EventSubscription](#7252-type-eventsubscription)
@@ -342,13 +321,13 @@ this document by reference and are not repeated in the table below:
 
 | **Term**                            | **Definition**                                                                                                                                                                   																																								| **Source**                                                                         |
 | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| API Endpoint                        | The endpoint of a communication channel (the complete URL of an API Resource) to which the HTTP-REST requests are addressed to operate on the _API Resource_.           																																								| [rapidapi.com](https://rapidapi.com/blog/api-glossary/endpoint/)<br>This document  |
+| API Endpoint                        | The endpoint of a communication channel (the complete URL of an API Resource) to which the HTTP-REST requests are addressed to operate on the _API Resource_.           																																								        | [rapidapi.com](https://rapidapi.com/blog/api-glossary/endpoint/)<br>This document  |
 | API Resource                        | A REST Resource. In REST, the primary data representation is called Resource. In this document, _API Resource_ is defined as an OAS _SchemaObject_ with specified _API Endpoints_.																																								| [restfulapi.net](https://restfulapi.net/resource-naming/)<br>This document         |
 | Notification                        | A notification is a representation of an event that is exchanged between interested parties. An event is a significant occurrence or change in system state that is important from the perspective of system administration.  																													| MEF W133.1 																		 |
 | On-Demand							  | Performance Monitoring Job actions that are initiated for a limited time to carry out the Performance Monitoring Job or measurements.																																																			| MEF W133.1 																		 |
 | OpenAPI                             | The OpenAPI 3.0 Specification, formerly known as the Swagger specification is an API description format for REST APIs.                                                           																																								| [spec.openapis.org](http://spec.openapis.org/oas/v3.0.3)                           |
-| Operation                           | An interaction between the Server and Client, potentially involving multiple back-and-forth transactions.                                                                              																																								| This document                                                                      |
-| Passive							  | Performance Monitoring Job action to support the collection and reporting of network and service statistics. The statistics collections include but are not limited to telemetry associated with an interface, (Net/Application) Flow, VLAN, bridging/Ethernet, IP, TCP, and UDP layers.  															| MEF W133.1 																		 |
+| Operation                           | An interaction between the Server and Client, potentially involving multiple back-and-forth transactions.                                                                              																																							| This document                                                                      |
+| Passive							  | Performance Monitoring Job action to support the collection and reporting of network and service statistics. The statistics collections include but are not limited to telemetry associated with an interface, (Net/Application) Flow, VLAN, bridging/Ethernet, IP, TCP, and UDP layers.  														| MEF W133.1 																		 |
 | PM Metric							  | A metric that is measured or calculated as a part of Performance Monitoring.																																																																	| MEF W105																			 |
 | Proactive							  |	Performance Monitoring Job actions that are carried on continuously to permit timely reporting of fault and/or performance status.																																																				| MEF W133.1 																		 |
 | REST API							  | Representational State Transfer. REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.	| [REST API](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) |
@@ -361,7 +340,7 @@ this document by reference and are not repeated in the table below:
 | API      | Application Programming Interface. In this document, API is used synonymously with REST API. | This document                                            |
 | BUS      | Business Applications                                                                        | MEF 55.1                                                 |
 | CUS      | Customer Application Coordinator															  | MEF 55.1                                                 |
-| IRP      | Interface Reference Point                                                                    | This document                                            |
+| IRP      | Interface Reference Point                                                                    | MEF 55.1                                                 |
 | OAS      | OpenAPI Specification                                                                        | [openapis.org](https://www.openapis.org/faq/style-guide) |
 | PM	   | Performance Monitoring																		  | MEF W133.1												 |
 | SOF      | Service Orchestration Functionality                                                          | MEF 55.1                                                 |
@@ -454,7 +433,7 @@ This standard is intended to support the design of API implementations that
 enable interoperable SOF operations (in the scope of this standard) across the
 Allegro IRP, Interlude IRP, and Legato IRP.
 
-This standard is based on TMF Open API (v14.5.1) for Performance Management
+This standard is based on TMF Open API (v5.0) for Performance Management
 [TMF 628](#8-references).
 
 The Performance Monitoring API allows the Buyer (CUS/SOF) or Client (BUS) to 
@@ -479,7 +458,7 @@ Seller (inter-operator SOF) and collect performance data from Server/Seller.
 This API implements the Performance Monitoring related requirements and use
 cases that are defined in MEF W133.1 [[MEF133.1](#8-references)]. The API 
 definition builds on _TMF 628 Performance Management API REST Specification 
-R14.5.1_[[TMF628](#8-references)]. Performance Monitoring Use Cases must support
+v5.0_ [[TMF628](#8-references)]. Performance Monitoring Use Cases must support
 the use of MEF service performance specifications as payload.
 
 ## 4.4. Approach
@@ -553,16 +532,15 @@ Performance Notifications are optional and do not impact end-to-end flow
   BUS system.
 - Service ordering flow in the diagram is simplified and is only supposed to
   show that in case of SLS attached to the service, a corresponding 
-  `PerformanceJob` is provisioned.
-- During provisioning performance monitoring, the SOF internally uses the
-  _Performance Monitoring API_ to instantiate the 'PerformanceJob'
-  <br>**_Note2_**: _Process of identification of applicable service performance
-  specification schema is out of scope for this standard._ **_Note3_**:
-  `PerformanceJob` can be provisioned using `PerformanceProfile`, but this is
-  not depicted in the sequence diagram.
+  `PerformanceJob` is provisioned internally.
+- During provisioning of performance monitoring, the SOF internally 
+  instantiates the 'PerformanceJob' <br>**_Note2_**: Process of identification
+  of applicable service performance specification schema is out of scope for 
+  this standard. **_Note3_**: `PerformanceJob` can be provisioned using 
+  `PerformanceProfile`, but this is not depicted in the sequence diagram.
   - The SOF provisions performance monitoring by creating a `PerformanceJob`
     which contains the configuration of performance objectives and related
-    subject (service or other type of entity).
+    subject (service).
   - `PerformanceJob` also carries a configuration including granularity,
     reporting period, schedule definition, and output format.
   - The `PerformanceJob` is processed by the SOF as per the state transition
@@ -573,14 +551,14 @@ Performance Notifications are optional and do not impact end-to-end flow
   - When the configured reporting period elapses, a `PerformanceReport` entity
      is created to collect the performance data.
   - `PerformanceReport` is processed as per the state transition rules 
-    described in [6.22.4.](#6224-performance-measurement-report-state-machine)
+    described in [6.18.4.](#6184-performance-monitoring-report-state-machine)
   - (optional) The SOF reports the `PerformanceJob` state change.
   - The BUS system can collect `PerformanceReport` through _Performance 
     Monitoring API_
 
 The same _Performance Monitoring API_ is used by the BUS to create **new**
 `PerformanceJob` instances, as well as update **existing** ones or trigger 
-state transitions (e.g. delete **existing** `PerformanceJob` instance)
+state transitions (e.g. cancel **existing** `PerformanceJob` instance)
 
 Figure 5 presents a high-level exemplary flow of performance monitoring 
 provisioning for non-SLS use cases.
@@ -633,13 +611,16 @@ the endpoint mapping. Use cases are described extensively in
 ### 5.2.1. Seller/Server (SOF) side Performance Monitoring API Endpoints
 
 **Base URL for Allegro**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/performanceMonitoring/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/performanceMonitoring/v3/`
 
 **Base URL for Interlude**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/performanceMonitoring/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/performanceMonitoring/v3/`
 
 **Base URL for Legato**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/performanceMonitoring/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/performanceMonitoring/v3/`
 
 The following API endpoints are implemented by the Seller/Server (SOF) and
 allow the Buyer/Client (SOF/CUS/BUS) to create, retrieve and modify
@@ -647,97 +628,99 @@ allow the Buyer/Client (SOF/CUS/BUS) to create, retrieve and modify
 endpoints and corresponding data model are defined in
 `serviceApi/pm/performanceMonitoring.api.yaml`.
 
-| API Endpoint                        | Description                                                                                                                   | MEF W133.1 Use Case Mapping |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| POST /performanceProfile            | A request initiated by the Administrator to create a Performance Monitoring Profile in the Seller/Server system.              | 10                          |
-| GET /performanceProfile             | The Administrator or Buyer/Client requests a list of Performance Monitoring Profiles based on a set of filter criteria.       | 11                          |
-| GET /performanceProfile/{{id}}      | The Administrator or Buyer/Client requests detailed information about a single Performance Monitoring Profile.                | 12                          |
-| POST /performanceJob                | A request initiated by the Buyer/Client to create a Performance Monitoring Job in the Seller/Server system.                   | 18,30                       |
-| GET /performanceJob                 | The Buyer/Client requests a list of Performance Monitoring Jobs based on a set of filter criteria.                            | 23                          |
-| GET /performanceJob/{{id}}          | The Buyer/Client requests detailed information about a single Performance Monitoring Job.                                     | 24                          |
-| POST /modifyPerformanceJob          | A request initiated by the Buyer/Client to modify a Performance Monitoring Job in the Seller/Server system.                   | 19,31                       |
-| GET /modifyPerformanceJob           | The Buyer/Client requests a list of Modify Performance Monitoring Job based on a set of filter criteria.                     | 19,31                       |
-| GET /modifyPerformanceJob/{{id}}    | The Buyer/Client requests detailed information about a single Modify Performance Monitoring Job.                              | 19,31                       |
-| POST /cancelPerformanceJob          | A request initiated by the Buyer/Client to cancel a Performance Monitoring Job in the Seller/Server system.                   | 20,32                       |
-| GET /cancelPerformanceJob           | The Buyer/Client requests a list of Cancel Performance Monitoring Job based on a set of filter criteria.                     | 20,32                       |
-| GET /cancelPerformanceJob/{{id}}    | The Buyer/Client requests detailed information about a single Cancel Performance Monitoring Job.                              | 20,32                       |
-| POST /suspendPerformanceJob         | A request initiated by the Buyer/Client to suspend a Performance Monitoring Job in the Seller/Server system.                  | 21                          |
-| GET /suspendPerformanceJob          | The Buyer/Client requests a list of Suspend Performance Monitoring Job based on a set of filter criteria.                    | 21                          |
-| GET /suspendPerformanceJob/{{id}}   | The Buyer/Client requests detailed information about a single Suspend Performance Monitoring Job.                             | 21                          |
-| POST /resumePerformanceJob          | A request initiated by the Buyer/Client to resume a Performance Monitoring Job in the Seller/Server system.                   | 22                          |
-| GET /resumePerformanceJob           | The Buyer/Client requests a list of Resume Performance Monitoring Job based on a set of filter criteria.                     | 22                          |
-| GET /resumePerformanceJob/{{id}}    | The Buyer/Client requests detailed information about a single Resume Performance Monitoring Job.                              | 22                          |
-| POST /performanceJobComplexQuery    | A request initiated by the Buyer/Client to create a Performance Monitoring Job Complex Query in the Seller/Server system.     | 23                          |
-| POST /performanceReport             | A request initiated by the Buyer/Client to create an ad-hoc (not initiated by Performance Monitoring Job) Performance Measurement Report in the Seller/Server system.       | 29,34                       |
-| GET /performanceReport              | The Buyer/Client requests a list of Performance Measurement Reports based on a set of filter criteria.                        | 28                          |
-| GET /performanceReport/{{id}}       | The Buyer/Client requests detailed information about a single Performance Measurement Report, including the content of the report.                                 | 29,34                       |
-| POST /performanceReportComplexQuery | A request initiated by the Buyer/Client to create a Performance Measurement Report Complex Query in the Seller/Server system. | 28                          |
-| GET /trackingRecord                 | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria.                                       |                             |
-| GET /trackingRecord/{{id}}          | The Buyer/Client requests detailed information about a single Tracking Record.                                                |                             |
+| API Endpoint                        | Description                                                                                                                   												| MEF W133.1 Use Case Mapping |
+| ----------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| POST /performanceProfile            | A request initiated by the Buyer/Client to create a Performance Monitoring Profile in the Seller/Server system.              												| 11                          |
+| GET /performanceProfile             | The Buyer/Client requests a list of Performance Monitoring Profiles based on a set of filter criteria.       																| 12                          |
+| GET /performanceProfile/{{id}}      | The Buyer/Client requests detailed information about a single Performance Monitoring Profile.                																| 13                          |
+| POST /performanceJob                | A request initiated by the Buyer/Client to create a Performance Monitoring Job in the Seller/Server system.                   												| 19,36                       |
+| GET /performanceJob                 | The Buyer/Client requests a list of Performance Monitoring Jobs based on a set of filter criteria.                            												| 24                          |
+| GET /performanceJob/{{id}}          | The Buyer/Client requests detailed information about a single Performance Monitoring Job.                                     												| 25                          |
+| POST /modifyPerformanceJob          | A request initiated by the Buyer/Client to modify a Performance Monitoring Job in the Seller/Server system.                   												| 20,37                       |
+| GET /modifyPerformanceJob           | The Buyer/Client requests a list of Modify Performance Monitoring Job based on a set of filter criteria.                     												| 20,37                       |
+| GET /modifyPerformanceJob/{{id}}    | The Buyer/Client requests detailed information about a single Modify Performance Monitoring Job.                              												| 20,37                       |
+| POST /cancelPerformanceJob          | A request initiated by the Buyer/Client to cancel a Performance Monitoring Job in the Seller/Server system.                   												| 21,38                       |
+| GET /cancelPerformanceJob           | The Buyer/Client requests a list of Cancel Performance Monitoring Job based on a set of filter criteria.                     												| 21,38                       |
+| GET /cancelPerformanceJob/{{id}}    | The Buyer/Client requests detailed information about a single Cancel Performance Monitoring Job.                              												| 21,38                       |
+| POST /performanceJob/{{id}}/suspend | A request initiated by the Buyer/Client to suspend a Performance Monitoring Job in the Seller/Server system.                  												| 22                          |
+| POST /performanceJob/{{id}}/resume  | A request initiated by the Buyer/Client to resume a Performance Monitoring Job in the Seller/Server system.                   												| 23                          |
+| POST /performanceJobComplexQuery    | A request initiated by the Buyer/Client to create a Performance Monitoring Job Complex Query in the Seller/Server system.                                                   | 24                          |
+| POST /performanceReport             | A request initiated by the Buyer/Client to collect data points existing in the Seller/Server system in the form of an ad-hoc Performance Monitoring Report.                 | 30,40                       |
+| GET /performanceReport              | The Buyer/Client requests a list of Performance Monitoring Reports based on a set of filter criteria.                                                                       | 29,39                       |
+| GET /performanceReport/{{id}}       | The Buyer/Client requests detailed information about a single Performance Monitoring Report, including the content of the report.                                           | 30,40                       |
+| POST /performanceReportComplexQuery | A request initiated by the Buyer/Client to create a Performance Monitoring Report Complex Query in the Seller/Server system.                                                | 29,39                       |
+| GET /trackingRecord                 | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria.                                                                                     |                             |
+| GET /trackingRecord/{{id}}          | The Buyer/Client requests detailed information about a single Tracking Record.                                                                                              |                             |
 
 **Table 4. Seller/Server (SOF) Performance Monitoring mandatory API endpoints**
 
 **[R1]** Seller/Server (SOF) **MUST** support all API endpoints listed in 
-Table 4.
+Table 4. [MEF133.1 R38, R42, R52, R73, R106, R108]
+
+**[R2]** The Buyer/Client **MUST** support the retrieval of a PM Profile List
+Use Case. [MEF133.1 R39]
+
+**[R3]** The Buyer/Client **MUST** support the retrieval of a PM Profile 
+Use Case. [MEF133.1 R43]
 
 API endpoints listed in Table 5 are optional and may be exposed by the SOF.
 
-| API Endpoint                      | Description                                                                                                                                                                    | MEF W133.1 Use Case Mapping |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------- |
-| PATCH /performanceProfile/{{id}}  | A request initiated by the Administrator to modify a Performance Monitoring Profile in the Seller/Server system based on a Performance Monitoring Profile Identifier.          | 13                          |
-| DELETE /performanceProfile/{{id}} | The Administrator requests deletion of Performance Monitoring Profile by specifying Performance Monitoring Profile Identifier.                                                 | 14                          |
-| POST /hub                         | The Buyer/Client or Administrator requests to subscribe to the Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Measurement Report Notifications.     | 15,25                       |
-| GET /hub/{{id}}                   | The Buyer/Client or Administrator retrieves a specific `EventSubscription` from the SOF, that matches the _`id`_ value provided as _`path`_ parameter.                         | 15,25                       |
-| DELETE /hub/{{id}}                | The Buyer/Client or Administrator requests to unsubscribe from the Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Measurement Report Notifications. | 17,26                       |
+| API Endpoint                      | Description                                                                                                                                                           | MEF W133.1 Use Case Mapping |
+| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| PATCH /performanceProfile/{{id}}  | A request initiated by the Buyer/Client to modify a Performance Monitoring Profile in the Seller/Server system based on a Performance Monitoring Profile Identifier.  | 14                          |
+| DELETE /performanceProfile/{{id}} | The Buyer/Client requests deletion of Performance Monitoring Profile by specifying Performance Monitoring Profile Identifier.                                         | 15                          |
+| POST /hub                         | The Buyer/Client requests to subscribe to the Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Monitoring Report Notifications.         | 16,26                       |
+| GET /hub/{{id}}                   | The Buyer/Client retrieves a specific `EventSubscription` from the SOF, that matches the _`id`_ value provided as _`path`_ parameter.                                 | 16,26                       |
+| DELETE /hub/{{id}}                | The Buyer/Client requests to unsubscribe from the Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Monitoring Report Notifications.     | 18,27                       |
 
 **Table 5. Seller/Server (SOF) Performance Monitoring optional API endpoints**
 
 **[O1]** The implementation **MAY** support API endpoints listed in Table 5. 
-[W133 O4, O6, O8]
+[W133 O5, O6, O7, O8, O9, O10, O13, O14]
 
 ### 5.2.2. Buyer/Client (CUS, BUS, SOF) side Performance Monitoring API Endpoints
 
 **Base URL for Allegro**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/performanceNotification/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/performanceNotification/v3/`
 
 **Base URL for Interlude**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/performanceNotification/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/performanceNotification/v3/`
 
 **Base URL for Legato**:
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/performanceNotification/v2/`
+
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/performanceNotification/v3/`
 
 The following API Endpoints are used by SOF to post notifications to registered
 CUS, BUS, or SOF listeners. The endpoints and corresponding data model are 
 defined in `serviceApi/pm/performanceNotification.api.yaml`
 
-| API Endpoint                                               | Description                                                                                                                                               | MEF W133.1 Use Case Mapping |
-| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| POST /listener/performanceJobCreateEvent                   | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceJob` instance creation.                                                    | 16,27                       |
-| POST /listener/performanceJobStateChangeEvent              | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceJob` instance state change.                                                | 16,27                       |
-| POST /listener/performanceJobAttributeValueChangeEvent     | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceJob` instance attribute value change.                                      | 16,27                       |
-| POST /listener/performanceJobReportReadyEvent              | A request initiated by the Seller/Server to notify Buyer/Client that `PerformanceReport` was generated for the `PerformanceJob` instance.                     | 16,27                       |
-| POST /listener/performanceJobReportPreparationErrorEvent   | A request initiated by the Seller/Server to notify Buyer/Client that `PerformanceReport` was not generated for the `PerformanceJob` instance due to an error. | 16,27                       |
-| POST /listener/cancelPerformanceJobStateChangeEvent        | A request initiated by the Seller/Server to notify Buyer/Client on the `CancelPerformanceJob` instance state change.                                          | 16,27                       |
-| POST /listener/modifyPerformanceJobStateChangeEvent        | A request initiated by the Seller/Server to notify Buyer/Client on the `ModifyPerformanceJob` instance state change.                                          | 16,27                       |
-| POST /listener/resumePerformanceJobStateChangeEvent        | A request initiated by the Seller/Server to notify Buyer/Client on the `ResumePerformanceJob` instance state change.                                          | 16,27                       |
-| POST /listener/suspendPerformanceJobStateChangeEvent       | A request initiated by the Seller/Server to notify Buyer/Client on the `SuspendPerformanceJob` instance state change.                                         | 16,27                       |
-| POST /listener/performanceProfileCreateEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceProfile` instance creation.                                                | 16,27                       |
-| POST /listener/performanceProfileStateChangeEvent          | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceProfile` instance state change.                                            | 16,27                       |
-| POST /listener/performanceProfileAttributeValueChangeEvent | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceProfile` instance attribute value change.                                  | 16,27                       |
-| POST /listener/performanceProfileDeleteEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceProfile` instance deletion.                                                | 16,27                       |
-| POST /listener/performanceReportCreateEvent                | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceReport` instance creation.                                                 | 16,27                       |
-| POST /listener/performanceReportStateChangeEvent           | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceReport` instance state change.                                             | 16,27                       |
+| API Endpoint                                               | Description                                                                                                                                                   | MEF W133.1 Use Case Mapping |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| POST /listener/performanceJobCreateEvent                   | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceJob` instance creation.                                                        | 28                          |
+| POST /listener/performanceJobStateChangeEvent              | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceJob` instance state change.                                                | 28                          |
+| POST /listener/performanceJobAttributeValueChangeEvent     | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceJob` instance attribute value change.                                      | 28                          |
+| POST /listener/performanceJobReportReadyEvent              | A request initiated by the Seller/Server to notify Buyer/Client that `PerformanceReport` was generated for the `PerformanceJob` instance.                     | 28                          |
+| POST /listener/performanceJobReportPreparationErrorEvent   | A request initiated by the Seller/Server to notify Buyer/Client that `PerformanceReport` was not generated for the `PerformanceJob` instance due to an error. | 28                          |
+| POST /listener/cancelPerformanceJobStateChangeEvent        | A request initiated by the Seller/Server to notify Buyer/Client on the `CancelPerformanceJob` instance state change.                                          | 28                          |
+| POST /listener/modifyPerformanceJobStateChangeEvent        | A request initiated by the Seller/Server to notify Buyer/Client on the `ModifyPerformanceJob` instance state change.                                          | 28                          |
+| POST /listener/performanceProfileCreateEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceProfile` instance creation.                                                    | 17                          |
+| POST /listener/performanceProfileAttributeValueChangeEvent | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceProfile` instance attribute value change.                                  | 17                          |
+| POST /listener/performanceProfileDeleteEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceProfile` instance deletion.                                                    | 17                          |
+| POST /listener/performanceReportCreateEvent                | A request initiated by the Seller/Server to notify Buyer/Client on `PerformanceReport` instance creation.                                                     | 28                          |
+| POST /listener/performanceReportStateChangeEvent           | A request initiated by the Seller/Server to notify Buyer/Client on the `PerformanceReport` instance state change.                                             | 28                          |
 
 **Table 6. Buyer/Client (CUS, BUS, SOF) Performance Monitoring API endpoints**
 
 **[O2]** The Buyer/Client (CUS, BUS, SOF) **MAY** support API endpoints listed
-in Table 6.
+in Table 6. [MEF133.1 O10]
 
 **[O3]** The Buyer/Client (CUS, BUS, SOF) **MAY** register to receive 
-performance monitoring notifications.
+performance monitoring notifications. [MEF133.1 O9]
 
-**[R2]** The Seller/Server **MUST** support sending notifications to API 
-endpoints listed in Table 6 to the registered Buyer/Client. [MEF133.1 R74]
+**[R4]** The Seller/Server **MUST** support sending notifications to API 
+endpoints listed in Table 6 to the registered Buyer/Client. [MEF133.1 R70]
 
 ## 5.3. Integration of Service Monitoring Specification into Performance Monitoring API
 
@@ -777,10 +760,10 @@ the above-mentioned URN:
 title: MEF LSO Legato - IP Performance Monitoring Configuration
 ```
 
-Monitoring configuration payload is introduced in multiple PM API entities through
-a `servicePayloadSpecificAttributes` attribute of type 
-`ServicePayloadSpecificAttributes` which is used as an extension point for 
-configuration attributes.
+Payload for configuring service performance monitoring is used in multiple 
+PM API entities through a `servicePayloadSpecificAttributes` attribute of type
+`ServicePayloadSpecificAttributes`. It is an extension point for configuration
+attributes.
 
 In terms of monitoring results, the appropriate payload is introduced via 
 `ReportContent`. This entity has a `measurementDataPoints` array of items of 
@@ -788,10 +771,10 @@ type `ResultPayload` which is used as an extension point for service-specific
 output content.
 
 Implementations might choose to integrate selected performance monitoring
-specifications to data model during development. In such a case an integrated 
-data model is built, and monitoring specifications are in an inheritance 
-relationship accordingly with either `ServicePayloadSpecificAttributes` or 
-`ResultPayload` as described in the OAS specification.
+specifications into the data model during development. In such a case an 
+integrated data model contains monitoring specifications which are in an 
+inheritance relationship accordingly with either `ServicePayloadSpecificAttributes`
+or `ResultPayload` as described in the OAS specification.
 This pattern is called **Static Binding**. The snippets below present an 
 example of a static binding of the envelope API with exemplary MEF monitoring 
 specifications, for both extension points.
@@ -800,8 +783,7 @@ specifications, for both extension points.
 ServicePayloadSpecificAttributes:
   type: object
   description: ServicePayloadSpecificAttributes is used as an extension point
-    for MEF specific service performance monitoring configuration. It includes
-    definition of service/entity and applicable performance monitoring objectives.
+    for MEF-specific service performance monitoring configuration. 
     The `@type` attribute is used as a discriminator
   discriminator:
     mapping:
@@ -811,10 +793,11 @@ ServicePayloadSpecificAttributes:
     '@type':
       type: string
       description:
-        The name that uniquely identifies type of performance monitoring configuration
-        that specifies PM objectives. In case of MEF services this is the URN
-        provided in performance monitoring configuration specification.
-        The named type must be a subclass of ServicePayloadSpecificAttributes.
+        Uniquely identifies the type of performance monitoring
+        configuration that specifies PM objectives. In the case of MEF services,
+        this is the URN provided in the performance monitoring configuration
+        specification. The named type must be a subclass of
+        ServicePayloadSpecificAttributes.
 ```
 
 ```yaml
@@ -855,22 +838,22 @@ IpPerformanceMonitoringResults:
 
 Alternatively, implementations might choose not to build an integrated model
 and choose a different mechanism allowing runtime validation of
-service-specific fragments of the payload. The system can validate a given
-monitoring configuration against a new schema without redeployment. This 
-pattern is called **Dynamic Binding.**
+service-specific fragments of the payload. In this case systems can validate 
+a given monitoring configuration against a new schema without redeployment. 
+This pattern is called **Dynamic Binding.**
 
 Regardless of the chosen implementation pattern, the HTTP payload is  
 the same. Both implementation approaches must conform to the requirements 
 specified below.
 
-**[R3]** `ServicePayloadSpecificAttributes` and `ResultPayload` types are
+**[R5]** `ServicePayloadSpecificAttributes` and `ResultPayload` types are
 extension points that **MUST** be used to integrate service performance 
 properties into a request/response payload.
 
-**[R4]** The `@type` property of `ServicePayloadSpecificAttributes` and 
+**[R6]** The `@type` property of `ServicePayloadSpecificAttributes` and 
 `ResultPayload` **MUST** be used to specify the type of the extending entity.
 
-**[R5]** Attributes specified in the payload must conform to the performance
+**[R7]** Attributes specified in the payload must conform to the performance
 definition specified in the `@type` property.
 
 ![Figure 8: Extension pattern](performance/media/extensionPattern.png)
@@ -878,14 +861,14 @@ definition specified in the `@type` property.
 **Figure 8. The Extension Pattern with Sample Service-Specific Extension**
 
 Figure 8 presents two MEF performance monitoring schemas that represent 
-configuration and result classes for IP services. When these schemas are used, 
-the `@type` of `ServicePayloadSpecificAttributes` takes
+configuration and result for IP services. When these schemas are used, 
+the `@type` of `ServicePayloadSpecificAttributes` takes value of
 `"urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"` 
-value to indicate which performance specification should be used to interpret a
- set of service-specific attributes included in the payload.
+to indicate which performance specification should be used to interpret a
+set of service-specific attributes included in the payload.
 Similarly, for `ResultPayload`, the `@type` attribute takes
 `"urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all"` value 
-which indicates how the resulting performance collection should be interpreted.
+which indicates how the output performance collection should be interpreted.
 
 ## 5.4. Model structure and validation
 
@@ -895,8 +878,11 @@ Performance Monitoring API endpoints is defined using:
 - OpenAPI version 3.0 for the service-agnostic part of the payload
 - JsonSchema (draft 7) for the service-specific part of the payload
 
-**[R6]** Implementations **MUST** use payloads that conform to these
+**[R8]** Implementations **MUST** use payloads that conform to these
 definitions.
+
+**[R9]** The Buyer/Client and the Seller/Server **MUST NOT** use any operation,
+entity or attribute that is not explicitly defined or allowed by this standard.
 
 ## 5.5. Security Considerations
 
@@ -915,42 +901,38 @@ _LSO API Security Profiles_ [[MEF128](#8-references)].
 # 6. API Interactions and Flows
 
 This section provides a detailed insight into the API functionality, use cases,
-and flows. It starts with Table 7 presenting a list and short description of
-all business use cases then present the variants of end-to-end interaction
-flows, and in the following subchapters describe the API usage flow and
-examples for each of the use cases.
+and flows. It starts with Table 7 showing a list and short description of
+all business use cases, then presents the variants of end-to-end interaction
+flows, and in the subchapters describes the API usage flows and examples for
+each of the use cases.
 
-| Use Case # | Use Case Name                                                  | Use Case Description                                                                                                                                                                |
-| ---------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1          | Create Performance Monitoring Profile                          | A request initiated by the Administrator to create a Performance Monitoring Profile in the Seller/Server system.                                                                    |
-| 2          | Retrieve Performance Monitoring Profile List                   | The Administrator or Buyer/Client requests a list of Performance Monitoring Profiles based on a set of filter criteria. The Seller/Server returns a summarized list of PM Profiles. |
-| 3          | Retrieve Performance Monitoring Profile by Profile Identifier  | The Administrator or Buyer/Client requests detailed information about a single Performance Monitoring Profile based on the Performance Monitoring Profile Identifier.               |
-| 4          | Modify Performance Monitoring Profile                          | A request initiated by the Administrator to modify a Performance Monitoring Profile in the Seller/Server system based on a Performance Monitoring Profile Identifier.               |
-| 5          | Delete Performance Monitoring Profile                          | The Administrator requests deletion of the Performance Monitoring Profile by specifying the Performance Monitoring Profile Identifier.                                              |
-| 6          | Create Performance Monitoring Job                              | A request initiated by the Buyer/Client to create a Performance Monitoring Job in the Seller/Server system to indicate performance monitoring objectives.                           |
-| 7          | Retrieve Performance Monitoring Job List                       | The Buyer/Client requests a list of Performance Monitoring Job based on a set of filter criteria. The Seller/Server returns a summarized list of PM Jobs.                          |
-| 8          | Retrieve Performance Monitoring Job by Job Identifier          | The Buyer/Client requests detailed information about a single Performance Monitoring Job based on the Performance Monitoring Job Identifier.                                        |
-| 9          | Modify Performance Monitoring Job                              | A request initiated by the Buyer/Client to modify a Performance Monitoring Job in the Seller/Server system.                                                                         |
-| 10         | Retrieve Modify Performance Monitoring Job List                | The Buyer/Client requests a list of Modify Performance Monitoring Job based on a set of filter criteria.                                                                           |
-| 11         | Retrieve Modify Performance Monitoring Job by Identifier  | The Buyer/Client requests detailed information about a single Modify Performance Monitoring Job based on the Modify Performance Monitoring Job Identifier.                          |
-| 12         | Cancel Performance Monitoring Job                              | A request initiated by the Buyer/Client to cancel a Performance Monitoring Job in the Seller/Server system.                                                                         |
-| 13         | Retrieve Cancel Performance Monitoring Job List                | The Buyer/Client requests a list of Cancel Performance Monitoring Job based on a set of filter criteria.                                                                           |
-| 14         | Retrieve Cancel Performance Monitoring Job by Identifier  | The Buyer/Client requests detailed information about a single Cancel Performance Monitoring Job based on the Cancel Performance Monitoring Job Identifier.                          |
-| 15         | Suspend Performance Monitoring Job                             | A request initiated by the Buyer/Client to suspend a Performance Monitoring Job in the Seller/Server system.                                                                        |
-| 16         | Retrieve Suspend Performance Monitoring Job List               | The Buyer/Client requests a list of Suspend Performance Monitoring Job based on a set of filter criteria.                                                                          |
-| 17         | Retrieve Suspend Performance Monitoring Job by Identifier | The Buyer/Client requests detailed information about a single Suspend Performance Monitoring Job based on the Suspend Performance Monitoring Job Identifier.                        |
-| 18         | Resume Performance Monitoring Job                              | A request initiated by the Buyer/Client to resume a Performance Monitoring Job in the Seller/Server system.                                                                         |
-| 19         | Retrieve Resume Performance Monitoring Job List                | The Buyer/Client requests a list of Resume Performance Monitoring Job based on a set of filter criteria.                                                                           |
-| 20         | Retrieve Resume Performance Monitoring Job by Identifier  | The Buyer/Client requests detailed information about a single Resume Performance Monitoring Job based on the Resume Performance Monitoring Job Identifier.                          |
-| 21         | Create Performance Monitoring Job Complex Query                | A request initiated by the Buyer/Client to create a Performance Monitoring Job Complex Query in the Seller/Server system.                                                           |
-| 22         | Create Performance Measurement Report                          | A request initiated by the Buyer/Client to create an ad-hoc (not triggered by PM Job) Performance Measurement Report based on existing performance data in the Seller/Server system.                          |
-| 23         | Retrieve Performance Measurement Report List                   | The Buyer/Client requests a list of Performance Measurement Reports based on a set of filter criteria. The Seller/Server returns a summarized list of PM Profiles.                  |
-| 24         | Retrieve Performance Measurement Report by Report Identifier   | The Buyer/Client requests detailed information, including generated content, about a single Performance Measurement Report based on the Performance Measurement Report Identifier.                                |
-| 25         | Create Performance Measurement Report Complex Query            | A request initiated by the Buyer/Client to create a Performance Measurement Report Complex Query in the Seller/Server system.                                                       |
-| 26         | Retrieve Tracking Record List                                  | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria. The Seller/Server returns a summarized list of Tracking Records.                            |
-| 27         | Retrieve Tracking Record List by Identifier                    | The Buyer/Client requests detailed information about a single Tracking Record based on the Tracking Record Identifier.                                                              |
-| 28         | Register for Event Notifications                               | The Buyer/Client or Administrator requests to subscribe to Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Measurement Report Notifications.         |
-| 29         | Send Event Notification                                        | A request initiated by the Seller/Server to notify the Buyer/Client.                                                                                                      |
+| Use Case # | Use Case Name                                                 | Use Case Description                                                                                                                                                             |
+| ---------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1          | Create Performance Monitoring Profile                         | A request initiated by the Buyer/Client to create a Performance Monitoring Profile in the Seller/Server system.                                                                  |
+| 2          | Retrieve Performance Monitoring Profile List                  | The Buyer/Client requests a list of Performance Monitoring Profiles based on a set of filter criteria. The Seller/Server returns a summarized list of PM Profiles.				|
+| 3          | Retrieve Performance Monitoring Profile by Profile Identifier | The Buyer/Client requests detailed information about a single Performance Monitoring Profile based on the Performance Monitoring Profile Identifier.               				|
+| 4          | Modify Performance Monitoring Profile                         | A request initiated by the Buyer/Client to modify a Performance Monitoring Profile in the Seller/Server system based on a Performance Monitoring Profile Identifier.             |
+| 5          | Delete Performance Monitoring Profile                         | The Buyer/Client requests deletion of the Performance Monitoring Profile by specifying the Performance Monitoring Profile Identifier.                                            |
+| 6          | Create Performance Monitoring Job                             | A request initiated by the Buyer/Client to create a Performance Monitoring Job in the Seller/Server system to indicate performance monitoring objectives.                        |
+| 7          | Retrieve Performance Monitoring Job List                      | The Buyer/Client requests a list of Performance Monitoring Job based on a set of filter criteria. The Seller/Server returns a summarized list of PM Jobs.                        |
+| 8          | Retrieve Performance Monitoring Job by Job Identifier         | The Buyer/Client requests detailed information about a single Performance Monitoring Job based on the Performance Monitoring Job Identifier.                                     |
+| 9          | Modify Performance Monitoring Job                             | A request initiated by the Buyer/Client to modify a Performance Monitoring Job in the Seller/Server system.                                                                      |
+| 10         | Retrieve Modify Performance Monitoring Job List               | The Buyer/Client requests a list of Modify Performance Monitoring Job based on a set of filter criteria.                                                                         |
+| 11         | Retrieve Modify Performance Monitoring Job by Identifier      | The Buyer/Client requests detailed information about a single Modify Performance Monitoring Job based on the Modify Performance Monitoring Job Identifier.                       |
+| 12         | Cancel Performance Monitoring Job                             | A request initiated by the Buyer/Client to cancel a Performance Monitoring Job in the Seller/Server system.                                                                      |
+| 13         | Retrieve Cancel Performance Monitoring Job List               | The Buyer/Client requests a list of Cancel Performance Monitoring Job based on a set of filter criteria.                                                                         |
+| 14         | Retrieve Cancel Performance Monitoring Job by Identifier      | The Buyer/Client requests detailed information about a single Cancel Performance Monitoring Job based on the Cancel Performance Monitoring Job Identifier.                       |
+| 15         | Suspend Performance Monitoring Job                            | A request initiated by the Buyer/Client to suspend a Performance Monitoring Job in the Seller/Server system.                                                                     |
+| 16         | Resume Performance Monitoring Job                             | A request initiated by the Buyer/Client to resume a Performance Monitoring Job in the Seller/Server system.                                                                      |
+| 17         | Create Performance Monitoring Job Complex Query               | A request initiated by the Buyer/Client to create a Performance Monitoring Job Complex Query in the Seller/Server system.                                                        |
+| 18         | Create Performance Monitoring Report                          | A request initiated by the Buyer/Client to collect data points existing in the Seller/Server system in the form of an ad-hoc Performance Monitoring Report.                      |
+| 19         | Retrieve Performance Monitoring Report List                   | The Buyer/Client requests a list of Performance Monitoring Reports based on a set of filter criteria. The Seller/Server returns a summarized list of PM Reports .                |
+| 20         | Retrieve Performance Monitoring Report by Report Identifier   | The Buyer/Client requests detailed information, including generated content, about a single Performance Monitoring Report based on the Performance Monitoring Report Identifier. |
+| 21         | Create Performance Monitoring Report Complex Query            | A request initiated by the Buyer/Client to create a Performance Monitoring Report Complex Query in the Seller/Server system.                                                     |
+| 22         | Retrieve Tracking Record List                                 | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria. The Seller/Server returns a summarized list of Tracking Records.                         |
+| 23         | Retrieve Tracking Record by Identifier                        | The Buyer/Client requests detailed information about a single Tracking Record based on the Tracking Record Identifier.                                                           |
+| 24         | Register for Event Notifications                              | The Buyer/Client requests to subscribe to Performance Monitoring Profile, Performance Monitoring Job, and/or Performance Monitoring Report Notifications.         				|
+| 25         | Send Event Notification                                       | A request initiated by the Seller/Server to notify the Buyer/Client.                                                                                                      		|
 
 **Table 7. Use cases description**
 
@@ -969,60 +951,37 @@ The flow of this use case is described in Figure 9.
 
 **Figure 9. Use Case 1 - Performance Monitoring Profile create request flow**
 
-The only actor allowed to execute the Performance Monitoring Profile create 
-request is the Administrator. Administrator is a special role that represents 
-additional access rights not available to standard Buyer/Client roles.
-
-**[R7]** - Only Administrator role **MUST** have access rights to create Performance 
-Monitoring Profile.
-
-The Administrator sends a request with a `PerformanceProfile_Create` type in
+The Buyer/Client sends a request with a `PerformanceProfile_Create` type in
 the body. The SOF performs request validation, assigns an `id`, and returns
 `PerformanceProfile` type in the response body, with a `state` set to
-`acknowledged`. From this point, the Performance Profile will undergo further
-validations before it is ready to be used, and its state is set to `active`.
-The Administrator can track the progress of the process either by subscribing
-for notifications or by periodically polling the `PerformanceProfile`. The two
-patterns are presented in the following diagrams.
-
-![Figure 10: Performance Profile Notification](performance/media/useCase1Notification.png)
-
-**Figure 10. Performance Profile progress tracking - Notifications**
-
-![Figure 11: Performance Profile Polling](performance/media/useCase1Polling.png)
-
-**Figure 11. Performance Profile progress tracking - Polling**
-
-**_Note_**: The context of notifications is not a part of the considered use
-case itself. It is presented to show the big picture of end-to-end flow. This
-applies also to all further use case flow diagrams with notifications.
+`active`. 
 
 ### 6.1.2. Create Performance Monitoring Profile Request
 
-Figure 12 presents the most important part of the data model used during the
+Figure 10 presents the most important part of the data model used during the
 Create Performance Profile request (`POST /performanceProfile`) and response.
 The model of the request message - `PerformanceProfile_Create` is a subset of
 the `PerformanceProfile` model and contains only attributes that can (or must)
 be set by the requestor. The Seller/Server then enriches the entity in the
 response with additional information.
 
-**_Note:_** `PerformanceProfile_Create` is an entity used by the Administrator
+**_Note:_** `PerformanceProfile_Create` is an entity used by the Buyer/Client
 to make a request. `PerformanceProfile` is an entity used by the Seller/Server
 to provide a response. The request entity has a subset of attributes of the
 response entity. Thus for the visibility of these shared attributes
 `PerformanceProfile_Common` has been introduced. However, this class is not to
 be used directly in the exchange.
 
-A `PerformanceProfile_Create` defines details of the execution of the 
-`PerformanceJob` that will use the profile as a template. This includes 
+A `PerformanceProfile_Create` defines configuration details of the  
+`PerformanceJob` that will use the profile as a template. This allows to setup
 parameters that can be shared by multiple Performance Monitoring Jobs.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 12: Performance Profile Key Entities](performance/media/performanceProfileModel.png)
+![Figure 10: Performance Profile Key Entities](performance/media/performanceProfileModel.png)
 
-**Figure 12. Performance Profile Key Entities**
+**Figure 10. Performance Profile Key Entities**
 
 To send a request the Buyer/Client uses the `createPerformanceProfile` 
 operation from the API. The snippet below presents an example of a Create 
@@ -1032,9 +991,8 @@ Performance Profile request:
 
 ```json
 {
-  "buyerProfileId": "a5240110-0945-11ee-be56-0242ac120002",
   "description": "Exemplary Create Performance Profile request",
-  "granularity": "10 second",
+  "granularity": "10 seconds",
   "jobPriority": 5,
   "jobType": "proactive",
   "outputFormat": "json",
@@ -1043,32 +1001,31 @@ Performance Profile request:
 }
 ```
 
-**[R8]** The Administrator's Create Performance Profile **MUST** support the  
-following attributes: [MEF133.1 R43]
-- PM Profile ID
-- Buyer PM Profile ID
+**[R10]** The Buyer/Client's Create Performance Profile **MUST** support the  
+following attributes: [MEF133.1 R37]
 - PM Job Type
 - Granularity
 - Reporting Period
+- Output Format
+- Result Format
 
-**[O4]** The Administrator's Create Performance Profile **MAY** contain the  
-following attributes: [MEF133.1 O3]
+**[O4]** The Buyer/Client's Create Performance Profile **MAY** contain the  
+following attributes: [MEF133.1 O2]
 - Description
 - PM Job Priority
 
-**[R9]** Administrator's Create Performance Profile request **MUST** include 
+**[R11]** The Buyer/Client's Create Performance Profile request **MUST** include
 the following attributes:
-- `jobType`
 - `outputFormat`
 - `resultFormat`
 
-**[R10]** Performance Profile is unique on the envelope level within the 
+**[R12]** Performance Profile is unique on the envelope level within the 
 Seller/Server's network.
 
 ### 6.1.3. Create Performance Monitoring Profile Response
 
 Entities used for providing a response to the Create Performance Profile request 
-are presented in Figure 12. The Seller/Server responds with a 
+are presented in Figure 10. The Seller/Server responds with a 
 `PerformanceProfile` type, which adds some attributes to the 
 `PerformanceProfile_Create` that was used in the Buyer/Client request.
 
@@ -1083,16 +1040,15 @@ structure as in the retrieve by identifier operation.
 
 ```json
 {
-  "buyerProfileId": "a5240110-0945-11ee-be56-0242ac120002",
   "description": "Exemplary Create Performance Profile request",
-  "granularity": "10 second",
+  "granularity": "10 seconds",
   "jobPriority": 5,
   "jobType": "proactive",
   "outputFormat": "json",
   "reportingPeriod": "1 hour",
   "resultFormat": "payload",
   "creationDate": "2023-06-12T17:47:50.399Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/8df0981a-0949-11ee-be56-0242ac120002", << added by SOF >>
+  "href": "{{baseUrl}}/performanceMonitoring/v3/8df0981a-0949-11ee-be56-0242ac120002", << added by SOF >>
   "id": "8df0981a-0949-11ee-be56-0242ac120002", << added by SOF >>
   "lastModifiedDate": "2023-06-12T17:47:50.399Z", << added by SOF >>
   "state": "active" << added by SOF >>
@@ -1102,51 +1058,44 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with 
 the `<< added by SOF >>` tag.
 
-**[R11]** The Seller/Server's response **MUST** include all and unchanged 
+**[R13]** The Seller/Server's response **MUST** include all and unchanged 
 attributes' values as provided by the Buyer/Client in the request.
 
-**[R12]** The Seller/Server **MUST** specify the following attributes in a 
+**[R14]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
 
 - `creationDate`
 - `id`
 - `state`
 
-**[R13]** The `id` **MUST** remain the same value for the life of the 
+**[R15]** The `id` **MUST** remain the same value for the life of the 
 Performance Profile.
 
 ### 6.1.4. Performance Monitoring Profile State Machine
 
-Figure 13 presents the Performance Profile state machine:
+Figure 11 presents the Performance Profile state machine:
 
-![Figure 13: Performance Profile State Machine](performance/media/performanceProfileStates.png)
+![Figure 11: Performance Profile State Machine](performance/media/performanceProfileStates.png)
 
-**Figure 13. Performance Profile State Machine**
+**Figure 11. Performance Profile State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
 validation passes a response is provided with `PerformanceProfile` in
-`acknowledged` status. Before moving to the `active` state, the Seller/Server
-performs all the remaining business and time-consuming validations. At this
-point, an Error response cannot be provided anymore, so the profile moves to a
-`rejected` state if some issues are found. The
-`performanceProfile.rejectionReason` acts as a placeholder to provide a
-detailed description of what caused the problem.
+`active` status. 
 
 Table 8 presents the mapping between the API `status` names and the MEF W133.1
 naming, together with the statuses' description.
 
 | state          | MEF W133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `acknowledged` | Acknowledged   | A Create Performance Monitoring Profile request has been received by the Server and has passed basic validation. Performance Monitoring Profile Identifier is assigned in the `Acknowledged` state. The request remains in the `Acknowledged` state until all validations as applicable are completed. If the attributes are validated the Performance Monitoring Profile moves to the `Active` state. If not all attributes are validated, the request moves to the `Rejected` state. |
 | `active`       | Active         | A Performance Monitoring Profile is active and can be used as a template for Performance Monitoring Job creation.                                                                                                                                                                                                                                                                                                                                                              |
 | `deleted`      | Deleted        | A Performance Monitoring Profile that does not have any Performance Monitoring Jobs attached is deleted.                                                                                                                                                                                                                                                                                                                                                                       |
-| `rejected`     | Rejected       | A Create Performance Monitoring Profile request fails validation and is rejected with error indications by the Server.                                                                                                                                                                                                                                                                                                                                                                 |
 
 **Table 8. Performance Profile states**
 
-**[R14]** The Seller/Server **MUST** support all Performance Profile statuses 
-and their associated transitions as described in Figure 13 and Table 8. 
+**[R16]** The Seller/Server **MUST** support all Performance Profile statuses 
+and their associated transitions as described in Figure 11 and Table 8. 
 
 ## 6.2. Use Case 2: Retrieve List of Performance Profile
 
@@ -1157,7 +1106,6 @@ operation with desired filtering criteria.
 **[O5]** The Buyer/Client Retrieve List of Performance Profiles request **MAY**
  contain none or more of the following attributes as filter criteria: 
 
-- `buyerProfileId`
 - `state`
 - `creationDate.gt`
 - `creationDate.lt`
@@ -1168,7 +1116,7 @@ operation with desired filtering criteria.
 
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/performanceProfile?state=active&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/performanceProfile?state=active&limit=10&offset=0
 ```
 
 The example above shows a Buyer/Client's request to get all Performance Profile
@@ -1185,31 +1133,29 @@ policy, the Seller/Server must choose to respond with either:
 - A response that indicates the result is too large and includes a subset of the
 matching PM Profiles.
 
-**[R15]** The Seller/Server **MUST** support the retrieval of a Performance 
-Profile List Use Case. [MEF133.1 R44]
+**[R17]** The Seller/Server **MUST** support the retrieval of a Performance 
+Profile List Use Case. [MEF133.1 R38]
 
-**[R16]** The Administrator or Buyer/Client **MUST** support the retrieval of a 
-Performance Profile List Use Case. [MEF133.1 R45]
+**[R18]** The Buyer/Client **MUST** support the retrieval of a 
+Performance Profile List Use Case. [MEF133.1 R39]
 
-**[R17]** The Seller **MUST** include following attributes (if set) in the
-`PerformanceProfile_Find` object in the response: [MEF133.1 R46]
-- `description`
-- `id`
-- `state`
+**[R19]** The Seller/Server’s response to the Buyer’s/Client’s retrieve List
+of PM Profiles **MUST** include the following attribute as applicable:  [MEF133.1 R40]
+•	PM Profile ID
 
-**[R18]** In case no items matching the criteria are found, the Seller/Server 
-**MUST** return a valid response with an empty list. [MEF133.1 R47]
+**[R20]** In case no items matching the criteria are found, the Seller/Server 
+**MUST** return a valid response with an empty list. [MEF133.1 R41]
 
-![Figure 14: Use Case 2](performance/media/useCase2Model.png)
+![Figure 12: Use Case 2](performance/media/useCase2Model.png)
 
-**Figure 14. Use Case 2: Retrieve Performance Profile List - Model**
+**Figure 12. Use Case 2: Retrieve Performance Profile List - Model**
 
 ## 6.3. Use Case 3: Retrieve Performance Monitoring Profile by Profile Identifier
 
 The Buyer/Client can get detailed information about the Performance Profile 
 from the Seller/Server by using a `GET /performanceProfile/{{id}}` operation. 
 The payload returned in the response is a full representation of the Performance 
-Profile and includes all attributes the Administrator has provided while sending
+Profile and includes all attributes the Buyer/Client has provided while sending
 a Performance Profile create request, together with additional attributes set 
 by Seller/Server. 
 
@@ -1220,60 +1166,47 @@ response to a Get by Identifier for a `PerformanceProfile` with
 `id=8df0981a-0949-11ee-be56-0242ac120002` would return the same response as
 presented in [section 6.1.3](#613-create-performance-monitoring-profile-response).
 
-**[R19]** The Seller/Server **MUST** support the retrieval of a Performance 
-Profile Use Case. [MEF133.1 R48]
+**[R21]** The Seller/Server **MUST** support the retrieval of a Performance 
+Profile by Identifier Use Case. [MEF133.1 R42]
 
-**[R20]** The Administrator or Buyer/Client **MUST** support the retrieval of a 
-Performance Profile Use Case. [MEF133.1 R49]
+**[R22]** The Buyer/Client **MUST** support the retrieval of a 
+Performance Profile by Identifier Use Case. [MEF133.1 R43]
 
-**[R21]** In case `id` does not allow finding a `PerformanceProfile` in 
+**[R23]** In case `id` does not allow finding a `PerformanceProfile` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R22]** The Seller/Server **MUST** include following attributes in the
-`PerformanceProfile` object in the response: 
-
-- `id`
-- `description`
-
-**[R23]** The Seller **MUST** provide all remaining optional attributes if they
-were previously set by the Buyer or the Seller. 
+**[R24]** The Seller/Server **MUST** include all attributes of Performance 
+Monitoring Profile. 
 
 ## 6.4. Use Case 4: Modify Performance Monitoring Profile
 
 The update operation is realized with the use of the REST PATCH operation 
-(`PATCH /performanceProfile`). For that purpose, a specialized type 
+(`PATCH /performanceProfile/{{id}}`). For that purpose, a specialized type 
 `PerformanceProfile_Update` is provided. It consists of attributes limited to a
-subset that includes only the updateable attributes. Modify Performance Profile
-operation is allowed only for API client with Administrator access rights. The
-Performance Profile cannot be used by a Performance Job, otherwise Performance
-Profile cannot be modified. 
-
-**[R24]** - Modify Performance Monitoring Profile **MUST** be available only to 
-Administrator role
+subset that includes only the updateable attributes. The Performance Profile 
+cannot be in use by a Performance Job, otherwise Performance Profile will not 
+be modified. 
 
 The PATCH usage recommendation follows RFC 7386 json/merge
 (https://tools.ietf.org/html/rfc7386).
 
-Figure 15 presents the model used in the PATCH request. The Seller/Server
+Figure 13 presents the model used in the PATCH request. The Seller/Server
 responds with a `PerformanceProfile` type which is a full representation of 
 Performance Profile instance.
 
-![Figure 15: Patch request Model](performance/media/useCase4PatchModel.png)
+![Figure 13: Patch request Model](performance/media/useCase4PatchModel.png)
 
-**Figure 15. Patch request Model**
+**Figure 13. Patch request Model**
 
 **[O6]** The Seller/Server **MAY** support the modification of a Performance 
 Profile Use Case. [MEF133.1 O4]
 
-**[O7]** The Administrator **MAY** support the modification of a Performance 
-Profile Use Case. [MEF133.1 O5]
+**[O7]** The Buyer/Client **MAY** modify all Buyer/Client settable 
+attributes. [MEF133.1 O3]
 
 **[R25]** In case `id` does not allow to find a `PerformanceProfile` that is to
 be updated in Seller/Server's system, an error response `Error404` **MUST** be 
 returned. 
-
-**[R26]** The Seller/Server **MUST** return an error (`Error422`) if the 
-Performance Profile `state` is not `active`.
 
 The example below shows a request to patch a `PerformanceProfile` that was 
 created in section [6.1.2](#612-create-performance-monitoring-profile-request). 
@@ -1286,11 +1219,14 @@ The request below aims to:
 
 ```json
 {
-  "description": "string",
-  "granularity": "5 minute",
+  "description": "updated description",
+  "granularity": "5 minutes",
   "reportingPeriod": "1 hour",
 }
 ```
+
+Modification of Performance Profile is allowed only for profiles created by the
+Buyer.
 
 ## 6.5. Use Case 5: Delete Performance Monitoring Profile
 
@@ -1298,41 +1234,38 @@ The Buyer/Client may request to delete a Performance Profile by using
 `DELETE /performanceProfile/{{id}}` endpoint. This operation only requires
 providing the `id` in the path and has an empty `204` confirmation response.
 
-Delete Performance Profile operation is allowed only for API client with
-Administrator access rights. 
-
-**[R27]** Delete Performance Monitoring Profile **MUST** be available only to 
-Administrator role
-
 The sequence diagram below presents this use case in detail.
 
-![Figure 16: Delete Performance Profile Flow](performance/media/useCase5DeleteFlow.png)
+![Figure 14: Delete Performance Profile Flow](performance/media/useCase5DeleteFlow.png)
 
-**Figure 16. Delete Performance Profile Flow**
+**Figure 14. Delete Performance Profile Flow**
 
 The Seller/Server verifies the request, then searches for a Performance Profile
 to be deleted by the given `id`. If found, the status is verified (`active`). The 
 Seller/Server checks also if there are any active Performance Job objects that 
 refer to the Performance Profile (active means state of `PerformanceJob` 
 is different from `rejected`, `completed`, `cancelled`, or 
-`resourceUnavailable`). If everything is verified correctly, the Seller moves 
+`resourcesUnavailable`). If everything is verified correctly, the Seller moves 
 the Performance Profile to the `deleted` status, sends a successful response to
 a request followed by `performanceProfileDeleteEvent` in case the Buyer/Client 
 subscribed for relevant notifications.
 
 **[O8]** The Seller/Server **MAY** support the deletion of a Performance 
+Profile Use Case. [MEF133.1 O5]
+
+**[O9]** The Buyer/Client **MAY** support the deletion of a Performance 
 Profile Use Case. [MEF133.1 O6]
 
-**[O9]** The Administrator **MAY** support the deletion of a Performance 
-Profile Use Case. [MEF133.1 O7]
-
-**[R28]** The Seller/Server **MUST** return an error (`Error422`) if the 
+**[R26]** The Seller/Server **MUST** return an error (`Error422`) if the 
 Performance Profile is referenced by an active `PerformanceJob` (active 
 means a state of `PerformanceJob` is different from `rejected`, `completed`, 
-`cancelled`, or `resourceUnavailable`) 
+`cancelled`, or `resourcesUnavailable`) 
 
-**[R29]** In case there is no `PerformanceProfile` with provided `id`, an error 
+**[R27]** In case there is no `PerformanceProfile` with provided `id`, an error 
 response `Error404` **MUST** be returned.
+
+Deletion of Performance Profile is allowed only for profiles created by the
+Buyer.
 
 ## 6.6. Use Case 6: Create a Performance Monitoring Job
 
@@ -1347,21 +1280,18 @@ measurable criteria for assessing the performance characteristics of a service.
 Performance Jobs are responsible for provisioning these measurement points, 
 and performance objectives, together with measurement intervals and schedules. 
 Performance objectives are typically associated with an SLS but can be used for 
-an On-Demand Job for making measurements as part of a troubleshooting procedure. 
+an On-Demand Job for taking measurements as part of a troubleshooting procedure. 
 
 The Performance Monitoring Job also provides the capability to provision and 
 collect passive statistics. These statistics encompass various telemetry data 
 associated with interfaces, (Net/Application) Flows, VLANs, bridging/Ethernet, 
 IP, TCP, and UDP layers. It is important to note that these measured statistics 
 fall outside the scope of measuring and responding to performance objectives. 
-Nevertheless, the same set of APIs is employed to manage both types of data. In 
-some cases, these statistics may not require a Performance Job to be instantiated
-prior to the collection, but are enabled and ready for collection on an 
-interface, VLAN, etc.
+Nevertheless, the same set of APIs is employed to manage both types of data. 
 
-The Performance Monitoring Jobs should result in Performance Measurement
+The Performance Monitoring Jobs should result in Performance Monitoring
 Collections (Reports) that will provide the Buyer/Client with performance 
-objective results. 
+results. 
 
 There are three types of Performance Job:
 - Proactive - carried on continuously to permit timely reporting of performance
@@ -1374,15 +1304,19 @@ There are three types of Performance Job:
   telemetry associated with an interface, (Net/Application) Flow, VLAN, 
   bridging/Ethernet, IP, TCP, and UDP layers. 
 
+In case of services with SLS attached, Proactive Performance Job is created by
+the service provisioning process. This should use the same operation as 
+described in [6.6. Use Case 6: Create a Performance Monitoring Job](#66-use-case-6-create-a-performance-monitoring-job).
+
 Proactive, On-Demand, and Passive Performance Jobs can use Performance 
 Monitoring Profiles as templates for the provisioning. In case Performance
 Monitoring Job is created without relationship to Performance Profile, all
-necessary attributes have to be associated with a Performance Job object.
+necessary attributes have to be provided in Performance Job creation request.
 Create Performance Job request can refer to attributes of the Performance 
 Profile by:
-- reference - direct reference by using Performance Profile id, or
-- value - assigning characteristics defined by the Performance Profile model 
-  directly in the Performance Job.
+- reference - direct reference to existing Performance Profile by its id, or
+- value - assigning characteristics typically associated with the Performance 
+Profile model directly at the Performance Job level.
 
 **[O10]** Performance Job **MAY** use Performance Monitoring Profile as a 
 template.
@@ -1390,11 +1324,11 @@ template.
 
 ### 6.6.1. Interaction flow
 
-The flow of this use case is shown in Figure 17.
+The flow of this use case is shown in Figure 15.
 
-![Figure 17: Use Case 6](performance/media/useCase6.png)
+![Figure 15: Use Case 6](performance/media/useCase6.png)
 
-**Figure 17. Use Case 6 - Performance Monitoring Job create request flow**
+**Figure 15. Use Case 6 - Performance Monitoring Job create request flow**
 
 The Buyer/Client sends a request with a `PerformanceJob_Create` type in the 
 body. The Seller/Server performs request validation, assigns an `id`, and 
@@ -1404,13 +1338,13 @@ processing. The Buyer/Client can track the progress of the process either by
 subscribing for notifications or by periodically polling the `PerformanceJob`.
 The two patterns are presented in the following diagrams.
 
-![Figure 18: Performance Job Notification](performance/media/useCase6Notification.png)
+![Figure 16: Performance Job Notification](performance/media/useCase6Notification.png)
 
-**Figure 18. Performance Job progress tracking - Notifications**
+**Figure 16. Performance Job progress tracking - Notifications**
 
-![Figure 19: Performance Job Polling](performance/media/useCase6Polling.png)
+![Figure 17: Performance Job Polling](performance/media/useCase6Polling.png)
 
-**Figure 19. Performance Job progress tracking - Polling**
+**Figure 17. Performance Job progress tracking - Polling**
 
 **_Note_**: The context of notifications is not a part of the considered use
 case itself. It is presented to show the big picture of end-to-end flow. This
@@ -1418,7 +1352,7 @@ applies also to all further use case flow diagrams with notifications.
 
 ### 6.6.2. Create Performance Monitoring Job Request
 
-Figure 20 presents the most important part of the data model used during
+Figure 18 presents the most important part of the data model used during
 the Create Performance Job request (`POST /performanceJob`) and response. The 
 model of the request message - `PerformanceJob_Create` is a subset of the 
 `PerformanceJob` model and contains only attributes that can (or must) be set 
@@ -1432,12 +1366,11 @@ subset of attributes of the response entity. Thus for visibility of these
 shared attributes `PerformanceJob_Common` has been
 introduced (this class is not supposed to be used directly in the exchange).
 
-A `PerformanceJob_Create` defines measurement intervals, schedules, and
-objectives of performance monitoring (in `servicePayloadSpecificAttributes`
+A `PerformanceJob_Create` defines subject, measurement intervals, schedules, 
+and objectives of performance monitoring (in `servicePayloadSpecificAttributes`
 section). It also refers to the existing `PerformanceProfile` by its `id` or 
 directly provides values of attributes defined by the `PerformanceProfile` 
-type. See chapter [section 6.6.5](#665-relationship-to-performance-monitoring-profile) 
-for more details.
+type. See chapter [section 6.6.5](#665-relationship-to-performance-monitoring-profile) for more details.
 
 Section `servicePayloadSpecificAttributes` of the Create Performance Job 
 request allows for the introduction of service-specific properties of 
@@ -1448,9 +1381,9 @@ The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
 
-![Figure 20: Performance Job Key Entities](performance/media/performanceJobModel.png)
+![Figure 18: Performance Job Key Entities](performance/media/performanceJobModel.png)
 
-**Figure 20. Performance Job Key Entities**
+**Figure 18. Performance Job Key Entities**
 
 To send a create Performance Job request the Buyer/Client uses the 
 `createPerformanceJob` operation from the API: `POST /performanceJob`. For
@@ -1464,66 +1397,57 @@ omitted to improve examples' readability.
   "buyerJobId": "TestJob12345",
   "consumingApplicationId": "CUS",
   "description": "Exemplary Create Performance Job request",
-  "fileTransferData": {
-    "fileFormat": "JSON",
-    "fileLocation": "ftp://cus.com/",
-    "transportProtocol": "ftp",
-    "compressionType": "NO_PACKING"
+  "monitoredObjectId": {
+    "@type": "Service",
+    "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+    "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
   },
   "performanceProfile": {
     "@type": "PerformanceProfileRef",
-    "id": "8df0981a-0949-11ee-be56-0242ac120002"
+    "performanceProfileId": "8df0981a-0949-11ee-be56-0242ac120002"
   },
   "producingApplicationId": "SOF",
   "scheduleDefinition": {
-    "recurringFrequency": {
-      "recurringFrequencyValue": 1,
-      "recurringFrequencyUnits": "HOURS"
-    },
-    "scheduleDefinitionStartTime": "2023-06-01T08:02:01.370Z"
+    "scheduleDefinitionStartTime": "2024-12-01T08:02:01.370Z"
   },
   "servicePayloadSpecificAttributes": {
-    "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-    "interface": {
-      "ipvcEndpoint": [
-        "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-        "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-      ],
-      "name": "slsRpPairTest1",
-      "description": "Exemplary performance monitoring service pair",
-      "cloudService": true
-    }
+    "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
   }
 }
 
 ```
 
-**[R30]** The Buyer’s/Client’s Create Performance Job **MUST** support the 
-following attributes: [MEF133.1 R50, R85]
-
-- Buyer Profile ID
-- Consumer Application Indicator
-- Granularity
-- Job Priority
-- Job Type
-- Output
+**[R28]** The Buyer’s/Client’s Create Performance Job **MUST** support the 
+following attributes: [MEF133.1 R44, R100]
+- PM Job Type (only present when no PM Profile ID is referenced)
+- Reporting Period (only present when no PM Profile ID is referenced)
+- Granularity (only present when no PM Profile ID is referenced)
 - PM Profile ID (if used)
-- Reporting Period
+- Output Format
 - Result Format
 - Schedule Definition
-- Service Specific Payload
+- Service ID
+- Service Specific Attributes (Payload)
+
+**[R29]** If the Buyer/Client request includes a Service, it **MUST** contain the
+following: [MEF133.1 R45]
+- Service ID From (Envelope)
+- Service ID To (Envelope)   
+
+**[R30]** If the Buyer/Client request includes an Entity, it **MUST** contain 
+an Entity Identifier [MEF133.1 R46]
 
 **[O11]** The Buyer’s/Client’s Create Performance Job **MAY** contain the 
-following attributes: [MEF133.1 O14, O19]
+following attributes: [MEF133.1 O13, O18]
 - Description
 - PM Job Priority
 
-**[O12]** A Performance Job **CAN** be scheduled as reoccurring. [MEF133.1 O15]
+**[O12]** A Performance Job **MAY** be scheduled as reoccurring. [MEF133.1 O14, O15]
 
 ### 6.6.3. Create Performance Monitoring Job Response
 
 Entities used for providing a response to Create Performance Job requests are
-presented in Figure 20. The Seller/Server responds with a `PerformanceJob` 
+presented in Figure 18. The Seller/Server responds with a `PerformanceJob` 
 type, which adds some attributes (like `id` or `state`) to the 
 `PerformanceJob_Create` that was used in the Buyer/Client request.
 
@@ -1541,55 +1465,42 @@ structure as in the retrieve by identifier operation.
   "buyerJobId": "TestJob12345",
   "consumingApplicationId": "CUS",
   "description": "Exemplary Create Performance Job request",
-  "fileTransferData": {
-    "fileFormat": "JSON",
-    "fileLocation": "ftp://cus.com/",
-    "transportProtocol": "ftp",
-    "compressionType": "NO_PACKING"
+  "monitoredObjectId": {
+    "@type": "Service",
+    "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+    "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
   },
   "performanceProfile": {
     "@type": "PerformanceProfileRef",
-    "id": "8df0981a-0949-11ee-be56-0242ac120002"
+    "performanceProfileId": "8df0981a-0949-11ee-be56-0242ac120002"
   },
   "producingApplicationId": "SOF",
   "scheduleDefinition": {
-    "recurringFrequency": {
-      "recurringFrequencyValue": 1,
-      "recurringFrequencyUnits": "HOURS"
-    },
-    "scheduleDefinitionStartTime": "2023-06-01T08:02:01.370Z"
+    "scheduleDefinitionStartTime": "2024-12-01T08:02:01.370Z"
   },
   "servicePayloadSpecificAttributes": {
-    "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-    "interface": {
-      "ipvcEndpoint": [
-        "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-        "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-      ],
-      "name": "slsRpPairTest1",
-      "description": "Exemplary performance monitoring service pair",
-      "cloudService": true
-    }
+    "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
   },
-  "creationDate": "2023-06-01T08:02:01.370Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
+  "creationDate": "2024-12-01T00:00:00.000Z", << added by SOF >>
+  "href": "{{baseUrl}}/performanceMonitoring/v3/755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
   "id": "755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
-  "lastModifiedDate": "2023-06-01T08:02:01.370Z", << added by SOF >>
+  "lastModifiedDate": "2024-12-01T00:00:00.000Z", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
 }
+
 ```
 
 Attributes that are set by the Seller/Server in the response are marked with 
 the `<< added by SOF >>` tag.
 
 **[R31]** The Seller/Server **MUST** assign a Job Identifier to the Performance 
-Job that is unique within the network. [MEF133.1 R51, R86]
+Job that is unique within the network. [MEF133.1 R47, R101]
 
 **[R32]** The Performance Job Identifier supplied by the Seller/Server **MUST** 
-be unique within the Seller/Server's network. [MEF133.1 R52, R87]
+be unique within the Seller/Server's network. [MEF133.1 R48, R102]
 
 **[R33]** The Performance Job **MUST** use the attributes included in the 
-Buyer’s/Client’s Create Performance Job request. [MEF133.1 R53, R88]
+Buyer’s/Client’s Create Performance Job request. [MEF133.1 R49, R103]
 
 **[R34]** The Seller/Server's response **MUST** include all and unchanged 
 attributes' values as provided by the Buyer/Client in the request.
@@ -1605,11 +1516,11 @@ Performance Job.
 
 ### 6.6.4. Performance Monitoring Job State Machine
 
-Figure 21 presents the Performance Job state machine:
+Figure 19 presents the Performance Job state machine:
 
-![Figure 21: Performance Job State Machine](performance/media/performanceJobStates.png)
+![Figure 19: Performance Job State Machine](performance/media/performanceJobStates.png)
 
-**Figure 21. Performance Job State Machine**
+**Figure 19. Performance Job State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
@@ -1621,45 +1532,48 @@ point, an Error response cannot be provided anymore, so the profile moves to a
 `performanceJob.rejectionReason` acts as a placeholder to provide a
 detailed description of what caused the problem. `PerformanceJob` moves to 
 either the `scheduled` or `inProgress` state depending on the assigned schedule. 
-`PerformanceJob` remains `scheduled` state until the scheduled start time is reached.
-`PerformanceJob` that is starting needs appropriate resources on Seller/Server 
-side. If required resources cannot be assigned, `PerformanceJob` moves to 
-`resourceUnavailable` state. After completion, the Seller/Server verifies if 
-`PerformanceJob` is recurring. If yes, `PerformanceJob` moves to either 
-`scheduled` or `inProgress` state depending on the schedule definition. 
+`PerformanceJob` remains `scheduled` state until the scheduled start time is 
+reached. `PerformanceJob` that is starting needs appropriate resources on 
+Seller/Server side. If required resources cannot be assigned, `PerformanceJob` 
+moves to `resourcesUnavailable` state. After completion, the Seller/Server 
+verifies if `PerformanceJob` is recurring. If yes, `PerformanceJob` moves to 
+either `scheduled` or `inProgress` state depending on the schedule definition. 
 Otherwise, it moves to a `completed` state. `PerformanceJob` can be cancelled 
-when in `scheduled` or `inProgress`. When cancellation is successful, 
-`PerformanceJob` moves to `cancelled` state. `PerformanceJob` can be modified 
-only in the `scheduled` or `suspended` state. The Modification includes an 
+when in `scheduled`, `inProgress` or `suspended`. When cancellation is 
+successful, `PerformanceJob` moves to `cancelled` state. Cancellation includes
+an intermediary `pendingCancel` state. `PerformanceJob` can be modified 
+only in the `scheduled` or `suspended` state. Modification includes an 
 intermediary `pending` step. 
 
 Table 9 presents the mapping between the API `status` names and the MEF W133.1
 naming, together with the statuses' description. 
 
-| state                  | MEF W133.1 name      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ---------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged`         | Acknowledged         | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. Otherwise, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                      |
-| `cancelled`            | Cancelled            | A Performance Monitoring Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `completed`            | Completed            | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `inProgress`           | In-Progress          | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. In case a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
-| `pending`              | Pending              | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains in the Pending state while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                  |
-| `rejected`             | Rejected             | A Create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `resourceUnavailable`  | Resource Unavailable | A Performance Monitoring Job cannot be allocated with necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `scheduled`            | Scheduled            | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays in the Scheduled state until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                         |
-| `suspended`            | Suspended            | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains in the Suspended state until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                   |
+| state                  | MEF W133.1 name      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged`         | Acknowledged         | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated the Seller/Server determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. Otherwise, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                                                                                                       |
+| `cancelled`            | Cancelled            | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `completed`            | Completed            | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `inProgress`           | In-Progress          | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. If the PM job has an immediate start time it moves back to In-Progress state, otherwise it moves to Scheduled. In case a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
+| `pending`              | Pending              | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains in the Pending state while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `pendingCancel`        | Pending Cancel       | A Cancel Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| `rejected`             | Rejected             | A Create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `resourcesUnavailable` | Resource Unavailable | A Performance Monitoring Job cannot be allocated with necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `scheduled`            | Scheduled            | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays in the Scheduled state until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                                                                                                     |
+| `suspended`            | Suspended            | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains in the Suspended state until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                                                                               |
 
 **Table 9. Performance Job State Machine states**
 
 **[R37]** The Seller/Server **MUST** support all Performance Job statuses and 
-their associated transitions as described in Figure 21 and Table 9.
+their associated transitions as described in Figure 19 and Table 9.
 
 ### 6.6.5. Relationship to Performance Monitoring Profile
 
 Performance Profile is a template defining common attributes for multiple 
 Performance Jobs. There are two options for the creation of a Performance Job:
-- specify the relationship to `PerformanceProfile` by its `id`
+- specify the relationship to existing `PerformanceProfile` by its `id`
 - provide required attributes that are typically defined by `PerformanceProfile`
-  type directly in the request. 
+model directly in the create Performance Job request.
+
 `PerformanceJob_Create` class used as a payload for `createPerformanceJob` 
 operation supports both options in the `performanceProfile` attribute which is 
 of type `PerformanceProfileRefOrValue`. 
@@ -1667,17 +1581,17 @@ Depending on the value of the `@type` attribute (discriminator) it is possible t
 refer to the existing `PerformanceProfile` object (`@type=PerformanceProfileRef`)
 or specify attributes that describe `PerformanceProfile` 
 (`@type=PerformanceProfileValue`).
-**_Note_**: Defining attributes related to `PerformanceProfile` in Performance 
-Job create request does not create a new `PerformanceProfile` object. 
+**_Note_**: Defining attributes related to `PerformanceProfile` in create 
+Performance Job request does not create a new `PerformanceProfile` object. 
 
-Figure 22 presents `PerformanceJob_Create` and related entities that 
+Figure 20 presents `PerformanceJob_Create` and related entities that 
 allow for referencing to Performance Profile or specifying corresponding
 attributes. 
 
 
-![Figure 22: Relationship to Performance Profile](performance/media/performanceProfileRefOrValue.png)
+![Figure 20: Relationship to Performance Profile](performance/media/performanceProfileRefOrValue.png)
 
-**Figure 22. Relationship to Performance Profile**
+**Figure 20. Relationship to Performance Profile**
 
 ## 6.7. Use Case 7: Retrieve List of Performance Monitoring Job
 
@@ -1685,9 +1599,12 @@ The Buyer/Client can retrieve a list of `PerformanceJob` by using a
 `GET /performanceJob` operation with desired filtering criteria.
 
 **[O13]** The Buyer/Client Retrieve List of Performance Jobs request **MAY** 
-contain none or more of the following attributes as filter criteria: 
+contain zero or more of the following attributes as filter attributes: 
 
 - `buyerJobId`
+- `serviceIdFrom`
+- `serviceIdTo`
+- `entityId`
 - `performanceProfileId`
 - `state`
 - `creationDate.gt`
@@ -1700,7 +1617,7 @@ contain none or more of the following attributes as filter criteria:
 - `jobPriority`
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/performanceJob?state=suspended&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/performanceJob?state=suspended&limit=10&offset=0
 ```
 
 The example above shows a Buyer/Client's request to get all Performance Job 
@@ -1726,6 +1643,7 @@ Performance Jobs **MUST** include the following attributes as applicable:
 - `creationDate`
 - `description`
 - `id`
+- `monitoredObjectId`
 - `performanceProfile`
 - `producingApplicationId`
 - `scheduleDefinition`
@@ -1734,11 +1652,11 @@ Performance Jobs **MUST** include the following attributes as applicable:
 **[R39]** If the Seller/Server validates the Buyer’s/Client’s request but finds 
 no matching Performance Jobs, the Seller/Server **MUST** return an empty list.
 
-Figure 23 presents entities related to the use case. 
+Figure 21 presents entities related to the use case. 
 
-![Figure 23: Use Case 7](performance/media/useCase7Model.png)
+![Figure 21: Use Case 7](performance/media/useCase7Model.png)
 
-**Figure 23. Use Case 7: Retrieve Performance Job List - Model**
+**Figure 21. Use Case 7: Retrieve Performance Job List - Model**
 
 ## 6.8. Use Case 8: Retrieve Performance Monitoring Job by Job Identifier
 
@@ -1757,29 +1675,29 @@ to a Get by ID for a `PerformanceJob` with
 presented in [section 6.6.3](#663-create-performance-monitoring-job-response).
 
 **[R40]** The Buyer/Client’s Retrieve Performance Job by Job Identifier request 
-**MUST** contain the Performance Job Identifier. [MEF133.1 R71]
+**MUST** contain the Performance Job Identifier. [MEF133.1 R67]
 
 **[R41]** In case `id` does not allow finding a `PerformanceJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R42]** The Seller **MUST** provide all remaining optional attributes if they
-were previously set by the Buyer or the Seller. [MEF133.1 R72]
+**[R42]** The Seller/Server’s response **MUST** contain all the PM Job 
+attributes. [MEF133.1 R68]
 
 
 ## 6.9. Use Case 9: Modify Performance Monitoring Job
 
 Due to the need for provisioning and resource reservation on the SOF side, the 
-modification operation associated with the Performance Monitoring Job may exhibit 
-a prolonged duration. Consequently, this operation is implemented through a 
-separate lifecycle process.
+modification operation associated with the Performance Monitoring Job may 
+involve a prolonged duration. Consequently, this operation is implemented 
+through a separate lifecycle process.
 
 ### 6.9.1. Interaction flow
 
-The flow of this use case is shown in Figure 24.
+The flow of this use case is shown in Figure 22.
 
-![Figure 24: Use Case 9](performance/media/useCase9.png)
+![Figure 22: Use Case 9](performance/media/useCase9.png)
 
-**Figure 24. Use Case 9 - Modify Performance Monitoring Job create request flow**
+**Figure 22. Use Case 9 - Modify Performance Monitoring Job create request flow**
 
 The Buyer/Client sends a request with a `ModifyPerformanceJob_Create` type in
 the body. The Seller/Server performs request validation, assigns an `id`, and 
@@ -1790,31 +1708,31 @@ the progress of the process either by subscribing for notifications or by
 periodically polling the `ModifyPerformanceJob`. The two patterns are presented
 in the following diagrams.
 
-![Figure 25: Modify Performance Job Notification](performance/media/useCase9Notification.png)
+![Figure 23: Modify Performance Job Notification](performance/media/useCase9Notification.png)
 
-**Figure 25. Modify Performance Job progress tracking - Notifications**
+**Figure 23. Modify Performance Job progress tracking - Notifications**
 
-![Figure 26: Modify Performance Job Polling](performance/media/useCase9Polling.png)
+![Figure 24: Modify Performance Job Polling](performance/media/useCase9Polling.png)
 
-**Figure 26. Modify Performance Job progress tracking - Polling**
+**Figure 24. Modify Performance Job progress tracking - Polling**
 
 **_Note_**: The Modify Performance Job process is altering the state of the PM 
 job itself. It is important to note that notifications resulting from changes 
-in the state of the Performance Job are not represented in Figures 25 and 26. 
+in the state of the Performance Job are not represented in Figures 23 and 24. 
 
 **_Note_**: The context of notifications is not a part of the considered use
 case itself. It is presented to show the big picture of end-to-end flow. This
 applies also to all further use case flow diagrams with notifications.
 
 **[R43]** The Seller/Server **MUST** support Performance Job modifications. 
-[MEF133.1 R56]
+[MEF133.1 R52]
 
 **[R44]** The Seller/Server **MUST** support Statistics Collection Job 
-modifications. [MEF133.1 R91]
+modifications. [MEF133.1 R106]
 
 ### 6.9.2. Modify Performance Monitoring Job Request
 
-Figure 27 presents the most important part of the data model used during 
+Figure 25 presents the most important part of the data model used during 
 the Modify Performance Job request (`POST /modifyPerformanceJob`) and response. 
 The model of the request message - `ModifyPerformanceJob_Create` is a subset of
 the `ModifyPerformanceJob` model and contains only attributes that can (or must)
@@ -1829,18 +1747,20 @@ shared attributes `ModifyPerformanceJob_Common` has been
 introduced (this class is not supposed to be used directly in the exchange).
 
 A `ModifyPerformanceJob_Create` is a subset that
-includes only the updateable attributes. It is important to note that 
-updating the reference to the Performance Profile must not be possible. To change this assignment, the existing Performance Job must be cancelled and 
-replaced by a new Job that relates to the relevant Profile. 
+includes only the updateable attributes. It is important to note that updating
+the reference to the Performance Profile must not be possible. To change this
+assignment, the existing Performance Job must be cancelled and replaced by 
+a new Job that relates to the relevant Profile. 
 Modification of Performance Job allows for changing attributes defined directly
-by the `PerformanceJob` type or Performance Profile attributes that are defined by 
-value. These attributes are contained in the `performanceProfile` group.
-The `performanceJobRef` section of `ModifyPerformanceJob_Create` is used to 
-specify which Performance Job object is a subject of the modification process 
-(relationship by reference using `id` of the Job).
+by the `PerformanceJob` type and attributes from Performance Profile model that
+are defined directly by value in Performance Job. These attributes are 
+contained in the `performanceProfile` group. 
 
-**_Note:_** Only attributes that should be modified on the Performance Job,
-should be included in the Modify Performance Job Request. 
+The `performanceJobId` attribute of `ModifyPerformanceJob_Create` is used to 
+specify which Performance Job object is a subject of the modification process.
+
+**_Note:_** Only attributes of the Performance Job that are supposed to be 
+modified, should be included in the Modify Performance Job Request. 
 
 Section `servicePayloadSpecificAttributes` of the Modify Performance Job 
 request allows for the introduction of service-specific properties of 
@@ -1850,9 +1770,9 @@ in detail in [Section 5.3](#53-integration-of-service-monitoring-specification-i
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 27: Modify Performance Job Key Entities](performance/media/modifyPerformanceJobModel.png)
+![Figure 25: Modify Performance Job Key Entities](performance/media/modifyPerformanceJobModel.png)
 
-**Figure 27. Modify Performance Job Key Entities**
+**Figure 25. Modify Performance Job Key Entities**
 
 To send a Modify Performance Job request the Buyer/Client uses the 
 `modifyPerformanceJob` operation from the API: `POST /modifyPerformanceJob`. 
@@ -1865,51 +1785,39 @@ The example below shows a request to create a modification process for
 The request below aims to:
 
 - update `buyerJobId`
-- modify `fileTransferData`
 - change `description` of the Performance Job
 
 ```json
 {
   "buyerJobId": "TestJob54321",
   "description": "Performance Job after modification",
-  "fileTransferData": {
-    "fileFormat": "JSON",
-    "fileLocation": "ftp://cus.com/newLocation",
-    "transportProtocol": "ftp",
-    "compressionType": "NO_PACKING"
-  },
   "modificationReason": "Modify Performance Job sample",
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  }
+  "performanceJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
 }
 ```
 
-**[R45]** The Buyer/Client Modify Performance Job request **MUST** include the 
-following attributes: [MEF133.1 R55, R90]
-- `performanceJob`
+**[R45]** The Buyer’s/Client’s Modify PM Job request **MUST** include the PM 
+Job Identifier. [MEF133.1 R51, R105]
 
 **[O14]** The Buyer/Client **MAY** include one or more of the following 
-attributes of `ModifyPerformanceJob_Create` in the request: [MEF133.1 O16, O20]
-- buyerJobId
-- consumingApplicationId
-- description
-- fileTransferData
-- granularity
-- jobPriority
-- modificationReason
-- performanceProfile
-- producingApplicationId
-- reportingPeriod
-- scheduleDefinition
-- servicePayloadSpecificAttributes
+attributes of `ModifyPerformanceJob_Create` in the request: [MEF133.1 O16, O19]
+- `buyerJobId`
+- `consumingApplicationId`
+- `description`
+- `granularity`
+- `jobPriority`
+- `modificationReason`
+- `outputFormat`
+- `producingApplicationId`
+- `reportingPeriod`
+- `resultFormat`
+- `scheduleDefinition`
+- `servicePayloadSpecificAttributes`
 
 ### 6.9.3. Modify Performance Monitoring Job Response
 
 Entities used for providing a response to Modify Performance Job requests are
-presented in Figure 27. The Seller/Server responds with a 
+presented in Figure 25. The Seller/Server responds with a 
 `ModifyPerformanceJob` type, which adds some attributes (like `id` or `state`) 
 to the `ModifyPerformanceJob_Create` that was used in the Buyer/Client request.
 
@@ -1924,23 +1832,18 @@ structure as in the retrieve by identifier operation.
 {
   "buyerJobId": "TestJob54321",
   "description": "Performance Job after modification",
-  "fileTransferData": {
-    "fileFormat": "JSON",
-    "fileLocation": "ftp://cus.com/newLocation",
-    "transportProtocol": "ftp",
-    "compressionType": "NO_PACKING"
-  },
   "modificationReason": "Modify Performance Job sample",
   "performanceJob": {
     "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
+    "href": "{{baseUrl}}/performanceMonitoring/v3/755e55e2-72b0-4e3b-af00-693e3beac691",
     "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
   "creationDate": "2023-06-19T12:58:17.088Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
+  "href": "{{baseUrl}}/performanceMonitoring/v3/9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
   "id": "9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
 }
+
 ```
 
 Attributes that are set by the Seller/Server in the response are marked with 
@@ -1970,11 +1873,11 @@ Seller/Server's system
 
 ### 6.9.4. Modify Performance Monitoring Job State Machine
 
-Figure 28 presents the Modify Performance Monitoring Job state machine:
+Figure 26 presents the Modify Performance Monitoring Job state machine:
 
-![Figure 28: Modify Performance Job State Machine](performance/media/modifyPerformanceJobStates.png)
+![Figure 26: Modify Performance Job State Machine](performance/media/modifyPerformanceJobStates.png)
 
-**Figure 28. Modify Performance Job State Machine**
+**Figure 26. Modify Performance Job State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
@@ -1982,10 +1885,10 @@ validation passes a response is provided with `ModifyPerformanceJob` in
 `acknowledged` status. Next, the Seller/Server
 performs all the remaining business and time-consuming validations. At this
 point, an Error response cannot be provided anymore, so the process moves to a
-`declined` state if some issues are found. The
+`rejected` state if some issues are found. The
 `modifyPerformanceJob.modificationDeniedReason` acts as a placeholder to 
 provide a detailed description of what caused the problem. If validation is 
-successful, `ModifyPerformanceJob` moves to the `accepted` state. At this point, 
+successful, `ModifyPerformanceJob` moves to the `inProgress` state. At this point, 
 the related `PerformanceJob` moves to a pending state, and the Seller/Server starts all 
 necessary arrangements to provision modification request. `PerformanceJob` 
 remains in the `pending` state until the Modify Performance Job process is finished and 
@@ -1994,19 +1897,19 @@ moved to the `completed` state. This causes the `PerformanceJob` state to change
 
 Table 10 presents the mapping between the API `status` names and the MEF W133.1
 naming, together with the statuses' description. The list of statuses is the same 
-for all processes related to Performance Job (cancel/modify/resume/suspend). 
+for all processes related to Performance Job (cancel/modify). 
 
-| state          | MEF W 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accepted`     | Accepted     | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been validated and accepted by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                 |
-| `acknowledged` | Acknowledged | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the Accepted state. If not all attributes are validated, the request moves to the Declined state. |
-| `completed`    | Completed    | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                              |
-| `declined`     | Declined     | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                         |
+| state          | MEF W 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged` | Acknowledged     | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+| `completed`    | Completed        | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
+| `inProgress`   | In-Progress      | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
+| `rejected`     | Rejected         | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
 
 **Table 10. Performance Job Process State Machine states**
 
 **[R49]** The Seller/Server **MUST** support all Modify Performance Job statuses 
-and their associated transitions as described in Figure 28 and Table 10. 
+and their associated transitions as described in Figure 26 and Table 10. 
 
 ## 6.10. Use Case 10: Retrieve Modify Performance Monitoring Job List
 
@@ -2022,7 +1925,7 @@ a `GET /modifyPerformanceJob` operation with desired filtering criteria.
 - `creationDate.lt`
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/modifyPerformanceJob?state=acknowledged&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/modifyPerformanceJob?state=acknowledged&limit=10&offset=0
 ```
 
 The example above shows a Buyer's/Client's request to get all Modify Performance 
@@ -2035,6 +1938,7 @@ related to pagination are described in [section 7.1.2](#712-response-pagination)
 **[R50]** The Seller **MUST** include following attributes (if set) in the
 `ModifyPerformanceJob_Find` object in the response: 
 
+- `creationDate`
 - `id`
 - `performanceJobId`
 - `state`
@@ -2042,11 +1946,11 @@ related to pagination are described in [section 7.1.2](#712-response-pagination)
 **[R51]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 29 presents entities related to the use case. 
+Figure 27 presents entities related to the use case. 
 
-![Figure 29: Use Case 10](performance/media/useCase10Model.png)
+![Figure 27: Use Case 10](performance/media/useCase10Model.png)
 
-**Figure 29. Use Case 10: Retrieve Modify Performance Job List - Model**
+**Figure 27. Use Case 10: Retrieve Modify Performance Job List - Model**
 
 ## 6.11. Use Case 11: Retrieve Modify Performance Monitoring Job by Identifier
 
@@ -2070,6 +1974,7 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 **[R53]** The Seller/Server **MUST** include following attributes in the
 `ModifyPerformanceJob` object in the response: 
 
+- `creationDate`
 - `id`
 - `performanceJob`
 - `state`
@@ -2081,37 +1986,40 @@ were previously set by the Buyer or the Seller.
 
 Due to the need for deprovisioning of the Performance Monitoring Job on the SOF 
 side, the cancel operation associated with the Performance Monitoring Job may 
-exhibit a prolonged duration. Consequently, this operation is implemented through 
+involve a prolonged duration. Consequently, this operation is implemented through 
 a separate lifecycle process.
+
+**[R55]** If the PM Job is In–Progress, Suspended, or Scheduled the 
+Seller/Server **MUST** allow the Client to cancel the PM Job. [MEF133.1 R54]
 
 ### 6.12.1. Interaction flow
 
-The flow of this use case is shown in Figure 30.
+The flow of this use case is shown in Figure 28.
 
-![Figure 30: Use Case 12](performance/media/useCase12.png)
+![Figure 28: Use Case 12](performance/media/useCase12.png)
 
-**Figure 30. Use Case 12 - Cancel Performance Monitoring Job create request flow**
+**Figure 28. Use Case 12 - Cancel Performance Monitoring Job create request flow**
 
 The Buyer/Client sends a request with a `CancelPerformanceJob_Create` type in 
 the body. The Seller/Server performs request validation, assigns an `id`, and 
 returns the `CancelPerformanceJob` type in the response body, with a `state` set to 
 `acknowledged`. Further processing is performed by Seller/Server which will in 
-case of success update the Performance Monitoring Job. The Buyer/Client can track 
+case of success cancel the Performance Monitoring Job. The Buyer/Client can track 
 the progress of the process either by subscribing for notifications or by
 periodically polling the `CancelPerformanceJob`. The two patterns are presented 
 in the following diagrams.
 
-![Figure 31: Cancel Performance Job Notification](performance/media/useCase12Notification.png)
+![Figure 29: Cancel Performance Job Notification](performance/media/useCase12Notification.png)
 
-**Figure 31. Cancel Performance Job progress tracking - Notifications**
+**Figure 29. Cancel Performance Job progress tracking - Notifications**
 
-![Figure 32: Cancel Performance Job Polling](performance/media/useCase12Polling.png)
+![Figure 30: Cancel Performance Job Polling](performance/media/useCase12Polling.png)
 
-**Figure 32. Cancel Performance Job progress tracking - Polling**
+**Figure 30. Cancel Performance Job progress tracking - Polling**
 
 **_Note_**: The Cancel Performance Job process is altering the state of the job 
 itself. It is important to note that notifications resulting from changes in the 
-state of the Performance Job are not represented in Figures 31 and 32. 
+state of the Performance Job are not represented in Figures 29 and 30. 
 
 **_Note_**: The context of notifications is not a part of the considered use
 case itself. It is presented to show the big picture of end-to-end flow. This
@@ -2120,7 +2028,7 @@ applies also to all further use case flow diagrams with notifications.
 
 ### 6.12.2. Cancel Performance Monitoring Job Request
 
-Figure 33 presents the most important part of the data model used during 
+Figure 31 presents the most important part of the data model used during 
 the Cancel Performance Job request (`POST /cancelPerformanceJob`) and response. 
 The model of the request message - `CancelPerformanceJob_Create` is a subset of 
 the `CancelPerformanceJob` model and contains only attributes that can (or must) 
@@ -2134,16 +2042,15 @@ subset of attributes of the response entity. Thus for visibility of these
 shared attributes `CancelPerformanceJob_Common` has been
 introduced (this class is not supposed to be used directly in the exchange).
 
-The `performanceJobRef` section of `CancelPerformanceJob_Create` is used to 
-specify which Performance Job object is a subject of the cancellation process 
-(relationship by reference using `id` of the Job).
+The `performanceJobId` attribute of `CancelPerformanceJob_Create` is used to 
+specify which Performance Job object is a subject of the cancellation process.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 33: Cancel Performance Job Key Entities](performance/media/cancelPerformanceJobModel.png)
+![Figure 31: Cancel Performance Job Key Entities](performance/media/cancelPerformanceJobModel.png)
 
-**Figure 33. Cancel Performance Job Key Entities** 
+**Figure 31. Cancel Performance Job Key Entities** 
 
 To send a Cancel Performance Job request the Buyer/Client uses the 
 `cancelPerformanceJob` operation from the API: `POST /cancelPerformanceJob`. 
@@ -2154,30 +2061,25 @@ The example below shows a request to create a cancellation process for
 ```json
 {
   "cancellationReason": "Cancel Performance Job sample",
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  }
+  "performanceJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
 }
 ```
 
-**[R55]** The Buyer’s/Client’s Cancel Performance Job request **MUST** include 
-the following attributes: [MEF133.1 R57]
-- `performanceJob`
+**[R56]** The Buyer’s/Client’s Cancel PM Job request **MUST** include the PM
+Job Identifier. [MEF133.1 R53]
 
-**[R56]** The Buyer’s/Client’s Cancel Statistics Collection Job request **MUST** 
-include the following attributes: [MEF133.1 R92]
+**[R57]** The Buyer’s/Client’s Cancel Statistics Collection Job request **MUST** 
+include the following attributes: [MEF133.1 R107]
 - `performanceJob`
 
 **_Note_**: If action arrives when Performance Job is running, it is 
 recommended to run until the end and only afterward action should be applied.
-[MEF133.1 O16, O26]
+[MEF133.1 O26]
 
 ### 6.12.3. Cancel Performance Monitoring Job Response
 
 Entities used for providing a response to Cancel Performance Job requests are
-presented in Figure 33. The Seller/Server responds with a `CancelPerformanceJob` 
+presented in Figure 31. The Seller/Server responds with a `CancelPerformanceJob` 
 type, which adds some attributes (like `id` or `state`) to the 
 `CancelPerformanceJob_Create` that was used in the Buyer/Client request.
 
@@ -2193,11 +2095,11 @@ structure as in the retrieve by identifier operation.
   "cancellationReason": "Cancel Performance Job sample",
   "performanceJob": {
     "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
+    "href": "{{baseUrl}}/performanceMonitoring/v3/755e55e2-72b0-4e3b-af00-693e3beac691",
     "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
   "creationDate": "2023-06-19T12:58:17.088Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
+  "href": "{{baseUrl}}/performanceMonitoring/v3/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
   "id": "aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
 }
@@ -2206,20 +2108,20 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with the
 `<< added by SOF >>` tag. 
 
-**[R57]** The Seller/Server's response **MUST** include all and unchanged 
+**[R58]** The Seller/Server's response **MUST** include all and unchanged 
 attributes' values as provided by the Buyer/Client in the request.
 
-**[R58]** The Seller/Server **MUST** specify the following attributes in a 
+**[R59]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
 - `id`
 - `state`
 - `creationDate`
 
-**[R59]** The `id` **MUST** remain the same value for the life of the Cancel 
+**[R60]** The `id` **MUST** remain the same value for the life of the Cancel 
 Performance Job.
 
 In case Seller/Server cannot successfully validate the request, Cancel 
-Performance Job process fails, which results in setting the state to `declined` with
+Performance Job process fails, which results in setting the state to `rejected` with
 a proper explanation in `cancellationDeniedReason`. This includes situation 
 when:
 - `id` does not allow to find a `PerformanceJob` that is to be cancelled in 
@@ -2228,23 +2130,26 @@ Seller/Server's system
 
 ### 6.12.4. Cancel Performance Monitoring Job State Machine
 
-Figure 34 presents the Cancel Performance Monitoring Job state machine:
+Figure 32 presents the Cancel Performance Monitoring Job state machine:
 
-![Figure 34: Cancel Performance Job State Machine](performance/media/cancelPerformanceJobStates.png)
+![Figure 32: Cancel Performance Job State Machine](performance/media/cancelPerformanceJobStates.png)
 
-**Figure 34. Cancel Performance Job State Machine**
+**Figure 32. Cancel Performance Job State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
 validation passes a response is provided with `CancelPerformanceJob` in
 `acknowledged` status. Next, the Seller/Server performs all the remaining 
 business and time-consuming validations. At this point, an Error response cannot
-be provided anymore, so the profile moves to a `declined` state if some issues 
+be provided anymore, so the profile moves to a `rejected` state if some issues 
 are found. The `cancelPerformanceJob.cancellationDeniedReason` acts as a 
 placeholder to provide a detailed description of what caused the problem. If 
-validation is successful, `CancelPerformanceJob` moves to the `accepted` state. When
-the Cancel Performance Job process is finished, it moves to the `completed` state. This 
-causes the `PerformanceJob` state to change to `cancelled`.
+validation is successful, `CancelPerformanceJob` moves to the `inProgress` state. 
+At this point, the related `PerformanceJob` moves to a `pendingCancel` state, 
+and the Seller/Server starts all necessary arrangements to deprovision resources.
+`PerformanceJob` remains in the `pendingCancel` state until the Cancel 
+Performance Job process is finished and moved to the `completed` state. 
+This causes the `PerformanceJob` state to change to `cancelled`.
 
 Description and mapping of the Cancel Performance Job States are the same as in 
 table 10.
@@ -2263,7 +2168,7 @@ a `GET /cancelPerformanceJob` operation with desired filtering criteria.
 - `creationDate.lt`
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/cancelPerformanceJob?state=acknowledged&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/cancelPerformanceJob?state=acknowledged&limit=10&offset=0
 ```
 
 The example above shows a Buyer/Client's request to get all Cancel Performance 
@@ -2273,21 +2178,22 @@ returned. The correct response (HTTP code `200`) in the response body contains a
 list of `CancelPerformanceJob_Find` objects matching the criteria. Details 
 related to pagination are described in [section 7.1.2](#712-response-pagination).
 
-**[R60]** The Seller **MUST** include following attributes in the
+**[R61]** The Seller **MUST** include following attributes in the
 `CancelPerformanceJob_Find` object in the response: 
 
+- `creationDate`
 - `id`
 - `performanceJobId`
 - `state`
 
-**[R61]** In case no items matching the criteria are found, the Seller/Server 
+**[R62]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 35 presents entities related to the use case. 
+Figure 33 presents entities related to the use case. 
 
-![Figure 35: Use Case 13](performance/media/useCase13Model.png)
+![Figure 33: Use Case 13](performance/media/useCase13Model.png)
 
-**Figure 35. Use Case 13: Retrieve Cancel Performance Job List - Model**
+**Figure 33. Use Case 13: Retrieve Cancel Performance Job List - Model**
 
 ## 6.14. Use Case 14: Retrieve Cancel Performance Monitoring Job by Identifier
 
@@ -2302,531 +2208,127 @@ Get List and Get by Identifier operations return different representations of
 Cancel Performance Job. Get List returns the `CancelPerformanceJob_Find` object 
 which is a subset of the `CancelPerformanceJob` returned by the Get by Identifier 
 operation. A response to a Get by Id for a `CancelPerformanceJob` with
-`id=755e55e2-72b0-4e3b-af00-693e3beac691` would return exactly the same response as
+`id=aea2769a-23f3-4ddc-b095-542a63b12481` would return exactly the same response as
 presented in [section 6.12.3](#6123-cancel-performance-monitoring-job-response).
 
-**[R62]** In case `id` does not allow finding a `CancelPerformanceJob` in 
+**[R63]** In case `id` does not allow finding a `CancelPerformanceJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R63]** The Seller/Server **MUST** include following attributes in the
+**[R64]** The Seller/Server **MUST** include following attributes in the
 `CancelPerformanceJob` object in the response: 
 
+- `creationDate`
 - `id`
 - `performanceJob`
 - `state`
 
-**[R64]** The Seller **MUST** provide all remaining optional attributes if they
+**[R65]** The Seller **MUST** provide all remaining optional attributes if they
 were previously set by the Buyer or the Seller. 
 
 ## 6.15. Use Case 15: Suspend Performance Monitoring Job
 
-Due to the need to release resources on the SOF side, the suspend operation 
-associated with the Performance Monitoring Job may exhibit a prolonged duration. 
-Consequently, this operation is implemented through a separate lifecycle 
-process.
+The Buyer/Client may request to suspend a Performance Monitoring Job by using
+`POST /performanceJob/{{id}}/suspend` endpoint. This operation only requires
+providing the `id` of the Performance Job in the path and has an empty `204` 
+confirmation response.
+
+**[R66]** The Buyer/Client’s Suspend PM Job request **MUST** include the PM Job
+Identifier. [MEF133.1 R55]
+
+The sequence diagram in Figure 34 presents this use case in detail.
+
+![Figure 34: Use Case 15](performance/media/useCase15.png)
+
+**Figure 34. Use Case 15 - Suspend Performance Monitoring Job Flow**
+
+The Buyer/Client sends a request specifying `id` of the Performance Monitoring
+Job to be suspended. The Seller/Server performs request validation, then 
+searches for Performance Monitoring Job. If found, the status is verified 
+(`inProgress`). If everything is verified correctly, the Seller/Server moves
+the Performance Monitoring Job to the `suspended` status, and sends a successful
+response to a suspension request followed by `performanceJobStateChangeEvent`.
 
 When the Performance Job is suspended, it does not generate Performance Reports.
 
-### 6.15.1. Interaction flow
+**_Note_**: The term "Response Code" used in the Business Requirements
+maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
+indicate _Failure_.
 
-The flow of this use case is shown in Figure 36.
+**[R67]** In case `id` does not allow to find a `PerformanceJob` that is to be
+suspended, an error response `Error404` **MUST** be returned. 
 
-![Figure 36: Use Case 15](performance/media/useCase15.png)
+**[R68]** The Performance Job **MUST** be in the In-Progress state to be 
+suspended. [MEF133.1 R56]
 
-**Figure 36. Use Case 15 - Suspend Performance Monitoring Job create request flow**
+**[R69]** The Seller/Server's response to the Buyer/Client’s suspend Performance
+Job request **MUST** indicate if the request is Accepted or Declined. 
+[MEF133.1 R57]
 
-The Buyer/Client sends a request with a `SuspendPerformanceJob_Create` type in 
-the body. The Seller/Server performs request validation, assigns an `id`, and 
-returns the `SuspendPerformanceJob` type in the response body, with a `state` set 
-to `acknowledged`. Further processing is performed by Seller/Server which will 
-in case of success update the Performance Monitoring Job. The Buyer/Client can 
-track the progress of the process either by subscribing for notifications or by 
-periodically polling the `SuspendPerformanceJob`. The two patterns are presented 
-in the following diagrams.
+**[R70]** In case of a successful validation of the suspend request, the Seller
+**MUST** move the Performance Job to `suspended` status. [MEF133.1 R58]
 
-![Figure 37: Suspend Performance Job Notification](performance/media/useCase15Notification.png)
+**[R71]** If the Seller/Server declines the Buyer/Client’s suspend Performance 
+Job request, the Performance Job **MUST NOT** be suspended. [MEF133.1 R59]
 
-**Figure 37. Suspend Performance Job progress tracking - Notifications**
-
-![Figure 38: Suspend Performance Job Polling](performance/media/useCase15Polling.png)
-
-**Figure 38. Suspend Performance Job progress tracking - Polling**
-
-**_Note_**: The Suspend Performance Job process is altering the state of the job 
-itself. It is important to note that notifications resulting from changes in the 
-state of the Performance Job are not represented in Figures 37 and 38.
-
-**_Note_**: The context of notifications is not a part of the considered use
-case itself. It is presented to show the big picture of end-to-end flow. This
-applies also to all further use case flow diagrams with notifications.
-
-### 6.15.2. Suspend Performance Monitoring Job Request
-
-Figure 39 presents the most important part of the data model used during 
-the Suspend Performance Job request (`POST /suspendPerformanceJob`) and 
-response. The model of the request message - `SuspendPerformanceJob_Create` is a
-subset of the `SuspendPerformanceJob` model and contains only attributes that 
-can (or must) be set by the Buyer/Client. The Seller/Server (SOF) then enriches 
-the entity in the response with additional information.
-
-**_Note:_** `SuspendPerformanceJob_Create` is an entity
-used by the Buyer/Client to make a request. `SuspendPerformanceJob` is an entity
-used by the Seller/Server to provide a response. The request entity has a
-subset of attributes of the response entity. Thus for visibility of these
-shared attributes `SuspendPerformanceJob_Common` has been
-introduced (this class is not supposed to be used directly in the exchange).
-
-The `performanceJobRef` section of `SuspendPerformanceJob_Create` is used to 
-specify which Performance Job object is a subject of the suspension process 
-(relationship by reference using `id` of the Job).
-
-The full list of attributes is available in [Section 7](#7-api-details) and in
-the API specification which is an integral part of this standard.
-
-![Figure 39: Suspend Performance Job Key Entities](performance/media/suspendPerformanceJobModel.png)
-
-**Figure 39. Suspend Performance Job Key Entities** 
-
-To send a Suspend Performance Job request the Buyer/Client uses the 
-`suspendPerformanceJob` operation from the API: `POST /suspendPerformanceJob`. 
-
-The example below shows a request to create a suspension process for
-`PerformanceJob` that was created in section [6.6.2](#662-create-performance-monitoring-job-request). 
-
-```json
-{
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  },
-  "suspensionReason": "Suspend Performance Job sample"
-}
-```
-
-**[R65]** The Buyer/Client Suspend Performance Job request **MUST** include the 
-following attributes: [MEF133.1 R59]
-- `performanceJob`
-
-**[R66]** The Performance Job **MUST** be in the In-Progress state to be 
-suspended. [MEF133.1 R60]
+**[R72]** If the Seller/Server declines the Buyer/Client’s suspend Performance 
+Job request, they **MUST** provide a reason why the request was declined. 
+[MEF133.1 R60]
 
 **[O17]** In case the Performance Job is running e.g., once a day for a short period
 of time, it may be difficult to change its state. If action arrives when 
 Performance Job is running, it is recommended to run until the end and only 
-afterwards action should be applied. [MEF133.1 O16, O26]
+afterwards action should be applied. [MEF133.1 O26]
 
-### 6.15.3. Suspend Performance Monitoring Job Response
+## 6.16. Use Case 16: Resume Performance Monitoring Job
 
-Entities used for providing a response to Suspend Performance Job requests are
-presented in Figure 39. The Seller/Server responds with a 
-`SuspendPerformanceJob` type, which adds some attributes (like `id` or `state`) 
-to the `SuspendPerformanceJob_Create` that was used in the Buyer/Client request.
+The Buyer/Client may request to resume a Performance Monitoring Job by using
+`POST /performanceJob/{{id}}/resume` endpoint. This operation only requires
+providing the `id` of the Performance Job in the path and has an empty `204` 
+confirmation response.
+
+The sequence diagram in Figure 35 presents this use case in detail.
+
+![Figure 35: Use Case 16](performance/media/useCase16.png)
+
+**Figure 35. Use Case 16 - Resume Performance Monitoring Job Flow**
+
+The Buyer/Client sends a request specifying `id` of the Performance Monitoring
+Job to be resumed. The Seller/Server performs request validation, then 
+searches for Performance Monitoring Job. If found, the status is verified 
+(`suspended`). If everything is verified correctly, the Seller/Server moves
+the Performance Monitoring Job to `scheduled` or `inProgress` status depending
+on the schedule, and sends a successful response to a resumption request 
+followed by `performanceJobStateChangeEvent`.
 
 **_Note_**: The term "Response Code" used in the Business Requirements
 maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
 indicate _Failure_.
 
-The following snippet presents the Seller/Server response. It has the same 
-structure as in the retrieve by identifier operation.
+**[R73]** The Buyer/Client Resume Performance Job request **MUST** include the 
+performanceJobId. [MEF133.1 R61]
 
-```json
-{
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  },
-  "suspensionReason": "Suspend Performance Job sample",
-  "creationDate": "2023-06-19T12:58:17.088Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
-  "id": "aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
-  "state": "acknowledged" << added by SOF >>
-}
-```
+**[R74]** In case `id` does not allow to find a `PerformanceJob` that is to be
+resumed, an error response `Error404` **MUST** be returned. 
 
-Attributes that are set by the Seller/Server in the response are marked with the
-`<< added by SOF >>` tag. 
+**[R75]** The Performance Job **MUST** be in the Suspended state in order to be 
+resumed. [MEF133.1 R62]
 
-**[R67]** The Seller/Server's response to the Buyer/Client’s Suspend Performance
+**[R76]** The Seller/Server's response to the Buyer/Client’s resume Performance 
 Job request **MUST** indicate if the request is Accepted or Declined. 
-[MEF133.1 R61]
+[MEF133.1 R63]
 
-**[R68]** If the Seller/Server accepts the Buyer/Client’s Suspend Performance 
-Job request, the Performance Job **MUST** be suspended and moved to the Suspended 
-state. [MEF133.1 R62]
+**[R77]** In case of a successful validation of the resume request, the Seller
+**MUST** move the Performance Job to `inProgress` or `scheduled` status 
+depending on the schedule. [MEF133.1 R64]
 
-**[R69]** If the Seller/Server declines the Buyer/Client’s Suspend Performance 
-Job request, the Performance Job **MUST NOT** be suspended. [MEF133.1 R63]
+**[R78]** If the Seller/Server declines the Buyer/Client’s Resume Performance Job
+request, the Performance Job **MUST NOT** be resumed. [MEF133.1 R65]
 
-**[R70]** If the Seller/Server declines the Buyer/Client’s Suspend Performance 
-Job request, they **MUST** provide a reason why the request was declined. 
-[MEF133.1 R64]
-
-**[R71]** The Seller/Server's response **MUST** include all and unchanged 
-attributes' values as provided by the Buyer/Client in the request.
-
-**[R72]** The Seller/Server **MUST** specify the following attributes in a 
-response: 
-- `id`
-- `state`
-- `creationDate`
-
-**[R73]** The `id` **MUST** remain the same value for the life of the 
-Suspend Performance Job.
-
-In case Seller/Server cannot successfully validate the request, Suspend 
-Performance Job process fails, which results in setting the state to `declined` with 
-a proper explanation in `suspensionDeniedReason`. This includes situations when:
-- `id` does not allow to find a `PerformanceJob` that is to be suspended in 
-Seller/Server's system
-- Performance Job is in a state that does not allow for suspension.
-
-### 6.15.4. Suspend Performance Monitoring Job State Machine
-
-Figure 40 presents the Suspend Performance Monitoring Job state machine:
-
-![Figure 40: Suspend Performance Job State Machine](performance/media/suspendPerformanceJobStates.png)
-
-**Figure 40. Suspend Performance Job State Machine**
-
-After receiving the request, the Seller/Server (SOF) performs basic checks of 
-the message. If any problem is found an Error response is provided. If the
-validation passes a response is provided with `SuspendPerformanceJob` in
-`acknowledged` status. Next, the Seller/Server
-performs all the remaining business and time-consuming validations. At this
-point, an Error response cannot be provided anymore, so the profile moves to a
-`declined` state if some issues are found. The
-`suspendPerformanceJob.suspensionDeniedReason` acts as a placeholder to provide 
-a detailed description of what caused the problem. If validation is successful, 
-`SuspendPerformanceJob` moves to `accepted` state. When the Suspend Performance Job 
-process is finished, it moves to the `completed` state. This causes `PerformanceJob`
-state to change to `suspended`.
-
-Description and mapping of the Suspend Performance Job States are the same as in 
-table 10.
-
-## 6.16. Use Case 16: Retrieve Suspend Performance Monitoring Job List
-
-The Buyer/Client can retrieve a list of Suspend Performance Job objects by using
-a `GET /suspendPerformanceJob` operation with desired filtering criteria.
-
-**[O18]** The Buyer/Client Retrieve List of Suspend Performance Jobs request 
-**MAY** contain none or more of the following attributes: 
-
-- `performanceJobId`
-- `state`
-- `creationDate.gt`
-- `creationDate.lt`
-
-```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/suspendPerformanceJob?state=acknowledged&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Suspend Performance 
-Job objects that are in the `acknowledged` state. Additionally, the Buyer/Client
-asks only for a first (`offset=0`) pack of 10 results (`limit=10`) to be 
-returned. The correct response (HTTP code `200`) in the response body contains a
-list of `SuspendPerformanceJob_Find` objects matching the criteria. Details 
-related to pagination are described in [section 7.1.2](#712-response-pagination).
-
-**[R74]** The Seller **MUST** include following attributes in the
-`SuspendPerformanceJob_Find` object in the response: 
-
-- `id`
-- `performanceJobId`
-- `state`
-
-**[R75]** In case no items matching the criteria are found, the Seller/Server 
-**MUST** return a valid response with an empty list. 
-
-Figure 41 presents entities related to the use case. 
-
-![Figure 41: Use Case 16](performance/media/useCase16Model.png)
-
-**Figure 41. Use Case 16: Retrieve Suspend Performance Job List - Model**
-
-## 6.17. Use Case 17: Retrieve Suspend Performance Monitoring Job by Identifier
-
-The Buyer/Client can get detailed information about the Suspend Performance Job 
-from the Seller/Server by using a `GET /suspendPerformanceJob/{{id}}` operation. 
-The payload returned in the response is a full representation of Suspend 
-Performance Job and includes all attributes the Buyer/Client has provided while 
-sending a Suspend Performance Job create request, together with additional 
-attributes set by Seller/Server. 
-
-Get List and Get by Identifier operations return different representations
-of Suspend Performance Job. Get List returns the `SuspendPerformanceJob_Find` object
-which is a subset of the `SuspendPerformanceJob` returned by the Get by Identifier 
-operation. A response to a Get by Identifier for a `SuspendPerformanceJob` with
-`id=aea2769a-23f3-4ddc-b095-542a63b12481` would return exactly the same response as
-presented in [section 6.15.3](#6153-suspend-performance-monitoring-job-response).
-
-**[R76]** In case `id` does not allow finding a `SuspendPerformanceJob` in 
-Seller/Server's system, an error response `Error404` **MUST** be returned. 
-
-**[R77]** The Seller/Server **MUST** include following attributes in the
-`SuspendPerformanceJob` object in the response:
-
-- `id`
-- `performanceJob`
-- `state`
-
-**[R78]** The Seller **MUST** provide all remaining optional attributes if they
-were previously set by the Buyer or the Seller. 
-
-## 6.18. Use Case 18: Resume Performance Monitoring Job
-
-Due to the need for reserving resources on the SOF side, the resume operation 
-associated with Performance Monitoring Job may exhibit prolonged duration. 
-Consequently, this operation is implemented through a separate lifecycle 
-process.
-
-### 6.18.1. Interaction flow
-
-The flow of this use case is shown in Figure 42.
-
-![Figure 42: Use Case 18](performance/media/useCase18.png)
-
-**Figure 42. Use Case 18 - Resume Performance Monitoring Job create request flow**
-
-The Buyer/Client sends a request with a `ResumePerformanceJob_Create` type in 
-the body. The Seller/Server performs request validation, assigns an `id`, and 
-returns the `ResumePerformanceJob` type in the response body, with a `state` set to 
-`acknowledged`. Further processing is performed by Seller/Server which will in 
-case of success resume the Performance Monitoring Job. The Buyer/Client can track 
-the progress of the process either by subscribing for notifications or by
-periodically polling the `ResumePerformanceJob`. The two patterns are presented 
-in the following diagrams.
-
-![Figure 43: Resume Performance Job Notification](performance/media/useCase18Notification.png)
-
-**Figure 43. Resume Performance Job progress tracking - Notifications**
-
-![Figure 44: Resume Performance Job Polling](performance/media/useCase18Polling.png)
-
-**Figure 44. Resume Performance Job progress tracking - Polling**
-
-**_Note_**: The Resume Performance Job process is altering the state of the job 
-itself. It is important to note that notifications resulting from changes in the 
-state of the Performance Job are not represented in Figures 43 and 44.
-
-**_Note_**: The context of notifications is not a part of the considered use
-case itself. It is presented to show the big picture of end-to-end flow. This
-applies also to all further use case flow diagrams with notifications.
-
-### 6.18.2. Resume Performance Monitoring Job Request
-
-Figure 45 presents the most important part of the data model used during 
-the Resume Performance Job request (`POST /resumePerformanceJob`) and response. 
-The model of the request message - `ResumePerformanceJob_Create` is a subset of 
-the `ResumePerformanceJob` model and contains only attributes that can (or must) 
-be set by the Buyer/Client. The Seller/Server (SOF) then enriches the entity in 
-the response with additional information.
-
-**_Note:_** `ResumePerformanceJob_Create` is an entity
-used by the Buyer/Client to make a request. `ResumePerformanceJob` is an entity
-used by the Seller/Server to provide a response. The request entity has a
-subset of attributes of the response entity. Thus for visibility of these
-shared attributes `ResumePerformanceJob_Common` has been
-introduced (this class is not supposed to be used directly in the exchange).
-
-The `performanceJob` section of `ResumePerformanceJob_Common` is used to specify
-which Performance Job object is a subject of the resume process (relationship by
-reference using the `id` of the Job).
-
-The full list of attributes is available in [Section 7](#7-api-details) and in
-the API specification which is an integral part of this standard.
-
-![Figure 45: Resume Performance Job Key Entities](performance/media/resumePerformanceJobModel.png)
-
-**Figure 45. Resume Performance Job Key Entities** 
-
-To send a Resume Performance Job request the Buyer/Client uses the 
-`resumePerformanceJob` operation from the API: `POST /resumePerformanceJob`. 
-
-The example below shows a request to create a resumption process for
-`PerformanceJob` that was created in section [6.6.2](#662-create-performance-monitoring-job-request). 
-
-```json
-{
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  },
-  "resumptionReason": "Resume Performance Job sample"
-}
-```
-
-**[R79]** The Buyer/Client Resume Performance Job request **MUST** include the 
-following attributes: [MEF133.1 R65]
-- `performanceJob`
-
-**[R80]** The Performance Job **MUST** be in the Suspended state in order to be 
-resumed. [MEF133.1 R66]
-
-### 6.18.3. Resume Performance Monitoring Job Response
-
-Entities used for providing a response to Resume Performance Job requests are
-presented in Figure 45. The Seller/Server responds with a `ResumePerformanceJob` 
-type, which adds some attributes (like `id` or `state`) to the 
-`ResumePerformanceJob_Create` that was used in the Buyer/Client request.
-
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
-
-The following snippet presents the Seller/Server response. It has the same 
-structure as in the retrieve by identifier operation.
-
-```json
-{
-  "performanceJob": {
-    "@type": "PerformanceJobRef",
-    "href": "{{baseUrl}}/performanceMonitoring/v2/755e55e2-72b0-4e3b-af00-693e3beac691",
-    "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
-  },
-  "resumptionReason": "Resume Performance Job sample",
-  "creationDate": "2023-06-19T12:58:17.088Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
-  "id": "aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
-  "state": "acknowledged" << added by SOF >>
-}
-```
-
-Attributes that are set by the Seller/Server in the response are marked with the
-`<< added by SOF >>` tag. 
-
-**[R81]** The Seller/Server's response to the Buyer/Client’s Resume Performance 
-Job request **MUST** indicate if the request is Accepted or Declined. 
-[MEF133.1 R67]
-
-**[R82]** If the Seller/Server accepts the Buyer/Client’s Resume Performance Job 
-request, the Performance Job **MUST** be resumed and returned to the In-Progress 
-state. [MEF133.1 R68]
-
-**[R83]** If the Seller/Server declines the Buyer/Client’s Resume Performance Job
-request, the Performance Job **MUST NOT** be resumed. [MEF133.1 R69]
-
-**[R84]** If the Seller/Server declines the Buyer/Client’s Resume Performance Job
+**[R79]** If the Seller/Server declines the Buyer/Client’s Resume Performance Job
 request, they **MUST** provide a reason why the request was declined. 
-[MEF133.1 R70]
+[MEF133.1 R66]
 
-**[R85]** The Seller/Server's response **MUST** include all and unchanged 
-attributes' values as provided by the Buyer/Client in the request.
-
-**[R86]** The Seller/Server **MUST** specify the following attributes in a 
-response: 
-- `id`
-- `state`
-- `creationDate`
-
-**[R87]** The `id` **MUST** remain the same value for the life of the 
-Performance Job.
-
-In case the Seller/Server cannot successfully validate the request, the Resume 
-Performance Job process fails, which results in setting the state to `declined` with 
-a proper explanation in `resumptionDeniedReason`. This includes situations when:
-- `id` does not allow to find a `PerformanceJob` that is to be resumed in 
-Seller/Server's system
-- Performance Job is in a state that does not allow for resumption.
-
-
-### 6.18.4. Resume Performance Monitoring Job State Machine
-
-Figure 46 presents the Resume Performance Monitoring Job state machine:
-
-![Figure 46: Resume Performance Job State Machine](performance/media/resumePerformanceJobStates.png)
-
-**Figure 46. Resume Performance Job State Machine**
-
-After receiving the request, the Seller/Server (SOF) performs basic checks of 
-the message. If any problem is found an Error response is provided. If the
-validation passes a response is provided with `ResumePerformanceJob` in
-`acknowledged` status. Next, the Seller/Server
-performs all the remaining business and time-consuming validations. At this
-point, an Error response cannot be provided anymore, so the profile moves to a
-`declined` state if some issues are found. The
-`resumePerformanceJob.resumptionDeniedReason` acts as a placeholder to provide a
-detailed description of what caused the problem. If validation is successful, 
-`ResumePerformanceJob` moves to `accepted` state. When the Resume Performance Job 
-process is finished, it moves to the `completed` state. This causes `PerformanceJob`
-state to change to `inProgress`.
-
-Description and mapping of the Resume Performance Job States are the same as in 
-table 10.
-
-## 6.19. Use Case 19: Retrieve Resume Performance Monitoring Job List
-
-The Buyer/Client can retrieve a list of Resume Performance Job objects by using 
-a `GET /resumePerformanceJob` operation with desired filtering criteria.
-
-**[O19]** The Buyer/Client Retrieve List of Resume Performance Jobs request 
-**MAY** contain none or more of the following attributes: 
-
-- `performanceJobId`
-- `state`
-- `creationDate.gt`
-- `creationDate.lt`
-
-```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/resumePerformanceJob?state=acknowledged&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Resume Performance 
-Job objects that are in the `acknowledged` state. Additionally, the Buyer/Client
-asks only for a first (`offset=0`) pack of 10 results (`limit=10`) to be 
-returned. The correct response (HTTP code `200`) in the response body contains a
-list of `ResumePerformanceJob_Find` objects matching the criteria. Details 
-related to pagination are described in [section 7.1.2](#712-response-pagination).
-
-**[R88]** The Seller **MUST** include following attributes in the
-`ResumePerformanceJob_Find` object in the response: 
-
-- `id`
-- `performanceJobId`
-- `state`
-
-**[R89]** In case no items matching the criteria are found, the Seller/Server 
-**MUST** return a valid response with an empty list. 
-
-Figure 47 presents entities related to the use case. 
-
-![Figure 47: Use Case 19](performance/media/useCase19Model.png)
-
-**Figure 47. Use Case 19: Retrieve Resume Performance Job List - Model**
-
-## 6.20. Use Case 20: Retrieve Resume Performance Monitoring Job by Identifier
-
-The Buyer/Client can get detailed information about the Resume Performance Job 
-from the Seller/Server by using a `GET /resumePerformanceJob/{{id}}` operation. 
-The payload returned in the response is a full representation of the Resume 
-Performance Job and includes all attributes the Buyer/Client has provided while 
-sending a Resume Performance Job create request, together with additional 
-attributes set by Seller/Server. 
-
-Get List and Get by Identifier operations return different representations
-of Resume Performance Job. Get List returns the `ResumePerformanceJob_Find` object 
-which is a subset of the `ResumePerformanceJob` returned by the Get by Identifier 
-operation. A response to a Get by Identifier for a `ResumePerformanceJob` with
-`id=aea2769a-23f3-4ddc-b095-542a63b12481` would return exactly the same response as
-presented in [section 6.18.3](#6183-resume-performance-monitoring-job-response).
-
-**[R90]** In case `id` does not allow finding a `ResumePerformanceJob` 
-in Seller/Server's system, an error response `Error404` **MUST** be returned.
-
-**[R91]** The Seller/Server **MUST** include following attributes in the
-`ResumePerformanceJob` object in the response: 
-
-- `id`
-- `performanceJob`
-- `state`
-
-**[R92]** The Seller **MUST** provide all remaining optional attributes if they
-were previously set by the Buyer or the Seller. 
-
-## 6.21. Use Case 21: Create Performance Monitoring Job Complex Query
+## 6.17. Use Case 17: Create Performance Monitoring Job Complex Query
 
 The `PerformanceJob` defines complex structures with multiple levels of nesting,
 such as `scheduleDefinition`. To facilitate filtering based on these structures,
@@ -2835,28 +2337,28 @@ This endpoint allows filtering by values defined by the `PerformanceJob` and
 `PerformanceProfile` types and returns a list of `PerformanceJob` objects that
 match the specified filters.
 
-### 6.21.1. Create Performance Monitoring Job Complex Query Request
+### 6.17.1. Create Performance Monitoring Job Complex Query Request
 
-Figure 48 depicts the key components of the data model utilized in the Create
+Figure 36 depicts the key components of the data model utilized in the Create
 Performance Job Complex Query request (`POST /performanceJobComplexQuery`) and
 its corresponding response. The request message model,
 `PerformanceJobComplexQuery_Create`, is a subset of the 
-`PerformanceJobComplexQuery` model and includes only attributes that can or 
-must be specified by the Buyer/Client, representing filtering options. In
+`PerformanceJobComplexQuery` model and includes only attributes that can be 
+specified by the Buyer/Client, representing filtering options. In
 response, the Seller/Server provides a list of `PerformanceJobComplexQuery`
-entities that contain the matched `PerformanceJob` objects.
+entities that contain the matched PM Job objects.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 48: Performance Job Complex Query Key Entities](performance/media/performanceJobComplexQueryModel.png)
+![Figure 36: Performance Job Complex Query Key Entities](performance/media/performanceJobComplexQueryModel.png)
 
-**Figure 48. Performance Job Complex Query Key Entities**
+**Figure 36. Performance Job Complex Query Key Entities**
 
-To send a request the Buyer/Client uses the `createPerformanceJobComplexQuery`
-operation from the API. The snippet below presents an example of a Create 
-Performance Job Complex Query request. It filters for `PerformanceJob` objects
-that:
+To send a request the Buyer/Client uses `createPerformanceJobComplexQuery`
+operation from the API and provides `PerformanceJobComplexQuery_Create` as 
+payload. The snippet below presents an example of a Create Performance Job
+Complex Query request. It lists `PerformanceJob` objects that:
 - have `consumingApplicationId` set to `CUS`
 - are based on the `performanceProfile` with 
   `id=8df0981a-0949-11ee-be56-0242ac120002`
@@ -2868,24 +2370,25 @@ that:
 ```json
 {
   "consumingApplicationId": "CUS",
-  "performanceProfile": {
-    "@type": "PerformanceProfileRef",
-    "id": "8df0981a-0949-11ee-be56-0242ac120002"
-  },
+  "performanceProfileId": "8df0981a-0949-11ee-be56-0242ac120002"
   "scheduleDefinition": {
-    "recurringFrequency": {
-      "recurringFrequencyValue": 1,
-      "recurringFrequencyUnits": "HOURS"
-    }
+    "recurringSchedule": {
+      "second": "0",
+      "minute": "0",
+      "hour": "*/1",
+      "dayOfMonth": "*",
+      "month": "*",
+      "dayOfWeek": "*"
+    },
   },
   "state": "scheduled"
 }
 ```
 
-### 6.21.2. Create Performance Monitoring Job Complex Query Response
+### 6.17.2. Create Performance Monitoring Job Complex Query Response
 
 Entities used for providing a response to Create Performance Job Complex Query
-request are presented in Figure 48. The Seller/Server responds with a list of 
+request are presented in Figure 36. The Seller/Server responds with a list of 
 `PerformanceJobComplexQuery` objects, which represent matched Performance Jobs. 
 
 **_Note_**: The term "Response Code" used in the Business Requirements
@@ -2903,9 +2406,15 @@ The following snippet presents the Seller/Server response.
     "consumingApplicationId": "CUS",
     "creationDate": "2023-06-01T08:02:01.370Z",
     "description": "Exemplary Create Performance Job request",
+    "lastModifiedDate": "2023-06-01T08:02:01.370Z",
+    "monitoredObjectId": {
+        "@type": "Service",
+        "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+        "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
+    },
     "performanceJob": {
       "@type": "PerformanceJobRef",
-      "id": "755e55e2-72b0-4e3b-af00-693e3beac691"
+      "performanceJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
     },
     "performanceProfile": {
       "@type": "PerformanceProfileRef",
@@ -2913,57 +2422,39 @@ The following snippet presents the Seller/Server response.
     },
     "producingApplicationId": "SOF",
     "scheduleDefinition": {
-      "recurringFrequency": {
-        "recurringFrequencyValue": 1,
-        "recurringFrequencyUnits": "HOURS"
-      },
       "scheduleDefinitionStartTime": "2023-06-01T08:02:01.370Z"
     },
     "servicePayloadSpecificAttributes": {
-      "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-      "interface": {
-        "ipvcEndpoint": [
-          "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-          "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-        ],
-        "name": "slsRpPairTest1",
-        "description": "Exemplary performance monitoring service pair",
-        "cloudService": true
-      }
+      "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
     },
     "state": "scheduled"
   }
 ]
 ```
 
-## 6.22. Use Case 22: Create a Performance Measurement Report
+## 6.18. Use Case 18: Create a Performance Monitoring Report
 
 The execution of all types of Performance Monitoring Jobs results in the
-generation of Performance Measurement Reports, which deliver comprehensive
+generation of Performance Monitoring Reports, which deliver comprehensive
 performance or statistics collections to the Buyer/Client. In certain 
-scenarios, performance data can be collected without the need for prior 
-provisioning of a Performance Job. This occurs under the following conditions:
-- When the Service Level Specification (SLS) is included in the Service Order 
-  request.
-- When passive statistics are automatically generated by the server.
-- When the client retrieves historical data that is already available on the 
-  server.
+scenarios, performance data can be collected by creating an ad-hoc Performance
+Report. This functionality can be useful for retrieving PM data from a dataset 
+that is already available on the Server (e.g., historical statistics).
 
-### 6.22.1. Interaction flow
+### 6.18.1. Interaction flow
 
-The flow of this use case is illustrated in Figure 49. A Performance Report
-can be generated either as an outcome of processing a Performance Job or by
-executing a Create Performance Report request. The latter option is
+The flow of this use case is illustrated in Figure 37. A Performance Report
+can be generated either by SOF as an outcome of processing a Performance Job or
+by executing a Create Performance Report request. The latter option is
 particularly useful for generating ad-hoc reports based on existing data. Both
 of these options are depicted in the figure.
 
-![Figure 49: Use Case 22](performance/media/useCase22.png)
+![Figure 37: Use Case 18](performance/media/useCase18.png)
 
-**Figure 49. Use Case 22 - Performance Monitoring Report create request flow**
+**Figure 37. Use Case 18 - Create Performance Monitoring Report flow**
 
-In the case of ad-hoc report creation, the Buyer/Client sends a request with a
-`PerformanceReport_Create` type in the body. 
-The Seller/Server
+In order to create a report, the Buyer/Client sends a request with a
+`PerformanceReport_Create` type in the body. The Seller/Server
 performs request validation, assigns an `id`, and returns `PerformanceReport` 
 type in the response body, with a `state` set to `acknowledged`. From this 
 point, the Performance Report is ready for further processing. The Buyer/Client 
@@ -2971,13 +2462,13 @@ can track the progress of the process either by subscribing for notifications or
 by periodically polling the `PerformanceReport`. The two patterns are presented 
 in the following diagrams.
 
-![Figure 50: Performance Job Notification](performance/media/useCase22Notification.png)
+![Figure 38: Performance Job Notification](performance/media/useCase18Notification.png)
 
-**Figure 50. Performance Job progress tracking - Notifications**
+**Figure 38. Performance Job progress tracking - Notifications**
 
-![Figure 51: Performance Job Polling](performance/media/useCase22Polling.png)
+![Figure 39: Performance Job Polling](performance/media/useCase18Polling.png)
 
-**Figure 51. Performance Job progress tracking - Polling**
+**Figure 39. Performance Job progress tracking - Polling**
 
 **_Note_**: To provide clarity, the figures illustrate only successful 
 scenarios, omitting any error or failure conditions.
@@ -2991,141 +2482,147 @@ through a notification or by utilizing the Retrieve List operation with the
 case itself. It is presented to show the big picture of end-to-end flow. This
 applies also to all further use case flow diagrams with notifications.
 
-### 6.22.2. Create Performance Measurement Report Request
+### 6.18.2. Create Performance Monitoring Report Request
 
-Figure 52 presents the most important part of the data model used during 
-the Create Performance Report request (`POST /performanceReport`) and response. 
+Figure 40 presents the most important part of the data model used for the 
+Create Performance Report request (`POST /performanceReport`) and response. 
 The model of the request message - `PerformanceReport_Create` is a subset of the 
 `PerformanceReport` model and contains only attributes that can (or must) be set 
 by the Buyer/Client. The Seller/Server (SOF) then enriches the entity in the 
-response with additional information including collected measurements (content 
-of the report). 
+response with additional information including collected measurements (link to
+the generated file or content of the report). 
 
-**_Note:_** `PerformanceReport_Create` is an entity
-used by the Buyer/Client to make a request. `PerformanceReport` is an entity
-used by the Seller/Server to provide a response. The request entity has a
-subset of attributes of the response entity. Thus for visibility of these
-shared attributes `PerformanceReport_Common` has been
-introduced (this class is not supposed to be used directly in the exchange).
+**_Note:_** `PerformanceReport_Create` is an entity used by the Buyer/Client to
+make a request. `PerformanceReport` is an entity used by the Seller/Server to
+provide a response. The request entity has a subset of attributes of the 
+response entity. Thus for visibility of these shared attributes `PerformanceReport_Common`
+has been introduced (this class is not supposed to be used directly in the 
+exchange).
 
-A `PerformanceReport_Create` defines reporting timeframe, measurement intervals, 
-output format, and objectives of performance data collection (in 
-`servicePayloadSpecificAttributes` section). Part of the attributes required by
-`PerformanceReport` is defined through the `PerformanceJob` type and is described
-in details in [section 6.22.5](#6225-relationship-to-performance-monitoring-job). 
-
-Section `servicePayloadSpecificAttributes` of the create Performance Report 
-request allows for the introduction of service-specific properties of 
-performance monitoring as the API payload. The extension mechanism is described 
-in detail in [Section 5.3](#53-integration-of-service-monitoring-specification-into-performance-monitoring-api).
+Creation of Performance Report involves providing reporting timeframe, 
+output format, subject of reporting (Service or Entity), type of statistics to 
+be taken, and other attributes. 
+Part of the `PerformanceReport` model is defined through the `PerformanceJob`
+type and is described in details in [section 6.18.5](#6185-relationship-to-performance-monitoring-job). 
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
+![Figure 40: Performance Report Key Entities](performance/media/performanceReportModel.png)
 
-![Figure 52: Performance Report Key Entities](performance/media/performanceReportModel.png)
-
-**Figure 52. Performance Report Key Entities**
+**Figure 40. Performance Report Key Entities**
 
 To send a Create Performance Report request the Buyer/Client uses the 
-`createPerformanceReport` operation from the API: `POST /performancReport`. For 
-clarity, some of create Performance Report payload's attributes might be omitted
-to improve examples' readability.
+`createPerformanceReport` operation from the API: `POST /performancReport`. For
+clarity, some of create Performance Report request attributes might be omitted
+to improve readability.
 
-**`Performance Measurement Report` Create Request**
+**`Performance Monitoring Report` Create Request**
 
 ```json
 {
   "description": "Exemplary Create Performance Report request",
-  "reportingTimeframe": {
-    "reportingStartDate": "2023-06-01T00:00:00.00",
-    "reportingEndDate": "2023-06-02T00:00:00.00"
-  },
   "performanceJob": {
     "@type": "PerformanceJobValue",
     "consumingApplicationId": "CUS",
     "granularity": "1 hour",
+    "monitoredObjectId": {
+      "@type": "Service",
+      "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+      "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
+    },
     "outputFormat": "json",
     "producingApplicationId": "SOF",
     "resultFormat": "payload",
     "servicePayloadSpecificAttributes": {
       "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-      "interface": {
-        "ipvcEndpoint": [
-          "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-          "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-        ],
-        "name": "slsRpPairTest1",
-        "description": "Exemplary performance monitoring service pair",
-        "cloudService": true
-      }
     }
+  },
+  "reportingTimeframe": {
+    "reportingStartDate": "2023-06-01T00:00:00.00",
+    "reportingEndDate": "2023-06-02T00:00:00.00"
   }
 }
 
 ```
 
-**[R93]** The Buyer/Client Create Performance Report request **MUST** include the
+**[R80]** The Buyer/Client Create Performance Report request **MUST** include the
 following attributes:
-- `performanceJob`
 - `performanceJob.@type`
-- `performanceJob.outputFormat`
-- `performanceJob.resultFormat`
-- `performanceJob.servicePayloadSpecificAttributes`
+- `performanceJob.id`
+- `performanceJob.granularity` (if referenced `PerformanceJob` id not provided)
+- `performanceJob.monitoredObjectId` (if referenced `PerformanceJob` id not provided)
+- `performanceJob.outputFormat` (if referenced `PerformanceJob` id not provided)
+- `performanceJob.resultFormat` (if referenced `PerformanceJob` id not provided)
+- `performanceJob.servicePayloadSpecificAttributes` 
+  (if referenced `PerformanceJob` id not provided)
+- `reportingTimeframe`
 
-### 6.22.3. Create Performance Measurement Report Response
+**[R81]** If the Buyer/Client desires to retrieve PM data for a service they
+**MUST** include the Service Identifier in the Retrieve PM Data from a PM
+Database request. [MEF133.1 R152]
 
-Figure 52 showcases the entities involved in delivering a response to the
+**[R82]** If the Buyer/Client desires to retrieve PM data for an entity they 
+**MUST** include the Entity Identifier in the Retrieve PM Data from a PM 
+Database request. [MEF133.1 R153]
+
+**[R83]** In addition to the Service or Entity Identifier, a Retrieve PM Data
+from a PM Database request **MUST** contain the following: [MEF133.1 R154]
+- Service Specific Payload Attributes
+- Start Time
+- End Time
+
+### 6.18.3. Create Performance Monitoring Report Response
+
+Figure 40 showcases the entities involved in delivering a response to the
 Create Performance Report request. The Seller/Server provides a response of the
-`PerformanceReport` type, which introduces additional attributes (such as `id`,
-`state`, `reportUrl` for accessing the generated report, or `reportContent` for
-including measurement data in the response payload) to the original 
+`PerformanceReport` type, which introduces additional attributes to the original
 `PerformanceReport_Create` object used in the Buyer/Client request.
+Additional attributes in the response include: `id`, `state`, `reportUrl` for
+accessing the file with generated report, or `reportContent` for including 
+measurement data in the response payload.
 
 **_Note_**: The term "Response Code" used in the Business Requirements
 maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
 indicate _Failure_.
 
-Depending on the `resultFormat` attribute, Seller/Server will provide a link
-to the generated data (`resultFormat=attachment`), or include actual values
-inside the response body (`resultFormat=payload`).
+Depending on the `resultFormat` attribute, Seller/Server will provide a link to
+the generated report (`resultFormat=attachment`), or include captured values 
+inside the response body (`resultFormat=payload`). This applies to reports that
+were successfully processed by the Seller/Server (state is `completed`).
 
 Section `reportContent` of the Performance Report response
 allows for the introduction of service-specific results of performance 
-monitoring as the API payload. The extension mechanism is described in detail in
-[Section 5.3](#53-integration-of-service-monitoring-specification-into-performance-monitoring-api).
+monitoring as the API payload. The extension mechanism is described in detail 
+in [Section 5.3](#53-integration-of-service-monitoring-specification-into-performance-monitoring-api).
 
 The following snippet presents the Seller/Server response. It has the same 
-structure as in the retrieve by identifier operation.
+structure as in the get by identifier operation.
 
-**`Performance Measurement Report` Create Response**
+**Create `PerformanceReport` Response**
 
 ```json
 {
   "description": "Exemplary Create Performance Report request",
-  "reportingTimeframe": {
-    "reportingStartDate": "2023-06-01T00:00:00.00",
-    "reportingEndDate": "2023-06-01T01:00:00.00"
-  },
   "performanceJob": {
     "@type": "PerformanceJobValue",
     "consumingApplicationId": "CUS",
     "granularity": "1 hour",
+    "monitoredObjectId": {
+      "@type": "Service",
+      "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+      "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
+    },
     "outputFormat": "json",
     "producingApplicationId": "SOF",
     "resultFormat": "payload",
     "servicePayloadSpecificAttributes": {
       "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-      "interface": {
-        "ipvcEndpoint": [
-          "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-          "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-        ],
-        "name": "slsRpPairTest1",
-        "description": "Exemplary performance monitoring service pair",
-        "cloudService": true
-      }
     }
+  },
+  "reportingTimeframe": {
+    "reportingStartDate": "2023-06-01T00:00:00.00",
+    "reportingEndDate": "2023-06-01T01:00:00.00"
   },
   "reportContent": [
     {
@@ -3136,31 +2633,12 @@ structure as in the retrieve by identifier operation.
       "measurementDataPoints": [
         {
           "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all",
-          "interface": {
-            "ipvcEndpoint": [
-              "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-              "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-            ],
-            "name": "slsRpPairTest1",
-            "description": "Exemplary performance monitoring service pair",
-            "cloudService": true
-          },
-          "vlan": 100,
-          "protocol": "IPV4",
-          "packetsIn": 300,
-          "charsIn": 30000,
-          "packetsOut": 400,
-          "charsOut": 40000,
-          "utilizationIn": 60,
-          "utilizationOut": 70,
-          "peakUtilizationIn": 80,
-          "peakUtilizationOut": 90
         }
       ]
     }
   ], << added by SOF >>
   "creationDate": "2023-06-01T08:02:01.370Z", << added by SOF >>
-  "href": "{{baseUrl}}/performanceMonitoring/v2/8ae5f9f3-554f-4d93-8314-1630f171da54", << added by SOF >>
+  "href": "{{baseUrl}}/performanceMonitoring/v3/8ae5f9f3-554f-4d93-8314-1630f171da54", << added by SOF >>
   "id": "8ae5f9f3-554f-4d93-8314-1630f171da54", << added by SOF >>
   "lastModifiedDate": "2023-06-01T08:02:01.370Z", << added by SOF >>
   "state": "completed" << added by SOF >>
@@ -3170,91 +2648,109 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with the
 `<< added by SOF >>` tag.
 
-**[R94]** The Seller/Server's response **MUST** include all and unchanged 
+**[R84]** The Seller/Server's response **MUST** include all and unchanged 
 attributes' values as provided by the Buyer/Client in the request.
 
-**[R95]** The Seller/Server **MUST** specify the following attributes in a 
+**[R85]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
 - `creationDate`
 - `id`
 - `state`
 
-**[R96]** The `id` **MUST** remain the same value for the life of the 
+**[R86]** The `id` **MUST** remain the same value for the life of the 
 Performance Report.
 
-### 6.22.4. Performance Measurement Report State Machine
+### 6.18.4. Performance Monitoring Report State Machine
 
-Figure 53 presents the Performance Report state machine:
+Figure 41 presents the Performance Report state machine:
 
-![Figure 53: Performance Report State Machine](performance/media/performanceReportStates.png)
+![Figure 41: Performance Report State Machine](performance/media/performanceReportStates.png)
 
-**Figure 53. Performance Report State Machine**
+**Figure 41. Performance Report State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
 validation passes a response is provided with `PerformanceReport` in
-`acknowledged` status. Next, the Seller/Server
-performs all the remaining business and time-consuming validations. At this
-point, an Error response cannot be provided anymore, so the profile moves to a
-`rejected` state if some issues are found. The
-`performanceReport.failureReason` acts as a placeholder to provide a
-detailed description of what caused the problem. `PerformanceReport` moves to
-`inProgress` state during which report content is prepared. Depending on the 
-outcome of the processing, `PerformanceReport` moves to `completed` or `failed`
-state. 
+`acknowledged` status. Next, the Seller/Server performs all the remaining 
+business and time-consuming validations. At this point, an Error response 
+cannot be provided anymore, so the profile moves to a `rejected` state if some
+issues are found. The `performanceReport.failureReason` acts as a placeholder
+to provide a detailed description of what caused the problem. `PerformanceReport`
+moves to `inProgress` state during which report content is collected 
+into the report. Depending on the outcome of the processing, `PerformanceReport`
+ moves to `completed` or `failed` state. 
 
 Table 11 presents the list of `status` names and their descriptions. 
 
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | acknowledged | A Create Performance Report request has been received by the Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
-| completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                                |
-| failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                                 |
-| inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                                  |
-| rejected     | This state indicates that: <br>- Invalid information is provided through the `PerformanceReport` request <br>- The request fails to meet validation rules for `PerformanceReport` delivery (processing).                                                                                                                                                                                                                                    |
+| completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                              |
+| failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                               |
+| inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                                |
+| rejected     | This state indicates that: <br>- Invalid information is provided through the `PerformanceReport` request <br>- The request fails to meet validation rules for `PerformanceReport` delivery (processing).                                                                                                                                                                                                                                  |
 
 **Table 11. Performance Report State Machine states**
 
-**[R97]** The Seller/Server **MUST** support all Performance Report statuses and
-their associated transitions as described in Figure 53 and Table 11. 
+**[R87]** The Seller/Server **MUST** support all Performance Report statuses and
+their associated transitions as described in Figure 41 and Table 11. 
 
-### 6.22.5. Relationship to Performance Monitoring Job
+### 6.18.5. Relationship to Performance Monitoring Job
 
 `PerformanceReport_Create` class used as a payload for `createPerformanceReport`
-operation refers to attributes defined by the `PerformanceJob` type by directly 
-assigning their values. These attributes are contained in `performanceJob` 
-section. For this "by value" assignment, the `@type` discriminator has to be set to
-`PerformanceJobValue`.
+operation can use attributes defined in the `PerformanceJob` type either by 
+refering to id of existing Performance Job, or directly assigning values for
+attributes defined by `PerformanceJob` model. 
 
-The `PerformanceReport` class, which represents the outcome of a report
-processing also includes a `performanceJob` section. However, this time it is
-defined as a `PerformanceJobRefOrValue`, enabling either a reference to a
-`PerformanceJob` object (when the Performance Report is generated by a 
-Performance Job) or the listing of attribute values defined within the 
-`PerformanceJob` type. Those two options are indicated by setting the `@type`
-(discriminator) attribute to either `PerformanceJobRef` or
+First option allows to reuse configuration of existing Performance Job, 
+including the following attributes: 
+- `consumingApplicationId`
+- `granularity`
+- `monitoredObjectId`
+- `outputFormat`
+- `producingApplicationId`
+- `resultFormat`
+- `servicePayloadSpecificAttributes`
+
+Second option allows for assigning values of abovementioned attributes in the 
+Create Performance Report request. 
+
+In both cases, `performanceJob` section is used to provide required data. 
+Assignment "by reference" should use `@type` discriminator set to `PerformanceJobRef`.
+In case of "by value" assignment, the `@type` discriminator has to be set to 
 `PerformanceJobValue`.
 
 **_Note_**: Defining attributes related to `PerformanceJob` in Create 
 Performance Report request does not create a new `PerformanceJob` object. 
 
-Figure 54 presents details of entities related to `PerformanceReport` that 
-allow for referencing to Performance Job or providing corresponding attributes.
+**_Note2_**: Performance Job for a given Service/Entity and performance 
+indicators still needs to exist, even if `PerformanceReport` is created 
+using `PerformanceJobValue` relationship. 
 
-![Figure 54: Relationship to Performance Job](performance/media/performanceJobRefOrValue.png)
+Figure 42 presents details of  `PerformanceReport` model that allow for 
+referencing to Performance Job or providing corresponding attributes.
 
-**Figure 54. Relationship to Performance Job**
+Section `servicePayloadSpecificAttributes` allows for the introduction of 
+service-specific properties of performance monitoring as the API payload. 
+The extension mechanism is described in detail in [Section 5.3](#53-integration-of-service-monitoring-specification-into-performance-monitoring-api).
 
-## 6.23. Use Case 23: Retrieve Performance Measurement Report List
+![Figure 42: Relationship to Performance Job](performance/media/performanceJobRefOrValue.png)
+
+**Figure 42. Relationship to Performance Job**
+
+## 6.19. Use Case 19: Retrieve Performance Monitoring Report List
 
 The Buyer/Client can retrieve a list of `PerformanceReport` objects by using a 
 `GET /performanceReport` operation with desired filtering criteria.
 
-**[O20]** The Buyer’s/Client’s Retrieve List of Performance Reports request 
+**[O18]** The Buyer’s/Client’s Retrieve List of Performance Reports request 
 **MAY** contain none or more of the following attributes as filter criteria: 
-[MEF133.1 O17]
+[MEF133.1 O19]
 
 - `performanceJobId`
+- `serviceIdFrom`
+- `serviceIdTo`
+- `entityId`
 - `state`
 - `creationDate.gt`
 - `creationDate.lt`
@@ -3263,13 +2759,12 @@ The Buyer/Client can retrieve a list of `PerformanceReport` objects by using a
 - `reportingTimeframe.endDate.gt`
 - `reportingTimeframe.endDate.lt`
 - `granularity`
+- `jobType`
 - `outputFormat`
 - `resultFormat`
-- `consumingApplicationId`
-- `producingApplicationId`
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/performanceReport?state=completed&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/performanceReport?state=completed&limit=10&offset=0
 ```
 
 The example above shows a Buyer/Client's request to get all Performance Report 
@@ -3283,38 +2778,37 @@ In particular, it does not contain the collected measurements. To get all
 details, the Buyer/Client has to query a specific `PerformanceReport` by its 
 `id`. 
 
-**[R98]** The Seller/Server **MUST** support the retrieval of a List of 
-Performance Measurement Reports Use Case. [MEF133.1 R77, R94]
+**[R88]** The Seller/Server **MUST** support the retrieval of a List of 
+Performance Monitoring Reports Use Case. [MEF133.1 R73, R108]
 
-**[R99]** The Buyer/Client **MUST** support the retrieval of a List of 
-Performance Measurement Reports Use Case. [MEF133.1 R78, R95]
+**[R89]** The Buyer/Client **MUST** support the retrieval of a List of 
+Performance Monitoring Reports Use Case. [MEF133.1 R74, R109]
 
-**[R100]** The Seller/Server's response to the Buyer’s/Client’s retrieve List of 
-Performance Measurement Reports **MUST** include the following attributes as 
-applicable: [MEF133.1 R79, R96]
+**[R90]** The Seller/Server's response to the Buyer’s/Client’s retrieve List of 
+Performance Monitoring Reports **MUST** include the following attributes as 
+applicable: [MEF133.1 R75, R110]
 
-- `creationDate`
 - `description`
 - `id`
-- `state`
 
-**[R101]** In case no items matching the criteria are found, the Seller/Server 
-**MUST** return a valid response with an empty list. 
+**[R91]** In case no items matching the criteria are found, the Seller/Server 
+**MUST** return a valid response with an empty list. [MEF133.1 R111] 
 
- Figure 55 presents entities related to the use case. 
+Figure 43 presents entities related to the use case. 
 
-![Figure 55: Use Case 23](performance/media/useCase23Model.png)
+![Figure 43: Use Case 19](performance/media/useCase19Model.png)
 
-**Figure 55. Use Case 23: Retrieve Performance Report List - Model**
+**Figure 43. Use Case 19: Retrieve Performance Report List - Model**
 
-## 6.24. Use Case 24: Retrieve Performance Measurement Report by Report Identifier
+## 6.20. Use Case 20: Retrieve Performance Monitoring Report by Report Identifier
 
 The Buyer/Client can get detailed information about a Performance Report from
 the Seller/Server by using a `GET /performanceReport/{{id}}` operation. The 
 response payload provides a comprehensive representation of the Performance
 Report and encompass all attributes that the Buyer/Client has provided when
-submitting a Create Performance Report request, together with any attributes
-added by Seller/Server, including the results of performance measurements 
+submitting a Create Performance Report request (or attributes of the 
+Performance Job that generated the report), together with any attributes
+added by the Seller/Server, including the results of performance measurements 
 collection. In case the Performance Report was created by Performance Job, it 
 contains a reference to the Performance Job.
 
@@ -3323,51 +2817,57 @@ of Performance Report. Get List returns the `PerformanceReport_Find` object whic
 a subset of `PerformanceReport` returned by the Get by Identifier operation. A 
 response to a Get by Identifier for a `PerformanceReport` with
 `id=8ae5f9f3-554f-4d93-8314-1630f171da54` would return exactly the same response as
-presented in [section 6.22.3](#6223-create-performance-measurement-report-response).
+presented in [section 6.18.3](#6183-create-performance-monitoring-report-response).
 Specifically, the object returned by the Get by Identifier operation contains a 
-collection of measurement results, either in the form of a URI of a generated 
-file or directly within the returned `PerformanceReport` object. Measurement 
-results are not returned by the Get List operation. 
+collection of measurement results, either in the form of reference to a file,
+or directly within the returned `PerformanceReport` object. Measurement results
+are not returned by the Get List operation.
 
-**[R102]** The Seller/Server MUST support at least one of the methods of retrieving 
-results:[MEF133.1 R80, R97]:
-- payload
+**[R92]** The Seller/Server **MUST** support at least one of the two methods of 
+retrieving results:[MEF133.1 R77, R112]:
 - attachment
+- payload
 
-**[O21]** The Seller/Server **MAY** support multiple methods of retrieving 
-results. [MEF133.1 O18, O21]
+**[O19]** The Seller/Server **MAY** support multiple methods of retrieving 
+results. [MEF133.1 O20]
 
-**[R103]** The Retrieve Results request **MUST** include the following 
-attributes: [MEF133.1 R81, R82, R98, R99] 
-- list of `id`
-- `fileTransferData` in case of retrieving results in attachment
-- `outputFormat`
+**[R93]** The Buyer Retrieve Performance Monitoring Report by Report Identifier
+request **MUST** include the following: [MEF133.1 R76]
+- Performance Report ID
 
-**[R104]** The Seller/Server **MUST** include following attributes in the
+**[R94]** The Retrieve Results in Service Payload request **MUST** include 
+the following attributes in Performance Job Create: [MEF133.1 R78, R113]
+- Report Format = Payload (always JSON format)  
+
+**[R95]** The Retrieve Results in Attachment request **MUST** include 
+the following attributes in Performance Job Create: [MEF133.1 R79, R114]
+- Report Format = Attachment
+- Output Format = JSON/AVRO/CSV/XML
+
+**[R96]** The Seller/Server **MUST** include following attributes in the
 `PerformanceReport` object in the response: 
 
 - `creationDate`
 - `id`
+- `state`
 
-**[R105]** The Seller/Server **MUST** provide all remaining optional attributes 
-if they were previously set by the Buyer or the Seller. 
+**[R97]** The Seller/Server **MUST** provide all remaining attributes if they
+were previously set by the Buyer or the Seller. 
 
-**[R106]** The results regardless of the format MUST contain the Performance 
-Metric results as specified with Performance Job request. [MEF133.1 R84]
+**[R98]** The results regardless of the format **MUST** contain the PM Metric 
+results as specified with PM Job request using the Output Format attribute. 
+[MEF133.1 R80]
 
-**[R107]** In case `id` does not allow finding a `PerformanceReport` in 
+**[R99]** In case `id` does not allow finding a `PerformanceReport` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R108]** The Seller/Server **MUST** provide the specified result in the API 
-payload. [MEF133.1 R101]
+**[R100]** The Seller/Server **MUST** provide the specified result in the API 
+payload. [MEF133.1 R115]
 
-**[R109]** The Seller/Server **MUST** provide the specified results as an 
-attachment. [MEF133.1 R102]
+**[R101]** The Seller/Server **MUST** provide the specified results as an 
+attachment. [MEF133.1 R116]
 
-**[R110]** The Seller/Server **MUST** provide the specified results as an FTP’d 
-file in JSON, AVRO, CSV, or XML format. [MEF133.1 R103]
-
-## 6.25. Use Case 25: Create Performance Measurement Report Complex Query
+## 6.21. Use Case 21: Create Performance Monitoring Report Complex Query
 
 The `PerformanceReport` defines complex structures with multiple levels of 
 nesting, such as `servicePayloadSpecificAttributes`. To facilitate filtering
@@ -3376,32 +2876,33 @@ based on these structures, the API provides an additional endpoint
 defined by the `PerformanceReport` and `PerformanceJob` types and returns 
 a list of Performance Report objects that match the specified filters.
 
-### 6.25.1. Create Performance Measurement Report Complex Query Request
+### 6.21.1. Create Performance Monitoring Report Complex Query Request
 
-Figure 56 depicts the key components of the data model utilized in the Create
+Figure 44 depicts the key components of the data model utilized in the Create
 Performance Report Complex Query request (`POST /performanceReportComplexQuery`) 
 and its corresponding response. The request message model,
 `PerformanceReportComplexQuery_Create`, is a subset of the 
-`PerformanceReportComplexQuery` model and includes only attributes that can or 
-must be specified by the Buyer/Client, representing filtering options. In
-response, the Seller/Server provides a list of `PerformanceReportComplexQuery`
-entities that contain the matched Performance Report objects.
+`PerformanceReportComplexQuery` model and includes only attributes that can be
+specified by the Buyer/Client, representing filtering options. In response, the
+Seller/Server provides a list of `PerformanceReportComplexQuery` entities that
+contain the matched Performance Report objects.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 56: Performance Report Complex Query Key Entities](performance/media/performanceReportComplexQueryModel.png)
+![Figure 44: Performance Report Complex Query Key Entities](performance/media/performanceReportComplexQueryModel.png)
 
-**Figure 56. Performance Report Complex Query Key Entities**
+**Figure 44. Performance Report Complex Query Key Entities**
 
 To send a request the Buyer/Client uses the `createPerformanceReportComplexQuery`
 operation from the API. The snippet below presents an example of a Create 
-Performance Report Complex Query request. It filters for Performance Report
+Performance Report Complex Query request. It searches for Performance Report
 objects that:
 - have `consumingApplicationId` set to `CUS`
 - were created between 2023-06-01 08:00:00 and 2023-06-01 09:00:00
 - `outputFormat` is JSON
-- relate to specified IPVC endpoints
+- relate to specific Service id
+- are in `completed` state
 
 **`Performance Report Complex Query` Create Request**
 
@@ -3411,26 +2912,19 @@ objects that:
   "creationDate.gt": "2023-06-01T08:00:00.000Z",
   "creationDate.lt": "2023-06-01T09:00:00.000Z",
   "outputFormat": "json",
-  "servicePayloadSpecificAttributes": {
-    "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-    "interface": {
-      "ipvcEndpoint": [
-        "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-        "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-      ],
-      "name": "slsRpPairTest1",
-      "description": "Exemplary performance monitoring service pair",
-      "cloudService": true
-    }
+  "monitoredObjectId": {
+    "@type": "Service",
+    "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+    "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
   },
   "state": "completed"
 }
 ```
 
-### 6.25.2. Create Performance Monitoring Report Complex Query Response
+### 6.21.2. Create Performance Monitoring Report Complex Query Response
 
 Entities used for providing a response to Create Performance Report Complex 
-Query requests are presented in Figure 56. The Seller/Server responds with a list 
+Query requests are presented in Figure 44. The Seller/Server responds with a list 
 of `PerformanceReportComplexQuery` objects, which represent matched Performance
 Reports. 
 
@@ -3445,40 +2939,40 @@ The following snippet presents the Seller/Server response.
 ```json
 [
   {
-    "consumingApplicationId": "CUS",
     "creationDate": "2023-06-01T08:02:01.370Z",
     "description": "Exemplary Create Performance Report request",
-    "granularity": "1 hour",
-    "outputFormat": "json",
-    "performanceReport": {
-      "id": "8ae5f9f3-554f-4d93-8314-1630f171da54"
+    "lastModifiedDate": "2023-06-01T08:02:01.370Z",
+    "performanceJob": {
+      "@type": "PerformanceJobValue",
+      "consumingApplicationId": "CUS",
+      "granularity": "1 hour",
+      "monitoredObjectId": {
+        "@type": "Service",
+        "serviceIdFrom": "d6c998f0-c723-4754-81fe-ad3ef7c15683", 
+        "serviceIdTo": "e02ee8c7-b6ec-4ab7-8307-b1c4cdba2891"
+      },
+      "outputFormat": "json",
+      "producingApplicationId": "SOF",
+      "resultFormat": "payload",
+      "servicePayloadSpecificAttributes": {
+        "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
+      }
     },
-    "producingApplicationId": "SOF",
+    "performanceReport": {
+      "performanceReportId": "8ae5f9f3-554f-4d93-8314-1630f171da54"
+    },
     "reportingTimeframe": {
       "reportingStartDate": "2023-06-01T00:00:00.00",
       "reportingEndDate": "2023-06-01T01:00:00.00"
-    },
-    "resultFormat": "payload",
-    "servicePayloadSpecificAttributes": {
-      "@type": "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all",
-      "interface": {
-        "ipvcEndpoint": [
-          "6e4e338a-8105-481e-8bf6-b3ca768a4b89",
-          "38bfa4c6-48a3-46e9-8746-bcba59f3cbc4"
-        ],
-        "name": "slsRpPairTest1",
-        "description": "Exemplary performance monitoring service pair",
-        "cloudService": true
-      }
     },
     "state": "completed"
   }
 ]
 ```
 
-## 6.26. Use Case 26: Retrieve Tracking Record List
+## 6.22. Use Case 22: Retrieve Tracking Record List
 
-Tracking Records allow the tracking of actions performed on main entities 
+Tracking Records provide history of actions performed on main entities 
 described in this document:
 - Performance Monitoring Profile
 - Performance Monitoring Job
@@ -3492,16 +2986,15 @@ entities can be established through the `relatedObjectId` attribute of the
 The Buyer/Client can retrieve a list of `TrackingRecord` by using a 
 `GET /trackingRecord` operation with desired filtering criteria.
 
-**[O22]** The Buyer/Client Retrieve List of Tracking Record request **MAY** 
+**[O20]** The Buyer/Client Retrieve List of Tracking Record request **MAY** 
 contain none or more of the following attributes: 
-
 - `relatedObjectId`
 - `creationDate.gt`
 - `creationDate.lt`
 - `user`
 
 ```
-https://serverRoot/mefApi/legato/performanceMonitoring/v2/trackingRecord?relatedObjectId=755e55e2-72b0-4e3b-af00-693e3beac691&limit=10&offset=0
+https://serverRoot/mefApi/legato/performanceMonitoring/v3/trackingRecord?relatedObjectId=755e55e2-72b0-4e3b-af00-693e3beac691&limit=10&offset=0
 ```
 
 The example above shows a Buyer/Client's request to get all Tracking Record 
@@ -3513,39 +3006,41 @@ The correct response (HTTP code `200`) in the response body contains a list of
 Buyer/Client has to query a specific `TrackingRecord` by its `id`. Details 
 related to pagination are described in [section 7.1.2](#712-response-pagination)
 
-**[R111]** The Seller/Server **MUST** include following attributes (if set) in 
+**[R102]** The Seller/Server **MUST** include following attributes (if set) in 
 the `TrackingRecord_Find` object in the response: 
 
 - `creationDate`
+- `id`
 - `relatedObjectId`
 
-**[R112]** Optionally The Seller/Server **MAY** return : 
+**[R103]** Optionally The Seller/Server **MAY** return : 
 - `description`
 - `user`
 
-**[R113]** In case no items matching the criteria are found, the Seller/Server 
+**[R104]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 57 presents the main Tracking Record entities. 
+Figure 45 presents the main Tracking Record entities. 
 
-![Figure 57: Tracking Record Model](performance/media/trackingRecordModel.png)
+![Figure 45: Tracking Record Model](performance/media/trackingRecordModel.png)
 
-**Figure 57. Tracking Record Model**
+**Figure 45. Tracking Record Model**
 
-## 6.27. Use Case 27: Retrieve Tracking Record by Identifier
+## 6.23. Use Case 23: Retrieve Tracking Record by Identifier
 
 The Buyer/Client can get detailed information about the Tracking Record from the
-Seller/Server by using a `GET /trackingRecord/{{id}}` operation. The payload 
-returned in the response is a full representation of the Tracking Record. 
+Seller/Server by using a `retrieveTrackingRecord` operation 
+(`GET /trackingRecord/{{id}}`). The payload returned in the response is a full 
+representation of the Tracking Record. 
 
 Get List and Get by Identifier operations return different representations
-of Tracking Record. Get List returns the `TrackingRecord_Find` object which is a 
-subset of `TrackingRecord` returned by the Get by Identifier operation. 
+of the Tracking Record. Get List returns the `TrackingRecord_Find` object which
+is a subset of `TrackingRecord` returned by the Get by Identifier operation.
 
-**[R114]** In case `id` does not allow finding a `TrackingRecord` in 
+**[R105]** In case `id` does not allow finding a `TrackingRecord` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned.
 
-**[R115]** The Seller/Server **MUST** include following attributes in the
+**[R106]** The Seller/Server **MUST** include following attributes in the
 `TrackingRecord` object in the response: 
 
 - `creationDate`
@@ -3555,15 +3050,15 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 The full list of attributes of the Tracking Record is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-## 6.28. Use Case 28: Register for Notifications
+## 6.24. Use Case 24: Register for Notifications
 
-The Buyer/Client can track the lifecycle of the Performance Monitoring
-objects by subscribing to notifications. An exemplary use case for exchanging
-notifications is presented in Figure 58. 
+The Buyer/Client can track the lifecycle of the PM API entities by subscribing
+to notifications. An exemplary use case for exchanging notifications is 
+presented in Figure 46. 
 
-![Figure 58: Performance Monitoring Notification Example](performance/media/useCase1Notification.png)
+![Figure 46: Performance Monitoring Notification Example](performance/media/useCase6Notification.png)
 
-**Figure 58. Performance Monitoring Notification Example**
+**Figure 46. Performance Monitoring Notification Example**
 
 The Seller/Server communicates with the Buyer/Client with Notifications provided 
 that:
@@ -3572,17 +3067,17 @@ that:
 - Buyer/Client has registered to receive notifications from the Seller/Server
 
 To register for notifications the Buyer/Client uses the `registerListener` 
-operation from the API: `POST /hub`. The request contains only 2 attributes:
+operation from the API: `POST /hub`. The request contains only two attributes:
 
 - `callback` - mandatory, to provide the callback address the events will be
-  notified to,
+  sent to,
 - `query` - optional, to provide the required types of event.
 
-Figure 59 shows all entities involved in the Notification use cases.
+Figure 47 shows all entities involved in the Notification use cases.
 
-![Figure 59: Performance Monitoring Notification Data Model](performance/media/performanceMonitoringNotificationModel.png)
+![Figure 47: Performance Monitoring Notification Data Model](performance/media/performanceMonitoringNotificationModel.png)
 
-**Figure 59. Performance Monitoring Notification Data Model**
+**Figure 47. Performance Monitoring Notification Data Model**
 
 By using a request in the following snippet, the Buyer/Client subscribes for 
 notification of all types of events. Those are:
@@ -3594,10 +3089,7 @@ notification of all types of events. Those are:
 - `performanceJobReportPreparationErrorEvent`
 - `cancelPerformanceJobStateChangeEvent`
 - `modifyPerformanceJobStateChangeEvent`
-- `resumePerformanceJobStateChangeEvent`
-- `suspendPerformanceJobStateChangeEvent`
 - `performanceProfileCreateEvent`
-- `performanceProfileStateChangeEvent`
 - `performanceProfileAttributeValueChangeEvent`
 - `performanceProfileDeleteEvent`
 - `performanceReportCreateEvent`
@@ -3609,20 +3101,20 @@ notification of all types of events. Those are:
 }
 ```
 
-**[O23]** The Seller/Server **MAY** support subscription to Performance Profile 
+**[O21]** The Seller/Server **MAY** support subscription to Performance Profile 
+Notifications Use Case. [MEF133.1 O7]
+
+**[O22]** The Buyer/Client **MAY** support subscription to Performance Profile 
 Notifications Use Case. [MEF133.1 O8]
 
-**[O24]** The Buyer/Client **MAY** support subscription to Performance Profile 
-Notifications Use Case. [MEF133.1 O9]
+**[O23]** The Seller/Server **MAY** support unsubscribing from Performance 
+Profile Notifications Use Case. [MEF133.1 O11]
 
-**[O25]** The Seller/Server **MAY** support unsubscribing from Performance 
-Profile Notifications Use Case. [MEF133.1 O12]
-
-**[O26]** The Buyer/Client **MAY** support unsubscribing from Performance Profile
-Notifications Use Case. [MEF133.1 O13]
+**[O24]** The Buyer/Client **MAY** support unsubscribing from Performance Profile
+Notifications Use Case. [MEF133.1 O12]
 
 If the Buyer/Client wishes to receive only notifications of a certain type, a 
-`query` must be added:
+`query` parameter must be added to the request:
 
 ```json
 {
@@ -3631,12 +3123,13 @@ If the Buyer/Client wishes to receive only notifications of a certain type, a
 }
 ```
 
-**[R116]** The Buyer/Client’s Subscribe to Performance Job Notifications request 
-**MUST** include: [MEF133.1 R73]
+**[R107]** The Buyer/Client’s Subscribe to Performance Job Notifications request 
+**MUST** include: [MEF133.1 R69]
 - Notification target information
+- List of notification types
 
-If the Buyer/Client wishes to subscribe to 2 different types of events, there 
-are 2 possible syntax variants [[TMF630](#8-references)]:
+If the Buyer/Client wishes to subscribe to two different types of events, there 
+are to possible syntax variants [[TMF630](#8-references)]:
 
 ```
 eventType=performanceJobStateChangeEvent,performanceJobReportReadyEvent
@@ -3664,37 +3157,39 @@ subscription to the message that must be further used for unsubscribing.
 }
 ```
 
-Example of a final address that the Notifications will be sent to (for
+Example of a final address that the Notifications to which the Buyer/Client 
+subcribed with request in previous snippets will be sent to (for
 `performanceJobStateChangeEvent`):
 
-- `https://bus.com/listenerEndpoint/mefApi/legato/performanceNotification/v2/listener/performanceJobStateChangeEvent`
+- `https://bus.com/listenerEndpoint/mefApi/legato/performanceNotification/v3/listener/performanceJobStateChangeEvent`
 
-## 6.29. Use Case 29: Send Notification
+## 6.25. Use Case 25: Send Notification
 
 Notifications are used to asynchronously inform the Buyer/Client about the 
 respective objects and attributes changes.
 
-Figure 60 presents notifications produced by Seller/Server for the whole lifecycle
+Figure 48 presents notifications produced by Seller/Server during the lifecycle
 of `PerformanceJob` assuming that Buyer/Client subscribed to all event types.
 
-![Figure 60: Performance Job lifecycle](performance/media/notificationsForPerformanceJob.png)
+![Figure 48: Performance Job lifecycle](performance/media/notificationsForPerformanceJob.png)
 
-**Figure 60. Performance Job lifecycle with all Notifications**
+**Figure 48. Performance Job lifecycle with all Notifications**
 
 After a successful Notification subscription, the Seller/Server sends a 
 `PerformanceJob` create request. The SOF responds with `PerformanceJob` in 
 an `acknowledged` state. Creation of `PerformanceJob` is notified with a
-`performanceJobCreateEvent`. When the validation is successful and the Performance 
-Job is not immediate, it moves to `scheduled` and a 
-`performanceJobStateChangeEvent` is sent. 
-When the scheduled start time is reached, `PerformanceJob` moves to `inProgress`
-status and the `performanceJobStateChangeEvent` is sent. 
+`performanceJobCreateEvent`. When the validation is successful and the 
+Performance Job is not immediate, it moves to `scheduled` and a 
+`performanceJobStateChangeEvent` with state=`scheduled` is sent. When the 
+scheduled start time is reached, `PerformanceJob` moves to `inProgress` status
+and the `performanceJobStateChangeEvent` with state=`inProgress` is sent. 
 Performance Job periodically produces a Performance Report. This is when the 
-`performanceJobReportReadyEvent` is sent. Additional actions, like suspension or
-modification trigger `performanceJobStateChangeEvent`. In addition, in the case of 
-`PerformanceJob` modification, Seller/Server produces 
-`performanceJobAttributeValueChangeEvent` notification. When report generation 
-fails, `performanceJobReportPreparationErrorEvent` is generated. 
+`performanceJobReportReadyEvent` including id of generated report is sent. 
+Further actions, like suspension or modification trigger `performanceJobStateChangeEvent`. 
+In addition, in the case of `PerformanceJob` modification, Seller/Server 
+produces `performanceJobAttributeValueChangeEvent` notification. When report
+generation fails, `performanceJobReportPreparationErrorEvent` is generated
+providing failure reason. 
 
 The following snippets present an example of `performanceJobCreateEvent` and 
 `performanceJobReportReadyEvent`.
@@ -3705,7 +3200,7 @@ The following snippets present an example of `performanceJobCreateEvent` and
   "eventTime": "2021-06-03T15:56:08.559Z",
   "eventType": "performanceJobCreateEvent",
   "event": {
-    "id": "00000000-4444-5555-6666-000000000987"
+    "id": "e1c4565f-8678-47d3-80a5-496597a8abe4"
   }
 }
 ```
@@ -3716,7 +3211,7 @@ The following snippets present an example of `performanceJobCreateEvent` and
   "eventType": "performanceJobReportReadyEvent",
   "eventTime": "2023-01-15T20:45:24.796Z",
   "event": {
-    "id": "00000000-3333-4444-5555-000000004567",
+    "id": "e1c4565f-8678-47d3-80a5-496597a8abe4",
     "reportId": "b54e7020-0bca-11ee-be56-0242ac120002"
   }
 }
@@ -3729,28 +3224,28 @@ Buyer/Client needs to query it later by `id` to get details.
 attribute changes its value. There are no status change notifications
 sent upon Performance Job creation.
 
-**[O27]** The Seller/Server **MAY** support Performance Profile Notifications Use
+**[O25]** The Seller/Server **MAY** support Performance Profile Notifications Use
+Case. [MEF133.1 O9]
+
+**[O26]** The Buyer/Client **MAY** support Performance Profile Notifications Use 
 Case. [MEF133.1 O10]
 
-**[O28]** The Buyer/Client **MAY** support Performance Profile Notifications Use 
-Case. [MEF133.1 O11]
-
-**[R117]** If the Buyer/Client registered for Performance Notifications, the 
+**[R108]** If the Buyer/Client registered for Performance Notifications, the 
 Seller/Server **MUST** notify the Buyer/Client when Performance Job results are 
-available. [MEF133.1 R54, R89]
+available. [MEF133.1 R50, R104]
 
-**[R118]** The Seller/Server **MUST NOT** send Notifications to Buyer/Client 
-that have not registered for them. [MEF133.1 R75]
+**[R109]** The Seller/Server **MUST NOT** send Notifications to Buyer/Client 
+that have not registered for them. [MEF133.1 R71]
 
-**[R119]** The Seller/Server **MUST** send Notifications to the Buyer/Client that 
-have registered for them. [MEF133.1 R74]
+**[R110]** The Seller/Server **MUST** send Notifications to the Buyer/Client that 
+have registered for them. [MEF133.1 R70]
 
-**[R120]** An event triggered by the Performance Report creation
+**[R111]** An event triggered by the Performance Report creation
 (`performanceJobReportReadyEvent`) **MUST** additionally contain the identifier
-of the Report. [MEF133.1 R76]
+of the Report. [MEF133.1 R72]
 
-**[R121]** The Seller/Server **MUST** include the following attributes in the 
-Performance Job State Change Notification: [MEF133.1 R76]
+**[R112]** The Seller/Server **MUST** include the following attributes in the 
+Performance Job State Change Notification: [MEF133.1 R72]
 - Job Identifier
 - Performance Job State
 
@@ -3775,9 +3270,9 @@ Implementations can use HTTP error codes not specified in this standard in
 compliance with rules defined in RFC 7231 [[RFC7231](#8-references)]. In such a
 case, the error message body structure might be aligned with the `Error`.
 
-![Figure 61: Error response data model](performance/media/errorEntities.png)
+![Figure 49: Error response data model](performance/media/errorEntities.png)
 
-**Figure 61. Data model types to represent an erroneous response**
+**Figure 49. Data model types to represent an erroneous response**
 
 #### 7.1.1.1. Type Error
 
@@ -3842,30 +3337,6 @@ Inherits from:
 - invalidBody: The request has an invalid body.
 
 
-<table id="T_Error400Code">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>missingQueryParameter</td>
-            <td>MISSING_QUERY_PARAMETER</td>
-        </tr><tr>
-            <td>missingQueryValue</td>
-            <td>MISSING_QUERY_VALUE</td>
-        </tr><tr>
-            <td>invalidQuery</td>
-            <td>INVALID_QUERY</td>
-        </tr><tr>
-            <td>invalidBody</td>
-            <td>INVALID_BODY</td>
-        </tr>
-    </tbody>
-</table>
-
 #### 7.1.1.4. Type Error401
 
 **Description:** 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
@@ -3896,24 +3367,6 @@ Inherits from:
 - missingCredentials: No credentials provided
 - invalidCredentials: Provided credentials are invalid or expired.
 
-
-<table id="T_Error401Code">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>missingCredentials</td>
-            <td>MISSING_CREDENTIALS</td>
-        </tr><tr>
-            <td>invalidCredentials</td>
-            <td>INVALID_CREDENTIALS</td>
-        </tr>
-    </tbody>
-</table>
 
 #### 7.1.1.6. Type Error403
 
@@ -3946,27 +3399,6 @@ Inherits from:
 - forbiddenRequester: Forbidden requester
 - tooManyUsers: Too many users.
 
-
-<table id="T_Error403Code">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>accessDenied</td>
-            <td>ACCESS_DENIED</td>
-        </tr><tr>
-            <td>forbiddenRequester</td>
-            <td>FORBIDDEN_REQUESTER</td>
-        </tr><tr>
-            <td>tooManyUsers</td>
-            <td>TOO_MANY_USERS</td>
-        </tr>
-    </tbody>
-</table>
 
 #### 7.1.1.8. Type Error404
 
@@ -4096,48 +3528,6 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
   provided in a reason).
 
 
-<table id="T_Error422Code">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>missingProperty</td>
-            <td>MISSING_PROPERTY</td>
-        </tr><tr>
-            <td>invalidValue</td>
-            <td>INVALID_VALUE</td>
-        </tr><tr>
-            <td>invalidFormat</td>
-            <td>INVALID_FORMAT</td>
-        </tr><tr>
-            <td>referenceNotFound</td>
-            <td>REFERENCE_NOT_FOUND</td>
-        </tr><tr>
-            <td>unexpectedProperty</td>
-            <td>UNEXPECTED_PROPERTY</td>
-        </tr><tr>
-            <td>tooLargeDataset</td>
-            <td>TOO_LARGE_DATASET</td>
-        </tr><tr>
-            <td>tooManyRecords</td>
-            <td>TOO_MANY_RECORDS</td>
-        </tr><tr>
-            <td>tooManyRequests</td>
-            <td>TOO_MANY_REQUESTS</td>
-        </tr><tr>
-            <td>performanceProfileInUse</td>
-            <td>PERFORMANCE_PROFILE_IN_USE</td>
-        </tr><tr>
-            <td>otherIssue</td>
-            <td>OTHER_ISSUE</td>
-        </tr>
-    </tbody>
-</table>
-
 #### 7.1.1.13. Type Error500
 
 **Description:** Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
@@ -4207,20 +3597,25 @@ can indicate that there are additional results available using:
 - `X-Total-Count` header attribute with the total number of available results
 - `X-Pagination-Throttled` header set to `true`
 
-**[R122]** Seller **MUST** use either `X-Total-Count` or
+**[R113]** Seller **MUST** use either `X-Total-Count` or
 `X-Pagination-Throttled` to indicate that the page was truncated and additional
 results are available.
 
 ## 7.2. Management API Data model
 
-Figure 62 presents the whole Performance Monitoring data model. The data
-types, requirements related to them, and mapping to MEF W133.1 specification are
+Figure 50 presents the full Performance Monitoring data model. The data types,
+requirements related to them, and mapping to MEF W133.1 specification are
 discussed later in this section.
 
-![Figure 62: Performance Monitoring Data Model](performance/media/performanceMonitoringDataModel.png)
-![Figure 62: Performance Monitoring Data Model Part 2](performance/media/performanceMonitoringDataModelPart2.png)
+![Figure 50: Performance Monitoring Data Model Part 1a](performance/media/performanceMonitoringDataModelPart1a.png)
+![Figure 50: Performance Monitoring Data Model Part 1b](performance/media/performanceMonitoringDataModelPart1b.png)
+![Figure 50: Performance Monitoring Data Model Part 2](performance/media/performanceMonitoringDataModelPart2.png)
+![Figure 50: Performance Monitoring Data Model Part 3](performance/media/performanceMonitoringDataModelPart3.png)
+![Figure 50: Performance Monitoring Data Model Part 4](performance/media/performanceMonitoringDataModelPart4.png)
+![Figure 50: Performance Monitoring Data Model Part 5](performance/media/performanceMonitoringDataModelPart5.png)
+![Figure 50: Performance Monitoring Data Model Part 6](performance/media/performanceMonitoringDataModelPart6.png)
 
-**Figure 62. Performance Monitoring Data Model**
+**Figure 50. Performance Monitoring Data Model**
 
 ### 7.2.1. PerformanceProfile
 
@@ -4238,19 +3633,14 @@ discussed later in this section.
     </thead>
     <tbody>
         <tr>
-            <td>buyerProfileId</td>
-            <td>string</td>
-            <td>Identifier of the profile understood and assigned by the Buyer/Client.</td>
-            <td>Buyer PM Profile ID</td>
-        </tr><tr>
             <td>description</td>
             <td>string</td>
-            <td>A free-text description of the Performance Profile</td>
+            <td>A free-text description of the Performance Profile.</td>
             <td>Description</td>
         </tr><tr>
-            <td>granularity</td>
+            <td>granularity*</td>
             <td><a href="#T_Interval">Interval</a></td>
-            <td>Sampling rate of the collection or production of performance indicators</td>
+            <td>Sampling rate of the collection or production of performance indicators.</td>
             <td>Granularity</td>
         </tr><tr>
             <td>jobPriority</td>
@@ -4260,23 +3650,23 @@ discussed later in this section.
         </tr><tr>
             <td>jobType*</td>
             <td><a href="#T_JobType">JobType</a></td>
-            <td></td>
+            <td>The type of PM Job.</td>
             <td>PM Job Type</td>
         </tr><tr>
             <td>outputFormat*</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
-            <td>reportingPeriod</td>
+            <td>reportingPeriod*</td>
             <td><a href="#T_Interval">Interval</a></td>
-            <td>Defines the interval for the report generation</td>
+            <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
             <td>resultFormat*</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
-            <td>Not present</td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
+            <td>Result Format</td>
         </tr>
     </tbody>
 </table>
@@ -4326,14 +3716,9 @@ Inherits from:
             <td>Date when the profile was last modified.</td>
             <td>Last Time Modified </td>
         </tr><tr>
-            <td>rejectionReason</td>
-            <td>string</td>
-            <td>Reason in case creation request was rejected.</td>
-            <td>Not present</td>
-        </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceProfileStateType">PerformanceProfileStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Profile.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4353,11 +3738,6 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>buyerProfileId</td>
-            <td>string</td>
-            <td>Identifier of the profile understood and assigned by the Buyer/Client.</td>
-            <td>Buyer PM Profile ID</td>
-        </tr><tr>
             <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when the profile was created.</td>
@@ -4368,7 +3748,7 @@ Inherits from:
             <td>A free-text description of the Performance Profile</td>
             <td>Description</td>
         </tr><tr>
-            <td>granularity</td>
+            <td>granularity*</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Sampling rate of the collection or production of performance indicators</td>
             <td>Granularity</td>
@@ -4385,17 +3765,17 @@ Inherits from:
         </tr><tr>
             <td>jobType*</td>
             <td><a href="#T_JobType">JobType</a></td>
-            <td></td>
+            <td>The type of PM Job.</td>
             <td>PM Job Type</td>
         </tr><tr>
-            <td>reportingPeriod</td>
+            <td>reportingPeriod*</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobStateType">PerformanceJobStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Profile.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4415,11 +3795,6 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>buyerProfileId</td>
-            <td>string</td>
-            <td>Identifier of the profile understood and assigned by the Buyer/Client.</td>
-            <td>Buyer PM Profile ID</td>
-        </tr><tr>
             <td>description</td>
             <td>string</td>
             <td>A free-text description of the Performance Profile</td>
@@ -4437,7 +3812,7 @@ Inherits from:
         </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>reportingPeriod</td>
@@ -4447,7 +3822,7 @@ Inherits from:
         </tr><tr>
             <td>resultFormat</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -4471,12 +3846,12 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>href</td>
+            <td>performanceProfileHref</td>
             <td>string</td>
             <td>Hyperlink to the referenced Performance Profile</td>
             <td>Not present</td>
         </tr><tr>
-            <td>id*</td>
+            <td>performanceProfileId*</td>
             <td>string</td>
             <td>Identifier of the referenced Performance Profile</td>
             <td>PM Profile ID</td>
@@ -4510,37 +3885,10 @@ Inherits from:
 
 **Description:** The state of the Performance Monitoring Profile.
 
-| state          | MEF W133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-| -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `acknowledged` | Acknowledged   | A Create Performance Monitoring Profile request has been received by the Server and has passed basic validation. Performance Monitoring Profile Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the Performance Monitoring Profile moves to the Active state. If not all attributes are validated, the request moves to the Rejected state. |
-| `active`       | Active         | A Performance Monitoring Profile is active and can be used as a template for Performance Monitoring Job creation.                                                                                                                                                                                                                                                                                                                                                              |
-| `deleted`      | Deleted        | A Performance Monitoring Profile that does not have any Performance Monitoring Jobs attached is deleted.                                                                                                                                                                                                                                                                                                                                                                       |
-| `rejected`     | Rejected       | A Create Performance Monitoring Profile request fails validation and is rejected with error indications by the Server.                                                                                                                                                                                                                                                                                                                                                                 |
-
-
-<table id="T_PerformanceProfileStateType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>acknowledged</td>
-            <td>ACKNOWLEDGED</td>
-        </tr><tr>
-            <td>active</td>
-            <td>ACTIVE</td>
-        </tr><tr>
-            <td>deleted</td>
-            <td>DELETED</td>
-        </tr><tr>
-            <td>rejected</td>
-            <td>REJECTED</td>
-        </tr>
-    </tbody>
-</table>
+| state          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `active`       | Active         | A Create Performance Monitoring Profile request has been received by the Server and has passed basic validation. Performance Monitoring Profile has been created by the Seller and allocated a unique `id`. |
+| `deleted`      | Deleted        | A Performance Monitoring Profile that does not have any Performance Monitoring Jobs attached is deleted.                                                                                                    |
 
 #### 7.2.1.9. Type PerformanceProfileValue
 
@@ -4560,7 +3908,7 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>granularity</td>
+            <td>granularity*</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Sampling rate of the collection or production of performance indicators</td>
             <td>Granularity</td>
@@ -4572,22 +3920,22 @@ Inherits from:
         </tr><tr>
             <td>jobType*</td>
             <td><a href="#T_JobType">JobType</a></td>
-            <td></td>
+            <td>The type of PM Job.</td>
             <td>PM Job Type</td>
         </tr><tr>
             <td>outputFormat*</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
-            <td>reportingPeriod</td>
+            <td>reportingPeriod*</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
             <td>resultFormat*</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -4624,14 +3972,14 @@ Inherits from:
             <td>A free-text description of the Performance Job</td>
             <td>Description</td>
         </tr><tr>
-            <td>fileTransferData</td>
-            <td><a href="#T_FileTransferData">FileTransferData</a></td>
-            <td></td>
-            <td>File Transfer Data</td>
+            <td>monitoredObjectId*</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td>Service ID/Enity ID</td>
         </tr><tr>
             <td>performanceProfile*</td>
             <td><a href="#T_PerformanceProfileRefOrValue">PerformanceProfileRefOrValue</a></td>
-            <td></td>
+            <td>Defines the reference to Performance Monitoring Profile or defines values from PerformanceProfile type.</td>
             <td>PM Profile ID</td>
         </tr><tr>
             <td>producingApplicationId</td>
@@ -4639,14 +3987,14 @@ Inherits from:
             <td>Identifier of producing application</td>
             <td>Producing Application Identifier</td>
         </tr><tr>
-            <td>scheduleDefinition</td>
+            <td>scheduleDefinition*</td>
             <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td></td>
+            <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
             <td>servicePayloadSpecificAttributes*</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr>
     </tbody>
@@ -4704,7 +4052,7 @@ Inherits from:
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobStateType">PerformanceJobStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4749,9 +4097,14 @@ Inherits from:
             <td>Unique identifier</td>
             <td>PM Job Identifier</td>
         </tr><tr>
+            <td>monitoredObjectId*</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td></td>
+        </tr><tr>
             <td>performanceProfile*</td>
             <td><a href="#T_PerformanceProfileRefOrValue">PerformanceProfileRefOrValue</a></td>
-            <td></td>
+            <td>Defines the reference to Performance Monitoring Profile or defines values from PerformanceProfile type.</td>
             <td>PM Profile ID</td>
         </tr><tr>
             <td>producingApplicationId</td>
@@ -4759,14 +4112,14 @@ Inherits from:
             <td>Identifier of producing application</td>
             <td>Producing Application Identifier</td>
         </tr><tr>
-            <td>scheduleDefinition</td>
+            <td>scheduleDefinition*</td>
             <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td></td>
+            <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobStateType">PerformanceJobStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4790,11 +4143,6 @@ Inherits from:
             <td>string</td>
             <td>An optional attribute that allows the Buyer/Client to provide additional detail to the Seller/Server on the reason for cancelling Performance Job.</td>
             <td>Not present</td>
-        </tr><tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
         </tr>
     </tbody>
 </table>
@@ -4806,9 +4154,28 @@ Inherits from:
 Inherits from:
 - <a href="#T_CancelPerformanceJob_Common">CancelPerformanceJob_Common</a>
 
+<table id="T_CancelPerformanceJob_Create">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>performanceJobId*</td>
+            <td>string</td>
+            <td>Identifer of Performance Monitoring Job that is a subject of CancelPerformanceJob.</td>
+            <td>PM Job Identifier</td>
+        </tr>
+    </tbody>
+</table>
+
 #### 7.2.2.7. Type CancelPerformanceJob
 
-**Description:** Request for cancellation of an existing Performance job
+**Description:** Request for cancellation of an existing Performance Job
 
 Inherits from:
 - <a href="#T_CancelPerformanceJob_Common">CancelPerformanceJob_Common</a>
@@ -4829,7 +4196,7 @@ Inherits from:
             <td>If the Cancel Performance Job request is denied by the  Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Cancel Performance Job was created.</td>
             <td>Not present</td>
@@ -4844,9 +4211,14 @@ Inherits from:
             <td>Unique identifier for the Cancel Performance Job that is generated by the Seller/Server when the Cancel Performance Job request  &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
             <td>Not present</td>
         </tr><tr>
+            <td>performanceJob*</td>
+            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
+            <td>A reference to a Performance Job resource.</td>
+            <td>PM Job Identifier</td>
+        </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
+            <td>The state of the process related to the Performance Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4866,7 +4238,7 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Cancel Performance Job was created.</td>
             <td>Not present</td>
@@ -4874,16 +4246,16 @@ Inherits from:
             <td>id*</td>
             <td>string</td>
             <td>Unique identifier for the Cancel Performance Job that is generated by the Seller/Server when the Cancel Performance Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td></td>
+            <td>Not present</td>
         </tr><tr>
             <td>performanceJob*</td>
             <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
+            <td>A reference to a Performance Job resource.</td>
             <td>PM Job Identifier</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
+            <td>The state of the process related to the Performance Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -4918,24 +4290,16 @@ Inherits from:
             <td>A free-text description of the Performance Job</td>
             <td>Description</td>
         </tr><tr>
-            <td>fileTransferData</td>
-            <td><a href="#T_FileTransferData">FileTransferData</a></td>
-            <td></td>
-            <td>File Transfer Data</td>
-        </tr><tr>
             <td>modificationReason</td>
             <td>string</td>
             <td>An optional attribute that allows the Buyer/Client to provide additional detail to the Seller/Server on the reason for modifying Performance Job.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
             <td>performanceProfile</td>
-            <td><a href="#T_ModifyPerformanceJob_ProfileValue">ModifyPerformanceJob_ProfileValue</a></td>
-            <td></td>
+            <td><a href="#T_ModifyPerformanceJob_PerformanceProfileValue">ModifyPerformanceJob_PerformanceProfileValue</a></td>
+            <td>Direct assignment of values defined by PerformanceProfile type to 
+            PerformanceJob object. This class is used for Performance Job 
+            modification to update attributes defined by PerformanceProfile.</td>
             <td>PM Profile ID</td>
         </tr><tr>
             <td>producingApplicationId</td>
@@ -4945,12 +4309,12 @@ Inherits from:
         </tr><tr>
             <td>scheduleDefinition</td>
             <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td></td>
+            <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
             <td>servicePayloadSpecificAttributes</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr>
     </tbody>
@@ -4962,6 +4326,25 @@ Inherits from:
 
 Inherits from:
 - <a href="#T_ModifyPerformanceJob_Common">ModifyPerformanceJob_Common</a>
+
+<table id="T_ModifyPerformanceJob_Create">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>performanceJobId</td>
+            <td>string</td>
+            <td>Identifer of Performance Monitoring Job that is a subject of ModifyPerformanceJob.</td>
+            <td>PM Job Identifier</td>
+        </tr>
+    </tbody>
+</table>
 
 #### 7.2.2.11. Type ModifyPerformanceJob
 
@@ -4981,7 +4364,7 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Modify Performance Job was created.</td>
             <td>Not present</td>
@@ -5001,9 +4384,14 @@ Inherits from:
             <td>If the Modify Performance Job request is denied by the  Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
             <td>Not present</td>
         </tr><tr>
+            <td>performanceJob*</td>
+            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
+            <td>A reference to a Performance Job resource.</td>
+            <td>PM Job Identifier</td>
+        </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
+            <td>The state of the process related to the Performance Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5023,7 +4411,7 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Modify Performance Job was created.</td>
             <td>Not present</td>
@@ -5035,21 +4423,21 @@ Inherits from:
         </tr><tr>
             <td>performanceJob*</td>
             <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Profile ID</td>
+            <td>A reference to a Performance Job resource.</td>
+            <td>PM Job Identifier</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
+            <td>The state of the process related to the Performance Job.</td>
             <td>State</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.2.13. Type ModifyPerformanceJob_ProfileValue
+#### 7.2.2.13. Type ModifyPerformanceJob_PerformanceProfileValue
 
-**Description:** Direct assignment of values defined by PerformanceProfile type to PerformanceJob object. Necessary when PerformanceJob is created without reference to PerformanceProfile.
-<table id="T_ModifyPerformanceJob_ProfileValue">
+**Description:** Direct assignment of values defined by PerformanceProfile type to PerformanceJob object. This class is used for Performance Job modification to update attributes defined by PerformanceProfile.
+<table id="T_ModifyPerformanceJob_PerformanceProfileValue">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -5072,17 +4460,17 @@ Inherits from:
         </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>reportingPeriod</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Defines the interval for the report generation</td>
-            <td>Reporting Peri-od</td>
+            <td>Reporting Period</td>
         </tr><tr>
             <td>resultFormat</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
             <td>Result Format</td>
         </tr>
     </tbody>
@@ -5134,12 +4522,32 @@ Inherits from:
         </tr><tr>
             <td>jobType</td>
             <td><a href="#T_JobType">JobType</a></td>
-            <td></td>
+            <td>The type of PM Job.</td>
             <td>PM Job Type</td>
         </tr><tr>
-            <td>performanceProfile</td>
-            <td><a href="#T_PerformanceProfileRef">PerformanceProfileRef</a></td>
-            <td></td>
+            <td>lastModifiedDate.gt</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified - greater than.</td>
+            <td>Last Time Modified</td>
+        </tr><tr>
+            <td>lastModifiedDate.lt</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified - lower than.</td>
+            <td>Last Time Modified</td>
+        </tr><tr>
+            <td>monitoredObjectId</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td>Service ID/Entity ID</td>
+        </tr><tr>
+            <td>outputFormat</td>
+            <td><a href="#T_OutputFormat">OutputFormat</a></td>
+            <td>List of possible output formats for the Performance Report.</td>
+            <td>Output Format</td>
+        </tr><tr>
+            <td>performanceProfileId</td>
+            <td>string</td>
+            <td>Identifier of the referenced Performance Profile.</td>
             <td>PM Profile ID</td>
         </tr><tr>
             <td>producingApplicationId</td>
@@ -5150,21 +4558,26 @@ Inherits from:
             <td>reportingPeriod</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Defines the interval for the report generation.</td>
-            <td>Reporting Peri-od</td>
+            <td>Reporting Period</td>
+        </tr><tr>
+            <td>resultFormat</td>
+            <td><a href="#T_ResultFormat">ResultFormat</a></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
+            <td>Result Format</td>
         </tr><tr>
             <td>scheduleDefinition</td>
             <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td></td>
+            <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
             <td>servicePayloadSpecificAttributes</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
             <td>state</td>
             <td><a href="#T_PerformanceJobStateType">PerformanceJobStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5194,7 +4607,7 @@ Inherits from:
             <td>Identifier of consuming application</td>
             <td>Consuming Application Indicator</td>
         </tr><tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Performance Job was created.</td>
             <td>Creation Date</td>
@@ -5204,54 +4617,44 @@ Inherits from:
             <td>A free-text description of the Performance Job</td>
             <td>Description</td>
         </tr><tr>
-            <td>granularity</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Sampling rate of the collection or production of performance indicators</td>
-            <td>Granularity</td>
+            <td>lastModifiedDate</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified.</td>
+            <td>Last Time Modi-fied</td>
         </tr><tr>
-            <td>jobPriority</td>
-            <td>integer</td>
-            <td>The priority of the Performance Job. The way the management application will use the Job priority to schedule Job execution is application-specific and out the scope.</td>
-            <td>PM Job Priority</td>
+            <td>monitoredObjectId*</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td>Service ID/Entity ID</td>
         </tr><tr>
-            <td>jobType</td>
-            <td><a href="#T_JobType">JobType</a></td>
-            <td></td>
-            <td>PM Job Type</td>
-        </tr><tr>
-            <td>performanceJob</td>
+            <td>performanceJob*</td>
             <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
+            <td>A reference to a Performance Job resource.</td>
             <td>PM Job Identifier</td>
         </tr><tr>
-            <td>performanceProfile</td>
-            <td><a href="#T_PerformanceProfileRef">PerformanceProfileRef</a></td>
-            <td></td>
-            <td>PM Profile ID</td>
+            <td>performanceProfile*</td>
+            <td><a href="#T_PerformanceProfileRefOrValue">PerformanceProfileRefOrValue</a></td>
+            <td>Defines the reference to Performance Monitoring Profile or defines values from PerformanceProfile type.</td>
+            <td>PM Profile</td>
         </tr><tr>
             <td>producingApplicationId</td>
             <td>string</td>
             <td>Identifier of producing application</td>
             <td>Producing Application Identifier</td>
         </tr><tr>
-            <td>reportingPeriod</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Defines the interval for the report generation.</td>
-            <td>Reporting Period</td>
-        </tr><tr>
-            <td>scheduleDefinition</td>
+            <td>scheduleDefinition*</td>
             <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td></td>
+            <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes</td>
+            <td>servicePayloadSpecificAttributes*</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
-            <td>state</td>
+            <td>state*</td>
             <td><a href="#T_PerformanceJobStateType">PerformanceJobStateType</a></td>
-            <td></td>
+            <td>The state of the Performance Monitoring Job.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5259,43 +4662,18 @@ Inherits from:
 
 #### 7.2.2.16. `enum` PerformanceJobProcessStateType
 
-**Description:** The state of the process related to the Performance Job
+**Description:** The state of the process related to the Performance Job.
 
-| state          | MEF W133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accepted`     | Accepted     | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been validated and accepted by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                 |
-| `acknowledged` | Acknowledged | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the Accepted state. If not all attributes are validated, the request moves to the Declined state. |
-| `completed`    | Completed    | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                              |
-| `declined`     | Declined     | The Cancel/Modify/Resume/Suspend Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                         |
-
-
-<table id="T_PerformanceJobProcessStateType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>accepted</td>
-            <td>ACCEPTED</td>
-        </tr><tr>
-            <td>acknowledged</td>
-            <td>ACKNOWLEDGED</td>
-        </tr><tr>
-            <td>completed</td>
-            <td>COMPLETED</td>
-        </tr><tr>
-            <td>declined</td>
-            <td>DECLINED</td>
-        </tr>
-    </tbody>
-</table>
+| state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged` | Acknowledged | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+| `completed`    | Completed    | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
+| `inProgress`   | In-Progress  | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
+| `rejected`     | Rejected     | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
 
 #### 7.2.2.17. Type PerformanceJobRef
 
-**Description:** A reference to a Performance Job resource
+**Description:** A reference to a Performance Job resource.
 
 Inherits from:
 - <a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a>
@@ -5311,12 +4689,12 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>href</td>
+            <td>performanceJobHref</td>
             <td>string</td>
             <td>Hyperlink to the referenced Performance Job</td>
             <td>Href</td>
         </tr><tr>
-            <td>id*</td>
+            <td>performanceJobId*</td>
             <td>string</td>
             <td>Identifier of the referenced Performance Job</td>
             <td>PM Job Identifier</td>
@@ -5350,61 +4728,22 @@ Inherits from:
 
 **Description:** The state of the Performance Monitoring Job.
 
-| state                  | MEF W133 name         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ---------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged`         | Acknowledged         | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. Otherwise, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                      |
-| `cancelled`            | Cancelled            | A Performance Monitoring Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-| `completed`            | Completed            | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `inProgress`           | In-Progress          | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. In case a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
-| `pending`              | Pending              | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                  |
-| `rejected`             | Rejected             | A Create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `resourceUnavailable`  | Resource Unavailable | A Performance Monitoring Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `scheduled`            | Scheduled            | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays Scheduled until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                         |
-| `suspended`            | Suspended            | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                   |
-
-
-<table id="T_PerformanceJobStateType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>acknowledged</td>
-            <td>ACKNOWLEDGED</td>
-        </tr><tr>
-            <td>cancelled</td>
-            <td>CANCELLED</td>
-        </tr><tr>
-            <td>completed</td>
-            <td>COMPLETED</td>
-        </tr><tr>
-            <td>inProgress</td>
-            <td>IN-PROGRESS</td>
-        </tr><tr>
-            <td>pending</td>
-            <td>PENDING</td>
-        </tr><tr>
-            <td>rejected</td>
-            <td>REJECTED</td>
-        </tr><tr>
-            <td>resourceUnavailable</td>
-            <td>RESOURCE-UNAVAILABLE</td>
-        </tr><tr>
-            <td>scheduled</td>
-            <td>SCHEDULED</td>
-        </tr><tr>
-            <td>suspended</td>
-            <td>SUSPENDED</td>
-        </tr>
-    </tbody>
-</table>
+| state                  | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ---------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged`         | Acknowledged          | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. If scheduled, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                   |
+| `cancelled`            | Cancelled             | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `completed`            | Completed             | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `inProgress`           | In-Progress           | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
+| `pending`              | Pending               | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                               |
+| `pendingCancel`        | Pending Cancel       | A Cancel Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `rejected`             | Rejected              | A create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `resourcesUnavailable` | Resources Unavailable | A Performance Monitoring Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `scheduled`            | Scheduled             | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays Scheduled until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                              |
+| `suspended`            | Suspended             | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                        |
 
 #### 7.2.2.20. Type PerformanceJobValue
 
-**Description:** Direct assignment of values defined by PerformanceJob type to PerformanceReport object. Necessary when PerformanceReport is not created by PerformanceJob and without relation to PerformanceJob.
+**Description:** Direct assignment of values defined by PerformanceJob type to PerformanceReport object. Necessary when PerformanceReport is not created by PerformanceJob.
 
 Inherits from:
 - <a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a>
@@ -5425,19 +4764,19 @@ Inherits from:
             <td>Identifier of consuming application</td>
             <td>Consuming Application Indicator</td>
         </tr><tr>
-            <td>fileTransferData</td>
-            <td><a href="#T_FileTransferData">FileTransferData</a></td>
-            <td></td>
-            <td>File Transfer Data</td>
-        </tr><tr>
-            <td>granularity</td>
+            <td>granularity*</td>
             <td><a href="#T_Interval">Interval</a></td>
             <td>Sampling rate of the collection or production of performance indicators</td>
             <td>Granularity</td>
         </tr><tr>
+            <td>monitoredObjectId*</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td>Service ID/Entity ID</td>
+        </tr><tr>
             <td>outputFormat*</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>producingApplicationId</td>
@@ -5447,247 +4786,13 @@ Inherits from:
         </tr><tr>
             <td>resultFormat*</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
             <td>Result Format</td>
         </tr><tr>
             <td>servicePayloadSpecificAttributes*</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.21. Type ResumePerformanceJob_Common
-
-**Description:** Request for resumption of an existing Performance Job
-<table id="T_ResumePerformanceJob_Common">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>resumptionReason</td>
-            <td>string</td>
-            <td>An optional attribute that allows the Buyer/Client to provide additional detail to the Seller/Server on the reason for resuming Performance Job.</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.22. Type ResumePerformanceJob_Create
-
-**Description:** Request for resumption of an existing Performance Job
-
-Inherits from:
-- <a href="#T_ResumePerformanceJob_Common">ResumePerformanceJob_Common</a>
-
-#### 7.2.2.23. Type ResumePerformanceJob
-
-**Description:** Request for resumption of an existing Performance job
-
-Inherits from:
-- <a href="#T_ResumePerformanceJob_Common">ResumePerformanceJob_Common</a>
-
-<table id="T_ResumePerformanceJob">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate</td>
-            <td>date-time</td>
-            <td>Date when Suspend Performance Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>href</td>
-            <td>string</td>
-            <td>Hyperlink to the Resume Performance Job entity</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Resume Performance Job that is generated by the Seller/Server when the Resume Performance Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>resumptionDeniedReason</td>
-            <td>string</td>
-            <td>If the Resume Performance Job request is denied by the Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
-            <td>State</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.24. Type ResumePerformanceJob_Find
-
-**Description:** This class represents a single list item for the response of `listResumePerformanceJob`
-<table id="T_ResumePerformanceJob_Find">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate</td>
-            <td>date-time</td>
-            <td>Date when Suspend Performance Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Resume Performance Job that is generated by the Seller/Server when the Resume Performance Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
-            <td>State</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.25. Type SuspendPerformanceJob_Common
-
-**Description:** Request for suspension of an existing Performance Job
-<table id="T_SuspendPerformanceJob_Common">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>suspensionReason</td>
-            <td>string</td>
-            <td>An optional attribute that allows the Buyer/Client to provide additional detail to the Seller/Server on the reason for suspending Performance Job.</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.26. Type SuspendPerformanceJob_Create
-
-**Description:** Request for suspension of an existing Performance Job
-
-Inherits from:
-- <a href="#T_SuspendPerformanceJob_Common">SuspendPerformanceJob_Common</a>
-
-#### 7.2.2.27. Type SuspendPerformanceJob
-
-**Description:** Request for suspension of an existing Performance Job
-
-Inherits from:
-- <a href="#T_SuspendPerformanceJob_Common">SuspendPerformanceJob_Common</a>
-
-<table id="T_SuspendPerformanceJob">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate</td>
-            <td>date-time</td>
-            <td>Date when Suspend Performance Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>href</td>
-            <td>string</td>
-            <td>Hyperlink to the Suspend Performance Job entity</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Suspend Performance Job that is generated by the Seller/Server when the Suspend Performance Job request &#x60;state&#x60;  is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
-            <td>State</td>
-        </tr><tr>
-            <td>suspensionDeniedReason</td>
-            <td>string</td>
-            <td>If the Suspend Performance Job request is denied by the  Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.28. Type SuspendPerformanceJob_Find
-
-**Description:** This class represents a single list item for the response of `listSuspendPerformanceJob`
-<table id="T_SuspendPerformanceJob_Find">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate</td>
-            <td>date-time</td>
-            <td>Date when Suspend Performance Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Suspend Performance Job that is generated by the Seller/Server when the Suspend Performance Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_PerformanceJobProcessStateType">PerformanceJobProcessStateType</a></td>
-            <td></td>
-            <td>State</td>
         </tr>
     </tbody>
 </table>
@@ -5711,11 +4816,16 @@ Inherits from:
             <td>description</td>
             <td>string</td>
             <td>A free-text description of the performance report</td>
-            <td></td>
+            <td>Not present</td>
         </tr><tr>
-            <td>reportingTimeframe</td>
+            <td>performanceJob*</td>
+            <td><a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a></td>
+            <td>Defines the reference to Performance Monitoring Job or defines values from PerformanceJob type.</td>
+            <td>PM Job</td>
+        </tr><tr>
+            <td>reportingTimeframe*</td>
             <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
-            <td></td>
+            <td>Specifies the date range between which data points will be included in the report.</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -5723,29 +4833,10 @@ Inherits from:
 
 #### 7.2.3.2. Type PerformanceReport_Create
 
-**Description:** In some cases, performance statistics are generated without provisioning a PM Job. These statistics can be collected with an ad-hoc Performance Report creation.
+**Description:** In some cases, performance statistics exist in the system. These statistics can be collected with an ad-hoc Performance Report creation.
 
 Inherits from:
 - <a href="#T_PerformanceReport_Common">PerformanceReport_Common</a>
-
-<table id="T_PerformanceReport_Create">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>performanceJob*</td>
-            <td><a href="#T_PerformanceJobValue">PerformanceJobValue</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr>
-    </tbody>
-</table>
 
 #### 7.2.3.3. Type PerformanceReport
 
@@ -5790,11 +4881,6 @@ Inherits from:
             <td>Date when the report was last modified.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>performanceJob</td>
-            <td><a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
             <td>reportContent</td>
             <td><a href="#T_ReportContentItem">ReportContentItem</a>[]</td>
             <td></td>
@@ -5802,12 +4888,12 @@ Inherits from:
         </tr><tr>
             <td>reportUrl</td>
             <td><a href="#T_AttachmentURL">AttachmentURL</a></td>
-            <td></td>
-            <td>FTP Address</td>
+            <td>The URL pointing to an Attachment for download.</td>
+            <td>File Transfer Data</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceReportStateType">PerformanceReportStateType</a></td>
-            <td></td>
+            <td>Possible values for the state of a Performance Report.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5842,19 +4928,19 @@ Inherits from:
             <td>Unique identifier</td>
             <td>Report Identifier</td>
         </tr><tr>
-            <td>performanceJob</td>
+            <td>performanceJob*</td>
             <td><a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a></td>
-            <td></td>
+            <td>Defines the reference to Performance Monitoring Job or defines values from PerformanceJob type.</td>
             <td>PM Job Identifier</td>
         </tr><tr>
-            <td>reportingTimeframe</td>
+            <td>reportingTimeframe*</td>
             <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
-            <td></td>
+            <td>Specifies the date range between which data points will be included in the report.</td>
             <td>Not present</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_PerformanceReportStateType">PerformanceReportStateType</a></td>
-            <td></td>
+            <td>Possible values for the state of a Performance Report.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5874,11 +4960,6 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>consumingApplicationId</td>
-            <td>string</td>
-            <td>Identifier of consuming application</td>
-            <td>Consuming Application Indicator</td>
-        </tr><tr>
             <td>creationDate.gt</td>
             <td>date-time</td>
             <td>Date when Performance Report was created - greater than.</td>
@@ -5894,20 +4975,30 @@ Inherits from:
             <td>Sampling rate of the collection or production of performance indicators</td>
             <td>Granularity</td>
         </tr><tr>
+            <td>lastModifiedDate.gt</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified - greater than.</td>
+            <td>Last Time Modified</td>
+        </tr><tr>
+            <td>lastModifiedDate.lt</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified - lower than.</td>
+            <td>Last Time Modified</td>
+        </tr><tr>
+            <td>monitoredObjectId</td>
+            <td><a href="#T_MonitoredObjectId">MonitoredObjectId</a></td>
+            <td>Defines the reference to object which is a subject of performance monitoring.</td>
+            <td>Service ID/Entity ID</td>
+        </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
+            <td>List of possible output formats for the Performance Report.</td>
             <td>Output Format</td>
         </tr><tr>
-            <td>performanceJob</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>producingApplicationId</td>
+            <td>performanceJobId</td>
             <td>string</td>
-            <td>Identifier of producing application</td>
-            <td>Producing Application Identifier</td>
+            <td>Identifier of the referenced Performance Job.</td>
+            <td>PM Job Identifier</td>
         </tr><tr>
             <td>reportingTimeframe.startDate.gt</td>
             <td>date-time</td>
@@ -5931,17 +5022,17 @@ Inherits from:
         </tr><tr>
             <td>resultFormat</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.</td>
             <td>Result Format</td>
         </tr><tr>
             <td>servicePayloadSpecificAttributes</td>
             <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
+            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
             <td>state</td>
             <td><a href="#T_PerformanceReportStateType">PerformanceReportStateType</a></td>
-            <td></td>
+            <td>Possible values for the state of a Performance Report.</td>
             <td>State</td>
         </tr>
     </tbody>
@@ -5961,12 +5052,7 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>consumingApplicationId</td>
-            <td>string</td>
-            <td>Identifier of consuming application</td>
-            <td>Consuming Application Indicator</td>
-        </tr><tr>
-            <td>creationDate</td>
+            <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when Performance Report was created.</td>
             <td>Not present</td>
@@ -5976,47 +5062,27 @@ Inherits from:
             <td>A free-text description of the performance report</td>
             <td>Not present</td>
         </tr><tr>
-            <td>granularity</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Sampling rate of the collection or production of performance indicators</td>
-            <td>Granularity</td>
+            <td>lastModifiedDate</td>
+            <td>date-time</td>
+            <td>Date when the report was last modified.</td>
+            <td>Last Time Modified</td>
         </tr><tr>
-            <td>outputFormat</td>
-            <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td></td>
-            <td>Output Format</td>
+            <td>performanceJob*</td>
+            <td><a href="#T_PerformanceJobRefOrValue">PerformanceJobRefOrValue</a></td>
+            <td>Defines the reference to Performance Monitoring Job or defines values from PerformanceJob type.</td>
+            <td>PM Job</td>
         </tr><tr>
-            <td>performanceJob</td>
-            <td><a href="#T_PerformanceJobRef">PerformanceJobRef</a></td>
-            <td></td>
-            <td>PM Job Identifier</td>
-        </tr><tr>
-            <td>performanceReport</td>
+            <td>performanceReport*</td>
             <td><a href="#T_PerformanceReportRef">PerformanceReportRef</a></td>
-            <td></td>
+            <td>A reference to a Performance Report resource.</td>
             <td>Report Identifier</td>
         </tr><tr>
-            <td>producingApplicationId</td>
-            <td>string</td>
-            <td>Identifier of producing application</td>
-            <td>Producing Application Identifier</td>
-        </tr><tr>
-            <td>reportingTimeframe</td>
+            <td>reportingTimeframe*</td>
             <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
-            <td></td>
+            <td>Specifies the date range between which data points will be included in the report.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>resultFormat</td>
-            <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td></td>
-            <td>Result Format</td>
-        </tr><tr>
-            <td>servicePayloadSpecificAttributes</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td></td>
-            <td>Service Payload Specific Attributes</td>
-        </tr><tr>
-            <td>state</td>
+            <td>state*</td>
             <td><a href="#T_PerformanceReportStateType">PerformanceReportStateType</a></td>
             <td></td>
             <td>State</td>
@@ -6038,14 +5104,14 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>href</td>
+            <td>performanceReportHref</td>
             <td>string</td>
-            <td>Hyperlink to the referenced Performance Report</td>
+            <td>Hyperlink to the referenced Performance Report.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>id*</td>
+            <td>performanceReportId*</td>
             <td>string</td>
-            <td>Identifier of the referenced Performance Report</td>
+            <td>Identifier of the referenced Performance Report.</td>
             <td>Report Identifier</td>
         </tr>
     </tbody>
@@ -6055,41 +5121,13 @@ Inherits from:
 
 **Description:** Possible values for the state of a Performance Report.
 
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A Performance Report request has been received by the Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
-| completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                                |
-| failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                                 |
-| inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                                  |
-| rejected     | This state indicates that: <br>- Invalid information is provided through the `PerformanceReport` request <br>- The request fails to meet validation rules for `PerformanceReport` delivery (processing).                                                                                                                                                                                                                                    |
-
-
-<table id="T_PerformanceReportStateType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>acknowledged</td>
-            <td>ACKNOWLEDGED</td>
-        </tr><tr>
-            <td>completed</td>
-            <td>COMPLETED</td>
-        </tr><tr>
-            <td>failed</td>
-            <td>FAILED</td>
-        </tr><tr>
-            <td>inProgress</td>
-            <td>IN_PROGRESS</td>
-        </tr><tr>
-            <td>rejected</td>
-            <td>REJECTED</td>
-        </tr>
-    </tbody>
-</table>
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| acknowledged | A Performance Report request has been received by Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+| completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                   |
+| failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                    |
+| inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                     |
+| rejected     | This state indicates that: <br>- Invalid information is provided in Create Performance Report request <br>- The request fails to meet validation rules for Performance Report delivery (processing).                                                                                                                                                                                                                           |
 
 ### 7.2.4. Common
 
@@ -6097,112 +5135,60 @@ Types described in this subsection are shared among two or more LSO APIs.
 
 #### 7.2.4.1. Type AttachmentURL
 
-**Description:** The AttachmentURL is used to get the PM report.
-<table id="T_AttachmentURL">
+**Description:** The URL pointing to an Attachment for download. 
+<table id="AttachmentURL">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>url*</td>
-            <td>string</td>
-            <td>&#x27;Uniform Resource Locator, is a web page address (a subset of  URI).&#x27;</td>
-            <td>FTP Address</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.4.2. Type DayOfMonth
-
-**Description:** Day of the month for recurrence
-<table id="T_DayOfMonth">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Type</td>
-            <td>Description</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>integer</td>
-            <td>Minimum: 1, maximum: 31</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.4.3. Type DayOfWeek
-
-**Description:** Day of the week for recurrence. 1=Sunday, 2=Monday, 3=Tuesday, 4=Wednesday, 5=Thursday, 6=Friday, 7=Saturday.
-<table id="T_DayOfWeek">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Type</td>
-            <td>Description</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>integer</td>
-            <td>Minimum: 1, maximum: 7</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.4.4. Type FileTransferData
-
-**Description:** Defines the place where the report content should be stored.
-<table id="T_FileTransferData">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>fileFormat</td>
-            <td>string</td>
-            <td>Format of the file containing collected data.</td>
-            <td>File format</td>
-        </tr><tr>
-            <td>fileLocation</td>
-            <td>uri</td>
-            <td>Location of the file containing collected data.</td>
-            <td>File Location</td>
-        </tr><tr>
-            <td>transportProtocol</td>
-            <td>string</td>
-            <td>Transport protocol to use for file transfer.</td>
-            <td>Transport Protocol</td>
-        </tr><tr>
-            <td>compressionType</td>
-            <td>string</td>
-            <td>Compression types used for the collected data file.</td>
-            <td>Compression Type</td>
-        </tr><tr>
-            <td>packingType</td>
-            <td>string</td>
-            <td>Specify if the data file is to be packed.</td>
-            <td>Packing Type</td>
-        </tr><tr>
             <td>retentionPeriod</td>
-            <td>string</td>
-            <td>A time interval to retain the file.</td>
+            <td>date-time</td>
+            <td>A date until which the file will be retained. </td>
             <td>Retention Period</td>
+        </tr><tr>
+            <td>url</td>
+            <td>uri</td>
+            <td>The URL pointing to an Attachment for download.</td>
+            <td>File Location</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.5. Type HourRange
+#### 7.2.4.2. Type EntityId
 
-**Description:** Defines start and end date
+**Description:** Identifier of an Entity.
+
+Inherits from:
+- <a href="#T_MonitoredObjectId">MonitoredObjectId</a>
+
+<table id="T_EntityId">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>entityId</td>
+            <td>string</td>
+            <td>Identifier of an Entity.</td>
+            <td>Entity ID</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.4.3. Type HourRange
+
+**Description:** Defines start and end date,
 <table id="T_HourRange">
     <thead style="font-weight:bold;">
         <tr>
@@ -6217,75 +5203,72 @@ Types described in this subsection are shared among two or more LSO APIs.
             <td>start</td>
             <td>date-time</td>
             <td>Start date</td>
-            <td>start</td>
+            <td>Hour Range</td>
         </tr><tr>
             <td>end</td>
             <td>date-time</td>
             <td>End date</td>
-            <td>end</td>
+            <td>Hour Range</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.6. `enum` Interval
+#### 7.2.4.4. `enum` Interval
 
-**Description:** Enumeration of applicable time intervals
+**Description:** Enumeration of applicable time intervals.
 
 
 <table id="T_Interval">
     <thead style="font-weight:bold;">
         <tr>
             <td>Value</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>10 milliseconds</td>
-            <td>10 MILLISECONDS</td>
+            <td>10 milliseconds</td>
         </tr><tr>
             <td>100 milliseconds</td>
-            <td>100 MILLISECONDS</td>
+            <td>100 milliseconds</td>
         </tr><tr>
             <td>1 second</td>
-            <td>1 SECOND</td>
+            <td>1 second</td>
         </tr><tr>
-            <td>10 second</td>
-            <td>10 SECOND</td>
+            <td>10 seconds</td>
+            <td>10 seconds</td>
         </tr><tr>
             <td>1 minute</td>
-            <td>1 MINUTE</td>
+            <td>1 minute</td>
         </tr><tr>
             <td>5 minutes</td>
             <td>5 MINUTES</td>
         </tr><tr>
             <td>15 minutes</td>
-            <td>15 MINUTES</td>
+            <td>15 minutes</td>
         </tr><tr>
             <td>30 minutes</td>
-            <td>30 MINUTES</td>
+            <td>30 minutes</td>
         </tr><tr>
             <td>1 hour</td>
-            <td>1 HOUR</td>
+            <td>1 hour</td>
         </tr><tr>
             <td>24 hours</td>
-            <td>24 HOURS</td>
+            <td>24 hours</td>
         </tr><tr>
             <td>1 month</td>
-            <td>1 MONTH</td>
+            <td>1 month</td>
         </tr><tr>
             <td>1 year</td>
-            <td>1 YEAR</td>
-        </tr><tr>
-            <td>not applicable</td>
-            <td>NOT APPLICABLE</td>
+            <td>1 year</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.7. `enum` JobType
+#### 7.2.4.5. `enum` JobType
 
-**Description:** The type of PM Job
+**Description:** The type of PM Job.
 
 
 <table id="T_JobType">
@@ -6309,9 +5292,9 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.4.8. Type MeasurementTime
+#### 7.2.4.6. Type MeasurementTime
 
-**Description:** Timeframe boundary for collected data
+**Description:** Timeframe boundary for collected data. Provide measurementStartDate and measurementEndDate or measurementStartDate and measurementInterval.
 <table id="T_MeasurementTime">
     <thead style="font-weight:bold;">
         <tr>
@@ -6323,52 +5306,47 @@ Types described in this subsection are shared among two or more LSO APIs.
     </thead>
     <tbody>
         <tr>
-            <td>measurementStartDate*</td>
+            <td>measurementStartDate</td>
             <td>date-time</td>
             <td>Start date of the period to which collected data points belong.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>measurementEndDate*</td>
+            <td>measurementEndDate</td>
             <td>date-time</td>
-            <td>Start date of the period to which collected data points belong.</td>
+            <td>End date of the period to which collected data points belong.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>measurementInterval*</td>
+            <td>measurementInterval</td>
             <td><a href="#T_Interval">Interval</a></td>
-            <td>Length of the measurement interval</td>
+            <td>Length of the measurement interval.</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.9. Type MonthlyScheduleDayOfWeekDefinition
+#### 7.2.4.7. Type MonitoredObjectId
 
-**Description:** Monthly scheduled day of the week.
-<table id="T_MonthlyScheduleDayOfWeekDefinition">
+**Description:** Defines the reference to object which is a subject of performance monitoring.
+<table id="T_MonitoredObjectId">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>recurringDaySequence</td>
-            <td><a href="#T_DayOfWeek">DayOfWeek</a>[]</td>
-            <td></td>
-            <td>recurringDaySequence</td>
-        </tr><tr>
-            <td>dayOfMonthRecurrence</td>
-            <td><a href="#T_DayOfMonth">DayOfMonth</a>[]</td>
-            <td></td>
-            <td>dayOfMonthRecurrence</td>
+            <td>@type*</td>
+            <td>string</td>
+            <td>This field is used as a discriminator to differentiate if monitored object is an Entity or a Service.</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.10. `enum` OutputFormat
+#### 7.2.4.8. `enum` OutputFormat
 
 **Description:** List of possible output formats for the Performance Report
 
@@ -6397,9 +5375,9 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.4.11. Type RecurringFrequency
+#### 7.2.4.9. Type RecurringSchedule
 
-**Description:** A recurring frequency to run a job within a timeframe defined by schedule definition, for example, every 5 minutes, 15 minutes, 1 hour, 1 day
+**Description:** A definition of recurring schedule to run a job based on the Cron utility in Linux-like systems. It defines how the job should periodically run at specified times, dates, or intervals. 
 <table id="T_RecurringFrequency">
     <thead style="font-weight:bold;">
         <tr>
@@ -6411,20 +5389,107 @@ Types described in this subsection are shared among two or more LSO APIs.
     </thead>
     <tbody>
         <tr>
-            <td>recurringFrequencyValue*</td>
-            <td>integer</td>
-            <td>The value of the recurrence as an integer. For example,  if the recurring frequency is 2 weeks this value is 2.</td>
-            <td>recurringFrequencyValue</td>
-        </tr><tr>
-            <td>recurringFrequencyUnits*</td>
+            <td>second</td>
             <td>string</td>
-            <td>The unit of measure in recurring frequency. For example, if a recurring frequency is 2 weeks this value is WEEKS.</td>
-            <td>recurringFrequencyUnits</td>
+            <td >A definition of time (seconds) to run a job. Allowed values: 0-59,  and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - */5 * * * * * -&gt; run a job at every 5th second. 
+  - */30 */1 * * * * -&gt; run a job at every 30 seconds 
+  past every minute.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>minute</td>
+            <td>string</td>
+            <td>A definition of time (minutes) to run a job. Allowed values: 0-59,  and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - 0 */10 * * * * -&gt; run a job at every 10th minute. 
+  - 0 */30 0 * * * -&gt; run a job at every 30th minute past midnight.
+  - 0 */30 8 * * 1 -&gt; run a job at every 30th minute 
+  past hour 8 on Monday.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>hour</td>
+            <td>string</td>
+            <td>A definition of time (hours) to run a job. Allowed values: 0-23,  and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - 0 0 10 10 * * -&gt; run a job 10 am on 10th day of every month. 
+  - 0 * 1,2 * * * -&gt; run a job at every minute past hour 1 and 2.
+  - 0 0 */2 * * * -&gt; run a job at every 2nd hour.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>dayOfMonth</td>
+            <td>string</td>
+            <td>A definition of time (day of month) to run a job.  Allowed values: 1-31, and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - 0 0 0 1,5,10,15 * * -&gt; run a job at midnight 
+  on every 1st, 5th, 10th, 15th day of month. 
+  - 0 0 */1 1-10 1-3 * -&gt; run a job at every full hour between 1st 
+  and 10th day of month in January, February, and March.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>month</td>
+            <td>string</td>
+            <td>A definition of time (month) to run a job. Allowed values: 1-12 or JAN-DEC, and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - 0 5 0 * 8 * -&gt; run a job at 00:05 on every day in August. 
+  - 0 0 0,12 1 */2 * -&gt; run a job at midnight and noon 
+  on every 1st day of every 2nd month.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>dayOfWeek</td>
+            <td>string</td>
+            <td>A definition of time (day of week) to run a job. Allowed values: 0-6 or SUN-SAT, and special characters: (,-*/), where:
+<pre>
+  - &#x60;*&#x60; -&gt; any value
+  - &#x60;,&#x60; -&gt; value list seprator
+  - &#x60;-&#x60; -&gt; range of values
+  - &#x27;/&#x27; -&gt; step values
+For example:
+  - 0 0 22 * * 1-5 -&gt; run a job at 22:00 on every day 
+  between Monday and Friday. 
+  - 0 5 4 * * sun -&gt; run a job at 04:05 on Sunday.
+  </pre></td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>hourRange</td>
+            <td><a href="#T_HourRange">HourRange</a>[]</td>
+            <td>A list of time ranges within a specific day that the schedule will be active on, for example, 08:00-12:00, 16:00-19:00.</td>
+            <td>Hour Range</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.12. Type ReportContentItem
+#### 7.2.4.10. Type ReportContentItem
 
 **Description:** Single item of the performance monitoring results in case result format was set to payload. Each item contains the timeframe of the collected data and a list of values measured in that timeframe.
 <table id="T_ReportContentItem">
@@ -6440,7 +5505,7 @@ Types described in this subsection are shared among two or more LSO APIs.
         <tr>
             <td>measurementTime*</td>
             <td><a href="#T_MeasurementTime">MeasurementTime</a></td>
-            <td></td>
+            <td>Timeframe boundary for collected data.</td>
             <td>Not present</td>
         </tr><tr>
             <td>measurementDataPoints</td>
@@ -6451,7 +5516,7 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.4.13. Type ReportingTimeframe
+#### 7.2.4.11. Type ReportingTimeframe
 
 **Description:** Specifies the date range between which data points will be included in the report.
 <table id="T_ReportingTimeframe">
@@ -6467,18 +5532,18 @@ Types described in this subsection are shared among two or more LSO APIs.
         <tr>
             <td>reportingStartDate</td>
             <td>date-time</td>
-            <td></td>
+            <td>Start date of reporting timeframe.</td>
             <td>Not present</td>
         </tr><tr>
             <td>reportingEndDate</td>
             <td>date-time</td>
-            <td></td>
+            <td>End date of reporting timeframe.</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.14. `enum` ResultFormat
+#### 7.2.4.12. `enum` ResultFormat
 
 **Description:** List of possible result formats that define how Seller/Server will deliver Performance Report to the Buyer/Client.
 
@@ -6492,16 +5557,16 @@ Types described in this subsection are shared among two or more LSO APIs.
     </thead>
     <tbody>
         <tr>
-            <td>payload</td>
-            <td>PAYLOAD</td>
-        </tr><tr>
             <td>attachment</td>
-            <td>ATTACHMENT</td>
+            <td>attachment</td>
+        </tr><tr>
+            <td>payload</td>
+            <td>payload</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.15. Type ResultPayload
+#### 7.2.4.13. Type ResultPayload
 
 **Description:** ResultPayload is used as an extension point for MEF-specific service performance monitoring results. The `@type` attribute is used as a discriminator.
 <table id="T_ResultPayload">
@@ -6523,7 +5588,7 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.4.16. Type ScheduleDefinition
+#### 7.2.4.14. Type ScheduleDefinition
 
 **Description:** The schedule definition for running jobs.
 <table id="T_ScheduleDefinition">
@@ -6539,40 +5604,61 @@ Types described in this subsection are shared among two or more LSO APIs.
         <tr>
             <td>scheduleDefinitionStartTime</td>
             <td>date-time</td>
-            <td>The Start time of the Schedule Definition. If the attribute is empty the Schedule starts immediately after provisioning of the Job. </td>
-            <td>scheduleDefinitionStartTime</td>
+            <td>The start time of the Schedule Definition. If the attribute is empty the Schedule starts immediately after provisioning of the Job. </td>
+            <td>Start Time</td>
         </tr><tr>
             <td>scheduleDefinitionEndTime</td>
             <td>date-time</td>
-            <td>The Endtime of the Schedule Definition. If the attribute is empty the Schedule runs forever, not having a time constraint.</td>
-            <td>scheduleDefinitionEndTime</td>
+            <td>The end time of the Schedule Definition. If the attribute is empty the Schedule runs forever, not having a time constraint.</td>
+            <td>End Time</td>
         </tr><tr>
-            <td>recurringFrequency</td>
-            <td><a href="#T_RecurringFrequency">RecurringFrequency</a></td>
-            <td></td>
-            <td>recurringFrequency</td>
+            <td>recurringSchedule</td>
+            <td><a href="#T_RecurringSchedule">RecurringSchedule</a></td>
+            <td>A recurring frequency to run a job within a timeframe defined by schedule definition, for example, every 5 minutes, 15 minutes, 1 hour, 1 day. If the attribute is empty, job runs non-stop.</td>
+            <td>Recurring Frequency</td>
         </tr><tr>
-            <td>scheduleDefinitionHourRange</td>
-            <td><a href="#T_HourRange">HourRange</a></td>
-            <td>A list of time ranges within a specific day that the schedule will be active on, for example, 08:00-12:00, 16:00-19:00.</td>
-            <td>scheduleDefinitionHourRange</td>
-        </tr><tr>
-            <td>monthlyScheduleDayOfWeekDefinition</td>
-            <td><a href="#T_MonthlyScheduleDayOfWeekDefinition">MonthlyScheduleDayOfWeekDefinition</a></td>
-            <td></td>
-            <td>monthlyScheduleDayOfWeekDefinition</td>
-        </tr><tr>
-            <td>weeklyScheduledDefinition</td>
-            <td><a href="#T_DayOfWeek">DayOfWeek</a>[]</td>
-            <td>The weekly schedule is used to define a schedule that is based on the days of the week, e.g. a schedule that will be active only on Monday and Tuesday.</td>
-            <td>weeklyScheduledDefinition</td>
+            <td>executionDuration</td>
+            <td><a href="#T_Interval">Interval</a></td>
+            <td>Total time for running one execution of a schedule. Depending on the reportingPeriod attribute, one execution of a schedule might produce multiple reports (e.g., when reporting period is 15 minutes and executionDuration is 1 hour, every execution of a schedule will produce 4 reports).</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.17. Type ServicePayloadSpecificAttributes
+#### 7.2.4.15. Type ServiceId
 
-**Description:** ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration. It includes a definition of service/entity and applicable performance monitoring objectives. The `@type` attribute is used as a discriminator.
+**Description:** Identifier of a Service.
+
+Inherits from:
+- <a href="#T_MonitoredObjectId">MonitoredObjectId</a>
+
+<table id="T_ServiceId">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>serviceIdFrom*</td>
+            <td>string</td>
+            <td>Identifier of a Service Endpoint.</td>
+            <td>Service ID From</td>
+        </tr><tr>
+            <td>serviceIdTo*</td>
+            <td>string</td>
+            <td>Identifier of a Service Endpoint.</td>
+            <td>Service ID To</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.4.16. Type ServicePayloadSpecificAttributes
+
+**Description:** ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service performance monitoring configuration. The `@type` attribute is used as a discriminator.
 <table id="T_ServicePayloadSpecificAttributes">
     <thead style="font-weight:bold;">
         <tr>
@@ -6592,7 +5678,7 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.4.18. Type TrackingRecord
+#### 7.2.4.17. Type TrackingRecord
 
 **Description:** Tracking Records allow the tracking of modifications of Performance Job, Profile, or Report.
 <table id="T_TrackingRecord">
@@ -6609,42 +5695,42 @@ Types described in this subsection are shared among two or more LSO APIs.
             <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when the record was created.</td>
-            <td>creationDate</td>
+            <td>Creation Date</td>
         </tr><tr>
             <td>description</td>
             <td>string</td>
             <td>Free-text field describing the action that created the Tracking Record and its details.</td>
-            <td>description</td>
+            <td>Description</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
             <td>Identifier of the Tracking Record</td>
-            <td>id</td>
+            <td>Identifier</td>
         </tr><tr>
             <td>relatedObjectId*</td>
             <td>string</td>
             <td>Identifier of Performance Job, Profile or Report</td>
-            <td>relatedObjectId</td>
+            <td>Related Object Identifier</td>
         </tr><tr>
             <td>request</td>
             <td>string</td>
             <td>Request that created the Tracking Record.</td>
-            <td>request</td>
+            <td>Request</td>
         </tr><tr>
             <td>system</td>
             <td>string</td>
             <td>Describes the system from which the action was done.</td>
-            <td>system</td>
+            <td>System</td>
         </tr><tr>
             <td>user</td>
             <td>string</td>
             <td>Describes the user doing the action.</td>
-            <td>user</td>
+            <td>User</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.4.19. Type TrackingRecord_Find
+#### 7.2.4.18. Type TrackingRecord_Find
 
 **Description:** This class represents a single list item for the response of the `listTrackingRecord` operation.
 <table id="T_TrackingRecord_Find">
@@ -6661,22 +5747,27 @@ Types described in this subsection are shared among two or more LSO APIs.
             <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when record was created.</td>
-            <td>creationDate</td>
+            <td>Creation Date</td>
         </tr><tr>
             <td>description</td>
             <td>string</td>
             <td>Describes the action that created the Tracking Record, such as: create, update.</td>
-            <td>description</td>
+            <td>Description</td>
+        </tr><tr>
+            <td>id*</td>
+            <td>string</td>
+            <td>Identifier of the Tracking Record.</td>
+            <td>Identifier</td>
         </tr><tr>
             <td>relatedObjectId*</td>
             <td>string</td>
             <td>Identifier of Performance Job, Profile or Report.</td>
-            <td>relatedObjectId</td>
+            <td>Related Object Identifier</td>
         </tr><tr>
             <td>user</td>
             <td>string</td>
             <td>User that executed the action which created a Tracking Record.</td>
-            <td>user</td>
+            <td>User</td>
         </tr>
     </tbody>
 </table>
@@ -6702,12 +5793,12 @@ The below sections describe data models related to this endpoint.
         <tr>
             <td>callback*</td>
             <td>string</td>
-            <td>This callback value must be set to the *host* property from Performance Notification API (performanceNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.co/listenerEndpoint&quot;, the performance job state  change event notification will be sent to &#x60;https://buyer.co/listenerEndpoint/mefApi/legato/performanceMonitoring/v2/listener/performanceJobStateChangeEvent&#x60;</td>
+            <td>This callback value must be set to the *host* property from Performance Notification API (performanceNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.co/listenerEndpoint&quot;, the performance job state change event notification will be sent to &#x60;https://buyer.co/listenerEndpoint/mefApi/legato/performanceMonitoring/v3/listener/performanceJobStateChangeEvent&#x60;</td>
             <td>Notification Target Information</td>
         </tr><tr>
             <td>query</td>
             <td>string</td>
-            <td>This attribute is used to define which type of events to register to. Example: &#x27;query&#x27;:&#x27;eventType &#x3D;  performanceReportStateChangeEvent&#x27;. To subscribe for more than one event type, put the values separated by a comma: &#x60;eventType&#x3D;performanceReportStateChangeEvent,performanceJobCreateEvent&#x60;. The possible values are enumerated by &#x27;PerformanceEventType&#x27; in performanceNotification.api.yaml. An empty query is treated as specifying no filters - ending in subscription for all event types.</td>
+            <td>This attribute is used to define which type of events to register to. Example: &#x27;query&#x27;:&#x27;eventType &#x3D;  performanceReportStateChangeEvent&#x27;. To subscribe for more than one event type, put the values separated by a comma: &#x60;eventType&#x3D;performanceReportStateChangeEvent,performanceJobCreateEvent&#x60;. The possible values are enumerated by Event type enums in performanceNotification.api.yaml. An empty query is treated as specifying no filters - ending in subscription for all event types.</td>
             <td>List of Notification Types</td>
         </tr>
     </tbody>
@@ -6749,11 +5840,11 @@ The below sections describe data models related to this endpoint.
 
 ## 7.3. Notification API Data model
 
-Figure 63 presents the Performance Monitoring Notification data model.
+Figure 51 presents the Performance Monitoring Notification data model.
 
-![Figure 63: Performance Monitoring Notification Data Model](performance/media/performanceMonitoringNotificationModel.png)
+![Figure 51: Performance Monitoring Notification Data Model](performance/media/performanceMonitoringNotificationModel.png)
 
-**Figure 63. Performance Monitoring Notification Data Model**
+**Figure 51. Performance Monitoring Notification Data Model**
 
 This data model is used to construct requests and responses of the API
 endpoints described in [5.2.2. Buyer/Client (CUS, BUS, SOF) side Performance Monitoring API Endpoints](#522-buyerclient-cus-bus-sof-side-performance-monitoring-api-endpoints).
@@ -6830,17 +5921,14 @@ Inherits from:
     </thead>
     <tbody>
         <tr>
-            <td>performanceProfileCreateEvent</td>
-            <td>PERFORMANCE_PROFILE_CREATE_EVENT</td>
+            <td>performanceProfileAttributeValueChangeEvent</td>
+            <td>PM Profile Modified</td>
         </tr><tr>
-            <td>performanceProfileStateChangeEvent</td>
-            <td>PERFORMANCE_PROFILE_STATE_CHANGE_EVENT</td>
+            <td>performanceProfileCreateEvent</td>
+            <td>PM Profile Created</td>
         </tr><tr>
             <td>performanceProfileDeleteEvent</td>
-            <td>PERFORMANCE_PROFILE_DELETE_EVENT</td>
-        </tr><tr>
-            <td>performanceProfileAttributeValueChangeEvent</td>
-            <td>PERFORMANCE_PROFILE_ATTRIBUTE_VALUE_CHANGE_EVENT</td>
+            <td>PM Profile Deleted</td>
         </tr>
     </tbody>
 </table>
@@ -6918,13 +6006,13 @@ Inherits from:
     <tbody>
         <tr>
             <td>performanceJobCreateEvent</td>
-            <td>PERFORMANCE_JOB_CREATE_EVENT</td>
+            <td>PM Job Created</td>
         </tr><tr>
             <td>performanceJobStateChangeEvent</td>
-            <td>PERFORMANCE_JOB_STATE_CHANGE_EVENT</td>
+            <td>PM Job State Change</td>
         </tr><tr>
             <td>performanceJobAttributeValueChangeEvent</td>
-            <td>PERFORMANCE_JOB_ATTRIBUTE_VALUE_CHANGE_EVENT</td>
+            <td>PM Job Attributes Modified</td>
         </tr>
     </tbody>
 </table>
@@ -7008,16 +6096,10 @@ Inherits from:
     <tbody>
         <tr>
             <td>cancelPerformanceJobStateChangeEvent</td>
-            <td>CANCEL_PERFORMANCE_JOB_STATE_CHANGE_EVENT</td>
+            <td>Not present</td>
         </tr><tr>
             <td>modifyPerformanceJobStateChangeEvent</td>
-            <td>MODIFY_PERFORMANCE_JOB_STATE_CHANGE_EVENT</td>
-        </tr><tr>
-            <td>resumePerformanceJobStateChangeEvent</td>
-            <td>RESUME_PERFORMANCE_JOB_STATE_CHANGE_EVENT</td>
-        </tr><tr>
-            <td>suspendPerformanceJobStateChangeEvent</td>
-            <td>SUSPEND_PERFORMANCE_JOB_STATE_CHANGE_EVENT</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
@@ -7027,8 +6109,6 @@ Inherits from:
 **Description:** The identifier of the Performance Job Process, including: 
   - Modify Performance Monitoring Job
   - Cancel Performance Monitoring Job
-  - Suspend Performance Monitoring Job
-  - Resume Performance Monitoring Job
 being the subject of this event.
 <table id="T_PerformanceJobProcessEventPayload">
     <thead style="font-weight:bold;">
@@ -7044,12 +6124,12 @@ being the subject of this event.
             <td>href</td>
             <td>string</td>
             <td>Hyperlink to access the Performance Job Process</td>
-            <td>Href</td>
+            <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
             <td>ID of the Performance Job Process</td>
-            <td>PM Job Identifier</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
@@ -7097,7 +6177,7 @@ Inherits from:
     <tbody>
         <tr>
             <td>performanceJobReportPreparationErrorEvent</td>
-            <td>PERFORMANCE_JOB_REPORT_PREPARATION_ERROR_EVENT</td>
+            <td>PM Report Preparation Failed</td>
         </tr>
     </tbody>
 </table>
@@ -7176,14 +6256,15 @@ Inherits from:
     <tbody>
         <tr>
             <td>performanceJobReportReadyEvent</td>
-            <td>PERFORMANCE_JOB_REPORT_READY_EVENT</td>
+            <td>PM Job Results Available</td>
         </tr>
     </tbody>
 </table>
 
 ### 7.3.16. Type PerformanceJobReportReadyEventPayload
 
-**Description:** The identifier of the Performance Job and Report ID being the subjects of this event.
+**Description:** The identifier of the Performance Job and Report ID being 
+the subjects of this event.
 <table id="T_PerformanceJobReportReadyEventPayload">
     <thead style="font-weight:bold;">
         <tr>
@@ -7264,10 +6345,10 @@ Inherits from:
     <tbody>
         <tr>
             <td>performanceReportCreateEvent</td>
-            <td>PERFORMANCE_REPORT_CREATE_EVENT</td>
+            <td>Not present</td>
         </tr><tr>
             <td>performanceReportStateChangeEvent</td>
-            <td>PERFORMANCE_REPORT_STATE_CHANGE_EVENT</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
@@ -7313,14 +6394,8 @@ Inherits from:
   February 2021
 - [MEF128] [MEF 128](https://www.mef.net/wp-content/uploads/MEF-128.pdf), LSO
   API Security Profile, July 2022
-- [MEF133.1] [MEF 133.1]
-  Allegro, Interlude and Legato Fault Management and Performance Monitoring BR&UC, June 2023
-- [MEF152] [MEF 152]
-  Carrier Ethernet Payload Schema/Guide for SOAM
-- [MEF153] [MEF 153]
-  IP/IPVPN Schema/Guide for SOAM
-- [MEF154] [MEF 154]
-  SD-WAN Schema/Guide for SOAM
+- [MEFW133.1](https://www.mef.net/wp-content/uploads/MEF-133.1.pdf)
+  Allegro, Interlude and Legato Fault Management and Alarm API BR&UC, January 2025
 - [OAS-v3] [Open API 3.0](http://spec.openapis.org/oas/v3.0.3.html), February
   2020
 - [REST]
@@ -7336,8 +6411,8 @@ Inherits from:
   Copyright © 2017 IETF Trust and the persons identified as the document
   authors. All rights reserved.
 - [TMF628]
-  [TMF 628](https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/),
-  Performance Management API REST Specification R14.5.1, June 2015
+  [TMF 628](https://www.tmforum.org/oda/open-apis/directory/performance-management-api-TMF628/v5.0),
+  Performance Management API REST Specification v5.0, June 2024
 - [TMF630]
   [TMF 630](https://www.tmforum.org/resources/specification/tmf630-rest-api-design-guidelines-4-2-0/)
   TMF630 API Design Guidelines 4.2.0

@@ -1,0 +1,61 @@
+@startuml sftUsecases
+
+left to right direction
+
+actor "Buyer/Client" as B
+actor "Seller/Server" as S
+
+rectangle {
+Usecase UC1 as "1. Create Test Profile"
+Usecase UC2 as "2. Retrieve Test Profile List"
+Usecase UC3 as "3. Retrieve Test Profile by Profile Identifier"
+Usecase UC4 as "4. Modify Test Profile"
+Usecase UC5 as "5. Delete Test Profile"
+Usecase UC6 as "6. Test Profile Dependency "
+Usecase UC7 as "7. Create Test Job"
+Usecase UC8 as "8. Retrieve Test Job List"
+Usecase UC9 as "9. Retrieve Test Job by Job Identifier"
+Usecase UC10 as "10. Modify Test Job"
+Usecase UC11 as "11. Retrieve Modify Test Job List"
+Usecase UC12 as "12. Retrieve Modify Test Job List by Identifier"
+Usecase UC13 as "13. Cancel Test Job"
+Usecase UC14 as "14. Retrieve Cancel Test Job List"
+Usecase UC15 as "15. Retrieve Cancel Test Job List by Identifier"
+Usecase UC16 as "16. Suspend Test Job"
+Usecase UC17 as "17. Retrieve Suspend Test Job List"
+Usecase UC18 as "18. Retrieve Suspend Test Job List by Identifier"
+Usecase UC19 as "19. Resume Test Job"
+Usecase UC20 as "20. Retrieve Resume Test Job List"
+Usecase UC21 as "21. Retrieve Resume Test Job List by Identifier"
+Usecase UC22 as "22. Register for Event Notifications"
+Usecase UC23 as "23. Send Event Notification"
+Usecase UC24 as "24. Un-Register for Event Notifications"
+}
+
+B --> UC1
+B --> UC2
+B --> UC2
+B --> UC3
+B --> UC4
+B --> UC5
+B --> UC6
+B --> UC7
+B --> UC8
+B --> UC9
+B --> UC10
+B --> UC11
+B --> UC12
+B --> UC13
+B --> UC14
+B --> UC15
+B --> UC16
+B --> UC17
+B --> UC18
+B --> UC19
+B --> UC20
+S --> UC21
+B --> UC22
+B --> UC23
+B --> UC24
+
+@enduml

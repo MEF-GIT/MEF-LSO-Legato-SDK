@@ -1,0 +1,26 @@
+@startuml useCase16Polling
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+B -> S : POST {{baseUrl}}/suspendTestJob (SuspendTestJob_Create)
+S -> S : basic validation
+
+alt succesful inquiry
+  S --> B : 201 SuspendTestJob with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until SuspendTestJob in completed state
+      B -> S :   GET {{baseUrl}}/suspendTestJob/{{id}}
+      return 200 SuspendTestJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+
+@enduml

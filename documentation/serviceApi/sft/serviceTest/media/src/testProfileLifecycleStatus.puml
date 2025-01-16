@@ -1,0 +1,44 @@
+@startuml testProfileLifecycleStatus
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state is_status_deprecated <<choice>> 
+ note right of is_status_deprecated : Is Status Deprecated?
+
+state is_status_pending <<choice>> 
+ note right of is_status_pending : Is Status Pending
+
+state is_status_experimental <<choice>> 
+ note right of is_status_experimental : Is Status Experimental
+
+state is_user_authorised_experimental <<choice>> 
+ note right of is_user_authorised_experimental : Is User Authorised to use Experimental
+
+
+state is_user_authorised_pending <<choice>> 
+ note right of is_user_authorised_pending : Is User Authorised to use Pending
+
+''' diagram'''
+[*] --> available
+available --> is_status_deprecated : Test Profile Selected
+is_status_deprecated --> [*]: Yes
+is_status_deprecated --> is_status_pending: No
+is_status_pending --> is_status_experimental: No
+is_status_pending --> is_user_authorised_pending: Yes
+is_status_experimental -r-> assigned: No
+is_status_experimental --> is_user_authorised_experimental
+is_user_authorised_experimental --> [*]: No
+is_user_authorised_experimental --> assigned: yes
+is_user_authorised_pending --> assigned: yes
+is_user_authorised_pending --> [*]: no
+assigned --> [*]
+
+
+@enduml

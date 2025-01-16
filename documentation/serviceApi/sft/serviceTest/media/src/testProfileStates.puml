@@ -1,0 +1,28 @@
+@startuml testProfileStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state validation_successful <<choice>> 
+ note right of validation_successful : Validation successful?
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> validation_successful
+
+validation_successful -l-> rejected: No
+
+validation_successful -d-> completed: Yes
+
+
+rejected -d-> [*]
+completed -d-> [*]
+
+@enduml

@@ -1,0 +1,36 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class L1OperatorVcEndPoint {
+    identifier: String[1]
+    l1VcEndPointExternalInterfaceType: L1VcEndPointExternalInterfaceType[1]
+    l1VcEndPointMap: L1VcEndPointMap[1]
+}
+
+class L1VcEndPointMap {
+    lineRate: LineRate[1]
+    tributarySlotRate: TributarySlotRate[1]
+    tributarySlots: Integer[1..*]
+}
+
+L1OperatorVcEndPoint "1" *--> "1" L1VcEndPointMap
+MefServiceConfiguration <|-- L1OperatorVcEndPoint
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

@@ -1,0 +1,97 @@
+@startuml faultManagementNotificationModel
+
+class Event {
+    eventId*: string
+    eventTime*: date-time
+}
+
+class FaultManagementJobEvent {
+    eventType*: FaultManagementJobEventType
+}
+Event <|-u- FaultManagementJobEvent
+
+FaultManagementJobEvent *-u->"1" FaultManagementJobEventPayload : event
+
+class FaultManagementJobEventPayload {
+    href: string
+    id*: string
+    state: string
+}
+
+class FaultManagementJobReportReadyEvent {
+    eventType*: FaultManagementJobReportReadyEventType
+}
+Event <|-- FaultManagementJobReportReadyEvent
+
+FaultManagementJobReportReadyEvent *-->"1" FaultManagementJobReportReadyEventPayload : event
+
+class FaultManagementJobReportReadyEventPayload {
+    href: string
+    id*: string
+    reportHref: string
+    reportId*: string
+}
+
+
+class FaultManagementJobReportPreparationErrorEvent {
+    eventType*: FaultManagementJobReportPreparationErrorEventType
+}
+Event <|-- FaultManagementJobReportPreparationErrorEvent
+
+FaultManagementJobReportPreparationErrorEvent *-->"1" FaultManagementJobReportPreparationErrorEventPayload : event
+
+class FaultManagementJobReportPreparationErrorEventPayload {
+    href: string
+    id*: string
+    reportPreparationFailedReason*: string
+}
+
+class FaultManagementJobProcessEvent {
+    eventType*: FaultManagementJobProcessEventType
+}
+Event <|-r- FaultManagementJobProcessEvent
+
+FaultManagementJobProcessEvent *-d->"1" FaultManagementJobProcessEventPayload : event
+
+class FaultManagementJobProcessEventPayload {
+    href: string
+    id*: string
+}
+
+class FaultManagementReportEvent {
+    eventType*: FaultManagementReportEventType
+}
+Event <|-l- FaultManagementReportEvent
+
+FaultManagementReportEvent *-u->"1" FaultManagementReportEventPayload : event
+
+class FaultManagementReportEventPayload {
+    href: string
+    id*: string
+}
+
+enum FaultManagementReportEventType {
+    faultManagementReportCreateEvent
+    faultManagementReportStateChangeEvent
+}
+
+enum FaultManagementJobProcessEventType {
+    cancelFaultManagementJobStateChangeEvent
+    modifyFaultManagementJobStateChangeEvent
+}
+
+enum FaultManagementJobEventType {
+    faultManagementJobCreateEvent
+    faultManagementJobStateChangeEvent
+    faultManagementJobAttributeValueChangeEvent
+}
+
+enum FaultManagementJobReportReadyEventType {
+    faultManagementJobReportReadyEvent
+}
+
+enum FaultManagementJobReportPreparationErrorEventType {
+    faultManagementJobReportPreparationErrorEvent
+}
+
+@enduml

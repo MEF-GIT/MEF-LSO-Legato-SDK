@@ -2,20 +2,16 @@
 
 class PerformanceReportComplexQuery {
 
-    consumingApplicationId: string
-    creationDate: date-time
+    creationDate*: date-time
     description: string
-    granularity: Interval
-    outputFormat: OutputFormat
-    producingApplicationId: string
-    resultFormat: ResultFormat
-    state: PerformanceReportStateType
+    lastModifiedDate: date-time
+    state*: PerformanceReportStateType
 }
 
-PerformanceReportComplexQuery *--> PerformanceJobRef : performanceJob
-PerformanceReportComplexQuery *--> PerformanceReportRef : performanceReport
-PerformanceReportComplexQuery *--> ReportingTimeframe : reportingTimeframe
-PerformanceReportComplexQuery *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+PerformanceReportComplexQuery *-->"1" PerformanceJobRefOrValue : performanceJob
+PerformanceReportComplexQuery *-->"1" PerformanceReportRef : performanceReport
+PerformanceReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
+
 
 
 class PerformanceReportComplexQuery_Create {
@@ -23,8 +19,12 @@ class PerformanceReportComplexQuery_Create {
     consumingApplicationId: string
     creationDate.gt: date-time
     creationDate.lt: date-time
+    description: string
     granularity: Interval
+    lastModifiedDate.gt: date-time
+    lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
+    performanceJobId: string
     producingApplicationId: string
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
@@ -34,8 +34,8 @@ class PerformanceReportComplexQuery_Create {
     state: PerformanceReportStateType
 }
 
-PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
-PerformanceReportComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+PerformanceReportComplexQuery_Create *-->"0..1" MonitoredObjectId : monitoredObjectId
+PerformanceReportComplexQuery_Create *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
 
 
 @enduml

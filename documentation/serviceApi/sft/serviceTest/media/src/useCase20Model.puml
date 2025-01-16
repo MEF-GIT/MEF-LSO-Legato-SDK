@@ -1,0 +1,21 @@
+@startuml useCase20Model
+
+class ResumeTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+ResumeTestJob_Find *-->"1" TestJobRef : testJob
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+    rejected
+}
+
+@enduml

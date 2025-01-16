@@ -6,15 +6,22 @@ hide footbox
 participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
-B -> S : POST {{baseUrl}}/suspendPerformanceJob (SuspendPerformanceJob_Create)
+entity "PerformanceJob" as PJ
+activate PJ
 
-S -> S : basic validation
-S -> S : assign id
-S -> S : state: acknowledged
-alt successful inquiry
-    B <-- S : 201 SuspendPerformanceJob with {{id}}
-else validation or internal problem
-    B <-- S: 4xx/5xx : error response
+note over PJ: PerformanceJob in `inProgress`
+
+B -> S : POST {{baseUrl}}/performanceJob/{{id}}/suspend request
+
+S -> S : find PerformanceJob by id
+S -> S : check PerformanceJob status
+S -> PJ : (causes status change)
+PJ -> PJ: status: suspended 
+
+B <-- S : 204 Suspended
+
+opt
+    PJ -> B: POST performanceJobStateChangeEvent
 end
 
 @enduml

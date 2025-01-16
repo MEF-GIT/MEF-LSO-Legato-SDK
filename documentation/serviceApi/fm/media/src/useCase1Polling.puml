@@ -1,0 +1,27 @@
+@startuml useCase1Polling
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+B -> S : POST {{baseUrl}}/faultManagementJob (FaultManagementJob_Create)
+S -> S : basic validation
+
+alt successful inquiry
+  S --> B : 201 FaultManagementJob with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until FaultManagementJob in Scheduled/In-Progress/\nRejected/ResourceUnavailable state
+      B -> S :   GET {{baseUrl}}/faultManagementJob/{{id}}
+      return 200 FaultManagementJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+
+@enduml

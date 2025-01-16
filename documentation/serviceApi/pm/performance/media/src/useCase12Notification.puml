@@ -15,7 +15,7 @@ alt succesful inquiry
   S --> B: 201 CancelPerformanceJob with {{id}}, `acknowledged` state 
   ...
 
-  group loop [until Cancel Performance Job in terminal state]
+  group loop [until CancelPerformanceJob in terminal state]
       S -> B: {{callbackUrl}}/listener/cancelPerformanceJobStateChangeEvent ({{id}})
       B --> S: 204 confirmation
       B -> S:   GET {{baseUrl}}/cancelPerformanceJob/{{id}}

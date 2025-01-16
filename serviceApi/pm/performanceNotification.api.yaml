@@ -4,7 +4,7 @@ info:
     **This file forms part of MEF W143**
 
     **This API implements part of Business Requirements & Use Cases described 
-    in MEF W133.1**
+    in MEF W133.1.**
 
     **This specification represents MEF work in progress and is subject to
     change.**
@@ -18,29 +18,31 @@ info:
     List of supported use cases:
     - Send Event Notification
 
-    Copyright 2022 MEF Forum and its contributors
+    Copyright 2024 MEF Forum and its contributors
 
-    This file includes content based on the TM Forum Performance Management API (TMF628
-    v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,
+    This file includes content based on the TM Forum Performance Management API 
+    (TMF628 v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,
     which is licensed by the TM Forum under the Apache License version 2.0.
     Such content has been modified by the MEF Forum and its contributors.
   title: Performance Monitoring Notification
-  version: 2.0.0-RC
+  version: 3.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v2/'
+  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v3/'
     variables:
       serverBase:
         default: mef.net
         description: The base of Buyer/Client's URL.
 tags:
   - description: >-
-      The Buyer/Client's endpoint to send particular event types notifications to.
+      The Buyer/Client's endpoint to send particular event types 
+      notifications to.
     name: Notification listeners
 paths:
   /listener/performanceJobCreateEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobCreateEvent notification
+        Client listener for receiving the performanceJobCreateEvent
+        notification.
       operationId: performanceJobCreateEvent
       requestBody:
         content:
@@ -82,13 +84,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Job Create Notification endpoint
+      summary: Performance Job Create Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobStateChangeEvent notification
+        Client listener for receiving the performanceJobStateChangeEvent 
+        notification.
       operationId: performanceJobStateChangeEvent
       requestBody:
         content:
@@ -130,13 +133,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Job State Change Notification endpoint
+      summary: Performance Job State Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceJobAttributeValueChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobAttributeValueChangeEvent notification
+        Client listener for receiving the performanceJobAttributeValueChangeEvent 
+        notification.
       operationId: performanceJobAttributeValueChangeEvent
       requestBody:
         content:
@@ -178,13 +182,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Job Attribute Value Change Notification endpoint
+      summary: Performance Job Attribute Value Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceJobReportReadyEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobReportReadyEvent notification
+        Client listener for receiving the performanceJobReportReadyEvent 
+        notification.
       operationId: performanceJobReportReadyEvent
       requestBody:
         content:
@@ -226,13 +231,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Job Report Ready Notification endpoint
+      summary: Performance Job Report Ready Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceJobReportPreparationErrorEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobReportPreparationErrorEvent notification
+        Client listener for receiving the 
+        performanceJobReportPreparationErrorEvent notification.
       operationId: performanceJobReportPreparationErrorEvent
       requestBody:
         content:
@@ -274,13 +280,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Job Report Preparation Error Notification endpoint
+      summary: Performance Job Report Preparation Error Notification endpoint.
       tags:
         - Notification listeners
   /listener/cancelPerformanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the cancelPerformanceJobStateChangeEvent notification
+        Client listener for receiving the cancelPerformanceJobStateChangeEvent 
+        notification.
       operationId: cancelPerformanceJobStateChangeEvent
       requestBody:
         content:
@@ -322,13 +329,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Cancel Performance Job State Change Notification endpoint
+      summary: Cancel Performance Job State Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/modifyPerformanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the modifyPerformanceJobStateChangeEvent notification
+        Client listener for receiving the modifyPerformanceJobStateChangeEvent 
+        notification.
       operationId: modifyPerformanceJobStateChangeEvent
       requestBody:
         content:
@@ -370,109 +378,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Modify Performance Job State Change Notification endpoint
-      tags:
-        - Notification listeners
-  /listener/resumePerformanceJobStateChangeEvent:
-    post:
-      description: >-
-        Client listener for receiving the resumePerformanceJobStateChangeEvent notification
-      operationId: resumePerformanceJobStateChangeEvent
-      requestBody:
-        content:
-          application/json;charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/PerformanceJobProcessEvent'
-        description: The event data
-        required: true
-      responses:
-        '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
-          description: Bad Request
-        '401':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error401'
-          description: Unauthorized
-        '403':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error403'
-          description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
-        '500':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error500'
-          description: Internal Server Error
-      summary: Resume Performance Job State Change Notification endpoint
-      tags:
-        - Notification listeners
-  /listener/suspendPerformanceJobStateChangeEvent:
-    post:
-      description: >-
-        Client listener for receiving the suspendPerformanceJobStateChangeEvent notification
-      operationId: suspendPerformanceJobStateChangeEvent
-      requestBody:
-        content:
-          application/json;charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/PerformanceJobProcessEvent'
-        description: The event data
-        required: true
-      responses:
-        '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
-          description: Bad Request
-        '401':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error401'
-          description: Unauthorized
-        '403':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error403'
-          description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
-        '500':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error500'
-          description: Internal Server Error
-      summary: Suspend Performance Job State Change Notification endpoint
+      summary: Modify Performance Job State Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceProfileCreateEvent:
     post:
       description: >-
-        Client listener for receiving the performanceProfileCreateEvent notification
+        Client listener for receiving the performanceProfileCreateEvent 
+        notification.
       operationId: performanceProfileCreateEvent
       requestBody:
         content:
@@ -514,61 +427,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Profile Create Notification endpoint
-      tags:
-        - Notification listeners
-  /listener/performanceProfileStateChangeEvent:
-    post:
-      description: >-
-        Client listener for receiving the performanceProfileStateChangeEvent notification
-      operationId: performanceProfileStateChangeEvent
-      requestBody:
-        content:
-          application/json;charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/PerformanceProfileEvent'
-        description: The event data
-        required: true
-      responses:
-        '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
-        '400':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
-          description: Bad Request
-        '401':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error401'
-          description: Unauthorized
-        '403':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error403'
-          description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
-        '500':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error500'
-          description: Internal Server Error
-      summary: Performance Profile State Change Notification endpoint
+      summary: Performance Profile Create Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceProfileAttributeValueChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceProfileAttributeValueChangeEvent notification
+        Client listener for receiving the 
+        performanceProfileAttributeValueChangeEvent notification.
       operationId: performanceProfileAttributeValueChangeEvent
       requestBody:
         content:
@@ -610,13 +476,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Profile Attribute Value Change Notification endpoint
+      summary: Performance Profile Attribute Value Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceProfileDeleteEvent:
     post:
       description: >-
-        Client listener for receiving the performanceProfileDeleteEvent notification
+        Client listener for receiving the performanceProfileDeleteEvent 
+        notification.
       operationId: performanceProfileDeleteEvent
       requestBody:
         content:
@@ -658,13 +525,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Profile Delete Notification endpoint
+      summary: Performance Profile Delete Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceReportCreateEvent:
     post:
       description: >-
-        Client listener for receiving the performanceReportCreateEvent notification
+        Client listener for receiving the performanceReportCreateEvent 
+        notification.
       operationId: performanceReportCreateEvent
       requestBody:
         content:
@@ -706,13 +574,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Report Create Notification endpoint
+      summary: Performance Report Create Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceReportStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceReportStateChangeEvent notification
+        Client listener for receiving the performanceReportStateChangeEvent 
+        notification.
       operationId: performanceReportStateChangeEvent
       requestBody:
         content:
@@ -754,165 +623,162 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Report State Change Notification endpoint
+      summary: Performance Report State Change Notification endpoint.
       tags:
         - Notification listeners
 components:
   schemas:
     Error:
+      type: object
       description: >
-        Standard Class used to describe API response error
+        Standard Class used to describe API response error.
 
         Not intended to be use directly. The `code` in the HTTP header is used
         as a discriminator for the type of error returned in runtime.
       properties:
         reason:
+          type: string
           description: >-
             Text that explains the reason for error. This can be shown to a
             client user.
           maxLength: 255
-          type: string
         message:
+          type: string
           description: >-
             Text that provide mode details and corrective actions related to
             the error. This can be shown to a client user.
-          type: string
         referenceError:
-          description: url pointing to documentation describing the error
-          format: uri
           type: string
+          description: url pointing to documentation describing the error.
+          format: uri
       required:
         - reason
-      type: object
     Error400:
       allOf:
         - $ref: '#/components/schemas/Error'
-        - properties:
+        - type: object
+          properties:
             code:
               $ref: '#/components/schemas/Error400Code'
+              description: Error code
           required:
             - code
-          type: object
       description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
+      type: string
       description: >-
         One of the following error codes:
-
         - missingQueryParameter: The URI is missing a required query-string
-        parameter
-
+        parameter.
         - missingQueryValue: The URI is missing a required query-string
-        parameter value
-
+        parameter value.
         - invalidQuery: The query section of the URI is invalid.
-
-        - invalidBody: The request has an invalid body
+        - invalidBody: The request has an invalid body.
       enum:
         - missingQueryParameter
         - missingQueryValue
         - invalidQuery
         - invalidBody
-      type: string
     Error401:
       allOf:
         - $ref: '#/components/schemas/Error'
-        - properties:
+        - type: object
+          properties:
             code:
               $ref: '#/components/schemas/Error401Code'
+              description: Error code
           required:
             - code
-          type: object
       description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
+      type: string
       description: |-
         One of the following error codes:
         - missingCredentials: No credentials provided.
-        - invalidCredentials: Provided credentials are invalid or expired
+        - invalidCredentials: Provided credentials are invalid or expired.
       enum:
         - missingCredentials
         - invalidCredentials
-      type: string
     Error403:
       allOf:
         - $ref: '#/components/schemas/Error'
-        - properties:
+        - type: object
+          properties:
             code:
               $ref: '#/components/schemas/Error403Code'
+              description: Error code
           required:
             - code
-          type: object
       description: 'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
     Error403Code:
+      type: string
       description: |-
-        This code indicates that the server understood
-        the request but refuses to authorize it because
-        of one of the following error codes:
-        - accessDenied: Access denied
-        - forbiddenRequester: Forbidden requester
-        - tooManyUsers: Too many users
+        This code indicates that the server understood the request but refuses 
+        to authorize it because of one of the following error codes:
+        - accessDenied: Access denied.
+        - forbiddenRequester: Forbidden requester.
+        - tooManyUsers: Too many users.
       enum:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-      type: string
     Error408:
       allOf:
         - $ref: '#/components/schemas/Error'
-        - properties:
+        - type: object
+          properties:
             code:
+              type: string
               description: >-
                 List of supported error codes:
-
                 - timeOut: Request Time-out - indicates that the server did not
                 receive a complete request message within the time that it was
                 prepared to wait.
               enum:
                 - timeOut
-              type: string
           required:
             - code
-          type: object
       description: 'Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)'
     Error500:
       allOf:
         - $ref: '#/components/schemas/Error'
-        - properties:
+        - type: object
+          properties:
             code:
+              type: string
               description: >-
                 One of the following error codes:
-
                 - internalError: Internal server error - the server encountered
                 an unexpected condition that prevented it from fulfilling the
                 request.
               enum:
                 - internalError
-              type: string
           required:
             - code
-          type: object
       description: >-
         Internal Server Error.
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
+      type: object
       description: >-
         Event class is used to describe the information structure used for
         notification.
       properties:
         eventId:
+          type: string
           description: Id of the event
-          type: string
         eventTime:
-          description: Date-time when the event occurred
-          format: date-time
           type: string
+          description: Date-time when the event occurred.
+          format: date-time
       required:
         - eventId
         - eventTime
-      type: object
     PerformanceJobEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceJobEventType'
             event:
@@ -920,45 +786,45 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceJobEventPayload:
+      type: object
       description: >-
         The identifier of the Performance Job being the subject to
         this event and its state.
       properties:
         href:
-          description: Hyperlink to access the Performance Job
           type: string
+          description: Hyperlink to access the Performance Job.
         id:
-          description: ID of the Performance Job
           type: string
+          description: ID of the Performance Job.
         state:
-          description: State of the Performance Job
           type: string
+          description: State of the Performance Job.
           enum:
             - acknowledged
             - cancelled
             - completed
-            - in-progress
+            - inProgress
             - pending
             - rejected
-            - resource-unavailable
+            - resourcesUnavailable
             - scheduled
             - suspended
       required:
         - id
-      type: object
     PerformanceJobEventType:
+      type: string
       description: Indicates the type of Performance Job event.
       enum:
         - performanceJobCreateEvent
         - performanceJobStateChangeEvent
         - performanceJobAttributeValueChangeEvent
-      type: string
     PerformanceJobReportReadyEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceJobReportReadyEventType'
             event:
@@ -966,37 +832,37 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceJobReportReadyEventPayload:
+      type: object
       description: >-
-        The identifier of the Performance Job and Report ID being the subjects of
-        this event.
+        The identifier of the Performance Job and Report ID being the subjects 
+        of this event.
       properties:
         href:
-          description: Hyperlink to access the Performance Job
           type: string
+          description: Hyperlink to access the Performance Job.
         id:
-          description: ID of the Performance Job
           type: string
+          description: ID of the Performance Job.
         reportHref:
-          description: Hyperlink to access the Performance Report
           type: string
+          description: Hyperlink to access the Performance Report.
         reportId:
-          description: ID of generated Performance Report
           type: string
+          description: ID of generated Performance Report.
       required:
         - id
         - reportId
-      type: object
     PerformanceJobReportReadyEventType:
+      type: string
       description: Indicates the type of Performance Job event.
       enum:
         - performanceJobReportReadyEvent
-      type: string
     PerformanceJobReportPreparationErrorEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventType'
             event:
@@ -1004,34 +870,34 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceJobReportPreparationErrorEventPayload:
+      type: object
       description: >-
         The identifier of the Performance Job being the subject of
         this event and reason for report preparation failure.
       properties:
         href:
-          description: Hyperlink to access the Performance Job
           type: string
+          description: Hyperlink to access the Performance Job.
         id:
-          description: ID of the Performance Job
           type: string
+          description: ID of the Performance Job.
         reportPreparationFailedReason:
-          description: Reason for Report preparation failure
           type: string
+          description: Reason for Report preparation failure.
       required:
         - id
         - reportPreparationFailedReason
-      type: object
     PerformanceJobReportPreparationErrorEventType:
+      type: string
       description: Indicates the type of Performance Job event.
       enum:
         - performanceJobReportPreparationErrorEvent
-      type: string
     PerformanceJobProcessEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceJobProcessEventType'
             event:
@@ -1039,37 +905,33 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceJobProcessEventPayload:
+      type: object
       description: |-
         The identifier of the Performance Job Process, including: 
           - Modify Performance Monitoring Job
           - Cancel Performance Monitoring Job
-          - Suspend Performance Monitoring Job
-          - Resume Performance Monitoring Job
         being the subject of this event.
       properties:
         href:
-          description: Hyperlink to access the Performance Job Process
           type: string
+          description: Hyperlink to access the Performance Job Process.
         id:
-          description: ID of the Performance Job Process
           type: string
+          description: ID of the Performance Job Process.
       required:
         - id
-      type: object
     PerformanceJobProcessEventType:
+      type: string
       description: Indicates the type of Performance Job Process event.
       enum:
         - cancelPerformanceJobStateChangeEvent
         - modifyPerformanceJobStateChangeEvent
-        - resumePerformanceJobStateChangeEvent
-        - suspendPerformanceJobStateChangeEvent
-      type: string
     PerformanceProfileEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceProfileEventType'
             event:
@@ -1078,33 +940,32 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceProfileEventPayload:
+      type: object
       description: >-
         The identifier of the Performance Profile being the subject of
         this event.
       properties:
         href:
-          description: Hyperlink to access the Performance Profile
           type: string
+          description: Hyperlink to access the Performance Profile.
         id:
-          description: ID of the Performance Profile
           type: string
+          description: ID of the Performance Profile.
       required:
         - id
-      type: object
     PerformanceProfileEventType:
+      type: string
       description: Indicates the type of Performance Profile event.
       enum:
-        - performanceProfileCreateEvent
-        - performanceProfileStateChangeEvent
-        - performanceProfileDeleteEvent
         - performanceProfileAttributeValueChangeEvent
-      type: string
+        - performanceProfileCreateEvent
+        - performanceProfileDeleteEvent
     PerformanceReportEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - properties:
+        - type: object
+          properties:
             eventType:
               $ref: '#/components/schemas/PerformanceReportEventType'
             event:
@@ -1112,24 +973,23 @@ components:
           required:
             - event
             - eventType
-          type: object
     PerformanceReportEventPayload:
+      type: object
       description: >-
         The identifier of the Performance Report being the subject of
         this event.
       properties:
         href:
-          description: Hyperlink to access the Performance Report
           type: string
+          description: Hyperlink to access the Performance Report.
         id:
-          description: ID of the Performance Report
           type: string
+          description: ID of the Performance Report.
       required:
         - id
-      type: object
     PerformanceReportEventType:
+      type: string
       description: Indicates the type of Performance Report event.
       enum:
         - performanceReportCreateEvent
         - performanceReportStateChangeEvent
-      type: string

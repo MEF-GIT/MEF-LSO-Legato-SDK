@@ -2,7 +2,6 @@
 
 class PerformanceProfile_Update {
 
-    buyerProfileId: string
     description: string
     granularity: Interval
     jobPriority: integer
@@ -16,7 +15,7 @@ enum Interval {
     10 milliseconds
     100 milliseconds
     1 second
-    10 second
+    10 seconds
     1 minute
     5 minutes
     15 minutes
@@ -25,7 +24,6 @@ enum Interval {
     24 hours
     1 month
     1 year
-    not applicable
 }
 
 enum OutputFormat {
@@ -38,8 +36,8 @@ enum OutputFormat {
 
 enum ResultFormat {
 
-    payload
     attachment
+    payload
 }
 
 @enduml

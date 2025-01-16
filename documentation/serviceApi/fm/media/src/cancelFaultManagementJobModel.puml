@@ -1,0 +1,34 @@
+@startuml cancelFaultManagementJobModel
+
+class CancelFaultManagementJob {
+
+    cancellationDeniedReason: string
+    creationDate*: date-time
+    href: string
+    id*: string
+    state*: FaultManagementJobProcessStateType
+}
+CancelFaultManagementJob_Common <|-- CancelFaultManagementJob
+
+
+
+class CancelFaultManagementJob_Common {
+    cancellationReason: string
+}
+
+CancelFaultManagementJob_Common *-->"1" FaultManagementJobRef : faultManagementJob
+
+
+class CancelFaultManagementJob_Create {
+
+}
+CancelFaultManagementJob_Common <|-- CancelFaultManagementJob_Create
+
+enum FaultManagementJobProcessStateType {
+    acknowledged
+    completed
+    inProgress
+    rejected
+}
+
+@enduml

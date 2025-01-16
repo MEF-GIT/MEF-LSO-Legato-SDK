@@ -1,0 +1,77 @@
+@startuml testJobWithoutTestProfileModel
+
+enum RecurencePeriodType {
+    none
+    hourly
+    daily
+    weekly
+    monthly
+}
+enum TestJobStateType{
+    acknowledged
+    canceled
+    completed
+    in_progress
+    pending
+    rejected
+    resource_unavailable
+    scheduled
+    suspended
+}
+
+class TestJob_Common {
+    name: string
+    description: string
+    startDateTime: date-time
+    endDateTime: date-time
+    recurencePeriod: RecurencePeriodType
+    validFor: date-time
+}
+class TestJob {
+    id: string
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    state: TestJobStateType
+}
+class TestJob_Create {
+
+}
+class TestMeasureAttributes {
+    @type*: string
+}
+class TestProfileRefOrValue {
+    @type*: string
+}
+class ServiceRef {
+    id*: string
+    name: string
+}
+class TestProfileValue {
+
+    description: string
+    relatedServiceSpecificationId: string
+}
+class ServiceSpecificTestProfileAttributes {
+    @type*: string
+}
+class RelatedContact {
+
+    name: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    emailAddress: string
+    postalAddress: string
+    organization: string
+}
+
+
+TestJob_Common <|-- TestJob
+TestJob_Common <|-- TestJob_Create
+TestJob_Common *-->"1" ServiceRef : relatedService
+TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
+TestJob_Common *-->"1" TestMeasureAttributes : testMeasureAttributes
+TestProfileRefOrValue <|-- TestProfileValue
+TestProfileValue *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestProfileValue *-->"*" RelatedContact : relatedContact
+
+@enduml

@@ -1,0 +1,75 @@
+@startuml performanceMonitoringDataModelPart3
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class PerformanceProfile {
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: PerformanceProfileStateType
+}
+PerformanceProfile_Common <|-- PerformanceProfile
+
+class PerformanceProfileRef {
+    performanceProfileHref: string
+    performanceProfileId*: string
+}
+PerformanceProfileRefOrValue <|-- PerformanceProfileRef
+
+class PerformanceProfileRefOrValue {
+    @type*: string
+}
+
+enum PerformanceProfileStateType {
+    active
+    deleted
+}
+
+class PerformanceProfileValue {
+    granularity*: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    resultFormat*: ResultFormat
+}
+PerformanceProfileRefOrValue <|-- PerformanceProfileValue
+
+class PerformanceProfile_Common {
+    description: string
+    granularity*: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    resultFormat*: ResultFormat
+}
+
+class PerformanceProfile_Create {
+}
+PerformanceProfile_Common <|-- PerformanceProfile_Create
+
+class PerformanceProfile_Find {
+    creationDate*: date-time
+    description: string
+    granularity*: Interval
+    id*: string
+    jobPriority: integer
+    jobType*: JobType
+    reportingPeriod*: Interval
+    state*: PerformanceProfileStateType
+}
+
+class PerformanceProfile_Update {
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+@enduml

@@ -1,16 +1,16 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:carrier-ethernet-performance-monitoring-configuration:v0.0.1:all
+$id: urn:mef:lso:spec:legato:carrier-ethernet-performance-monitoring-configuration:v0.0.2:all
 x-mef-target: ServicePayloadSpecificAttributes
 description: Carrier Ethernet Performance Monitoring Configuration Schema.
 title: 
     MEF LSO Legato - Carrier Ethernet Performance Monitoring Configuration
-    # MEF Forum - Date: 20230622  Edit-level: 
+    # MEF Forum - Date: 20241220  Edit-level: 
     # File: carrierEthernet/faultAndPerformanceManagement/carrierEthernetPerformanceMonitoringConfiguration.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2023. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -58,8 +58,6 @@ properties:
   description: >-
     Data type representing the Carrier Ethernet Layer 2 frame performance statistics configuration
     for receive and transmit.
-  interface:
-    type: string
   rxEthIINum:
     description: Number of frames encapsulated by using Ethernet II.
     type: boolean
@@ -115,10 +113,14 @@ properties:
     description: Number of frames transparently sent.
     type: boolean
   utilizationIn:
+    description: Enable or disable collection of input Ethernet bandwidth utilization on monitored interface.
     type: boolean
   utilizationOut:
+    description: Enable or disable collection of output Ethernet bandwidth utilization on monitored interface.
     type: boolean
   peakUtilizationIn:
+    description: Enable or disable collection of input peak Ethernet bandwidth utilization on monitored interface.
     type: boolean
   peakUtilizationOut:
+    description: Enable or disable collection of output peak Ethernet bandwidth utilization on monitored interface.
     type: boolean

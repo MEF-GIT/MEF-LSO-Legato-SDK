@@ -1,0 +1,60 @@
+@startuml extensionPattern
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+class FaultManagementJob {
+
+    id: string 
+    href: string 
+    jobType: JobType
+    reportingPeriod: Interval
+    scheduleDefinition: ScheduleDefinition
+    <<... attributes are skipped ...>>
+}
+
+
+class ServicePayloadSpecificAttributes {
+    @type*: string <<discriminator>>
+}
+
+
+FaultManagementJob *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class urn:mef:lso:spec:legato:ip-fault-management-test-configuration:v0.0.1:all <<ServicePayloadSpecificAttributes>> {
+
+    <<... attributes are skipped ...>>
+}
+ServicePayloadSpecificAttributes <|-- "urn:mef:lso:spec:legato:ip-fault-management-test-configuration:v0.0.1:all"
+
+
+
+class FaultManagementReport {
+
+    id: string 
+    href: string 
+    <<... attributes are skipped ...>>
+}
+
+class ReportContentItem {
+
+}
+
+class ResultPayload {
+    @type*: string <<discriminator>>
+}
+
+FaultManagementReport *-->"0..*" ReportContentItem : reportContent
+ReportContentItem -->"*" ResultPayload : measurementDataPoints
+
+class urn:mef:lso:spec:legato:ip-fault-management-test-results:v0.0.1:all <<ResultPayload>> {
+
+    <<... attributes are skipped ...>>
+}
+ResultPayload <|-- "urn:mef:lso:spec:legato:ip-fault-management-test-results:v0.0.1:all"
+
+@enduml

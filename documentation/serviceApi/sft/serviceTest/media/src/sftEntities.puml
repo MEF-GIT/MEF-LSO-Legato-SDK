@@ -1,0 +1,34 @@
+@startuml sftEntities
+autonumber
+
+actor "Buyer/Client" as B
+entity TestProfile as PP
+entity TestJob as PJ
+
+B -> PP: POST /testProfile request
+activate PP
+note right of PP: Test Profile is created 
+PP --> B: Created
+B -> PP: GET /testProfile request
+PP --> B: List Test Profiles
+B -> PP: PATCH /testProfile/{id} request
+note right of PP: Test Profile is updated
+PP --> B: Updated
+note left of B: Buyer/Client is getting list of Test Profiles
+B -> PP: GET /testProfile request
+PP --> B: List Test Profiles
+deactivate PP
+
+note left of PJ: Buyer/Client is creating \na Test Job based on \nPerformance Profile
+B -> PJ: POST /testJob request
+activate PJ
+PJ --> B: Created
+note right of PJ: On scheduled date
+PJ -> PJ: state: in-progress
+PJ -> PJ: collect test measure
+PJ -> PJ: state: completed
+PJ -> B: POST /testJobStateChangeEvent
+B -> PJ: GET /testJob
+PJ --> B: Test Job content
+
+@enduml

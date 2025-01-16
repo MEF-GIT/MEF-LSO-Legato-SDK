@@ -1,0 +1,42 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class CarrierEthernetOvc {
+    identifier: String[1]
+    ovcType: ConnectionType[1]
+    maximumNumberOfUniOvcEndPoints: Integer[1]
+    maximumNumberOfEnniOvcEndPoints: Integer[1]
+    maximumFrameSize: Integer[1]
+    ceVlanIdPreservation: VlanIdPreservation[1]
+    ceVlanPcpPreservation: EnabledDisabled[1]
+    ceVlanDeiPreservation: EnabledDisabled[1]
+    svlanPcpPreservation: EnabledDisabled[1]
+    svlanDeiPreservation: EnabledDisabled[1]
+    listOfCosNames: String[0..*]
+    carrierEthernetServiceLevelSpecification: CarrierEthernetServiceLevelSpecification[0..*]
+    frameDisposition: FrameDisposition[1]
+    availableMegLevel: MegLevel[1]
+    l2cpAddressSet: L2cpAddressSet[1]
+}
+
+
+MefServiceConfiguration <|-- CarrierEthernetOvc
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

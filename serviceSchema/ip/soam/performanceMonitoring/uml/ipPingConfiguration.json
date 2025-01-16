@@ -1,0 +1,82 @@
+@startjson
+{
+    "buyerJobId" : "Performance-Job-00-11-22",
+    "description" : "IP PING Performance Job",
+    "monitoredObjectId" : {
+      "@type" : "MonitoredObjectId",
+      "atType" : "Entity"
+    },
+    "performanceProfile" : {
+      "@type" : "PerformanceProfileRef",
+      "atType" : null,
+      "performanceProfileId" : "100"
+    },
+    "scheduleDefinition" : {
+      "scheduleDefinitionStartTime" : {
+        "offset" : {
+          "totalSeconds" : -21600,
+          "id" : "-06:00",
+          "rules" : {
+            "fixedOffset" : true,
+            "transitions" : [ ],
+            "transitionRules" : [ ]
+          }
+        },
+        "month" : "JANUARY",
+        "dayOfYear" : 2,
+        "dayOfWeek" : "THURSDAY",
+        "nano" : 600000000,
+        "year" : 2025,
+        "monthValue" : 1,
+        "dayOfMonth" : 2,
+        "hour" : 7,
+        "minute" : 50,
+        "second" : 38
+      },
+      "scheduleDefinitionEndTime" : {
+        "offset" : {
+          "totalSeconds" : -21600,
+          "id" : "-06:00",
+          "rules" : {
+            "fixedOffset" : true,
+            "transitions" : [ ],
+            "transitionRules" : [ ]
+          }
+        },
+        "month" : "JANUARY",
+        "dayOfYear" : 2,
+        "dayOfWeek" : "THURSDAY",
+        "nano" : 601000000,
+        "year" : 2025,
+        "monthValue" : 1,
+        "dayOfMonth" : 2,
+        "hour" : 7,
+        "minute" : 50,
+        "second" : 38
+      },
+      "scheduleDefinitionHourRange" : null,
+      "weeklyScheduledDefinition" : null
+    },
+    "servicePayloadSpecificAttributes" : {
+      "@type" : "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+      "atType" : null,
+      "vlan" : 100,
+      "sourceIpAddress" : {
+        "ipv4" : [ "192.168.1.112" ],
+        "ipv6" : null
+      },
+      "destinationIpAddress" : {
+        "ipv4" : [ "192.168.1.115" ],
+        "ipv6" : null
+      },
+      "transmissionInterval" : {
+        "timeDurationValue" : 10,
+        "timeDurationUnits" : "MIN"
+      },
+      "count" : 100,
+      "mask" : "/24",
+      "packetSize" : 500
+    }
+  }
+
+@endjson

@@ -1,0 +1,68 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+set namespaceSeparator none
+
+class PerformanceReport {
+
+    id: string 
+    href: string 
+<<...attributes are skipped...>>
+}
+
+class ReportContent {
+    
+}
+
+
+PerformanceReport *-->"0..1" ReportContent: reportContent
+
+enum Protocol {
+    ARP 
+    IPV4 
+    IPV6
+    }
+class ResultPayload {
+    @type*: string <<discriminator>>
+}
+
+ReportContent *-->"*" ResultPayload: measurementDataPoints
+
+class IpPerformanceMonitoringResults {
+    protocol: Protocol[1]
+    packetsIn: integer[1] 
+    charsIn: integer[1]
+    packetsOut: integer[1]
+    charsOut: integer[1]
+    utilizationIn: Percentage[1]
+    utilizationOut: Percentage[1]
+    peakUtilizationIn: Percentage[1]
+    peakUtilizationOut: Percentage[1]
+}
+
+class BfdReport {
+    <<...attributes are skipped...>>
+}
+
+class PingReport {
+    <<...attributes are skipped...>>
+}
+
+class TwampReport {
+    <<...attributes are skipped...>>
+}
+
+class TracerouteReport {
+    <<...attributes are skipped...>>
+}
+
+ResultPayload <|-- IpPerformanceMonitoringResults
+ResultPayload <|-- BfdReport
+ResultPayload <|-- PingReport
+ResultPayload <|-- TwampReport
+ResultPayload <|-- TracerouteReport
+
+@enduml

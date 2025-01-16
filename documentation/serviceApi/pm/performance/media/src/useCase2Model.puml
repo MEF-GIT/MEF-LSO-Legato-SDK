@@ -2,14 +2,13 @@
 
 class PerformanceProfile_Find {
 
-    buyerProfileId: string
     creationDate*: date-time
     description: string
-    granularity: Interval
+    granularity*: Interval
     id*: string
     jobPriority: integer
     jobType*: JobType
-    reportingPeriod: Interval
+    reportingPeriod*: Interval
     state*: PerformanceProfileStateType
 }
 
@@ -18,7 +17,7 @@ enum Interval {
     10 milliseconds
     100 milliseconds
     1 second
-    10 second
+    10 seconds
     1 minute
     5 minutes
     15 minutes
@@ -27,7 +26,6 @@ enum Interval {
     24 hours
     1 month
     1 year
-    not applicable
 }
 
 enum JobType {
@@ -39,10 +37,8 @@ enum JobType {
 
 enum PerformanceProfileStateType {
 
-    acknowledged
     active
     deleted
-    rejected
 }
 
 @enduml

@@ -1,0 +1,98 @@
+@startjson
+{
+    "coordinatedAction" : [ {
+      "coordinatedActionDelay" : {
+        "amount" : 10,
+        "units" : "milliSeconds"
+      },
+      "coordinationDependency" : "startToFinish",
+      "orderId" : null
+    } ],
+    "note" : null,
+    "orderRelationship" : null,
+    "relatedContactInformation" : null,
+    "requestedCompletionDate" : {
+      "offset" : {
+        "totalSeconds" : -18000,
+        "id" : "-05:00",
+        "rules" : {
+          "fixedOffset" : true,
+          "transitions" : [ ],
+          "transitionRules" : [ ]
+        }
+      },
+      "year" : 2024,
+      "monthValue" : 10,
+      "dayOfMonth" : 7,
+      "hour" : 11,
+      "minute" : 37,
+      "second" : 41,
+      "month" : "OCTOBER",
+      "dayOfWeek" : "MONDAY",
+      "dayOfYear" : 281,
+      "nano" : 655000000
+    },
+    "requestedStartDate" : {
+      "offset" : {
+        "totalSeconds" : -18000,
+        "id" : "-05:00",
+        "rules" : {
+          "fixedOffset" : true,
+          "transitions" : [ ],
+          "transitionRules" : [ ]
+        }
+      },
+      "year" : 2024,
+      "monthValue" : 10,
+      "dayOfMonth" : 7,
+      "hour" : 11,
+      "minute" : 37,
+      "second" : 41,
+      "month" : "OCTOBER",
+      "dayOfWeek" : "MONDAY",
+      "dayOfYear" : 281,
+      "nano" : 655000000
+    },
+    "serviceOrderItem" : [ {
+      "id" : "MEF-SO-CE",
+      "action" : "add",
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v0.0.2:all",
+          "atType" : "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v0.0.2:all",
+          "identifier" : "CarrierEthernetOperatorUni-1",
+          "physicalLayer" : [ {
+            "physicalLink" : "1000BASE_CX"
+          } ],
+          "synchronousMode" : [ "DISABLED" ],
+          "aggregationLinkMap" : null,
+          "maximumFrameSize" : 1522,
+          "defaultCeVlanId" : 100,
+          "egressBandwidthProfile" : {
+            "cir" : {
+              "irValue" : 10,
+              "irUnits" : "GBPS"
+            }
+          },
+          "linkOam" : "DISABLED",
+          "lagLinkMeg" : "DISABLED",
+          "elmi" : "DISABLED",
+          "tokenShare" : "DISABLED",
+          "envelopes" : null,
+          "l2cpPeering" : null
+        }
+      },
+      "serviceOrderItemRelationship" : [ {
+        "orderItem" : null,
+        "relationshipType" : "INSTALL_LOCATION"
+      } ]
+    } ]
+  }
+@endjson
+

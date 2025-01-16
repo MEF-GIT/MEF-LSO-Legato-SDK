@@ -1,0 +1,20 @@
+@startuml useCase8Model
+
+class CancelFaultManagementJob_Find {
+
+    creationDate*: date-time
+    id*: string
+    state*: FaultManagementJobProcessStateType
+}
+
+CancelFaultManagementJob_Find *-->"1" FaultManagementJobRef : faultManagementJob
+
+enum FaultManagementJobProcessStateType {
+
+    acknowledged
+    completed
+    inProgress
+    rejected
+}
+
+@enduml

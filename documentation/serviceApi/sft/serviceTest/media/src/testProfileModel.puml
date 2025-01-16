@@ -1,0 +1,56 @@
+@startuml testProfileModel
+
+class TestProfile {
+    id: string 
+    creationDateTime: date-time
+    state*: TestProfileStateType
+    isAssigned: boolean
+    lastUpdate: date-time
+}
+
+class TestProfile_Common {
+    description: string
+    isBundled: boolean
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    name: string
+    validFor: date-time
+    relatedServiceSpecificationId: string
+    creationDateTime: date-time
+    lastUpdate: date-time
+}
+TestProfile_Common <|-- TestProfile_Create
+TestProfile_Common <|-- TestProfile
+
+enum TestProfileStateType {
+
+    acknowledged
+    completed
+    rejected
+}
+
+enum TestProfileLifecycleStatusType {
+    experimantal
+    pending
+    approved
+    deprecated
+}
+
+class ServiceSpecificTestProfileAttributes {
+    @type*: string
+}
+class RelatedContact {
+
+    name: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    emailAddress: string
+    postalAddress: string
+    organization: string
+}
+
+TestProfile_Common *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+TestProfile_Common *-->"*" RelatedTestProfileRef : relatedTestProfile
+
+
+@enduml

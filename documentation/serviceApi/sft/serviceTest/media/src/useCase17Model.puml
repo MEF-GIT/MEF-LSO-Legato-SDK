@@ -1,0 +1,21 @@
+@startuml useCase17Model
+
+class SuspendTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+SuspendTestJob_Find *-->"1" TestJobRef : testJob
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+    rejected
+}
+
+@enduml

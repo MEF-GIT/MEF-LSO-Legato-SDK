@@ -1,0 +1,55 @@
+@startuml extensionPattern
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecificTestProfileAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+class TestProfile {
+
+    id: string
+    href: string
+    description: string
+    name: string
+    <<... attributes are skipped ...>>
+}
+
+
+class ServiceSpecificTestProfileAttributes {
+    @type*: string <<discriminator>>
+}
+
+
+TestProfile *-->"0..1" ServiceSpecificTestProfileAttributes : servicePayloadSpecificAttributes
+
+class urn:mef:lso:spec:legato:ip-ping-configuration:v0.0.1:all <<ServiceSpecificTestProfileAttributes>> {
+
+    <<... attributes are skipped ...>>
+}
+ServiceSpecificTestProfileAttributes <|-- "urn:mef:lso:spec:legato:ip-ping-configuration:v0.0.1:all"
+
+
+
+class TestJob {
+
+    id: string 
+    href: string 
+    <<... attributes are skipped ...>>
+}
+
+class TestMeasureAttributes {
+    @type*: string <<discriminator>>
+}
+
+TestJob *-->"0..1" TestMeasureAttributes : testMeasureAttributes
+
+class urn:mef:lso:spec:legato:ip-ping-results:v0.0.1:all <<TestMeasureAttributes>> {
+
+    <<... attributes are skipped ...>>
+}
+TestMeasureAttributes <|-- "urn:mef:lso:spec:legato:ip-ping-results:v0.0.1:all"
+
+
+@enduml

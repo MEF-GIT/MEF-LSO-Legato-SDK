@@ -12,7 +12,7 @@ BUS -> SOF : POST {{baseUrl}}/serviceOrder
 SOF -> SOF : basic validation
 SOF -> SOF : assign ServiceOrder.id
 
-alt succesful inquiry
+alt successful inquiry
   SOF --> BUS : 201 ServiceOrder with {{id}} in `acknowledged` state \nServiceOrderItems in `acknowledged` state
   SOF -> BUS: {{callbackUrl}}/listener/serviceOrderCreateEvent {{id}}
   BUS --> SOF : 204 confirmation  
@@ -59,7 +59,7 @@ alt succesful inquiry
 
 
 else validation or internal problem
-  SOF --> BUS : 4xx or 5xx errorresponse
+  SOF --> BUS : 4xx or 5xx error response
 end 
 
 ...

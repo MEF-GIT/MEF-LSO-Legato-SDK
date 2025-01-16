@@ -1,0 +1,42 @@
+@startuml modifyFaultManagementJobModel
+
+class ModifyFaultManagementJob {
+
+    creationDate*: date-time
+    href: string
+    id*: string
+    modificationDeniedReason: string
+    state*: FaultManagementJobProcessStateType
+}
+ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob
+
+class ModifyFaultManagementJob_Common {
+
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    modificationReason: string
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+ModifyFaultManagementJob_Common *-l->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Common *-->"0..1" ScheduleDefinition : scheduleDefinition
+ModifyFaultManagementJob_Common *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class ModifyFaultManagementJob_Create {
+
+}
+ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob_Create
+
+enum FaultManagementJobProcessStateType {
+    acknowledged
+    completed
+    inProgress
+    rejected
+}
+
+@enduml
+

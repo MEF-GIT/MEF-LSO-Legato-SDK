@@ -1,0 +1,21 @@
+@startuml useCase53Notification
+
+hide footbox
+
+participant "Buyer/Client" as A
+participant "Seller/Server" as S
+
+participant SOF
+
+A -> S : POST {{baseUrl}}/hub with {{callbackUrl}}
+S --> A: 201 confirmation with {{id}}
+...
+SOF -> S : createAlarm
+S -> A: {{callbackUrl}}/listener/createAlarm ({{Alarm}})
+A --> S : 204 confirmation
+...
+
+A -> S : DELETE {{baseUrl}}/hub/{{id}} 
+S -->  A : 204 confirmation
+
+@enduml

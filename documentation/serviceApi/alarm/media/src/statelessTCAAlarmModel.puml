@@ -1,0 +1,84 @@
+@startuml statelessTCAAlarmModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Alarm {
+
+    alarmRaisedTime: date-time
+    externalAlarmId: string
+    isRootCause: boolean
+    probableCause: ProbableCause
+    sourceSystemId: string
+    specificProblem: string
+}
+Alarm_Common <|-- Alarm
+
+Alarm *-->"*" AlarmedObjectRef : alarmedObject
+Alarm *-->"*" Comment : comment
+Alarm *--> AlarmRef : parentAlarm
+Alarm *--> AlarmSpecificAttributes : alarmSpecificAttributes
+
+
+class AlarmRef {
+
+}
+
+
+
+class AlarmSpecificAttributes {
+
+    @type*: string
+}
+
+
+class Alarm_Common {
+
+    id*: string
+    href: uri
+    alarmChangedTime: date-time
+    alarmClearedTime: date-time
+    alarmDetails*: string
+    alarmedObjectType: string
+    alarmReportingTime*: date-time
+    alarmType*: AlarmType
+    perceivedSeverity*: PerceivedSeverity
+    plannedOutageIndicator: PlannedOutageIndicator
+    reportingSystemId: string
+    serviceAffecting: boolean
+    state*: State
+}
+
+Alarm_Common *-->"*" ServiceRef : affectedService
+Alarm_Common *-->"*" AlarmRef : correlatedAlarm
+
+
+class Alarm_Find {
+
+}
+Alarm_Common <|-- Alarm_Find
+
+
+
+class AlarmedObjectRef {
+}
+
+
+
+class Comment {
+}
+
+class TcaStatelessAlarm {
+
+    performanceMetricName: string
+    performanceMetricValue: number
+    tcaPerformanceThresholdValue: number
+    dampingFactor: number
+    numberOfPmMetricCalculationIntervals: number
+}
+AlarmSpecificAttributes <|-- TcaStatelessAlarm
+
+
+
+@enduml

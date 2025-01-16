@@ -1,0 +1,41 @@
+@startuml suspendTestJobStates
+
+' skinparam Linetype polyline
+' skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state request_validated <<choice>> 
+ note left of request_validated : Request validation passed?
+
+state request_accepted <<choice>> 
+ note bottom of request_accepted : Request accepted?
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> request_validated
+
+request_validated -d-> request_accepted: Yes
+
+request_validated -r-> rejected: No
+
+request_accepted -d-> accepted: Yes
+
+request_accepted -r-> declined: No
+
+
+rejected -d-> [*]
+
+accepted -d-> completed
+
+completed -d-> [*]
+
+declined -d-> [*]
+
+
+@enduml

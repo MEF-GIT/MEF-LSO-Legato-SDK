@@ -11,19 +11,20 @@ class PerformanceJob_Find {
     state*: PerformanceJobStateType
 }
 
+PerformanceJob_Find *-->"1" MonitoredObjectId : monitoredObjectId
 PerformanceJob_Find *-->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJob_Find *--> ScheduleDefinition : scheduleDefinition
-
+PerformanceJob_Find *-->"1" ScheduleDefinition : scheduleDefinition
 
 enum PerformanceJobStateType {
 
     acknowledged
     cancelled
     completed
-    in-progress
+    inProgress
     pending
+    pendingCancel
     rejected
-    resource-unavailable
+    resourcesUnavailable
     scheduled
     suspended
 }

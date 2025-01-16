@@ -21,6 +21,9 @@ S -> S: check if any Performance Job refers to Performance Profile
 S -> PP: (causes status change)
 PP -> PP: status: deleted
 S --> B: DELETE /performanceProfile/{{id}} response
-PP -> B: POST performanceProfileDeleteEvent
+
+opt
+    PP -> B: POST performanceProfileDeleteEvent
+end
 
 @enduml

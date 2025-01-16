@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-virtual-uni:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-virtual-uni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet Virtual UNI Service Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet Virtual UNI Service Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetVirtualUni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,17 +51,19 @@ title:
     # products or services.
     # ---------------------
     #
-description:
-  This class represents the Virtual UNI Service Attributes that are agreed on by the SP/SO and the Operator for each UNI.
+description: >-
+  This class represents the Virtual UNI Service Attributes that are agreed on by the 
+  SP/SO and the Operator for each UNI. Reference MEF 26.2 Section 15 Virtual UNI (VUNI),
+  Feeder OVC, and Remote UNI (RUNI).
 properties:
-  adminState:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/AdminState'
-  operationalState:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/OperationalState'
   identifier:
+    minLength: 1
     maxLength: 45
+    pattern: "[\x20-\x7F]+"
     type: string
-    description: An identifier for the instance of the VUNI intended for operations purposes.
+    description: >-
+      An identifier for the instance of the VUNI intended for operations purposes. Reference
+      MEF 26.2 Section 15.1.1 VUNI Identifier Service Attribute.
   sVlanId:
     $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
   defaultEnniCeVlanId:
@@ -69,32 +71,35 @@ properties:
   maximumNumberOfOvcEndPoints:
     minimum: 0
     type: integer
-    description: The maximum number of OVC End Points that can be in the VUNI.
-  maximumNumberOfEnniCeVlanIdsPerOvcEndPoints:
+    description: >-
+      The maximum number of OVC End Points that can be in the VUNI. Reference MEF 26.2 Section
+      15.1.4 VUNI Maximum Number of OVC End Points Service Attribute.
+  maximumNumberOfEnniCeVlanIdsPerOvcEndPoint:
     type: integer
-    description: The maximum number of ENNI CE-VLAN ID values that can be mapped to an OVC End Point that is in the VUNI.
+    description: >-
+      The maximum number of ENNI CE-VLAN ID values that can be mapped to an OVC End Point that 
+      is in the VUNI. Reference MEF 26.2 Section 15.1.5 VUNI Maximum Number of ENNI CE-VLAN IDs
+      per OVC End Point Service Attribute.
   ingressBandwidthProfile:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+    $ref: 'carrierEthernetCommon.yaml#/definitions/IngressBwpFlow'
   egressBandwidthProfile:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EgressBwpFlow'
   l2cpAddressSet:
     $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
   l2cpPeering:
     minItems: 0
     type: array
-    description: L2CP Peering applied to VUNI. Reference MEF 26.2 Section 15.1.9 VUNI L2CP Peering Service Attribute.
+    description: >-
+      L2CP Peering applied to VUNI. Reference MEF 26.2 Section 15.1.9 VUNI L2CP Peering Service 
+      Attribute.
     items:
       $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpPeering'
   mepList:
     minItems: 0
     type: array
-    description: The indication of the instantiation of a MEP. A list with each item specifying the MEG Level. Reference MEF 26.2 Section 15.1.10 VUNI Maintenance End Point List Service Attribute.
+    description: >- 
+      The value of the VUNI Maintenance End Point List Service Attribute is a list MEG levels,
+      one for each MEP that is instantiated. Reference MEF 26.2 Section 15.1.10 VUNI Maintenance 
+      End Point List Service Attribute.
     items:
       $ref: 'carrierEthernetCommon.yaml#/definitions/MepLevelAndDirection'
-required:
-  - identifier
-  - sVlanId
-  - defaultEnniCeVlanId
-  - maximumNumberOfOvcEndPoints
-  - maximumNumberOfEnniCeVlanIdsPerOvcEndPoints
-  - l2cpAddressSet

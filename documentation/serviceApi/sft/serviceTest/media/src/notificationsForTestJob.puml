@@ -1,0 +1,63 @@
+@startuml notificationsForTestJob
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant SOF
+
+B -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
+SOF --> B: 201 confirmation with {{id}}
+...
+B -> SOF : POST {{baseUrl}}/testJob
+SOF -> SOF : basic validation
+SOF -> SOF : assign testJob.id
+
+alt succesful inquiry
+  SOF --> B : 201 TestJob with {{id}} in `acknowledged` state
+  SOF -> B: {{callbackUrl}}/listener/testJobCreateEvent {{id}}
+  B --> SOF : 204 confirmation  
+  ...
+
+  note over B, SOF : TestJob moves to `scheduled`
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+      B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : Schedule start time is reached\nTestJob moves to `in-progress`
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+  
+  note over B, SOF : SuspendTestJob request is completed
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyTestJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyTestJob request is completed
+  SOF -> B: {{callbackUrl}}/listener/testJobAttributeValueChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  
+  note over B, SOF : TestJob is not recurring
+  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+
+else validation or internal problem
+  SOF --> B : 4xx or 5xx errorresponse
+end 
+
+...
+
+B -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  B : 204 confirmation
+
+@enduml

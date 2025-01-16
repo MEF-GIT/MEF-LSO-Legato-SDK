@@ -1,0 +1,18 @@
+@startuml alarmNotificationModel
+
+class AlarmSubscription {
+
+    id: string
+}
+AlarmSubscriptionInput <|-- AlarmSubscription
+
+
+
+class AlarmSubscriptionInput {
+
+    callback*: string
+    query: string
+}
+
+
+@enduml

@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-evc:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-evc:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet EVC Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet EVC Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetEvc.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,12 +51,46 @@ title:
     # products or services.
     # ---------------------
     #
-description:
-  An EVC is an association of two or more EVC End Points (EVC EPs). Reference MEF 10.4 Section 7.8 Ethernet Virtual Connection, EVC End Point and EVC EP Map Service Attribute.
+description: >-
+  An EVC is an association of two or more EVC End Points (EVC EPs). Reference 
+  MEF 10.4 Section 7.8 Ethernet Virtual Connection, EVC End Point and EVC EP 
+  Map Service Attribute.
 properties:
   identifier:
+    minLength: 1
     maxLength: 45
     type: string
-    description: Used to identify an EVC within the SP Network. Reference MEF 10.4 Section 8.1 EVC ID Service Attribute.
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetService'
+    pattern: "[\x20-\x7F]+"
+    description: >-
+      Used to identify an EVC within the SP Network. Reference MEF 10.4 Section 
+      8.1 EVC ID Service Attribute.
+  evcType:
+    $ref: './carrierEthernetCommon.yaml#/definitions/ConnectionType'
+  frameDisposition:
+    $ref: './carrierEthernetCommon.yaml#/definitions/FrameDisposition'  
+  cTagPcpPreservation:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  cTagDeiPreservation:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  listOfCosNames:
+    minItems: 1
+    type: array
+    description: >-
+      Used to specify all the Class of Service Names supported by an EVC or OVC. 
+      Reference MEF 10.4 Section 8.7 EVC List of Class of Service Names Service 
+      Attribute. The Class of Service Names supported by the OVC. Reference MEF 
+      26.2 Section 12.12 OVC List of Class of Service Names Service Attribute.
+    items:
+      type: string
+  carrierEthernetServiceLevelSpecification:
+    $ref: './carrierEthernetServiceLevelSpecification.yaml#/definitions/CarrierEthernetServiceLevelSpecification'
+  groupMembership:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EvcGroupMembership'
+  maximumFrameSize:
+    type: integer
+    description: >-
+      Maximum size of EI frames that can be carried over the EVC or OVC. Reference MEF 10.4 
+      Section 8.10 EVC Maximum Service Frame Size Service Attribute and MEF 26.2 Section 
+      12.6 OVC Maximum Frame Size Service Attribute.
+  availableMegLevel:
+    $ref: './carrierEthernetCommon.yaml#/definitions/MegLevel'

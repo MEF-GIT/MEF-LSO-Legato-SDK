@@ -1,0 +1,71 @@
+@startuml notificationsForFaultManagementJob
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant SOF
+
+B -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
+SOF --> B: 201 confirmation with {{id}}
+...
+B -> SOF : POST {{baseUrl}}/faultManagementJob
+SOF -> SOF : basic validation
+SOF -> SOF : assign id
+
+alt successful inquiry
+  SOF --> B : 201 FaultManagementJob with {{id}} in `acknowledged` state
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobCreateEvent {{id}}
+  B --> SOF : 204 confirmation  
+  ...
+
+  note over B, SOF : FaultManagementJob moves to `scheduled`
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`scheduled`
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : Schedule start time is reached\nFaultManagementJob moves to `inProgress`
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`inProgress`
+  B --> SOF : 204 confirmation
+  ...
+  
+  note over B, SOF : FaultManagementReport is generated
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobReportReadyEvent {{id}}, {{reportId}}
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : FaultManagementJob is suspended
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`suspended`
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyFaultManagementJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`pending`
+  B --> SOF : 204 confirmation
+  ...
+
+  note over B, SOF : ModifyFaultManagementJob request is completed
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobAttributeValueChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`inProgress`
+  B --> SOF : 204 confirmation
+
+  note over B, SOF : FaultManagementReport generation failed
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobReportPreparationErrorEvent {{id}}, failureReason
+  B --> SOF : 204 confirmation
+
+  note over B, SOF : FaultManagementJob is not recurring
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobStateChangeEvent {{id}}, state=`completed`
+  B --> SOF : 204 confirmation
+
+
+else validation or internal problem
+  SOF --> B : 4xx or 5xx error response
+end 
+
+...
+
+B -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  B : 204 confirmation
+
+@enduml

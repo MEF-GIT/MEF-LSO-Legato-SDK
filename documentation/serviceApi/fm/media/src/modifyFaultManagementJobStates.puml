@@ -1,0 +1,29 @@
+@startuml modifyFaultManagementJobStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state request_accepted <<choice>> 
+ note bottom of request_accepted : Is request accepted?
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> request_accepted
+
+request_accepted -l-> rejected: No
+
+request_accepted -r-> inProgress: Yes
+
+inProgress -d-> completed
+
+rejected -d-> [*]
+completed -d-> [*]
+
+@enduml

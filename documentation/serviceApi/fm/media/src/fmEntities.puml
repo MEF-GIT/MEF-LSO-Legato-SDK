@@ -1,0 +1,37 @@
+@startuml fmEntities
+autonumber
+
+actor "Buyer/Client" as B
+
+entity FaultManagementJob as FJ
+entity FaultManagementReport as PR
+
+B -> FJ: POST /faultManagementJob request
+activate FJ
+FJ --> B: Created
+
+note right of FJ: On scheduled date
+
+FJ -> FJ: state: inProgress
+
+FJ -> FJ: generate data
+
+FJ --> PR: (causes report creation)
+
+activate PR
+
+PR -> PR: state: inProgress
+
+PR -> PR: collect data
+
+PR -> PR: state: completed
+
+PR --> FJ: (report completed)
+
+note right of FJ: non-recurring Job
+FJ -> FJ: state: completed
+
+B -> PR: GET /faultManagementReport
+PR --> B: FaultManagement Report content
+
+@enduml

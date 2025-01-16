@@ -1,0 +1,20 @@
+@startuml useCase14Model
+
+class CancelTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+CancelTestJob_Find *-->"1" TestJobRef : testJob
+
+enum TestJobProcessStateType {
+    accepted
+    acknowledged
+    completed
+    declined
+    rejected
+}
+
+@enduml

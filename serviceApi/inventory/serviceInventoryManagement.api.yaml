@@ -1,22 +1,24 @@
 openapi: 3.0.3
 info:
-  title: Legato Service Inventory Management API
+  title: Service Inventory Management
   description: |-
-    **This file forms part of MEF 135** 
+    **This file forms part of MEF 135.1** 
+     
+    **This draft represents MEF work in progress and is subject to change.**
 
     Supported use cases:
     - Retrieve Service List
     - Retrieve Service by Identifier
 
-    Copyright 2023 MEF Forum and its contributors.
+    Copyright 2025 MEF Forum and its contributors.
 
     This file includes content based on the TM Forum Service Inventory Management API (TMF638
     v4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
-  version: 5.0.0
+  version: 6.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/serviceInventory/v5/'
+  - url: 'https://{serverBase}/mefApi/legato/serviceInventory/v6/'
     variables:
       serverBase:
         description: The base of SOF's URL.
@@ -40,14 +42,7 @@ paths:
           description: The state of the service
           required: false
           schema:
-            type: string
-            enum:
-              - feasibilityChecked
-              - designed
-              - reserved
-              - active
-              - inactive
-              - terminated
+            $ref: '#/components/schemas/ServiceStateType'
         - name: serviceDate.lt
           in: query
           description: >-
@@ -318,6 +313,14 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
+        '422':
+          description: Unprocessable entity due to the business validation problems
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error422'
         '403':
           description: Forbidden
           content:
@@ -424,6 +427,14 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error404'
+        '422':
+          description: Unprocessable entity due to the business validation problems
+          content:
+            application/json;charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error422'
         '500':
           description: Internal Server Error
           content:
@@ -438,6 +449,38 @@ components:
       enum:
         - bus
         - sof
+    ContactInformation:
+      description: >-
+        Contact data for a person or organization that is involved in the
+        product offering qualification. In a given context it is always
+        specified by the SOF (e.g. SOF Contact Information) or by the
+        BUS.
+      type: object
+      properties:
+        number:
+          description: Phone number
+          type: string
+        emailAddress:
+          description: Email address
+          type: string
+        postalAddress:
+          description: >-
+            Identifies the postal address of the person or office to be
+            contacted.
+          $ref: '#/components/schemas/FieldedAddressRepresentation'
+        organization:
+          description: The organization or company that the contact belongs to
+          type: string
+        name:
+          description: Name of the contact
+          type: string
+        numberExtension:
+          description: Phone number extension
+          type: string
+      required:
+        - emailAddress
+        - name
+        - number
     Error:
       description: >
         Standard Class used to describe API response error Not intended to be
@@ -697,9 +740,9 @@ components:
             This property is appended with the base path and notification
             resource path specified in that API to construct an URL to which
             notification is sent. E.g. for "callback":
-            "https://bus.com/listenerEndpoint", the service state change event
+            "https://client.mef.com/listenerEndpoint", the service state change event
             notification will be sent to:
-            `https://bus.com/listenerEndpoint/mefApi/legato/serviceInventoryNotification/v5/listener/serviceStateChangeEvent`
+            `https://client.mef.com/listenerEndpoint/mefApi/legato/serviceInventoryNotification/v6/listener/serviceStateChangeEvent`
           type: string
         query:
           description: >-
@@ -713,330 +756,266 @@ components:
           type: string
       required:
         - callback
-    FieldedAddress:
+    FieldedAddressRepresentation:
       description: >-
         A type of Address that has a discrete field and value for each type of
         boundary or identifier down to the lowest level of detail. For example
         "street number" is one field, "street name" is another field, etc.
-        Reference: MEF 79 (Sn 8.9.2)
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            city:
-              description: The city that the address is in
-              type: string
-            country:
-              description: Country that the address is in
-              type: string
-            geographicSubAddress:
-              description: >-
-                Additional fields used to specify an address, as detailed as
-                possible.
-              $ref: '#/components/schemas/GeographicSubAddress'
-            locality:
-              description: The locality that the address is in
-              type: string
-            postcode:
-              description: >-
-                Descriptor for a postal delivery area, used to speed and
-                simplify the delivery of mail (also known as zip code)
-              type: string
-            postcodeExtension:
-              description: >-
-                An extension of a postal code. E.g. the part following the dash
-                in a US urban property address
-              type: string
-            stateOrProvince:
-              description: The State or Province that the address is in
-              type: string
-            streetName:
-              description: Name of the street or other street type
-              type: string
-            streetNr:
-              description: >-
-                Number identifying a specific property on a public street. It
-                may be combined with streetNrLast for ranged addresses. MEF 79
-                defines it as required however as in certain countries it is not
-                used we make it optional in API.
-              type: string
-            streetNrLast:
-              description: Last number in a range of street numbers allocated to a property
-              type: string
-            streetNrLastSuffix:
-              description: Last street number suffix for a ranged address
-              type: string
-            streetNrSuffix:
-              description: The first street number suffix
-              type: string
-            streetSuffix:
-              description: A modifier denoting a relative direction
-              type: string
-            streetType:
-              description: >-
-                The type of street (e.g., alley, avenue, boulevard, brae,
-                crescent, drive, highway, lane, terrace, parade, place, tarn,
-                way, wharf)
-              type: string
-          required:
-            - city
-            - country
-            - streetName
-    FieldedAddressValue:
-      description: >-
-        A type of Address that has a discrete field and value for each type of
-        boundary or identifier down to the lowest level of detail. For example
-        "street number" is one field, "street name" is another field, etc.
-        Reference: MEF 79 (Sn 8.9.2)
       type: object
       properties:
-        city:
-          description: The city that the address is in
-          type: string
-        country:
-          description: Country that the address is in
-          type: string
-        geographicSubAddress:
-          description: >-
-            Additional fields used to specify an address, as detailed as
-            possible.
-          $ref: '#/components/schemas/GeographicSubAddress'
-        locality:
-          description: The locality that the address is in
-          type: string
-        postcode:
-          description: >-
-            Descriptor for a postal delivery area, used to speed and simplify
-            the delivery of mail (also known as zip code)
-          type: string
-        postcodeExtension:
-          description: >-
-            An extension of a postal code. E.g. the part following the dash in a
-            US urban property address
-          type: string
-        stateOrProvince:
-          description: The State or Province that the address is in
-          type: string
-        streetName:
-          description: Name of the street or other street type
-          type: string
         streetNr:
           description: >-
             Number identifying a specific property on a public street. It may be
-            combined with streetNrLast for ranged addresses. MEF 79 defines it
-            as required however as in certain countries it is not used we make
-            it optional in API.
-          type: string
-        streetNrLast:
-          description: Last number in a range of street numbers allocated to a property
-          type: string
-        streetNrLastSuffix:
-          description: Last street number suffix for a ranged address
+            combined with streetNrLast for ranged addresses.
           type: string
         streetNrSuffix:
-          description: The first street number suffix
+          description: >-
+            The first street number suffix (in a street number range) or the
+            suffix for the street number if there is no range
           type: string
-        streetSuffix:
-          description: A modifier denoting a relative direction
+        streetNrLast:
+          description:
+            Last number in a range of street numbers allocated to an Address
+          type: string
+        streetNrLastSuffix:
+          description: Last street number suffix for a ranged Address
+          type: string
+        streetPreDirection:
+          description:
+            The direction of the street that appears before the Street Name
+          type: string
+        streetName:
+          description: Name of the street or other street type
           type: string
         streetType:
           description: >-
             The type of street (e.g., alley, avenue, boulevard, brae, crescent,
             drive, highway, lane, terrace, parade, place, tarn, way, wharf)
           type: string
+        streetPostDirection:
+          description: >-
+            A modifier denoting a relative direction that appears after the
+            Street Name.
+          type: string
+        poBox:
+          description: >-
+            Number identifying a specific location in a post office.
+          type: string
+        locality:
+          description: >-
+            An area of defined or undefined boundaries within a local authority
+            or other legislatively defined area.
+          type: string
+        city:
+          description: City in which the Address is located.
+          type: string
+        postcode:
+          description: >-
+            A descriptor for a postal delivery area used to speed and simplify
+            the delivery of mail (also known as zip code)
+          type: string
+        postcodeExtension:
+          description: >-
+            The extension used on a postal code. Note: there are different use
+            codes for this attribute depending upon the country.
+          type: string
+        stateOrProvince:
+          description: The State or Province in which the Address is located.
+          type: string
+        countryCode:
+          description: >-
+            Country in which the Address is located, defined using two
+            characters as defined in ISO 3166
+          type: string
+          minLength: 2
+          maxLength: 2
+        subUnit:
+          description: >-
+            The Sub Unit represented as a list. This is a list to allow complex
+            sub-unit information such as SUITE 42 ROOM A
+          type: array
+          items:
+            $ref: '#/components/schemas/SubUnit'
+        buildingName:
+          description: >
+            The well-known name of a building that is located at this Address
+            (e.g., where there is one Address for a campus).
+          type: string
+        privateStreetNumber:
+          description: Street number on a private street within the Address.
+          type: string
+        privateStreetName:
+          description: >-
+            Private streets internal to a property (e.g., a university) may have
+            internal names that are not recorded by the land title office.
+          type: string
+        language:
+          description: >-
+            The language in which the address is expressed. It MUST use the ISO 639:2023 two letter code
+            639:2023
+          type: string
+          minLength: 2
+          maxLength: 2
+    FormattedAddressRepresentation:
+      description:
+        'A freeform text representation agreed to by the BUS and SOF. '
+      type: object
+      properties:
+        formattedAddress:
+          description: >-
+            A formatted Address Representation that contains a non-fielded
+            address.
+          type: string
+        language:
+          description: >-
+            The language in which the address is expressed. Based on ISO
+            639:2023
+          type: string
+          minLength: 2
+          maxLength: 2
       required:
-        - city
-        - country
-        - streetName
-    FormattedAddress:
-      description: >-
-        A type of Address that has discrete fields for each type of boundary or
-        identifier with the exception of street and more specific location
-        details, which are combined into a maximum of two strings based on local
-        postal addressing conventions. Reference: MEF 79 (Sn 8.9.3)
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            addrLine1:
-              description: The first address line in a formatted address
-              type: string
-            addrLine2:
-              description: The second address line in a formatted address
-              type: string
-            city:
-              description: The city that the address is in
-              type: string
-            country:
-              description: Country that the address is in
-              type: string
-            locality:
-              description: >-
-                An area of defined or undefined boundaries within a local
-                authority or other legislatively defined area, usually rural or
-                semi-rural in nature
-              type: string
-            postcode:
-              description: >-
-                Descriptor for a postal delivery area, used to speed and
-                simplify the delivery of mail (also known as ZIP code)
-              type: string
-            postcodeExtension:
-              description: >-
-                An extension of a postal code. E.g. the part following the dash
-                in an US urban property address
-              type: string
-            stateOrProvince:
-              description: The State or Province that the address is in
-              type: string
-          required:
-            - addrLine1
-            - city
-            - country
-    GeographicAddressLabel:
-      description: >-
-        A unique identifier controlled by a generally accepted independent
-        administrative authority that specifies a fixed geographical location.
-        Reference: MEF 79 (Sn 8.9.4)
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            externalReferenceId:
-              description: A reference to an address by id
-              type: string
-            externalReferenceType:
-              description: >-
-                Uniquely identifies the authority that specifies the addresses
-                reference and/or its type (if the authority specifies more than
-                one type of address). The value(s) to be used are to be agreed
-                during the onboarding. For North American providers this would
-                normally be CLLI (Common Language Location Identifier) code.
-              type: string
-          required:
-            - externalReferenceId
-            - externalReferenceType
+        - formattedAddress
     GeographicAddressRef:
       description: >
         A reference to a Geographic Address resource available through Address
         Validation API.
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            href:
-              description: >
-                Hyperlink to the referenced GeographicAddress. Hyperlink MAY be
-                provided by the SOF in responses. Hyperlink MUST be ignored by
-                the SOF in case it is provided by the BA in a request
-              type: string
-            id:
-              description: >-
-                Identifier of the referenced Geographic Address. This identifier
-                is assigned during a successful address validation request
-                (Geographic Address Validation API)
-              type: string
-          required:
-            - id
-    GeographicPoint:
+      type: object
+      properties:
+        href:
+          description: >
+            Hyperlink to the referenced Address. Hyperlink MAY be used by the
+            SOF in responses. Hyperlink MUST be ignored by the SOF in case
+            it is provided by the BUS in a request.
+          type: string
+        id:
+          description: >-
+            Identifier of the referenced Geographic Address. This identifier is
+            assigned during a successful address validation request (Geographic
+            Address Management API)
+          type: string
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - GeographicAddressRef
+      required:
+        - '@type'
+        - id
+    GeographicAddress_Query:
+      description: >-
+        A list of representations being a subset of Geographic Address entity.
+        This is to be used when providing a list of representations to validate
+        a Geographic Address
+      type: object
+      properties:
+        fieldedAddressRepresentation:
+          description: A list of Fielded Address representations
+          type: array
+          items:
+            $ref: '#/components/schemas/FieldedAddressRepresentation'
+        formattedAddressRepresentation:
+          description: A list of Formatted Address representations
+          type: array
+          items:
+            $ref: '#/components/schemas/FormattedAddressRepresentation'
+        geographicPointRepresentation:
+          description: A list of Geographic Point Address representations
+          type: array
+          items:
+            $ref: '#/components/schemas/GeographicPointRepresentation'
+        labelRepresentation:
+          description: A list of Label Address representations
+          type: array
+          items:
+            $ref: '#/components/schemas/LabelRepresentation'
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - GeographicAddress_Query
+      minProperties: 2
+      required:
+        - '@type'
+    GeographicPointRepresentation:
       description: >
-        A MEFGeographicPoint defines a geographic point through coordinates.
-        Reference: MEF 79 (Sn 8.9.5)
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            spatialRef:
-              description: >-
-                The spatial reference system used to determine the coordinates
-                (e.g. "WGS84"). The system used and the value of this field are
-                to be agreed during the onboarding process.
-              type: string
-            x:
-              description: >-
-                The latitude expressed in the format specified by the
-                `spacialRef`
-              type: string
-            'y':
-              description: >-
-                The longitude expressed in the format specified by the
-                `spacialRef`
-              type: string
-            z:
-              description: >-
-                The elevation expressed in the format specified by the
-                `spacialRef`
-              type: string
-          required:
-            - spatialRef
-            - x
-            - 'y'
+        A GeographicPointRepresentation defines a geographic point through
+        coordinates.
+      type: object
+      properties:
+        spatialRef:
+          description: >-
+            The spatial reference system used to determine the coordinates. The
+            system used and the value of this field are to be agreed during the
+            onboarding process.
+          type: string
+        latitude:
+          description:
+            The latitude expressed in the format specified by the `spacialRef`
+          type: string
+        longitude:
+          description:
+            The longitude expressed in the format specified by the `spacialRef`
+          type: string
+        elevation:
+          description:
+            The elevation expressed in the format specified by the `spacialRef`
+          type: string
+      required:
+        - latitude
+        - longitude
+        - spatialRef
     GeographicSiteRef:
       description: >
         A reference to a Geographic Site resource available through Service Site
         API
-      allOf:
-        - $ref: '#/components/schemas/RelatedPlaceRefOrValue'
-        - type: object
-          properties:
-            href:
-              description: >
-                Hyperlink to the referenced GeographicSite. Hyperlink MAY be
-                provided by the SOF in responses. Hyperlink MUST be ignored by
-                the SOF in case it is provided by the BA in a request
-              type: string
-            id:
-              description: Identifier of the referenced Geographic Site.
-              type: string
-          required:
-            - id
-    GeographicSubAddress:
-      description: 'Additional fields used to specify an address, as detailed as possible.'
       type: object
       properties:
-        buildingName:
+        href:
           description: >
-            Allows for identification of places that require building name  as
-            part of addressing information
+            Hyperlink to the referenced Site. Hyperlink MAY be used by the
+            SOF in responses. Hyperlink MUST be ignored by the SOF in case
+            it is provided by the BUS in a request.
           type: string
-        levelNumber:
-          description: 'Used where a level type may be repeated e.g. BASEMENT 1, BASEMENT 2'
+        id:
+          description: Identifier of the referenced Geographic Site.
           type: string
-        levelType:
-          description: Describes level types within a building
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
           type: string
-        privateStreetName:
-          description: >-
-            "Private streets internal to a property (e.g. a university) may have
-            internal names that are not recorded by the land title office
-          type: string
-        privateStreetNumber:
-          description: Private streets numbers internal to a private street
-          type: string
-        subUnit:
-          description: >-
-            Used for describing subunit within a subAddress e.g. BERTH, FLAT,
-            PIER, SUITE, SHOP, TOWER, UNIT, WHARF.
-          type: array
-          items:
-            $ref: '#/components/schemas/GeographicSubAddressUnit'
-    GeographicSubAddressUnit:
-      description: Allows for sub unit identification
+          enum:
+            - GeographicSiteRef
+      required:
+        - '@type'
+        - id
+    LabelRepresentation:
+      description: >-
+        A unique identifier controlled by a generally accepted independent
+        administrative authority that specifies a fixed geographical location.
       type: object
       properties:
-        subUnitNumber:
+        label:
           description: >-
-            The discriminator used for the subunit, often just a simple number
-            but may also be a range.
+            The unique reference to a Geographic Address assigned by the
+            Administrative Authority.
           type: string
-        subUnitType:
+        administrativeAuthority:
           description: >-
-            The type of subunit e.g.BERTH, FLAT, PIER, SUITE, SHOP, TOWER, UNIT,
-            WHARF.
+            The organization or standard from the organization that administers
+            this Geographic Address Label ensuring it is unique within the
+            Administrative Authority.
           type: string
+        language:
+          description:
+            'The language in which the label is expressed. Based on ISO 639:2023'
+          type: string
+          minLength: 2
+          maxLength: 2
       required:
-        - subUnitNumber
-        - subUnitType
+        - administrativeAuthority
+        - label
     MefServiceConfiguration:
       description: >-
         MefServiceConfiguration is used as an extension point for MEF specific
@@ -1080,72 +1059,83 @@ components:
         - id
         - source
         - text
+    PlaceRefOrQuery:
+      description: >-
+        A place described by reference to a Geographic Address, Geographic Site
+        or by Geographic Address Representations.
+      type: object
+      discriminator:
+        propertyName: '@type'
+        mapping:
+          GeographicAddressRef: '#/components/schemas/GeographicAddressRef'
+          GeographicSiteRef: '#/components/schemas/GeographicSiteRef'
+          GeographicAddress_Query: '#/components/schemas/GeographicAddress_Query'
+      oneOf:
+        - $ref: '#/components/schemas/GeographicAddressRef'
+        - $ref: '#/components/schemas/GeographicSiteRef'
+        - $ref: '#/components/schemas/GeographicAddress_Query'
     RelatedContactInformation:
-      description: |
+      description: >-
         Contact information of an individual or organization playing a role for
-        this Service. The rule for mapping a represented attribute value to a
-        `role` is to use the _lowerCamelCase_ pattern.
+        this Order Item. The rule for mapping a represented attribute value to a
+        `role` is to use the _lowerCamelCase_ pattern. In a given context it is always
+        specified by the SOF (e.g. SOF Contact Information) or by the
+        BUS.
       type: object
       properties:
-        emailAddress:
-          description: Email address
-          type: string
-        name:
-          description: Name of the contact
+        role:
+          description: The role of the particular contact in the request
           type: string
         number:
           description: Phone number
           type: string
-        numberExtension:
-          description: Phone number extension
-          type: string
-        organization:
-          description: The organization or company that the contact belongs to
+        emailAddress:
+          description: Email address
           type: string
         postalAddress:
           description: >-
             Identifies the postal address of the person or office to be
             contacted.
-          $ref: '#/components/schemas/FieldedAddressValue'
-        role:
-          description: A role the party plays in a given context.
+          $ref: '#/components/schemas/FieldedAddressRepresentation'
+        organization:
+          description: The organization or company that the contact belongs to
+          type: string
+        name:
+          description: Name of the contact
+          type: string
+        numberExtension:
+          description: Phone number extension
           type: string
       required:
         - emailAddress
         - name
         - number
         - role
-    RelatedPlaceRefOrValue:
-      description: A Place provided either by value or by reference
+    RelatedPlaceRefOrQuery:
+      description: >-
+        Allows pointing to a place by referring to a GeographicAddress,
+        GeographicSite, or providing GeographicAddress by value. It also
+        provides additional information like the `role` the place plays for
+        given Product and `contact` needed access to this place.
       type: object
       properties:
-        '@type':
-          description: >
-            This field is used as a discriminator and is used between different
-            place representations. This type might discriminate for additional
-            related place as defined in '@schemaLocation'.
-          type: string
-        '@schemaLocation':
-          description: >-
-            A URI to a JSON-Schema file that defines additional attributes and
-            relationships. May be used to define additional related place types.
-          type: string
-          format: uri
+        place:
+          $ref: '#/components/schemas/PlaceRefOrQuery'
         role:
-          description: Role of this place
+          description: >-
+            Role of this place. The values that can be specified here are
+            described by Product Specification (e.g. "INSTALL_LOCATION").
           type: string
+        contact:
+          description: >-
+            The person to call to get access to this place in case such access
+            is required to complete the evaluation of this POQ Item.
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactInformation'
       required:
-        - '@type'
+        - place
         - role
-      discriminator:
-        propertyName: '@type'
-        mapping:
-          FieldedAddress: '#/components/schemas/FieldedAddress'
-          FormattedAddress: '#/components/schemas/FormattedAddress'
-          GeographicAddressLabel: '#/components/schemas/GeographicAddressLabel'
-          GeographicAddressRef: '#/components/schemas/GeographicAddressRef'
-          GeographicSiteRef: '#/components/schemas/GeographicSiteRef'
-          GeographicPoint: '#/components/schemas/GeographicPoint'
     Service:
       description: |-
         The Service instance managed by SOF and retrievable by an BA over the 
@@ -1176,7 +1166,7 @@ components:
             Places as defined in the Service Specification.
           type: array
           items:
-            $ref: '#/components/schemas/RelatedPlaceRefOrValue'
+            $ref: '#/components/schemas/RelatedPlaceRefOrQuery'
         relatedContactInformation:
           description: >-
             Contact information of an individual or organization playing a role
@@ -1313,3 +1303,20 @@ components:
         - active
         - inactive
         - terminated
+    SubUnit:
+      description: Allows for sub unit identification
+      type: object
+      properties:
+        subUnitNumber:
+          description: >-
+            The discriminator used for the subunit, often just a simple number
+            but may also be a range.
+          type: string
+        subUnitType:
+          description: >-
+            The type of subunit e.g. BERTH, FLAT, PIER, SUITE, SHOP, TOWER,
+            UNIT, WHARF.
+          type: string
+      required:
+        - subUnitNumber
+        - subUnitType    

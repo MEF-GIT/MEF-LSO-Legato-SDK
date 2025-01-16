@@ -1,0 +1,26 @@
+@startuml useCase7Polling
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+B -> S : POST {{baseUrl}}/cancelFaultManagementJob (CancelFaultManagementJob_Create)
+S -> S : basic validation
+
+alt successful inquiry
+  S --> B : 201 CancelFaultManagementJob with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until CancelFaultManagementJob in terminal state
+      B -> S :   GET {{baseUrl}}/cancelFaultManagementJob/{{id}}
+      return 200 CancelFaultManagementJob in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+@enduml

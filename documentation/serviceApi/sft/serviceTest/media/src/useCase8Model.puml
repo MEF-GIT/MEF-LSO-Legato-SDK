@@ -1,0 +1,13 @@
+@startuml useCase8Model
+
+class TestJob_Find {
+
+    id*: string
+    name: string
+    testProfileId: string
+    relatedServiceId: string
+    startDate: date-time
+    endDate: date-time
+}
+
+@enduml

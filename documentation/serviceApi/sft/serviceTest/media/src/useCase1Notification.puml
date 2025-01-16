@@ -1,0 +1,37 @@
+@startuml useCase1Notification
+
+hide footbox
+
+participant "Buyer/Client" as A
+participant "Seller/Server" as SOF
+
+A -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} details
+SOF --> A: 201 confirmation with {{id}}
+...
+A -> SOF : POST {{baseUrl}}/testProfile (TestProfile_Create)
+SOF -> SOF : basic validation
+
+alt succesful inquiry
+  SOF --> A : 201 TestProfile with {{id}}, `acknowledged` state 
+  SOF -> A: {{callbackUrl}}/listener/testProfileCreateEvent ({{id}})
+  A --> SOF : 204 confirmation
+
+  ...
+
+  group loop [until Test Profile in completed state]
+      SOF -> A: {{callbackUrl}}/listener/testProfileStateChangeEvent ({{id}})
+      A --> SOF : 204 confirmation
+      A -> SOF :   GET {{baseUrl}}/testProfile/{{id}}
+      return 200 TestProfile in current state
+  end
+
+else validation or internal problem
+  SOF --> A : 4xx or 5xx error response
+end 
+
+...
+
+A -> SOF : DELETE {{baseUrl}}/hub/{{id}} 
+SOF -->  A : 204 confirmation
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml useCase2Model
+
+class TestProfile_Find {
+
+    id*: string
+    name*: string
+    description*: string
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    creationDate*: date-time
+    lastUpdate*: date-time
+    state*: TestProfileStateType
+}
+
+enum TestProfileStateType {
+
+    acknowledged
+    completed
+    rejected
+}
+
+
+enum TestProfileLifecycleStatusType {
+    experimantal
+    pending
+    approved
+    deprecated
+}
+
+@enduml

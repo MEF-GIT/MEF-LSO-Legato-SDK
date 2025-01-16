@@ -1,15 +1,16 @@
 openapi: 3.0.3
 info:
-  description: "**This file forms part of MEF 135** \n\nSupported use cases:\n- Send\
-    \ Notifications\n\nCopyright 2023 MEF Forum and its contributors.\n\nThis file\
-    \ includes content based on the TM Forum Service Inventory\nManagement API (TMF638\
-    \ v4.0.1) available at\nhttps://github.com/tmforum-apis/TMF638_ServiceInventory,\
+  description: "**This file forms part of MEF 135.1** \n \n**This draft represents\
+    \ MEF work in progress and is subject to change.**\n\nSupported use cases:\n-\
+    \ Send Notifications\n\nCopyright 2025 MEF Forum and its contributors.\n\nThis\
+    \ file includes content based on the TM Forum Service Inventory\nManagement API\
+    \ (TMF638 v4.0.1) available at\nhttps://github.com/tmforum-apis/TMF638_ServiceInventory,\
     \ which is licensed\nby the TM Forum under the Apache License version 2.0. Such\
     \ content has been\nmodified by the MEF Forum and its contributors.\n"
-  title: Legato Service Inventory Notification API
-  version: 5.0.0
+  title: Service Inventory Notification
+  version: 6.0.0-RC
 servers:
-- url: "https://{serverBase}/mefApi/legato/serviceInventoryNotification/v5/"
+- url: "https://{serverBase}/mefApi/legato/serviceInventoryNotification/v6/"
   variables:
     serverBase:
       default: mef.net
@@ -30,7 +31,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceCreateEvent'
         required: true
       responses:
         "204":
@@ -53,12 +54,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -80,7 +75,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceDeleteEvent'
         required: true
       responses:
         "204":
@@ -103,12 +98,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -130,7 +119,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceStateChangeEvent'
         required: true
       responses:
         "204":
@@ -153,12 +142,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -180,7 +163,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceAttributeValueChangeEvent'
         required: true
       responses:
         "204":
@@ -203,12 +186,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -309,21 +286,6 @@ components:
       - forbiddenRequester
       - tooManyUsers
       type: string
-    Error408:
-      allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: |-
-              List of supported error codes:
-              - timeOut: Request Time-out - indicates that the server did not receive a complete request message within the time that it was prepared to wait.
-            enum:
-            - timeOut
-            type: string
-        required:
-        - code
-        type: object
-      description: Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)
     Error500:
       allOf:
       - $ref: '#/components/schemas/Error'
@@ -350,16 +312,60 @@ components:
           description: Date-time when the event occurred
           format: date-time
           type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
+      - event
       - eventId
       - eventTime
+      - eventType
       type: object
-    ServiceEvent:
+    ServiceAttributeValueChangeEvent:
       allOf:
       - $ref: '#/components/schemas/Event'
       - properties:
           eventType:
-            $ref: '#/components/schemas/ServiceEventType'
+            description: |
+              Indicates the type of the event.
+            enum:
+            - serviceAttributeValueChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/ServiceEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    ServiceCreateEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - serviceCreateEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/ServiceEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    ServiceDeleteEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - serviceDeleteEvent
+            type: string
           event:
             $ref: '#/components/schemas/ServiceEventPayload'
         required:
@@ -378,13 +384,56 @@ components:
       required:
       - id
       type: object
-    ServiceEventType:
-      description: Indicates the type of Service event.
+    ServiceStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - serviceStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/ServiceStateChangeEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    ServiceStateChangeEventPayload:
+      description: The identifier of the Service being subject of this event.
+      properties:
+        id:
+          description: ID of the Service
+          type: string
+        href:
+          description: Hyperlink to access the Service
+          type: string
+        state:
+          $ref: '#/components/schemas/ServiceStateType'
+      required:
+      - id
+      - state
+      type: object
+    ServiceStateType:
+      description: |
+        List of possible state for the Service.
+
+        | State              | Description                                                                                                           |
+        | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+        | feasibilityChecked | Initial check whether the necessary resources are available and sufficient for the installation of a given service.   |
+        | designed           | The Service is designed. The resources are identified and/or allocated, but not reserved.                             |
+        | reserved           | All required resources for given service are reserved and ready.                                                      |
+        | inactive           | The service is deactivated and is no longer available.                                                                |
+        | active             | The service is fully available and active                                                                             |
+        | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
       enum:
-      - serviceCreateEvent
-      - serviceDeleteEvent
-      - serviceStateChangeEvent
-      - serviceAttributeValueChangeEvent
+      - feasibilityChecked
+      - designed
+      - reserved
+      - active
+      - inactive
+      - terminated
       type: string
   securitySchemes:
     oauth2MEFLSOAPI:

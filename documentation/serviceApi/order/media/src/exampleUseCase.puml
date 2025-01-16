@@ -1,7 +1,6 @@
 @startuml
 
 skinparam {
-    ClassBackgroundColor White
     ClassBorderColor<<INV>>  Black
     ClassBorderColor Red
     
@@ -32,11 +31,11 @@ class IpUniAccessLinkTrunk <<INV>> {
 }
   IpUniAccessLink "0..*" o-r-> "1" IpUniAccessLinkTrunk : PROVIDED_BY
 
-class RelatedPlaceRefOrValue <<INV>> {
+class RelatedPlaceRefOrQuery <<INV>> {
 
 }
 
-IpUniAccessLinkTrunk "0..*" o-d-> "1" RelatedPlaceRefOrValue : INSTALL_LOCATION
+IpUniAccessLinkTrunk "0..*" o-d-> "1" RelatedPlaceRefOrQuery : INSTALL_LOCATION
 
 
 @enduml

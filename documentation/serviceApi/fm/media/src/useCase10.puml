@@ -1,0 +1,26 @@
+@startuml useCase10
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+entity "FaultManagementJob" as FJ
+activate FJ
+
+note over FJ: FaultManagementJob in `inProgress`
+
+B -> S : POST {{baseUrl}}/faultManagementJob/{{id}}/suspend request
+
+S -> S : find FaultManagementJob by id
+S -> S : check FaultManagementJob status
+S -> FJ : (causes status change)
+FJ -> FJ: status: suspended 
+
+B <-- S : 204 Suspended
+
+opt
+    FJ -> B: POST faultManagementJobStateChangeEvent
+end
+
+@enduml

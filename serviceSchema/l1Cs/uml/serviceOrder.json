@@ -1,0 +1,56 @@
+@startjson
+{
+  "coordinatedAction" : [ {
+    "coordinatedActionDelay" : {
+      "amount" : 1,
+      "units" : "businessMinutes"
+    },
+    "coordinationDependency" : "startToFinish"
+  } ],
+  "serviceOrderItem" : [ {
+    "action" : "add",
+    "service" : {
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:l1-subscriber-uni:v0.0.2:all",
+        "identifier" : "l1-subscriber-uni-100",
+        "physicalLayer" : {
+          "clientProtocol" : "ETHERNET"
+        }
+      }
+    }
+  }, {
+    "action" : "add",
+    "service" : {
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:l1-subscriber-vc-end-point:v0.0.2:all",
+        "identifier" : "l1-subscriber-vc-ep-100"
+      }
+    },
+    "serviceOrderItemRelationship" : [ {
+      "relationshipType" : "L1_UNI_ENDPOINT_OF_VC"
+    }, {
+      "relationshipType" : "CONNECTS_TO_L! SUBSCRIBER_UNI"
+    } ]
+  }, {
+    "action" : "add",
+    "service" : {
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:l1-subscriber-vc:v0.0.2:all",
+        "identifier" : "mef-l1vc-1",
+        "l1ServiceLevelSpecification" : {
+          "duration" : {
+            "number" : 10,
+            "unit" : "second"
+          },
+          "sls1wDelayPerformanceMetric" : [ {
+            "delayObjective" : {
+              "time" : 10,
+              "timeUnits" : "milliSeconds"
+            }
+          } ]
+        }
+      }
+    }
+  } ]
+}
+@endjson

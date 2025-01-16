@@ -1,21 +1,23 @@
 openapi: 3.0.1
 info:
-  title: Legato Service Ordering Notification API
+  title: Service Ordering Notification
   description: |
-    **This file forms part of MEF 99** 
+    **This file forms part of MEF 99.1** 
+     
+    **This draft represents MEF work in progress and is subject to change.**
 
     Supported use cases:
     - Send Notifications
 
-    Copyright 2023 MEF Forum and its contributors.
+    Copyright 2025 MEF Forum and its contributors.
 
     This file includes content based on the TM Forum Service Order API (TMF641
     v4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the MEF Forum and its contributors.
-  version: 5.0.0
+  version: 6.0.0-RC
 servers:
-  - url: "https://{serverBase}/mefApi/legato/serviceOrderingNotification/v5/"
+  - url: "https://{serverBase}/mefApi/legato/serviceOrderingNotification/v6/"
     variables:
       serverBase:
         description: The base of BUS's URL.
@@ -37,7 +39,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/ServiceOrderEvent"
+              $ref: "#/components/schemas/ServiceOrderCreateEvent"
         required: true
       responses:
         "204":
@@ -60,12 +62,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Error403"
-        "408":
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: "#/components/schemas/Error408"
         "500":
           description: Internal Server Error
           content:
@@ -86,7 +82,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/ServiceOrderEvent"
+              $ref: "#/components/schemas/ServiceOrderStateChangeEvent"
         required: true
       responses:
         "204":
@@ -109,12 +105,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Error403"
-        "408":
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: "#/components/schemas/Error408"
         "500":
           description: Internal Server Error
           content:
@@ -135,7 +125,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/ServiceOrderEvent"
+              $ref: "#/components/schemas/ServiceOrderInformationRequiredEvent"
         required: true
       responses:
         "204":
@@ -158,12 +148,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Error403"
-        "408":
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: "#/components/schemas/Error408"
         "500":
           description: Internal Server Error
           content:
@@ -184,7 +168,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: "#/components/schemas/ServiceOrderEvent"
+              $ref: "#/components/schemas/ServiceOrderItemStateChangeEvent"
         required: true
       responses:
         "204":
@@ -207,12 +191,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: "#/components/schemas/Error403"
-        "408":
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: "#/components/schemas/Error408"
         "500":
           description: Internal Server Error
           content:
@@ -343,24 +321,6 @@ components:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-    Error408:
-      description: "Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)"
-      allOf:
-        - $ref: "#/components/schemas/Error"
-        - type: object
-          properties:
-            code:
-              description: >-
-                List of supported error codes:
-
-                - timeOut: Request Time-out - indicates that the server did not
-                receive a complete request message within the time that it was
-                prepared to wait.
-              type: string
-              enum:
-                - timeOut
-          required:
-            - code
     Error500:
       description: >-
         Internal Server Error.
@@ -394,38 +354,23 @@ components:
           description: Date-time when the event occurred
           type: string
           format: date-time
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
+        - event
         - eventId
         - eventTime
-    ServiceOrderEvent:
-      allOf:
-        - $ref: "#/components/schemas/Event"
-        - type: object
-          properties:
-            eventType:
-              description: |
-                Indicates the type of the event.
-              $ref: "#/components/schemas/ServiceOrderEventType"
-            event:
-              description: >
-                A reference to the Service Order that is source of the
-                notification.
-              $ref: "#/components/schemas/ServiceOrderEventPayload"
-          required:
-            - event
-            - eventType
+        - eventType
     ServiceOrderEventPayload:
       description: >-
         The identifier of the Service Order and Order Item being subject of this
         event.
       type: object
       properties:
-        orderItemId:
-          description: >-
-            ID of the Service Order Item (within the Service Order) which state
-            change triggered the event. Mandatory for
-            `serviceOrderItemStateChangeEvent`
-          type: string
         id:
           description: ID of the Service Order
           type: string
@@ -434,11 +379,137 @@ components:
           type: string
       required:
         - id
-    ServiceOrderEventType:
-      description: Indicates the type of Service Order event.
-      type: string
+    ServiceOrderCreateEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceOrderCreateEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceOrderEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceOrderItemStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceOrderItemStateChangeEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceOrderItemStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceOrderItemStateChangeEventPayload:
+      description: The identifier of the ServiceOrderItem being subject of this event.
+      type: object
+      properties:
+        id:
+          description: ID of the ServiceOrder
+          type: string
+        orderItemId:
+          description: >-
+            ID of the Service Order Item (within the Service Order) which state
+            change triggered the event. Mandatory for
+            `serviceOrderItemStateChangeEvent`
+          type: string
+        href:
+          description: Hyperlink to access the ServiceOrder
+          type: string
+        state:
+          description: The state of the Service Order
+          $ref: "#/components/schemas/ServiceOrderStateType"
+      required:
+        - id
+        - orderItemId
+        - state
+    ServiceOrderStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceOrderStateChangeEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceOrderStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceOrderStateChangeEventPayload:
+      description: The identifier of the ServiceOrder being subject of this event.
+      type: object
+      properties:
+        id:
+          description: ID of the ServiceOrder
+          type: string
+        href:
+          description: Hyperlink to access the ServiceOrder
+          type: string
+        state:
+          description: The state of the Service Order
+          $ref: "#/components/schemas/ServiceOrderStateType"
+      required:
+        - id
+        - state
+    ServiceOrderInformationRequiredEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceOrderInformationRequiredEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceOrderEventPayload'
+          required:
+            - event
+            - eventType    
+    ServiceOrderStateType:
+      description: |
+        Possible values for the state of a Service Order
+
+        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+        | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+        | rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is rejected, then the entire `ServiceOrder` request is rejected and a _Error Response_ is sent.                                                                                                                                                                                                           |
+        | inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                |
+        | pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further, pending order amend or cancel assessment. <br> A _`pending`_ state can lead into auto cancellation of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                               |
+        | held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into auto cancellation of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
+        | failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                              |
+        | completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                        |
+        | partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`cancelled`_ and/or _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state.                                                                                                                                                                                                                                                                                                                                                      |
       enum:
-        - serviceOrderCreateEvent
-        - serviceOrderStateChangeEvent
-        - serviceOrderItemStateChangeEvent
-        - serviceOrderInformationRequiredEvent
+        - acknowledged
+        - rejected
+        - pending
+        - held
+        - inProgress
+        - completed
+        - failed
+        - partial

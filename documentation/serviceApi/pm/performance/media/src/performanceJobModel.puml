@@ -18,12 +18,13 @@ enum PerformanceJobStateType {
     acknowledged
     cancelled
     completed
-    in-progress
+    inProgress
     pending
+    pendingCancel
     rejected
-    resource-unavailable
+    resourcesUnavailable
     scheduled
-    suspended
+    suspended 
 }
 class PerformanceJob_Common {
 
@@ -39,9 +40,9 @@ class PerformanceJob_Create {
 PerformanceJob_Common <|-- PerformanceJob_Create
 
 
-PerformanceJob_Common *-l-> FileTransferData : fileTransferData
+PerformanceJob_Common *-u->"1" MonitoredObjectId : monitoredObjectId
 PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJob_Common *-l-> ScheduleDefinition : scheduleDefinition
+PerformanceJob_Common *-u->"1" ScheduleDefinition : scheduleDefinition
 PerformanceJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
 
 class ServicePayloadSpecificAttributes {

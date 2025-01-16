@@ -1,0 +1,99 @@
+@startuml performanceMonitoringDataModelPart4
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class PerformanceReport {
+    creationDate*: date-time
+    failureReason: string
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: PerformanceReportStateType
+}
+PerformanceReport_Common <|-- PerformanceReport
+
+PerformanceReport *-->"*" ReportContentItem : reportContent
+PerformanceReport *-u-> AttachmentURL : reportUrl
+
+class PerformanceReportComplexQuery {
+    creationDate*: date-time
+    description: string
+    lastModifiedDate: date-time
+    state*: PerformanceReportStateType
+}
+PerformanceReportComplexQuery *-->"1" PerformanceJobRefOrValue : performanceJob
+PerformanceReportComplexQuery *-->"1" PerformanceReportRef : performanceReport
+PerformanceReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
+
+
+class PerformanceReportComplexQuery_Create {
+    consumingApplicationId: string
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    description: string
+    granularity: Interval
+    lastModifiedDate.gt: date-time
+    lastModifiedDate.lt: date-time
+    outputFormat: OutputFormat
+    performanceJobId: string
+    producingApplicationId: string
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
+}
+PerformanceReportComplexQuery_Create *-r-> MonitoredObjectId : monitoredObjectId
+PerformanceReportComplexQuery_Create *-u-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class PerformanceReportRef {
+    performanceReportHref: string
+    performanceReportId*: string
+}
+
+enum PerformanceReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+class PerformanceReport_Common {
+    description: string
+}
+PerformanceReport_Common *-->"1" PerformanceJobRefOrValue : performanceJob
+PerformanceReport_Common *-->"1" ReportingTimeframe : reportingTimeframe
+
+class PerformanceReport_Create {
+}
+PerformanceReport_Common <|-- PerformanceReport_Create
+
+class PerformanceReport_Find {
+    creationDate*: date-time
+    description: string
+    id*: string
+    state*: PerformanceReportStateType
+}
+PerformanceReport_Find *-->"1" PerformanceJobRefOrValue : performanceJob
+PerformanceReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+
+class ReportContentItem {
+}
+ReportContentItem *-->"1" MeasurementTime : measurementTime
+ReportContentItem *-->"*" ResultPayload : measurementDataPoints
+
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+class ResultPayload {
+    @type*: string
+}
+
+@enduml

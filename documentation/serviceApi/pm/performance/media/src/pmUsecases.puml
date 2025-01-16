@@ -2,7 +2,6 @@
 
 left to right direction
 
-actor "Administrator" as A
 actor "Buyer/Client" as B
 actor "Seller/Server" as S
 
@@ -22,29 +21,23 @@ Usecase UC12 as "12. Cancel Performance Monitoring Job"
 Usecase UC13 as "13. Retrieve Cancel Performance Monitoring Job List"
 Usecase UC14 as "14. Retrieve Cancel Performance Monitoring Job by Identifier"
 Usecase UC15 as "15. Suspend Performance Monitoring Job"
-Usecase UC16 as "16. Retrieve Suspend Performance Monitoring Job List"
-Usecase UC17 as "17. Retrieve Suspend Performance Monitoring Job by Identifier"
-Usecase UC18 as "18. Resume Performance Monitoring Job"
-Usecase UC19 as "19. Retrieve Resume Performance Monitoring Job List"
-Usecase UC20 as "20. Retrieve Resume Performance Monitoring Job by Identifier"
-Usecase UC21 as "21. Create Performance Monitoring Job Complex Query"
-Usecase UC22 as "22. Create Performance Measurement Report"
-Usecase UC23 as "23. Retrieve Performance Measurement Report List"
-Usecase UC24 as "24. Retrieve Performance Measurement Report by Report Identifier"
-Usecase UC25 as "25. Create Performance Measurement Report Complex Query"
-Usecase UC26 as "26. Retrieve Tracking Record List"
-Usecase UC27 as "27. Retrieve Tracking Record by Identifier"
-Usecase UC28 as "28. Register for Event Notifications"
-Usecase UC29 as "29. Send Event Notification"
+Usecase UC16 as "16. Resume Performance Monitoring Job"
+Usecase UC17 as "17. Create Performance Monitoring Job Complex Query"
+Usecase UC18 as "18. Create Performance Monitoring Report"
+Usecase UC19 as "19. Retrieve Performance Monitoring Report List"
+Usecase UC20 as "20. Retrieve Performance Monitoring Report by Report Identifier"
+Usecase UC21 as "21. Create Performance Monitoring Report Complex Query"
+Usecase UC22 as "22. Retrieve Tracking Record List"
+Usecase UC23 as "23. Retrieve Tracking Record by Identifier"
+Usecase UC24 as "24. Register for Event Notifications"
+Usecase UC25 as "25. Send Event Notification"
 }
 
-A --> UC1
-A --> UC2
+B --> UC1
 B --> UC2
-A --> UC3
 B --> UC3
-A --> UC4
-A --> UC5
+B --> UC4
+B --> UC5
 B --> UC6
 B --> UC7
 B --> UC8
@@ -64,11 +57,6 @@ B --> UC21
 B --> UC22
 B --> UC23
 B --> UC24
-B --> UC25
-B --> UC26
-B --> UC27
-A --> UC28
-B --> UC28
-S --> UC29
+S --> UC25
 
 @enduml

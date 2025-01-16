@@ -1,0 +1,25 @@
+@startuml useCase1Polling
+hide footbox
+
+participant "Buyer/Client" as A
+participant "Seller/Server" as SOF
+
+
+A -> SOF : POST {{baseUrl}}/testProfile (TestProfile_Create)
+SOF -> SOF : basic validation
+
+alt succesful inquiry
+  SOF --> A : 201 TestProfile with {{id}}, `acknowledged` state
+  
+  ...
+
+  loop periodically until TestProfile in completed state
+      A -> SOF :   GET {{baseUrl}}/testProfile/{{id}}
+      return 200 TestProfile in completed state  end
+
+else validation or internal problem
+  SOF --> A : 4xx or 5xx error response
+end
+
+
+@enduml

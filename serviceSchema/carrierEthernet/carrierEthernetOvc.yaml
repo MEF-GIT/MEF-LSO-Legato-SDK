@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-ovc:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-ovc:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet OVC Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet OVC Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetOvc.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,58 +51,68 @@ title:
     # products or services.
     # ---------------------
     #
-description:
-  The Operator Virtual Connection (OVC) is the building block for constructing an EVC spanning multiple Operator CENs.  Reference MEF 26.2 Section 8.8 Operator Virtual Connection.
+description: >-
+  The Operator Virtual Connection (OVC) is the building block for constructing an EVC 
+  spanning multiple Operator CENs.  Reference MEF 26.2 Section 8.8 Operator Virtual 
+  Connection.
 properties:
   identifier:
+    minLength: 1
     maxLength: 45
+    pattern: "[\x20-\x7F]+"
     type: string
-    description: An identifier for the OVC intended for managment purposes. Reference MEF 26.2 Section 12.1 OVC Identifier Service Attribute.
+    description: >-
+      An identifier for the OVC intended for management purposes. Reference MEF 26.2 
+      Section 12.1 OVC Identifier Service Attribute.
   ovcType:
     $ref: 'carrierEthernetCommon.yaml#/definitions/ConnectionType'
   maximumNumberOfUniOvcEndPoints:
     minimum: 0
     type: integer
-    description: The bound on the number of OVC End Points at different UNIs that can be associated by the OVC. Reference MEF 26.2 Section 12.4 Maximum Number of UNI OVC End Points Service Attribute.
+    description: >-
+      The bound on the number of OVC End Points at different UNIs that can be associated 
+      by the OVC. Reference MEF 26.2 Section 12.4 Maximum Number of UNI OVC End Points 
+      Service Attribute.
   maximumNumberOfEnniOvcEndPoints:
     minimum: 1
     type: integer
-    description: The bound on the number of OVC End Points at ENNIs that can be associated by the OVC.
+    description: >-
+      The bound on the number of OVC End Points at ENNIs that can be associated by the OVC.
+      Reference MEF 26.2 Section 12.5 Maximum Number of ENNI OVC End Points Service Attribute.
+  maximumFrameSize:
+    type: integer
+    minimum: 1526
+    description: >-
+      Maximum size of EI frames that can be carried over the EVC or OVC. Reference MEF 26.2 
+      Section 12.6 OVC Maximum Frame Size Service Attribute.
   ceVlanIdPreservation:
     $ref: '#/definitions/VlanIdPreservation'
+  ceVlanPcpPreservation:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'  
+  ceVlanDeiPreservation:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
   svlanPcpPreservation:
-    type: string
-    enum:
-    - ENABLED
-    - DISABLED
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
   svlanDeiPreservation:
-    type: string
-    enum:
-    - ENABLED
-    - DISABLED
+    $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  listOfCosNames:
+    minItems: 0
+    type: array
+    description: >-
+      Used to specify all the Class of Service Names supported by an OVC. 
+      Reference MEF 26.2 Section 12.12 OVC List of Class of Service Names 
+      Service Attribute.
+    items:
+      type: string
+  carrierEthernetServiceLevelSpecification:
+    $ref: './carrierEthernetServiceLevelSpecification.yaml#/definitions/CarrierEthernetServiceLevelSpecification'
+  frameDisposition:
+    $ref: './carrierEthernetCommon.yaml#/definitions/FrameDisposition'
+  availableMegLevel:
+    $ref: './carrierEthernetCommon.yaml#/definitions/MegLevel'
   l2cpAddressSet:
     $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
-required:
-  - identifier
-  - ovcType
-  - maximumNumberOfUniOvcEndPoints
-  - maximumNumberOfEnniOvcEndPoints
-  - ceVlanIdPreservation
-  - svlanPcpPreservation
-  - svlanDeiPreservation
-  - l2cpAddressSet
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetService'
 definitions:
-  BandwidthProfilePerEquivalenceClassName:
-    type: object
-    properties:
-      egressEquivalenceClassName:
-        type: string
-        description: Egress Equivalence Class Name. Reference MEF 26.2 Section 16.13 Egress Bandwidth Profile per Egress Equiva-lence Class Name Service Attribute.
-      bwpFlow:
-        $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
-    description: List of pairs of the form <x,y> where x is an Egress Equivalence Class Name and y has the value  BwpFlow.  Reference MEF 26.2 Section 16.13 Egress Bandwidth Profile per Egress Equivalence Class Name Service Attribute.
   CosNameAndColorToDeiPac:
     type: object
     properties:
@@ -157,54 +167,6 @@ definitions:
         items:
           $ref: '#/definitions/CosNameAndColorToPcpPac'
     description: This lists the Egress Map types, either CoS Name to PCP, or CoS Name and Ingress Color to PCP, or CoS Name and Ingress Color to DEI for S-Tag or C-Tag. Reference MEF 26.2 Section 16.8 OVC End Point Egress Map Service Attribute.
-  OvcEgressMapType:
-    type: object
-    properties:
-      type:
-        type: string
-        enum:
-        - CN_C_TAG_PCP
-        - CC_C_TAG_PCP
-        - CC_C_TAG_DEI
-        - CN_S_TAG_PCP
-        - CC_S_TAG_PCP
-        - CC_S_TAG_DEI
-    description: This lists the Egress Map types, either CoS Name to PCP, or CoS Name and Ingress Color to PCP, or CoS Name and Ingress Color to DEI for S-Tag or C-Tag. Reference MEF 26.2 Section 16.8 OVC End Point Egress Map Service Attribute.
-  OvcEndPointMap:
-    type: object
-    properties:
-      ovcEndPointMapForm:
-        type: string
-        enum:
-        - FORM_E
-        - FORM_V
-        - FORM_U
-        - FORM_T
-      ovcEndPointMapFormT:
-        maxItems: 1
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/OvcEndPointMapFormT'
-      ovcEndPointMapFormV:
-        maxItems: 1
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/OvcEndPointMapFormV'
-      ovcEndPointMapFormU:
-        maxItems: 1
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/OvcEndPointMapFormU'
-      ovcEndPointMapFormE:
-        maxItems: 1
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/OvcEndPointMapFormE'
-    description: The information that determines which EI Frames are mapped to the OVC End Point. Reference MEF 26.2 Section 16.5 OVC End Point Map Service Attribute.
   OvcEndPointMapFormE:
     type: object
     properties:
@@ -233,13 +195,6 @@ definitions:
       ceVlanIdList:
         $ref: '#/definitions/VlanIdListing'
     description: The OvcEndPointMapFormU object class represents the OVC End Point Map Form U (U for UNI). It is a list of one or more CE-VLAN ID values. A Service Frame is mapped to the OVC End Point if the CE-VLAN ID value of the Service Frame is in the list.
-  OvcEndPointRole:
-    type: string
-    description: String enumeration representing OVC End Point Role. Reference MEF 26.2 Section 16.4 OVC End Point Role Service Attribute.
-    enum:
-    - ROOT
-    - LEAF
-    - TRUNK
   VlanIdListing:
     type: object
     properties:
@@ -261,7 +216,9 @@ definitions:
     - LIST
   VlanIdPreservation:
     type: string
-    description: Enumeration for VLAN ID Preservation. Reference MEF 26.2 Section 12.7 OVC CE-VLAN ID Preservation Service Attribute.
+    description: >-
+      Enumeration for VLAN ID Preservation. Reference MEF 26.2 Section 12.7 OVC CE-VLAN ID Preservation 
+      Service Attribute.
     enum:
     - PRESERVE
     - RETAIN

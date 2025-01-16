@@ -1,61 +1,38 @@
 openapi: 3.0.3
 info:
-  description: >-
-    The Service Catalog API provides a standardized mechanism for retrieving 
-
-    *ServiceSpecifications*. Using these APIs Business Applications (BUS) 
-
-    systems query the **Service Catalog** for *ServiceSpecifications* supported
-    
-
-    by the Service Orchestration Function (SOF).
-
-
-    Additionally, the APIs also allow the BUS to register listeners to be 
-
-    notified of the changes to the *ServiceSpecifications*.  
-
-
-    - MEF Developer Guide Reference : MEF_W99 v1.0
-
-
-    - TMF API Reference : TMF 633 v18.5.1
-
-
-    Copyright � MEF 2020. All Rights Reserved
-
-
-    This file includes content based on the TM Forum Service Catalog Management
-    API
-
-    (TMF633 v3.0.0) available at
-
-    https://github.com/tmforum-apis/TMF633_ServiceCatalog, which is licensed
-
-    by the TM Forum under the Apache License version 2.0. Such content has been
-
-    modified by the MEF Forum and its contributors.
+  description: "The Service Catalog API provides a standardized mechanism for retrieving\
+    \ \n*ServiceSpecifications*. Using these APIs Business Applications (BUS) \nsystems\
+    \ query the **Service Catalog** for *ServiceSpecifications* supported \nby the\
+    \ Service Orchestration Function (SOF).\n\nAdditionally, the APIs also allow the\
+    \ BUS to register listeners to be \nnotified of the changes to the *ServiceSpecifications*.\
+    \  \n\n- MEF Developer Guide Reference : MEF_W99 v1.0\n\n- TMF API Reference :\
+    \ TMF 633 v18.5.1\n\nCopyright © MEF 2020. All Rights Reserved\n\nThis file includes\
+    \ content based on the TM Forum Service Catalog Management API\n(TMF633 v3.0.0)\
+    \ available at\nhttps://github.com/tmforum-apis/TMF633_ServiceCatalog, which is\
+    \ licensed\nby the TM Forum under the Apache License version 2.0. Such content\
+    \ has been\nmodified by the MEF Forum and its contributors."
   title: Legato Service Catalog API
   version: 4.0.0-RC
 servers:
-  - url: 'https://{server}:{port}{basePath}'
-    variables:
-      server:
-        default: mef.net
-      port:
-        default: '8443'
-        enum:
-          - '8443'
-          - '443'
-      basePath:
-        default: /mefApi/legato/serviceCatalog/v4
+- url: "https://{server}:{port}{basePath}"
+  variables:
+    server:
+      default: mef.net
+    port:
+      default: "8443"
+      enum:
+      - "8443"
+      - "443"
+    basePath:
+      default: /mefApi/legato/serviceCatalog/v4
+security:
+- oauth2MEFLSOAPI:
+  - default
 tags:
-  - description:
-      Mechanisms for BUS to query and retrieve *ServiceSpecifications*.
-    name: ServiceSpecification
-  - description:
-      Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
-    name: EventSubscriptionHub
+- description: Mechanisms for BUS to query and retrieve *ServiceSpecifications*.
+  name: ServiceSpecification
+- description: Mechanisms for BUS to subscribe/unsubscribe to *Notifications*.
+  name: EventSubscriptionHub
 paths:
   /serviceSpecification:
     get:
@@ -63,202 +40,183 @@ paths:
       description: This operation returns service specifications from a catalog
       operationId: serviceSpecificationFind
       parameters:
-        - description: Service Category
-          explode: true
-          in: query
-          name: category
-          required: false
-          schema:
-            type: string
-          style: form
-        - description: Service Specification status
-          explode: true
-          in: query
-          name: lifecycleStatus
-          required: false
-          schema:
-            $ref: '#/components/schemas/ServiceSpecificationState'
-          style: form
-        - description: |-
-            Comma-separated properties of the Service Specification to be 
-            included in the returned response
-          explode: true
-          in: query
-          name: fields
-          required: false
-          schema:
-            type: string
-          style: form
-        - description: |-
-            Requested start index in a ordered list (sorted by id property) of 
-            matching Service Specifications to be provided in response.
-          explode: true
-          in: query
-          name: offset
-          required: false
-          schema:
-            type: integer
-          style: form
-        - description: |-
-            Requested maximum number of Service Specifications to be provided 
-            in the response
-          explode: true
-          in: query
-          name: limit
-          required: false
-          schema:
-            type: integer
-          style: form
+      - description: Service Category
+        in: query
+        name: category
+        required: false
+        schema:
+          type: string
+      - description: Service Specification status
+        in: query
+        name: lifecycleStatus
+        required: false
+        schema:
+          $ref: '#/components/schemas/ServiceSpecificationState'
+      - description: "Comma-separated properties of the Service Specification to be\
+          \ \nincluded in the returned response"
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
+      - description: "Requested start index in a ordered list (sorted by id property)\
+          \ of \nmatching Service Specifications to be provided in response. "
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: "Requested maximum number of Service Specifications to be provided\
+          \ \nin the response"
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
       responses:
-        '200':
+        "200":
           content:
             application/json;charset=utf-8:
               schema:
-                type: array
                 items:
                   $ref: '#/components/schemas/ServiceSpecification'
+                type: array
           description: Ok
-        '400':
+        "400":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Bad Request
-        '401':
+        "401":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unauthorized
-        '403':
+        "403":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Forbidden
-        '404':
+        "404":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        '422':
+        "422":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unprocessable entity
-        '500':
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Internal Server Error
-        '503':
+        "503":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
       security:
-        - oauth2MEFLSOAPI:
-            - serviceSpecificationFind
+      - oauth2MEFLSOAPI:
+        - serviceSpecificationFind
       summary: List service specifications
       tags:
-        - ServiceSpecification
-  '/serviceSpecification/{id}':
+      - ServiceSpecification
+  /serviceSpecification/{id}:
     get:
       deprecated: false
-      description: >-
-        This operation returns a service specification by its id from a
+      description: This operation returns a service specification by its id from a
         catalog. Attribute selection is enabled using the fields attribute.
       operationId: serviceSpecificationGet
       parameters:
-        - description: Identifier of the ServiceSpecification
-          explode: false
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          style: simple
-        - description: |-
-            Comma-separated properties of the Service Specification to be 
-            included in the returned response
-          explode: true
-          in: query
-          name: fields
-          required: false
-          schema:
-            type: string
-          style: form
+      - description: Identifier of the ServiceSpecification
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: "Comma-separated properties of the Service Specification to be\
+          \ \nincluded in the returned response"
+        in: query
+        name: fields
+        required: false
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/ServiceSpecification'
           description: Ok
-        '400':
+        "400":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Bad Request
-        '401':
+        "401":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unauthorized
-        '403':
+        "403":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Forbidden
-        '404':
+        "404":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        '405':
+        "405":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Method Not Allowed
-        '408':
+        "408":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Request Time-out
-        '422':
+        "422":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unprocessable entity
-        '500':
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Internal Server Error
-        '503':
+        "503":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
       security:
-        - oauth2MEFLSOAPI:
-            - serviceSpecificationGet
+      - oauth2MEFLSOAPI:
+        - serviceSpecificationGet
       summary: Retrieve a service specification
       tags:
-        - ServiceSpecification
+      - ServiceSpecification
   /hub:
     post:
       deprecated: false
@@ -271,226 +229,222 @@ paths:
               $ref: '#/components/schemas/EventSubscriptionInput'
         required: true
       responses:
-        '201':
+        "201":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EventSubscription'
           description: Created
-        '400':
+        "400":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Bad Request
-        '401':
+        "401":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unauthorized
-        '403':
+        "403":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Forbidden
-        '404':
+        "404":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        '405':
+        "405":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Method Not Allowed
-        '408':
+        "408":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Request Time-out
-        '409':
+        "409":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Conflict
-        '500':
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Internal Server Error
-        '503':
+        "503":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
       security:
-        - oauth2MEFLSOAPI:
-            - hubCreate
+      - oauth2MEFLSOAPI:
+        - hubCreate
       summary: Create Hub
       tags:
-        - EventSubscriptionHub
-  '/hub/{hubId}':
+      - EventSubscriptionHub
+  /hub/{hubId}:
     delete:
       deprecated: false
       description: Delete an existing Hub
       operationId: hubDelete
       parameters:
-        - explode: false
-          in: path
-          name: hubId
-          required: true
-          schema:
-            type: string
-          style: simple
+      - in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Bad Request
-        '401':
+        "401":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unauthorized
-        '403':
+        "403":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Forbidden
-        '404':
+        "404":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        '405':
+        "405":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Method Not Allowed
-        '408':
+        "408":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Request Time-out
-        '422':
+        "422":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unprocessable entity
-        '500':
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Internal Server Error
-        '503':
+        "503":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
       security:
-        - oauth2MEFLSOAPI:
-            - hubDelete
+      - oauth2MEFLSOAPI:
+        - hubDelete
       summary: Delete Hub
       tags:
-        - EventSubscriptionHub
+      - EventSubscriptionHub
     get:
       deprecated: false
       operationId: hubGet
       parameters:
-        - explode: false
-          in: path
-          name: hubId
-          required: true
-          schema:
-            type: string
-          style: simple
+      - in: path
+        name: hubId
+        required: true
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EventSubscription'
           description: Ok
-        '400':
+        "400":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Bad Request
-        '401':
+        "401":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unauthorized
-        '403':
+        "403":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Forbidden
-        '404':
+        "404":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Not Found
-        '405':
+        "405":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Method Not Allowed
-        '408':
+        "408":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Request Time-out
-        '422':
+        "422":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unprocessable entity
-        '500':
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Internal Server Error
-        '503':
+        "503":
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Service Unavailable
       security:
-        - oauth2MEFLSOAPI:
-            - hubGet
+      - oauth2MEFLSOAPI:
+        - hubGet
       summary: get hub
       tags:
-        - EventSubscriptionHub
+      - EventSubscriptionHub
 components:
   responses:
     BadRequest:
@@ -555,103 +509,88 @@ components:
       description: Conflict
   schemas:
     ServiceSpecificationState:
-      type: string
-      description: |-
-        List of possible states that represents the entire Service 
-        Specification lifecycle. This includes all the processes required to 
-        design, build, deploy, maintain and ultimately retire the catalog 
-        element.
+      description: "List of possible states that represents the entire Service \n\
+        Specification lifecycle. This includes all the processes required to \ndesign,\
+        \ build, deploy, maintain and ultimately retire the catalog \nelement."
       enum:
-        - IN_STUDY
-        - IN_DESIGN
-        - IN_TEST
-        - LAUNCHED
-        - ACTIVE
-        - RETIRED
-        - OBSOLETE
-        - REJECTED
+      - IN_STUDY
+      - IN_DESIGN
+      - IN_TEST
+      - LAUNCHED
+      - ACTIVE
+      - RETIRED
+      - OBSOLETE
+      - REJECTED
+      type: string
     ServiceSpecification:
       allOf:
-        - $ref: '#/components/schemas/Addressable'
-        - type: object
-          properties:
-            category:
-              type: string
-              description: |-
-                The category is used to group service specifications in logical
-                containers. Categories can be further sub-categorized into other
-                categories.
-            subcategory:
-              type: string
-              description:
-                Categories can be further sub-categorized into other
-                categories.
-            version:
-              type: string
-              description: Service specification version
-            description":
-              type: string
-              description:
-                A narrative that explains  details of the service
-                specification.
-            isBundle:
-              type: boolean
-              description: |-
-                Determines whether a ServiceSpecification represents a single 
-                ServiceSpecification (false), or a bundle of 
-                ServiceSpecification (true).
-            lastUpdate:
-              type: string
-              format: date-time
-              description:
-                Date and time of the last update of the service specification
-            validFor:
-              type: object
-              $ref: '#/components/schemas/TimePeriod'
-              description:
-                The period for which the service specification is valid
-            lifecycleStatus:
-              $ref: '#/components/schemas/ServiceSpecificationState'
-            attachment:
-              type: array
-              description: |-
-                A list of attachments (Attachment [*]). Complements 
-                the description of the specification through video, pictures...
-              items:
-                $ref: '#/components/schemas/AttachmentRef'
-              maxItems: 1
-              minItems: 0
-            relatedParty:
-              type: array
-              items:
-                $ref: '#/components/schemas/RelatedPartyRef'
-              minItems: 0
-            serviceLevelSpecification:
-              type: array
-              description: >-
-                A list of service level specifications related to this service
-                specification, and which will need to be satisifiable for
-                corresponding service instances; e.g. Gold, Platinum
-              items:
-                $ref: '#/components/schemas/ServiceLevelSpecificationRef'
-            serviceSpecRelationship:
-              type: array
-              description: >-
-                A list of service specifications related to this specification,
-                e.g. migration, substitution, dependency or exclusivity
-                relationship
-              items:
-                $ref: '#/components/schemas/ServiceSpecificationRelationship'
-            serviceSpecCharacteristic:
-              type: array
-              description: >-
-                A list of service spec characteristics
-                (ServiceSpecCharacteristic [*]). This class represents the key
-                features of this service specification.
-              items:
-                $ref: '#/components/schemas/ServiceSpecCharacteristic'
-            targetServiceSchema:
-              $ref: '#/components/schemas/TargetServiceSchema'
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          category:
+            description: |-
+              The category is used to group service specifications in logical
+              containers. Categories can be further sub-categorized into other
+              categories.
+            type: string
+          subcategory:
+            description: Categories can be further sub-categorized into other categories.
+            type: string
+          version:
+            description: Service specification version
+            type: string
+          description":
+            description: A narrative that explains  details of the service specification.
+            type: string
+          isBundle:
+            description: "Determines whether a ServiceSpecification represents a single\
+              \ \nServiceSpecification (false), or a bundle of \nServiceSpecification\
+              \ (true)."
+            type: boolean
+          lastUpdate:
+            description: Date and time of the last update of the service specification
+            format: date-time
+            type: string
+          validFor:
+            $ref: '#/components/schemas/TimePeriod'
+            description: The period for which the service specification is valid
+            type: object
+          lifecycleStatus:
+            $ref: '#/components/schemas/ServiceSpecificationState'
+          attachment:
+            description: "A list of attachments (Attachment [*]). Complements \nthe\
+              \ description of the specification through video, pictures..."
+            items:
+              $ref: '#/components/schemas/AttachmentRef'
+            maxItems: 1
+            minItems: 0
+            type: array
+          relatedParty:
+            items:
+              $ref: '#/components/schemas/RelatedPartyRef'
+            minItems: 0
+            type: array
+          serviceLevelSpecification:
+            description: "A list of service level specifications related to this service\
+              \ specification, and which will need to be satisifiable for corresponding\
+              \ service instances; e.g. Gold, Platinum"
+            items:
+              $ref: '#/components/schemas/ServiceLevelSpecificationRef'
+            type: array
+          serviceSpecRelationship:
+            description: "A list of service specifications related to this specification,\
+              \ e.g. migration, substitution, dependency or exclusivity relationship"
+            items:
+              $ref: '#/components/schemas/ServiceSpecificationRelationship'
+            type: array
+          serviceSpecCharacteristic:
+            description: "A list of service spec characteristics (ServiceSpecCharacteristic\
+              \ [*]). This class represents the key features of this service specification."
+            items:
+              $ref: '#/components/schemas/ServiceSpecCharacteristic'
+            type: array
+          targetServiceSchema:
+            $ref: '#/components/schemas/TargetServiceSchema'
+        type: object
       description: |-
         ServiceSpecification offers the ability to describe the characteristics
         of a specific type of service. Functionally, it acts as a template by
@@ -659,208 +598,174 @@ components:
         these services would therefore share the same set of characteristics.
     AttachmentRef:
       allOf:
-        - $ref: '#/components/schemas/Referenceable'
-        - type: object
-          properties:
-            description:
-              type: string
-              description:
-                A narrative text describing the content of the attachment
-            url:
-              type: string
-              format: uri
-              description: Link to the attachment media/content
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          description:
+            description: A narrative text describing the content of the attachment
+            type: string
+          url:
+            description: Link to the attachment media/content
+            format: uri
+            type: string
+        type: object
       description: |-
         An attachment represents a file that is used to complement the
         description of an entity through video, pictures, etc..
     ServiceLevelSpecificationRef:
       allOf:
-        - $ref: '#/components/schemas/Referenceable'
-      description: |-
-        A Service Level Specification represents a pre-defined or negotiated set
-        of Service Level Objectives. In addition, certain consequences are 
-        associated with not meeting the Service Level Objectives. Service Level 
-        Agreements are expressed in terms of Service Level Specifications.
+      - $ref: '#/components/schemas/Referenceable'
+      description: "A Service Level Specification represents a pre-defined or negotiated\
+        \ set\nof Service Level Objectives. In addition, certain consequences are\
+        \ \nassociated with not meeting the Service Level Objectives. Service Level\
+        \ \nAgreements are expressed in terms of Service Level Specifications."
     ServiceSpecificationRelationship:
       allOf:
-        - $ref: '#/components/schemas/Referenceable'
-        - type: object
-          properties:
-            relationshipType:
-              $ref: '#/components/schemas/ServiceSpecificationRelationshipType'
-            role:
-              type: string
-              description: The association role for this service specification.
-            validFor:
-              type: object
-              $ref: '#/components/schemas/TimePeriod'
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          relationshipType:
+            $ref: '#/components/schemas/ServiceSpecificationRelationshipType'
+          role:
+            description: The association role for this service specification.
+            type: string
+          validFor:
+            $ref: '#/components/schemas/TimePeriod'
+            type: object
+        type: object
       description: Reference to a ServiceSpecification instance.
     ServiceSpecificationRelationshipType:
-      type: string
       description: Relationship type.
       enum:
-        - reliesOn
-        - dependency
-        - migration
-        - substitution
-        - exclusivity
+      - reliesOn
+      - dependency
+      - migration
+      - substitution
+      - exclusivity
+      type: string
     ServiceSpecCharacteristic:
       allOf:
-        - $ref: '#/components/schemas/Addressable'
-        - type: object
-          properties:
-            '@valueSchemaLocation':
-              type: string
-              description: |-
-                This (optional) field provides a link to the schema describing 
-                the value type.
-            valueType:
-              type: string
-              description: >-
-                A kind of value that the characteristic can take on, such as
-                numeric,
-
-                text and so forth
-            description:
-              type: string
-              description: >-
-                A narrative that explains in details the nature of the
-                serviceSpecCharacteristic
-            extensible:
-              type: boolean
-              description: |-
-                An indicator that specifies that the values for the 
-                characteristic can be extended by adding new values when 
-                instantiating a characteristic for an Entity.
-            isUnique:
-              type: boolean
-              description: >-
-                An indicator that specifies if a value is unique for the
-
-                specification. Possible values are; "unique while value is in
-                effect" and "unique whether value is in effect or not"
-            maxCardinality:
-              type: integer
-              description: >-
-                The maximum number of instances a CharacteristicValue can take
-                on. For example, zero to five phone numbers in a group calling
-                plan, where five is the value for the maxCardinality.
-            minCardinality:
-              type: integer
-              description: >-
-                The minimum number of instances a CharacteristicValue can take
-                on. For example, zero to five phone numbers in a group calling
-                plan, where  zero is the value for the minCardinality.
-            regex:
-              type: string
-              description: >-
-                A rule or principle represented in regular expression used to
-                derive the value of a characteristic value.
-            validFor:
-              type: object
-              $ref: '#/components/schemas/TimePeriod'
-              description:
-                The period for which the serviceSpecCharacteristic is valid
-            serviceSpecCharRelationship:
-              type: array
-              description: >-
-                A list of service spec char relationships. An aggregation,
-                migration, substitution, dependency or exclusivity relationship
-                between/among Specification Characteristics.
-              items:
-                $ref: '#/components/schemas/ServiceSpecificationRelationship'
-            serviceSpecCharacteristicValue:
-              type: array
-              description: |-
-                A list of service spec characteristic values. A 
-                ServiceSpecCharacteristicValue object is used to define a set 
-                of attributes, each of which can be assigned to a corresponding 
-                set of attributes in a ServiceSpecCharacteristic object. The 
-                values of the attributes in the ServiceSpecCharacteristicValue 
-                object describe the values of the attributes that a 
-                corresponding ServiceSpecCharacteristic object can take on.
-              items:
-                $ref: '#/components/schemas/ServiceSpecCharacteristicValue'
-      description: |-
-        This class represents the key features of this service specification. 
-        For example, bandwidth is a characteristic of many different types of
-        services; if bandwidth is a relevant characteristic (e.g., from the
-        point-of-view of a Customer obtaining this Service via a Product) then
-        bandwidth would be a ServiceSpecCharacteristic for that particular
-        Service.
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          '@valueSchemaLocation':
+            description: "This (optional) field provides a link to the schema describing\
+              \ \nthe value type."
+            type: string
+          valueType:
+            description: |-
+              A kind of value that the characteristic can take on, such as numeric,
+              text and so forth
+            type: string
+          description:
+            description: A narrative that explains in details the nature of the serviceSpecCharacteristic
+            type: string
+          extensible:
+            description: "An indicator that specifies that the values for the \ncharacteristic\
+              \ can be extended by adding new values when \ninstantiating a characteristic\
+              \ for an Entity."
+            type: boolean
+          isUnique:
+            description: |-
+              An indicator that specifies if a value is unique for the
+              specification. Possible values are; "unique while value is in effect" and "unique whether value is in effect or not"
+            type: boolean
+          maxCardinality:
+            description: "The maximum number of instances a CharacteristicValue can\
+              \ take on. For example, zero to five phone numbers in a group calling\
+              \ plan, where five is the value for the maxCardinality."
+            type: integer
+          minCardinality:
+            description: "The minimum number of instances a CharacteristicValue can\
+              \ take on. For example, zero to five phone numbers in a group calling\
+              \ plan, where  zero is the value for the minCardinality."
+            type: integer
+          regex:
+            description: A rule or principle represented in regular expression used
+              to derive the value of a characteristic value.
+            type: string
+          validFor:
+            $ref: '#/components/schemas/TimePeriod'
+            description: The period for which the serviceSpecCharacteristic is valid
+            type: object
+          serviceSpecCharRelationship:
+            description: "A list of service spec char relationships. An aggregation,\
+              \ migration, substitution, dependency or exclusivity relationship between/among\
+              \ Specification Characteristics."
+            items:
+              $ref: '#/components/schemas/ServiceSpecificationRelationship'
+            type: array
+          serviceSpecCharacteristicValue:
+            description: "A list of service spec characteristic values. A \nServiceSpecCharacteristicValue\
+              \ object is used to define a set \nof attributes, each of which can\
+              \ be assigned to a corresponding \nset of attributes in a ServiceSpecCharacteristic\
+              \ object. The \nvalues of the attributes in the ServiceSpecCharacteristicValue\
+              \ \nobject describe the values of the attributes that a \ncorresponding\
+              \ ServiceSpecCharacteristic object can take on."
+            items:
+              $ref: '#/components/schemas/ServiceSpecCharacteristicValue'
+            type: array
+        type: object
+      description: "This class represents the key features of this service specification.\
+        \ \nFor example, bandwidth is a characteristic of many different types of\n\
+        services; if bandwidth is a relevant characteristic (e.g., from the\npoint-of-view\
+        \ of a Customer obtaining this Service via a Product) then\nbandwidth would\
+        \ be a ServiceSpecCharacteristic for that particular\nService."
     ServiceSpecCharacteristicValue:
       allOf:
-        - $ref: '#/components/schemas/Addressable'
-        - type: object
-          properties:
-            isDefault:
-              type: boolean
-              description:
-                Indicates if the value is the default value for a
-                characteristic
-            rangeInterval:
-              type: string
-              description: |-
-                An indicator that specifies the inclusion or exclusion of the
-                valueFrom and valueTo attributes. If applicable, possible 
-                values are "open", "closed", "closedBottom" and "closedTop".
-            regex:
-              type: string
-              description: A regular expression constraint for given value
-            unitOfMeasure:
-              type: string
-              description: |-
-                A length, surface, volume, dry measure, liquid measure, money, 
-                weight, time, and the like. In general, a determinate quantity 
-                or magnitude of the kind designated, taken as a standard of 
-                comparison for others of the same kind, in assigning to them 
-                numerical values, as 1 foot, 1 yard, 1 mile, 1 square foot.
-            valueFrom:
-              type: integer
-              description:
-                The low range value that a characteristic can take on
-            valueTo:
-              type: integer
-              description:
-                The upper range value that a characteristic can take on
-            valueType:
-              type: string
-              description: >-
-                A kind of value that the characteristic can take on, such as
-                numeric,  text, and so forth
-            validFor:
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          isDefault:
+            description: Indicates if the value is the default value for a characteristic
+            type: boolean
+          rangeInterval:
+            description: "An indicator that specifies the inclusion or exclusion of\
+              \ the\nvalueFrom and valueTo attributes. If applicable, possible \n\
+              values are \"open\", \"closed\", \"closedBottom\" and \"closedTop\"."
+            type: string
+          regex:
+            description: A regular expression constraint for given value
+            type: string
+          unitOfMeasure:
+            description: "A length, surface, volume, dry measure, liquid measure,\
+              \ money, \nweight, time, and the like. In general, a determinate quantity\
+              \ \nor magnitude of the kind designated, taken as a standard of \ncomparison\
+              \ for others of the same kind, in assigning to them \nnumerical values,\
+              \ as 1 foot, 1 yard, 1 mile, 1 square foot."
+            type: string
+          valueFrom:
+            description: The low range value that a characteristic can take on
+            type: integer
+          valueTo:
+            description: The upper range value that a characteristic can take on
+            type: integer
+          valueType:
+            description: "A kind of value that the characteristic can take on, such\
+              \ as numeric,  text, and so forth"
+            type: string
+          validFor:
+            $ref: '#/components/schemas/TimePeriod'
+            description: The period of time for which a value is applicable
+            type: object
+          value:
+            additionalProperties:
               type: object
-              $ref: '#/components/schemas/TimePeriod'
-              description: The period of time for which a value is applicable
-            value:
-              type: object
-              additionalProperties:
-                type: object
-              description: >-
-                A discrete value that the characteristic can take on, or the
-                actual value of the characteristic
-      description: >-
-        A ServiceSpecCharacteristicValue object is used to define a set of
-        attributes, each of which can be assigned to a corresponding set of
-        attributes in a ServiceSpecCharacteristic object. The values of the
-        attributes in the ServiceSpecCharacteristicValue object describe the
-        values of the attributes that a corresponding ServiceSpecCharacteristic
-        object can take on.
+            description: "A discrete value that the characteristic can take on, or\
+              \ the actual value of the characteristic"
+            type: object
+        type: object
+      description: "A ServiceSpecCharacteristicValue object is used to define a set\
+        \ of attributes, each of which can be assigned to a corresponding set of attributes\
+        \ in a ServiceSpecCharacteristic object. The values of the attributes in the\
+        \ ServiceSpecCharacteristicValue object describe the values of the attributes\
+        \ that a corresponding ServiceSpecCharacteristic object can take on."
     TargetServiceSchema:
       allOf:
-        - $ref: '#/components/schemas/Extensible'
-      description: >-
-        The reference to the schema and type of target service which is
+      - $ref: '#/components/schemas/Extensible'
+      description: The reference to the schema and type of target service which is
         described by service specification
     Error:
-      type: object
-      description: >-
-        Used when an API throws an Error, typically with a HTTP error    
-        response-code (3xx, 4xx, 5xx)
+      description: "Used when an API throws an Error, typically with a HTTP error\
+        \     response-code (3xx, 4xx, 5xx)"
       properties:
         code:
-          type: integer
-          format: int32
           description: |-
             Application related code.
             List of supported error codes are defined below:
@@ -908,13 +813,14 @@ components:
             **501: Not Implemented**
 
             **503: Service Unavailable**
+          format: int32
+          type: integer
         reason:
-          type: string
           description: |-
             Text that explains the reason for error. This can be shown to a
             client user.
+          type: string
         message:
-          type: array
           description: |-
             Text that provides more details and corrective actions related to
             the error. This can be shown to a client user.
@@ -922,152 +828,135 @@ components:
             type: string
           maxItems: 1
           minItems: 0
-        status:
           type: array
+        status:
           description: HTTP error code extension like 400-2.
           items:
             type: string
           maxItems: 1
           minItems: 0
-        referenceError:
           type: array
-          description:
-            URI pointing to (external) documentation describing the error.
+        referenceError:
+          description: URI pointing to (external) documentation describing the error.
           items:
             type: string
           maxItems: 1
           minItems: 0
+          type: array
       required:
-        - code
-        - reason
-    EventSubscriptionInput:
+      - code
+      - reason
       type: object
+    EventSubscriptionInput:
       description: The information needed to create a Hub.
       properties:
         query:
-          type: string
-          description: >-
+          description: |-
             The query must have an eventType= information.
-
             Optionally a ? could be added to reduce hub.
-
-            query�:�eventType =
-            ServiceOrderStateChangeNotification�&serviceOrder.state=COMPLETED
-        callback:
+            query”:”eventType = ServiceOrderStateChangeNotification”&serviceOrder.state=COMPLETED
           type: string
+        callback:
           description: URL where notification must be send
+          type: string
       required:
-        - callback
-        - query
+      - callback
+      - query
+      type: object
     EventSubscription:
       allOf:
-        - $ref: '#/components/schemas/EventSubscriptionInput'
-        - type: object
-          properties:
-            id:
-              type: string
-              description: Unique identifier of Hub
-          required:
-            - id
+      - $ref: '#/components/schemas/EventSubscriptionInput'
+      - properties:
+          id:
+            description: Unique identifier of Hub
+            type: string
+        required:
+        - id
+        type: object
       description: Resource used to manage notification subscription.
     Addressable:
       allOf:
-        - $ref: '#/components/schemas/Extensible'
-        - type: object
-          properties:
-            id:
-              type: string
-              description: |-
-                Unique identifier of the API schema object instance. The 
-                ID is invariant and is assigned by the server. In other words 
-                this entity will have the same ID throught its lifetime.
-              readOnly: true
-            href:
-              type: string
-              format: uri
-              description: URI reference of the API schema object instance.
-            name:
-              type: string
-              description: Name of the API schema object instance.
+      - $ref: '#/components/schemas/Extensible'
+      - properties:
+          id:
+            description: "Unique identifier of the API schema object instance. The\
+              \ \nID is invariant and is assigned by the server. In other words \n\
+              this entity will have the same ID throught its lifetime."
+            readOnly: true
+            type: string
+          href:
+            description: URI reference of the API schema object instance.
+            format: uri
+            type: string
+          name:
+            description: Name of the API schema object instance.
+            type: string
+        type: object
       description: Base schema for all adressable API schema objects.
       required:
-        - id
+      - id
     Extensible:
-      type: object
-      description: |-
-        Base schema for all API schema objects that support polymorphic 
-        extensions of its defined schema.
+      description: "Base schema for all API schema objects that support polymorphic\
+        \ \nextensions of its defined schema."
       properties:
         '@type':
+          description: The concrete (non-abstract) class type of the API schema object.
           type: string
-          description:
-            The concrete (non-abstract) class type of the API schema object.
         '@baseType':
+          description: "When sub-classing, this defines the super/base class type\
+            \ (if \napplicable) of the API schema object."
           type: string
-          description: |-
-            When sub-classing, this defines the super/base class type (if 
-            applicable) of the API schema object.
         '@schemaLocation':
-          type: string
+          description: A URI refernce to the schema file that defines the attributes
+            and relationships of the API schema object.
           format: uri
-          description: >-
-            A URI refernce to the schema file that defines the attributes and
-            relationships of the API schema object.
+          type: string
       required:
-        - '@type'
-    TimePeriod:
+      - '@type'
       type: object
-      description: >-
-        A period of time, either as a deadline (endDateTime only) a
-        startDateTime only, or both
+    TimePeriod:
+      description: "A period of time, either as a deadline (endDateTime only) a startDateTime\
+        \ only, or both "
       properties:
         endDateTime:
-          type: string
+          description: "End of the time period, using IETC-RFC-3339 format"
           format: date-time
-          description: 'End of the time period, using IETC-RFC-3339 format'
+          type: string
         startDateTime:
-          type: string
+          description: "Start of the time period, using IETC-RFC-3339 format. If you\
+            \ \ndefine a start, you must also define an end"
           format: date-time
-          description: |-
-            Start of the time period, using IETC-RFC-3339 format. If you 
-            define a start, you must also define an end
+          type: string
+      type: object
     RelatedPartyRef:
       allOf:
-        - $ref: '#/components/schemas/Referenceable'
-        - type: object
-          properties:
-            role:
-              type: string
-              description:
-                'The role of the related party (e.g. Owner, requester).'
+      - $ref: '#/components/schemas/Referenceable'
+      - properties:
+          role:
+            description: "The role of the related party (e.g. Owner, requester)."
+            type: string
+        type: object
       description: |-
         A related party defines a party and its role, that is linked to a
         specific entity such as ServiceSpecification, ServiceOrder, Service, etc
     Referenceable:
       allOf:
-        - $ref: '#/components/schemas/Addressable'
-        - type: object
-          properties:
-            '@referredType':
-              type: string
-              description:
-                The class type of the target API schema object instance.
-          required:
-            - '@referredType'
+      - $ref: '#/components/schemas/Addressable'
+      - properties:
+          '@referredType':
+            description: The class type of the target API schema object instance.
+            type: string
+        required:
+        - '@referredType'
+        type: object
       description: Base schema for all adressable API schema object references.
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code
       flows:
         clientCredentials:
-          refreshUrl: 'http://mef.net/example/refresh'
+          refreshUrl: http://mef.net/example/refresh
           scopes:
-            serviceSpecificationFind:
-              Scope for operation serviceSpecificationFind
-            serviceSpecificationGet:
-              Scope for operation serviceSpecificationGet
-            hubCreate: Scope for operation hubCreate
-            hubGet: Scope for operation hubGet
-            hubDelete: Scope for operation hubDelete
-          tokenUrl: 'http://mef.net/example/token'
+            default: default scope
+          tokenUrl: http://mef.net/example/token
       type: oauth2

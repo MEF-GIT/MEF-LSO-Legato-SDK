@@ -1,0 +1,225 @@
+@startuml faultManagementDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class AttachmentURL {
+
+    retentionPeriod: date-time
+    url*: uri
+}
+
+class HourRange {
+
+    start: date-time
+    end: date-time
+}
+
+enum Interval {
+
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 seconds
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+}
+
+enum JobType {
+
+    proactive
+    on-demand
+    passive
+}
+
+class MeasurementTime {
+
+    measurementStartDate: date-time
+    measurementEndDate: date-time
+    measurementInterval: Interval
+}
+
+enum OutputFormat {
+
+    json
+    xml
+    avro
+    csv
+}
+
+class FaultManagementJob {
+
+    creationDate*: date-time
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    rejectionReason: string
+    state*: FaultManagementJobStateType
+}
+FaultManagementJob_Common <|-- FaultManagementJob
+
+class FaultManagementJobComplexQuery {
+
+    creationDate*: date-time
+    description: string
+    granularity*: Interval
+    jobPriority: integer
+    jobType*: JobType
+    lastModifiedDate: date-time
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    resultFormat*: ResultFormat
+    state*: FaultManagementJobStateType
+}
+
+FaultManagementJobComplexQuery *-u->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementJobComplexQuery *-->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJobComplexQuery *-->"1" ServiceId : serviceId
+FaultManagementJobComplexQuery *-u->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class FaultManagementJobComplexQuery_Create {
+
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    lastModifiedDate.gt: date-time
+    lastModifiedDate.lt: date-time
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+    state: FaultManagementJobStateType
+}
+
+FaultManagementJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
+FaultManagementJobComplexQuery_Create *--> ServiceId : serviceId
+FaultManagementJobComplexQuery_Create *-u-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class FaultManagementJobRef {
+
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+}
+
+enum FaultManagementJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    inProgress
+    pending
+    pendingCancel
+    rejected
+    resourcesUnavailable
+    scheduled
+    suspended
+}
+
+class FaultManagementJob_Common {
+
+    description: string
+    granularity*: Interval
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    resultFormat*: ResultFormat
+}
+
+FaultManagementJob_Common *-->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJob_Common *-->"1" ServiceId : serviceId
+FaultManagementJob_Common *-u->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class FaultManagementJob_Create {
+
+}
+FaultManagementJob_Common <|-u- FaultManagementJob_Create
+
+class FaultManagementJob_Find {
+
+    creationDate*: date-time
+    description: string
+    granularity*: Interval
+    id*: string
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    state*: FaultManagementJobStateType
+}
+
+FaultManagementJob_Find *-->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJob_Find *-->"1" ServiceId : serviceId
+
+class RecurringSchedule {
+
+    second: string
+    minute: string
+    hour: string
+    dayOfMonth: string
+    month: string
+    dayOfWeek: string
+}
+
+RecurringSchedule *-->"*" HourRange : hourRange
+
+enum ResultFormat {
+
+    attachment
+    payload
+}
+
+class ResultPayload {
+
+    @type*: string
+}
+
+class ScheduleDefinition {
+
+    scheduleDefinitionStartTime: date-time
+    scheduleDefinitionEndTime: date-time
+    executionDuration: Interval
+}
+
+ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+
+class ServiceId {
+
+    serviceIdFrom*: string
+    serviceIdTo*: string
+}
+
+class ServicePayloadSpecificAttributes {
+
+    @type*: string
+}
+
+class TrackingRecord {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    request: string
+    system: string
+    user: string
+}
+
+class TrackingRecord_Find {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    user: string
+}
+
+@enduml

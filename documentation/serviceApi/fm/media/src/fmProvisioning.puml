@@ -1,0 +1,88 @@
+@startuml fmProvisioning
+autonumber
+
+actor BUS as B
+collections "SOF:FaultManagement" as SOF
+
+entity Hub 
+
+opt
+B -> Hub: registerListener (FaultManagementJobNotification)
+B -> Hub: registerListener (FaultManagementReportNotification)
+end
+
+B -> SOF: createFaultManagementJob
+
+create entity FaultManagementJob as FMJ
+SOF -> FMJ: <<create>>
+
+SOF --> B: Response (FaultManagementJob)
+
+activate FMJ
+
+opt
+FMJ -> Hub: createEvent
+Hub -> B: notifyListeners (faultManagementJobCreateEvent)
+end
+
+note right of FMJ: On scheduled date
+FMJ -> FMJ: state: inProgress
+
+opt
+FMJ -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
+end
+
+FMJ -> FMJ: generateData
+
+note right of FMJ: reportingPeriod elapses
+
+create entity FaultManagementReport as PR
+FMJ -> PR: <<create>>
+
+activate PR
+
+opt
+PR -> Hub: createEvent
+Hub -> B: notifyListeners (faultManagementReportCreateEvent)
+end
+
+PR -> PR: state: inProgress
+
+opt
+PR -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
+end
+
+PR -> PR: collectData
+
+PR -> PR: state: completed
+
+opt
+PR -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
+end
+
+PR --> FMJ: (report completed)
+
+opt
+FMJ -> Hub: reportReadyEvent
+Hub -> B: notifyListeners (faultManagementJobReportReadyEvent)
+end
+
+note right of FMJ: Schedule elapses
+
+FMJ -> FMJ: state: completed|scheduled
+
+opt
+FMJ -> Hub: stateChangeEvent
+Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
+end
+
+B -> SOF: getReport
+SOF -> PR: <<retrieve>>
+SOF --> B: Response (FaultManagementReport)
+
+entity Hub
+
+@enduml

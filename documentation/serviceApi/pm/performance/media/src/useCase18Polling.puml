@@ -4,23 +4,21 @@ hide footbox
 participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
-
-B -> S : POST {{baseUrl}}/resumePerformanceJob (ResumePerformanceJob_Create)
-S -> S : basic validation
-
-alt succesful inquiry
-  S --> B : 201 ResumePerformanceJob with {{id}}, `acknowledged` state
-  
-  ...
-
-  loop periodically until ResumePerformanceJob in active state
-      B -> S :   GET {{baseUrl}}/resumePerformanceJob/{{id}}
-      return 200 ResumePerformanceJob in current state
-  end
-
-else validation or internal problem
-  S --> B : 4xx or 5xx error response
+alt Report generated internally by PM Job
+  S -> S : internal report processing
+  B -> S : GET {{baseUrl}}/performanceReport, filter on PerformanceJob id
+  S -> B : 200 list of PerformanceReport
+else Report triggered externally
+  B -> S : POST {{baseUrl}}/performanceReport (PerformanceReport_Create)
+  S -> S : internal report processing
+  S --> B : 201 PerformanceReport with {{id}}, `acknowledged` state
 end
 
+...
+
+loop periodically until PerformanceReport in terminal state
+  B -> S :   GET {{baseUrl}}/performanceReport/{{id}}
+  return 200 PerformanceReport in current state
+end
 
 @enduml

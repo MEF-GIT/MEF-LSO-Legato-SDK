@@ -40,16 +40,15 @@ class PerformanceReport {
     <<... attributes are skipped ...>>
 }
 
-class ReportContent {
+class ReportContentItem {
 
 }
-
 class ResultPayload {
     @type*: string <<discriminator>>
 }
 
-PerformanceReport *-->"0..1" ReportContent : reportContent
-ReportContent *-->"*" ResultPayload : measurementDataPoints
+PerformanceReport *-->"0..*" ReportContentItem : reportContent
+ReportContentItem -->"*" ResultPayload : measurementDataPoints
 
 class urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all <<ResultPayload>> {
 

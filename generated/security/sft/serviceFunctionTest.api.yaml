@@ -1,0 +1,2793 @@
+openapi: 3.0.1
+info:
+  description: "**This file forms part of MEF W149**\n\n**This API implements part\
+    \ of Business Requirements & Use Cases described\nin MEF W136.**\n\n**This specification\
+    \ represents MEF work in progress and is subject to\nchange.**\n\nMEF Service\
+    \ Function Testing is defined as testing that is performed either\nas a part of\
+    \ service verifi-cation, service activation, or service \nmaintenance.  The requirements\
+    \ and Use Cases are the same for the Allegro\nInterface Reference Point (IRP),\
+    \ the Interlude IRP, and the Legato IRP.\n\n\nList of use cases by supported the\
+    \ API:\n- Create, Modify, Delete, Suspend, Resume, Cancel Test Job w/Test Profile\n\
+    - Create, Modify, Delete, Suspend, Resume, Cancel Test Job w/o Test Profile\n\
+    - Retrieve Test Job List\n- Retrieve Test Job by ID\n- Create, Modify, Delete\
+    \ Test Profile\n- Retrieve Test Profile List\n- Retrieve Test Profile  by ID\n\
+    - Subscribe to Notifications\n- Unsubscribe to Notifications\n\nCopyright 2024\
+    \ MEF Forum and its contributors\n\nThis file includes content based on the TM\
+    \ Forum Service Test Management API\n(TMF653 v4.1.0) available at \nhttps://github.com/tmforum-apis/TMF653_ServiceTestManagement,\
+    \ which is licensed by \nthe TM Forum under the Apache License version 2.0. Such\
+    \ content has been\nmodified by the MEF Forum and its contributors.\n"
+  title: Service Function Testing
+  version: 1.0.0-RC
+servers:
+- url: "https://{serverBase}/mefApi/legato/serviceFunctionTesting/v1/"
+  variables:
+    serverBase:
+      default: mef.net
+      description: The base of SOF's URL.
+security:
+- oauth2MEFLSOAPI:
+  - default
+tags:
+- name: testJob
+- name: modifyTestJob
+- name: cancelTestJob
+- name: suspendTestJob
+- name: resumeTestJob
+- name: testProfile
+paths:
+  /testJob:
+    get:
+      description: "The Buyer/Client  requests a list of Test Jobs using none or more\
+        \ of the filter criteria. The Seller/Server returns a summarized list of \
+        \ Test Jobs. For each Test Job returned, the Seller/Server also  provides\
+        \ a Test Job Identifier that uniquely identifiers this  Test Job within the\
+        \ Seller/Server. The order of the elements  returned to the Buyer/Client is\
+        \ defined by the Seller/Server (e.g.  natural order) and does not change between\
+        \ the pages."
+      operationId: listTestJob
+      parameters:
+      - description: The service identifier of the Service to be tested.
+        in: query
+        name: relatedServiceId
+        required: false
+        schema:
+          type: string
+      - description: The identifier of the Test Profile.
+        in: query
+        name: testProfileId
+        required: false
+        schema:
+          type: string
+      - description: The name of the Test Job.
+        in: query
+        name: name
+        required: false
+        schema:
+          type: string
+      - description: The start date and time of the Test Job - greater than.
+        in: query
+        name: startDateTime.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: The start date and time of the Test Job - lower than.
+        in: query
+        name: startDateTime.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: The end date and time of the Test Job - greater than.
+        in: query
+        name: endDateTime.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: The end date and time of the Test Job - lower than.
+        in: query
+        name: endDateTime.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by the client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TestJob_Find'
+                type: array
+          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - listTestJob
+      summary: List or find TestJob objects.
+      tags:
+      - testJob
+    post:
+      description: 'A request initiated by the Buyer/Client to create a Test Job in
+        the Seller/Server that specifies the service to be tested.  '
+      operationId: createTestJob
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/TestJob_Create'
+        description: The Test Job to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/TestJob'
+          description: '''Created (https://tools.ietf.org/html/rfc7231#section-6.3.2)'''
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - createTestJob
+      summary: Creates a TestJob.
+      tags:
+      - testJob
+  /testJob/{id}:
+    get:
+      description: The Buyer/Client requests detailed information about a single Test
+        Jobs based on the Test Job Identifier.
+      operationId: retrieveTestJob
+      parameters:
+      - description: Identifier of the Test Job
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/TestJob'
+          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveTestJob
+      summary: Retrieves a TestJob by ID.
+      tags:
+      - testJob
+  /cancelTestJob:
+    get:
+      description: The Buyer/Client requests a list of Cancel Test Monitoring Job
+        based on a set of filter criteria.
+      operationId: listCancelTestJob
+      parameters:
+      - description: Identifer of Test Job that is a subject of CancelTestJob.
+        in: query
+        name: testJobId
+        required: false
+        schema:
+          type: string
+      - description: State of CancelTestJob. See `TestJobProcessStateType` definition
+          for details.
+        in: query
+        name: state
+        required: false
+        schema:
+          enum:
+          - acknowledged
+          - rejected
+          - accepted
+          - declined
+          type: string
+      - description: Date when the CancelTestJob was created - greater than.
+        in: query
+        name: creationDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the CancelTestJob was created - lower than.
+        in: query
+        name: creationDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Requested number of items to be provided in response requested
+          by client.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CancelTestJob_Find'
+                type: array
+          description: Success
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - listCancelTestJob
+      summary: Lists or finds CancelTestJob objects.
+      tags:
+      - cancelTestJob
+    post:
+      description: A request initiated by the Buyer/Client to cancel  a Test Job in
+        the Seller/Server system.
+      operationId: createCancelTestJob
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/CancelTestJob_Create'
+        description: The CancelTestJob to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CancelTestJob'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - createCancelTestJob
+      tags:
+      - cancelTestJob
+  /cancelTestJob/{id}:
+    get:
+      description: The Buyer/Client requests detailed information about a single  Cancel
+        Test Job based on the  Cancel Test Job Identifier.
+      operationId: retrieveCancelTestJob
+      parameters:
+      - description: Identifier of the CancelTestJob
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CancelTestJob'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveCancelTestJob
+      summary: Retrieves a CancelTestJob by ID.
+      tags:
+      - cancelTestJob
+  /suspendTestJob:
+    get:
+      description: The Buyer/Client requests a list of Suspend Test Monitoring Job
+        based on a set of filter criteria.
+      operationId: listSuspendTestJob
+      parameters:
+      - description: Identifer of Test Job that is a subject of SuspendTestJob.
+        in: query
+        name: testJobId
+        required: false
+        schema:
+          type: string
+      - description: State of SuspendTestJob. See `TestJobProcessStateType` definition
+          for details.
+        in: query
+        name: state
+        required: false
+        schema:
+          enum:
+          - acknowledged
+          - rejected
+          - accepted
+          - declined
+          type: string
+      - description: Date when the SuspendTestJob was created - greater than.
+        in: query
+        name: creationDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the SuspendTestJob was created - lower than.
+        in: query
+        name: creationDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Requested number of items to be provided in response requested
+          by client.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SuspendTestJob_Find'
+                type: array
+          description: Success
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - listSuspendTestJob
+      summary: Lists or finds SuspendTestJob objects.
+      tags:
+      - suspendTestJob
+    post:
+      description: A request initiated by the Buyer/Client to suspend  a Test Job
+        in the Seller/Server system.
+      operationId: createSuspendTestJob
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/SuspendTestJob_Create'
+        description: The SuspendTestJob to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SuspendTestJob'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - createSuspendTestJob
+      tags:
+      - suspendTestJob
+  /suspendTestJob/{id}:
+    get:
+      description: The Buyer/Client requests detailed information about a single  Suspend
+        Test Job based on the  Suspend Test Job Identifier.
+      operationId: retrieveSuspendTestJob
+      parameters:
+      - description: Identifier of the SuspendTestJob
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SuspendTestJob'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveSuspendTestJob
+      summary: Retrieves a SuspendTestJob by ID.
+      tags:
+      - suspendTestJob
+  /resumeTestJob:
+    get:
+      description: The Buyer/Client requests a list of Resume Test Monitoring Job
+        based on a set of filter criteria.
+      operationId: listResumeTestJob
+      parameters:
+      - description: Identifer of Test Job that is a subject of ResumeTestJob.
+        in: query
+        name: testJobId
+        required: false
+        schema:
+          type: string
+      - description: State of ResumeTestJob. See `TestJobProcessStateType` definition
+          for details.
+        in: query
+        name: state
+        required: false
+        schema:
+          enum:
+          - acknowledged
+          - rejected
+          - accepted
+          - declined
+          type: string
+      - description: Date when the ResumeTestJob was created - greater than.
+        in: query
+        name: creationDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the ResumeTestJob was created - lower than.
+        in: query
+        name: creationDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Requested number of items to be provided in response requested
+          by client.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ResumeTestJob_Find'
+                type: array
+          description: Success
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - listResumeTestJob
+      summary: Lists or finds ResumeTestJob objects.
+      tags:
+      - resumeTestJob
+    post:
+      description: A request initiated by the Buyer/Client to cancel  a Test Job in
+        the Seller/Server system.
+      operationId: createResumeTestJob
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ResumeTestJob_Create'
+        description: The ResumeTestJob to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ResumeTestJob'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - createResumeTestJob
+      tags:
+      - resumeTestJob
+  /resumeTestJob/{id}:
+    get:
+      description: The Buyer/Client requests detailed information about a single  Resume
+        Test Job based on the  Resume Test Job Identifier.
+      operationId: retrieveResumeTestJob
+      parameters:
+      - description: Identifier of the ResumeTestJob
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ResumeTestJob'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveResumeTestJob
+      summary: Retrieves a ResumeTestJob by ID.
+      tags:
+      - resumeTestJob
+  /modifyTestJob:
+    get:
+      description: The Buyer/Client requests a list of Modify Test Monitoring Job
+        based on a set of filter criteria.
+      operationId: listModifyTestJob
+      parameters:
+      - description: Identifer of Test Job that is a subject of ModifyTestJob.
+        in: query
+        name: testJobId
+        required: false
+        schema:
+          type: string
+      - description: State of ModifyTestJob. See `TestJobProcessStateType` definition
+          for details.
+        in: query
+        name: state
+        required: false
+        schema:
+          enum:
+          - acknowledged
+          - rejected
+          - accepted
+          - declined
+          type: string
+      - description: Date when the ModifyTestJob was created - greater than.
+        in: query
+        name: creationDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the ModifyTestJob was created - lower than.
+        in: query
+        name: creationDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Requested number of items to be provided in response requested
+          by client.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ModifyTestJob_Find'
+                type: array
+          description: Success
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - listModifyTestJob
+      summary: Lists or finds ModifyTestJob objects.
+      tags:
+      - modifyTestJob
+    post:
+      description: A request initiated by the Buyer/Client to cancel  a Test Job in
+        the Seller/Server system.
+      operationId: createModifyTestJob
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ModifyTestJob_Create'
+        description: The ModifyTestJob to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ModifyTestJob'
+          description: Created
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - createModifyTestJob
+      tags:
+      - modifyTestJob
+  /modifyTestJob/{id}:
+    get:
+      description: The Buyer/Client requests detailed information about a single  Modify
+        Test Job based on the  Modify Test Job Identifier.
+      operationId: retrieveModifyTestJob
+      parameters:
+      - description: Identifier of the ModifyTestJob
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ModifyTestJob'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveModifyTestJob
+      summary: Retrieves a ModifyTestJob by ID.
+      tags:
+      - modifyTestJob
+  /testProfile:
+    get:
+      description: "The Administrator or Buyer/Client requests a list of TestProfiles\
+        \ based on a set of filter criteria. The Seller/Server returns a summarized\
+        \ list of TestProfiles. For each TestProfile returned, the Seller/Server also\
+        \ provides a TestProfiles Identifier that uniquely identifiers this TestProfiles\
+        \ within the Seller/Server. The order of the elements returned to the Buyer\
+        \ is defined by the Seller/Server (e.g. natural order) and does not change\
+        \ between the pages."
+      operationId: listTestProfile
+      parameters:
+      - description: Text description of the Test Profile.
+        in: query
+        name: description
+        required: false
+        schema:
+          type: string
+      - description: Date when the profile was created - greater than.
+        in: query
+        name: creationDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the profile was created - lower than.
+        in: query
+        name: creationDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the profile was updated - greater than.
+        in: query
+        name: lastUpdate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the profile was updated - lower than.
+        in: query
+        name: lastUpdate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: The identifier of the Related Service Specification.
+        in: query
+        name: relatedServiceSpecificationId
+        required: false
+        schema:
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by the client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: Requested number of resources to be provided in response.
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TestProfile_Find'
+                type: array
+          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+          headers:
+            X-Pagination-Throttled:
+              description: Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be fetched.
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: "The total number of matching items. E.g. if there are\
+                \ 50 matching items in total, but the request has offset=10 and limit=10,\
+                \ then the X-Total-Count is 50."
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response.
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - listTestProfile
+      summary: List or find Test Profile objects.
+      tags:
+      - testProfile
+    post:
+      description: A request initiated by the Administrator to create a TestProfile
+        Profile in the Seller/Server system.
+      operationId: createTestProfile
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/TestProfile_Create'
+        description: The TestProfile to be created.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/TestProfile'
+          description: '''Created (https://tools.ietf.org/html/rfc7231#section-6.3.2)'''
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - createTestProfile
+      summary: Creates a TestProfile.
+      tags:
+      - testProfile
+  /testProfile/{id}:
+    delete:
+      description: The Administrator requests deletion of TestProfile by specifying
+        TestProfile Identifier.
+      operationId: deleteTestProfile
+      parameters:
+      - description: Identifier of the TestProfile
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - deleteTestProfile
+      summary: Deletes a Test Profile.
+      tags:
+      - testProfile
+    get:
+      description: The Administrator or Buyer/Client requests detailed information
+        about a single TestProfile based on the TestProfile Identifier.
+      operationId: retrieveTestProfile
+      parameters:
+      - description: Identifier of the TestProfile
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/TestProfile'
+          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveTestProfile
+      summary: Retrieves a Test Profile by ID.
+      tags:
+      - testProfile
+    patch:
+      description: A request initiated by the Administrator to modify  a TestProfile
+        in the Seller/Server system  based on a TestProfile Identifier.
+      operationId: modifyTestProfile
+      parameters:
+      - description: Identifier of the TestProfile
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/TestProfile_Modify'
+        description: Test Profile to be updated.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/TestProfile'
+          description: '''Updated (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "409":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error409'
+          description: Conflict
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - modifyTestProfile
+      summary: Modifies partially a TestProfile.
+      tags:
+      - testProfile
+  /hub:
+    post:
+      description: The Buyer/Client or Administrator requests to subscribe to  Test
+        Job Notifications.
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - registerListener
+      summary: Register a listener
+      tags:
+      - events subscription
+  /hub/{id}:
+    delete:
+      description: The Buyer/Client or Administrator requests to unsubscribe from  Test
+        Job Notifications.
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - unregisterListener
+      summary: Unregister a listener
+      tags:
+      - events subscription
+    get:
+      description: The Buyer/Client requests detailed information about  a single
+        Notification Hub based on the Hub Identifier.
+      operationId: retrieveHub
+      parameters:
+      - description: Identifier of the Hub
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+        "501":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error501'
+          description: Method not implemented.
+      security:
+      - oauth2MEFLSOAPI:
+        - retrieveHub
+      summary: Retrieves a Hub by ID.
+      tags:
+      - events subscription
+components:
+  schemas:
+    CancelTestJob:
+      allOf:
+      - $ref: '#/components/schemas/CancelTestJob_Common'
+      - description: Request for cancellation of an existing Test job
+        properties:
+          cancellationDeniedReason:
+            description: "If the Cancel Test Job request is denied by the  Seller/Server,\
+              \ the Seller/Server provides a reason to the Buyer/Client using this\
+              \ attribute."
+            type: string
+          creationDate:
+            description: Date when Cancel Test Job was created.
+            format: date-time
+            type: string
+          href:
+            description: Hyperlink to the Cancel Test Job entity
+            type: string
+          id:
+            description: Unique identifier for the Cancel Test Job that is generated
+              by the Seller/Server when the Cancel Test Job request  `state` is set
+              to `acknowledged`.
+            type: string
+          state:
+            $ref: '#/components/schemas/TestJobProcessStateType'
+        required:
+        - id
+        - state
+        type: object
+    CancelTestJob_Common:
+      description: Request for cancellation of an existing Test Job
+      properties:
+        cancellationReason:
+          description: An optional attribute that allows the Buyer/Client to provide
+            additional detail to the Seller/Server on the reason for cancelling Test
+            Job.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+      required:
+      - TestJob
+      type: object
+    CancelTestJob_Create:
+      allOf:
+      - $ref: '#/components/schemas/CancelTestJob_Common'
+      - description: Request for cancellation of an existing Test Job
+        type: object
+    CancelTestJob_Find:
+      description: This class represents a single list item for the response of  `listCancelTestJob`
+      properties:
+        creationDate:
+          description: Date when Cancel Test Job was created.
+          format: date-time
+          type: string
+        id:
+          description: Unique identifier for the Cancel Test Job that is generated
+            by the Seller/Server when the Cancel Test Job request  `state` is set
+            to `acknowledged`.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+        state:
+          $ref: '#/components/schemas/TestJobProcessStateType'
+      required:
+      - TestJob
+      - id
+      - state
+      type: object
+    Error:
+      description: Standard Class used to describe API response error Not intended
+        to be used directly. The `code` in the HTTP header is used as a discriminator
+        for the type of error returned in runtime.
+      properties:
+        message:
+          description: Text that provides mode details and corrective actions related
+            to the error. This can be shown to a client user.
+          type: string
+        reason:
+          description: Text that explains the reason for the error. This can be shown
+            to a client user.
+          maxLength: 255
+          type: string
+        referenceError:
+          description: URL pointing to documentation describing the error.
+          format: uri
+          type: string
+      required:
+      - reason
+      type: object
+    Error400:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error400Code'
+        required:
+        - code
+        type: object
+      description: '''Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'''
+    Error400Code:
+      description: "One of the following error codes:\n- missingQueryParameter: The\
+        \ URI is missing a required query-string \n  parameter\n- missingQueryValue:\
+        \ The URI is missing a required query-string \n  parameter value\n- invalidQuery:\
+        \ The query section of the URI is invalid\n- invalidBody: The request has\
+        \ an invalid body."
+      enum:
+      - missingQueryParameter
+      - missingQueryValue
+      - invalidQuery
+      - invalidBody
+      type: string
+    Error401:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error401Code'
+        required:
+        - code
+        type: object
+      description: '''Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'''
+    Error401Code:
+      description: |-
+        One of the following error codes:
+        - missingCredentials: No credentials provided
+        - invalidCredentials: Provided credentials are invalid or expired.
+      enum:
+      - missingCredentials
+      - invalidCredentials
+      type: string
+    Error403:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error403Code'
+        required:
+        - code
+        type: object
+      description: Forbidden. This code indicates that the server understood the request
+        but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+    Error403Code:
+      description: |-
+        This code indicates that the server understood the request but refuses to authorize it because of one of the following error codes:
+        - accessDenied: Access denied
+        - forbiddenRequester: Forbidden requester
+        - tooManyUsers: Too many users.
+      enum:
+      - accessDenied
+      - forbiddenRequester
+      - tooManyUsers
+      type: string
+    Error404:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: "The following error code:\n- notFound: A current representation\
+              \ for the target resource \n  not found."
+            enum:
+            - notFound
+            type: string
+        required:
+        - code
+        type: object
+      description: Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+    Error409:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - conflict: The client has provided a value whose semantics are not appropriate for the property.
+            enum:
+            - conflict
+            type: string
+        required:
+        - code
+        type: object
+      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
+    Error422:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error422Code'
+          propertyPath:
+            description: |-
+              A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
+              Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
+            type: string
+        required:
+        - code
+        type: object
+      description: Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
+    Error422Code:
+      description: "One of the following error codes:\n- missingProperty: The property\
+        \ that was expected is not present in the\n  payload\n- invalidValue: The\
+        \ property has an incorrect value\n- invalidFormat: The property value does\
+        \ not comply with the expected \n  value format\n- referenceNotFound: The\
+        \ object referenced by the property cannot be \n  identified in the target\
+        \ system\n- unexpectedProperty: Additional, not expected property has been\
+        \ \n  provided\n- tooLargeDataset: Requested entity will produce too many\
+        \ data\n- tooManyRecords: The number of records to be provided in the response\n\
+        \  exceeds the  threshold\n- tooManyRequests: The number of simultaneous requests\
+        \ from one API \n  client exceeds the threshold\n- testProfileInUse: Requested\
+        \ Test Profile is being used\n  by a Test Job\n- otherIssue: Other problem\
+        \ was identified (detailed information\n  provided in a reason)."
+      enum:
+      - missingProperty
+      - invalidValue
+      - invalidFormat
+      - referenceNotFound
+      - unexpectedProperty
+      - tooLargeDataset
+      - tooManyRecords
+      - tooManyRequests
+      - performanceProfileInUse
+      - otherIssue
+      type: string
+    Error500:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
+            enum:
+            - internalError
+            type: string
+        required:
+        - code
+        type: object
+      description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+    Error501:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - notImplemented: Method not supported by the server.
+            enum:
+            - notImplemented
+            type: string
+        required:
+        - code
+        type: object
+      description: Not Implemented. Used in case Seller is not supporting an optional
+        operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
+    EventSubscription:
+      allOf:
+      - $ref: '#/components/schemas/EventSubscriptionInput'
+      - description: This resource is used to respond to notification subscriptions.
+        properties:
+          id:
+            description: An identifier of this Event Subscription assigned when a
+              resource is created.
+            type: string
+        type: object
+      required:
+      - id
+    EventSubscriptionInput:
+      description: This class is used to register for Notifications.
+      properties:
+        callback:
+          description: "This callback value must be set to *host* property from SFT\
+            \ Notification API (serviceFunctionTestNotification.api.yaml). This property\
+            \ is appended with the base path and notification resource path specified\
+            \ in that API to construct an URL to which  notification is sent. E.g.\
+            \ for 'callback':  \"https://buyer.co/listenerEndpoint\", the SFT event\
+            \ notification will be  sent to: `https://buyer.co/listenerEndpoint/mefApi/legato/serviceFuctionTestNotification/v1/listener/`"
+          type: string
+        query:
+          description: "This attribute is used to define to which type of events to\
+            \  register to. Example: 'query':'eventType =  testJobCreateEvent'. To\
+            \ subscribe for more than one event type, put the values separated by\
+            \ comma: `eventType=testJobCreateEvent,testProfileAttributeValueChangeEvent`.\
+            \ The possible values are enumerated by 'TestProfileEventType' and TestJobEventType\
+            \ in serviceFunctionTestNotification.api.yaml. An empty query is treated\
+            \ as specifying no filters - ending in subscription for all event types."
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    ModifyTestJob:
+      allOf:
+      - $ref: '#/components/schemas/ModifyTestJob_Common'
+      - description: Request for modification of an existing Test job
+        properties:
+          modificationDeniedReason:
+            description: "If the Modify Test Job request is denied by the  Seller/Server,\
+              \ the Seller/Server provides a reason to the Buyer/Client using this\
+              \ attribute."
+            type: string
+          creationDate:
+            description: Date when Modify Test Job was created.
+            format: date-time
+            type: string
+          href:
+            description: Hyperlink to the Modify Test Job entity
+            type: string
+          id:
+            description: Unique identifier for the Modify Test Job that is generated
+              by the Seller/Server when the Modify Test Job request  `state` is set
+              to `acknowledged`.
+            type: string
+          state:
+            $ref: '#/components/schemas/TestJobProcessStateType'
+        required:
+        - id
+        - state
+        type: object
+    ModifyTestJob_Common:
+      description: Request for modification of an existing Test Job
+      properties:
+        modificationReason:
+          description: An optional attribute that allows the Buyer/Client to provide
+            additional detail to the Seller/Server on the reason for cancelling Test
+            Job.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+        name:
+          description: The name of the Test Job.
+          type: string
+        description:
+          description: A description of the Test Job.
+          type: string
+        startDateTime:
+          description: The start date and time of the test job. If the attribute is
+            empty the test jobs starts immediately.
+          format: date-time
+          type: string
+        endDateTime:
+          description: The end date and time of the Test Job. If the attribute is
+            empty the test job runs forever.
+          format: date-time
+          type: string
+        testProfile:
+          $ref: '#/components/schemas/TestProfileRefOrValue'
+        relatedService:
+          $ref: '#/components/schemas/ServiceRef'
+        testMeasureAttributes:
+          $ref: '#/components/schemas/TestMeasureAttributes'
+      required:
+      - TestJob
+      type: object
+    ModifyTestJob_Create:
+      allOf:
+      - $ref: '#/components/schemas/ModifyTestJob_Common'
+      - description: Request for modification of an existing Test Job
+        type: object
+    ModifyTestJob_Find:
+      description: This class represents a single list item for the response of  `listModifyTestJob`
+      properties:
+        creationDate:
+          description: Date when Modify Test Job was created.
+          format: date-time
+          type: string
+        id:
+          description: Unique identifier for the Modify Test Job that is generated
+            by the Seller/Server when the Modify Test Job request  `state` is set
+            to `acknowledged`.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+        state:
+          $ref: '#/components/schemas/TestJobProcessStateType'
+      required:
+      - TestJob
+      - id
+      - state
+      type: object
+    RecurrencePeriodType:
+      description: |-
+        The date/time that the Test Job is repeated
+
+        | state          | MEF W136.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+        | -------------- | ------------ | --------------------------------------------------------|
+        | `none`         | NONE         | Test Job is not repeted after it's been executed.       |
+        | `hourly`       | HOURLY       | Test Job is repted once every hour.                     |
+        | `daily`        | DAILY        | Test Job is repted once every 24 hours.                 |
+        | `weekly`       | WEEKLY       | Test Job is repted once every 7 days.                   |
+        | `monthly`      | MONTHLY      | Test Job is repted once every 30 days.                  |
+      enum:
+      - none
+      - hourly
+      - daily
+      - weekly
+      - monthly
+      type: string
+    RelatedContact:
+      properties:
+        name:
+          description: The name of person or organization to be contacted.
+          type: string
+        phoneNumber:
+          description: The telephone number for this contact.
+          type: string
+        phoneNumberExtension:
+          description: The telephone number extension for this contact.
+          type: string
+        emailAddress:
+          description: The email address for this contact.
+          type: string
+        postalAddress:
+          description: The postal address for this contact.
+          type: string
+        organization:
+          description: The organization of this contact.
+          type: string
+      type: object
+    RelatedTestProfileRef:
+      properties:
+        serviceSpecificationId:
+          description: The unique identifier of the related Service Specification
+            that this Test Profile can be used to test
+          type: string
+        id:
+          description: The unique identifier for a related Test Profile
+          type: string
+        name:
+          description: The unique name for a related Test Profile
+          type: string
+        type:
+          $ref: '#/components/schemas/TestProfileRelationshipType'
+        role:
+          $ref: '#/components/schemas/TestProfileRelationshipRole'
+        order:
+          description: The order which the related Test Jobs are run during a Test
+            Job
+          type: integer
+        validFor:
+          description: The last date that the Test Profile is valid.
+          format: date-time
+          type: string
+      type: object
+    ResumeTestJob:
+      allOf:
+      - $ref: '#/components/schemas/ResumeTestJob_Common'
+      - description: Request for resumption of an existing Test job
+        properties:
+          resumptionDeniedReason:
+            description: "If the Resume Test Job request is denied by the  Seller/Server,\
+              \ the Seller/Server provides a reason to the Buyer/Client using this\
+              \ attribute."
+            type: string
+          creationDate:
+            description: Date when Resume Test Job was created.
+            format: date-time
+            type: string
+          href:
+            description: Hyperlink to the Resume Test Job entity
+            type: string
+          id:
+            description: Unique identifier for the Resume Test Job that is generated
+              by the Seller/Server when the Resume Test Job request  `state` is set
+              to `acknowledged`.
+            type: string
+          state:
+            $ref: '#/components/schemas/TestJobProcessStateType'
+        required:
+        - id
+        - state
+        type: object
+    ResumeTestJob_Common:
+      description: Request for resumption of an existing Test Job
+      properties:
+        resumptionReason:
+          description: An optional attribute that allows the Buyer/Client to provide
+            additional detail to the Seller/Server on the reason for cancelling Test
+            Job.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+      required:
+      - TestJob
+      type: object
+    ResumeTestJob_Create:
+      allOf:
+      - $ref: '#/components/schemas/ResumeTestJob_Common'
+      - description: Request for resumption of an existing Test Job
+        type: object
+    ResumeTestJob_Find:
+      description: This class represents a single list item for the response of  `listResumeTestJob`
+      properties:
+        creationDate:
+          description: Date when Resume Test Job was created.
+          format: date-time
+          type: string
+        id:
+          description: Unique identifier for the Resume Test Job that is generated
+            by the Seller/Server when the Resume Test Job request  `state` is set
+            to `acknowledged`.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+        state:
+          $ref: '#/components/schemas/TestJobProcessStateType'
+      required:
+      - TestJob
+      - id
+      - state
+      type: object
+    ServiceRef:
+      properties:
+        id:
+          description: unique identifier of the service to be tested
+          type: string
+        name:
+          description: The name of the test job to be tested
+          type: string
+      required:
+      - id
+      type: object
+    ServiceSpecificTestProfileAttributes:
+      description: ServiceSpecificTestProfileAttributes is used as an extension point
+        for MEF service specific test profile configuration. It includes definition
+        of service/entity and applicable test job objectives. The `@type` attribute
+        is used as a discriminator.
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: The named type must be a subclass of ServiceSpecificTestProfileAttributes.
+          type: string
+      required:
+      - '@type'
+      type: object
+    ServiceSpecificationRef:
+      properties:
+        relatedServiceSpecificationId:
+          description: The unique identifier of the related Service Specification
+            that this Test Profile can be used to test
+          type: string
+      type: object
+    SuspendTestJob:
+      allOf:
+      - $ref: '#/components/schemas/SuspendTestJob_Common'
+      - description: Request for suspension of an existing Test job
+        properties:
+          suspensionDeniedReason:
+            description: "If the Suspend Test Job request is denied by the  Seller/Server,\
+              \ the Seller/Server provides a reason to the Buyer/Client using this\
+              \ attribute."
+            type: string
+          creationDate:
+            description: Date when Suspend Test Job was created.
+            format: date-time
+            type: string
+          href:
+            description: Hyperlink to the Suspend Test Job entity
+            type: string
+          id:
+            description: Unique identifier for the Suspend Test Job that is generated
+              by the Seller/Server when the Suspend Test Job request  `state` is set
+              to `acknowledged`.
+            type: string
+          state:
+            $ref: '#/components/schemas/TestJobProcessStateType'
+        required:
+        - id
+        - state
+        type: object
+    SuspendTestJob_Common:
+      description: Request for suspension of an existing Test Job
+      properties:
+        suspensionReason:
+          description: An optional attribute that allows the Buyer/Client to provide
+            additional detail to the Seller/Server on the reason for suspending Test
+            Job.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+      required:
+      - TestJob
+      type: object
+    SuspendTestJob_Create:
+      allOf:
+      - $ref: '#/components/schemas/SuspendTestJob_Common'
+      - description: Request for suspension of an existing Test Job
+        type: object
+    SuspendTestJob_Find:
+      description: This class represents a single list item for the response of  `listSuspendTestJob`
+      properties:
+        creationDate:
+          description: Date when Suspend Test Job was created.
+          format: date-time
+          type: string
+        id:
+          description: Unique identifier for the Suspend Test Job that is generated
+            by the Seller/Server when the Suspend Test Job request  `state` is set
+            to `acknowledged`.
+          type: string
+        testJob:
+          $ref: '#/components/schemas/TestJobRef'
+        state:
+          $ref: '#/components/schemas/TestJobProcessStateType'
+      required:
+      - TestJob
+      - id
+      - state
+      type: object
+    TestJob:
+      allOf:
+      - $ref: '#/components/schemas/TestJob_Common'
+      - description: A definition of Test Job for a specific Service Identifier.
+        properties:
+          id:
+            description: The identifier of the Test Job.
+            type: string
+          state:
+            $ref: '#/components/schemas/TestJobStateType'
+          actualStartDateTime:
+            description: The actual start date and time that a test job started.
+            format: date-time
+            type: string
+          actualEndDateTime:
+            description: The actual end date and time of the test job.
+            format: date-time
+            type: string
+        required:
+        - id
+        - state
+        type: object
+    TestJobProcessStateType:
+      description: |-
+        The state of process related to Test Job
+
+        | state          | MEF W136.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+        | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `accepted`     | ACCEPTED     | The Modify/Cancel/Resume/Suspend Test Job request has been accepted and processed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                               |
+        | `acknowledged` | ACKNOWLEDGED | The Modify/Cancel/Resume/Suspend Test Job request has been received by the Seller/Server and has passed basic validation. Test Job Process Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated, the request moves to the Accepted state. If not all attributes are validated, the request moves to the Declined state. |
+        | `completed`    | COMPLETED    | The Modify/Cancel/Resume/Suspend Test Job request has been completed by the Seller/Server                                                                                                                                                                                                                                                                                                                                            |
+        | `declined`     | DECLINED     | The Modify/Cancel/Resume/Suspend Test Job request has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                            |
+        | `rejected`     | REJECTED     | The Modify/Cancel/Resume/Suspend Test Job request has been rejected by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                            |
+      enum:
+      - accepted
+      - acknowledged
+      - declined
+      - rejected
+      type: string
+    TestJobRef:
+      description: A reference to a Test Job resource
+      properties:
+        href:
+          description: Hyperlink to the referenced Test Job
+          type: string
+        id:
+          description: Identifier of the referenced Test Job
+          type: string
+      required:
+      - id
+      type: object
+    TestJobStateType:
+      description: |-
+        The state of the Test Job.
+
+        | State                    | MEF W136.1 name           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+        | -------------------------| -----------------------| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `acknowledged`           | ACKNOWLEDGED           | The Create Test Job request has been received from the Buyer/Client and the Sell-er/Server has assigned a Test Job Identifier to it.  If the request attributes fail validation, the Create Test Job moves to the REJECTED state.  If the attributes pass validation, it is then determined if the Create Test Job Start Date Time is immediate or if the Create Test Job Start Date Time indicates that the Test Job is to be scheduled for a later date time.  If the Test Job is to be scheduled the Test Job moves to the SCHEDULED state and awaits the scheduled date and time.  If the Test Job is to be performed immediately, the Test Job moves to the IN_PROGRESS state and Test Results begin. |
+        | `assessing_modification` | ASSESSING_MODIFICATION | A Modify Test Job request while the Test Job is in the SUSPEND or SCHEDULED state.  If the Modify Test Job is accepted, the Test Job is updated. If the Modify Test Job is declined, the Test Job is not updated and returns to the SUSPEND or SCHEDULED state. |
+        | `cancelled`              | CANCELLED              | A Cancel Test Job request is received from the Buyer/Client.  If the request is accepted, the Test Job moves to the CANCELLED state.  The Test Job must be in the IN_PROGRESS, SCHEDULED, or SUSPEND, state.|
+        | `completed`              | COMPLETED              | The Test Job has reached the End Date Time or has completed all Test Measurements and provided Test Results.|
+        | `inProgress`             | IN-PROGRESS            | Whether an immediate request or a scheduled request, the Test Job moves to the IN_PROGRESS state when it begins performing Test Results.  If a Cancel Test Job request is received and accepted, the Test Job moves to the CANCELLED state.  If the Cancel Test Job request is declined, the Test Job returns to the IN_PROGRESS state and continues Test Results until they are completed.  If a Suspend Test Job request is received, the Test Job moves to the SUSPEND state.|
+        | `rejected`               | REJECTED               | The Create Test Job request fails validation and is rejected.|
+        | `scheduled`              | SCHEDULED              | The Test Job is scheduled to start at a later time.  The Test Job stays in the SCHEDULED state until the Start Date and Time is reached.  The Test Job moves to IN_PROGRESS when the Start Date and Time is reached.  A Test Job with the state SCHEDULED can be moved to the SUSPEND or CANCELLED state.|
+        | `suspended`              | SUSPENDED              | A Test Job in the IN_PROGRESS or SCHEDULED state receives a Suspend Test Job request.  The Test Job moves to the SUSPEND state. A Test Job cannot be modified unless it is in the SUSPEND state.|
+      enum:
+      - acknowledged
+      - assessing_modification
+      - cancelled
+      - completed
+      - inProgress
+      - rejected
+      - scheduled
+      - suspended
+      type: string
+    TestJob_Common:
+      description: A definition of Test Job for a specific Service Identifier.
+      properties:
+        name:
+          description: The name of the Test Job.
+          type: string
+        description:
+          description: A description of the Test Job.
+          type: string
+        startDateTime:
+          description: The start date and time of the test job. If the attribute is
+            empty the test jobs starts immediately.
+          format: date-time
+          type: string
+        endDateTime:
+          description: The end date and time of the Test Job. If the attribute is
+            empty the test job runs forever.
+          format: date-time
+          type: string
+        recurrencePeriod:
+          $ref: '#/components/schemas/RecurrencePeriodType'
+        testProfile:
+          $ref: '#/components/schemas/TestProfileRefOrValue'
+        validFor:
+          description: The last date that the Test Job is valid.
+          format: date-time
+          type: string
+        relatedService:
+          $ref: '#/components/schemas/ServiceRef'
+        testMeasureAttributes:
+          $ref: '#/components/schemas/TestMeasureAttributes'
+      type: object
+    TestJob_Create:
+      allOf:
+      - $ref: '#/components/schemas/TestJob_Common'
+      - description: A definition of Test Job for a specific Service Identifier.
+        type: object
+      required:
+      - endDateTime
+      - name
+      - relatedService.relatedServiceId
+      - startDateTime
+      - testAttributeSchema
+      - validFor
+    TestJob_Find:
+      description: This class represents a single list item for the response of  `listTestJob`
+      properties:
+        id:
+          description: A unique identifier for the Test Job assigned by the Seller/Server.
+          type: string
+        name:
+          description: The name of the Test Job..
+          type: string
+        testProfileId:
+          description: A unique identifier of the referenced Test Profile.
+          type: string
+        relatedServiceId:
+          description: A unique identifier of the service to be tested
+          type: string
+        startDateTime:
+          description: The start date and time of the test job.
+          type: string
+        endDateTime:
+          description: The end date and time of the test job.
+          type: string
+      type: object
+    TestMeasureAttributes:
+      description: TestMeasureAttributes is used as an extension point for schema
+        to be used that de-fines the  Test Result attributes. The `@type` attribute
+        is used as a discriminator.
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: The named type must be a subclass of TestMeasureAttributes.
+          type: string
+      required:
+      - '@type'
+      type: object
+    TestProfile:
+      allOf:
+      - $ref: '#/components/schemas/TestProfile_Common'
+      - description: The test profile describes the test job in terms of parameters
+          to be configured and measures to be taken.
+        properties:
+          id:
+            description: A unique identifier for the Test Profile assigned by the
+              Seller/Server.
+            type: string
+          creationDate:
+            description: Date when test profile was created.
+            format: date-time
+            type: string
+          state:
+            $ref: '#/components/schemas/TestProfileStateType'
+          isAssigned:
+            description: Indicates if Test Profile is assigned to a Test Job.
+            type: boolean
+          lastUpdate:
+            description: Date and time of the last update of the test profile
+            format: date-time
+            type: string
+        type: object
+    TestProfileLifecycleStatusType:
+      description: |-
+        Current lifecycle status of the test profile.
+
+        | State          | MEF W136.1 name     | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        | -------------- | --------------   | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | `experimental` | EXPERIMENTAL     | Test Profile use may be limited to a small number of users. |
+        | `pending`      | PENDING          | Test Profile is waiting to be Approved |
+        | `approved`     | APPROVED         | Test Profile has been Approved for general use. |
+        | `deprecated`   | DEPRECATED       | Test Profile has been replaced by another Test Profile. |
+      enum:
+      - experimental
+      - pending
+      - approved
+      - deprecated
+      type: string
+    TestProfileRef:
+      allOf:
+      - $ref: '#/components/schemas/TestProfileRefOrValue'
+      - properties:
+          href:
+            description: Hyperlink to the referenced Test Profile
+            type: string
+          id:
+            description: Identifier of the referenced Test Profile
+            type: string
+        required:
+        - id
+        type: object
+      description: A reference to a Test Profile resource
+    TestProfileRefOrValue:
+      description: Defines the reference to Test Profile or defines values from TestProfile
+        type.
+      discriminator:
+        mapping:
+          TestProfileRef: '#/components/schemas/TestProfileRef'
+          TestProfileValue: '#/components/schemas/TestProfileValue'
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: This field is used as a discriminator to differentiate if object
+            relates directly to Test Profile entity or defines values from TestProfile
+            type.
+          enum:
+          - TestProfileRef
+          - TestProfileValue
+          type: string
+      required:
+      - '@type'
+    TestProfileRelationshipRole:
+      description: |-
+        Role of the relationship.
+
+        | role          | MEF W136.1 name    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | `primary`      | PRIMARY        | Test Profile to be started first. |
+        | `secondary`    | SECONDARY      | Test Profile to be started after Primary Test Profile is completed. |
+      enum:
+      - primary
+      - secondary
+      type: string
+    TestProfileRelationshipType:
+      description: |-
+        Type of relationship.
+
+        | state          | MEF W136.1 name   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | `bundled`      | BUNDLED        | Two or more Test Profiles are related together in a bundle. |
+      enum:
+      - bundled
+      type: string
+    TestProfileStateType:
+      description: |-
+        Current lifecycle status of the test profile.
+
+        | State          | MEF W136.1 name   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | `acknowledged` | ACKNOWLEDGED   | The Create Test Profile request has been received from the Buyer/Client and the Sell-er/Server has assigned a Test Profile Identifier to it. |
+        | `completed`    | COMPLETED      | The Test Profile has been created and is ready for use by the Buyer/Client. |
+        | `rejected`     | REJECTED       | The Create Test Profile does not pass attribute validation and the Create Test Profile is rejected. |
+      enum:
+      - acknowledged
+      - completed
+      - rejected
+      type: string
+    TestProfileValue:
+      allOf:
+      - $ref: '#/components/schemas/TestProfileRefOrValue'
+      properties:
+        description:
+          description: A free-text description of the Test Profile
+          type: string
+        serviceSpecificTestProfileAttributes:
+          $ref: '#/components/schemas/ServiceSpecificTestProfileAttributes'
+        relatedServiceSpecificationId:
+          description: The unique identifier of the related Service Specification
+            that this Test Profile can be used to test
+          type: string
+        relatedContact:
+          description: Contacts who manage or otherwise have an interest in this test
+            profile
+          items:
+            $ref: '#/components/schemas/RelatedContact'
+          type: array
+      required:
+      - '@type'
+    TestProfile_Common:
+      description: The common test profile specifies the common parameters  that can
+        be re-used by multiple test profiles.
+      properties:
+        description:
+          description: A free-text description of the Test Profile
+          type: string
+        isBundled:
+          description: "Determines whether test profile represents a single test profile\
+            \ (false), or a bundle of test profiles (true)."
+          type: boolean
+        lifecycleStatus:
+          $ref: '#/components/schemas/TestProfileLifecycleStatusType'
+        name:
+          description: The name of the test profile
+          type: string
+        validFor:
+          description: Last date that the test profile is valid
+          format: date-time
+          type: string
+        relatedTestProfile:
+          description: Test profile may relate to more than one sub test profiles.
+          items:
+            $ref: '#/components/schemas/RelatedTestProfileRef'
+          type: array
+        serviceSpecificTestProfileAttributes:
+          $ref: '#/components/schemas/ServiceSpecificTestProfileAttributes'
+        relatedServiceSpecificationId:
+          description: The unique identifier of the related Service Specification
+            that this Test Profile can be used to test
+          type: string
+        relatedContact:
+          description: Contacts who manage or otherwise have an interest in this test
+            profile
+          items:
+            $ref: '#/components/schemas/RelatedContact'
+          type: array
+      type: object
+    TestProfile_Create:
+      allOf:
+      - $ref: '#/components/schemas/TestProfile_Common'
+      - description: The test profile describes the test job in terms of parameters
+          to be configured and measures to be taken.
+        type: object
+      required:
+      - lifecycleStatus
+      - name
+      - validFor
+    TestProfile_Find:
+      description: This class represents a single list item for the response of  `listTestProfile`
+      properties:
+        id:
+          description: A unique identifier for the Test Profile assigned by the Seller/Server.
+          type: string
+        name:
+          description: The name of the test profile
+          type: string
+        description:
+          description: A free-text description of the Test Profile
+          type: string
+        lifecycleStatus:
+          $ref: '#/components/schemas/TestProfileLifecycleStatusType'
+        creationDate:
+          description: Date when test profile was created.
+          format: date-time
+          type: string
+        lastUpdate:
+          description: Date and time of the last update of the test profile
+          format: date-time
+          type: string
+        state:
+          $ref: '#/components/schemas/TestProfileStateType'
+      required:
+      - creationDate
+      - description
+      - id
+      - lastUpdate
+      - lifecycleStatus
+      - name
+      - state
+      type: object
+    TestProfile_Modify:
+      allOf:
+      - $ref: '#/components/schemas/TestProfile_Common'
+      - description: The test profile describes the test job in terms of parameters
+          to be configured and measures to be taken.
+        type: object
+  securitySchemes:
+    oauth2MEFLSOAPI:
+      description: Default m2m client code
+      flows:
+        clientCredentials:
+          refreshUrl: http://mef.net/example/refresh
+          scopes:
+            default: default scope
+          tokenUrl: http://mef.net/example/token
+      type: oauth2

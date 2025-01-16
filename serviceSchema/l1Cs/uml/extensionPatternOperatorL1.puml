@@ -1,0 +1,57 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+set namespaceSeparator none
+
+class ServiceValue{
+
+    id: string 
+    href: string 
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationshipWithGrouping
+    <<...attributes are skipped...>>
+}
+
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+
+ServiceValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+class urn:mef:lso:spec:service:l1-operator-uni:0.0.2:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:l1-operator-uni:0.0.2:order"
+
+
+class urn:mef:lso:spec:service:l1-operator-vc:0.0.2:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:l1-operator-vc:0.0.2:order"
+
+class urn:mef:lso:spec:service:l1-operator-vc-end-point:0.0.2:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:l1-operator-vc-end-point:0.0.2:order"
+
+class urn:mef:lso:spec:service:l1-enni:0.0.2:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:l1-enni:0.0.2:order"
+
+class urn:mef:lso:spec:service:l1-enni-service:0.0.2:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:l1-enni-service:0.0.2:order"
+@enduml

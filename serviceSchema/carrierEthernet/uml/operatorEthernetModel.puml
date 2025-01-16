@@ -31,9 +31,9 @@ class CarrierEthernetVuni {
 
 CarrierEthernetOvc "1" *-->"*" CarrierEthernetOvcEndPoint
 CarrierEthernetOperatorUni "0..1" o-->"*" CarrierEthernetOvcEndPoint
-CarrierEthernetEnniService "0..1" o-->"*" CarrierEthernetOvcEndPoint
+CarrierEthernetEnni "0..1" o-->"*" CarrierEthernetOvcEndPoint
 CarrierEthernetVuni "0..1" o-->"*" CarrierEthernetOvcEndPoint
 CarrierEthernetEnni "1" *-->"1..*" CarrierEthernetEnniService
-CarrierEthernetEnniService "1" o-->"*" CarrierEthernetVuni
+
 
 @enduml

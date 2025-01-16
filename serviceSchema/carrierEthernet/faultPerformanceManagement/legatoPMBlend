@@ -1,0 +1,2 @@
+java -jar blender-all-in.jar blend -discover -d ./faultPerformanceManagement -m MefServiceConfiguration -i ./performanceManagement.api.yaml \
+-b ./carrierEthernetFaultManagementResults.yaml --sorted

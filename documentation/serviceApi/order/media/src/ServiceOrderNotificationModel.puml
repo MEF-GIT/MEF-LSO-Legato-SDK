@@ -1,41 +1,76 @@
 @startuml
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 
 class Event {
 
     eventId*: string
     eventTime*: date-time
+    eventType*: string
+    event*: object
 }
 
-
-
-class ServiceOrderEvent {
-
-    eventType*: ServiceOrderEventType
-}
-Event <|-- ServiceOrderEvent
-
-ServiceOrderEvent *-->"1" ServiceOrderEventPayload : event
 
 
 class ServiceOrderEventPayload {
 
-    orderItemId: string
     id*: string
     href: string
 }
 
 
 
-enum ServiceOrderEventType {
+class ServiceOrderCreateEvent {
 
-    serviceOrderCreateEvent
-    serviceOrderStateChangeEvent
-    serviceOrderItemStateChangeEvent
-    serviceOrderInformationRequiredEvent
+    eventType*: string
 }
+Event <|-- ServiceOrderCreateEvent
+
+ServiceOrderCreateEvent *-->"1" ServiceOrderEventPayload : event
+
+
+class ServiceOrderItemStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceOrderItemStateChangeEvent
+
+ServiceOrderItemStateChangeEvent *-->"1" ServiceOrderItemStateChangeEventPayload : event
+
+
+class ServiceOrderItemStateChangeEventPayload {
+
+    id*: string
+    orderItemId*: string
+    href: string
+    state*: ServiceOrderStateType
+}
+
+
+
+class ServiceOrderStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceOrderStateChangeEvent
+
+ServiceOrderStateChangeEvent *-->"1" ServiceOrderStateChangeEventPayload : event
+
+
+class ServiceOrderStateChangeEventPayload {
+
+    id*: string
+    href: string
+    state*: ServiceOrderStateType
+}
+
+
+
+class ServiceOrderInformationRequiredEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceOrderInformationRequiredEvent
+
+ServiceOrderInformationRequiredEvent *-->"1" ServiceOrderEventPayload : event
+
 @enduml

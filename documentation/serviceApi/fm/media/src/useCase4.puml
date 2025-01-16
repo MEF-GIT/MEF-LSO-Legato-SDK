@@ -1,0 +1,19 @@
+@startuml useCase4
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S : POST {{baseUrl}}/modifyFaultManagementJob (ModifyFaultManagementJob_Create)
+
+S -> S : basic validation
+S -> S : assign id
+S -> S : state: acknowledged
+alt successful inquiry
+    B <-- S : 201 ModifyFaultManagementJob with {{id}}
+else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+end
+
+@enduml

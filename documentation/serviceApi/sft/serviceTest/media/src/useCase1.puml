@@ -1,0 +1,18 @@
+@startuml useCase1
+
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S : POST {{baseUrl}}/testProfile (TestProfile_Create)
+
+S -> S : assign id
+S -> S : state: acknowledged
+alt successful inquiry
+    B <-- S : 201 TestProfile with {{id}}
+else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+end
+@endumTestl

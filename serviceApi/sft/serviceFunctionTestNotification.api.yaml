@@ -1,0 +1,795 @@
+openapi: "3.0.1"
+info:
+  title: "Service Function Testing Notification"
+  description: "**This file forms part of MEF W149**\n\n**This specification represents\
+    \ MEF work in progress and is subject to\nchange.** \n\nThis API implements Business\
+    \ Requirements described in MEF W136.\n\nThis is the API to manage notifications\
+    \ for Test Job and Test Profile. This API must be\ndeployed on notification subscriber\
+    \ side (buyer side / listener).\n\nList of supported use cases:\n  - Send Event\
+    \ Notification\n\nCopyright 2021 MEF Forum and its contributors.\n\nThis file\
+    \ includes content based on the TM Forum Service Test Management API\n(TMF653\
+    \ v4.1.0) available at \nhttps://github.com/tmforum-apis/TMF653_ServiceTestManagement,\
+    \ which is licensed by \nthe TM Forum under the Apache License version 2.0. Such\
+    \ content has been\nmodified by the MEF Forum and its contributors.\n"
+  version: "1.0.0-RC"
+  x-logo:
+      url: "/redoc/logo.png"
+      backgroundColor: "#FFFFFF"
+servers:
+- url: "https://{serverBase}/mefApi/legato/serviceFunctionTestingNotification/v1/"
+  variables:
+    serverBase:
+      description: "The base of Buyer's URL."
+      default: "mef.net"
+tags:
+- name: "Notification listeners"
+  description: "The Buyer/Client's endpoint to send particular event types notifications\
+    \ to.\n"
+paths:
+  /listener/testJobCreateEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Job Create Notification endpoint"
+      description: "This endpoint is used to receive notifications on Test Job Create\
+        \ Event"
+      operationId: "testJobCreateEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/TestJobEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testJobStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Job State Change Notification endpoint"
+      description: "Client listener for receiving the testJobStateChangeEvent notification"
+      operationId: "testJobStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestJobEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testJobAttributeValueChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Job Attribute Value Change Notification endpoint"
+      description: "This endpoint is used to receive notifications on Test Job attribute\
+        \ value change event"
+      operationId: "testJobAttributeValueChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/TestJobEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/cancelTestJobStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Cancel Test Job State Change Notification endpoint"
+      description: "Client listener for receiving the cancelTestJobStateChangeEvent\
+        \ notification"
+      operationId: "cancelTestJobStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestJobProcessEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/modifyTestJobStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Modify Test Job State Change Notification endpoint"
+      description: "Client listener for receiving the modifyTestJobStateChangeEvent\
+        \ notification"
+      operationId: "modifyTestJobStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestJobProcessEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/suspendTestJobStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Suspend Test Job State Change Notification endpoint"
+      description: "Client listener for receiving the suspendTestJobStateChangeEvent\
+        \ notification"
+      operationId: "suspendTestJobStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestJobProcessEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/resumeTestJobStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Resume Test Job State Change Notification endpoint"
+      description: "Client listener for receiving the resumeTestJobStateChangeEvent\
+        \ notification"
+      operationId: "resumeTestJobStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestJobProcessEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testProfileCreateEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Profile Create Notification endpoint"
+      description: "This endpoint is used to receive notifications on Test Profile\
+        \ Create Event"
+      operationId: "testProfileCreateEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/TestProfileEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testProfileAttributeValueChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Profile Attribute Value Change Notification endpoint"
+      description: "This endpoint is used to receive notifications on Test Profile\
+        \ attribute value change event"
+      operationId: "testProfileAttributeValueChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/TestProfileEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testProfileStateChangeEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Profile State Change Notification endpoint"
+      description: "Client listener for receiving the testProfileStateChangeEvent\
+        \ notification"
+      operationId: "testProfileStateChangeEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: "#/components/schemas/TestProfileEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+  /listener/testProfileDeleteEvent:
+    post:
+      tags:
+      - "Notification listeners"
+      summary: "Test Profile Delete Notification endpoint"
+      description: "This endpoint is used to receive notifications on Test Profile\
+        \ Delete Event"
+      operationId: "testProfileDeleteEvent"
+      requestBody:
+        description: "The event data"
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/TestProfileEvent"
+        required: true
+      responses:
+        "204":
+          description: "No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)"
+        "400":
+          description: "Bad Request"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error400"
+        "401":
+          description: "Unauthorized"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error401"
+        "403":
+          description: "Forbidden"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error403"
+        "408":
+          description: "Request Time-out"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error408"
+        "500":
+          description: "Internal Server Error"
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/Error500"
+components:
+  schemas:
+    Error:
+      description: "Standard Class used to describe API response error\nNot intended\
+        \ to be use directly. The `code` in the HTTP header is used as a discriminator\
+        \ for the type of error returned in runtime.\n"
+      type: "object"
+      properties:
+        reason:
+          description: "Text that explains the reason for error. This can be shown\
+            \ to a client user."
+          type: "string"
+          maxLength: 255
+        message:
+          description: "Text that provide mode details and corrective actions related\
+            \ to the error. This can be shown to a client user."
+          type: "string"
+        referenceError:
+          description: "url pointing to documentation describing the error"
+          type: "string"
+          format: "uri"
+      required:
+      - "reason"
+    Error400:
+      description: "Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)"
+      allOf:
+      - $ref: "#/components/schemas/Error"
+      - type: "object"
+        properties:
+          code:
+            description: "One of the following error codes:\n- missingQueryParameter:\
+              \ The URI is missing a required query-string parameter\n- missingQueryValue:\
+              \ The URI is missing a required query-string parameter value\n- invalidQuery:\
+              \ The query section of the URI is invalid.\n- invalidBody: The request\
+              \ has an invalid body"
+            $ref: "#/components/schemas/Error400Code"
+        required:
+        - "code"
+    Error400Code:
+      description: "One of the following error codes:\n- missingQueryParameter: The\
+        \ URI is missing a required query-string parameter\n- missingQueryValue: The\
+        \ URI is missing a required query-string parameter value\n- invalidQuery:\
+        \ The query section of the URI is invalid.\n- invalidBody: The request has\
+        \ an invalid body"
+      type: "string"
+      enum:
+      - "missingQueryParameter"
+      - "missingQueryValue"
+      - "invalidQuery"
+      - "invalidBody"
+    Error401:
+      description: "Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)"
+      allOf:
+      - $ref: "#/components/schemas/Error"
+      - type: "object"
+        properties:
+          code:
+            description: "One of the following error codes:\n- missingCredentials:\
+              \ No credentials provided.\n- invalidCredentials: Provided credentials\
+              \ are invalid or expired"
+            $ref: "#/components/schemas/Error401Code"
+        required:
+        - "code"
+    Error401Code:
+      description: "One of the following error codes:\n- missingCredentials: No credentials\
+        \ provided.\n- invalidCredentials: Provided credentials are invalid or expired"
+      type: "string"
+      enum:
+      - "missingCredentials"
+      - "invalidCredentials"
+    Error403:
+      description: "Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)"
+      allOf:
+      - $ref: "#/components/schemas/Error"
+      - type: "object"
+        properties:
+          code:
+            description: "This code indicates that the server understood\nthe request\
+              \ but refuses to authorize it because\nof one of the following error\
+              \ codes:\n- accessDenied: Access denied\n- forbiddenRequester: Forbidden\
+              \ requester\n- tooManyUsers: Too many users"
+            $ref: "#/components/schemas/Error403Code"
+        required:
+        - "code"
+    Error403Code:
+      description: "This code indicates that the server understood\nthe request but\
+        \ refuses to authorize it because\nof one of the following error codes:\n\
+        - accessDenied: Access denied\n- forbiddenRequester: Forbidden requester\n\
+        - tooManyUsers: Too many users"
+      type: "string"
+      enum:
+      - "accessDenied"
+      - "forbiddenRequester"
+      - "tooManyUsers"
+    Error408:
+      description: "Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)"
+      allOf:
+      - $ref: "#/components/schemas/Error"
+      - type: "object"
+        properties:
+          code:
+            description: "List of supported error codes:\n- timeOut: Request Time-out\
+              \ - indicates that the server did not receive a complete request message\
+              \ within the time that it was prepared to wait."
+            type: "string"
+            enum:
+            - "timeOut"
+        required:
+        - "code"
+    Error500:
+      description: "Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)"
+      allOf:
+      - $ref: "#/components/schemas/Error"
+      - type: "object"
+        properties:
+          code:
+            description: "One of the following error codes:\n- internalError: Internal\
+              \ server error - the server encountered an unexpected condition that\
+              \ prevented it from fulfilling the request."
+            type: "string"
+            enum:
+            - "internalError"
+        required:
+        - "code"
+    Event:
+      description: "Event class is used to describe information structure used for\
+        \ notification."
+      type: "object"
+      properties:
+        eventId:
+          description: "Id of the event"
+          type: "string"
+        eventTime:
+          description: "Date-time when the event occurred"
+          type: "string"
+          format: "date-time"
+      required:
+      - "eventId"
+      - "eventTime"
+    TestJobEvent:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: "object"
+        properties:
+          eventType:
+            description: "Indicates the type of the event.\n"
+            $ref: "#/components/schemas/TestJobEventType"
+          event:
+            description: "A reference to the object that is source of the notification.\n"
+            $ref: "#/components/schemas/TestJobEventPayload"
+        required:
+        - "event"
+        - "eventType"
+    TestJobEventPayload:
+      description: "The identifier of the Test Job being subject of this event."
+      type: "object"
+      properties:
+        id:
+          description: "ID of the Test Job"
+          type: "string"
+        href:
+          description: "Hyperlink to access the Test Job"
+          type: "string"
+      required:
+      - "id"
+    TestJobEventType:
+      description: "Indicates the type of Test Job event."
+      type: "string"
+      enum:
+      - "testJobCreateEvent"
+      - "testJobAttributeValueChangeEvent"
+      - "testJobStateChangeEvent"
+    TestJobProcessEvent:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: "object"
+        properties:
+          eventType:
+            description: "Indicates the type of the event.\n"
+            $ref: "#/components/schemas/TestJobProcessEventType"
+          event:
+            description: "A reference to the object that is source of the notification.\n"
+            $ref: "#/components/schemas/TestJobProcessEventPayload"
+        required:
+        - "event"
+        - "eventType"
+    TestJobProcessEventPayload:
+      description: "The identifier of the Test Job Process being subject of this event."
+      type: "object"
+      properties:
+        id:
+          description: "ID of the Test Job Process"
+          type: "string"
+        href:
+          description: "Hyperlink to access the Test Job Process"
+          type: "string"
+      required:
+      - "id"
+    TestJobProcessEventType:
+      description: "Indicates the type of Test Job Process Event."
+      type: "string"
+      enum:
+      - "cancelTestJobStateChangeEvent"
+      - "modifyTestJobStateChangeEvent"
+      - "suspendTestJobStateChangeEvent"
+      - "resumeTestJobStateChangeEvent"
+    TestProfileEvent:
+      allOf:
+      - $ref: "#/components/schemas/Event"
+      - type: "object"
+        properties:
+          eventType:
+            description: "Indicates the type of the event.\n"
+            $ref: "#/components/schemas/TestProfileEventType"
+          event:
+            description: "A reference to the object that is source of the notification.\n"
+            $ref: "#/components/schemas/TestProfileEventPayload"
+        required:
+        - "event"
+        - "eventType"
+    TestProfileEventPayload:
+      description: "The identifier of the Test Profile being subject of this event."
+      type: "object"
+      properties:
+        id:
+          description: "ID of the Test Profile"
+          type: "string"
+        href:
+          description: "Hyperlink to access the Test Profile"
+          type: "string"
+      required:
+      - "id"
+    TestProfileEventType:
+      description: "Indicates the type of Test Profile event."
+      type: "string"
+      enum:
+      - "testProfileCreateEvent"
+      - "testProfileAttributeValueChangeEvent"
+      - "testProfileDeleteEvent"
+      - "testProfileStateChangeEvent"

@@ -1,6 +1,5 @@
 @startuml
 skinparam {
-    ClassBackgroundColor White
     ClassBorderColor<<API>>  Black
     ClassBorderColor Red
     

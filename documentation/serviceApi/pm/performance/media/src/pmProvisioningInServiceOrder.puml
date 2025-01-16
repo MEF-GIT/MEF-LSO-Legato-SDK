@@ -34,7 +34,7 @@ opt
 end
 
 note right of PJ: On scheduled date
-PJ -> PJ: state: in-progress
+PJ -> PJ: state: inProgress
 
 opt
   PJ -> Hub: stateChangeEvent
@@ -55,7 +55,7 @@ opt
   Hub -> B: notifyListeners (performanceReportCreateEvent)
 end 
 
-PR -> PR: state: in-progress
+PR -> PR: state: inProgress
 
 opt
   PR -> Hub: stateChangeEvent

@@ -1,0 +1,68 @@
+@startuml testJobModel
+
+
+class TestJob_Common {
+    name: string
+    description: string
+    startDateTime: date-time
+    endDateTime: date-time
+    recurencePeriod: RecurencePeriodType
+    testProfileId: string
+    validFor: date-time
+}
+TestJob_Common <|-- TestJob
+
+class TestJob {
+    id: string
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    state: TestJobStateType
+}
+
+
+
+enum RecurencePeriodType {
+    none
+    hourly
+    daily
+    weekly
+    monthly
+}
+
+enum TestJobStateType{
+    acknowledged
+    canceled
+    completed
+    in_progress
+    pending
+    rejected
+    resource_unavailable
+    scheduled
+    suspended
+}
+
+
+class TestJob_Create {
+
+}
+TestJob_Common <|-- TestJob_Create
+
+class TestJob_Modify {
+
+}
+TestJob_Common <|-- TestJob_Modify
+
+class ServiceRef {
+    relatedServiceId: string
+    relatedServiceName: string
+}
+
+class TestMeasureAttributes{
+    @type*: string <<discriminator>>
+}
+
+
+TestJob_Common *-->"1..1" ServiceRef : relatedService
+TestJob_Common *-->"0..1" TestMeasureAttributes: testMeasureAttributes
+
+@enduml

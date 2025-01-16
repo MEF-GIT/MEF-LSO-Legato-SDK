@@ -1,0 +1,20 @@
+@startuml useCase10
+
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S : POST {{baseUrl}}/modifyTestJob (ModifyTestJob_Create)
+
+S -> S : basic validation
+S -> S : assign id
+S -> S : state: acknowledged
+alt successful inquiry
+    B <-- S : 201 ModifyTestJob with {{id}}
+else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+end
+
+@enduml

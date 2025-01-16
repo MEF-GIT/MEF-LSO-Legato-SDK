@@ -2,7 +2,7 @@
 
 class ModifyPerformanceJob {
 
-    creationDate: date-time
+    creationDate*: date-time
     href: string
     id*: string
     modificationDeniedReason: string
@@ -19,18 +19,19 @@ class ModifyPerformanceJob_Common {
     producingApplicationId: string
 }
 
-ModifyPerformanceJob_Common *--> FileTransferData : fileTransferData
-ModifyPerformanceJob_Common *-->"1" PerformanceJobRef : performanceJob
-ModifyPerformanceJob_Common *--> ModifyPerformanceJob_ProfileValue : performanceProfile
-ModifyPerformanceJob_Common *--> ScheduleDefinition : scheduleDefinition
-ModifyPerformanceJob_Common *-r-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+ModifyPerformanceJob_Common *-->"0..1" ModifyPerformanceJob_PerformanceProfileValue : performanceProfile
+ModifyPerformanceJob_Common *-u->"0..1" ScheduleDefinition : scheduleDefinition
+ModifyPerformanceJob_Common *-u->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+ModifyPerformanceJob *-d->"1" PerformanceJobRef : performanceJob
 
 class ModifyPerformanceJob_Create {
+    performanceJobId*: string
 
 }
 ModifyPerformanceJob_Common <|-l- ModifyPerformanceJob_Create
 
-class ModifyPerformanceJob_ProfileValue {
+class ModifyPerformanceJob_PerformanceProfileValue {
 
     granularity: Interval
     jobPriority: integer

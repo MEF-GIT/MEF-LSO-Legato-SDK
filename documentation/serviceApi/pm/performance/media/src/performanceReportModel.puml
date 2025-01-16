@@ -11,27 +11,26 @@ class PerformanceReport {
 }
 PerformanceReport_Common <|-- PerformanceReport
 
-PerformanceReport *--> PerformanceJobRefOrValue : performanceJob
-PerformanceReport *-->"*" ReportContentItem : reportContent
-PerformanceReport *--> AttachmentURL : reportUrl
+
+PerformanceReport *-->"0..*" ReportContentItem : reportContent
+PerformanceReport *-->"0..1" AttachmentURL : reportUrl
 
 class PerformanceReport_Common {
 
     description: string
 }
 
-PerformanceReport_Common *--> ReportingTimeframe : reportingTimeframe
-
+PerformanceReport_Common *-->"1" PerformanceJobRefOrValue : performanceJob
+PerformanceReport_Common *-->"1" ReportingTimeframe : reportingTimeframe
 
 class PerformanceReport_Create {
 
 }
+
 PerformanceReport_Common <|-- PerformanceReport_Create
 
-PerformanceReport_Create *-->"1" PerformanceJobValue : performanceJob
 
 enum PerformanceReportStateType {
-
     acknowledged
     completed
     failed
@@ -44,7 +43,7 @@ class ReportContentItem {
 }
 
 ReportContentItem *-->"1" MeasurementTime : measurementTime
-ReportContentItem *-->"*" ResultPayload : measurementDataPoints
+ReportContentItem *-->"1..*" ResultPayload : measurementDataPoints
 
 class ResultPayload {
 

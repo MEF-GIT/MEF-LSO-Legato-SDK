@@ -1,16 +1,16 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:carrier-ethernet-performance-monitoring-results:v0.0.1:all
+$id: urn:mef:lso:spec:legato:carrier-ethernet-performance-monitoring-results:v0.0.2:all
 x-mef-target: ResultPayload
 description: Carrier Ethernet Performance Monitoring Results Schema.
 title:
     MEF LSO Legato - Carrier Ethernet Performance Monitoring Results
-    # MEF Forum - Date: 20230622  Edit-level: 
+    # MEF Forum - Date: 20241220  Edit-level: 
     # File: carrierEthernet/faultAndPerformanceManagement/carrierEthernetPerformanceMonitoringResults.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2023. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -58,8 +58,6 @@ properties:
   description: >-
     Data type representing the Carrier Ethernet Layer 2 frame performance statistics results 
     for receive and transmit.
-  interface:
-    type: string
   rxEthIINum:
     description: Number of frames encapsulated by using Ethernet II.
     type: integer
@@ -115,16 +113,20 @@ properties:
     description: Number of frames transparently sent.
     type: integer
   utilizationIn:
+    description:  Input Ethernet bandwidth utilization on monitored interface.
     $ref: '#/definitions/Percentage'
   utilizationOut:
+    description: Output Ethernet bandwidth utilization on monitored interface.
     $ref: '#/definitions/Percentage'
   peakUtilizationIn:
+    description: Input peak Ethernet bandwidth utilization on monitored interface.
     $ref: '#/definitions/Percentage'
   peakUtilizationOut:
+    description: Output peak Ethernet bandwidth utilization on monitored interface.
     $ref: '#/definitions/Percentage'
 definitions:
   Percentage:
-    description: This is a number of percent - a number between 0 and 100.
+    description: This is a number of percent - a floating point number between 0 and 100.
     maximum: 100
     minimum: 0
     type: number

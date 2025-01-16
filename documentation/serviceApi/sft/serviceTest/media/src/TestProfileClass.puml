@@ -1,0 +1,54 @@
+@startuml TestProfileClass
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+class TestProfile {
+
+    id: string 
+    description: string
+    creationDateTime: date-time
+    isBundled: boolean
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    state*: TestProfileStateType
+    name: string
+    validFor: date-time
+    lastUpdate: date-time
+}
+
+class ServiceSpecificTestProfileAttributes {
+    @type*: string <<discriminator>>
+}
+
+class RelatedContactRef {
+    <<... attributes are skipped ...>>
+}
+
+class TestProfileRef {
+    relatedTestProfileId: string
+}
+
+class ServiceSpecificationRef {
+        relatedServiceSpecificationId: string
+}
+enum TestProfileLifecycleStatusType {
+    EXPERIMENTAL
+    PENDING
+    APPROVED
+    DEPRECATED
+}
+
+enum TestProfileStateType {
+    ACKNOWLEDGED
+    COMPLETED
+    REJECTED
+}
+
+TestProfile *-->"0..1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestProfile *-->"0..*" TestProfileRef : relatedTestProfile
+TestProfile *-->"0..*" ServiceSpecificationRef : relatedServiceSpecification
+TestProfile *-->"0..*" RelatedContactRef : relatedContact

@@ -1,0 +1,111 @@
+@startuml performanceMonitoringDataModelPart5
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class AttachmentURL {
+    retentionPeriod: string
+    url*: string
+}
+
+class EntityId {
+    entityId: string
+}
+MonitoredObjectId <|-- EntityId
+
+class HourRange {
+    start: date-time
+    end: date-time
+}
+
+enum Interval {
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 seconds
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+}
+
+enum JobType {
+    proactive
+    on-demand
+    passive
+}
+
+class MeasurementTime {
+    measurementStartDate: date-time
+    measurementEndDate: date-time
+    measurementInterval: Interval
+}
+
+class MonitoredObjectId {
+    @type*: string
+}
+
+enum OutputFormat {
+    json
+    xml
+    avro
+    csv
+}
+
+class RecurringSchedule {
+    second: string
+    minute: string
+    hour: string
+    dayOfMonth: string
+    month: string
+    dayOfWeek: string
+}
+
+RecurringSchedule *-->"*" HourRange : hourRange
+
+enum ResultFormat {
+    attachment
+    payload
+}
+
+class ScheduleDefinition {
+    scheduleDefinitionStartTime: date-time
+    scheduleDefinitionEndTime: date-time
+    executionDuration: Interval
+}
+ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+
+class ServiceId {
+    serviceIdFrom*: string
+    serviceIdTo*: string
+}
+MonitoredObjectId <|-- ServiceId
+
+class ServicePayloadSpecificAttributes {
+    @type*: string
+}
+
+class TrackingRecord {
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    request: string
+    system: string
+    user: string
+}
+
+class TrackingRecord_Find {
+    creationDate*: date-time
+    description: string
+    id*: string
+    relatedObjectId*: string
+    user: string
+}
+
+@enduml

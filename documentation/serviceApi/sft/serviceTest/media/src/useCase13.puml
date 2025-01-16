@@ -1,0 +1,35 @@
+@startuml useCase13
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+B -> S : POST {{baseUrl}}/cancelTestJob (CancelTestJob_Create)
+
+S -> S : basic validation
+S -> S : assign id
+S -> S : state: acknowledged
+alt successful inquiry
+    B <-- S : 201 CancelPerformanceJob with {{id}}
+else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+end
+
+
+' hide footbox
+
+' participant "Buyer/Client" as B
+' participant "Seller/Server" as S
+
+' B -> S : POST {{baseUrl}}/testJob/{{id}}/cancel
+
+' S -> S : basic validation
+' S -> S : state: acknowledged
+' alt
+'     B <-- S : 201 : TestJobProcessResponse
+' else validation or internal problem
+'     B <-- S: 4xx/5xx : error response
+' end
+
+@enduml

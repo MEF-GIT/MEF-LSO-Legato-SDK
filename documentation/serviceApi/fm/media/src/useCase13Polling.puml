@@ -1,0 +1,20 @@
+@startuml useCase12Polling
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+note over S: Report is generated\nby FM Job
+S -> S : internal report processing
+B -> S : GET {{baseUrl}}/faultManagementReport, filter on FaultManagementJob id
+S -> B : 200 list of FaultManagementReport
+
+...
+
+loop periodically until FaultManagementReport in terminal state
+  B -> S :   GET {{baseUrl}}/faultManagementReport/{{id}}
+  return 200 FaultManagementReport in current state
+end
+
+@enduml

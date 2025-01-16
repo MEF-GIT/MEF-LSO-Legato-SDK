@@ -1,6 +1,5 @@
 @startuml
 skinparam {
-    ClassBackgroundColor White
     ClassBorderColor Black
     ClassBorderColor<<ServiceSpecification>> FireBrick
 }
@@ -10,7 +9,7 @@ class ServiceValue {
 
     id: string 
     href: string 
-    place: RelatedPlaceRefOrValue
+    place: RelatedPlaceRefOrQuery
     serviceOffering: ServiceOfferingRef
     serviceRelationship: ServiceRelationship
     <<... attributes are skipped ...>>

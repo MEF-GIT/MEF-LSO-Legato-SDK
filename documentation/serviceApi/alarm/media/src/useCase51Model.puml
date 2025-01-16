@@ -1,0 +1,73 @@
+@startuml useCase51Model
+
+class Alarm_Common {
+
+    id*: string
+    href: uri
+    alarmChangedTime: date-time
+    alarmClearedTime: date-time
+    alarmDetails*: string
+    alarmedObjectType: string
+    alarmReportingTime*: date-time
+    alarmType*: AlarmType
+    perceivedSeverity*: PerceivedSeverity
+    plannedOutageIndicator: string
+    reportingSystemId: string
+    serviceAffecting: boolean
+    state*: string
+}
+
+Alarm_Common *-->"*" ServiceRef : affectedService
+Alarm_Common *-->"*" AlarmRef : correlatedAlarm
+
+
+class Alarm_Find {
+
+}
+Alarm_Common <|-- Alarm_Find
+
+
+
+
+
+class AlarmRef {
+
+    id*: string
+    href: string
+}
+
+
+
+enum AlarmType {
+
+    communicationsAlarm
+    processingErrorAlarm
+    environmentalAlarm
+    qualityOfServiceAlarm
+    equipmentAlarm
+    integrityViolation
+    operationalViolation
+    physicalViolation
+    securityService
+    mechanismViolation
+    timeDomainViolation
+}
+
+
+enum PerceivedSeverity {
+
+    cleared
+    critical
+    indeterminate
+    major
+    minor
+    warning
+}
+class ServiceRef {
+
+    id*: string
+    href: string
+}
+
+
+@enduml

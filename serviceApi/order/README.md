@@ -1,5 +1,115 @@
 # Service Order Management: Release notes
 
+## Release Irene:
+
+**Readiness status**: Call for Comments Ballot #1. Work in progress and is subject to change.
+
+**Summary:**
+
+- Updating Address model according to new definition in MEF 150
+- Revised, fully specialized Event model.
+- State change events now carry the value of the new `state`
+- `buyerId` and `sellerId` in notification now carried vie query params (consistent with seller side API)
+
+### List of changes in the API:
+
+**serviceOrderingManagement.api.yaml:**
+
+- `POST /hub`:
+  - `422` - response code added
+- `DELETE /hub/(id)`:
+  - `422` - response code added
+- `GET /serviceOrder:`
+  - `422` - response code added
+
+
+- `ContactInformation` - added
+- `Duration`:
+  - `amount` - added `minimum:0`
+- `FieldedAddress` - replaced with `FieldedAddressRepresentation`
+  - `allOf` with `GeographicAddress` - removed
+  - `buildingName` - added
+  - `country` - removed
+  - `countryCode` - added
+  - `geographicSubAddress` - removed
+  - `language` - added
+  - `poBox` - added
+  - `privateStreetName` - added
+  - `privateStreetNumber` - added
+  - `streetPreDirection` - added
+  - `streetPostDirection` - added
+  - `streetSuffix` - removed
+  - no attribute is required anymore
+- `FieldedAddressValue` - replaced with `FieldedAddressRepresentation`
+- `FormattedAddress` - replaced with `FormattedAddressRepresentation`
+  - `addrLine1` - renamed to `formattedAddress`
+  - `allOf` with `GeographicAddress` - removed
+  - `addrLine2` - removed
+  - `city` - removed
+  - `country` - removed
+  - `language` - added
+  - `locality` - removed
+  - `postcode` - removed
+  - `postcodeExtension` - removed
+  - `stateOrProvince` - removed
+- `GeographicAddress_Query` - added
+- `GeographicAddressLabel` - replaced with `LabelRepresentation`
+  - `allOf` with `GeographicAddress` - removed
+  - `externalReferenceId` - renamed to `label`
+  - `externalReferenceType` - renamed to `administrativeAuthority`
+  - `language` - added
+- `GeographicAddressRef`
+  - does not extend the `GeographicAddressRefOrValue`
+  - `@type` - added with constant `GeographicAddressRef` value
+- `GeographicPoint` - replaced with `GeographicPointRepresentation`
+  - `allOf` with `GeographicAddress` - removed
+  - `x` - renamed to `longitude`
+  - `y` - renamed to `latitude`
+  - `z` - renamed to `elevation`
+- `GeographicSiteRef`
+  - does not extend the `GeographicAddressRefOrValue`
+  - `@type` - added with constant `GeographicSiteRef` value
+- `GeographicSubAddress` - removed
+- `GeographicSubAddressUnit` - renamed to `SubUnit`
+- `RelatedContactInformation`:
+  - `postalAddress` - changed ref type to `FieldedAddressRepresentation`
+- `RelatedPlaceRefOrValue` - replaced with `RelatedPlaceRefOrQuery`
+- `ServiceOrderItem_Common`:
+  - `relatedContactInformation` - added
+- `ServiceValue`:
+  - `place` - changed ref type to `RelatedPlaceRefOrQuery`
+- `TimeUnit`:
+  - added:
+    - `seconds`
+    - `minutes`
+    - `months`
+    - `years`
+  - removed:
+    - `calendarMinutes`
+    - `businessMinutes`
+    - `calendarMonths`
+
+
+**serviceOrderingNotification.api.yaml:**
+
+- `408` - response code removed
+- `Error408` - removed
+
+- `Event` - made a generic Event
+  - `event` - added
+  - `eventType` - added
+
+
+- `ServiceOrderCreateEvent` - added
+- `ServiceOrderEvent` - removed
+- `ServiceOrderInformationRequiredEvent` - added
+- `ServiceOrderItemStateChangeEvent` - added
+- `ServiceOrderItemStateChangeEventPayload` - added
+- `ServiceOrderStateChangeEvent` - added
+- `ServiceOrderStateChangeEventPayload` - added
+- `ServiceOrderStateType` - added
+- `ServiceOrderEventType` - removed
+
 ## Release Haley:
 
 **Readiness status**: MEF Published Standard

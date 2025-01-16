@@ -1,0 +1,20 @@
+@startuml useCase11Model
+
+class ModifyTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+ModifyTestJob_Find *-->"1" TestJobRef : testJob
+
+enum TestJobProcessStateType {
+    accepted
+    acknowledged
+    completed
+    declined
+    rejected
+}
+
+@enduml

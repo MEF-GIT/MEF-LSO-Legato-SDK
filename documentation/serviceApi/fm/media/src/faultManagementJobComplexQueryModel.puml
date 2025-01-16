@@ -1,0 +1,91 @@
+@startuml faultManagementJobComplexQueryModel
+
+class FaultManagementJobComplexQuery {
+
+    creationDate*: date-time
+    description: string
+    granularity*: Interval
+    jobPriority: integer
+    jobType*: JobType
+    lastModifiedDate: date-time
+    outputFormat*: OutputFormat
+    reportingPeriod*: Interval
+    resultFormat*: ResultFormat
+    state*: FaultManagementJobStateType
+}
+
+FaultManagementJobComplexQuery *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementJobComplexQuery *-u->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJobComplexQuery *-->"1" ServiceId : serviceId
+FaultManagementJobComplexQuery *-u->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+
+class FaultManagementJobComplexQuery_Create {
+
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    granularity: Interval
+    jobPriority: integer
+    jobType: JobType
+    lastModifiedDate.gt: date-time
+    lastModifiedDate.lt: date-time
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+    state: FaultManagementJobStateType
+}
+
+FaultManagementJobComplexQuery_Create *-->"0..1" ScheduleDefinition : scheduleDefinition
+FaultManagementJobComplexQuery_Create *-->"0..1" ServiceId : serviceId
+FaultManagementJobComplexQuery_Create *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+enum FaultManagementJobStateType {
+
+    acknowledged
+    cancelled
+    completed
+    inProgress
+    pending
+    pendingCancel
+    rejected
+    resourcesUnavailable
+    scheduled
+    suspended
+}
+
+enum Interval {
+
+    10 milliseconds
+    100 milliseconds
+    1 second
+    10 seconds
+    1 minute
+    5 minutes
+    15 minutes
+    30 minutes
+    1 hour
+    24 hours
+    1 month
+    1 year
+    not applicable
+}
+enum JobType {
+
+    proactive
+    on-demand
+    passive
+}
+
+enum OutputFormat {
+    json
+    xml
+    avro
+    csv
+}
+
+enum ResultFormat {
+    attachment
+    payload
+}
+
+@enduml

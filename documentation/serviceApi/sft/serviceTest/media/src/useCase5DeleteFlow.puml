@@ -1,0 +1,23 @@
+@startuml useCase5DeleteFlow
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+
+entity "Test Profile" as PP
+activate PP
+
+autonumber
+
+note over PP: Test Profile not in `assigned` state
+B -> S : DELETE /testProfile/{{id}} request
+
+S -> S: find Test Profile by id
+S -> S: check Test Profile IS NOT Assigned to a Test Job
+
+S --> B: DELETE /testProfile/{{id}} response
+PP -> B: POST testProfileDeleteEvent
+
+@enduml

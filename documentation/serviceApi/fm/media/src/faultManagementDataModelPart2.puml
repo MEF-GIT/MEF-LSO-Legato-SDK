@@ -1,0 +1,93 @@
+@startuml faultManagementDataModelPart2
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class FaultManagementReport {
+
+    creationDate*: date-time
+    description: string
+    failureReason: string
+    href: uri
+    id*: string
+    lastModifiedDate: date-time
+    state*: FaultManagementReportStateType
+}
+
+FaultManagementReport *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport *-u->"*" ReportContentItem : reportContent
+FaultManagementReport *-->"1" ReportingTimeframe : reportingTimeframe
+FaultManagementReport *-u-> AttachmentURL : reportUrl
+
+class FaultManagementReportComplexQuery {
+
+    creationDate*: date-time
+    description: string
+    lastModifiedDate: date-time
+    state*: FaultManagementReportStateType
+}
+
+FaultManagementReportComplexQuery *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReportComplexQuery *-u->"1" FaultManagementReportRef : faultManagementReport
+FaultManagementReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
+
+class FaultManagementReportComplexQuery_Create {
+
+    creationDate.gt: date-time
+    creationDate.lt: date-time
+    faultManagementJobId: string
+    granularity: Interval
+    lastModifiedDate.gt: date-time
+    lastModifiedDate.lt: date-time
+    outputFormat: OutputFormat
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: FaultManagementReportStateType
+}
+
+FaultManagementReportComplexQuery_Create *--> ServiceId : serviceId
+FaultManagementReportComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class FaultManagementReportRef {
+
+    faultManagementReportHref: string
+    faultManagementReportId*: string
+}
+
+enum FaultManagementReportStateType {
+
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+class FaultManagementReport_Find {
+
+    creationDate*: date-time
+    description: string
+    id*: string
+    state*: FaultManagementReportStateType
+}
+
+FaultManagementReport_Find *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+
+class ReportContentItem {
+
+}
+
+ReportContentItem *-u->"1" MeasurementTime : measurementTime
+ReportContentItem *-u->"*" ResultPayload : measurementDataPoints
+
+class ReportingTimeframe {
+
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+@enduml

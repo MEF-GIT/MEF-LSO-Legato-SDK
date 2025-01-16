@@ -1,25 +1,14 @@
 @startuml
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 
 class Event {
 
     eventId*: string
     eventTime*: date-time
+    eventType*: string
+    event*: object
 }
 
-
-
-class ServiceEvent {
-
-    eventType*: ServiceEventType
-}
-Event <|-- ServiceEvent
-
-ServiceEvent *-->"1" ServiceEventPayload : event
 
 
 class ServiceEventPayload {
@@ -30,10 +19,49 @@ class ServiceEventPayload {
 
 
 
-enum ServiceEventType {
+class ServiceCreateEvent {
 
-    serviceCreateEvent
-    serviceDeleteEvent
-    serviceStateChangeEvent
+    eventType*: string
 }
+Event <|-- ServiceCreateEvent
+
+ServiceCreateEvent *-->"1" ServiceEventPayload : event
+
+
+class ServiceStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceStateChangeEvent
+
+ServiceStateChangeEvent *-->"1" ServiceStateChangeEventPayload : event
+
+
+class ServiceStateChangeEventPayload {
+
+    id*: string
+    href: string
+    state*: ServiceStateType
+}
+
+
+
+class ServiceDeleteEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceDeleteEvent
+
+ServiceDeleteEvent *-->"1" ServiceEventPayload : event
+
+
+class ServiceAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ServiceAttributeValueChangeEvent
+
+ServiceAttributeValueChangeEvent *-->"1" ServiceEventPayload : event
+
+
 @enduml

@@ -1,0 +1,46 @@
+@startjson
+
+{
+  "coordinatedAction" : [ {
+    "coordinatedActionDelay" : {
+      "amount" : 1,
+      "units" : "businessMinutes"
+    },
+    "coordinationDependency" : "startToFinish",
+    "orderId" : "100"
+  } ],
+  "orderRelationship" : [ {
+    "serviceOrder" : {
+      "href" : "{{baseUrl}}/serviceOrder/00000000-3333-4444-5555-000000004567",
+      "id" : "00000000-3333-4444-5555-000000004567"
+    },
+    "relationshipType" : "uniqueOrder100"
+  } ],
+  "requestedStartDate" : "2024-11-17T02:15:00Z",
+  "requestedCompletionDate" : "2024-11-17T02:15:00Z",
+  "serviceOrderItem" : [ {
+    "id" : "soid-subscvep-100",
+    "action" : "modify",
+    "service" : {
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:l1-subscriber-vc:v0.0.2:all",
+        "atType" : "urn:mef:lso:spec:service:l1-subscriber-vc:v0.0.2:all",
+        "identifier" : "mef-l1vc-1",
+        "l1ServiceLevelSpecification" : {
+          "duration" : {
+            "number" : 10,
+            "unit" : "second"
+          },
+          "sls1wDelayPerformanceMetric" : [ {
+            "delayObjective" : {
+              "time" : 100,
+              "timeUnits" : "milliSeconds"
+            }
+          } ]
+        }
+      }
+    }
+  } ]
+}
+
+@endjson

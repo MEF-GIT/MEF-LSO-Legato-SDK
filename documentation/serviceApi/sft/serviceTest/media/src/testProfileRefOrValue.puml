@@ -1,0 +1,44 @@
+@startuml testProfileRefOrValue
+
+
+
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
+
+
+class TestProfileRef {
+
+    href: string
+    id*: string
+}
+TestProfileRefOrValue <|-- TestProfileRef
+
+
+
+class TestProfileValue {
+
+    description: string
+    relatedServiceSpecificationId: string
+}
+
+TestProfileRefOrValue <|-- TestProfileValue
+
+class TestJob {}
+
+class TestJob_Common {}
+
+class TestJob_Create {}
+TestJob_Common <|-- TestJob_Create
+
+TestJob_Common <|-- TestJob
+
+TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
+
+
+TestProfileValue *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestProfileValue *-->"1" RelatedContactRef : relatedContact
+
+@enduml

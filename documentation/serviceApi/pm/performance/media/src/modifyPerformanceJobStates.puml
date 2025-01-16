@@ -17,13 +17,13 @@ state request_accepted <<choice>>
 
 acknowledged -d-> request_accepted
 
-request_accepted -l-> declined: No
+request_accepted -l-> rejected: No
 
-request_accepted -r-> accepted: Yes
+request_accepted -r-> inProgress: Yes
 
-accepted -d-> completed
+inProgress -d-> completed
 
-declined -d-> [*]
+rejected -d-> [*]
 completed -d-> [*]
 
 @enduml

@@ -1,0 +1,86 @@
+@startuml TestJobClass
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
+    ClassBorderColor<<ResultPayload>> FireBrick
+}
+set namespaceSeparator none
+
+
+class TestJob {
+    id: string
+    href: string
+    description: string
+    name: string
+    startDateTime: date-time
+    actualStartDateTime: date-time
+    endDateTime: date-time
+    actualdateTime: date-time
+    validFor: date-time
+    recurencePeriod*: RecurencePeriodType
+    state*: TestJobStateType
+
+}
+
+
+class TestAttributeSchema {
+    @type*: string <<discriminator>>
+}
+
+class ServiceRef {
+    relatedServiceId: string
+    relatedServiceName: string
+}
+
+class TestProfileRef {
+    relatedTestProfileId: string
+}
+
+enum RecurencePeriodType {
+    NONE
+    HOURLY
+    DAILY
+    WEEKLY
+    MONTHLY
+}
+
+enum TestJobStateType{
+    ACKNOWLEDGED
+    CANCELED
+    COMPLETED
+    IN_PROGRESS
+    PENDING
+    REJECTED
+    RESOURCE_UNAVAILABLE
+    SCHEDULED
+    SUSPENDED
+}
+
+
+class TestAttributesRef{
+    description: string
+    creationDateTime: date-time
+
+}
+
+class ServiceSpecificTestProfileAttributes {
+    @type*: string <<discriminator>>
+}
+class ServiceSpecificationRef {
+        relatedServiceSpecificationId: string
+}
+
+class RelatedContactRef {
+    <<... attributes are skipped ...>>
+}
+
+TestAttributesRef *-->"0..1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestAttributesRef *-->"0..*" ServiceSpecificationRef : relatedServiceSpecification
+TestAttributesRef *-->"0..*" RelatedContactRef : relatedContact
+
+
+TestJob *-->"0..1" TestAttributeSchema : testAttributeSchema
+TestJob *-->"1..1" ServiceRef : relatedService
+TestJob *-->"0..1" TestProfileRef : testProfile
+TestJob *-->"0..1" TestAttributesRef: testAttributes

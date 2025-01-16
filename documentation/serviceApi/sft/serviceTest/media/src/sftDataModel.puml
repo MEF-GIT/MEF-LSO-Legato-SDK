@@ -1,0 +1,531 @@
+@startuml sftDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Error {
+
+    message: string
+    reason*: string
+    referenceError: uri
+}
+
+
+
+class Error400 {
+
+    code*: Error400Code
+}
+Error <|-- Error400
+
+
+
+enum Error400Code {
+
+    missingQueryParameter
+    missingQueryValue
+    invalidQuery
+    invalidBody
+}
+class Error401 {
+
+    code*: Error401Code
+}
+Error <|-- Error401
+
+
+
+enum Error401Code {
+
+    missingCredentials
+    invalidCredentials
+}
+class Error403 {
+
+    code*: Error403Code
+}
+Error <|-- Error403
+
+
+
+enum Error403Code {
+
+    accessDenied
+    forbiddenRequester
+    tooManyUsers
+}
+class Error404 {
+
+    code*: string
+}
+Error <|-- Error404
+
+
+
+class Error409 {
+
+    code*: string
+}
+Error <|-- Error409
+
+
+
+class Error422 {
+
+    code*: Error422Code
+    propertyPath: string
+}
+Error <|-- Error422
+
+
+
+enum Error422Code {
+
+    missingProperty
+    invalidValue
+    invalidFormat
+    referenceNotFound
+    unexpectedProperty
+    tooLargeDataset
+    tooManyRecords
+    tooManyRequests
+    performanceProfileInUse
+    otherIssue
+}
+class Error500 {
+
+    code*: string
+}
+Error <|-- Error500
+
+
+
+class Error501 {
+
+    code*: string
+}
+Error <|-- Error501
+
+
+
+class EventSubscription {
+
+    id: string
+}
+EventSubscriptionInput <|-- EventSubscription
+
+
+
+class EventSubscriptionInput {
+
+    callback*: string
+    query: string
+}
+
+
+
+class RelatedContact {
+
+    name: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    emailAddress: string
+    postalAddress: string
+    organization: string
+}
+
+
+
+enum RecurrencePeriodType {
+
+    none
+    hourly
+    daily
+    weekly
+    monthly
+}
+class ServiceRef {
+
+    id*: string
+    name: string
+}
+
+
+
+class TestJob {
+
+    id*: string
+    state*: TestJobStateType
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+}
+TestJob_Common <|-- TestJob
+
+
+
+class TestJob_Common {
+
+    name: string
+    description: string
+    startDateTime: date-time
+    endDateTime: date-time
+    recurrencePeriod: RecurrencePeriodType
+    validFor: date-time
+}
+
+TestJob_Common *--> TestProfileRefOrValue : testProfile
+TestJob_Common *--> ServiceRef : relatedService
+TestJob_Common *--> TestMeasureAttributes : testMeasureAttributes
+
+
+class TestJob_Find {
+
+    id: string
+    name: string
+    testProfileId: string
+    relatedServiceId: string
+    startDateTime: string
+    endDateTime: string
+}
+
+
+
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
+
+
+class TestProfileRef {
+
+    href: string
+    id*: string
+}
+TestProfileRefOrValue <|-- TestProfileRef
+
+
+
+class TestProfileValue {
+
+}
+TestProfileRefOrValue <|-- TestProfileValue
+
+
+
+class TestJob_Create {
+
+}
+TestJob_Common <|-- TestJob_Create
+
+
+
+class TestJob_Modify {
+
+}
+TestJob_Common <|-- TestJob_Modify
+
+
+
+class TestJobProcessResponse {
+
+    testJobId: string
+    state: TestJobProcessStateType
+    deniedReason: string
+}
+
+
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    declined
+    rejected
+}
+enum TestJobStateType {
+
+    acknowledged
+    assessing_modification
+    cancelled
+    completed
+    inProgress
+    rejected
+    scheduled
+    suspended
+}
+class TestProfile {
+
+    id: string
+    creationDate: date-time
+    state: TestProfileStateType
+    isAssigned: boolean
+    lastUpdate: date-time
+}
+TestProfile_Common <|-- TestProfile
+
+
+
+class TestProfile_Common {
+
+    description: string
+    isBundled: boolean
+    lifecycleStatus: TestProfileLifecycleStatusType
+    name: string
+    validFor: date-time
+    relatedServiceSpecificationId: string
+}
+
+TestProfile_Common *-->"*" RelatedTestProfileRef : relatedTestProfile
+TestProfile_Common *--> ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+
+
+class TestProfile_Create {
+
+}
+TestProfile_Common <|-- TestProfile_Create
+
+
+
+class TestProfile_Find {
+
+    id*: string
+    name*: string
+    description*: string
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    creationDate*: date-time
+    lastUpdate*: date-time
+    state*: TestProfileStateType
+}
+
+
+
+class TestProfile_Modify {
+
+}
+TestProfile_Common <|-- TestProfile_Modify
+
+
+
+class ServiceSpecificTestProfileAttributes {
+
+    @type*: string
+}
+
+
+
+class ServiceSpecificationRef {
+
+    relatedServiceSpecificationId: string
+}
+
+
+
+class RelatedTestProfileRef {
+
+    serviceSpecificationId: string
+    id: string
+    name: string
+    type: TestProfileRelationshipType
+    role: TestProfileRelationshipRole
+    order: integer
+    validFor: date-time
+}
+
+
+
+enum TestProfileLifecycleStatusType {
+
+    experimental
+    pending
+    approved
+    deprecated
+}
+enum TestProfileRelationshipType {
+
+    bundled
+}
+enum TestProfileRelationshipRole {
+
+    primary
+    secondary
+}
+enum TestProfileStateType {
+
+    acknowledged
+    completed
+    rejected
+}
+class TestMeasureAttributes {
+
+    @type*: string
+}
+
+
+
+class SuspendTestJob {
+
+    suspensionDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+SuspendTestJob_Common <|-- SuspendTestJob
+
+
+
+class SuspendTestJob_Common {
+
+    suspensionReason: string
+}
+
+SuspendTestJob_Common *--> TestJobRef : testJob
+
+
+class SuspendTestJob_Create {
+
+}
+SuspendTestJob_Common <|-- SuspendTestJob_Create
+
+
+
+class SuspendTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+SuspendTestJob_Find *--> TestJobRef : testJob
+
+
+class ResumeTestJob {
+
+    resumptionDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+ResumeTestJob_Common <|-- ResumeTestJob
+
+
+
+class ResumeTestJob_Common {
+
+    resumptionReason: string
+}
+
+ResumeTestJob_Common *--> TestJobRef : testJob
+
+
+class ResumeTestJob_Create {
+
+}
+ResumeTestJob_Common <|-- ResumeTestJob_Create
+
+
+
+class ResumeTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+ResumeTestJob_Find *--> TestJobRef : testJob
+
+
+class CancelTestJob {
+
+    cancellationDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+CancelTestJob_Common <|-- CancelTestJob
+
+
+
+class CancelTestJob_Common {
+
+    cancellationReason: string
+}
+
+CancelTestJob_Common *--> TestJobRef : testJob
+
+
+class CancelTestJob_Create {
+
+}
+CancelTestJob_Common <|-- CancelTestJob_Create
+
+
+
+class CancelTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+CancelTestJob_Find *--> TestJobRef : testJob
+
+
+class ModifyTestJob {
+
+    modificationDeniedReason: string
+    creationDate: date-time
+    href: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+ModifyTestJob_Common <|-- ModifyTestJob
+
+
+
+class ModifyTestJob_Common {
+
+    modificationReason: string
+    name: string
+    description: string
+    startDateTime: date-time
+    endDateTime: date-time
+}
+
+ModifyTestJob_Common *--> TestJobRef : testJob
+ModifyTestJob_Common *--> TestProfileRefOrValue : testProfile
+ModifyTestJob_Common *--> ServiceRef : relatedService
+ModifyTestJob_Common *--> TestMeasureAttributes : testMeasureAttributes
+
+
+class ModifyTestJob_Create {
+
+}
+ModifyTestJob_Common <|-- ModifyTestJob_Create
+
+
+
+class ModifyTestJob_Find {
+
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+
+ModifyTestJob_Find *--> TestJobRef : testJob
+
+
+class TestJobRef {
+
+    href: string
+    id*: string
+}
+
+
+
+@enduml

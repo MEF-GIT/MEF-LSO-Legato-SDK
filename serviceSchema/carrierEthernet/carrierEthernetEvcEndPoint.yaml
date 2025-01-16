@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-evc-end-point:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-evc-end-point:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet EVC End Point Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet EVC End Point Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernet/carrierEthernetEvcEndPoint.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,107 +51,146 @@ title:
     # products or services.
     # ---------------------
     #
-description: A CarrierEthernetEvcEndPoint is a construct at a UNI that selects a subset of the Service Frames that pass over the UNI. A CarrierEthernetEvcEndPoint represents the logical attachment of an EVC to a UNI. Reference MEF 10.4 Section 10 EVC EP Service Attributes. NOTE-CarrierEthernetEvcEndPoint inherits from CarrierEthernetServiceEndPoint.
+description: >-
+  A CarrierEthernetEvcEndPoint is a construct at a UNI that selects a subset of the
+  Service Frames that pass over the UNI. A CarrierEthernetEvcEndPoint represents the 
+  logical attachment of an EVC to a UNI. Reference MEF 10.4 Section 10 EVC EP Service 
+  Attributes. NOTE-CarrierEthernetEvcEndPoint inherits from CarrierEthernetServiceEndPoint.
 properties:
   identifier:
+    minLength: 1
     maxLength: 45
     type: string
-    description: A string that is used to allow the Subscriber and Service Provider to uniquely identify the CarrierEthernetEvcEndPoint for operations purposes. Reference MEF 10.4 Section 10.1 EVC EP ID Service Attribute.
+    pattern: "[\x20-\x7F]+"
+    description: >-
+      A string that is used to allow the Subscriber and Service Provider to uniquely 
+      identify the CarrierEthernetEvcEndPoint for operations purposes. Reference MEF 10.4 
+      Section 10.1 EVC EP ID Service Attribute.
   role:
     type: string
-    description: This enumeration is indicating how external interface frames mapped to the EVC End Point can be forwarded. Reference MEF 10.4 Section 10.3 EVC EP Role Service Attribute.
+    description: >-
+      This enumeration is indicating how external interface frames mapped to the EVC End 
+      Point can be forwarded. Reference MEF 10.4 Section 10.3 EVC EP Role Service Attribute.
     enum:
     - ROOT
     - LEAF
-  evcEndPointMap:
-    $ref: '#/definitions/VlanIdListOrUntag'
+  map:
+    $ref: '#/definitions/EvcEndPointMap'
+  ingressClassOfServiceMap:
+    $ref: './carrierEthernetCommon.yaml#/definitions/CosMap'
+  colorMap:
+    $ref: './carrierEthernetCommon.yaml#/definitions/ColorIdentifier'
   egressMap:
       minItems: 0
+      maxItems: 1
+      uniqueItems: TRUE
       type: array
-      description: Attribute is a map of the form <Corresponding Ingress Service Frame Class of Service Name, Corresponding Ingress Service Frame Color> to either <Egress Service Frame C-Tag PCP value, Egress Service Frame C-Tag DEI value> or Discard. Reference MEF 10.4 Section 10.7 EVC EP Egress Map Service Attribute.
+      description: >-
+        Attribute is a map of the form <Corresponding Ingress Service Frame Class of Service Name, 
+        Corresponding Ingress Service Frame Color> to either <Egress Service Frame C-Tag PCP value, 
+        Egress Service Frame C-Tag DEI value> or Discard. Reference MEF 10.4 Section 10.7 EVC 
+        EP Egress Map Service Attribute.
       items:
-      $ref: '#/definitions/EvcEpEgressMap'
-  egressBandwidthProfilePerEndPoint:
-    $ref: '#/definitions/EgressBwpFlow'
-  egressBandwidthProfilePerCosName:
+      $ref: '#/definitions/EvcEpEgressMap'  
+  ingressBwp:
+    $ref: './carrierEthernetCommon.yaml#/definitions/IngressBwpFlow'
+  cosIngressBwp:
+    minItems: 0
+    type: array
+    description: >-
+      For each CoS Name listed, Bandwidth Profile Flow parameters for all ingress EI Frames mapped 
+      to that CoS Name at the EVC End Point or OVC End Point. Reference MEF 10.4 Section 10.9 EVC 
+      EP Class of Service Name Ingress Bandwidth Profile Service Attribute.
+    items:
+      $ref: './carrierEthernetCommon.yaml#/definitions/IngressBandwidthProfilePerClassOfServiceName'
+  egressBwp:
+    $ref: './carrierEthernetCommon.yaml#/definitions/EgressBwpFlow'
+  cosEgressBwp:
     minItems: 0
     type: array
     description: Used to limit the rate of all Egress Service Frames with a given Class of Service Name, as determined at the ingress UNI for each frame per the EVC EP Ingress Class of Service Map Service Attribute. Reference MEF 10.4 Section 10.11 EVC EP Class of Service Name Egress Bandwidth Profile Service Attribute.
     items:
-    $ref: '#/definitions/ClassOfServiceEgressBandwidthProfile'
+      $ref: './carrierEthernetCommon.yaml#/definitions/EgressBandwidthProfilePerClassOfServiceName'
+  sourceMacAddressLimit:
+    $ref: './carrierEthernetCommon.yaml#/definitions/SourceMacAddressLimit'
   subscriberMegMip:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/MegLevel'
+    $ref: './carrierEthernetCommon.yaml#/definitions/MegLevel'
 required:
   - identifier
   - role
-  - evcEndPointMap
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetServiceEndPoint'
 definitions:
-  ClassOfServiceEgressBandwidthProfile:
+  EvcEndPointMap:
     type: object
     properties:
-      classOfServiceName:
-        type: string
-        description: Class of Service Name.
-      egressBwpFlow:
-        $ref: '#/definitions/EgressBwpFlow'
-    description: List of pairs of the form <x,y> where x is an Class of Service Name contained in the EVC List of Class of Service Names and y is <CIR, CIRmax, ER>.   Reference MEF 10.4 Section 10.11 EVC EP Class of Service Name Egress Bandwidth Profile Service Attribute.
-  EgressBwpFlow:
-    type: object
-    properties:
-      cir:
-        minimum: 0
-        type: integer
-        description: Attribute represents Committed Information Rate. When added to unused committed bandwidth provided from higher-ranked Bandwidth Profile Flows (depending on the value of CF for the higher-ranked Bandwidth Profile Flows), limits the average rate in bits per second at which Service Frames for this Bandwidth Profile Flow can be declared Green.
-      cirMax:
-        minimum: 0
-        type: integer
-        description: Attribute represents Maximum Committed Information Rate. Limits the average rate in bits per second at which Service Frames for this Bandwidth Profile Flow can be declared Green (regardless of unused committed bandwidth* from higher-ranked Bandwidth Profile Flows).
-      rank:
-        minimum: 0
-        type: integer
-        description: This attribute denotes the rank of the bandwidth profile flow in the envelope.
-      envelope:
-        description: Identifies the Envelope that the Bandwidth Profile Flow belongs to, and the rank within the Envelope.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/Envelope'
-    description: Bandwidth Profile for egress interfaces that support the tuple set of cir, cirMax, rank and envelope.
+      vlanType:
+          description:  >-
+              An indication of the type of EVC End Point Map. If the value
+              is UT/PT then no additional information is required. If the value
+              is LIST then a list of C-VLAN ID values must be specified.
+          type: string
+          enum:
+              - "LIST"
+              - "UT/PT"
+              - "ALL"
+      vlanId:
+          description:  >-
+              A list of VLAN IDs if the value of vlanType is "LIST" *** Validation
+              Notes: This element must be specified if and only if EndPointMapEvc.vlanType
+              = "LIST"
+          type: array 
+          minItems: 1
+          maxItems: 4094
+          uniqueItems: TRUE
+          items:
+              type: integer
+              minimum: 1
+              maximum: 4094
+    description: >-
+            MEF 10.4 sec. 10.4 - This is specifications for which Service
+            Frames are mapped to the EVC End Point. The allowed values in MEF
+            10.4 are ALL, LIST, and UT/PT. Since Private services must be ALL,
+            the map isn't needed for those services, and therefore the type
+            does not include ALL. If the type is LIST there must be a list
+            of VLAN IDs specified.
   EvcEpEgressMap:
     type: object
+    description:  >-
+        This map is a table with one entries for each CosName, that includes the CoSName, 
+        a PCP value for green frames, a PCP value for yellow frames, a DEI value for green 
+        frames and a DEI value for yellow frames. Any of the values can be DISCARD. This 
+        table is used at the UNI for EVCs.
+    properties:
+      evcEgressMapEntries:
+        description:  >-
+            This is a table of EVC Egress Map entries. An empty list indicates a value of 
+            None. Per R140 in MEF 10.4, the value of the EVC EP Egress Map Service Attribute 
+            MUST NOT be None unless one of the conditions noted in the requirement is met.
+        type: array 
+        minItems: 0
+        uniqueItems: TRUE
+        items:
+            $ref: "#/definitions/EvcEgressMapEntry"
+  EvcEgressMapEntry:
+    type: object
+    description:  >-
+        A row in the EVC Egress Map. Contains a CoSName, PCPGreen,
+        PCPYellow, DEIGreen, DEIYellow
     properties:
       cosName:
-        type: string
-        description: The CoS Name assigned to the Service Frame at the ingress UNI.
-      color:
-        description: The Color assigned to the Service Frame at the ingress UNI.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/FrameColor'
-      pcp:
-        description: The PCP value to set in the C-tag of the egress Service Frame.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/PcpOrDiscard'
-      dei:
-        description: The DEI value to set in the C-tag of the egress Service Frame.
-        allOf:
-        - $ref: 'carrierEthernetCommon.yaml#/definitions/DeiOrDiscard'
-    description: Represents an entry in the Egress Map that maps the Cos Name and Color assigned to an ingress Service Frame to the PCP and DEI values to set in the C-Tag of an egress Service Frame.  It is as-sociated with EVC End Point. Reference MEF 10.4 Section 10.7 EVC End Point Egress Map Service Attribute.
-  VlanIdListOrUntag:
-    type: object
-    properties:
-      type:
-        $ref: '#/definitions/VlanIdMappingTypeOrUntag'
-      vlanIdList:
-        minItems: 0
-        type: array
-        items:
-          $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
-    description: VLAN ID types, ALL for all VLAN IDs, LIST for a list of VLAN IDs, EXCEPT for all VLAN IDs except the listed, UNTAGGED to indicate that untagged and priority-tagged frames are mapped to this end point. Reference MEF 10.4 Section 10.4 EVC EP Map Service Attribute.
-  VlanIdMappingTypeOrUntag:
-    type: string
-    description: 'Enumeration for VLAN ID types, ALL for all VLAN IDs, LIST for a list of VLAN IDs, EX-CEPT for all VLAN IDs except the listed, UNTAGGED to indicate untagged and priority-tagged frames are mapped to this end point: ALL- All VLAN IDs, EXCEPT- All VLAN IDs except the listed. LIST- List of VLAN IDs, UNTAGGED- Untagged and priority-tagged frames.'
-    enum:
-    - ALL
-    - EXCEPT
-    - LIST
-    - UNTAGGED
+          type: string
+      pcpGreen:
+          description: A PCP value (0-7) or DISCARD to use for Green Frames
+          $ref: "./carrierEthernetCommon.yaml#/definitions/PcpOrDiscard"
+      pcpYellow:
+          description: A PCP value (0-7) or DISCARD to use for Yellow frames
+          $ref: "./carrierEthernetCommon.yaml#/definitions/PcpOrDiscard"
+      deiGreen:
+          description:  >-
+              A DEI value to use for Green frames *** Validation Notes: This
+              is optional ONLY if pcpGreen is set to DISCARD
+          $ref: "./carrierEthernetCommon.yaml#/definitions/DeiOrDiscard"
+      deiYellow:
+          description:  >-
+              A DEI value to use for Yellow frames *** Validation Notes:
+              This is optional ONLY if pcpYellow is set to DISCARD
+          $ref: "./carrierEthernetCommon.yaml#/definitions/DeiOrDiscard"

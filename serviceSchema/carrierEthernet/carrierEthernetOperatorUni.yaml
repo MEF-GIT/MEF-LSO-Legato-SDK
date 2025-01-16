@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-operator-uni:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet Operator UNI Specification
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet Operator UNI Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetOperatorUni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,46 +51,117 @@ title:
     # products or services.
     # ---------------------
     #
-description:
-  This class represents the Operator UNI Service Attributes that are agreed on by the SP/SO and the Operator for each UNI.
+description: >-
+  This class represents the Operator UNI Service Attributes that are agreed on by the 
+  SP/SO and the Operator for each UNI.
 properties:
   identifier:
+    minLength: 1
     maxLength: 45
+    pattern: "[\x20-\x7F]+"
     type: string
-    description: An identifier for the UNI intended for management purposes. Reference MEF 26.2 Section 14.1 Operator UNI Identifier Service Attribute.
-  synchronousMode:
-    minItems: 1
-    type: array
-    items:
-      $ref: '#/definitions/SyncModePerLink'
+    description: >-
+      An identifier for the UNI intended for management purposes. Reference MEF 26.2 Section 
+      14.1 Operator UNI Identifier Service Attribute.
   physicalLayer:
     minItems: 1
     type: array
-    description: The physical layer of each of the links supporting the Operator UNI. Reference MEF 26.2 Section 14.2 Operator UNI Physical Layer Service Attribute.
+    description: >-
+      The physical layer of each of the links supporting the Operator UNI. Reference MEF 26.2 
+      Section 14.2 Operator UNI Physical Layer Service Attribute.
     items:
-      $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+      $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetPhysicalLink'
+  synchronousMode:
+    description: >-
+      A list with one item for each of the physical links implementing the UNI. Each item in
+      the list takes on one of two values: Enabled or Disabled. When the value of an item is 
+      Enabled the bits transmitted from the Operator CEN to the Customer Edge on the physical
+      link corresponding to the item can be used by the Customer Edge as a bit clock reference.
+      Reference MEF 26.2 Section 14.3 Operator UNI Synchronous Mode Service Attribute.
+    minItems: 1
+    type: array
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
   numberOfLinks:
     minimum: 1
     type: integer
-    description: The number of physical links at the UNI. Reference MEF 26.2 Section 14.4 Operator UNI Number of Links Service Attribute.
+    description: >-
+      The number of physical links at the UNI. Reference MEF 26.2 Section 14.4 Operator UNI 
+      Number of Links Service Attribute.
+  linkAggregation:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/LinkAggregation'
+  aggregationLinkMap:
+    description: >-
+      This is a Port Conversation ID to Aggregation Link Map as defined in
+      IEEE Std 802.1AX 2014. Reference MEF 26.2 Section 14.6 Operator UNI
+      Port Conversation ID to Aggregation Link Map Service Attribute.
+    minItems: 0
+    type: array
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/ConversationIdToAggregationLinkMap'
+  serviceFrameFormat:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EthernetFrameFormat'
+  maximumFrameSize:
+    type: integer
+    minimum: 1522
+    description: >-
+      Specifies the maximum size of EI Frames that can be transmitted across EI. 
+      Reference MEF 10.4 Section 9.8 Subscriber UNI Maximum Service Frame Size 
+      Service Attribute. Reference MEF 26.2 Section 14.8 Operator UNI Maximum 
+      Service Frame Size Service Attribute. Reference MEF 26.2 Section 10.3 ENNI 
+      Maximum Frame Size Multilateral Attribute.
   defaultCeVlanId:
     $ref: 'carrierEthernetCommon.yaml#/definitions/VlanId'
+  maximumNumberOfEndPoints:
+    minimum: 1
+    type: integer
+    description: >-
+      The maximum number of OVC End Points that the Operator CEN can support at 
+      the UNI. Reference MEF 26.2 Section 14.10 Operator UNI Maximum Number of 
+      OVC End Points Service Attribute.
+  maxNumOfCtagVlanIdsPerEndPoint:
+    maximum: 4094
+    minimum: 1
+    type: integer
+    description: >-
+      An integer greater than or equal to 1 that limits the number of C-Tag VLAN 
+      IDs that can map to each EVC End Point. Reference MEF 10.4 Section 9.10 
+      Subscriber UNI Maximum Number of C-Tag VLAN IDs per EVC EP Service Attribute.
+      The maximum number of CE-VLAN ID values that can be mapped to an OVC End Point 
+      by the Operator CEN at the UNI. Reference MEF 26.2 Section 14.11 Operator 
+      UNI Maximum Number of CE-VLAN IDs per OVC End Point Service Attribute.
   ingressBandwidthProfile:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+    $ref: 'carrierEthernetCommon.yaml#/definitions/IngressBwpFlow'
   egressBandwidthProfile:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/BwpFlow'
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EgressBwpFlow'
+  linkOam:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  meg:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  lagLinkMeg:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
   elmi:
-    type: string
-    enum:
-    - ENABLED
-    - DISABLED
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
-definitions: 
-  SyncModePerLink:
-    type: object
-    properties:
-      syncModeEnabled:
-        type: boolean
-        description: This attribute denotes whether the Synchronous Mode is enabled on the link with the Link ID.
-    description: A link may consist of one or more physical ports.  This data type includes the link ID and sync mode of the physical port associated to the link id. Reference MEF 26.4 Section 14.2 Operator UNI Physical Layer Service Attribute.
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  tokenShare:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+  envelopes:
+    minItems: 0
+    type: array
+    description: >-
+      The Envelopes and Envelope Coupling Flag values to which Bandwidth Profile 
+      Flows can be mapped. Reference MEF 26.2 Section 14.19 Operator UNI Envelopes 
+      Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/Envelope'
+  l2cpAddressSet:
+    $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
+  l2cpPeering:
+    minItems: 0
+    type: array
+    description: >-
+      Specifies the Layer 2 Control Protocols that are peered at the EI, as described in 
+      MEF 45.1. Reference MEF 10.4 Section 9.17 Subscriber UNI L2CP Peering Service Attribute, 
+      MEF 26.2 Section 10.1 ENNI L2CP Peering Multilateral Attribute.  L2CP Peering applied to 
+      UNI and MEF 26.2 Section 14.21 Operator UNI L2CP Peering Service Attribute.
+    items:
+      $ref: 'carrierEthernetCommon.yaml#/definitions/L2cpPeering'

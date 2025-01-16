@@ -1,0 +1,45 @@
+@startuml resumeTestJobModel
+
+class ResumeTestJob {
+
+    creationDate: date-time
+    href: string
+    id*: string
+    resumptionDeniedReason: string
+    state*: TestJobProcessStateType
+}
+ResumeTestJob_Common <|-- ResumeTestJob
+
+
+
+class ResumeTestJob_Common {
+
+    resumptionReason: string
+}
+
+ResumeTestJob_Common *-->"1" TestJobRef : testJob
+
+
+class ResumeTestJob_Create {
+
+}
+ResumeTestJob_Common <|-- ResumeTestJob_Create
+
+class ResumeTestJob_Find {
+    creationDate: date-time
+    id*: string
+    state*: TestJobProcessStateType
+}
+ResumeTestJob_Find *-->"1" TestJobRef : testJob
+
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    completed
+    declined
+    rejected
+}
+
+@enduml

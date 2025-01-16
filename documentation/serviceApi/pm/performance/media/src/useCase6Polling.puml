@@ -13,7 +13,7 @@ alt succesful inquiry
   
   ...
 
-  loop periodically until PerformanceJob in active state
+  loop periodically until PerformanceJob in Scheduled/In-Progress/\nRejected/ResourceUnavailable state
       B -> S :   GET {{baseUrl}}/performanceJob/{{id}}
       return 200 PerformanceJob in current state
   end

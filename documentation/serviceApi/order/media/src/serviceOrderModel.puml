@@ -1,29 +1,67 @@
 @startuml
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
-class ServiceOrder_Common {
+ServiceOrderItem_Common -u[hidden]-> ServiceOrder
+class Duration {
 
-    coordinatedAction: OrderCoordinatedAction
-    description: string
-    externalId: string
-    requestedCompletionDate*: date-time
-    requestedStartDate*: date-time
+    amount*: integer
+    units*: TimeUnit
 }
 
 
-class ServiceOrder_Create {
 
+class MefServiceConfiguration {
+
+    @type*: string
 }
-ServiceOrder_Common <|-- ServiceOrder_Create
 
-' ServiceOrder_Common *-->"*" OrderCoordinatedAction : coordinatedAction
-ServiceOrder_Common *-->"*" Note_BusSof : note
-ServiceOrder_Common *-->"*" ServiceOrderRelationship : orderRelationship
-ServiceOrder_Common *-->"*" RelatedContactInformation : relatedContactInformation
 
+
+class Note_BusSof {
+
+    author*: string
+    date*: date-time
+    id*: string
+    source*: BusSofType
+    text*: string
+}
+
+
+
+class OrderCoordinatedAction {
+
+    coordinationDependency*: OrderItemCoordinationDependencyType
+    orderId*: string
+}
+
+OrderCoordinatedAction *-->"1" Duration : coordinatedActionDelay
+
+
+class OrderItemCoordinatedAction {
+
+    coordinationDependency*: OrderItemCoordinationDependencyType
+    itemId*: string
+}
+
+OrderItemCoordinatedAction *-->"1" Duration : coordinatedActionDelay
+
+
+class RelatedContactInformation {
+
+    role*: string
+    number*: string
+    emailAddress*: string
+    organization: string
+    name*: string
+    numberExtension: string
+    postalAddress: FieldedAddressRepresentation
+}
+
+
+class RelatedPlaceRefOrQuery {
+    contact: ContactInformation
+    place*: PlaceRefOrQuery
+    role*: string
+}
 
 class ServiceOrder {
 
@@ -39,17 +77,52 @@ ServiceOrder_Common <|-- ServiceOrder
 
 ServiceOrder *-->"1..*" ServiceOrderItem : serviceOrderItem
 
-ServiceOrder_Create *-->"1..*" ServiceOrderItem_Create : serviceOrderItem
 
+class ServiceOrderItem {
 
-class Note_BusSof {
-
-    author*: string
-    date*: date-time
-    id*: string
-    source*: BusSofType
-    text*: string
+    state*: ServiceOrderStateType
 }
+ServiceOrderItem_Common <|-- ServiceOrderItem
+
+ServiceOrderItem *-->"*" TerminationError : terminationError
+
+
+class ServiceOrderItemRef {
+
+    itemId*: string
+    serviceOrderHref: string
+    serviceOrderId: string
+}
+
+
+
+class ServiceOrderItemRelationship {
+
+    relationshipType*: string
+}
+
+ServiceOrderItemRelationship *-->"1" ServiceOrderItemRef : orderItem
+
+
+class ServiceOrderItem_Common {
+
+    id*: string
+    action*: ServiceActionType
+}
+
+ServiceOrderItem_Common *-->"*" OrderItemCoordinatedAction : coordinatedAction
+ServiceOrderItem_Common *-->"*" Note_BusSof : note
+ServiceOrderItem_Common *-->"*" RelatedContactInformation : relatedContactInformation
+ServiceOrderItem_Common *-->"1" ServiceValue : service
+ServiceOrderItem_Common *-->"*" ServiceOrderItemRelationship : serviceOrderItemRelationship
+
+
+class ServiceOrderItem_Create {
+
+}
+ServiceOrderItem_Common <|-- ServiceOrderItem_Create
+
+
 
 class ServiceOrderRef {
 
@@ -66,68 +139,26 @@ class ServiceOrderRelationship {
 
 ServiceOrderRelationship *-->"1" ServiceOrderRef : serviceOrder
 
+class ServiceOrder_Common {
 
-class ServiceOrderItem_Common {
-
-    id*: string
-    action*: ServiceActionType
-    coordinatedAction: OrderItemCoordinatedAction
+    description: string
+    externalId: string
+    requestedCompletionDate*: date-time
+    requestedStartDate*: date-time
 }
 
-' ServiceOrderItem_Common *-->"*" OrderItemCoordinatedAction : coordinatedAction
-ServiceOrderItem_Common *-->"*" Note_BusSof : note
-ServiceOrderItem_Common *-->"1" ServiceValue : service
-ServiceOrderItem_Common *-->"*" ServiceOrderItemRelationship : serviceOrderItemRelationship
+ServiceOrder_Common *-->"*" OrderCoordinatedAction : coordinatedAction
+ServiceOrder_Common *-->"*" Note_BusSof : note
+ServiceOrder_Common *-->"*" ServiceOrderRelationship : orderRelationship
+ServiceOrder_Common *-->"*" RelatedContactInformation : relatedContactInformation
 
 
-class ServiceOrderItem_Create {
+class ServiceOrder_Create {
 
 }
-ServiceOrderItem_Common <|-- ServiceOrderItem_Create
+ServiceOrder_Common <|-- ServiceOrder_Create
 
-
-
-class ServiceOrderItem {
-
-    state*: ServiceOrderStateType
-}
-ServiceOrderItem *-->"*" TerminationError : terminationError
-ServiceOrderItem_Common <|-- ServiceOrderItem
-
-
-class TerminationError {
-
-    code: Error422Code
-    propertyPath: string
-    value: string
-}
-
-
-class RelatedContactInformation {
-
-    emailAddress*: string
-    name*: string
-    number*: string
-    numberExtension: string
-    organization: string
-    postalAddress: FieldedAddressValue
-    role*: string
-}
-
-class ServiceOrderItemRelationship {
-
-    relationshipType*: string
-}
-
-ServiceOrderItemRelationship *-->"1" ServiceOrderItemRef : orderItem
-
-
-class ServiceOrderItemRef {
-
-    itemId*: string
-    serviceOrderHref: string
-    serviceOrderId: string
-}
+ServiceOrder_Create *-->"1..*" ServiceOrderItem_Create : serviceOrderItem
 
 
 class ServiceRef {
@@ -137,6 +168,13 @@ class ServiceRef {
 }
 
 
+
+class ServiceRelationship {
+
+    relationshipType*: string
+}
+
+ServiceRelationship *-->"1" ServiceRef : service
 
 class ServiceValue {
 
@@ -154,30 +192,16 @@ class ServiceValue {
 ServiceValue *-->"*" Note_BusSof : note
 ServiceValue *-->"*" ServiceRelationship : serviceRelationship
 ServiceValue *-->"*" RelatedContactInformation : relatedContactInformation
-ServiceValue *-->"*" RelatedPlaceRefOrValue : place
+ServiceValue *-->"*" RelatedPlaceRefOrQuery : place
 ServiceValue *--> MefServiceConfiguration : serviceConfiguration
+ServiceValue *-->"*" ServiceOrderItemRef : serviceOrderItem
 
 
-class ServiceRelationship {
+class TerminationError {
 
-    relationshipType*: string
-}
-
-ServiceRelationship *--> "1" ServiceRef : service
-
-
-class RelatedPlaceRefOrValue {
-
-    @type*: string
-    @schemaLocation: uri
-    role*: string
-}
-
-
-
-class MefServiceConfiguration {
-
-    @type*: string
+    code: Error422Code
+    propertyPath: string
+    value: string
 }
 
 

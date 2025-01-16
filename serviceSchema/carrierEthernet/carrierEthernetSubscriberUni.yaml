@@ -1,14 +1,14 @@
-$id: urn:mef:lso:spec:legato:carrier-ethernet-subscriber-uni:v0.0.1:all
+$id: urn:mef:lso:spec:service:carrier-ethernet-subscriber-uni:v0.0.4:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - Carrier Ethernet Subscriber UNI Provisioning Specifications
-    # MEF Forum - Date: 20221114  Edit-level: 
+    MEF LSO Service - Carrier Ethernet Subscriber UNI Specification
+    # MEF Forum - Date: 20241119  Edit-level: 
     # File: carrierEthernet/carrierEthernetSubscriberUni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2022. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -51,49 +51,157 @@ title:
     # products or services.
     # ---------------------
     #
-description:
+description: >-
   The Ethernet User Network Interface demarcation point between the responsibility of the Service Provider and the responsibility of the Subscriber. Reference MEF 10.4 Section 9. Subscriber UNI Service Attributes.
-allOf:
-  - $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetUni'
-  - properties:
-      identifier:
-        maxLength: 45
-        type: string
-        description: String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI for operations purposes. Reference MEF 10.4 Section 9.1 Subscriber UNI ID Service Attribute.
-      instantiation:
-        type: string
-        description: The value is either Physical or Virtual. Reference MEF 10.4 Section 9.2 Subscriber UNI Instantiation Service Attribute.
-        enum:
-        - PHYSICAL
-        - VIRTUAL
-      virtualFrameMap:
-        $ref: '#/definitions/VirtualFrameMap'
-      listOfPhyLinks:
-        minItems: 0
-        type: array
-        items:
-          $ref: '#/definitions/SubscriberUniPhysicalLinks'
-    required:
-      - identifier
-      - instantiation
+properties:
+    identifier:
+      type: string
+      minLength: 1
+      maxLength: 45
+      pattern: "[\x20-\x7F]+"
+      description: >-
+        String that is used to allow the Subscriber and Service Provider to uniquely identify the UNI for operations purposes. 
+        Reference MEF 10.4 Section 9.1 Subscriber UNI ID Service Attribute.
+    instantiation:
+      type: string
+      description: >-
+        The value is either Physical or Virtual. Reference MEF 10.4 Section 9.2 Subscriber UNI Instantiation Service Attribute.
+      enum:
+      - PHYSICAL
+      - VIRTUAL
+    virtualFrameMap:
+      $ref: '#/definitions/VirtualFrameMap'
+    listOfPhyLinks:
+      minItems: 0
+      type: array
+      items:
+        $ref: '#/definitions/SubscriberUniPhysicalLinks'
+    linkAggregation:
+      $ref: './carrierEthernetCommon.yaml#/definitions/LinkAggregation'
+    aggregationLinkMap:
+      minItems: 0
+      type: array
+      items:
+        $ref: './carrierEthernetCommon.yaml#/definitions/ConversationIdToAggregationLinkMap'
+    serviceFrameFormat:
+        $ref: './carrierEthernetCommon.yaml#/definitions/EthernetFrameFormat'
+    maximumFrameSize:
+      type: integer
+      description: >-
+        Specifies the maximum size of EI Frames that can be transmitted across EI. 
+        Reference MEF 10.4 Section 9.8 Subscriber UNI Maximum Service Frame Size 
+        Service Attribute. Reference MEF 26.2 Section 14.8 Operator UNI Maximum 
+        ervice Frame Size Service Attribute. Reference MEF 26.2 Section 10.3 ENNI 
+        Maximum Frame Size Multilateral Attribute.
+    maximumNumberOfEvcEndPoints:
+      minimum: 1
+      type: integer
+      description: >-
+        An integer greater than or equal to 1 that limits the number of EVC End Points 
+        that can be located at the UNI. Reference MEF 10.4 Section 9.9 Subscriber UNI 
+        Maximum Number of EVC EPs Service Attribute. The maximum number of OVC End 
+        Points that the Operator CEN can support at the UNI.  Reference MEF 26.2 Section 
+        14.10 Operator UNI Maximum Number of OVC End Points Service Attribute.
+    maxNumOfCtagVlanIdsPerEvcEndPoint:
+      maximum: 4094
+      minimum: 1
+      type: integer
+      description: >-
+        An integer greater than or equal to 1 that limits the number of C-Tag VLAN 
+        IDs that can map to each EVC End Point. Reference MEF 10.4 Section 9.10 
+        Subscriber UNI Maximum Number of C-Tag VLAN IDs per EVC EP Service Attribute. 
+        The maximum number of CE-VLAN ID values that can be mapped to an OVC End Point 
+        by the Operator CEN at the UNI. Reference MEF 26.2 Section 14.11 Operator 
+        UNI Maximum Number of CE-VLAN IDs per OVC End Point Service Attribute.
+    tokenShare:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+    envelopes:
+      minItems: 0
+      type: array
+      description: >-
+        The Envelopes and Envelope Coupling Flag values to which Bandwidth Profile 
+        Flows can be mapped. Reference MEF 10.4 Section 9.12 Sub-scriber UNI Envelopes 
+        Service Attribute and MEF 26.2 Section 14.19 Operator UNI Envelopes Service Attribute.
+      items:
+        $ref: './carrierEthernetCommon.yaml#/definitions/Envelope'
+    linkOam:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+    lagLinkMeg:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+    meg:
+      $ref: './carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
+    l2cpAddressSet:
+      $ref: './carrierEthernetCommon.yaml#/definitions/L2cpAddressSet'
+    l2cpPeering:
+      minItems: 0
+      type: array
+      description: >- 
+        Specifies the Layer 2 Control Protocols that are peered at the EI, as described 
+        in MEF 45.1. Reference MEF 10.4 Section 9.17 Subscriber UNI L2CP Peering Service 
+        Attribute, MEF 26.2 Section 10.1 ENNI L2CP Peering Multilateral Attribute.  L2CP 
+        Peering applied to UNI and MEF 26.2 Section 14.21 Operator UNI L2CP Peering Service 
+        Attribute.
+      items:
+        $ref: './carrierEthernetCommon.yaml#/definitions/L2cpPeering'
 definitions:
   SubscriberUniPhysicalLinks:
     type: object
     properties:
-      id:
-        type: string
-        description: Identifier of link.
       physicalLink:
         description: Physical layer type.
-        $ref: 'carrierEthernetCommon.yaml#/definitions/PhysicalLayer'
+        $ref: 'carrierEthernetCommon.yaml#/definitions/CarrierEthernetPhysicalLink'
       synchronousEthernet:
         description: Synchronous Ethernet enabled or disabled.
         $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
       precisionTiming:
         description: Precision timing enabled or disabled.
         $ref: 'carrierEthernetCommon.yaml#/definitions/EnabledDisabled'
-    description: The value of the Subscriber UNI List of Physical Links Service Attribute is a list of 4-tuples (which may be empty if Virtual UNI is used) of the form <id,pl,fs,pt>, with one list item for each physical link. The The value of id is an identifier for the physical link. The value of pl specifies a physical layer. fs indicates if synchronous Ethernet is used on the physical link corresponding to the 4-tuple and has the value either Enabled or Disabled. The value of pt indicates if the Precision Time Protocol is used on the physical link corresponding to the 4-tuple and has the value either En-abled or Disabled. Reference MEF 10.4 Section 9.4 Subscriber UNI List of Physical Links Service Attribute.
+      uniConnectorType:
+        description:  >-
+            This indicates the type of connector that is presented to the
+            Subscriber.
+        type: string
+        enum:
+            - "SC"
+            - "LC"
+            - "RJ45"
+            - "OTHER"
+      uniConnectorGender:
+          description:  >-
+              This indicates whether the Subscriber is presented with a SOCKET
+              (common) or a PLUG (less common).
+          type: string
+          enum:
+              - "SOCKET"
+              - "PLUG"
+      autoNegotiation:
+          description:  >-
+              IEEE Std 802.3-2018 Clause 28 and 37 - Indicates whether 802.3
+              autonegotiation is enabled on the UNI link.
+          $ref: "carrierEthernetCommon.yaml#/definitions/EnabledDisabled"
+    description: >-
+      This is a 6-tuple that specifies UNI specific link attributes
+      (in addition to the general physical link attributes). The components
+      of the 6-tuple are: (1) Physical layer, (2) whether Synchronous Ethernet is enabled
+      or disabled, (3) whether PTP is used on the link, (4) UNI connector
+      type, (6) the UNI connector gender, and (6) whether autonegotiation
+      is used on the link.
   VirtualFrameMap:
     type: object
-    properties: {}
-    description: A map for virtual frame mapping.   The absence of this attribute corresponds to a Service Attribute value of Not Applicable. Reference MEF 10.4 Section 9.3 Subscriber UNI Virtual Frame Map Service Attribute.
+    properties: 
+      vfMap:
+        description: >-
+          MEF 10.4 Section 9.2 and Section 9.3 When the value of the Subscriber UNI 
+          Instantiation Service Attribute equals Virtual, there must exist a map
+          that maps the set of Virtual Frames that cross the UNI to a sequence of pairs
+          of the for <s,t> where s is a standard Ethernet frame per Clause 3 of IEEE
+          Std 802.3 - 2015 and t is the arrival time at the UNI for bits in s.
+
+          Since MEF 10.4 does not specify the contents or format of this map, it is 
+          currently defined as an arbitrary length string.
+        type: string
+        minLength: 0
+    description: >-
+      A map for virtual frame mapping. The absence of this attribute corresponds to a 
+      Service Attribute value of Not Applicable. Reference MEF 10.4 Section 9.3 Subscriber 
+      UNI Virtual Frame Map Service Attribute.

@@ -1,22 +1,24 @@
 openapi: 3.0.3
 info:
-  title: Legato Service Inventory Notification API
+  title: Service Inventory Notification
   description: |
-    **This file forms part of MEF 135** 
+    **This file forms part of MEF 135.1** 
+     
+    **This draft represents MEF work in progress and is subject to change.**
 
     Supported use cases:
     - Send Notifications
 
-    Copyright 2023 MEF Forum and its contributors.
+    Copyright 2025 MEF Forum and its contributors.
 
     This file includes content based on the TM Forum Service Inventory
     Management API (TMF638 v4.0.1) available at
     https://github.com/tmforum-apis/TMF638_ServiceInventory, which is licensed
     by the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
-  version: 5.0.0
+  version: 6.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/serviceInventoryNotification/v5/'
+  - url: 'https://{serverBase}/mefApi/legato/serviceInventoryNotification/v6/'
     variables:
       serverBase:
         description: The base of SOF's URL.
@@ -30,17 +32,19 @@ paths:
       tags:
         - Event listeners
       summary: Service Create Event endpoint
-      description: This endpoint is used to receive notifications on Service Create Events
+      description:
+        This endpoint is used to receive notifications on Service Create Events
       operationId: ServiceCreateEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceCreateEvent'
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -59,12 +63,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
-        '408':
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
         '500':
           description: Internal Server Error
           content:
@@ -76,17 +74,19 @@ paths:
       tags:
         - Event listeners
       summary: Service Delete Event endpoint
-      description: This endpoint is used to receive notifications on Service Delete Events
+      description:
+        This endpoint is used to receive notifications on Service Delete Events
       operationId: serviceDeleteEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceDeleteEvent'
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -105,12 +105,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
-        '408':
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
         '500':
           description: Internal Server Error
           content:
@@ -130,11 +124,12 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceStateChangeEvent'
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -153,12 +148,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
-        '408':
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
         '500':
           description: Internal Server Error
           content:
@@ -178,11 +167,12 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/ServiceEvent'
+              $ref: '#/components/schemas/ServiceAttributeValueChangeEvent'
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -201,12 +191,6 @@ paths:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
-        '408':
-          description: Request Time-out
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
         '500':
           description: Internal Server Error
           content:
@@ -231,8 +215,8 @@ components:
           maxLength: 255
         message:
           description: >-
-            Text that provide mode details and corrective actions related to the
-            error. This can be shown to a client user.
+            Text that provide mode details and corrective actions related to
+            the error. This can be shown to a client user.
           type: string
         referenceError:
           description: url pointing to documentation describing the error
@@ -241,7 +225,8 @@ components:
       required:
         - reason
     Error400:
-      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
       allOf:
         - $ref: '#/components/schemas/Error'
         - type: object
@@ -282,7 +267,8 @@ components:
         - invalidQuery
         - invalidBody
     Error401:
-      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
       allOf:
         - $ref: '#/components/schemas/Error'
         - type: object
@@ -308,7 +294,8 @@ components:
         - missingCredentials
         - invalidCredentials
     Error403:
-      description: 'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
+      description:
+        'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
       allOf:
         - $ref: '#/components/schemas/Error'
         - type: object
@@ -337,24 +324,6 @@ components:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-    Error408:
-      description: 'Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)'
-      allOf:
-        - $ref: '#/components/schemas/Error'
-        - type: object
-          properties:
-            code:
-              description: >-
-                List of supported error codes:
-
-                - timeOut: Request Time-out - indicates that the server did not
-                receive a complete request message within the time that it was
-                prepared to wait.
-              type: string
-              enum:
-                - timeOut
-          required:
-            - code
     Error500:
       description: >-
         Internal Server Error.
@@ -388,10 +357,18 @@ components:
           description: Date-time when the event occurred
           type: string
           format: date-time
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
+        - event
         - eventId
         - eventTime
-    ServiceEvent:
+        - eventType
+    ServiceAttributeValueChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
         - type: object
@@ -399,10 +376,48 @@ components:
             eventType:
               description: |
                 Indicates the type of the event.
-              $ref: '#/components/schemas/ServiceEventType'
+              type: string
+              enum:
+                - serviceAttributeValueChangeEvent
             event:
               description: |
-                A reference to the Service that is source of the notification.
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceCreateEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceCreateEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceDeleteEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceDeleteEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
               $ref: '#/components/schemas/ServiceEventPayload'
           required:
             - event
@@ -419,11 +434,57 @@ components:
           type: string
       required:
         - id
-    ServiceEventType:
-      description: Indicates the type of Service event.
+    ServiceStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          properties:
+            eventType:
+              description: |
+                Indicates the type of the event.
+              type: string
+              enum:
+                - serviceStateChangeEvent
+            event:
+              description: |
+                A reference to the object that is source of the notification.
+              $ref: '#/components/schemas/ServiceStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    ServiceStateChangeEventPayload:
+      description: The identifier of the Service being subject of this event.
+      type: object
+      properties:
+        id:
+          description: ID of the Service
+          type: string
+        href:
+          description: Hyperlink to access the Service
+          type: string
+        state:
+          description: The life cycle state of the service.
+          $ref: '#/components/schemas/ServiceStateType'
+      required:
+        - id
+        - state
+    ServiceStateType:
+      description: |
+        List of possible state for the Service.
+
+        | State              | Description                                                                                                           |
+        | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+        | feasibilityChecked | Initial check whether the necessary resources are available and sufficient for the installation of a given service.   |
+        | designed           | The Service is designed. The resources are identified and/or allocated, but not reserved.                             |
+        | reserved           | All required resources for given service are reserved and ready.                                                      |
+        | inactive           | The service is deactivated and is no longer available.                                                                |
+        | active             | The service is fully available and active                                                                             |
+        | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
       type: string
       enum:
-        - serviceCreateEvent
-        - serviceDeleteEvent
-        - serviceStateChangeEvent
-        - serviceAttributeValueChangeEvent
+        - feasibilityChecked
+        - designed
+        - reserved
+        - active
+        - inactive
+        - terminated

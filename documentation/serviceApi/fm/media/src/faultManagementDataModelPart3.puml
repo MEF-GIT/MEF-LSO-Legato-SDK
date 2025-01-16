@@ -1,0 +1,86 @@
+@startuml faultManagementDataModelPart3
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class CancelFaultManagementJob {
+
+    cancellationDeniedReason: string
+    creationDate*: date-time
+    href: string
+    id*: string
+}
+CancelFaultManagementJob_Common <|-- CancelFaultManagementJob
+
+CancelFaultManagementJob *-->"1" FaultManagementJobProcessStateType : state
+
+class CancelFaultManagementJob_Common {
+
+    cancellationReason: string
+}
+
+CancelFaultManagementJob_Common *-->"1" FaultManagementJobRef : faultManagementJob
+
+class CancelFaultManagementJob_Create {
+
+}
+CancelFaultManagementJob_Common <|-- CancelFaultManagementJob_Create
+
+class CancelFaultManagementJob_Find {
+
+    creationDate*: date-time
+    id*: string
+}
+
+CancelFaultManagementJob_Find *-->"1" FaultManagementJobRef : faultManagementJob
+CancelFaultManagementJob_Find *-->"1" FaultManagementJobProcessStateType : state
+
+class ModifyFaultManagementJob {
+
+    creationDate*: date-time
+    href: string
+    id*: string
+    modificationDeniedReason: string
+}
+ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob
+
+ModifyFaultManagementJob *-->"1" FaultManagementJobProcessStateType : state
+
+class ModifyFaultManagementJob_Common {
+
+    description: string
+    granularity: Interval
+    jobPriority: integer
+    modificationReason: string
+    outputFormat: OutputFormat
+    reportingPeriod: Interval
+    resultFormat: ResultFormat
+}
+
+ModifyFaultManagementJob_Common *-->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Common *-l-> ScheduleDefinition : scheduleDefinition
+ModifyFaultManagementJob_Common *-u-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+
+class ModifyFaultManagementJob_Create {
+
+}
+ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob_Create
+
+class ModifyFaultManagementJob_Find {
+
+    creationDate*: date-time
+    id*: string
+}
+
+ModifyFaultManagementJob_Find *-->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Find *-->"1" FaultManagementJobProcessStateType : state
+
+enum FaultManagementJobProcessStateType {
+    acknowledged
+    completed
+    inProgress
+    rejected
+}
+
+@enduml

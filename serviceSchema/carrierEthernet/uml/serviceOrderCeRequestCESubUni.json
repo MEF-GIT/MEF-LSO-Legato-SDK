@@ -1,0 +1,60 @@
+@startjson
+{
+  "coordinatedAction" : [ {
+    "coordinatedActionDelay" : {
+      "amount" : 10,
+      "units" : "milliSeconds"
+    },
+    "coordinationDependency" : "startToFinish",
+    "orderId" : "service-order-102"
+  } ],
+  "note" : null,
+  "orderRelationship" : null,
+  "relatedContactInformation" : null,
+  "requestedCompletionDate" : "2024-05-06T22:52:15.962090600+02:00",
+  "requestedStartDate" : "2024-05-06T22:52:15.962090600+02:00",
+  "serviceOrderItem" : [ {
+    "id" : "MEF-SO-CE",
+    "action" : "add",
+    "coordinatedAction" : null,
+    "note" : null,
+    "service" : {
+      "note" : null,
+      "serviceRelationship" : null,
+      "relatedContactInformation" : null,
+      "place" : null,
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-subscriber-uni:v0.0.2:all",
+        "atType" : "urn:mef:lso:spec:service:carrier-ethernet-subscriber-uni:v0.0.2:all",
+        "identifier" : "CarrierEthernetSubscriberUni-1",
+        "instantiation" : "PHYSICAL",
+        "listOfPhyLinks" : [ {
+          "physicalLink" : {
+            "physicalLink" : "1000BASE_CX"
+          },
+          "synchronousEthernet" : "DISABLED",
+          "precisionTiming" : "DISABLED",
+          "uniConnectorGender" : "SOCKET",
+          "autoNegotiation" : "ENABLED"
+        } ],
+        "aggregationLinkMap" : null,
+        "serviceFrameFormat" : {
+          "type" : "ETHERNET"
+        },
+        "maximumNumberOfEvcEndPoints" : 2,
+        "maxNumOfCtagVlanIdsPerEvcEndPoint" : 10,
+        "tokenShare" : "DISABLED",
+        "envelopes" : null,
+        "linkOam" : "DISABLED",
+        "l2cpAddressSet" : {
+          "bridgedAddresses" : "CTA"
+        },
+        "l2cpPeering" : [ {
+          "linkIdList" : [ "01-80-C2-00-00-07", "01-80-C2-00-00-08" ]
+        } ]
+      }
+    },
+    "serviceOrderItemRelationship" : null
+  } ]
+}
+  @endjson

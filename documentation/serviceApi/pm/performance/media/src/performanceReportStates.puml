@@ -15,7 +15,7 @@ state validation_successful <<choice>>
 state processing_successful <<choice>> 
  note right of processing_successful : Processing successful?
 
-state "in-progress" as in_progress
+state "inProgress" as in_progress
 
 ''' diagram'''
 [*] -d-> acknowledged
