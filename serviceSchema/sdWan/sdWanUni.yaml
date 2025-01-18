@@ -72,7 +72,7 @@ properties:
     $ref: './common/ipCommon.yaml#/definitions/Ipv6ConnectionAddressing'
     nullable: true
   routingProtocols:
-    $ref: './common/ipCommon.yaml#/definitions/RoutingProtocols'
+    $ref: './common/ipCommon.yaml#/definitions/RoutingProtocolsSdWan'
   availabilityObjective:
     $ref: './sdWanCommon.yaml#/definitions/Percentage'
   meanTimeToRepairObjective:

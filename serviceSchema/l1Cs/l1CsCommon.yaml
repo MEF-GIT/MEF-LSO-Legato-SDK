@@ -61,11 +61,11 @@ definitions:
       - SDH
       - SONET 
   EnabledDisabled:
-    type: string
-    description: Enumeration used to indicate state as ENABLED or DISABLED.
-    enum:
-    - ENABLED
-    - DISABLED         
+      description: Enumeration to indicate Enabled/Disabled state of an attribute
+      type: string
+      enum:
+          - "ENABLED"
+          - "DISABLED"        
   Eth1000BaseXOpticalInterfaceFunction:
     type: string
     description: >-

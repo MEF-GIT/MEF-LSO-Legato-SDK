@@ -181,7 +181,7 @@ definitions:
       oneWayFdPercentile:
         $ref: '#/definitions/Percentage'
       oneWayFdObjective:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
     description:
       Data type representing One-way Frame Delay Performance Metric. Reference MEF 10.4 Section 8.8.2 
       One-way Frame Delay Performance Metric and MEF 26.2 Section 12.13.2 One-way Frame Delay Performance 
@@ -197,7 +197,7 @@ definitions:
         items:
           $ref: '#/definitions/OrderedPair'
       oneWayMfdObjective:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
     description:
       Data type representing One-way Mean Frame Delay Performance Metric. Reference MEF 10.4 Section 
       8.8.3 One-way Mean Frame Delay Performance Metric and MEF 26.2 Section 12.13.3 One-way Mean 
@@ -215,7 +215,7 @@ definitions:
       oneWayFdrPercentile:
         $ref: '#/definitions/Percentage'
       oneWayFdrObjective:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
     description:
       Data type representing One-way Frame Delay Range Performance Metric.Reference MEF 10.4 Section 
       8.8.4 One-way Frame Delay Range Performance Metric and MEF 26.2 Section 12.13.4 One-way Frame 
@@ -230,11 +230,11 @@ definitions:
         items:
           $ref: '#/definitions/OrderedPair'
       timeDuration:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
       oneWayIfdvPercentile:
         $ref: '#/definitions/Percentage'
       oneWayIfdvObjective:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
     description:
       Data type representing One-way Inter-Frame Delay Performance Metric. Reference MEF 10.4 
       Section 8.8.5 One-way InterFrame Delay Performance Metric and MEF 26.2 Section 12.13.5 
@@ -336,9 +336,9 @@ definitions:
         type: integer
         description: Composite indicator for One-way Frame Delay Variation equal to 0 or 1.
       oneWayFdThreshold:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
       oneWayIfdvThreshold:
-        $ref: '#/definitions/Time'
+        $ref: '#/definitions/TimeUnitS'
       cpmObjective:
         $ref: '#/definitions/Percentage'
     description: 
@@ -396,7 +396,7 @@ definitions:
         items:
           $ref: '#/definitions/OrderedPair'
     description: Data type representing a set of Ordered Pairs.
-  Time:
+  TimeUnitS:
     type: object
     properties:
       number:

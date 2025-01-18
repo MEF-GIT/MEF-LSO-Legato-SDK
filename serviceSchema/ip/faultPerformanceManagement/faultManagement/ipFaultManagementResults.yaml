@@ -180,7 +180,6 @@ components:
     TimeDurationUnits:
       description: |-
         The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.
-          type: string
       enum:
         - NS
         - US

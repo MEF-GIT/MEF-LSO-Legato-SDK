@@ -84,18 +84,17 @@ definitions:
           - $ref: "#/definitions/ForwardThroughput"
           - $ref: "#/definitions/BackwardThroughput"
   TimeDurationUnits:
-    description: >-
-      The unit of measure in the duration. For example, if an interval is 2ms,
-      this element is MS.
-        type: string
+    description: |-
+      The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.
     enum:
-      - "NS"
-      - "US"
-      - "MS"
-      - "SEC"
-      - "MIN"
-      - "HOUR"
-      - "DAY"
-      - "WEEK"
-      - "MONTH"
-      - "YEAR"
+      - NS
+      - US
+      - MS
+      - SEC
+      - MIN
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+      - YEAR
+    type: string

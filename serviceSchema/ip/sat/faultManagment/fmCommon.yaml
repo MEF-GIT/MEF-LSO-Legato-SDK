@@ -81,7 +81,7 @@ definitions:
             type: boolean
         type: object
   Percentage:
-    description: This is a number of percent - a floating point number between 0 and 100.
+    description: This is a number of percent - a number between 0 and 100.
     maximum: 100
     minimum: 0
     type: number
@@ -117,7 +117,6 @@ definitions:
   TimeDurationUnits:
     description: |-
       The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.
-        type: string
     enum:
       - NS
       - US

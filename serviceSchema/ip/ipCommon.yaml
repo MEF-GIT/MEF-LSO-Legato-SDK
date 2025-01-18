@@ -189,7 +189,7 @@ definitions:
           Used to control which routers are accepted, preferred, distributed, or
           advertised.
         items:
-          $ref: "#/definitions/BgpCommunity"
+          $ref: "#/definitions/BgpCommunityWithSemantics"
         type: array
       bgpExtendedCommunityList:
         description:
@@ -197,7 +197,7 @@ definitions:
           enhancement over existing BGP Community Attribute an extended range,
           the addition of type field.
         items:
-          $ref: "#/definitions/BgpExtendedCommunity"
+          $ref: "#/definitions/BgpExtendedCommunityWithSemantics"
         type: array
       holdTime:
         description:
@@ -225,7 +225,7 @@ definitions:
         type: integer
         minimum: 1
     type: object
-  BgpCommunity:
+  BgpCommunityWithSemantics:
     description: >
       A community is a group of destinations which share some common property.
       Each autonomous system administrator may define which communities a
@@ -241,7 +241,7 @@ definitions:
         description: Text describing how the Seller will handle routes tagged with this Community
         type: string
     type: object
-  BgpExtendedCommunity:
+  BgpExtendedCommunityWithSemantics:
     description: >-
       This attribute provides a mechanism for labeling information carried in
       BGP-4. These labels can be used to control the distribution of this
@@ -433,67 +433,58 @@ definitions:
         type: array
     type: object
   Damping:
-    description: Damping parameters as defined in RFC 2439 BGP Route Flap Damping, Section
-      4.2
+    description: "Damping parameters as defined in RFC 2439 BGP Route Flap Damping,\
+      \ Section 4.2"
     properties:
       cutoffThreshold:
-        description: >-
-          This value is expressed as a number of route withdrawals.  It is the
-          value above which a route advertisement will be suppressed.
+        description: This value is expressed as a number of route withdrawals.  It
+          is the value above which a route advertisement will be suppressed.
         type: integer
       decayHalfLifeWhileReachable:
-        description: >-
-          This value is the time duration in seconds during which the
-          accumulated stability figure of merit will be reduced by half if the
-          route if considered reachable (whether suppressed or not).
+        description: This value is the time duration in seconds during which the
+          accumulated stability figure of merit will be reduced by half if the route
+          if considered reachable (whether suppressed or not).
         type: integer
       decayHalfLifeWhileUnReachable:
-        description: >-
-          This value is the time duration in seconds during which the
-          accumulated stability figure of merit will be reduced by half if the
-          route if considered unreachable.  If not specified or set to zero, no
-          decay will occur while a route remains unreachable.
+        description: "This value is the time duration in seconds during which the\
+          \ accumulated stability figure of merit will be reduced by half if the\
+          \ route if considered unreachable.  If not specified or set to zero, no\
+          \ decay will occur while a route remains unreachable."
         type: integer
       decayMemoryLimit:
-        description: >-
-          This is the maximum time (in seconds) that any memory of previous
-          instability will be retained given that the route's state remains
-          unchanged, whether reachable or unreachable.  This parameter is
-          generally used to determine array sizes.
+        description: "This is the maximum time (in seconds) that any memory of previous\
+          \ instability will be retained given that the route's state remains unchanged,\
+          \ whether reachable or unreachable.  This parameter is generally used\
+          \ to determine array sizes."
         type: integer
       maxHoldDownTime:
-        description: >-
-          This value is the maximum time a route can be suppressed no matter how
-          unstable it has been prior to this period of stability. In seconds.
+        description: This value is the maximum time a route can be suppressed no
+          matter how unstable it has been prior to this period of stability. In
+          seconds.
         type: integer
       numberOfReuseLists:
-        description: >-
-          This is the number of reuse lists.  It may be determined from
+        description: This is the number of reuse lists.  It may be determined from
           reuse-list-max or set explicitly.
         type: integer
       reuseListMemoryReuseListMax:
-        description: >-
-          This is the time (in seconds) value corresponding to the last reuse
-          list. This may be the maximum value of T-hold for all parameter sets
-          of may be configured.
+        description: This is the time (in seconds) value corresponding to the last
+          reuse list. This may be the maximum value of T-hold for all parameter
+          sets of may be configured.
         type: integer
       reuseListTimeGranularity:
-        description: >-
-          This is the time (in seconds) interval between evaluations of the
-          reuse lists.  Each reuse lists corresponds to an additional time
+        description: This is the time (in seconds) interval between evaluations
+          of the reuse lists.  Each reuse lists corresponds to an additional time
           increment.
         type: integer
       reuseThreshold:
-        description: >-
-          This value is expressed as a number of route withdrawals.  It is the
-          value below which a suppressed route will now be used again.
+        description: This value is expressed as a number of route withdrawals.  It
+          is the value below which a suppressed route will now be used again.
         type: integer
       timeGranularity:
-        description: >-
-          This is the time granularity in seconds used to perform all decay
-          computations.
+        description: This is the time granularity in seconds used to perform all
+          decay computations.
         type: integer
-    type: object
+    type: object  
   Demux:
     description: Is a value that is specific to each type of UNI Access Link Trunk and indicates which Layer 2 sub-channel should be select for this UNI Acces Link.
     properties:
@@ -781,7 +772,7 @@ definitions:
     maximum: 2147483647
     minimum: 0
     type: integer   
-  ForwardingInformation:
+  ForwardingInformationWithUniAccessLink:
     description: Forwarding information, consisting of either a nexthop IP address in the
       Subscriber Network (if the access medium is multipoint capable, e.g.,
       Ethernet), or a specific UNI Access Link (if the access medium is strictly
@@ -1831,9 +1822,14 @@ definitions:
       administrativeDistance:
         description: Administrative distance, an integer > 0.
         type: integer
+        minimum: 0
       forwardingInformation:
-        $ref: "#/definitions/ForwardingInformation"
+        description:
+          Forwarding information with either Next Hop IP address or UNI Access
+          Link identifier.
+        $ref: "#/definitions/ForwardingInformationWithUniAccessLink"
       staticPrefix:
+        description: IPv4 or IPv6 Prefix that is advertised.
         $ref: "#/definitions/Ipv4OrIpv6Prefix"
     type: object
   StaticRoute:
@@ -1879,37 +1875,29 @@ definitions:
       - "LEAF"
     type: string
   TimeDuration:
-    type: object
-    description: >-
-      This class is used to describe durations expressed as a 2-tuple, (value,
-      units). The units from from nanoseconds to years.
+    description: This class is used to describe durations expressed as a 2-tuple, (value, units). The units from from nanoseconds to years.
     properties:
       timeDurationValue:
-        description: >-
-          The value of the duration. For example, if the duration is 20 ms, this
-          element is 20.
+        description: The value of the duration. For example, if the duration is 20 ms, this element is 20.
         type: integer
       timeDurationUnits:
-        description: >-
-          The unit of measure in the duration. For example, if an interval is
-          2ms, this element is MS.
-        $ref: "#/definitions/TimeDurationUnits"
+        $ref: '#/definitions/TimeDurationUnits'
+    type: object
   TimeDurationUnits:
-    description: >-
-      The unit of measure in the duration. For example, if an interval is 2ms,
-      this element is MS.
-        type: string
+    description: |-
+      The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.
     enum:
-      - "NS"
-      - "US"
-      - "MS"
-      - "SEC"
-      - "MIN"
-      - "HOUR"
-      - "DAY"
-      - "WEEK"
-      - "MONTH"
-      - "YEAR"
+      - NS
+      - US
+      - MS
+      - SEC
+      - MIN
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+      - YEAR
+    type: string
   TwoOctetInteger:
     description: A two octet integer. Value range 0 - 65535
     type: integer

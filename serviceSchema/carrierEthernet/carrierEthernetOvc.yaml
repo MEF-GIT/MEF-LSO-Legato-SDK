@@ -65,7 +65,7 @@ properties:
       An identifier for the OVC intended for management purposes. Reference MEF 26.2 
       Section 12.1 OVC Identifier Service Attribute.
   ovcType:
-    $ref: 'carrierEthernetCommon.yaml#/definitions/ConnectionType'
+    $ref: 'carrierEthernetCommon.yaml#/definitions/ConnectionTypeWithRooted'
   maximumNumberOfUniOvcEndPoints:
     minimum: 0
     type: integer

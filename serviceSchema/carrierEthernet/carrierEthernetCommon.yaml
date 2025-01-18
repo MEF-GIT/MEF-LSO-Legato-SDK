@@ -259,7 +259,7 @@ definitions:
         - COLOR_AWARE
         - COLOR_BLIND
     description: This enumeration indicates whether the Color Identifier of the Service Frame is considered by the Bandwidth Profile Algorithm.
-  ConnectionType:
+  ConnectionTypeWithRooted:
     type: string
     description: This is for EVC or OVC connection types, including point to point, multi-point and rooted multi-point. Reference MEF 26.2 Section 12.2 OVC Type Service Attribute and MEF 10.4 Section 8.3 EVC Type Service Attribute.
     enum:
@@ -615,11 +615,11 @@ definitions:
       The EgressBwpFlow object class represents the Bandwidth Profile Flow which includes the bandwidth 
       profile parameters CIR, CIRmax, and ER.
   EnabledDisabled:
+    description: Enumeration to indicate Enabled/Disabled state of an attribute
     type: string
-    description: Enumeration used to indicate state as ENABLED or DISABLED.
     enum:
-    - ENABLED
-    - DISABLED
+      - "ENABLED"
+      - "DISABLED"
   Envelope:
     type: object
     properties:

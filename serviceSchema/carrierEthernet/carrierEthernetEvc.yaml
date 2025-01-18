@@ -65,7 +65,7 @@ properties:
       Used to identify an EVC within the SP Network. Reference MEF 10.4 Section 
       8.1 EVC ID Service Attribute.
   evcType:
-    $ref: './carrierEthernetCommon.yaml#/definitions/ConnectionType'
+    $ref: './carrierEthernetCommon.yaml#/definitions/ConnectionTypeWithRooted'
   frameDisposition:
     $ref: './carrierEthernetCommon.yaml#/definitions/FrameDisposition'  
   cTagPcpPreservation:

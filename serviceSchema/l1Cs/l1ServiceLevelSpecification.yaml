@@ -65,7 +65,7 @@ definitions:
           MEF 63: [R22] t-start MUST be specified to the nearest second. MEF 64: [R30] 
           t-start MUST be specified to the nearest second.
       duration:
-        $ref: '#/definitions/TimeIntervalT'
+        $ref: '#/definitions/TimeIntervalTs'
         description: >-
           Duration is a duration that is used in conjunction with ts to specify a contiguous 
           sequence of time intervals for determining when performance objectives are met. 
@@ -263,25 +263,24 @@ definitions:
     properties:
       day:
         type: integer
-        description: Denotes the day.
+        description: This denotes the day.
       hour:
         type: integer
-        description: Denotes the hour.
+        description: This denotes the hour.
       minute:
         type: integer
-        description: Denotes the minute.
+        description: This denotes the minute.
       month:
         type: integer
-        description: Denotes the month.
+        description: This denotes the month.
       second:
         type: integer
-        description: Denotes the second.
+        description: This denotes the second.
       year:
         type: integer
-        description: Denotes the year.
-    description: |-
-      This data type is for Time and Date in UTC.
-  TimeIntervalT:
+        description: This denotes the year.
+    description: Data type for Time and Date in UTC.
+  TimeIntervalTs:
     type: object
     properties:
       number:

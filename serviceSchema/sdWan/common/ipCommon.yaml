@@ -15,7 +15,7 @@ definitions:
     enum:
       - ANY
     type: string
-  Bgp:
+  BgpSdWan:
     description: >-
       When an entry in the (SD-WAN) UNI Routing Protocol is for BGP, BGP as specified in
       RFC 4271 is used across the UNI to exchange information. Reference MEF
@@ -66,7 +66,7 @@ definitions:
         minimum: 0
         maximum: 65535
       damping:
-        $ref: "#/definitions/Damping"
+        $ref: "#/definitions/DampingSdwan"
         description: >-
           Route flap damping. When the Damping parameter is NONE, the attribute
           is not set. When not NONE a single set of parameters described in
@@ -135,7 +135,7 @@ definitions:
     oneOf:
       - required: [regularType, regularValue]
       - required: [extendedType, extendedValue]
-  Damping:
+  DampingSdwan:
     description: >-
       Damping parameters as defined in RFC 2439 BGP Route Flap Damping, Section
       4.2
@@ -534,11 +534,11 @@ definitions:
       devices to request IPv6 addresses in a given subnet from the SP or Operator.
       -SLAAC: Stateless Address Autoconfiguration (SLAAC) is used by the Subscriber 
       devices to create unique IPv6 global addresses within an IP Prefix advertised 
-      by the SP or Operator as described in RFC 4862.
+      by the SP or Operator as describer in RFC 4862.
       -STATIC: IPv6 addresses in a given IPv6 subnet are statically assigned to the 
       SP or Operator and to the Subscriber.
-      - LL_ONLY: If the value is LL-only, these are only IPv6 addresses used on 
-      the UNI.
+      - LL_ONLY: o	If the value is LL-only, these are only IPv6 addresses used on 
+      the UNI Access Link.
     enum:
       - "DHCP"
       - "SLAAC"
@@ -600,7 +600,7 @@ definitions:
       required:
         - ipv6Prefix
     type: object
-  Ospf:
+  OspfSdWan:
     description: >-
       When an entry in the UNI Routing Protocols is for OSPF, OSPF as specified
       in RFC 2328 (for IPv4) and/or RFC 5340 (for IPv6) is used across each UNI
@@ -718,7 +718,7 @@ definitions:
       oneOf:
         - required: [protoV4]
         - required: [protoV4KeyWord]
-  RoutingProtocols:
+  RoutingProtocolsSdWan:
     description: >-
       Data type to support routing protocols and associated parameters that are used to exchange 
       IP routes across a UNI.  The value is a list of protocols (possibly empty), where each entry 
@@ -748,11 +748,11 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Bgp"
+        $ref: "#/definitions/BgpSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Bgp"
+        $ref: "#/definitions/BgpSdWan"
     required:
       - ipv4
       - ipv6
@@ -768,15 +768,15 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Bgp"
+        $ref: "#/definitions/BgpSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Bgp"
+        $ref: "#/definitions/BgpSdWan"
       both:
         description: >-
           Configuration for exchanging both IPv4 and IPv6 types of routes.
-        $ref: "#/definitions/Bgp"
+        $ref: "#/definitions/BgpSdWan"
       ipv4AndIpv6:
         description: >-
           Configuration for exchanging IPv4 and IPv6 types of routes.
@@ -793,11 +793,11 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Ospf"
+        $ref: "#/definitions/OspfSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Ospf"
+        $ref: "#/definitions/OspfSdWan"
     required:
       - ipv4
       - ipv6
@@ -813,15 +813,15 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Ospf"
+        $ref: "#/definitions/OspfSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Ospf"
+        $ref: "#/definitions/OspfSdWan"
       both:
         description: >-
           Configuration for exchanging both IPv4 and IPv6 types of routes.
-        $ref: "#/definitions/Ospf"
+        $ref: "#/definitions/OspfSdWan"
       ipv4AndIpv6:
         description: >-
           Configuration for exchanging IPv4 and IPv6 types of routes.
@@ -838,11 +838,11 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Static"
+        $ref: "#/definitions/StaticSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Static"
+        $ref: "#/definitions/StaticSdWan"
     required:
       - ipv4
       - ipv6
@@ -855,15 +855,15 @@ definitions:
       ipv4:
         description: >-
           Configuration for exchanging IPv4 types of routes.
-        $ref: "#/definitions/Static"
+        $ref: "#/definitions/StaticSdWan"
       ipv6:
         description: >-
           Configuration for exchanging IPv6 types of routes.
-        $ref: "#/definitions/Static"
+        $ref: "#/definitions/StaticSdWan"
       both:
         description: >-
           Configuration for exchanging both IPv4 and IPv6 types of routes.
-        $ref: "#/definitions/Static"
+        $ref: "#/definitions/StaticSdWan"
       ipv4AndIpv6:
         description: >-
           Configuration for exchanging IPv4 and IPv6 types of routes.
@@ -896,7 +896,7 @@ definitions:
     oneOf:
       - required: [$ref: "#/definitions/ServiceNameAndTransportProtocols"]
       - required: [$ref: "#/definitions/Any"]
-  Static:
+  StaticSdWan:
     description: >-
       When an entry in the UNI Routing Protocols list is for Static, the IP
       Prefixes used in the Subscriber Network that are reachable via this UNI
@@ -906,11 +906,11 @@ definitions:
       staticIpEntry:
         description: Static IP address entry.
         items:
-          $ref: "#/definitions/StaticIpEntry"
+          $ref: "#/definitions/StaticIpEntrySdWan"
         minItems: 1
         type: array
     type: object
-  StaticIpEntry:
+  StaticIpEntrySdWan:
     description: >-
       StaticIpEntry data type including IPv4/IPv6 prefixes, forwarding
       information and administrative distance.
@@ -929,16 +929,15 @@ definitions:
         $ref: "#/definitions/Ipv4OrIpv6Prefix"
     type: object
   SubscriberAndSpLoopbackAddresses:
+    type: object
     description: >-
       A list of pairs of IP addresses, each pair containing the Subscriber's
       loopback address and the SP's or Operator's loopback address. A single BGP
       peering session is established for each pair of addresses.
     properties:
       subscriberLoopbackAddress:
-        description:
-          Subscriber's loopback Address for BGP establishing a session
+        description: Subscriber's loopback Address for BGP establishing a session
         $ref: "#/definitions/Ipv4OrIpv6Address"
       spLoopbackAddress:
-        description:
-          Service Provider's loopback Address for BGP establishing a session
+        description: Service Provider's loopback Address for BGP establishing a session
         $ref: "#/definitions/Ipv4OrIpv6Address"
