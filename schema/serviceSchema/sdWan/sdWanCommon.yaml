@@ -1,0 +1,1290 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Legato - Common SD-WAN Service Specifications
+definitions:
+  ApplicationFlowSpecification:
+    description:
+      A non-empty ordered list of 3-tuples <AFname,AFCritList,AFGroup>.
+    type: object
+    properties:
+      applicationFlowName:
+        description:
+          Identifier String that is used to refer to the Application Flow
+          Specification (and resulting Application Flows).
+        type: string
+      applicationFlowCriteria:
+        type: array
+        items:
+          $ref: '#/definitions/ApplicationFlowCriteria'
+      applicationFlowGroup:
+        $ref: '#/definitions/ApplicationFlowSpecificationGroup'
+  ApplicationFlowBusinessImportanceLevels:
+    type: object
+    properties:
+      implist:
+        minItems: 1
+        type: array
+        description:
+          A non-empty list of Identifier Strings that are the business
+          importance labels ordered from highest importance to lowest.
+        items:
+          $ref: '#/definitions/ApplicationFlowBusinessImportanceLevelIdentifier'
+      afbilDefault:
+        $ref: '#/definitions/ApplicationFlowBusinessImportanceLevelIdentifier'
+      description:
+        Specifies and ordered list of labels that can be assigned to
+        Application Flows to indicate the relative importance of each
+        Application Flow. Reference MEF 70.2 Section 9.11 SWVC List of
+        Application Flow Business Importance Levels Service Attribute.
+  ApplicationFlowCriteria:
+    type: object
+    properties:
+      sav4:
+        type: array
+        description:
+          IPv4 Source Address. List of IPv4 Prefixes. Reference MEF 70.2
+          Section 9.14 Table-7.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4Prefix
+      dav4:
+        type: array
+        description:
+          IPv4 Destination Address. List of IPv4 Prefixes. Reference MEF 70.2
+          Section 9.14 Table-7.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4Prefix
+      protv4:
+        type: array
+        description:
+          IPv4 Protocol List. List of integers in the range 0 to 255 or a list
+          of keywords for IANA Protocol Numbers Registry. Reference MEF 70.2
+          Section 9.14 Table-7 and Table-8.
+        items:
+          maximum: 255
+          minimum: 0
+          type: integer
+      sav6:
+        type: array
+        description:
+          IPv6 Source Address. List of IPv6 Prefixes. Reference MEF 70.2
+          Section 9.14 Table-7.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv6Prefix
+      dav6:
+        type: array
+        description:
+          IPv6 Destination Address. List of IPv6 Prefixes. Reference MEF 70.2
+          Section 9.14 Table-7.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv6Prefix
+      nextHeadV6:
+        minItems: 0
+        type: array
+        description:
+          IPv6 Next Header List. Reference MEF 70.2 Section 9.14 Table-7.
+        items:
+          maximum: 255
+          minimum: 0
+          type: integer
+      dscp:
+        minItems: 0
+        type: array
+        description:
+          DSCP list of values. Reference MEF 70.2 Section 9.14 Table-7.
+        items:
+          maximum: 63
+          minimum: 0
+          type: integer
+      tcpUdpSourcePortList:
+        minItems: 0
+        type: array
+        description:
+          TCP/UDP Source Port List. Reference MEF 70.2 Section 9.14 Table-7.
+        items:
+          maximum: 65535
+          minimum: 0
+          type: integer
+      tcpUdpDestinationPortList:
+        minItems: 0
+        type: array
+        description:
+          TCP/UDP Destination Port List. Reference MEF 70.2 Section 9.14
+          Table-7.
+        items:
+          maximum: 65535
+          minimum: 0
+          type: integer
+      applicationIdentifier:
+        minItems: 0
+        type: array
+        description:
+          Custom match including heuristic/algorithmic matching. Reference MEF
+          70.2 Section 9.14 SWVC  List of Application Flow Criteria Service
+          Attribute.
+        items:
+          $ref: '#/definitions/ApplicationIdentifier'
+      any:
+        type: boolean
+        description:
+          Match Any IP Packet. Reference MEF 70.2 Section 9.14 Table-7.
+      ethertype:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description:
+          Ethertype. Integer in the range 0x600 to 0xffff. Reference MEF 70.2
+          Section 9.14 Table-8.
+        items:
+          type: integer
+      sdav4:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description:
+          IPv4 Source or Destination Address. Reference MEF 70.2 Section 9.14
+          Table-8.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4Prefix
+      sdav6:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description:
+          IPv6 Source or Destination Address. Reference MEF W70.2 Section 9.14
+          Table-8.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv6Prefix
+      tcpUdpSourceOrDestinationPortList:
+        minItems: 0
+        type: array
+        description:
+          TCP/UDP Source or Destination Port List. Reference MEF W70.2 Section
+          9.14 Table-8.
+        items:
+          maximum: 65535
+          minimum: 0
+          type: integer
+    description:
+      ApplicationFlowCriterion is a datatype used to describe Application Flow
+      MUST or SHOULD include the  Criteria. Reference MEF W70.2 Tables 7 and 8.
+  ApplicationFlowSpecificationGroup:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Application Flow Group name.
+      applicationFlowSpecification:
+        minItems: 0
+        type: array
+        description: Associated Application Flow Specifications.
+        items:
+          $ref: '#/definitions/ApplicationFlowSpecification'
+    description:
+      Provides a mechanism for associating a Policy with multiple Application
+      Flows. Reference MEF W70.2 Section 9.13 SWVC List of Application Flow
+      Specification Groups Service Attribute.
+  ApplicationIdentifier:
+    description:
+      A method for referring to named packet matching definitions (both simple
+      and complex) defined by a Service Provider.
+    type: object
+    properties:
+      applicationIdentifier:
+        type: string
+        description: The Application Identifier.
+      additionalArguments:
+        type: array
+        items:
+          type: string
+          description: Additional arguments required (beyond the Identifier)
+      applicationMatch:
+        type: array
+        items:
+          type: string
+          description:
+            Details of the applications and application traffic matched by the
+            APPID.
+  BandwidthPolicyCriterion:
+    description:
+      Provides a method to express the intended bandwidth requirements for an
+      Application Flow, and the probability of packet delay or discard in the
+      face of varying bandwidth contention for Underlay Connectivity Service
+      resources. Reference MEF W70.2 Section 9.12.2.10 BANDWIDTH Ingress Policy
+      Criterion.
+    type: object
+    properties:
+      unamedRateLimiter:
+        description: An unnamed Rate Limiter 2-tuple <commit,limit>.
+        $ref: '#/definitions/UnnamedRateLimiter'
+      rateLimiter:
+        description:
+          A named Rate Limiter specified in the SWVC List of Rate Limiters.
+        $ref: '#/definitions/RateLimiter'
+    oneOf:
+      - required:
+          - unamedRateLimiter
+      - required:
+          - rateLimiter
+  ApplicationFlowBusinessImportanceLevelIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description: The Identifier string of business importance labels.
+  CipherSuite:
+    description:
+      A Cipher suite includes the protocol name (i.e., TLS), the Key Exchange
+      algorithm (e.g., DHE_RSA), with the encryption algorithm (e.g.,
+      AES_128_GCM) and the Message Authentication algorithm (e.g., SHA256).
+      Reference IANA, TLS Cipher Suites Registry.
+    type: object
+    properties:
+      value:
+        type: string
+        description: Cipher value
+      name:
+        type: string
+        description: Enumeration (in future) representing Cipher Suite Name.
+  Dpf:
+    description:
+      Service Provider maintained list of 5-tuple for IP filtering. Reference
+      MEF 88 Section 9.2 DNS Protocol Filtering.
+    type: object
+    properties:
+      sav4:
+        description:
+          'A list of IPv4 source addresses or a value of ANY meaning any IPv4
+          address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+      dav4:
+        description:
+          'A list of IPv4 destination addresses or a value of ANY meaning any
+          IPv4 address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+      sav6:
+        description:
+          'A list of IPv6 source addresses or a value of ANY meaning any IPv6
+          address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+      dav6:
+        description:
+          'A list of IPv6 destination addresses or a value of ANY meaning any
+          IPv6 address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+      dnsMessageType:
+        description: One of the DNS messages, as specified in RFC 6895.
+        type: string
+  DpfOrNone:
+    type: object
+    description:
+      Data type to allow the selection of Dpf or None. Note that the value None
+      indicates that the DPF Security Function is Disabled for all Application
+      Flows to which this Security Policy is applied. Reference MEF 88 Section
+      6.5 DNS Protocol Filtering Parameter.
+    properties:
+      dpfNone:
+        type: string
+        enum:
+          - NONE
+      dpfSelect:
+        $ref: '#/definitions/DnsProtocolFilter'
+    oneOf:
+      - required:
+          - dpfNone
+      - required:
+          - dpfSelect
+  Dnf:
+    type: object
+    description:
+      Domain Name Filtering is defined as the Security Function that determines
+      whether an Application Flow, or subset of an Application Flow, contains
+      doman names. This data type represents a Domain Name for filtering.
+    properties:
+      domainName:
+        type: string
+        description: Domain name.
+  DnsProtocolFilter:
+    type: object
+    description:
+      Provides for filtering of Application Flows with respect to IP addresses
+      or DNS servers and DNS message types. Reference MEF 88 Section 6.5 DNS
+      Protocol Filtering Parameter.
+    properties:
+      dpfBlockList:
+        type: array
+        items:
+          $ref: '#/definitions/Dpf'
+      dpfAllowList:
+        type: array
+        items:
+          $ref: '#/definitions/Dpf'
+      dpfQuarantineList:
+        type: array
+        items:
+          $ref: '#/definitions/Dpf'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on any of the
+          DPF Lists.  The possible values are Allow or Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      duration:
+        description:
+          Duration of time between updates of the DPF security threat database.
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  DomainNameFilteringSecurityFunctionPolicy:
+    type: object
+    description:
+      Provides for filtering of Application Flows with respect to domain names.
+      Reference MEF 88  Section 6.6 Domain Name Filtering Parameter.
+    properties:
+      dnfBlockList:
+        type: array
+        items:
+          $ref: '#/definitions/Dnf'
+      dnfAllowList:
+        type: array
+        items:
+          $ref: '#/definitions/Dnf'
+      dnfQuarantineList:
+        type: array
+        items:
+          $ref: '#/definitions/Dnf'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on any of the
+          DNF Lists.  The possible values are Allow or Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      duration:
+        description:
+          Duration of time between updates of the DNF security threat database.
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  L2Interface:
+    type: object
+    properties:
+      l2InterfaceType:
+        type: string
+        description:
+          L2InterfaceType is an enumeration that describes the underlying
+          network layer that carries IP Packets across the UNI. The possible
+          values are UT/PT and CVLANx. Reference MEF 70.2 Section 11.2 SD-WAN
+          UNI L2 Interface Service Attribute.
+        enum:
+          - UT_PT
+          - CVLANX
+      vlanId:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: VLAN ID.
+        items:
+          type: integer
+    description:
+      L2Interface is a data type that describes the underlying network layer
+      that carries IP Packets across the UNI. The possible values are UT/PT and
+      CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service
+      Attribute.
+  IpPortProtocolFilteringSecurityFunctionPolicy:
+    type: object
+    description:
+      Service Provider maintained list of 8-tuple for IP filtering. Reference
+      MEF 88 Section 9.1 IP, Port and Protocol Filtering.
+    properties:
+      sav4:
+        description:
+          'A list of IPv4 source addresses or a value of ANY meaning any IPv4
+          address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+      dav4:
+        description:
+          'A list of IPv4 destination addresses or a value of ANY meaning any
+          IPv4 address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+      protov4:
+        description:
+          The IPv4 protocol list, is a list of integers in range 0 to 255 or a
+          list of keywords from IANA Protocol Numbers, or a mix of integers and
+          keywords.
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/IanaProtocolsIntegerOrKeyword
+      sav6:
+        description:
+          'A list of IPv6 source addresses or a value of ANY meaning any IPv6
+          address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+      dav6:
+        description:
+          'A list of IPv6 destination addresses or a value of ANY meaning any
+          IPv6 address. '
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+      nextheadv6:
+        description:
+          The IPv6 protocol list, is a list of integers in the range 0 to 255
+          or a list of  keywords from IANA, Protocol Numbers or a mix of
+          integers and keywords.
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/IanaProtocolsIntegerOrKeyword
+      sport:
+        description:
+          Transport Source Port, is a list of integers in the range 0 to 65535
+          or a list of keywords from IANA, Protocol Numbers, or a mix of
+          integers and keywords. Any could be used to  indicate that any source
+          port number is on the list.
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/ServiceNameAndTransportProtocolsOrAny
+      dport:
+        description:
+          Transport Destination Port, is a list of integers in the range 0 to
+          65535 or a list of keywords from IANA, Protocol Numbers, or a mix of
+          integers and keywords. Any could be used to  indicate that any source
+          port number is on the list.
+        type: array
+        items:
+          $ref: ./common/ipCommon.yaml#/definitions/ServiceNameAndTransportProtocolsOrAny
+  IpPortProtocolFilter:
+    type: object
+    description:
+      Provides for filtering of Application Flows with respect to IP addresses,
+      port numbers and IP protocols. Reference MEF 88 Section 6.4 IP, Port and
+      Protocol Filtering Parameter.
+    properties:
+      ippfBlockList:
+        type: array
+        items:
+          $ref: '#/definitions/Ippf'
+      ippfAllowList:
+        type: array
+        items:
+          $ref: '#/definitions/Ippf'
+      ippfQuarantineList:
+        type: null
+        items:
+          $ref: '#/definitions/Ippf'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on any of the
+          IPPF Lists.  The possible values are Allow or Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      duration:
+        description:
+          Duration of time between updates of the IPPF security threat
+          database.
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  MalwareDetectionRemovalSecurityFunctionPolicy:
+    type: object
+    description:
+      Provides for the identification of Malware in an Application Flow and
+      Removal of the Malware or blocking of the subset of the Application Flow
+      containing the Malware. Reference MEF 88 Section 6.8 Malware Detection
+      and Removal Parameter.
+    properties:
+      mdR_BlockList:
+        type: array
+        items:
+          $ref: '#/definitions/Md_R'
+      mdR_AllowList:
+        type: array
+        items:
+          $ref: '#/definitions/Md_R'
+      mdR_QuarantineList:
+        type: array
+        items:
+          $ref: '#/definitions/Md_R'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on any of the
+          MD+R Lists.  The possible values are Allow or Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      duration:
+        description:
+          Duration of time between updates of the MD+R security threat
+          database.
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+      detection:
+        description:
+          Detection type (e.g., signature scan or behavioral analysis).
+        type: string
+      removalBehavior:
+        description: Malware removal behavior.
+        type: string
+        enum:
+          - BLOCK_OBJECT_BLOCK_SUBSET_AF
+          - BLOCK_OBJECT_ALLOW_SUBSET_AF
+          - QUARANTINE_OBJECT_BLOCK_SUBSET_AF
+          - QUARANTINE_OBJECT_ALLOW_SUBSET_AF
+          - REMOVAL_MALWARE_ALLOW_SUBSET_AF
+  Mbf:
+    description:
+      Maintained by the Service Provider for each Application Flow, which each
+      match criteria entry on a list using a 2-tuple of the form <P, CS>, where
+      P is a specific TLS protocol version and CS is the list of cipher suites
+      for that TLS protocol version. Any can be used to indicate that any
+      cipher suite for a given TLS protocol version is on the list.
+    type: object
+    properties:
+      tlsProtocolVersion:
+        type: string
+      cipherList:
+        $ref: '#/definitions/CipherSuite'
+  Md_R:
+    type: object
+    description: Under development.
+    properties:
+      attribute1:
+        description: Under development.
+        type: string
+  MiddleboxSecurityFunctionPolicy:
+    type: object
+    description:
+      Is an Atomic Policy that defines the rules that determine whether a
+      subset of the Service Flow is decrypted/re-encrypted, Blocked, or passed
+      through unchanged by the Middlebox Security Function. Reference MEF 138
+      Section 9.3 Middlebox Security Function Policy.
+    properties:
+      supportedList:
+        type: array
+        items:
+          $ref: '#/definitions/Mbf'
+      unsupportedList:
+        type: array
+        items:
+          $ref: '#/definitions/Mbf'
+      blockList:
+        type: array
+        items:
+          $ref: '#/definitions/Mbf'
+      allowList:
+        type: array
+        items:
+          $ref: '#/definitions/Mbf'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on either the
+          MBF Block List or MBF Allow List.   The possible values are Allow or
+          Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      certificateAuthorityList:
+        type: array
+        items:
+          certificateAuthority:
+            type: string
+      caBehaviorIfInvalid:
+        type: string
+        enum:
+          - ALLOW
+          - BLOCK
+  NetworkAddressTranslation:
+    type: object
+    description:
+      When Ingress IP Packets are destined to the Internet via Internet
+      Breakout, the Subscriber might require the SD-WAN Service Provider to
+      perform Network Address Translation (NAT), translating the Subscriber's
+      IP addresses into public IP addresses and vice versa.
+    properties:
+      ipversion:
+        type: string
+        description:
+          An enumeration that indicates the type(s) of Subscriber addresses
+          that are translated.
+        readOnly: true
+        enum:
+          - IPV4
+          - IPV6
+          - BOTH
+      publicPrefix:
+        minItems: 1
+        type: array
+        description:
+          Public-assigned IPv4 Prefix representing the public address or
+          addresses that the Subscriber's IP addresses are translated to (and
+          from).
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4Prefix
+      exceptions:
+        minItems: 0
+        type: array
+        description:
+          A list (possibly empty) of IP prefixes that are not subject to
+          translation.
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4Prefix
+  OneWayMeanPacketDelayPrimary:
+    type: object
+    description: Specifies the primary One Way Mean Packet Delay parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+      ceiling:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+      remediation:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  OneWayMeanPacketDelayVariationPrimary:
+    type: object
+    description:
+      Specifies the primary One Way Mean Packet Delay Variation parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+      ceiling:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+      remediation:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  OneWayMeanPacketLossRatioPrimary:
+    type: object
+    description:
+      Specifies the primary One Way Mean Packet Delay Variation parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/Percentage
+      ceiling:
+        $ref: ../../common/common.yaml#/definitions/Percentage
+      remediation:
+        $ref: ../../common/common.yaml#/definitions/Percentage
+  OneWayMeanPacketDelaySecondary:
+    type: object
+    description: Specifies the secondary One Way Mean Packet Delay parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  OneWayMeanPacketDelayVariationSecondary:
+    type: object
+    description:
+      Specifies the secondary One Way Mean Packet Delay Variation parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  OneWayMeanPacketLossRatioSecondary:
+    type: object
+    description:
+      Specifies the secondary One Way Mean Packet Delay Variation parameters.
+    properties:
+      threshold:
+        $ref: ../../common/common.yaml#/definitions/Percentage
+  PerformanceMetricsPrimary:
+    type: object
+    description:
+      Describes the most important Performance Metric for this Application Flow
+      for Primary.
+    properties:
+      oneWayMeanPacketDelay:
+        $ref: '#/definitions/OneWayMeanPacketDelayPrimary'
+      oneWayMeanPacketDelayVariation:
+        $ref: '#/definitions/OneWayMeanPacketDelayVariationPrimary'
+      oneWayMeanPacketLossRatio:
+        $ref: '#/definitions/OneWayMeanPacketLossRatioPrimary'
+  PerformanceMetricsSecondary:
+    type: object
+    description:
+      Describes the most important Performance Metric for this Application Flow
+      for Secondary.
+    properties:
+      oneWayMeanPacketDelay:
+        $ref: '#/definitions/OneWayMeanPacketDelaySecondary'
+      oneWayMeanPacketDelayVariation:
+        $ref: '#/definitions/OneWayMeanPacketDelayVariationSecondary'
+      oneWayMeanPacketLossRatio:
+        $ref: '#/definitions/OneWayMeanPacketLossRatioSecondary'
+  PerformanceTimeIntervals:
+    type: object
+    description:
+      Specifies a set of time intervals used in the determination of the
+      performance of all Paths in the SWVC. The value of the Service Attribute
+      is a 3-tuple <evalInterval,arrivalInterval,irDuration>. Reference MEF
+      70.2 Section 9.7 SWVC Performance Time Intervals Service Attribute.
+    properties:
+      evalInterval:
+        description:
+          The interval in milliseconds over which the Performance Metrics
+          specified in the performance Policy Criterion are evaluated.
+        type: integer
+      arrivalIntervals:
+        description:
+          The difference in arrival times (specified in milliseconds) at the
+          Ingress UNI between two  packets used to compute the Mean One-Way
+          Packet Delay Variation.
+        type: integer
+      irDuration:
+        description:
+          The time interval in milliseconds over which the information rate is
+          determined in the evaluation of the BANDWIDTH Policy Criterion. The
+          information rate is determined over any time interval of  duration.
+          SHOULD NOT exceed 1000 milliseconds.
+        type: integer
+        maximum: 1000
+  PolicyMap:
+    type: object
+    properties:
+      applicationFlow:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: Pointer to Application Flow.
+        items:
+          $ref: '#/definitions/ApplicationFlowSpecification'
+      applicationFlowGroup:
+        maxItems: 1
+        minItems: 0
+        type: array
+        description: Pointer to Application Flow Group.
+        items:
+          $ref: '#/definitions/ApplicationFlowSpecificationGroup'
+      policy:
+        $ref: '#/definitions/Policy'
+    description:
+      Specifies the Policies that are assigned to Application Flows and
+      Application Flow Groups at the SWVC End Point. Reference MEF 70 Section
+      9.3 SWVC End Point Policy Map.
+  Policy:
+    type: object
+    description:
+      Associated with each SWVC is a list of Policies that be assigned to each
+      Application Flow.  A Policy is composed of Policy Criteria. Reference MEF
+      70.2 Section 9.12 SWVC List of Policies  Service Attribute.
+    properties:
+      polName:
+        allOf:
+          type: String
+          description:
+            An identifier String that specifies the name of Policy. polName
+            cannot be 'None' or reserved Policy name 'Block'.
+          not:
+            enum:
+              - NONE
+              - BLOCK
+      polCl:
+        minItems: 1
+        type: array
+        description:
+          A non-empty list of Policy Criteria 2-tuples of form <pcName,
+          pcParam>
+        items:
+          $ref: '#/definitions/PolicyCriteria'
+  PolicyCriteria:
+    type: object
+    description:
+      Data type representing a Policy Criteria 2-tuples, of the form
+      <pcName,pcParam>. Reference MEF W70.2 Section 9.12 SWVC List of Policies
+      Service Attribute, Tables 4 and 5.
+    properties:
+      encryptionType:
+        description: Encryption type.
+        type: string
+        enum:
+          - REQUIRED_ALWAYS
+          - REQUIRED_PUBLIC_ONLY
+          - OPTIONAL
+      internetBreakout:
+        description:
+          Indicates whether the Application Flow should be forwarded to an
+          Internet destination.
+        type: string
+        enum:
+          - ENABLED
+          - DISABLED
+      internetBreakoutDirection:
+        type: string
+        enum:
+          - INGRESS
+          - EGRESS
+      publicPrivate:
+        description:
+          Indicates whether the Application Flow can traverse Internet Access
+          Underlay Connectivity Services or not.
+        type: string
+        enum:
+          - PRIVATE_ONLY
+          - EITHER
+      backup:
+        description:
+          Indicates whether this Application Flow can use a UCS designated as
+          "backup".
+        type: string
+        enum:
+          - ENABLED
+          - DISABLED
+      virtualTopology:
+        descripion:
+          Indicates the Virtual Topology that the Application Flow should be
+          forwarded over.
+        $ref: '#/definitions/VirtualTopology'
+      allowedDestinationZones:
+        type: array
+        description:
+          Specifies which Zones the IP Packets in the Application Flow can be
+          delivered to.
+        items:
+          $ref: '#/definitions/Zone'
+      billingMethod:
+        description:
+          Indicates whether the Application Flow can be sent over an Underlay
+          Connectivity Service that has usage-based or flat-rate billing.
+        type: string
+        enum:
+          - FLAT_RATE_ONLY
+          - USAGE_BASED_ONLY
+          - EITHER
+      businessImportance:
+        description:
+          Indicates the relative business importance of the Application Flow.
+        $ref: '#/definitions/ApplicationFlowBusinessImportanceLevelIdentifier'
+      performance:
+        description:
+          Specifies a list of performance requirements for the Application
+          Flow.
+        $ref: '#/definitions/PerformancePolicyCriterion'
+      bandwidth:
+        description:
+          Specifies a bandwidth commitment and bandwdith limit on the
+          Application Flow.
+        $ref: '#/definitions/BandwidthPolicyCriterion'
+      afSecurityIngress:
+        description:
+          Specifies the Security Functions to apply to the Application Flow at
+          the Ingress UNI.
+        $ref: '#/definitions/SecurityFunctionPolicy'
+      blockSource:
+        description:
+          Indicates specific sources to disallow for egress.  * UNI - Discard
+          all IP Packets in the Application Flow if the Application Flow is not
+          in Zone INTERNET. * INTERNET - Discard all IP Packets in the
+          Application Flow if the Application Flow is in Zone INTERNET. *
+          UNI_INTERNET - Discard all IP Packets in the Application Flow. *
+          EMPTY_LIST - No effect on IP Packets in the Application Flow.
+        enum:
+          - UNI
+          - INTERNET
+          - UNI_INTERNET
+          - EMPTY_LIST
+      afSecurityEgress:
+        description:
+          Specifies the Security Functions to apply to the Application Flow at
+          the Egress UNI.
+        $ref: '#/definitions/SecurityFunctionPolicy'
+      serviceProviderDefinedPolicyCriterion:
+        description: Service Provider defined own Policy Criteria.
+        minItems: 0
+        type: array
+        items:
+          $ref: '#/definitions/ServiceProviderDefinedPolicyCriterion'
+  PerformancePolicyCriterion:
+    type: object
+    description:
+      Allows the Subscriber to indicate the importance Performance Metrics for
+      each Ingress Application Flow.
+    properties:
+      primary:
+        $ref: '#/definitions/PerformanceMetricsPrimary'
+      secondary:
+        $ref: '#/definitions/PerformanceMetricsSecondary'
+  RateLimiter:
+    type: object
+    description: "A 3-tuple, <name,commit,limit> where: \n  * name is an
+      Identifier\
+      \ String that is name of Rate Limiter.\n  * commit is the threshold rate
+      (bits\
+      \ per second) at or below which the SD-WAN Service Provider\n  commits to
+      deliver\
+      \ packets in the Bandwidth Flow with high probability under all traffic
+      conditions.\n\
+      \  * limit is the threshold information rate (bits per second) above
+      which the\
+      \ Service Provider does not\n  deliver IP Packet in the Bandwidth Flow
+      under\
+      \ any conditions. Reference MEF 70.2 Section 9.9 SWVC\n  List of Rate
+      Limiters\
+      \ Service Attribute."
+    properties:
+      name:
+        type: string
+      commit:
+        $ref: ../../common/common.yaml#/definitions/InformationRate
+      limit:
+        $ref: ../../common/common.yaml#/definitions/InformationRate
+  Receipient:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description: The value is a string identifier for a receipient.
+  SecurityEventNotification:
+    type: object
+    description:
+      A Security Event Notification (SEN) is a notification to the Subscriber
+      of a security  event. Reference MEF 88 Section 6.2 Security Event
+      Notification Parameter.
+    properties:
+      receipients:
+        description: Receipients of security event notifications.
+        type: array
+        uniqueItems: true
+        items:
+          $ref: '#/definitions/Receipient'
+      timestamp:
+        $ref: '#/definitions/TimeAndDate'
+  SecurityEventNotificationOrNone:
+    type: object
+    description:
+      Data type to allow the selection of SecurityEventNotification or None.
+      Note that the value None  indicates that the SEN if not need for this
+      Security Policy. Reference MEF 88 Section 6.2  Security Event
+      Notification Parameter.
+    properties:
+      senNone:
+        type: string
+        enum:
+          - NONE
+      senSelect:
+        $ref: '#/definitions/SecurityEventNotification'
+    oneOf:
+      - required:
+          - senNone
+      - required:
+          - senSelect
+  SecurityFunctionPolicy:
+    description:
+      A set of parameters that are agreed between the Subscriber and Service
+      Provider (as part of the SWVC List of Security Function Policies Service
+      Attribute) and that specify which Security Functions are to be applied to
+      an Application Flow. A Security Policy could be referenced in zero or
+      more Ingress (SD-WAN) Policies and zero or more Egress (SD-WAN) Policies.
+      Reference MEF 138, Section 9 Security Function Policy.
+    type: object
+    properties:
+      policyIdentifier:
+        $ref: '#/definitions/SecurityPolicyIdentifier'
+      securityFunctionPolicyIdentifier:
+        $ref: '#/definitions/SecurityFunctionPolicyIdentifier'
+      middleboxSecurityFunctionPolicy:
+        $ref: '#/definitions/MiddleboxSecurityFunctionPolicy'
+      ipPortProtocolFilteringSecurityFunctionPolicy:
+        $ref: '#/definitions/IpPortProtocolFilteringSecurityFunctionPolicy'
+      domainNameFilteringSecurityFunctionPolicy:
+        $ref: '#/definitions/DomainNameFilteringSecurityFunctionPolicy'
+      urlFilteringSecurityFunctionPolicy:
+        $ref: '#/definitions/UrlFilteringSecurityFunctionPolicy'
+      malwareDetectionRemovalSecurityFunctionPolicy:
+        $ref: '#/definitions/MalwareDetectionRemovalSecurityFunctionPolicy'
+      dnsProtocolFilteringSecurityFunctionPolicy:
+        $ref: '#/definitions/DpfOrNone'
+  SecurityFunctionPolicyIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description:
+      Parameter of a Security Function Policy that provides a unique identifier
+      for a given Security Function Policy. Reference MEF 138 Section 9.2
+      Security Function Policy Identifier Parameter.
+  SecurityPolicyIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description:
+      Parameter of a Security Function Policy that provides a unique
+      identifier. Reference MEF 138 Section 9.1 Security Policy Identifier
+      Parameter.
+  ServicePerformanceObjectivesReportingPeriods:
+    type: object
+    properties:
+      startTime:
+        $ref: '#/definitions/TimeAndDate'
+      duration:
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+    description:
+      'Service Performance Objectives are evaluated over a series of
+      consecutive time periods. The value of this Service Attribute is a
+      2-tuple <s,T> where: * s (startTime) is a time that represents the date
+      and time that the evaluation of Service  Performance Objectives start for
+      the SWVC and it components. * T (duration) is a time duration.  Reference
+      MEF 70.2 Section 9.8 SWVC Service Performance Objectives Reporting
+      Periods Service Attribute.'
+  ServiceProviderDefinedPolicyCriterion:
+    type: object
+    description:
+      Service Provider defined Policy Criterion. Reference MEF W70.2 Section
+      9.12 SWVC List of Policies Service Attribute.
+    properties:
+      polName:
+        description: A name for the Policy Criterion
+        type: string
+        maxLength: 53
+        pattern: "[ -\x7F]+"
+      criterionValue:
+        type: string
+      behavior:
+        type: string
+      policyDirection:
+        type: string
+        enum:
+          - INGRESS
+          - EGRESS
+  SwVcIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description:
+      The value of SWVC Identifier Service Attribute is a string that is used
+      by the Subscriber and the Service Provider to uniquely identify an SWVC.
+      Reference MEF 70.2 Section 9.1 SWVC Identifier Service Attribute.
+  SwVcEndPointIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description:
+      The value of the SWVC End Point Identifier Service Attribute is a string
+      that is used to allow the Subscriber and Service Provider to uniquely
+      identify the association of the SWVC with a UNI. Reference MEF 70.2
+      Section 10.1 SWVC End Point Identifier Service Attribute.
+  TimeAndDate:
+    type: object
+    properties:
+      day:
+        type: integer
+        description: This denotes the day.
+      hour:
+        type: integer
+        description: This denotes the hour.
+      minute:
+        type: integer
+        description: This denotes the minute.
+      month:
+        type: integer
+        description: This denotes the month.
+      second:
+        type: integer
+        description: This denotes the second.
+      year:
+        type: integer
+        description: This denotes the year.
+    description: Data type for Time and Date in UTC.
+  UcsBillingMethod:
+    type: string
+    description:
+      UcsBillingMethod is an enumeration that indicates how access to the
+      Underlay Connectivity Ser-vice is billed.  Reference MEF 70.2 Section
+      12.1.3 UCS Billing Method Service Attribute.
+    readOnly: true
+    enum:
+      - FLAT_RATE
+      - USAGE_BASE
+      - OTHER
+  UcsIdentifier:
+    type: string
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+    description:
+      The value is a string that is to allow the Subscriber and Service
+      Provider to uniquely identify an Underlay Connectivity Service. Reference
+      MEF 70.2 Section 9.2 SWVC List of UCSs Service Attribute.
+  UcsType:
+    type: string
+    description:
+      UcsType is an enumeration that represents the type of Underlay
+      Connectivity Service types. Reference  MEF 70.2 Section 12.1.2 UCS Type
+      Service Attribute.
+    readOnly: true
+    enum:
+      - PRIVATE
+      - PUBLIC
+  UnnamedRateLimiter:
+    type: object
+    description: "A 2-tuple, <commit,limit> where: \n  * commit is the
+      threshold rate\
+      \ (bits per second) at or below which the SD-WAN Service
+      Provider\n  commits\
+      \ to deliver packets in the Bandwidth Flow with high probability under
+      all traffic\
+      \ conditions.\n  * limit is the threshold information rate (bits per
+      second)\
+      \ above which the Service Provider does not\n  deliver IP Packet in the
+      Bandwidth\
+      \ Flow under any conditions. Reference MEF 70.2 Section 9.9 SWVC\n  List
+      of\
+      \ Rate Limiters Service Attribute."
+    properties:
+      commit:
+        $ref: ../../common/common.yaml#/definitions/InformationRate
+      limit:
+        $ref: ../../common/common.yaml#/definitions/InformationRate
+  Urlf:
+    type: object
+    description: This data type represents a Domain Name for filtering.
+    properties:
+      domainName:
+        type: string
+        format: uri
+        description: URL.
+  UrlFilteringSecurityFunctionPolicy:
+    type: object
+    description:
+      Provides for filtering of Application Flows with respect to IP addresses,
+      port numbers and IP protocols. Reference MEF 88 Section 6.7 URL Filtering
+      Parameter.
+    properties:
+      urlfBlockList:
+        type: array
+        items:
+          $ref: '#/definitions/Urlf'
+      urlfAllowList:
+        type: array
+        items:
+          $ref: '#/definitions/Urlf'
+      urlfQuarantineList:
+        type: array
+        items:
+          $ref: '#/definitions/Urlf'
+      nm:
+        type: string
+        description:
+          Parameter that determines the behavior when a subset of the
+          Application Flow does not match a match criteria entry on any of the
+          URL Lists.  The possible values are Allow or Block.
+        enum:
+          - ALLOW
+          - BLOCK
+      duration:
+        description:
+          Duration of time between updates of the URLF security threat
+          database.
+        $ref: ../../common/common.yaml#/definitions/TimeDuration
+  VirtualTopology:
+    type: object
+    properties:
+      vtName:
+        allOf:
+          type: String
+          description:
+            An identifier String that specifies the name of the Virtual
+            Topology.
+          not:
+            enum:
+              - Swvc
+      vtType:
+        description:
+          'Provides a description of the type of connectivity provided by the
+          Virtual Topology. '
+        readOnly: true
+        enum:
+          - MPT_TO_MPT
+          - ROOTED_MPT
+      vtEp:
+        description:
+          Provides details of the SWVC End Points that are connected by the
+          Virtual Topology.
+        $ref: '#/definitions/VirtualTopologyEndPoint'
+    description:
+      Attribute representing differing forwarding topologies to different
+      Application Flows. The value is a list of 3-tuples of the for
+      <vtName,vtType,vtEP>. Reference MEF 70.2 Section 9.6 SWVC List of Virtual
+      Topologies Service Attribute.
+  VirtualTopologyEndPoint:
+    type: object
+    description: Virtual Topology End Point.
+    properties:
+      multipointToMultipoint:
+        description:
+          Multipoint-to-Multipoint for a Virtual Topology requires specifying
+          list of at least two SWVC End Point Identifiers.
+        type: array
+        items:
+          $ref: '#/definitions/SwVcEndPointIdentifier'
+        minItems: 2
+      rootedMultipoint:
+        description: Rooted-multipoint
+        $ref: '#/definitions/VtRootedMultipoint'
+    oneOf:
+      - required:
+          - multipointToMultipoint
+      - required:
+          - rootedMultipoint
+  VtRootedMultipoint:
+    type: object
+    description: Rooted-multipoint for a Virtual Topology.
+    properties:
+      rootList:
+        type: array
+        items:
+          $ref: '#/definitions/SwVcEndPointIdentifier'
+        minItems: 1
+      leafList:
+        type: array
+        items:
+          $ref: '#/definitions/SwVcEndPointIdentifier'
+        minItems: 1
+  Zone:
+    type: object
+    properties:
+      zoneName:
+        allOf:
+          type: String
+          description:
+            An identifier String that specifies the name of the Zone. It cannot
+            have the values of  Self, Internet, or All.
+          not:
+            enum:
+              - SELF
+              - INTERNET
+              - ALL
+      zonePrefixes:
+        description:
+          'Keyword default or a non-empty list of IP Prefixes that identifies
+          the hosts in the Zone. '
+        items:
+          $ref: ../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Prefix
+        minItems: 1
+        type: array
+      zoneIngressPolicy:
+        description:
+          A list (possibly empty) of 2-tuples <zoneIngressAFS, zoneIPol>.
+        items:
+          $ref: '#/definitions/ZoneIngressPolicy'
+        minItems: 0
+        type: array
+    description:
+      Zone is defined with a 3-tuple <zoneName, zonePrefixes,
+      zoneIngressPolicies>. Reference MEF 70.2  Section 9.5 SWVC List of Zones
+      Service Attribute.
+  ZoneIngressPolicy:
+    type: object
+    properties:
+      zoneIngressAfs:
+        type: string
+        description: Application Flow Specification Group Name.
+      zonePolicy:
+        type: string
+        description: Name of ingress policy.
+    description: A list (possibly empty) of 2-tuples <zoneIngressAFS, zonePol>.

@@ -1,0 +1,104 @@
+@startjson
+{
+  "buyerJobId" : "Performance-Job-00-11-22",
+  "description" : "IP TWAMP Performance Job",
+  "monitoredObjectId" : {
+    "@type" : "MonitoredObjectId",
+    "atType" : "Entity"
+  },
+  "performanceProfile" : {
+    "@type" : "PerformanceProfileRef",
+    "atType" : null,
+    "performanceProfileId" : "100"
+  },
+  "scheduleDefinition" : {
+    "scheduleDefinitionStartTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "transitionRules" : [ ],
+          "transitions" : [ ],
+          "fixedOffset" : true
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "nano" : 508000000,
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 9,
+      "minute" : 25,
+      "second" : 26
+    },
+    "scheduleDefinitionEndTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "transitionRules" : [ ],
+          "transitions" : [ ],
+          "fixedOffset" : true
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "nano" : 510000000,
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 9,
+      "minute" : 25,
+      "second" : 26
+    },
+    "scheduleDefinitionHourRange" : null,
+    "weeklyScheduledDefinition" : null
+  },
+  "servicePayloadSpecificAttributes" : {
+    "@type" : "urn:mef:lso:spec:service:twamp-configuration:v0.0.1:all",
+    "atType" : null,
+    "controlClient" : {
+      "connectionName" : "TWAMP Control Server Connection",
+      "serverIpv4Address" : [ "192.168.1.110" ],
+      "serverIpv6Address" : null,
+      "serverTcpPort" : 3000,
+      "clientIpv4Address" : [ "192.168.1.111" ],
+      "clientIpv6Address" : null,
+      "controlPacketDscp" : 0,
+      "clientTcpPort" : 3000,
+      "maximumReconnect" : 10,
+      "maximumReconnectContinuous" : true,
+      "reconnectInterval" : 100,
+      "fragmentation" : false,
+      "paddingBytes" : 10
+    },
+    "server" : {
+      "connectionName" : "TWAMP Server Connection",
+      "securityMode" : "ENABLED",
+      "controlPacketDscp" : 64
+    },
+    "sessionReflector" : {
+      "reflectorIpv4Address" : [ "192.168.1.117" ],
+      "reflectorIpv6Address" : null,
+      "senderIpv4Address" : [ "192.168.1.120" ],
+      "senderIpv6Address" : null,
+      "reflectorUdpPort" : 3400,
+      "senderUdpPort" : 3400
+    },
+    "sessionSender" : {
+      "reflectorIpv4Address" : [ "192.168.1.120" ],
+      "reflectorIpv6Address" : null,
+      "reflectorUdpPort" : 3001,
+      "senderIpv4Address" : [ "192.168.1.116" ],
+      "senderIpv6Address" : null,
+      "senderUdpPort" : 862,
+      "interval" : 10,
+      "dscpValue" : 64,
+      "measurementInterval" : 100
+    }
+  }
+}
+  @endjson

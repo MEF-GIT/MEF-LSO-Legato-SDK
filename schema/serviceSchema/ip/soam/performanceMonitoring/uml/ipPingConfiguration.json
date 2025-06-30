@@ -1,0 +1,92 @@
+@startjson
+{
+  "buyerJobId" : "Performance-Job-00-11-22",
+  "description" : "IP PING Performance Job",
+  "monitoredObjectId" : {
+    "@type" : "MonitoredObjectId",
+    "atType" : "Entity"
+  },
+  "performanceProfile" : {
+    "@type" : "PerformanceProfileRef",
+    "atType" : null,
+    "performanceProfileId" : "100"
+  },
+  "scheduleDefinition" : {
+    "scheduleDefinitionStartTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "transitionRules" : [ ],
+          "fixedOffset" : true,
+          "transitions" : [ ]
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 6,
+      "minute" : 46,
+      "second" : 42,
+      "nano" : 631000000
+    },
+    "scheduleDefinitionEndTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "transitionRules" : [ ],
+          "fixedOffset" : true,
+          "transitions" : [ ]
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 6,
+      "minute" : 46,
+      "second" : 42,
+      "nano" : 633000000
+    },
+    "scheduleDefinitionHourRange" : null,
+    "weeklyScheduledDefinition" : null
+  },
+  "servicePayloadSpecificAttributes" : {
+    "@type" : "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+    "atType" : null,
+    "vlan" : 100,
+    "sourceIpAddress" : {
+      "ipv4" : [ "192.168.1.112" ],
+      "ipv6" : null
+    },
+    "destinationIpAddress" : {
+      "ipv4" : [ "192.168.1.115" ],
+      "ipv6" : null
+    },
+    "transmissionInterval" : {
+      "timeDurationValue" : 10,
+      "timeDurationUnits" : "MIN"
+    },
+    "protocol" : "IPV4",
+    "count" : 100,
+    "sweepmaxsize" : 100,
+    "sweepminsize" : 10,
+    "sweepincrement" : 5,
+    "wait" : 10,
+    "preload" : 2,
+    "mask" : "/24",
+    "timeToLive" : 10,
+    "pattern" : "pingPattern",
+    "packetSize" : 500,
+    "timeout" : 10,
+    "typeOfService" : 64
+  }
+}
+
+@endjson

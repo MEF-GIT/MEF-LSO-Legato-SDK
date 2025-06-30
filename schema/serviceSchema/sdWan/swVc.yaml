@@ -1,0 +1,157 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:service:swvc:v0.0.3:all
+title:
+  MEF LSO Service - SD-WAN Virtual Connection Service Specifications
+  # MEF Forum - Date: 20250311  Edit-level:
+  # File: sdWan/swVc.yaml
+  #
+  # ---------------------
+  # Disclaimer
+  #
+  # © MEF Forum 2025. All Rights Reserved.
+  #
+  # The information in this publication is freely available for reproduction
+  # and use by any recipient and is believed to be accurate as of its
+  # publication date. Such information is subject to change without notice
+  # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+  # assume responsibility to update or correct any information in this
+  # publication. No representation or warranty, expressed or implied, is
+  # made by MEF concerning the completeness, accuracy, or applicability of
+  # any information contained herein and no liability of any kind shall be
+  # assumed by MEF as a result of reliance upon such information.
+  #
+  # The information contained herein is intended to be used without
+  # modification by the recipient or user of this document. MEF is not
+  # responsible or liable for any modifications to this document made by any
+  # other party.
+  #
+  # The receipt or any use of this document or its contents
+  # does not in any way create, by implication or otherwise:
+  #
+  # a) any express or implied license or right to or under any patent,
+  # copyright, trademark or trade secret rights held or claimed by any MEF
+  # member which are or may be associated with the ideas, techniques,
+  # concepts or expressions contained herein; nor
+  #
+  # b) any warranty or representation that any MEF members will announce
+  # any product(s) and/or service(s) related thereto, or if such
+  # announcements are made, that such announced product(s) and/or service(s)
+  # embody any or all of the ideas, technologies, or concepts contained
+  # herein; nor
+  #
+  # c) any form of relationship between any MEF member and the recipient
+  # or user of this document.
+  #
+  # Implementation or use of specific MEF standards, specifications, or
+  # recommendations will be voluntary, and no Member shall be obliged to
+  # implement them by virtue of participation in MEF Forum. MEF is a
+  # non-profit international organization to enable the development and
+  # worldwide adoption of agile, assured and orchestrated network services.
+  # MEF does not, expressly or otherwise, endorse or promote any specific
+  # products or services.
+  # ---------------------
+  #
+description: >-
+  An association of SD-WAN Virtual Connection End Points in an SD-WAN Service
+  that provides the logical construct of a L3 Virtual Private Routed Network
+  for a Subscriber. SwVc is a resource that represents a SD-WAN Virtual
+  Connection. Reference MEF 70.2 Section 9  SD-WAN Virtual Connection (SWVC)
+  Service Attribute.
+type: object
+properties:
+  swVcIdentifier:
+    $ref: './sdWanCommon.yaml#/definitions/SwVcIdentifier'
+  reservedPrefixes:
+    minItems: 0
+    type: array
+    description: >-
+      Specifies a list of IP Prefixes that the Service Provider reserves for
+      use for the SWVC  within their own network or for distribution to the
+      Subscriber via DHCP or SLAAC. Reference  MEF 70.2 Section 9.4 SWVC
+      Reserved Prefixes Service Attribute.
+    items:
+      $ref: '../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Prefix'
+  zoneList:
+    minItems: 1
+    type: array
+    description: >-
+      A list of the Zones supported at one or more UNIs in the SD-WAN Service
+      and Zone-wide Policies  associated with the Zones. Reference MEF 70.2
+      Section 9.5 SWVC List of Zones Service Attribute.
+    items:
+      $ref: './sdWanCommon.yaml#/definitions/Zone'
+  virtualTopologiesList:
+    minItems: 1
+    type: array
+    description: >-
+      A list of the Virtual Topologies of the form of a 3-tuple <vtName,
+      vtType, vtEP>.
+    items:
+      $ref: './sdWanCommon.yaml#/definitions/VirtualTopology'
+  performanceTimeIntervals:
+    $ref: './sdWanCommon.yaml#/definitions/PerformanceTimeIntervals'
+  performanceObjectivesReportingPeriods:
+    $ref: './sdWanCommon.yaml#/definitions/ServicePerformanceObjectivesReportingPeriods'
+  rateLimiterList:
+    minItems: 0
+    type: array
+    description:
+    items:
+      $ref: './sdWanCommon.yaml#/definitions/RateLimiter'
+  securityFunctionPolicyList:
+    minItems: 0
+    type: array
+    description: >-
+      A list (which may be empty) of the Security Policies that are available
+      for use with the SWVC. MEF 138 Section 9 Security Function Policy defines
+      the structure and content of each Security  Policy in the SWVC List of
+      Security Policies Service Attribute. Reference MEF 70.2 Section 9.10
+      SWVC List of Policies Service Attribute.
+    items:
+      $ref: 'sdWanCommon.yaml#/definitions/SecurityFunctionPolicy'
+  applicationFlowBusinessImportanceLevelsList:
+    minItems: 0
+    type: array
+    description: >-
+      Specifies an ordered list of labels that can be assigned to Application
+      Flows to indicate  importance of each Application Flow. Reference MEF
+      70.2 Section 9.11 SWVC List of Application Flow Business Importance
+      Levels Service Attribute.
+    items:
+      $ref: 'sdWanCommon.yaml#/definitions/ApplicationFlowBusinessImportanceLevels'
+  policyList:
+    minItems: 1
+    type: array
+    description: >-
+      Associated with each SWVC is a list of named Policies that can be
+      assigned to each Application Flow using the SWVC End Point Policy Map or
+      via Zone-wide Policies specified in the SWVC List of Zones. Reference MEF
+      70.2 Section 9.12 SWVC List of Policies Service Attribute.
+    items:
+      $ref: 'sdWanCommon.yaml#/definitions/Policy'
+  applicationFlowSpecificationGroupList:
+    minItems: 0
+    type: array
+    description: >-
+      A list (possibly empty) of Application Flow Group names. Reference MEF
+      70.2 Section 9.13  SWVC List of Application Flow Groups Service
+      Attribute.
+    items:
+      $ref: 'sdWanCommon.yaml#/definitions/ApplicationFlowSpecificationGroup'
+  applicationFlowSpecificationList:
+    minItems: 1
+    type: array
+    description: >-
+      Specifies the Application Flows that can be recognized by the SD-WAN
+      service and information  about how to identify IP packets in each
+      Application Flow. Reference MEF 70.2 Section 9.14 SWVC  List of
+      Application Flows Service Attribute.
+    items:
+      $ref: 'sdWanCommon.yaml#/definitions/ApplicationFlowSpecification'
+required:
+  - swVcIdentifier
+  - ucsList
+  - zoneList
+  - virtualTopologiesList
+  - policyList
+  - applicationFlowSpecificationList

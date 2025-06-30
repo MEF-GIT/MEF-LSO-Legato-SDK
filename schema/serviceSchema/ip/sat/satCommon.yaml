@@ -1,0 +1,53 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Common Types and Resources
+definitions:
+  Ipv4Address:
+    description: Data type representing IPv4 address.
+    type: string
+    format: ipv4
+  Ipv6Address:
+    description: Data type representing IPv6 address.
+    type: string
+    format: ipv6
+  Ipv4OrIpv6Address:
+    description: Data type representing IPv4 or IPV6 address.
+    type: object
+    properties:
+      ipv4: 
+        type: array
+        items:
+          $ref: '#/definitions/Ipv4Address'
+        minItems: 0
+      ipv6:
+        type: array
+        items:
+          $ref: '#/definitions/Ipv6Address'
+        minItems: 0
+  Ipv4OrIpv6Prefix:
+    description:
+      IPv4 or IPv6 prefix. Includes subnet address and prefix length.
+    type: object
+    properties:
+      ipv4Prefix:
+        description: IPv4 prefix.
+        $ref: '#/definitions/Ipv4Prefix'
+      ipv6Prefix:
+        description: IPv6 prefix.
+        $ref: '#/definitions/Ipv6Prefix'
+    oneOf:
+      - required: [ipv4Prefix]
+      - required: [ipv6Prefix]
+  TimePeriod:
+    description: A period of time, either as a deadline (endDateTime only) a startDateTime only, or both
+    properties:
+      startDateTime:
+        description: Start of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+      endDateTime:
+        description: End of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+    type: object

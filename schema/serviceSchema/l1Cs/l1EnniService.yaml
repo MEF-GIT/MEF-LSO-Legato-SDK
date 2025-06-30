@@ -1,0 +1,152 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:service:l1-enni-service:v0.0.2:all
+title: 
+    MEF LSO Service - L1 ENNI Service Specification
+    # MEF Forum - Date: 20241112  Edit-level: 
+    # File: l1Cs/l1EnniService.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2024. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+description: >-
+  For each instance of an ENNI, there are multiple sets of ENNI Service Attributes. 
+  The value for each ENNI Service Attribute in a set for an Operator network is 
+  specific to the SP/SO that is using the ENNI. Reference MEF 64 Section 8.2 ENNI 
+  Service Attributes.
+properties:
+  identifier:
+    type: string
+    minLength: 1
+    maxLength: 45
+    pattern: "[\x20-\x7F]+"
+    description: >-
+      The Operator ENNI Identifier Service Attribute value is a string used to allow 
+      the SP/SO and Operator to uniquely identify the ENNI. Reference MEF 64 Section 
+      8.2.1 Operator ENNI Identifier Service Attribute.
+  pathOverhead:
+    $ref: '#/definitions/PathOverHead'
+  multiplexingCapabilityList:
+    description: >-
+      Indicates the Operator's ability to mulitiplex a given LO ODUj into a HO ODUk
+      (single-stage), or multiplex a given LO ODUi into a HO ODUj and into a SHO ODUk
+      (two-stage), or more multiplexing stages. Reference MEF 64 Section 8.2.2 Operator
+      Multiplexing Capability List Service Attribute.
+    oneOf:
+      - $ref: '#/definitions/HighOrderOdu4MultiplexingSequences'
+      - $ref: '#/definitions/HighOrderOdu3MultiplexingSequences'
+      - $ref: '#/definitions/HighOrderOdu2And2eMultiplexingSequences'
+      - $ref: '#/definitions/HighOrderOdu1MultiplexingSequences'
+definitions:
+  HighOrderOdu4MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU3-ODU4TO64
+      - ODU0-ODU1-ODU2-ODU4TO80
+      - ODU0-ODU1-ODU4TO80
+      - ODU0-ODU2-ODU3-ODU4TO64
+      - ODU0-ODU2-ODU4TO80
+      - ODU0-ODU3-ODU4TO64
+      - ODU0-ODU4TO80
+      - ODU1-ODU2-ODU3-ODU4TO32
+      - ODU1-ODU2-ODU4TO40
+      - ODU1-ODU3-ODU4TO32
+      - ODU1-ODU4TO40
+      - ODUFLEX-ODU2-ODU3-ODU4TO10G
+      - ODUFLEX-ODU2-ODU4TO10G
+      - ODUFLEX-ODU3-ODU4TO10G
+      - ODUFLEX-ODU4TO100G
+      - ODU2-ODU3-ODU4TO8
+      - ODU2-ODU4TO10
+      - ODU2E-ODU3-ODU4TO6
+      - ODU2E-ODU4TO10
+      - ODU3-ODU4TO2
+  HighOrderOdu3MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2-ODU3TO32
+      - ODU0-ODU1-ODU3TO32
+      - ODU0-ODU2-ODU3TO32
+      - ODU0-ODU3TO32
+      - ODU1-ODU2-ODU3TO16_1.25TS
+      - ODU1-ODU2-ODU3TO16_2.5TS
+      - ODU1-ODU3TO16_1.25TS
+      - ODU1-ODU3TO16_2.5TS
+      - ODUFLEX-ODU2-ODU3TO10G
+      - ODUFLEX-ODU3TO40G
+      - ODU2-ODU3TO4_1.25TS
+      - ODU2-ODU3TO4_2.5TS
+      - ODU2E-ODU3TO3
+  HighOrderOdu2And2eMultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1-ODU2TO8
+      - ODU0-ODU2TO8
+      - ODU1-ODU2TO4_1.25TS
+      - ODU1-ODU2TO4_2.5TS
+      - ODUFLEX-ODU2TO10G
+  HighOrderOdu1MultiplexingSequences:
+    type: string
+    enum:
+      - ODU0-ODU1TO2
+  PathOverHead:
+    type: object
+    description: >-
+      An ODU path is the connectivity between the locations where the path overhead is 
+      terminated. Either None or List. When the value of the Operator Path Overhead 
+      Service Attribute is List, the entries are the overhead values corresponding to 
+      each of the SHO/HO/LO ODU paths carried across an ENNI which is terminated in 
+      an Operator’s network. Reference MEF 64 Section 8.2.3 Operator Path Overhead 
+      Service Attribute.
+    properties:
+      oduTti:        
+        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
+      oduGcc1:        
+        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
+      oduGcc2:        
+        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
+      oduAps:        
+        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"

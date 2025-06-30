@@ -136,7 +136,7 @@ This SDK contains the following items:
 - `README` - This file
 - `serviceApi` - Definitions of the APIs are found in this directory, provided
   as yaml files.
-- `serviceSchema` - Contains JSON schema (draft 7) files for service
+- `schema` - Contains JSON schema (draft 7) files for service
   specifications.
 - `documentation` - documentation including API/Schema developer guides and
   openapi-tools generated API descriptions in markdown format

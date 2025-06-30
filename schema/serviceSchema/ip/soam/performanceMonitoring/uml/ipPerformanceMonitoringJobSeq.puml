@@ -1,0 +1,71 @@
+@startuml ipPerformanceMonitoringJobSeq
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+note over B
+    Create the Envelope part for POST request
+end note
+
+
+B -> B: PerformanceJobCreate pjc = new PerformanceJobCreate();
+loop for each attribute
+    B -> B: pjc.setAttributes();
+end
+
+note over B
+    Create a technology-specific payload
+    (e.g. BFD Configuration)
+end note
+
+B -> B: BfdConfiguration bfdc = new BfdConfiguration();
+loop for each attribute
+    B -> B: bfdc.setAttributes();
+end
+
+note over B
+    Associate the payload (BFD Configuration) 
+    with the envelope
+end note
+
+B -> B: pjc.servicePayloadSpecificAttributes(bfdc);
+
+B -> S : POST {{baseUrl}}/performanceJob (PerformanceJob_Create)
+
+S -> S : basic validation
+S -> S : assign id
+S -> S : state: acknowledged
+
+note over S
+    Create PerformanceJob for Response
+end note
+
+S -> S: PerformanceJob perfjob = new PerformanceJob();
+loop for each attribute
+    S -> S: perfjob.setAttributes()
+end
+
+note over S
+    Create technology-specific payload results
+end note
+
+S -> S: IpPerformanceMonitoringReport ippmr = new IpPerformanceMonitoringReport();
+loop for each attribute
+    S -> S: ippmr.setAttributes()
+end
+
+note over S
+    Associate the payload (IP Performance Monitoring Report) with the PerformanceJob
+end note
+
+S -> S: perfjob.setServicePayloadSpecificAttributes(ippmr);
+
+alt successful inquiry
+    B <-- S : 201 PerformanceJob with {{id}}
+else validation or internal problem
+    B <-- S: 4xx/5xx : error response
+end
+
+@enduml

@@ -1,0 +1,162 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all
+x-mef-target: ServicePayloadSpecificAttributes
+description: IP Performance Monitoring Configuration Schema.
+title: 
+    MEF LSO Legato - IP Performance Monitoring Configuration
+    # MEF Forum - Date: 20230622  Edit-level: 
+    # File: ip/faultAndPerformanceManagement/ipPerformanceMonitoringConfiguration.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © MEF Forum 2023. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by MEF concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by MEF as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. MEF is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any MEF members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any MEF member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific MEF standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in MEF Forum. MEF is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+type: object
+properties:
+  description: >-
+    Data type representing the IP packet performance statistics configuration for receive and transmit.
+  interface:
+    $ref: '#/definitions/Location'
+  vlan:
+    type: integer
+  startTime:
+    format: date-time
+    type: string
+  endTime:
+    format: date-time
+    type: string
+  protocol:
+    description: Protocol type
+    type: string
+    enum:
+      - IPV4
+      - IPV6
+      - ARP
+  packetsIn:
+    type: boolean
+  charsIn:
+    type: boolean
+  packetsOut:
+    type: boolean
+  charsOut:
+    type: boolean
+  utilizationIn:
+    type: boolean
+  utilizationOut:
+    type: boolean
+  peakUtilizationIn:
+    type: boolean
+  peakUtilizationOut:
+    type: boolean
+definitions:
+  IpvcEndPoint:
+    description: A subclass of a SlsReferencePoint.
+    properties:
+      id:
+        description: IPVC End Point unique identifier
+        type: string
+      description:
+        description: IPVC End Point description
+        type: string
+    type: object
+  Location:
+    allOf:
+      - $ref: '#/definitions/SlsReferencePoint'
+      - description: A subclass of a SlsReferencePoint.
+        properties:
+          ipvcEndpoint:
+            description: Pointer to IPVC End Point
+            items:
+              type: string
+            type: array
+          name:
+            description: Location name
+            type: string
+          description:
+            description: Location description
+            type: string
+          cloudService:
+            description: Attribute to indicate if associated with a cloud service.
+            type: boolean
+        type: object
+  Percentage:
+    description: This is a number of percent - a number between 0 and 100.
+    maximum: 100
+    minimum: 0
+    type: number
+  ServiceUptime:
+    description: The Service Uptime Performance Metric is the proportion of time, during a given time period Tk, that the service is working from the perspective of the Subscriber (for a Subscriber IP Service) or the  perspective of the SP/SO (for an Operator IP Service), excluding any pre-agreed exceptions, for  example maintenance intervals. Reference MEF 61.1[1] Section 10.9 Service Uptime Performance Metric.
+    properties:
+      serviceUptimeObjective:
+        $ref: '#/definitions/Percentage'
+    type: object
+  SlsReferencePoint:
+    oneOf:
+      - $ref: '#/definitions/Location'
+      - $ref: '#/definitions/IpvcEndPoint'
+      - description: SlsReferencePoint is an abstract data type that can be subclassed to IpvcEndPoint and Location. Reference MEF 61.1 Section 10.9.1 SLS Reference Points.
+        type: object
+  SlsRpPair:
+    description: Service Level Specification Reference Point Pair. In a multipoint or rooted multipoint IPVC, performance objectives are ideally specified as applying between pairs of IPVC EPs - in other words, they apply to the performance that IP Data Packets experience as they flow from one EI to another. The SlsRpPair is a representation of this association. Reference MEF 61.1 Section 10.9.1
+    properties:
+      fromSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'
+      toSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'
+    type: object
+  TimePeriod:
+    description: A period of time, either as a deadline (endDateTime only) a startDateTime only, or both
+    properties:
+      startDateTime:
+        description: Start of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+      endDateTime:
+        description: End of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+    type: object

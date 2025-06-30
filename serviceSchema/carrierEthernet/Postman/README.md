@@ -1,1 +1,0 @@
-The set of Postman scripts allow testing of MEF 99 with CE.

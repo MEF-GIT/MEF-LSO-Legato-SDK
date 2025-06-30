@@ -1,0 +1,46 @@
+@startjson
+{
+  "coordinatedAction" : null,
+  "description" : null,
+  "externalId" : null,
+  "note" : null,
+  "orderRelationship" : null,
+  "relatedContactInformation" : null,
+  "requestedCompletionDate" : null,
+  "requestedStartDate" : null,
+  "serviceOrderItem" : [ {
+    "id" : "order-item-0001",
+    "action" : "add",
+    "coordinatedAction" : null,
+    "note" : null,
+    "service" : {
+      "href" : null,
+      "id" : null,
+      "description" : null,
+      "externalId" : null,
+      "startDate" : null,
+      "endDate" : null,
+      "state" : null,
+      "note" : null,
+      "serviceType" : null,
+      "name" : null,
+      "serviceRelationship" : null,
+      "relatedContactInformation" : null,
+      "place" : null,
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:legato:sdWanUni:v0.0.1:all",
+        "atType" : "urn:mef:lso:spec:legato:sdWanUni:v0.0.1:all",
+        "uniIdentifier" : "SDWANUNI-0001",
+        "l2Interface" : null,
+        "maxL2FrameSize" : null,
+        "ipv4ConnectionAddressing" : null,
+        "ipv6ConnectionAddressing" : null,
+        "routingProtocols" : null,
+        "availabilityObjective" : null,
+        "meanTimeToRepairObjective" : null
+      }
+    },
+    "serviceOrderItemRelationship" : null
+  } ]
+}
+@endjson

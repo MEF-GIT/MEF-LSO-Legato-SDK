@@ -1,0 +1,130 @@
+$schema: http://json-schema.org/draft-07/schema#
+title: MEF LSO Common Types and Resources
+definitions:
+  BfdDuration:
+    description: This resource defines BFD transmission interval, (value, units).
+    properties:
+      timeDurationValue:
+        description: The value of the duration. For example, if the duration is 20
+          ms, this element is 20.
+    enum:
+    - 3.3MS
+    - 10MS
+    - 20MS
+    - 50MS
+    - 100MS
+    - 1S
+    - 10S
+  IpvcEndPoint:
+    description: A subclass of a SlsReferencePoint.
+    properties:
+      id:
+        description: IPVC End Point unique identifier
+        type: string
+      description:
+        description: IPVC End Point description
+        type: string
+    type: object
+  Ipv4Address:
+    description: Data type representing IPv4 address.
+    type: string
+    format: ipv4
+  Ipv6Address:
+    description: Data type representing IPv6 address.
+    type: string
+    format: ipv6
+  Ipv4OrIpv6Address:
+    description: Data type representing IPv4 or IPV6 address.
+    type: object
+    properties:
+      ipv4:
+        type: array
+        items:
+          $ref: '#/definitions/Ipv4Address'
+        minItems: 0
+      ipv6:
+        type: array
+        items:
+          $ref: '#/definitions/Ipv6Address'
+        minItems: 0
+  Ipv4OrIpv6Prefix:
+    description: IPv4 or IPv6 prefix. Includes subnet address and prefix length.
+    type: object
+    properties:
+      ipv4Prefix:
+        description: IPv4 prefix.
+        $ref: '#/definitions/Ipv4Prefix'
+      ipv6Prefix:
+        description: IPv6 prefix.
+        $ref: '#/definitions/Ipv6Prefix'
+    oneOf:
+    - required:
+      - ipv4Prefix
+    - required:
+      - ipv6Prefix
+  Location:
+    allOf:
+    - $ref: '#/definitions/SlsReferencePoint'
+    - description: A subclass of a SlsReferencePoint.
+      properties:
+        ipvcEndpoint:
+          description: Pointer to IPVC End Point
+          items:
+            type: string
+          type: array
+        name:
+          description: Location name
+          type: string
+        description:
+          description: Location description
+          type: string
+        cloudService:
+          description: Attribute to indicate if associated with a cloud service.
+          type: boolean
+      type: object
+  ServiceUptime:
+    description: The Service Uptime Performance Metric is the proportion of time,
+      during a given time period Tk, that the service is working from the perspective
+      of the Subscriber (for a Subscriber IP Service) or the  perspective of the SP/SO
+      (for an Operator IP Service), excluding any pre-agreed exceptions, for  example
+      maintenance intervals. Reference MEF 61.1[1] Section 10.9 Service Uptime Performance
+      Metric.
+    properties:
+      serviceUptimeObjective:
+        $ref: ../../../../common/common.yaml#/definitions/Percentage
+    type: object
+  SlsReferencePoint:
+    oneOf:
+    - $ref: '#/definitions/Location'
+    - $ref: '#/definitions/IpvcEndPoint'
+    - description: SlsReferencePoint is an abstract data type that can be subclassed
+        to IpvcEndPoint and Location. Reference MEF 61.1 Section 10.9.1 SLS Reference
+        Points.
+      type: object
+  SlsRpPair:
+    description: Service Level Specification Reference Point Pair. In a multipoint
+      or rooted multipoint IPVC, performance objectives are ideally specified as applying
+      between pairs of IPVC EPs - in other words, they apply to the performance that
+      IP Data Packets experience as they flow from one EI to another. The SlsRpPair
+      is a representation of this association. Reference MEF 61.1 Section 10.9.1
+    properties:
+      fromSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'
+      toSlsReferencePoint:
+        $ref: '#/definitions/SlsReferencePoint'
+    type: object
+  TimePeriod:
+    description: A period of time, either as a deadline (endDateTime only) a startDateTime
+      only, or both
+    properties:
+      startDateTime:
+        description: Start of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+      endDateTime:
+        description: End of the time period, using IETC-RFC-3339 format
+        example: '1985-04-12T23:20:50.520Z'
+        format: date-time
+        type: string
+    type: object

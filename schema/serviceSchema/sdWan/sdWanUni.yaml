@@ -1,0 +1,39 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:service:sd-wan-uni:v0.0.3:all
+title: MEF LSO Service SD-WAN UNI Service Specifications
+description: SdWanUni is a resource that represents the boundary between the responsibility
+  of the Subscriber and the responsibility of the Service Provider. Reference MEF
+  70.2, Section 7.4 SD-WAN UNI.
+type: object
+properties:
+  uniIdentifier:
+    type: string
+    description: A String that is used to allow the Subscriber and Service Provider
+      to uniquely identify the UNI. Reference MEF 70.2, Section 11.1 SD-WAN UNI Identifier
+      Service Attribute.
+    maxLength: 53
+    pattern: "[ -\x7F]+"
+  l2Interface:
+    $ref: sdWanCommon.yaml#/definitions/L2Interface
+  maxL2FrameSize:
+    type: integer
+    description: Specifies the maximum length L2 frame that is accepted by the Service
+      Provider at the UNI. Reference MEF 70.2, Section 11.3 SD-WAN UNI Maximum L2
+      Frame Size Service Attribute.
+    minimum: 1522
+  ipv4ConnectionAddressing:
+    $ref: ./common/ipCommon.yaml#/definitions/Ipv4ConnectionAddressing
+    nullable: true
+  ipv6ConnectionAddressing:
+    $ref: ./common/ipCommon.yaml#/definitions/Ipv6ConnectionAddressing
+    nullable: true
+  routingProtocols:
+    $ref: ./common/ipCommon.yaml#/definitions/RoutingProtocolsSdWan
+  availabilityObjective:
+    $ref: ../../common/common.yaml#/definitions/Percentage
+  meanTimeToRepairObjective:
+    $ref: ../../common/common.yaml#/definitions/TimeDuration
+  required:
+  - uniIdentifier
+  - l2Interface
+  - maxL2FrameSize

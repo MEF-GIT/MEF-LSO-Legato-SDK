@@ -1,0 +1,63 @@
+@startuml name extensionPatternSdWan
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+
+set namespaceSeparator none
+
+class ServiceValue {
+
+    id: string 
+    href: string 
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationshipWithGrouping
+   
+}
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+ServiceValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+
+class urn:mef:lso:spec:service:SdWanUni:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:SdWanUni:0.0.3:order"
+
+class urn:mef:lso:spec:service:SwVc:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:SwVc:0.0.3:order"
+
+class urn:mef:lso:spec:service:SwVcEndPoint:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:SwVcEndPoint:0.0.3:order"
+
+class urn:mef:lso:spec:service:UcsUni:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:UcsUni:0.0.3:order"
+
+class urn:mef:lso:spec:service:Ucs:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:Ucs:0.0.3:order"
+
+class urn:mef:lso:spec:service:UcsEndPoint:0.0.3:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:UcsEndPoint:0.0.3:order"
+
+@enduml

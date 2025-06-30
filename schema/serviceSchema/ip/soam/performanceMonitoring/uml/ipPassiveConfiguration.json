@@ -1,0 +1,84 @@
+@startjson
+{
+  "buyerJobId" : "Performance-Job-00-11-22",
+  "description" : "IP Passive Statistics Performance Job",
+  "monitoredObjectId" : {
+    "@type" : "Service",
+    "atType" : null,
+    "serviceIdFrom" : "FROM_SID",
+    "serviceIdTo" : "TO_SID"
+  },
+  "performanceProfile" : {
+    "@type" : "PerformanceProfileRef",
+    "atType" : null,
+    "performanceProfileId" : "100"
+  },
+  "scheduleDefinition" : {
+    "scheduleDefinitionStartTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "fixedOffset" : true,
+          "transitions" : [ ],
+          "transitionRules" : [ ]
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 7,
+      "minute" : 35,
+      "second" : 36,
+      "nano" : 856000000
+    },
+    "scheduleDefinitionEndTime" : {
+      "offset" : {
+        "totalSeconds" : -21600,
+        "id" : "-06:00",
+        "rules" : {
+          "fixedOffset" : true,
+          "transitions" : [ ],
+          "transitionRules" : [ ]
+        }
+      },
+      "month" : "JANUARY",
+      "dayOfYear" : 20,
+      "dayOfWeek" : "MONDAY",
+      "year" : 2025,
+      "monthValue" : 1,
+      "dayOfMonth" : 20,
+      "hour" : 7,
+      "minute" : 35,
+      "second" : 36,
+      "nano" : 858000000
+    },
+    "scheduleDefinitionHourRange" : null,
+    "weeklyScheduledDefinition" : null
+  },
+  "servicePayloadSpecificAttributes" : {
+    "@type" : "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.2:all",
+    "atType" : null,
+    "protocol" : "IPV4",
+    "packetsIn" : true,
+    "charsIn" : true,
+    "packetsOut" : true,
+    "charsOut" : true,
+    "utilizationIn" : true,
+    "utilizationOut" : true,
+    "peakUtilizationIn" : true,
+    "peakUtilizationOut" : true
+  }
+}
+@endjson
+
+
+
+
+
+
+
+

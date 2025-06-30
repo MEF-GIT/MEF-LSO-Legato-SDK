@@ -1,0 +1,40 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: urn:mef:lso:spec:legato:ping-report:v0.0.1:all
+x-mef-target: ResultPayload
+description: IP Performance Monitoring Ping Results Schema.
+title: MEF LSO - IP Performance Monitoring Results
+type: object
+properties:
+  description: Data type representing the IP packet performance statistics results
+    for receive and transmit.
+  interface:
+    $ref: ../fmCommon.yaml#/definitions/Location
+  vlan:
+    type: integer
+  startTime:
+    format: date-time
+    type: string
+  endTime:
+    format: date-time
+    type: string
+  protocol:
+    description: Protocol type
+    type: string
+    enum:
+    - IPV4
+    - IPV6
+    - ARP
+  numberOfTxPackets:
+    type: integer
+  numberOfRxPackets:
+    type: integer
+  minimumRoundTripDelay:
+    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+  averageRoundTripDelay:
+    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+  maximumRoundTripDelay:
+    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+  countOfLostPackets:
+    type: integer
+  percentageOfLostPackets:
+    $ref: ../../../common/common.yaml#/definitions/Percentage
