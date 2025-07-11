@@ -2,26 +2,24 @@ openapi: 3.0.1
 info:
   title: Service Ordering Notification
   description: |
-    **This file forms part of MEF 99.1** 
-     
-    **This draft represents MEF work in progress and is subject to change.**
+    **This file forms part of Mplify 99.1** 
 
     Supported use cases:
     - Send Notifications
 
-    Copyright 2025 MEF Forum and its contributors.
+    Copyright 2025 Mplify Alliance and its contributors.
 
     This file includes content based on the TM Forum Service Order API (TMF641
     v4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
-    content has been modified by the MEF Forum and its contributors.
-  version: 6.0.0-RC
+    content has been modified by the Mplify Alliance and its contributors.
+  version: 6.0.0
 servers:
   - url: "https://{serverBase}/mefApi/legato/serviceOrderingNotification/v6/"
     variables:
       serverBase:
         description: The base of BUS's URL.
-        default: mef.net
+        default: mplify.net
 tags:
   - name: Notification listeners
     description: |

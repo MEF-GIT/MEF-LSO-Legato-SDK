@@ -1,5 +1,29 @@
 # Service Inventory Management: Release notes
 
+## Release Janis:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary:**
+
+- Fixed `Service` missing `id`
+
+### List of changes in the API:
+
+**serviceInventoryManagement.api.yaml:**
+
+- `Service`:
+  - `id` - added
+  - `href` - added
+  - `state` - made required
+- `ServiceRef`:
+  - `href` - removed `format: uri`
+
+**serviceInventoryNotification.api.yaml:**
+
+No changes
+
 ## Release Irene:
 
 **Readiness status**: Call for Comments Ballot #1. Work in progress and is

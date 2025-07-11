@@ -2,27 +2,25 @@ openapi: 3.0.3
 info:
   title: Service Inventory Notification
   description: |
-    **This file forms part of MEF 135.1** 
+    **This file forms part of Mplify 135.1** 
      
-    **This draft represents MEF work in progress and is subject to change.**
 
     Supported use cases:
     - Send Notifications
 
-    Copyright 2025 MEF Forum and its contributors.
+    Copyright 2025 Mplify Alliance and its contributors.
 
-    This file includes content based on the TM Forum Service Inventory
-    Management API (TMF638 v4.0.1) available at
-    https://github.com/tmforum-apis/TMF638_ServiceInventory, which is licensed
-    by the TM Forum under the Apache License version 2.0. Such content has been
-    modified by the MEF Forum and its contributors.
-  version: 6.0.0-RC
+    This file includes content based on the TM Forum Service Inventory Management API (TMF638
+    v4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,
+    which is licensed by the TM Forum under the Apache License version 2.0. Such
+    content has been modified by the Mplify Alliance and its contributors.
+  version: 7.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/serviceInventoryNotification/v6/'
+  - url: 'https://{serverBase}/mefApi/legato/serviceInventoryNotification/v7/'
     variables:
       serverBase:
         description: The base of SOF's URL.
-        default: mef.net
+        default: mplify.net
 tags:
   - name: Event listeners
     description: Mechanism for SOF to publish *Service* notifications to BUS
@@ -470,7 +468,7 @@ components:
         - state
     ServiceStateType:
       description: |
-        List of possible state for the Service.
+        Valid values for the lifecycle state of the Service.
 
         | State              | Description                                                                                                           |
         | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -485,6 +483,6 @@ components:
         - feasibilityChecked
         - designed
         - reserved
-        - active
         - inactive
+        - active
         - terminated

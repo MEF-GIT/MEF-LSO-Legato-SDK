@@ -1,5 +1,25 @@
 # Service Order Management: Release notes
 
+## Release Janis:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary:**
+
+TODO
+
+### List of changes in the API:
+
+**serviceOrderingManagement.api.yaml:**
+
+- `ServiceOrder`:
+  - `href` - removed `format: uri`
+
+**serviceOrderingNotification.api.yaml:**
+
+TODO
+
 ## Release Irene:
 
 **Readiness status**: Call for Comments Ballot #1. Work in progress and is subject to change.
