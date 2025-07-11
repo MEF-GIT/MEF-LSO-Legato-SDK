@@ -1149,8 +1149,7 @@ components:
         - role
     Service:
       description: |-
-        The Service instance managed by SOF and retrievable by an BA over the 
-        Legato IRP via the Service Inventory API.
+        The Service instance managed by SOF and retrievable by BA
       type: object
       properties:
         id:
