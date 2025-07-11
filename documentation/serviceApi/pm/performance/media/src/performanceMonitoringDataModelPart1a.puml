@@ -5,6 +5,7 @@ skinparam {
 }
 
 class PerformanceJob {
+
     creationDate*: date-time
     href: uri
     id*: string
@@ -12,17 +13,10 @@ class PerformanceJob {
     rejectionReason: string
     state*: PerformanceJobStateType
 }
-PerformanceJob_Common <|-- PerformanceJob
+PerformanceJob_Create <|-- PerformanceJob
 
-class PerformanceJobRef {
-    performanceJobHref: string
-    performanceJobId*: string
-}
-PerformanceJobRefOrValue <|-- PerformanceJobRef
 
-class PerformanceJobRefOrValue {
-    @type*: string
-}
+
 
 enum PerformanceJobStateType {
     acknowledged
@@ -37,44 +31,17 @@ enum PerformanceJobStateType {
     suspended
 }
 
-class PerformanceJobValue {
-    consumingApplicationId: string
-    granularity*: Interval
-    outputFormat*: OutputFormat
-    producingApplicationId: string
-    resultFormat*: ResultFormat
-}
-PerformanceJobRefOrValue <|-- PerformanceJobValue
-PerformanceJobValue *-->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJobValue *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-class PerformanceJob_Common {
-    buyerJobId: string
-    consumingApplicationId: string
-    description: string
-    producingApplicationId: string
-}
-PerformanceJob_Common *-->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJob_Common *-->"1" ScheduleDefinition : scheduleDefinition
-PerformanceJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-
 class PerformanceJob_Create {
-}
-PerformanceJob_Common <|-- PerformanceJob_Create
 
-class PerformanceJob_Find {
     buyerJobId: string
     consumingApplicationId: string
-    creationDate*: date-time
     description: string
-    id*: string
     producingApplicationId: string
-    state*: PerformanceJobStateType
 }
-PerformanceJob_Find *-->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJob_Find *-->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJob_Find *-->"1" ScheduleDefinition : scheduleDefinition
+
+PerformanceJob_Create *-->"1" MonitoredObjectRef : monitoredObject
+PerformanceJob_Create *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Create *-->"1" ScheduleDefinition : scheduleDefinition
+
 
 @enduml

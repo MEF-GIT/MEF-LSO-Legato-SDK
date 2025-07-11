@@ -41,11 +41,8 @@ opt
   Hub -> B: notifyListeners (performanceJobStateChangeEvent)
 end
 
-PJ -> PJ: generateData
-
-note right of PJ: reportingPeriod elapses
-
 create entity PerformanceReport as PR
+
 PJ -> PR: <<create>>
 
 activate PR
@@ -62,7 +59,9 @@ opt
   Hub -> B: notifyListeners (performanceReportStateChangeEvent)
 end
 
-PR -> PR: collectData
+PJ -> PR: collectData
+
+note right of PJ: reportingPeriod elapses
 
 PR -> PR: state: completed
 

@@ -5,32 +5,31 @@ class PerformanceProfile {
     creationDate*: date-time
     href: uri
     id*: string
+    isAssigned*: boolean
     lastModifiedDate: date-time
-    state*: PerformanceProfileStateType
 }
 
-PerformanceProfile_Common <|-- PerformanceProfile
-
-
-enum PerformanceProfileStateType {
-    active
-    deleted
-}
-class PerformanceProfile_Common {
-    description: string
-    granularity*: Interval
-    jobPriority: integer
-    jobType*: JobType
-    outputFormat*: OutputFormat
-    reportingPeriod*: Interval
-    resultFormat*: ResultFormat
-}
-
+PerformanceProfile_Create <|-- PerformanceProfile
 
 class PerformanceProfile_Create {
 
+    description: string
+    granularity*: TimeDuration
+    jobPriority: integer
+    jobType*: JobType
+    lifecycleStatus*: PerformanceProfileLifecycleStatusType
+    outputFormat*: OutputFormat
+    reportingPeriod*: TimeDuration
+    resultFormat*: ResultFormat
+    serviceSpecificConfiguration*: ServiceSpecificConfiguration
 }
 
-PerformanceProfile_Common <|-- PerformanceProfile_Create
+enum PerformanceProfileLifecycleStatusType {
+
+    approved
+    deprecated
+    experimental
+    pending
+}
 
 @enduml

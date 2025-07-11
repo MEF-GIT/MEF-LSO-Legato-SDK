@@ -9,34 +9,30 @@ class PerformanceReport {
     lastModifiedDate: date-time
     state*: PerformanceReportStateType
 }
-PerformanceReport_Common <|-- PerformanceReport
+PerformanceReport_Create <|-- PerformanceReport
 
-
-PerformanceReport *-->"0..*" ReportContentItem : reportContent
-PerformanceReport *-->"0..1" AttachmentURL : reportUrl
-
-class PerformanceReport_Common {
-
-    description: string
-}
-
-PerformanceReport_Common *-->"1" PerformanceJobRefOrValue : performanceJob
-PerformanceReport_Common *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport *--> PerformanceJobRef : performanceJob
+PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
+PerformanceReport *-u-> AttachmentURL : reportUrl
 
 class PerformanceReport_Create {
 
+    description: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
 }
 
-PerformanceReport_Common <|-- PerformanceReport_Create
+PerformanceReport_Create *-u->"1" TimeDuration : granularity
+PerformanceReport_Create *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Create *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
+class ReportContentPerMonitoredObject {
 
-enum PerformanceReportStateType {
-    acknowledged
-    completed
-    failed
-    inProgress
-    rejected
 }
+
+ReportContentPerMonitoredObject *-->"1" MonitoredObjectRef : monitoredObject
+ReportContentPerMonitoredObject *-->"0..*" ReportContentItem : reportContentItem
 
 class ReportContentItem {
 
@@ -48,6 +44,14 @@ ReportContentItem *-->"1..*" ResultPayload : measurementDataPoints
 class ResultPayload {
 
     @type*: string
+}
+
+enum PerformanceReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
 }
 
 

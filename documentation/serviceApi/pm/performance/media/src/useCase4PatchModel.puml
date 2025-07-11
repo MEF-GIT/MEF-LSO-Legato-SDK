@@ -3,27 +3,34 @@
 class PerformanceProfile_Update {
 
     description: string
-    granularity: Interval
     jobPriority: integer
+    lifecycleStatus: PerformanceProfileLifecycleStatusType
     outputFormat: OutputFormat
-    reportingPeriod: Interval
     resultFormat: ResultFormat
 }
 
-enum Interval {
+PerformanceProfile_Update *--> TimeDuration : granularity
+PerformanceProfile_Update *--> TimeDuration : reportingPeriod
+PerformanceProfile_Update *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-    10 milliseconds
-    100 milliseconds
-    1 second
-    10 seconds
-    1 minute
-    5 minutes
-    15 minutes
-    30 minutes
-    1 hour
-    24 hours
-    1 month
-    1 year
+class TimeDuration {
+
+    timeDurationValue*: integer
+    timeDurationUnits*: TimeDurationUnits
+}
+
+enum TimeDurationUnits {
+
+    NS
+    US
+    MS
+    SEC
+    MIN
+    HOUR
+    DAY
+    WEEK
+    MONTH
+    YEAR
 }
 
 enum OutputFormat {
@@ -38,6 +45,14 @@ enum ResultFormat {
 
     attachment
     payload
+}
+
+enum PerformanceProfileLifecycleStatusType {
+
+    approved
+    deprecated
+    experimental
+    pending
 }
 
 @enduml

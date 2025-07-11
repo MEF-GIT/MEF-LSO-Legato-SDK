@@ -13,7 +13,7 @@ state validation_successful <<choice>>
  note top of validation_successful : Validation successful?
 
 state immediate <<choice>> 
- note left of immediate : Immediate start time?
+ note top of immediate : Immediate start time?
 
 state modification <<choice>> 
  note top of modification : Modification successful?
@@ -42,9 +42,9 @@ immediate -r-> scheduled: No
 scheduled -d-> pending_cancel: Cancel
 scheduled -d-> resources: schedule start time
 resources -d-> resource_unavailable: No
-resources -l-> in_progress: Yes
+resources -r-> in_progress: Yes
 
-immediate -d-> resources: Yes
+immediate -r-> resources: Yes
 in_progress -d-> recurring
 recurring -d-> completed: No
 recurring -u-> immediate: Yes
@@ -65,7 +65,7 @@ modification -d-> scheduled: No
 
 modification -r-> pending: Yes
 
-pending -d-> immediate
+pending -r-> immediate
 
 rejected -d-> [*]
 completed -d-> [*]

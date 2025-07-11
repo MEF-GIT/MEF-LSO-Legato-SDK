@@ -1,14 +1,20 @@
 @startuml useCase19Model
 
 class PerformanceReport_Find {
+
     creationDate*: date-time
     description: string
     id*: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
     state*: PerformanceReportStateType
 }
 
-PerformanceReport_Find *--> "1" PerformanceJobRefOrValue : performanceJob
-PerformanceReport_Find *--> "1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Find *-u->"1" TimeDuration : granularity
+PerformanceReport_Find *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Find *-->"0..1" PerformanceJobRef : performanceJob
+PerformanceReport_Find *-u->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum PerformanceReportStateType {
 
@@ -19,29 +25,10 @@ enum PerformanceReportStateType {
     rejected
 }
 
-class PerformanceJobRefOrValue {
-    @type*: string
-}
-
 class PerformanceJobRef {
 
     performanceJobHref: string
     performanceJobId*: string
 }
-PerformanceJobRefOrValue <|-- PerformanceJobRef
-
-class PerformanceJobValue {
-
-    consumingApplicationId: string
-    granularity*: Interval
-    outputFormat*: OutputFormat
-    producingApplicationId: string
-    resultFormat*: ResultFormat
-}
-PerformanceJobRefOrValue <|-- PerformanceJobValue
-
-PerformanceJobValue *-->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJobValue *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
 
 @enduml

@@ -18,10 +18,10 @@ B -> PM: createPerformanceJob
 
 create entity PerformanceJob as PJ
 PM -> PJ: <<create>>
-
+activate PJ
 PM --> B: Response (PerformanceJob)
 
-activate PJ
+
 
 opt
 PJ -> Hub: createEvent
@@ -36,31 +36,29 @@ PJ -> Hub: stateChangeEvent
 Hub -> B: notifyListeners (performanceJobStateChangeEvent)
 end
 
-PJ -> PJ: generateData
-
-note right of PJ: reportingPeriod elapses
-
 create entity PerformanceReport as PR
+
 PJ -> PR: <<create>>
 
 activate PR
 
 opt
-PR -> Hub: createEvent
-Hub -> B: notifyListeners (performanceReportCreateEvent)
-end
+  PR -> Hub: createEvent
+  Hub -> B: notifyListeners (performanceReportCreateEvent)
+end 
 
 PR -> PR: state: inProgress
 
 opt
-PR -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (performanceReportStateChangeEvent)
+  PR -> Hub: stateChangeEvent
+  Hub -> B: notifyListeners (performanceReportStateChangeEvent)
 end
 
-PR -> PR: collectData
+PJ -> PR: collectData
+
+note right of PJ: reportingPeriod elapses
 
 PR -> PR: state: completed
-
 opt
 PR -> Hub: stateChangeEvent
 Hub -> B: notifyListeners (performanceReportStateChangeEvent)

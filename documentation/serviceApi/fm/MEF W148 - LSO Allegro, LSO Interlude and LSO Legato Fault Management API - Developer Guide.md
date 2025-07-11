@@ -104,7 +104,7 @@ contained herein.
     - [6.1.3. Create Fault Management Job Response](#613-create-fault-management-job-response)
     - [6.1.4. Fault Management Job State Machine](#614-fault-management-job-state-machine)
   - [6.2. Use Case 2: Retrieve List of Fault Management Job](#62-use-case-2-retrieve-list-of-fault-management-job)
-  - [6.3. Use Case 3: Retrieve Fault Management Job by Job Identifier](#63-use-case-3-retrieve-fault-management-job-by-job-identifier)
+  - [6.3. Use Case 3: Retrieve Fault Management Job by Identifier](#63-use-case-3-retrieve-fault-management-job-by-identifier)
   - [6.4. Use Case 4: Modify Fault Management Job](#64-use-case-4-modify-fault-management-job)
     - [6.4.1. Interaction flow](#641-interaction-flow)
     - [6.4.2. Modify Fault Management Job Request](#642-modify-fault-management-job-request)
@@ -121,19 +121,19 @@ contained herein.
   - [6.9. Use Case 9: Retrieve Cancel Fault Management Job by Identifier](#69-use-case-9-retrieve-cancel-fault-management-job-by-identifier)
   - [6.10. Use Case 10: Suspend Fault Management Job](#610-use-case-10-suspend-fault-management-job)
   - [6.11. Use Case 11: Resume Fault Management Job](#611-use-case-11-resume-fault-management-job)
-  - [6.12. Use Case 12: Create Fault Management Job Complex Query](#612-use-case-12-create-fault-management-job-complex-query)
-    - [6.12.1. Create Fault Management Job Complex Query Request](#6121-create-fault-management-job-complex-query-request)
-    - [6.12.2. Create Fault Management Job Complex Query Response](#6122-create-fault-management-job-complex-query-response)
+  - [6.12. Use Case 12: Fault Management Job Complex Query](#612-use-case-12-fault-management-job-complex-query)
+    - [6.12.1. Fault Management Job Complex Query Request](#6121-fault-management-job-complex-query-request)
+    - [6.12.2. Fault Management Job Complex Query Response](#6122-fault-management-job-complex-query-response)
   - [6.13. Use Case 13: Retrieve Fault Management Report List](#613-use-case-13-retrieve-fault-management-report-list)
     - [6.13.1. Fault Management Report State Machine](#6131-fault-management-report-state-machine)
-  - [6.14. Use Case 14: Retrieve Fault Management Report by Report Identifier](#614-use-case-14-retrieve-fault-management-report-by-report-identifier)
-  - [6.15. Use Case 15: Create Fault Management Report Complex Query](#615-use-case-15-create-fault-management-report-complex-query)
-    - [6.15.1. Create Fault Management Report Complex Query Request](#6151-create-fault-management-report-complex-query-request)
-    - [6.15.2. Create Fault Management Report Complex Query Response](#6152-create-fault-management-report-complex-query-response)
+  - [6.14. Use Case 14: Retrieve Fault Management Report by Identifier](#614-use-case-14-retrieve-fault-management-report-by-identifier)
+  - [6.15. Use Case 15: Fault Management Report Complex Query](#615-use-case-15-fault-management-report-complex-query)
+    - [6.15.1. Fault Management Report Complex Query Request](#6151-fault-management-report-complex-query-request)
+    - [6.15.2. Fault Management Report Complex Query Response](#6152-fault-management-report-complex-query-response)
   - [6.16. Use Case 16: Retrieve Tracking Record List](#616-use-case-16-retrieve-tracking-record-list)
   - [6.17. Use Case 17: Retrieve Tracking Record by Identifier](#617-use-case-17-retrieve-tracking-record-by-identifier)
-  - [6.18. Use Case 18: Register for Notifications](#618-use-case-18-register-for-notifications)
-  - [6.19. Use Case 19: Send Notification](#619-use-case-19-send-notification)
+  - [6.18. Use Case 18: Register for notifications](#618-use-case-18-register-for-notifications)
+  - [6.19. Use Case 19: Send notification](#619-use-case-19-send-notification)
 - [7. API Details](#7-api-details)
   - [7.1. API patterns](#71-api-patterns)
     - [7.1.1. Indicating errors](#711-indicating-errors)
@@ -150,7 +150,6 @@ contained herein.
       - [7.1.1.11. `enum` Error422Code](#71111-enum-error422code)
       - [7.1.1.12. Type Error500](#71112-type-error500)
       - [7.1.1.13. Type Error501](#71113-type-error501)
-    - [7.1.2. Response pagination](#712-response-pagination)
   - [7.2. Management API Data model](#72-management-api-data-model)
     - [7.2.1. FaultManagementJob](#721-faultmanagementjob)
       - [7.2.1.1. Type FaultManagementJob\_Common](#7211-type-faultmanagementjob_common)
@@ -188,10 +187,10 @@ contained herein.
       - [7.2.3.8. Type ReportContentItem](#7238-type-reportcontentitem)
       - [7.2.3.9. Type ReportingTimeframe](#7239-type-reportingtimeframe)
       - [7.2.3.10. `enum` ResultFormat](#72310-enum-resultformat)
-      - [7.2.3.11. Type ResultPayload](#72311-type-resultpayload)
+      - [7.2.3.11. Type ServiceSpecificResult](#72311-type-servicespecificresult)
       - [7.2.3.12. Type ScheduleDefinition](#72312-type-scheduledefinition)
       - [7.2.3.13. Type ServiceId](#72313-type-serviceid)
-      - [7.2.3.14. Type ServicePayloadSpecificAttributes](#72314-type-servicepayloadspecificattributes)
+      - [7.2.3.14. Type ServiceSpecificConfiguration](#72314-type-servicespecificconfiguration)
       - [7.2.3.15. Type TrackingRecord](#72315-type-trackingrecord)
       - [7.2.3.16. Type TrackingRecord\_Find](#72316-type-trackingrecord_find)
     - [7.2.4. Notification Registration](#724-notification-registration)
@@ -239,7 +238,7 @@ This standard is intended to assist the implementation of the Application
 Programming Interfaces (APIs) for the Fault Management functionality of 
 the Service Orchestration Function at the LSO Allegro, LSO Interlude and LSO 
 Legato Interface Reference Points (IRPs), for which requirements and use cases
-are defined in MEF W133.1 [[MEF133.1](#8-references)]. The requirements and use 
+are defined in MEF W133.1 [[MEF W133.1](#8-references)]. The requirements and use 
 cases are the same for all IRPs. This standard consists of this document and 
 complementary API definitions for Fault Management and Fault Management 
 Notification.
@@ -263,7 +262,7 @@ they were part of this document from the GitHub repository:
 - `serviceApi/fm/faultNotification.api.yaml`
 
 The Fault Management API is defined using OpenAPI 3.0 
-[[OAS-V3](#8-references)]
+[[Open API 3.0](#8-references)]
 
 <div class="page"/>
 
@@ -279,7 +278,7 @@ In addition, terms defined in the standards referenced below are included in
 this document by reference and are not repeated in the table below:
 
 - MEF W133.1 _Allegro, Interlude and Legato Fault Management and Performance
-  Monitoring BR&UC_ February 2023 [[MEF 133.1](#8-references)]
+  Monitoring BR&UC_ February 2023 [[MEF W133.1](#8-references)]
 - MEF 55.1, _Lifecycle Service Orchestration (LSO): Reference Architecture and
   Framework_ February 2021 [[MEF 55.1](#8-references)]
 
@@ -293,7 +292,7 @@ this document by reference and are not repeated in the table below:
 | Operation                           | An interaction between the Server and Client, potentially involving multiple back-and-forth transactions.                                                                              																																							| This document                                                                      |
 | Passive							  | Fault Management Job action to support the collection and reporting of network and service faults.   															                                                                                                                                                                                | MEF W133.1 																		                                                                                            |
 | Proactive							  |	Fault Management Job actions that are carried on continuously to permit timely reporting of fault  status.																																																				                        | MEF W133.1 																		 |
-| REST API							  | Representational State Transfer. REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.	| [REST API](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) |
+| Representational State Transfer     | Representational State Transfer. REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.	| [Chapter 5: Representational State Transfer (REST)](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) |
 | SchemaObject                        | The construct that allows the definition of input and output data types. These types can represent object classes, as well as primitives and array specifications.              																																								| [spec.openapis.org](http://spec.openapis.org/oas/v3.0.3#schema-object)             |
 
 **Table 2. Terminology**
@@ -306,6 +305,7 @@ this document by reference and are not repeated in the table below:
 | FM	   | Fault Management   																		  | MEF W133.1												 |
 | IRP      | Interface Reference Point                                                                    | MEF 55.1                                                 |
 | OAS      | OpenAPI Specification                                                                        | [openapis.org](https://www.openapis.org/faq/style-guide) |
+| REST     | Representational State Transfer															  | [REST](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)				 |
 | SOF      | Service Orchestration Functionality                                                          | MEF 55.1                                                 |
 
 **Table 3. Abbreviations**
@@ -315,8 +315,8 @@ this document by reference and are not repeated in the table below:
 The key words **"MUST"**, **"MUST NOT"**, **"REQUIRED"**, **"SHALL"**, **"SHALL
 NOT"**, **"SHOULD"**, **"SHOULD NOT"**, **"RECOMMENDED"**, **"NOT
 RECOMMENDED"**, **"MAY"**, and **"OPTIONAL"** in this document are to be
-interpreted as described in BCP 14 (RFC 2119 [[RFC2119](#8-references)], RFC
-8174 [[RFC8174](#8-references)]) when, and only when, they appear in all
+interpreted as described in BCP 14 (RFC 2119 [[RFC 2119](#8-references)], RFC
+8174 [[RFC 8174](#8-references)]) when, and only when, they appear in all
 capitals, as shown here. All key words must be in bold text.
 
 Items that are **REQUIRED** (contain the words **MUST** or **MUST NOT**) are
@@ -349,7 +349,7 @@ This standard specification document describes the Application Programming
 Interface (API) for Fault Management functionality of the LSO Allegro
 Interface Reference Point (IRP), LSO Interlude Interface Reference Point (IRP)
 and LSO Sonata IRP as defined in the _MEF 55.1 Lifecycle Service Orchestration
-(LSO): Reference Architecture and Framework_ [[MEF55.1](#8-references)]. The 
+(LSO): Reference Architecture and Framework_ [[MEF 55.1](#8-references)]. The 
 LSO Reference Architecture is shown in Figure 1 with the three IRPs 
 highlighted.
 
@@ -410,7 +410,7 @@ Seller (inter-operator SOF) and collect fault reports from Server/Seller.
 ## 4.3. Relation to Other Documents
 
 This API implements the Fault Management related requirements and use
-cases that are defined in MEF W133.1 [[MEF133.1](#8-references)]. Fault 
+cases that are defined in MEF W133.1 [[MEF W133.1](#8-references)]. Fault 
 Management Use Cases must support the use of MEF service fault indicators 
 specifications as payload.
 
@@ -445,15 +445,15 @@ This Developer Guide does not define MEF service fault management
 specifications but can be used in combination with any specifications defined 
 by or compliant with MEF. MEF service fault management schemas are defined by:
 
-- MEF 152: Carrier Ethernet Payload Schema/Guide for SOAM [[MEF152](#8-references)]
-- MEF 153: IP/IPVPN Schema/Guide for SOAM [[MEF153](#8-references)]
-- MEF 154: SD-WAN Schema/Guide for SOAM [[MEF154](#8-references)]
+- MEF 152: Carrier Ethernet Payload Schema/Guide for SOAM 
+- MEF 153: IP/IPVPN Schema/Guide for SOAM 
+- MEF 154: SD-WAN Schema/Guide for SOAM 
 
 Figure 3 presents the relationship between the Fault Mamagement API 
 entities and the fault management specification model. 
-The `ServiceSpecificPayloadAttribute` serves as an extension point for 
+The `ServiceSpecificConfiguration` serves as an extension point for 
 configuring service-specific fault parameters. On the other hand, the 
-`ResultPayload` acts as an extension point for capturing and representing the 
+`ServiceSpecificResult` acts as an extension point for capturing and representing the 
 fault management results.
 
 ![Figure 3: Fault Indicators specification for Allegro, Interlude, Legato](media/faultSpecSchema.png)
@@ -464,10 +464,10 @@ fault management results.
 
 The Fault Management API in essence allows the Buyer/Client to request SOF 
 to provision intervals, schedules, and fault indicators between ordered pairs. 
-An ordered pair is an association between two endpoints. The Fault Notifications
-API provides means to exchange information about significant changes in 
-the system state between interested parties. Figure 4 presents an exemplary 
-high-level flow of Fault Management Job provisioning.
+An ordered pair is an association between two endpoints. The Fault Management 
+Notifications API provides means to exchange information about significant 
+changes in the system state between interested parties. Figure 4 presents 
+an exemplary high-level flow of Fault Management Job provisioning.
 
 ![Figure 4: High Level Flow](media/fmProvisioning.png)
 
@@ -476,7 +476,7 @@ high-level flow of Fault Management Job provisioning.
 The following steps describe the high-level flow:
 
 - (optional) The BUS system registers for notifications. <br>**_Note1_**: 
-Fault Notifications are optional and do not impact end-to-end flow
+Fault Management Notifications are optional and do not impact end-to-end flow
 - The BUS system triggers provisioning of Fault Management Job. 
   - The SOF provisions Fault Management by creating a `FaultManagementJob`
     which contains the configuration of fault indicators and related service.
@@ -520,7 +520,8 @@ Finally, payload validation and API security aspects are discussed.
 
 Figure 6 presents a high-level use case diagram. It aims to help understand
 the endpoint mapping. Use cases are described extensively in
-[chapter 6](#6-api-interactions-and-flows).
+[chapter 6](#6-api-interactions-and-flows). The mandatory use cases are 
+highlighted in bold.
 
 ![Figure 6: Use cases](media/fmUsecases.png)
 
@@ -532,15 +533,15 @@ the endpoint mapping. Use cases are described extensively in
 
 **Base URL for Allegro**:
 
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/faultManagement/v1/`
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/allegro/faultManagement/v2/`
 
 **Base URL for Interlude**:
 
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/faultManagement/v1/`
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/interlude/faultManagement/v2/`
 
 **Base URL for Legato**:
 
-`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/faultManagement/v1/`
+`https://{{serverBase}}:{{port}}{{?/sof_prefix}}/mefApi/legato/faultManagement/v2/`
 
 The following API endpoints are implemented by the Seller/Server (SOF) and
 allow the Buyer/Client (SOF/CUS/BUS) to create, retrieve and modify
@@ -571,21 +572,15 @@ endpoints and corresponding data model are defined in
 **Table 4. Seller/Server (SOF) Fault Management mandatory API endpoints**
 
 **[R1]** Seller/Server (SOF) **MUST** support all API endpoints listed in 
-Table 4.
+Table 4. [MEF W133.1 R33, MEF 133.1 R34]
 
-**[R2]** The Seller/Server **MUST** support the retrieval of a List of Fault 
-Management Reports Use Case. [MEF133.1 R33]
-
-**[R3]** Buyer/Client **MUST** support the retrieval of a List of Fault 
-Management Reports Use Case. [MEF133.1 R34]
-
-API endpoints listed in Table 5 are optional and may be exposed by the SOF.
+API endpoints listed in Table 5 are optional and may be supported by the SOF.
 
 | API Endpoint                      | Description                                                                                                                           | MEF W133.1 Use Case Mapping |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| POST /hub                         | The Buyer/Client requests to subscribe to the Fault Management Job or Fault Management Report Notifications.                          | 6                           |
+| POST /hub                         | The Buyer/Client requests to subscribe to the Fault Management Notifications.                          | 6                           |
 | GET /hub/{{id}}                   | The Buyer/Client retrieves a specific `EventSubscription` from the SOF, that matches the _`id`_ value provided as _`path`_ parameter. | N/A                         |
-| DELETE /hub/{{id}}                | The Buyer/Client requests to unsubscribe from the Fault Management Job or Fault Management Report Notifications.                      | 8                           |
+| DELETE /hub/{{id}}                | The Buyer/Client requests to unsubscribe from the Fault Management Notifications.                      | 8                           |
 
 **Table 5. Seller/Server (SOF) Fault Management optional API endpoints**
 
@@ -593,15 +588,15 @@ API endpoints listed in Table 5 are optional and may be exposed by the SOF.
 
 **Base URL for Allegro**:
 
-`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/allegro/faultNotification/v1/`
+`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/allegro/faultNotification/v2/`
 
 **Base URL for Interlude**:
 
-`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/interlude/faultNotification/v1/`
+`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/interlude/faultNotification/v2`
 
 **Base URL for Legato**:
 
-`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/legato/faultNotification/v1/`
+`https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/legato/faultNotification/v2/`
 
 The following API Endpoints are used by SOF to post notifications to registered
 CUS, BUS, or SOF listeners. The endpoints and corresponding data model are 
@@ -625,32 +620,29 @@ defined in `serviceApi/fm/faultNotification.api.yaml`
 in Table 6.
 
 **[O2]** The Buyer/Client (CUS, BUS, SOF) **MAY** register to receive 
-Fault Management notifications.
+Fault Management Notifications.
 
-**[R4]** The Seller/Server FM Notifications MUST be sent to Buyer/Clients who
-have subscribed to FM Notifications. [MEF133.1 R30]
-
-**[R5]** The Seller/Server FM Notifications MUST Not be sent to Buyer/Clients 
-who have not subscribed to FM Notifications. [MEF133.1 R31]
+**[CR1]<[O2]** The Seller/Server FM Notifications MUST be sent to Buyer/Clients who
+have subscribed to FM Notifications. [MEF W133.1 R30]
 
 ## 5.3. Integration of Service Fault Management Specification into Fault Management API
 
-Fault Management API discussed in this document is a generic envelope that 
-allows for the lifecycle management of relevant Fault Management objects.
-The API itself does not provide explicit definitions for configuring fault  
-management or prescribing the structure of output data. However, it offers 
+The Fault Management API is a generic envelope that allows for the lifecycle
+management of relevant Fault Management objects. The API itself does not 
+provide particular technology-specific definitions for configuring fault 
+management or prescribing the structure of output data. However, it offers
 flexible extensibility to accommodate the configuration of service-specific 
 fault indicators and results. This allows for customization and adaptation to 
-various fault management requirements and desired data formats. This fault
+various fault management requirements and desired data formats. This fault 
 configuration and result schemas are defined using JsonSchema (draft 7) format 
 [JSON Schema draft 7](#8-references) and can be integrated into the 
 `FaultManagementJob` and `FaultManagementReport` using the TMF extension pattern.
 
 The extension hosting types in the API data model are:
 
-- `ServicePayloadSpecificAttributes` - this type is extended with Fault 
+- `ServiceSpecificConfiguration` - this type is extended with Fault 
 Management configuration schema
-- `ResultPayload` - this type is extended with Fault Management result schema
+- `ServiceSpecificResult` - this type is extended with Fault Management result schema
   
 The `@type` attribute of those extension hosting types must be set to a value 
 that uniquely identifies the fault management schmeas. A unique 
@@ -662,43 +654,43 @@ the Seller/Server.
 
 The example below shows a header of a schema, which describes the IP service
 Fault Management configuration, where `"$id": 
-urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all` is 
+urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all` is 
 the above-mentioned URN:
 
 ```yaml
 '$schema': http://json-schema.org/draft-07/schema#
-'$id': urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all
-title: MEF LSO Legato - IP Fault Management Configuration
+'$id': urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all
+title: MEF LSO - IP SOAM Ping Configuration
 ```
 
 Fault configuration payload is introduced in multiple FM API entities through
-a `servicePayloadSpecificAttributes` attribute of type 
-`ServicePayloadSpecificAttributes` which is used as an extension point for 
+a `serviceSpecificConfiguration` attribute of type 
+`ServiceSpecificConfiguration` which is used as an extension point for 
 configuration attributes.
 
 In terms of fault results, the appropriate payload is introduced via 
 `ReportContent`. This entity has a `measurementDataPoints` array of items of 
-type `ResultPayload` which is used as an extension point for service-specific
+type `ServiceSpecificResult` which is used as an extension point for service-specific
 output content.
 
 Implementations might choose to integrate selected Fault Management
 specifications to data model during development. In such a case an integrated 
 data model is built, and fault configurations are in an inheritance 
-relationship accordingly with either `ServicePayloadSpecificAttributes` or 
-`ResultPayload` as described in the OAS specification.
+relationship accordingly with either `ServiceSpecificConfiguration` or 
+`ServiceSpecificResult` as described in the OAS specification.
 This pattern is called **Static Binding**. The snippets below present an 
 example of a static binding of the envelope API with exemplary MEF fault 
 management configuration, for both extension points.
 
 ```yaml
-ServicePayloadSpecificAttributes:
+ServiceSpecificConfiguration:
   type: object
-  description: ServicePayloadSpecificAttributes is used as an extension point
+  description: ServiceSpecificConfiguration is used as an extension point
     for MEF-specific service fault management configuration. The `@type` 
     attribute is used as a discriminator.
   discriminator:
     mapping:
-      urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all: '#/components/schemas/IpFaultManagementConfiguration'
+      urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all: '#/components/schemas/PingConfiguration'
     propertyName: '@type'
   properties:
     '@type':
@@ -707,26 +699,26 @@ ServicePayloadSpecificAttributes:
         The name that uniquely identifies type of fault management job 
         configuration. In the case of MEF services, this is the URN provided in
         the fault management configuration specification. The named type must 
-        be a subclass of ServicePayloadSpecificAttributes.
+        be a subclass of ServiceSpecificConfiguration.
 ```
 
 ```yaml
 IpFaultManagementConfiguration:
   allOf:
-    - $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+    - $ref: '#/components/schemas/ServiceSpecificConfiguration'
     - type: object
       description: IP Fault Management Configuration Schema.
 ```
 
 ```yaml
-ResultPayload:
+ServiceSpecificResult:
   type: object
   description:
-    ResultPayload is used as an extension point for MEF-specific fault 
+    ServiceSpecificResult is used as an extension point for MEF-specific fault 
     management job results. The `@type` attribute is used as a discriminator.
   discriminator:
     mapping:
-      urn:mef:lso:spec:legato:ip-fault-management-results:v0.0.1:all: '#/components/schemas/IpFaultManagementResults'
+      urn:mef:lso:spec:legato:ping-report:v0.0.1:all: '#/components/schemas/PingReport'
     propertyName: '@type'
   properties:
     '@type':
@@ -735,13 +727,13 @@ ResultPayload:
         The name that uniquely identifies the type of results that are
         returned by the Fault Management Report. In the case of MEF 
         services, this is the URN provided in the fault management results
-        specification. The named type must be a subclass of ResultPayload.
+        specification. The named type must be a subclass of ServiceSpecificResult.
 ```
 
 ```yaml
 IpFaultManagementResults:
   allOf:
-    - $ref: '#/components/schemas/ResultPayload'
+    - $ref: '#/components/schemas/ServiceSpecificResult'
     - type: object
       description: IP Fault Management Results Schema.
 ```
@@ -756,12 +748,12 @@ Regardless of the chosen implementation pattern, the HTTP payload is
 the same. Both implementation approaches must conform to the requirements 
 specified below.
 
-**[R6]** `ServicePayloadSpecificAttributes` and `ResultPayload` types are
+**[R6]** `ServiceSpecificConfiguration` and `ServiceSpecificResult` types are
 extension points that **MUST** be used to integrate service fault management 
 properties into a request/response payload.
 
-**[R7]** The `@type` property of `ServicePayloadSpecificAttributes` and 
-`ResultPayload` **MUST** be used to specify the type of the extending entity.
+**[R7]** The `@type` property of `ServiceSpecificConfiguration` and 
+`ServiceSpecificResult` **MUST** be used to specify the type of the extending entity.
 
 **[R8]** Attributes specified in the payload must conform to the fault 
 management configuration specified in the `@type` property.
@@ -772,12 +764,12 @@ management configuration specified in the `@type` property.
 
 Figure 7 presents two MEF Fault Management schemas that represent 
 configuration and result classes for IP services. When these schemas are used, 
-the `@type` of `ServicePayloadSpecificAttributes` takes
-`"urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all"` 
+the `@type` of `ServiceSpecificConfiguration` takes
+`"urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all"` 
 value to indicate which fault management specification should be used to 
 interpret a set of service-specific attributes included in the payload.
-Similarly, for `ResultPayload`, the `@type` attribute takes
-`"urn:mef:lso:spec:legato:ip-fault-management-results:v0.0.1:all"` value 
+Similarly, for `ServiceSpecificResult`, the `@type` attribute takes
+`"urn:mef:lso:spec:legato:ping-report:v0.0.1:all"` value 
 which indicates how the resulting fault collection should be interpreted.
 
 ## 5.4. Model structure and validation
@@ -804,7 +796,7 @@ what information may be obtained. For Allegro and Interlude IRPs, security
 should follow rules for external communication.
 The definition of the exact security mechanism and configuration is outside
 the scope of this document. The LSO Security mechanisms are defined by MEF 128
-_LSO API Security Profiles_ [[MEF128](#8-references)].
+_LSO API Security Profiles_ [[MEF 128.1](#8-references)].
 
 <div class="page"/>
 
@@ -820,7 +812,7 @@ examples for each of the use cases.
 | ---------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1          | Create Fault Management Job                           | A request initiated by the Buyer/Client to create a Fault Management Job in the Seller/Server system to indicate Fault Management Job configuration.                 |
 | 2          | Retrieve Fault Management Job List                    | The Buyer/Client requests a list of Fault Management Job based on a set of filter criteria. The Seller/Server returns a summarized list of FM Jobs.                  |
-| 3          | Retrieve Fault Management Job by Job Identifier       | The Buyer/Client requests detailed information about a single Fault Management Job based on the Fault Management Job Identifier.                                     |
+| 3          | Retrieve Fault Management Job by Identifier       | The Buyer/Client requests detailed information about a single Fault Management Job based on the Fault Management Job Identifier.                                     |
 | 4          | Modify Fault Management Job                           | A request initiated by the Buyer/Client to modify a Fault Management Job in the Seller/Server system.                                                                |
 | 5          | Retrieve Modify Fault Management Job List             | The Buyer/Client requests a list of Modify Fault Management Job based on a set of filter criteria.                                                                   |
 | 6          | Retrieve Modify Fault Management Job by Identifier    | The Buyer/Client requests detailed information about a single Modify Fault Management Job based on the Modify Fault Management Job Identifier.                       |
@@ -835,7 +827,7 @@ examples for each of the use cases.
 | 15         | Create Fault Management Report Complex Query          | A request initiated by the Buyer/Client to create a Fault Management Report Complex Query in the Seller/Server system.                                               |
 | 16         | Retrieve Tracking Record List                         | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria. The Seller/Server returns a summarized list of Tracking Records.             |
 | 17         | Retrieve Tracking Record List by Identifier           | The Buyer/Client requests detailed information about a single Tracking Record based on the Tracking Record Identifier.                                               |
-| 18         | Register for Event Notifications                      | The Buyer/Client requests to subscribe to Fault Management Job or Fault Management Report Notifications.                                                             |
+| 18         | Register for Fault Management Notifications           | The Buyer/Client requests to subscribe to Fault Management Notifications.                                                             |
 | 19         | Send Event Notification                               | A request initiated by the Seller/Server to notify the Buyer/Client.                                                                                                 |
 
 **Table 7. Use cases description**
@@ -852,7 +844,7 @@ or diagnostic process of a service. Besides, Fault Management Job entity
 provides configuration, including measurement intervals and schedules of FM job
 execution. 
 
-The Fault Management Jobs should result in Fault Management Collections 
+The Fault Management Jobs produce Fault Management Collections 
 (Reports) that will provide the Buyer/Client with fault indicator results. 
 
 There are three types of Fault Management Job:
@@ -909,10 +901,10 @@ of the response entity. Thus for visibility of these shared attributes
 to be used directly in the exchange).
 
 A `FaultManagementJob_Create` defines measurement intervals, schedules, and
-service-specific configuration of FM job (in `servicePayloadSpecificAttributes`
+service-specific configuration of FM job (in `serviceSpecificConfiguration`
 section). 
 
-Section `servicePayloadSpecificAttributes` of the Create Fault Management Job 
+Section `serviceSpecificConfiguration` of the Create Fault Management Job 
 request allows for the introduction of service-specific properties as the API 
 payload. The extension mechanism is described in detail in [Section 5.3](#53-integration-of-service-fault-management-specification-into-fault-management-api).
 
@@ -956,28 +948,50 @@ to improve examples' readability.
     "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
     "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
   },
-  "servicePayloadSpecificAttributes": {
-    "@type": "urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all"
+  "serviceSpecificConfiguration": {
+    "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+    "sourceIpAddress": "192.0.2.1",
+    "destinationIpAddress": "192.0.2.2",
+    "transmissionInterval": {
+      "amount": 1,
+      "units": "seconds"
+    },
+    "count": 10,
+    "packetSize": 128,
+    "timeout": 5,
+    "waitTime": 2
   }
 }
 
 ```
 
-**[R11]** The Buyer/Client’s Create FM Job **MUST** contain the following
-attributes: [MEF133.1 R1]
-- Job Type
-- Output Format
-- Granularity
-- Reporting Period
-- Result Format
-- Schedule Definition
-- Service Specific Payload
-- Service ID
+**[R11]** The Buyer/Client’s Create Fault Management Job request **MUST** 
+provide the following attributes: [MEF W133.1 R1]
+- `jobType`
+- `granularity`
+- `reportingPeriod`
+- `outputFormat`
+- `resultFormat`
+- `scheduleDefinition`
+- `serviceSpecificConfiguration`
 
-**[O3]** The Buyer/Client’s Create FM Job **MAY** contain the 
-following attributes: [MEF133.1 O1]
-- Description
-- FM Job Priority
+**[R29]** If the Buyer/Client requests to provision a Fault Management Job for
+an ordered pair, they **MUST** provide reference to service endpoints by 
+specifying the following: []
+- `serviceIdFrom`
+- `serviceIdTo`
+
+**[R30]** If the Buyer/Client requests to provision a Fault Management Job for 
+a service, they **MUST** provide reference to a service by specifying 
+`serviceId`
+
+**[R30]** If the Buyer/Client requests to provision a Fault Management Job for 
+an entity other than a service, they **MUST** provide `entityId` []
+
+**[O3]** The Buyer/Client’s Create FM Job request **MAY** provide the 
+following attributes: [MEF W133.1 O1]
+- `description`
+- `jobPriority`
 
 ### 6.1.3. Create Fault Management Job Response
 
@@ -1021,11 +1035,21 @@ structure as in the retrieve by identifier operation.
     "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
     "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
   },
-  "servicePayloadSpecificAttributes": {
-    "@type": "urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all"
+  "serviceSpecificConfiguration": {
+    "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+    "sourceIpAddress": "192.0.2.1",
+    "destinationIpAddress": "192.0.2.2",
+    "transmissionInterval": {
+      "amount": 1,
+      "units": "seconds"
+    },
+    "count": 10,
+    "packetSize": 128,
+    "timeout": 5,
+    "waitTime": 2
   },
   "creationDate": "2025-01-01T00:00:00.000Z", << added by SOF >>
-  "href": "{{baseUrl}}/faultManagement/v1/755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
+  "href": "{{baseUrl}}/faultManagement/v2/755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
   "id": "755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
   "lastModifiedDate": "2025-01-01T00:00:00.000Z", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
@@ -1035,14 +1059,14 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with 
 the `<< added by SOF >>` tag.
 
-**[R12]** The Seller/Server sets the Creation Time and Job Identifier 
-attribute. [MEF133.1 R2]
+**[R12]** The Seller/Server sets the `creationDate` and `id` 
+attribute. [MEF W133.1 R2]
 
 **[R13]** The Seller’s/Server’s response **MUST** echo back all Buyer/Client 
-provided attributes. [MEF133.1 R3]
+provided attributes. [MEF W133.1 R3]
 
 **[R14]** The FM Job Identifier supplied by the Seller/Server **MUST** be unique
-within the Seller/Server’s network. [MEF133.1 R4]
+within the Seller/Server’s system. [MEF W133.1 R4]
 
 **[R15]** The Seller/Server **MUST** specify the following attributes in a 
 response:
@@ -1074,31 +1098,31 @@ either the `scheduled` or `inProgress` state depending on the assigned schedule.
 `FaultManagementJob` remains `scheduled` state until the scheduled start time 
 is reached. `FaultManagementJob` that is starting needs appropriate resources
 on Seller/Server side. If required resources cannot be assigned, `FaultManagementJob`
-moves to `resourceUnavailable` state. After completion, the Seller/Server 
-verifies if `FaultManagementJob` is recurring. If yes, `FaultManagementJob` 
-moves to either `scheduled` or `inProgress` state depending on the schedule 
-definition. Otherwise, it moves to a `completed` state. `FaultManagementJob` 
-can be cancelled when in `scheduled`, `inProgress` or `suspended`. When 
-cancellation is successful, `FaultManagementJob` moves to `cancelled` state.
-Cancellation includes an intermediary `pendingCancel` state. `FaultManagementJob`
-can be modified only in the `scheduled` or `suspended` state. Modification 
-includes an intermediary `pending` step.
+moves to `resourceUnavailable` state. After collecting fault data is finished, 
+the Seller/Server verifies if `FaultManagementJob` is recurring. If yes, 
+`FaultManagementJob` moves to either `scheduled` or `inProgress` state depending
+on the schedule definition. Otherwise, it moves to a `completed` state. 
+`FaultManagementJob` can be cancelled when in `scheduled`, `inProgress` or 
+`suspended`. When cancellation is successful, `FaultManagementJob` moves to 
+`cancelled` state. Cancellation includes an intermediary `pendingCancel` state. 
+`FaultManagementJob` can be modified only in the `scheduled` or `suspended` 
+state. Modification includes an intermediary `pending` step.
 
 Table 8 presents the mapping between the API `status` names and the MEF W133.1
 naming, together with the statuses' description. 
 
 | state                  | MEF W133.1 name      | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ---------------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged`         | Acknowledged         | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated the Seller/Server determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. Otherwise, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                                                                                     |
-| `cancelled`            | Cancelled            | A Fault Management Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `completed`            | Completed            | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| `inProgress`           | In-Progress          | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If the FM job has an immediate start time it moves back to In-Progress state, otherwise it moves to Scheduled. In case a Suspend Fault Management Job request is completed, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Pending Cancel state. |
-| `pending`              | Pending              | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains in the Pending state while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `pendingCancel`        | Pending Cancel       | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `acknowledged`         | Acknowledged         | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the `acknowledged` state. The request remains in the `acknowledged` state until all validations as applicable are completed. If the attributes are validated the Seller/Server determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the `inProgress` state. Otherwise, the Fault Management Job moves to the `scheduled` state. If not all attributes are validated, the request moves to the `rejected` state.                                                                                                                                     |
+| `cancelled`            | Cancelled            | A Fault Management Job that was `inProgress`, `suspended`, or `scheduled` is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `completed`            | Completed            | A non-recurring Fault Management Job finished execution or recurring job finished its schedule.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `inProgress`           | In-Progress          | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the `completed` state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If the FM job has an immediate start time it moves back to `inProgress` state, otherwise it moves to `scheduled`. In case a Suspend Fault Management Job request is completed, the Job moves to the `suspended` state. If a Cancel Fault Management Job request is accepted, the Job moves to the `pendingCancel` state. |
+| `pending`              | Pending              | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains in the `pending` state while updates to the Job are completed. Once updates are complete, the Job returns to the `scheduled` or `inProgress` status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `pendingCancel`        | Pending Cancel       | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains `pendingCancel` while resources used by the Job are being released. Once updates are complete, the Job moves to the `cancelled` status.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `rejected`             | Rejected             | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `resourcesUnavailable` | Resource Unavailable | A Fault Management Job cannot be allocated with necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `scheduled`            | Scheduled            | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays in the Scheduled state until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Pending Cancel state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                                                                                    |
-| `suspended`            | Suspended            | A Suspend Fault Management Job request is completed by the Seller/Server. The Job remains in the Suspended state until a Resume Fault Management Job request is completed by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Pending Cancel state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                                                      |
+| `resourcesUnavailable` | Resource Unavailable | A Fault Management Job cannot be allocated with necessary resources when moving to execution (`inProgress` state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `scheduled`            | Scheduled            | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays in the `scheduled` state until the start time is reached. The Fault Management Job then moves to `inProgress`. If the Cancel Fault Management Job request is accepted, the Job moves to the `pendingCancel` state. If the Modify Fault Management Job request is accepted, the Job moves to the `pending` state.                                                                                                                                                                                                                                                                                                                                    |
+| `suspended`            | Suspended            | A Suspend Fault Management Job request is completed by the Seller/Server. The Job remains in the `suspended` state until a Resume Fault Management Job request is completed by the Seller/Server at which time the Job returns to the `inProgress` state. If the Cancel Fault Management Job request is accepted, the Job moves to the `pendingCancel` state. If the Modify Fault Management Job request is accepted, the Job moves to the `pending` state.                                                                                                                                                                                                                                                                                                      |
 
 **Table 8. Fault Management Job State Machine states**
 
@@ -1123,24 +1147,43 @@ The Buyer/Client can retrieve a list of `FaultManagementJob` by using a
 - `reportingPeriod`
 - `jobPriority`
 
-```
-https://serverRoot/mefApi/legato/faultManagement/v1/faultManagementJob?state=suspended&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Fault Management Job 
-objects that are in the `suspended` state. Additionally, the Buyer/Client asks 
-only for a first (`offset=0`) pack of 10 results (`limit=10`) to be returned. 
-The correct response (HTTP code `200`) in the response body contains a list of 
-`FaultManagementJob_Find` objects matching the criteria. To get all the details, the 
-Buyer/Client has to query a specific `FaultManagementJob` by its `id`. Details 
-related to pagination are described in [section 7.1.2](#712-response-pagination)
-
 If the quantity of the records requested to be returned exceeds a Seller/Server 
 policy, the Seller/Server must choose to respond with either:
-- An empty list and message that indicates the result set is too large or
+- An empty list and error message that indicates the result set is too large 
+  (HTTP status 422 with `tooManyRecords` error code) or
 - A response that indicates the result is too large and includes a subset of the
-matching FM Jobs.
+  matching FM jobs.
 
+The Buyer may also ask for pagination of the response when the number of results
+is too big. The following query attributes related to pagination can be
+provided:
+
+- `limit` - number of expected list items
+- `offset` - offset of the first element in the result list
+
+```
+https://serverRoot/mefApi/legato/faultManagement/v2/faultManagementJob?state=suspended&limit=20&offset=0
+```
+
+The example above shows a Buyer's request to get the first twenty 
+`FaultManagementJob` that are in `suspended` state. The correct response
+(HTTP code `200`) contains a list of `PerformanceProfile` objects matching
+the criteria in the response body.
+
+The Seller/Server returns a list of elements that comply with the requested 
+`limit`. If the requested `limit` is higher than the supported list size then 
+the smaller list of results is returned. In that case, the size of the result
+is returned in the header attribute `X-Result-Count`. The Seller can indicate
+that there are additional results available using:
+
+- `X-Total-Count` header attribute with the total number of available results
+- `X-Pagination-Throttled` header set to `true`
+
+**[D1]** The Seller **SHOULD** support the pagination mechanism.
+
+**[CR1]<[D1]** Seller **MUST** use either `X-Total-Count` or
+`X-Pagination-Throttled` to indicate that the page was truncated and additional
+results are available.
 
 **[R18]** The Seller/Server's response to the Buyer’s/Client’s Retrieve List of 
 Fault Management Jobs **MUST** include the following attributes as applicable:
@@ -1166,7 +1209,7 @@ Figure 13 presents entities related to the use case.
 
 **Figure 13. Use Case 2: Retrieve Fault Management Job List - Model**
 
-## 6.3. Use Case 3: Retrieve Fault Management Job by Job Identifier
+## 6.3. Use Case 3: Retrieve Fault Management Job by Identifier
 
 The Buyer/Client can get detailed information about the Fault Management Job 
 from the Seller/Server by using a `GET /faultManagementJob/{{id}}` operation. 
@@ -1182,10 +1225,7 @@ operation. A response to a Get by ID for a `FaultManagementJob` with
 `id=755e55e2-72b0-4e3b-af00-693e3beac691` would return exactly the same response as
 presented in [section 6.1.3](#613-create-fault-management-job-response).
 
-**[R20]** The Buyer/Client’s Retrieve Fault Management Job by Job Identifier 
-request **MUST** contain the Fault Management Job Identifier. 
-
-**[R21]** In case `id` does not allow finding a `FaultManagementJob` in 
+**[R21]** In case `id` does not match a `FaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
 ## 6.4. Use Case 4: Modify Fault Management Job
@@ -1220,11 +1260,6 @@ in the following diagrams.
 
 **Figure 16. Modify Fault Management Job progress tracking - Polling**
 
-**_Note_**: The Modify Fault Management Job process is altering the state 
-of the FM job itself. It is important to note that notifications resulting from
-changes in the state of the Fault Management Job are not represented in 
-Figures 15 and 16. 
-
 **_Note_**: The context of notifications is not a part of the considered use
 case itself. It is presented to show the big picture of end-to-end flow. This
 applies also to all further use case flow diagrams with notifications.
@@ -1254,7 +1289,7 @@ using `id` of the Job).
 **_Note:_** Only those attributes of the Fault Management Job that should be 
 modified, should be included in the Modify Fault Management Job Request. 
 
-Section `servicePayloadSpecificAttributes` of the Modify Fault Management Job 
+Section `serviceSpecificConfiguration` of the Modify Fault Management Job 
 request allows for the introduction of service-specific properties of 
 Fault Management Job as the API payload. The extension mechanism is described 
 in detail in [Section 5.3](#53-integration-of-service-fault-management-specification-into-fault-management-api).
@@ -1290,19 +1325,19 @@ The request below aims to:
 }
 ```
 
-**[R22]** The Buyer’s/Client’s Modify FM Job request **MUST** include the FM
-Job Identifier. [MEF133.1 R6]
+**[R22]** The Buyer’s/Client’s Modify FM Job request **MUST** include the 
+Fault Management Job Identifier. [MEF W133.1 R6]
 
 **[R23]** The Buyer’s/Client’s Modify FM Job request **MUST** contain one 
-or more of the following attributes: [MEF133.1 R7]
-- Output Format
-- Granularity
-- Description
-- FM Job Priority
-- Reporting Period
-- Result Format
-- Schedule Definition
-- Service Payload Specific Attributes
+or more of the following attributes: [MEF W133.1 R7]
+- `outputFormat`
+- `granularity`
+- `description`
+- `jobPriority`
+- `reportingPeriod`
+- `resultFormat`
+- `scheduleDefinition`
+- `serviceSpecificConfiguration`
 
 ### 6.4.3. Modify Fault Management Job Response
 
@@ -1310,10 +1345,6 @@ Entities used for providing a response to Modify Fault Management Job requests
 are presented in Figure 17. The Seller/Server responds with a 
 `ModifyFaultManagementJob` type, which adds some attributes (like `id` or `state`) 
 to the `ModifyFaultManagementJob_Create` that was used in the Buyer/Client request.
-
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
 
 The following snippet presents the Seller/Server response. It has the same 
 structure as in the retrieve by identifier operation.
@@ -1327,7 +1358,7 @@ structure as in the retrieve by identifier operation.
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
   "creationDate": "2025-01-02T00:00:00.000Z", << added by SOF >>
-  "href": "{{baseUrl}}/faultManagement/v1/9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
+  "href": "{{baseUrl}}/faultManagement/v2/9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
   "id": "9c51d971-185d-403e-952f-2110f33a9628", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
 }
@@ -1337,10 +1368,7 @@ Attributes that are set by the Seller/Server in the response are marked with
 the `<< added by SOF >>` tag. 
 
 **[R24]** The Seller’s/Server’s response to the Buyer’s/Client’s Modify FM Job
-request **MUST** echo back the attributes in the Client’s request. [MEF133.1 R8]
-
-**[R25]** The Seller’s/Server’s response to the Buyer’s/Client’s Modify FM Job
-request **MUST** indicate if the request has been accepted or rejected. [MEF133.1 R9]
+request **MUST** echo back the attributes in the Client’s request. [MEF W133.1 R8]
 
 **[R26]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
@@ -1353,13 +1381,13 @@ response:
 Fault Management Job.
 
 In case Seller/Server cannot successfully validate the request, Modify 
-Fault Management Job process fails, which results in setting the state to `rejected` 
-with a proper explanation in `modificationDeniedReason`. This includes 
-situation when:
-- `id` does not allow to find a `FaultManagementJob` that is to be updated in 
+Fault Management Job process fails, which results in setting the state to 
+`rejected`. This includes situation when:
+- `id` does not match a `FaultManagementJob` that is to be updated in 
 Seller/Server's system
 - requested attributes cannot be modified
-- Fault Management Job is in a state that does not allow for modification.
+- Fault Management Job is in a state that does not allow for modification (any 
+  state other than `suspended`).
 
 ### 6.4.4. Modify Fault Management Job State Machine
 
@@ -1375,8 +1403,7 @@ validation passes, a response is provided with `ModifyFaultManagementJob` in
 `acknowledged` status. Next, the Seller/Server performs all the remaining 
 business and time-consuming validations. At this point, an Error response 
 cannot be provided anymore, so the process moves to a `rejected` state if some
-issues are found. The `ModifyFaultManagementJob.modificationDeniedReason` acts 
-as a placeholder to provide a detailed description of what caused the problem. 
+issues are found. 
 If validation is successful, `ModifyFaultManagementJob` moves to the `inProgress` 
 state. At this point, the related `FaultManagementJob` moves to a `pending` 
 state, and the Seller/Server starts all necessary arrangements to provision 
@@ -1415,17 +1442,6 @@ criteria.
 - `creationDate.gt`
 - `creationDate.lt`
 
-```
-https://serverRoot/mefApi/legato/faultManagement/v1/modifyFaultManagementJob?state=acknowledged&limit=10&offset=0
-```
-
-The example above shows a Buyer's/Client's request to get all Modify Fault 
-Management Job objects that are in the `acknowledged` state. Additionally, 
-the Buyer/Client asks only for a first (`offset=0`) pack of 10 results 
-(`limit=10`) to be returned. The correct response (HTTP code `200`) 
-in the response body contains a list of `ModifyFaultManagementJob_Find` objects
-matching the criteria. Details related to pagination are described in [section 7.1.2](#712-response-pagination).
-
 **[R29]** The Seller **MUST** include following attributes (if set) in the
 `ModifyFaultManagementJob_Find` object in the response: 
 
@@ -1460,7 +1476,7 @@ A response to a Get by Identifier for a `ModifyFaultManagementJob` with
 `id=9c51d971-185d-403e-952f-2110f33a9628` would return exactly the same response 
 as presented in [section 6.4.3](#643-modify-fault-management-job-response).
 
-**[R31]** In case `id` does not allow finding a `ModifyFaultManagementJob` in 
+**[R31]** In case `id` does not match a `ModifyFaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
 **[R32]** The Seller/Server **MUST** include following attributes in the
@@ -1506,15 +1522,6 @@ The two patterns are presented in the following diagrams.
 
 **Figure 22. Cancel Fault Management Job progress tracking - Polling**
 
-**_Note_**: The Cancel Fault Management Job process is altering the state 
-of the job itself. It is important to note that notifications resulting
-from changes in the state of the Fault Management Job are not represented 
-in Figures 21 and 22. 
-
-**_Note_**: The context of notifications is not a part of the considered use
-case itself. It is presented to show the big picture of end-to-end flow. This
-applies also to all further use case flow diagrams with notifications.
-
 ### 6.7.2. Cancel Fault Management Job Request
 
 Figure 23 presents the most important part of the data model used during 
@@ -1558,7 +1565,7 @@ The example below shows a request to create a cancellation process for
 ```
 
 **[R34]** The Buyer’s/Client’s Cancel FM Job request **MUST** include 
-the FM Job Identifier. [MEF133.1 R10]
+the FM Job Identifier. [MEF W133.1 R10]
 
 ### 6.7.3. Cancel Fault Management Job Response
 
@@ -1567,10 +1574,6 @@ are presented in Figure 23. The Seller/Server responds with
 a `CancelFaultManagementJob` type, which adds some attributes 
 (like `id` or `state`) to the `CancelFaultManagementJob_Create` that was used 
 in the Buyer/Client request.
-
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
 
 The following snippet presents the Seller/Server response. It has the same 
 structure as in the retrieve by identifier operation.
@@ -1582,7 +1585,7 @@ structure as in the retrieve by identifier operation.
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
   "creationDate": "2025-01-02T00:00:00.000Z", << added by SOF >>
-  "href": "{{baseUrl}}/faultManagement/v1/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
+  "href": "{{baseUrl}}/faultManagement/v2/aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
   "id": "aea2769a-23f3-4ddc-b095-542a63b12481", << added by SOF >>
   "state": "acknowledged" << added by SOF >>
 }
@@ -1603,25 +1606,22 @@ response:
 **[R37]** The `id` **MUST** remain the same value for the life of the Cancel 
 Fault Management Job.
 
-**[R38]** The Seller’s/Server’s response to the Buyer’s/Client’s Cancel FM Job
-request **MUST** indicate if the request is Accepted or Declined. [MEF133.1 R11]
-
 **[R39]** If the Seller/Server accepts the Buyer’s/Client’s Cancel FM Job 
-request, the Job **MUST** stop. [MEF133.1 R12]
+request, the Job **MUST** stop. [MEF W133.1 R12]
 
 **[R40]** If the Seller/Server declines the Buyer’s/Client’s Cancel FM Job 
-request, the Job **MUST NOT** stop. [MEF133.1 R13]
+request, the Job **MUST NOT** stop. [MEF W133.1 R13]
 
 **[R41]** If the Seller/Server declines the Client’s Cancel FM Job request,
-they **MUST** provide a reason the request was declined. [MEF133.1 R14]
+they **MUST** provide a reason the request was declined. [MEF W133.1 R14]
 
 In case Seller/Server cannot successfully validate the request, Cancel 
 Fault Management Job process fails, which results in setting the state 
-to `rejected` with a proper explanation in `cancellationDeniedReason`. 
-This includes situation when:
-- `id` does not allow to find a `FaultManagementJob` that is to be cancelled in 
+to `rejected`. This includes situation when:
+- `id` does not match a `FaultManagementJob` that is to be cancelled in 
 Seller/Server's system
-- Fault Management Job is in a state that does not allow for cancellation.
+- Fault Management Job is in a state that does not allow for cancellation (any 
+  state other than `inProgress`, `suspended`, or `scheduled`).
 
 ### 6.7.4. Cancel Fault Management Job State Machine
 
@@ -1637,15 +1637,13 @@ validation passes a response is provided with `CancelFaultManagementJob` in
 `acknowledged` status. Next, the Seller/Server performs all the remaining 
 business and time-consuming validations. At this point, an Error response cannot
 be provided anymore, so the process moves to a `rejected` state if some issues 
-are found. The `CancelFaultManagementJob.cancellationDeniedReason` acts as 
-a placeholder to provide a detailed description of what caused the problem. If 
-validation is successful, `CancelFaultManagementJob` moves to the `inProgress`
-state. At this point, the related `FaultManagementJob` moves to a `pendingCancel`
-state, and the Seller/Server starts all necessary arrangements to provision 
-cancellation request. `FaultManagementJob` remains in the `pendingCancel` state 
-until the Cancel Fault Management Job process is finished and moved to the 
-`completed` state. This causes the `FaultManagementJob` state to change to 
-`cancelled`.
+are found. If validation is successful, `CancelFaultManagementJob` moves to 
+the `inProgress` state. At this point, the related `FaultManagementJob` moves 
+to a `pendingCancel` state, and the Seller/Server starts all necessary 
+arrangements to provision cancellation request. `FaultManagementJob` remains 
+in the `pendingCancel` state until the Cancel Fault Management Job process is
+finished and moved to the `completed` state. This causes the `FaultManagementJob`
+state to change to `cancelled`.
 
 Description and mapping of the Cancel Fault Management Job States are the same
 as in table 9.
@@ -1663,17 +1661,6 @@ criteria.
 - `state`
 - `creationDate.gt`
 - `creationDate.lt`
-
-```
-https://serverRoot/mefApi/legato/faultManagement/v1/cancelFaultManagementJob?state=acknowledged&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Cancel Fault 
-Management Job objects that are in the `acknowledged` state. Additionally, 
-the Buyer/Client asks only for a first (`offset=0`) pack of 10 results 
-(`limit=10`) to be returned. The correct response (HTTP code `200`) in 
-the response body contains a list of `CancelFaultManagementJob_Find` objects
-matching the criteria. Details related to pagination are described in [section 7.1.2](#712-response-pagination).
 
 **[R42]** The Seller **MUST** include following attributes in the
 `CancelFaultManagementJob_Find` object in the response: 
@@ -1709,7 +1696,7 @@ A response to a Get by Id for a `CancelFaultManagementJob` with
 `id=aea2769a-23f3-4ddc-b095-542a63b12481` would return exactly the same response
 as presented in [section 6.7.3](#673-cancel-fault-management-job-response).
 
-**[R44]** In case `id` does not allow finding a `CancelFaultManagementJob` in 
+**[R44]** In case `id` does not match a `CancelFaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
 **[R45]** The Seller/Server **MUST** include following attributes in the
@@ -1730,9 +1717,6 @@ The Buyer/Client may request to suspend a Fault Management Job by using
 providing the `id` of the Fault Management Job in the path and has an empty 
 `204` confirmation response.
 
-**[R47]** The Buyer/Client’s Suspend FM Job request **MUST** include the FM Job
-Identifier. [MEF133.1 15]
-
 The sequence diagram in Figure 26 presents this use case in detail.
 
 ![Figure 26: Use Case 10](media/useCase10.png)
@@ -1750,27 +1734,21 @@ response to a suspension request optionally followed by
 When the Fault Management Job is suspended, it does not generate 
 Fault Management Reports.
 
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
-
-**[R48]** In case `id` does not allow to find a `FaultManagementJob` that is to be
+**[R48]** In case `id` does not match a `FaultManagementJob` that is to be
 suspended, an error response `Error404` **MUST** be returned. 
 
-**[R49]** The FM Job **MUST** be in the In-Progress state to be Suspended. [MEF133.1 16]
-
-**[R50]** The Seller/Server’s response to the Client’s Suspend FM Job request 
-**MUST** indicate if the request is Accepted or Declined. [MEF133.1 R17]
+**[R49]** The FM Job **MUST** be in the `inProgress` state to be suspended. [MEF W133.1 16]
 
 **[R51]** If the Seller/Server accepts the Client’s Suspend FM Job request,
-the Job **MUST** be suspended. [MEF133.1 R18]
+the Job **MUST** be suspended. [MEF W133.1 R18]
 
 **[R52]** If the Seller/Server declines the Buyer/Client’s suspend FM Job 
-request, the Job **MUST NOT** be suspended. [MEF133.1 R19]
+request, the Job **MUST NOT** be suspended. [MEF W133.1 R19]
 
-**[R53]** If the Seller/Server declines the Buyer/Client’s suspend FM Job 
-request, they **MUST** provide a reason why the request was declined. 
-[MEF133.1 R20]
+**[R53]** If the Seller/Server declines the Buyer/Client’s request to suspend 
+a Performance Job, they **MUST** provide an Error with a meaningful explanation
+in `reason` field.
+[MEF W133.1 R20]
 
 ## 6.11. Use Case 11: Resume Fault Management Job
 
@@ -1778,8 +1756,6 @@ The Buyer/Client may request to resume a Fault Management Job by using
 `POST /faultManagementJob/{{id}}/resume` endpoint. This operation only requires
 providing the `id` of the Fault Management Job in the path and has an empty 
 `204` confirmation response.
-
-**[R54]** The Client’s Resume FM Job request **MUST** include the Job Identifier. [MEF133.1 R21]
 
 The sequence diagram in Figure 27 presents this use case in detail.
 
@@ -1795,29 +1771,22 @@ Job to `scheduled` or `inProgress` status depending on the schedule, and sends
 a successful response to a resumption request optionally followed by 
 `faultManagementJobStateChangeEvent`.
 
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
-
-**[R55]** In case `id` does not allow to find a `FaultManagementJob` 
+**[R55]** In case `id` does not match a `FaultManagementJob` 
 that is to be resumed, an error response `Error404` **MUST** be returned. 
 
-**[R56]** The FM Job **MUST** be in the Suspended state. [MEF133.1 R22]
-
-**[R57]** The Seller/Server's response to the Buyer/Client’s Resume FM Job 
-request **MUST** indicate if the request is Accepted or Declined. 
-[MEF133.1 R23]
+**[R56]** The FM Job **MUST** be in the `suspended` state. [MEF W133.1 R22]
 
 **[R58]** If the Seller/Server accepts the Client’s Resume FM Job request, 
-the Job **MUST** be resumed and return to the In-Progress or Scheduled state. [MEF133.1 R24]
+the Job **MUST** be resumed and return to the `inProgress` or `scheduled` state. [MEF W133.1 R24]
 
 **[R59]** If the Seller/Server declines the Buyer/Client’s Resume FM Job 
-request, the FM Job **MUST NOT** be resumed. [MEF133.1 R25]
+request, the FM Job **MUST NOT** be resumed. [MEF W133.1 R25]
 
-**[R60]** If the Seller/Server declines the Buyer/Client’s Resume FM Job
-request, they **MUST** provide a reason the request was declined. [MEF133.1 26]
+**[R60]** If the Seller/Server declines the Buyer/Client’s request to resume
+a Performance Job, they **MUST** provide an Error with a meaningful explanation
+in `reason` field. [MEF W133.1 26]
 
-## 6.12. Use Case 12: Create Fault Management Job Complex Query
+## 6.12. Use Case 12: Fault Management Job Complex Query
 
 The `FaultManagementJob` defines complex structures with multiple levels of 
 nesting, such as `scheduleDefinition`. To facilitate filtering based on these 
@@ -1826,9 +1795,9 @@ This endpoint allows filtering by values defined by the `FaultManagementJob`
 and returns a list of `FaultManagementJob` objects that match the specified 
 filters.
 
-### 6.12.1. Create Fault Management Job Complex Query Request
+### 6.12.1. Fault Management Job Complex Query Request
 
-Figure 28 depicts the key components of the data model utilized in the Create
+Figure 28 depicts the key components of the data model utilized in the 
 Fault Management Job Complex Query request (`POST /faultManagementJobComplexQuery`) 
 and its corresponding response. The request message model,
 `FaultManagementJobComplexQuery_Create`, is a subset of the 
@@ -1844,16 +1813,16 @@ the API specification which is an integral part of this standard.
 
 **Figure 28. Fault Management Job Complex Query Key Entities**
 
-To send a request the Buyer/Client uses the `createFaultManagementJobComplexQuery`
-operation from the API. The snippet below presents an example of a Create 
-Fault Management Job Complex Query request. It filters for `FaultManagementJob`
+To send a request the Buyer/Client uses the `faultManagementJobComplexQuery`
+operation from the API. The snippet below presents an example of a Fault 
+Management Job Complex Query request. It filters for `FaultManagementJob`
 objects that:
 
 - have granularity set to 1 minute
 - run on a schedule with the recurring frequency set to every full hour
 - are in a `scheduled` state
 
-**`Fault Management Job Complex Query` Create Request**
+**`Fault Management Job Complex Query` Request**
 
 ```json
 {
@@ -1872,20 +1841,16 @@ objects that:
 }
 ```
 
-### 6.12.2. Create Fault Management Job Complex Query Response
+### 6.12.2. Fault Management Job Complex Query Response
 
-Entities used for providing a response to Create Fault Management Job Complex 
+Entities used for providing a response to Fault Management Job Complex 
 Query request are presented in Figure 28. The Seller/Server responds with a list
 of `FaultManagementJobComplexQuery` objects, which represent matched Fault 
 Management Jobs. 
 
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
-
 The following snippet presents the Seller/Server response. 
 
-**`Fault Management Job Complex Query` Create Response**
+**`Fault Management Job Complex Query` Response**
 
 ```json
 [
@@ -1919,8 +1884,18 @@ The following snippet presents the Seller/Server response.
       "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
       "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
     },
-    "servicePayloadSpecificAttributes": {
-      "@type": "urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all"
+    "serviceSpecificConfiguration": {
+      "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+      "sourceIpAddress": "192.0.2.1",
+      "destinationIpAddress": "192.0.2.2",
+      "transmissionInterval": {
+        "amount": 1,
+        "units": "seconds"
+      },
+      "count": 10,
+      "packetSize": 128,
+      "timeout": 5,
+      "waitTime": 2
     },
     "state": "scheduled"
   }
@@ -1950,34 +1925,18 @@ The Buyer/Client can retrieve a list of `FaultManagementReport` objects by using
 - `outputFormat`
 - `resultFormat`
 
-```
-https://serverRoot/mefApi/legato/faultManagement/v1/faultManagementReport?state=completed&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Fault Management 
-Report objects that are in the `completed` state. Additionally, 
-the Buyer/Client asks only for a first (`offset=0`) pack of 10 results 
-(`limit=10`) to be returned. 
-Details related to pagination are described in [section 7.1.2](#712-response-pagination)
-The correct response (HTTP code `200`) in the response body contains a list of 
-`FaultManagementReport_Find` objects matching the criteria. 
-`FaultManagementReport_Find` object is a subset of all Fault Management Report
-attributes. In particular, it does not contain the collected measurements. 
-To get all details, the Buyer/Client has to query a specific 
-`FaultManagementReport` by its `id`. 
-
 **[R61]** The Seller/Server **MUST** support the retrieval of a List of 
-Fault Management Reports Use Case. [MEF133.1 R33]
+Fault Management Reports Use Case. [MEF W133.1 R33]
 
 **[R62]** The Buyer/Client **MUST** support the retrieval of a List of 
-Fault Management Reports Use Case. [MEF133.1 R34]
+Fault Management Reports Use Case. [MEF W133.1 R34]
 
 **[R63]** The Seller/Server's response to the Buyer’s/Client’s retrieve List 
 of Fault Management Reports **MUST** include the following attributes as 
-applicable: [MEF133.1 R35]
+applicable: [MEF W133.1 R35]
 
-- Description
-- Report ID
+- `description`
+- `id`
 
 **[R64]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
@@ -2013,13 +1972,13 @@ Table 10 presents the list of `status` names and their descriptions.
 | failed       | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
 | inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
 | rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
-
+In case id does not 
 **Table 10. Fault Management Report State Machine states**
 
 **[R65]** The Seller/Server **MUST** support all Fault Management Report 
 statuses and their associated transitions as described in Figure 30 and Table 10. 
 
-## 6.14. Use Case 14: Retrieve Fault Management Report by Report Identifier
+## 6.14. Use Case 14: Retrieve Fault Management Report by Identifier
 
 The Buyer/Client can get detailed information about a Fault Management Report
 from the Seller/Server by using a `GET /faultManagementReport/{{id}}` operation.
@@ -2055,7 +2014,23 @@ A response to Get by Identifier request is presented in the following snippet.
       },
       "measurementDataPoints": [
         {
-          "@type": "urn:mef:lso:spec:legato:ip-fault-management-results:v0.0.1:all"
+          "@type": "urn:mef:lso:spec:legato:ping-report:v0.0.1:all",
+          "numberOfTxPackets": 10,
+          "numberOfRxPackets": 9,
+          "minimumRoundTripDelay": {
+            "amount": 2,
+            "units": "ms"
+          },
+          "averageRoundTripDelay": {
+            "amount": 5,
+            "units": "ms"
+          },
+          "maximumRoundTripDelay": {
+            "amount": 8,
+            "units": "ms"
+          },
+          "countOfLostPackets": 1,
+          "percentageOfLostPackets": 10.0
         }
       ]
     }
@@ -2079,23 +2054,23 @@ A response to Get by Identifier request is presented in the following snippet.
 if they were previously set by the Buyer or the Seller. 
 
 **[R68]** The results regardless of the format **MUST** contain the FM results
-as specified with FM Job request. [MEF133.1 R36]
+as specified with FM Job request. [MEF W133.1 R36]
 
-**[R69]** In case `id` does not allow finding a `FaultManagementReport` in 
+**[R69]** In case `id` does not match `FaultManagementReport` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-## 6.15. Use Case 15: Create Fault Management Report Complex Query
+## 6.15. Use Case 15: Fault Management Report Complex Query
 
 The `FaultManagementReport` defines complex structures with multiple levels of 
-nesting, such as `servicePayloadSpecificAttributes`. To facilitate filtering
+nesting, such as `serviceSpecificConfiguration`. To facilitate filtering
 based on these structures, the API provides an additional endpoint 
 `POST /faultManagementReportComplexQuery`. This endpoint allows filtering by values
 defined by the `FaultManagementReport` and `FaultManagementJob` types and returns 
 a list of Fault Management Report objects that match the specified filters.
 
-### 6.15.1. Create Fault Management Report Complex Query Request
+### 6.15.1. Fault Management Report Complex Query Request
 
-Figure 31 depicts the key components of the data model utilized in the Create
+Figure 31 depicts the key components of the data model utilized in the 
 Fault Management Report Complex Query request (`POST /faultManagementReportComplexQuery`)
 and its corresponding response. The request message model,
 `FaultManagementReportComplexQuery_Create`, is a subset of the 
@@ -2111,15 +2086,15 @@ the API specification which is an integral part of this standard.
 
 **Figure 31. Fault Management Report Complex Query Key Entities**
 
-To send a request the Buyer/Client uses the `createFaultManagementReportComplexQuery`
-operation from the API. The snippet below presents an example of a Create Fault
+To send a request the Buyer/Client uses the `faultManagementReportComplexQuery`
+operation from the API. The snippet below presents an example of a Fault
 Management Report Complex Query request. It filters for Fault Management Report
 objects that:
 - were created between 2025-01-01 00:00:00 and 2025-01-02 00:00:00
 - Output format is JSON
-- relate to specified Service Id From
+- relate to specific Ordered Pair (Service Id From/To)
 
-**`Fault Management Report Complex Query` Create Request**
+**`Fault Management Report Complex Query` Request**
 
 ```json
 {
@@ -2133,20 +2108,16 @@ objects that:
 }
 ```
 
-### 6.15.2. Create Fault Management Report Complex Query Response
+### 6.15.2. Fault Management Report Complex Query Response
 
-Entities used for providing a response to Create Fault Management Report 
+Entities used for providing a response to Fault Management Report 
 Complex Query requests are presented in Figure 31. The Seller/Server responds 
 with a list of `FaultManagementReportComplexQuery` objects, which represent 
 matched Fault Management Reports. 
 
-**_Note_**: The term "Response Code" used in the Business Requirements
-maps to HTTP response code, where `2xx` indicates _Success_ and `4xx` or `5xx`
-indicate _Failure_.
-
 The following snippet presents the Seller/Server response. 
 
-**`Fault Management Report Complex Query` Create Response**
+**`Fault Management Report Complex Query` Response**
 
 ```json
 [
@@ -2193,19 +2164,6 @@ contain none or more of the following attributes:
 - `creationDate.lt`
 - `user`
 
-```
-https://serverRoot/mefApi/legato/faultManagement/v1/trackingRecord?relatedObjectId=755e55e2-72b0-4e3b-af00-693e3beac691&limit=10&offset=0
-```
-
-The example above shows a Buyer/Client's request to get all Tracking Record 
-objects that are related to the object with 
-`id=755e55e2-72b0-4e3b-af00-693e3beac691`. Additionally, the Buyer/Client asks 
-only for a first (`offset=0`) pack of 10 results (`limit=10`) to be returned. 
-The correct response (HTTP code `200`) in the response body contains a list of 
-`TrackingRecord_Find` objects matching the criteria. To get all the details, the 
-Buyer/Client has to query a specific `TrackingRecord` by its `id`. Details 
-related to pagination are described in [section 7.1.2](#712-response-pagination)
-
 **[R70]** The Seller/Server **MUST** include following attributes (if set) in 
 the `TrackingRecord_Find` object in the response: 
 
@@ -2236,7 +2194,7 @@ Get List and Get by Identifier operations return different representations
 of Tracking Record. Get List returns the `TrackingRecord_Find` object which is a 
 subset of `TrackingRecord` returned by the Get by Identifier operation. 
 
-**[R73]** In case `id` does not allow finding a `TrackingRecord` in 
+**[R73]** In case `id` does not match a `TrackingRecord` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned.
 
 **[R74]** The Seller/Server **MUST** include following attributes in the
@@ -2249,7 +2207,7 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 The full list of attributes of the Tracking Record is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-## 6.18. Use Case 18: Register for Notifications
+## 6.18. Use Case 18: Register for notifications
 
 The Buyer/Client can track the lifecycle of the Fault Management objects by
 subscribing to notifications. An exemplary use case for exchanging 
@@ -2259,7 +2217,7 @@ notifications is presented in Figure 33.
 
 **Figure 33. Fault Management Notification Example**
 
-The Seller/Server communicates with the Buyer/Client with Notifications 
+The Seller/Server communicates with the Buyer/Client with notifications 
 provided that:
 
 - Buyer/Client supports a notification mechanism
@@ -2272,7 +2230,7 @@ operation from the API: `POST /hub`. The request contains only 2 attributes:
   notified to,
 - `query` - optional, to provide the required types of event.
 
-Figure 34 shows all entities involved in the Notification use cases.
+Figure 34 shows all entities involved in the notification use cases.
 
 ![Figure 34: Fault Management Notification Data Model](media/faultManagementNotificationModel.png)
 
@@ -2297,15 +2255,12 @@ notification of all types of events. Those are:
 }
 ```
 
-**[R75]** The Client request **MUST** contain the following: [MEF133.1 R27]
-- FM Job Notification Target Information
-- List of Job Notification Types
+**[R75]** The Client request **MUST** contain the following: [MEF W133.1 R27]
+- `callback`
+- `query`
 
-**[R76]** The Seller/Server **MUST** respond to the Client’s Register for FM Job
-Notifications request to indicate that the request was accepted or rejected. [MEF133.1 R28]
-
-**[R77]** If the Seller/Server rejects the Client’s Register for FM Job 
-Notifications request, the response **MUST** include a reason for the rejection. [MEF133.1 R29]
+**[R77]** If the Seller/Server rejects the Client’s Register for FM 
+Notifications request, the response **MUST** include a reason for the rejection. [MEF W133.1 R29]
 
 If the Buyer/Client wishes to receive only notifications of a certain type, 
 a `query` must be added:
@@ -2318,7 +2273,7 @@ a `query` must be added:
 ```
 
 If the Buyer/Client wishes to subscribe to two different types of events, there 
-are two possible syntax variants [[TMF630](#8-references)]:
+are two possible syntax variants [[TMF 630](#8-references)]:
 
 ```
 eventType=faultManagementJobStateChangeEvent,faultManagementJobReportReadyEvent
@@ -2330,7 +2285,7 @@ or
 eventType=faultManagementJobStateChangeEvent&eventType=faultManagementJobReportReadyEvent
 ```
 
-The `query` formatting complies with RFC3986 [RFC3986](#8-references).
+The `query` formatting complies with RFC3986 [RFC 3986](#8-references).
 According to it, every attribute defined in the Event model (from notification
 API) can be used in the `query`. However, this standard requires only
 `eventType` attribute to be supported.
@@ -2346,12 +2301,12 @@ subscription to the message that must be further used for unsubscribing.
 }
 ```
 
-Example of a final address that the Notifications will be sent to (for
+Example of a final address that the notifications will be sent to (for
 `faultManagementJobStateChangeEvent`):
 
-`https://bus.com/listenerEndpoint/mefApi/legato/faultNotification/v1/listener/faultManagementJobStateChangeEvent`
+`https://bus.com/listenerEndpoint/mefApi/legato/faultNotification/v2/listener/faultManagementJobStateChangeEvent`
 
-## 6.19. Use Case 19: Send Notification
+## 6.19. Use Case 19: Send notification
 
 Notifications are used to asynchronously inform the Buyer/Client about the 
 respective objects and attributes changes.
@@ -2361,9 +2316,9 @@ of `FaultManagementJob` assuming that Buyer/Client subscribed to all event types
 
 ![Figure 35: Fault Management Job lifecycle](media/notificationsForFaultManagementJob.png)
 
-**Figure 35. Fault Management Job lifecycle with all Notifications**
+**Figure 35. Fault Management Job lifecycle with all notifications**
 
-After a successful Notification subscription, the Seller/Server sends a 
+After a successful notification subscription, the Seller/Server sends a 
 `FaultManagementJob` create request. The SOF responds with `FaultManagementJob` 
 in an `acknowledged` state. Creation of `FaultManagementJob` is notified 
 with a `faultManagementJobCreateEvent`. When the validation is successful 
@@ -2405,26 +2360,28 @@ The following snippets present an example of `faultManagementJobCreateEvent` and
 }
 ```
 
-**_Note_**: the body of the event carries only the source object's `id`. The
-Buyer/Client needs to query it later by `id` to get details. 
+**_Note_**: The body of the event doesn't contain all details of the object. 
+The Buyer/Client needs to query it later by `id` to get details. 
 
 **_Note:_** The state change notification is sent only when the state
 attribute changes its value. There are no status change notifications
 sent upon Fault Management Job creation.
 
 **[R78]** The Seller/Server FM Notifications **MUST** be sent to Buyer/Clients
-who have subscribed to FM Notifications. [MEF133.1 R30]
+who have subscribed to FM Notifications. [MEF W133.1 R30]
 
 **[R79]** The Seller/Server FM Notifications **MUST NOT** be sent 
-to Buyer/Clients who have not subscribed to FM Notifications. [MEF133.1 R31]
+to Buyer/Clients who have not subscribed to FM Notifications. [MEF W133.1 R31]
 
 **[R80]** The Seller/Server’s FM Notification **MUST** include the following
-attributes: [MEF133.1 R32]
-- FM Notification Type
-- FM Notification Identifier
+attributes: [MEF W133.1 R32]
+- `eventType`
+- `eventId`
+- `eventTime`
+- object that trigerred the notification
 
 **[R81]** If the Buyer/Client registered for FM Notifications, the Seller/Server
-**MUST** notify the Buyer/Client when FM Job results are available. [MEF133.1 R5]
+**MUST** notify the Buyer/Client when FM Job results are available. [MEF W133.1 R5]
 
 To stop receiving events, the Buyer/Client has to use the `unregisterListener`
 operation from the `DELETE /hub/{id}` endpoint. The `id` is the identifier
@@ -2721,29 +2678,6 @@ Inherits from:
     </tbody>
 </table>
 
-### 7.1.2. Response pagination
-
-A response to retrieve a list of results (e.g. `GET /faultManagementJob`) can
-be paginated. The Buyer/Client can specify the following query attributes
-related to pagination:
-
-- `limit` - number of expected list items
-- `offset` - offset of the first element in the result list
-
-The filtering and pagination attributes must be specified in URI query format
-[RFC3986](#8-references).The Seller/Server returns a list of elements that 
-comply with the requested `limit`. If the requested `limit` is higher than the 
-supported list size the smaller list result is returned. In that case, the size 
-of the result is returned in the header attribute `X-Result-Count`. The Seller 
-can indicate that there are additional results available using:
-
-- `X-Total-Count` header attribute with the total number of available results
-- `X-Pagination-Throttled` header set to `true`
-
-**[R82]** Seller **MUST** use either `X-Total-Count` or
-`X-Pagination-Throttled` to indicate that the page was truncated and additional
-results are available.
-
 ## 7.2. Management API Data model
 
 Figure 37 presents the full Fault Management data model. The data types,
@@ -2817,9 +2751,9 @@ discussed later in this section.
             <td>Identifier of a Service.</td>
             <td>Service ID</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes*</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service fault management configuration.</td>
+            <td>serviceSpecificConfiguration*</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr>
     </tbody>
@@ -3131,9 +3065,9 @@ Inherits from:
             <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td>ServicePayloadSpecificAttributes is used as an extension point for  MEF-specific service fault management configuration. </td>
+            <td>serviceSpecificConfiguration</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration. </td>
             <td>Service Payload Specific Attributes</td>
         </tr>
     </tbody>
@@ -3231,7 +3165,7 @@ Inherits from:
 
 #### 7.2.1.13. Type FaultManagementJobComplexQuery_Create
 
-**Description:** Fault Management Job Complex Query entity is used to perform  searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServicePayloadSpecificAttributes.
+**Description:** Fault Management Job Complex Query entity is used to perform  searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServiceSpecificConfiguration.
 <table id="T_FaultManagementJobComplexQuery_Create">
     <thead style="font-weight:bold;">
         <tr>
@@ -3303,9 +3237,9 @@ Inherits from:
             <td>Identifier of a Service.</td>
             <td>Service ID</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td>ServicePayloadSpecificAttributes is used as an extension point for  MEF-specific service fault management configuration. </td>
+            <td>serviceSpecificConfiguration</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration. </td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
             <td>state</td>
@@ -3318,7 +3252,7 @@ Inherits from:
 
 #### 7.2.1.14. Type FaultManagementJobComplexQuery
 
-**Description:** Fault Management Job Complex Query entity is used to perform searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServicePayloadSpecificAttributes.
+**Description:** Fault Management Job Complex Query entity is used to perform searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServiceSpecificConfiguration.
 <table id="T_FaultManagementJobComplexQuery">
     <thead style="font-weight:bold;">
         <tr>
@@ -3390,9 +3324,9 @@ Inherits from:
             <td>Identifier of a Service.</td>
             <td>Service ID</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes*</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service fault management configuration.</td>
+            <td>serviceSpecificConfiguration*</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
             <td>state*</td>
@@ -3581,7 +3515,7 @@ Inherits from:
 
 #### 7.2.2.3. Type FaultManagementReportComplexQuery_Create
 
-**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServicePayloadSpecificAttributes.
+**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServiceSpecificConfiguration.
 <table id="T_FaultManagementReportComplexQuery_Create">
     <thead style="font-weight:bold;">
         <tr>
@@ -3658,9 +3592,9 @@ Inherits from:
             <td>Identifier of a Service.</td>
             <td>Service ID</td>
         </tr><tr>
-            <td>servicePayloadSpecificAttributes</td>
-            <td><a href="#T_ServicePayloadSpecificAttributes">ServicePayloadSpecificAttributes</a></td>
-            <td>ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service fault management configuration.</td>
+            <td>serviceSpecificConfiguration</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
             <td>Service Payload Specific Attributes</td>
         </tr><tr>
             <td>state</td>
@@ -3673,7 +3607,7 @@ Inherits from:
 
 #### 7.2.2.4. Type FaultManagementReportComplexQuery
 
-**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServicePayloadSpecificAttributes.
+**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServiceSpecificConfiguration.
 <table id="T_FaultManagementReportComplexQuery">
     <thead style="font-weight:bold;">
         <tr>
@@ -4094,7 +4028,7 @@ For example:
             <td>Not present</td>
         </tr><tr>
             <td>measurementDataPoints</td>
-            <td><a href="#T_ResultPayload">ResultPayload</a>[]</td>
+            <td><a href="#T_ServiceSpecificResult">ServiceSpecificResult</a>[]</td>
             <td>List of Fault Management Job results measured in the related timeframe.</td>
             <td>Not present</td>
         </tr>
@@ -4151,10 +4085,10 @@ For example:
     </tbody>
 </table>
 
-#### 7.2.3.11. Type ResultPayload
+#### 7.2.3.11. Type ServiceSpecificResult
 
-**Description:** ResultPayload is used as an extension point for MEF-specific fault management job results. The `@type` attribute is used as a discriminator.
-<table id="T_ResultPayload">
+**Description:** ServiceSpecificResult is used as an extension point for MEF-specific fault management job results. The `@type` attribute is used as a discriminator.
+<table id="T_ServiceSpecificResult">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4167,7 +4101,7 @@ For example:
         <tr>
             <td>@type*</td>
             <td>string</td>
-            <td>The name that uniquely identifies the type of results that are returned by the Fault Management Report. In the case of MEF services, this is the URN provided in the fault management results specification. The named type must be a subclass of ResultPayload.</td>
+            <td>The name that uniquely identifies the type of results that are returned by the Fault Management Report. In the case of MEF services, this is the URN provided in the fault management results specification. The named type must be a subclass of ServiceSpecificResult.</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -4237,10 +4171,10 @@ For example:
     </tbody>
 </table>
 
-#### 7.2.3.14. Type ServicePayloadSpecificAttributes
+#### 7.2.3.14. Type ServiceSpecificConfiguration
 
-**Description:** ServicePayloadSpecificAttributes is used as an extension point for MEF-specific service fault management configuration. The `@type` attribute is used as a discriminator.
-<table id="T_ServicePayloadSpecificAttributes">
+**Description:** ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration. The `@type` attribute is used as a discriminator.
+<table id="T_ServiceSpecificConfiguration">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4253,7 +4187,7 @@ For example:
         <tr>
             <td>@type*</td>
             <td>string</td>
-            <td>Uniquely identifies the type of fault management job configuration. In the case of MEF services, this is the URN provided in the fault management configuration specification. The named type must be a  subclass of ServicePayloadSpecificAttributes.</td>
+            <td>Uniquely identifies the type of fault management job configuration. In the case of MEF services, this is the URN provided in the fault management configuration specification. The named type must be a  subclass of ServiceSpecificConfiguration.</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -4360,7 +4294,7 @@ The below sections describe data models related to this endpoint.
 
 #### 7.2.4.1. Type EventSubscriptionInput
 
-**Description:** This class is used to register for Notifications.
+**Description:** This class is used to register for notifications.
 <table id="T_EventSubscriptionInput">
     <thead style="font-weight:bold;">
         <tr>
@@ -4374,7 +4308,7 @@ The below sections describe data models related to this endpoint.
         <tr>
             <td>callback*</td>
             <td>string</td>
-            <td>This callback value must be set to the *host* property from Fault  Management Notification API (faultNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.co/listenerEndpoint&quot;, the Fault Management Job state change event notification will be sent to &#x60;https://buyer.co/listenerEndpoint/mefApi/legato/faultManagement/v1/listener/faultManagementJobStateChangeEvent&#x60;</td>
+            <td>This callback value must be set to the *host* property from Fault Management Notification API (faultNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.co/listenerEndpoint&quot;, the Fault Management Job state change event notification will be sent to &#x60;https://buyer.co/listenerEndpoint/mefApi/legato/faultManagement/v2/listener/faultManagementJobStateChangeEvent&#x60;</td>
             <td>Notification Target Information</td>
         </tr><tr>
             <td>query</td>
@@ -4883,35 +4817,26 @@ Inherits from:
   documents, by Austin Wright and Henry Andrews, March 2018. Copyright © 2018
   IETF Trust and the persons identified as the document authors. All rights
   reserved.
-- [MEF55.1]
-  [MEF 55.1](https://www.mef.net/wp-content/uploads/2021/02/MEF-55.1.pdf),
+- [MEF 55.1](https://www.mef.net/wp-content/uploads/2021/02/MEF-55.1.pdf),
   Lifecycle Service Orchestration (LSO): Reference Architecture and Framework,
   February 2021
-- [MEF128] [MEF 128](https://www.mef.net/wp-content/uploads/MEF-128.pdf), LSO
-  API Security Profile, July 2022
-- [MEFW133.1](https://www.mef.net/wp-content/uploads/MEF-133.1.pdf)
-  Allegro, Interlude and Legato Fault Management and Alarm API BR&UC, January 2025
-- [MEF152] [MEF 152]
-  Carrier Ethernet Payload Schema/Guide for SOAM
-- [MEF153] [MEF 153]
-  IP/IPVPN Schema/Guide for SOAM
-- [MEF154] [MEF 154]
-  SD-WAN Schema/Guide for SOAM
-- [OAS-v3] [Open API 3.0](http://spec.openapis.org/oas/v3.0.3.html), February
-  2020
-- [REST]
-  [Chapter 5: Representational State Transfer (REST)](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
+- [MEF 128.1](https://www.mef.net/wp-content/uploads/MEF-128.pdf), LSO
+  API Security Profile, April 2024
+- [MEF W133.1](https://www.mef.net/wp-content/uploads/MEF-133.1.pdf)
+  Allegro, Interlude and Legato Fault Management and Alarm API BR&UC 
+  Working Draft 2, July 2025
+- [Open API 3.0](http://spec.openapis.org/oas/v3.0.3.html), February 2020
+- [Chapter 5: Representational State Transfer (REST)](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
   Fielding, Roy Thomas, Architectural Styles and the Design of Network-based
   Software Architectures (Ph.D.).
-- [RFC2119] [RFC 2119](https://tools.ietf.org/html/rfc2119), Key words for use
+- [RFC 2119](https://tools.ietf.org/html/rfc2119), Key words for use
   in RFCs to Indicate Requirement Levels, by S. Bradner, March 1997
-- [RFC3986] [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3) Uniform
+- [RFC 3986](https://tools.ietf.org/html/rfc3986#section-3) Uniform
   Resource Identifier (URI): Generic Syntax, January 2005
-- [RFC8174] [RFC 8174](https://tools.ietf.org/html/rfc8174), Ambiguity of
+- [RFC 8174](https://tools.ietf.org/html/rfc8174), Ambiguity of
   Uppercase vs Lowercase in RFC 2119 Key Words, by B. Leiba, May 2017,
   Copyright © 2017 IETF Trust and the persons identified as the document
   authors. All rights reserved.
-- [TMF630]
-  [TMF 630](https://www.tmforum.org/resources/specification/tmf630-rest-api-design-guidelines-4-2-0/)
+- [TMF 630](https://www.tmforum.org/resources/specification/tmf630-rest-api-design-guidelines-4-2-0/)
   TMF630 API Design Guidelines 4.2.0
 

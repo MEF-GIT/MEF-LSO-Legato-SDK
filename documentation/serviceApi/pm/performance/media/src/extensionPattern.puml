@@ -2,8 +2,8 @@
 skinparam {
     ClassBackgroundColor White
     ClassBorderColor Black
-    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
-    ClassBorderColor<<ResultPayload>> FireBrick
+    ClassBorderColor<<ServiceSpecificConfiguration>> FireBrick
+    ClassBorderColor<<ServiceSpecificResult>> FireBrick
 }
 set namespaceSeparator none
 
@@ -18,18 +18,18 @@ class PerformanceJob {
 }
 
 
-class ServicePayloadSpecificAttributes {
+class ServiceSpecificConfiguration {
     @type*: string <<discriminator>>
 }
 
 
-PerformanceJob *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+PerformanceJob *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-class urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all <<ServicePayloadSpecificAttributes>> {
+class urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all <<ServiceSpecificConfiguration>> {
 
     <<... attributes are skipped ...>>
 }
-ServicePayloadSpecificAttributes <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
+ServiceSpecificConfiguration <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
 
 
 
@@ -40,21 +40,26 @@ class PerformanceReport {
     <<... attributes are skipped ...>>
 }
 
+class ReportContentPerMonitoredObject { 
+    monitoredObject: MonitoredObjectRef
+}
+
 class ReportContentItem {
 
 }
-class ResultPayload {
+class ServiceSpecificResult {
     @type*: string <<discriminator>>
 }
 
-PerformanceReport *-->"0..*" ReportContentItem : reportContent
-ReportContentItem -->"*" ResultPayload : measurementDataPoints
+PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
+ReportContentPerMonitoredObject *-->"*" ReportContentItem : reportContentItem
+ReportContentItem -->"*" ServiceSpecificResult : measurementDataPoints
 
-class urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all <<ResultPayload>> {
+class urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all <<ServiceSpecificResult>> {
 
     <<... attributes are skipped ...>>
 }
-ResultPayload <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all"
+ServiceSpecificResult <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all"
 
 
 @enduml

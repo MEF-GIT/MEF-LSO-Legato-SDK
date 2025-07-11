@@ -5,71 +5,102 @@ skinparam {
 }
 
 class PerformanceProfile {
+
     creationDate*: date-time
     href: uri
     id*: string
+    isAssigned*: boolean
     lastModifiedDate: date-time
-    state*: PerformanceProfileStateType
 }
-PerformanceProfile_Common <|-- PerformanceProfile
+PerformanceProfile_Create <|-- PerformanceProfile
 
 class PerformanceProfileRef {
+
     performanceProfileHref: string
     performanceProfileId*: string
-}
-PerformanceProfileRefOrValue <|-- PerformanceProfileRef
-
-class PerformanceProfileRefOrValue {
     @type*: string
 }
 
-enum PerformanceProfileStateType {
-    active
-    deleted
+
+
+class PerformanceProfileRefOrValue {
+
 }
+
+
+
+class PerformanceProfileRefOrValue_Query {
+
+}
+
+
 
 class PerformanceProfileValue {
-    granularity*: Interval
-    jobPriority: integer
-    jobType*: JobType
-    outputFormat*: OutputFormat
-    reportingPeriod*: Interval
-    resultFormat*: ResultFormat
-}
-PerformanceProfileRefOrValue <|-- PerformanceProfileValue
 
-class PerformanceProfile_Common {
-    description: string
-    granularity*: Interval
     jobPriority: integer
     jobType*: JobType
     outputFormat*: OutputFormat
-    reportingPeriod*: Interval
     resultFormat*: ResultFormat
+    @type*: string
 }
+
+PerformanceProfileValue *-->"1" TimeDuration : granularity
+PerformanceProfileValue *-->"1" TimeDuration : reportingPeriod
+PerformanceProfileValue *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+
+
+
+class PerformanceProfileValue_Query {
+
+    jobPriority: integer
+    jobType: JobType
+    outputFormat: OutputFormat
+    resultFormat: ResultFormat
+    @type*: string
+}
+
+PerformanceProfileValue_Query *--> TimeDuration : granularity
+PerformanceProfileValue_Query *--> TimeDuration : reportingPeriod
+PerformanceProfileValue_Query *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
 
 class PerformanceProfile_Create {
-}
-PerformanceProfile_Common <|-- PerformanceProfile_Create
 
-class PerformanceProfile_Find {
-    creationDate*: date-time
     description: string
-    granularity*: Interval
-    id*: string
     jobPriority: integer
     jobType*: JobType
-    reportingPeriod*: Interval
-    state*: PerformanceProfileStateType
+    lifecycleStatus*: PerformanceProfileLifecycleStatusType
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
 }
 
+PerformanceProfile_Create *-->"1" TimeDuration : granularity
+PerformanceProfile_Create *-u->"1" TimeDuration : reportingPeriod
+PerformanceProfile_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+
 class PerformanceProfile_Update {
+
     description: string
-    granularity: Interval
     jobPriority: integer
+    lifecycleStatus: PerformanceProfileLifecycleStatusType
     outputFormat: OutputFormat
-    reportingPeriod: Interval
     resultFormat: ResultFormat
 }
+
+PerformanceProfile_Update *--> TimeDuration : granularity
+PerformanceProfile_Update *--> TimeDuration : reportingPeriod
+PerformanceProfile_Update *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+enum PerformanceProfileLifecycleStatusType {
+
+    approved
+    deprecated
+    experimental
+    pending
+}
+
+
 
 @enduml

@@ -35,15 +35,13 @@ note right of PJ: On scheduled date
 
 PJ -> PJ: state: inProgress
 
-PJ -> PJ: generate data
-
 PJ --> PR: (causes report creation)
 
 activate PR
 
 PR -> PR: state: inProgress
 
-PR -> PR: collect data
+PJ -> PR: collect data
 
 PR -> PR: state: completed
 

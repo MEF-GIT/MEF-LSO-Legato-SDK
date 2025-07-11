@@ -1,31 +1,99 @@
 @startuml performanceMonitoringNotificationModel
 
+class CancelPerformanceJobStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- CancelPerformanceJobStateChangeEvent
+
+CancelPerformanceJobStateChangeEvent *-u->"1" CancelPerformanceJobStateChangeEventPayload : event
+
+
+class CancelPerformanceJobStateChangeEventPayload {
+
+    href: string
+    id*: string
+    state*: PerformanceJobProcessStateType
+}
 class Event {
+
     eventId*: string
     eventTime*: date-time
 }
 
-class PerformanceJobEvent {
-    eventType*: PerformanceJobEventType
+
+
+class ModifyPerformanceJobStateChangeEvent {
+
+    eventType*: string
 }
-Event <|-u- PerformanceJobEvent
+Event <|-u- ModifyPerformanceJobStateChangeEvent
 
-PerformanceJobEvent *-u->"1" PerformanceJobEventPayload : event
+ModifyPerformanceJobStateChangeEvent *-u->"1" ModifyPerformanceJobStateChangeEventPayload : event
 
-class PerformanceJobEventPayload {
+
+class ModifyPerformanceJobStateChangeEventPayload {
+
     href: string
     id*: string
-    state: string
+    state*: PerformanceJobProcessStateType
 }
+
+
+
+class PerformanceJobAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-- PerformanceJobAttributeValueChangeEvent
+
+PerformanceJobAttributeValueChangeEvent *-->"1" PerformanceJobEventPayload : event
+
+
+class PerformanceJobCreateEvent {
+
+    eventType*: string
+}
+Event <|-- PerformanceJobCreateEvent
+
+PerformanceJobCreateEvent *-->"1" PerformanceJobEventPayload : event
+
+
+class PerformanceJobEventPayload {
+
+    href: string
+    id*: string
+}
+
+class PerformanceJobReportPreparationErrorEvent {
+
+    eventType*: string
+}
+Event <|-- PerformanceJobReportPreparationErrorEvent
+
+PerformanceJobReportPreparationErrorEvent *-->"1" PerformanceJobReportPreparationErrorEventPayload : event
+
+
+class PerformanceJobReportPreparationErrorEventPayload {
+
+    href: string
+    id*: string
+    reportPreparationFailedReason: string
+}
+
+
 
 class PerformanceJobReportReadyEvent {
-    eventType*: PerformanceJobReportReadyEventType
-}
-Event <|-- PerformanceJobReportReadyEvent
 
-PerformanceJobReportReadyEvent *-->"1" PerformanceJobReportReadyEventPayload : event
+    eventType*: string
+}
+Event <|-l- PerformanceJobReportReadyEvent
+
+PerformanceJobReportReadyEvent *-l->"1" PerformanceJobReportReadyEventPayload : event
+
 
 class PerformanceJobReportReadyEventPayload {
+
     href: string
     id*: string
     reportHref: string
@@ -33,83 +101,89 @@ class PerformanceJobReportReadyEventPayload {
 }
 
 
-class PerformanceJobReportPreparationErrorEvent {
-    eventType*: PerformanceJobReportPreparationErrorEventType
+
+class PerformanceJobStateChangeEvent {
+
+    eventType*: string
 }
-Event <|-- PerformanceJobReportPreparationErrorEvent
+Event <|-- PerformanceJobStateChangeEvent
 
-PerformanceJobReportPreparationErrorEvent *-->"1" PerformanceJobReportPreparationErrorEventPayload : event
+PerformanceJobStateChangeEvent *-->"1" PerformanceJobStateChangeEventPayload : event
 
-class PerformanceJobReportPreparationErrorEventPayload {
+
+class PerformanceJobStateChangeEventPayload {
+
     href: string
     id*: string
-    reportPreparationFailedReason*: string
+    state*: PerformanceJobStateType
 }
 
-class PerformanceJobProcessEvent {
-    eventType*: PerformanceJobProcessEventType
+class PerformanceProfileAttributeValueChangeEvent {
+
+    eventType*: string
 }
-Event <|-r- PerformanceJobProcessEvent
+Event <|-u- PerformanceProfileAttributeValueChangeEvent
 
-PerformanceJobProcessEvent *-d->"1" PerformanceJobProcessEventPayload : event
+PerformanceProfileAttributeValueChangeEvent *-u->"1" PerformanceProfileEventPayload : event
 
-class PerformanceJobProcessEventPayload {
-    href: string
-    id*: string
+
+class PerformanceProfileCreateEvent {
+
+    eventType*: string
 }
+Event <|-u- PerformanceProfileCreateEvent
 
-class PerformanceProfileEvent {
-    eventType*: PerformanceProfileEventType
+PerformanceProfileCreateEvent *-u->"1" PerformanceProfileEventPayload : event
+
+
+class PerformanceProfileDeleteEvent {
+
+    eventType*: string
 }
-Event <|-u- PerformanceProfileEvent
+Event <|-u- PerformanceProfileDeleteEvent
 
-PerformanceProfileEvent *-u->"1" PerformanceProfileEventPayload : event
+PerformanceProfileDeleteEvent *-u->"1" PerformanceProfileEventPayload : event
+
 
 class PerformanceProfileEventPayload {
+
     href: string
     id*: string
 }
 
-class PerformanceReportEvent {
-    eventType*: PerformanceReportEventType
-}
-Event <|-l- PerformanceReportEvent
 
-PerformanceReportEvent *-u->"1" PerformanceReportEventPayload : event
+
+class PerformanceReportCreateEvent {
+
+    eventType*: string
+}
+Event <|-r- PerformanceReportCreateEvent
+
+PerformanceReportCreateEvent *-r->"1" PerformanceReportEventPayload : event
+
 
 class PerformanceReportEventPayload {
+
     href: string
     id*: string
 }
 
-enum PerformanceReportEventType {
-    performanceReportCreateEvent
-    performanceReportStateChangeEvent
-}
 
-enum PerformanceJobProcessEventType {
-    cancelPerformanceJobStateChangeEvent
-    modifyPerformanceJobStateChangeEvent
-}
 
-enum PerformanceProfileEventType {
-    performanceProfileAttributeValueChangeEvent
-    performanceProfileCreateEvent
-    performanceProfileDeleteEvent
-}
+class PerformanceReportStateChangeEvent {
 
-enum PerformanceJobEventType {
-    performanceJobCreateEvent
-    performanceJobStateChangeEvent
-    performanceJobAttributeValueChangeEvent
+    eventType*: string
 }
+Event <|-- PerformanceReportStateChangeEvent
 
-enum PerformanceJobReportReadyEventType {
-    performanceJobReportReadyEvent
-}
+PerformanceReportStateChangeEvent *-->"1" PerformanceReportStateChangeEventPayload : event
 
-enum PerformanceJobReportPreparationErrorEventType {
-    performanceJobReportPreparationErrorEvent
+
+class PerformanceReportStateChangeEventPayload {
+
+    href: string
+    id*: string
+    state*: PerformanceReportStateType
 }
 
 @enduml

@@ -4,51 +4,19 @@ skinparam {
     ClassBorderColor Black
 }
 
-class PerformanceJobComplexQuery {
-    buyerJobId: string
-    consumingApplicationId: string
-    creationDate*: date-time
-    description: string
-    lastModifiedDate: date-time
-    producingApplicationId: string
-    state*: PerformanceJobStateType
-}
-
-PerformanceJobComplexQuery *-d->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJobComplexQuery *-u->"1" PerformanceJobRef : performanceJob
-PerformanceJobComplexQuery *-u->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJobComplexQuery *-l->"1" ScheduleDefinition : scheduleDefinition
-PerformanceJobComplexQuery *-l->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
 class PerformanceJobComplexQuery_Create {
+
     buyerJobId: string
     consumingApplicationId: string
     creationDate.gt: date-time
     creationDate.lt: date-time
-    description: string
-    granularity: Interval
-    jobPriority: integer
-    jobType: JobType
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
-    outputFormat: OutputFormat
-    performanceProfileId: string
     producingApplicationId: string
-    reportingPeriod: Interval
-    resultFormat: ResultFormat
     state: PerformanceJobStateType
 }
 
-PerformanceJobComplexQuery_Create *--> MonitoredObjectId : monitoredObjectId
+PerformanceJobComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+PerformanceJobComplexQuery_Create *--> PerformanceProfileRefOrValue_Query : performanceProfile
 PerformanceJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
-PerformanceJobComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-enum PerformanceJobProcessStateType {
-    acknowledged
-    completed
-    inProgress
-    rejected
-}
 
 
 @enduml

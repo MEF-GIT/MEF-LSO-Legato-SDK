@@ -5,59 +5,64 @@ skinparam {
 }
 
 class AttachmentURL {
-    retentionPeriod: string
-    url*: string
+
+    retentionPeriod: date-time
+    url*: uri
 }
 
-class EntityId {
-    entityId: string
+
+
+
+class EntityRef {
+
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
 }
-MonitoredObjectId <|-- EntityId
 
 class HourRange {
-    start: date-time
-    end: date-time
+
+    start*: string
+    end*: string
 }
 
-enum Interval {
-    10 milliseconds
-    100 milliseconds
-    1 second
-    10 seconds
-    1 minute
-    5 minutes
-    15 minutes
-    30 minutes
-    1 hour
-    24 hours
-    1 month
-    1 year
-}
+
 
 enum JobType {
+
     proactive
     on-demand
     passive
 }
 
-class MeasurementTime {
-    measurementStartDate: date-time
-    measurementEndDate: date-time
-    measurementInterval: Interval
+
+
+
+class MonitoredObjectRef {
+
 }
 
-class MonitoredObjectId {
-    @type*: string
-}
+
 
 enum OutputFormat {
+
     json
     xml
     avro
     csv
 }
 
+
+
+
+
+
+
+
+
 class RecurringSchedule {
+
     second: string
     minute: string
     hour: string
@@ -68,29 +73,80 @@ class RecurringSchedule {
 
 RecurringSchedule *-->"*" HourRange : hourRange
 
+
+
+
+
 enum ResultFormat {
+
     attachment
     payload
 }
-
 class ScheduleDefinition {
+
     scheduleDefinitionStartTime: date-time
     scheduleDefinitionEndTime: date-time
-    executionDuration: Interval
 }
+
 ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+ScheduleDefinition *--> TimeDuration : executionDuration
 
-class ServiceId {
-    serviceIdFrom*: string
-    serviceIdTo*: string
-}
-MonitoredObjectId <|-- ServiceId
 
-class ServicePayloadSpecificAttributes {
+class ServiceFromToRef {
+
+    serviceFrom*: object
+    serviceTo*: object
     @type*: string
 }
 
+
+
+class ServiceRef {
+
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+
+
+class ServiceSpecificConfiguration {
+
+    @type*: string
+}
+
+
+
+class ServiceSpecificResult {
+
+    @type*: string
+}
+
+
+
+class TimeDuration {
+
+    timeDurationValue*: integer
+    timeDurationUnits*: TimeDurationUnits
+}
+
+
+
+enum TimeDurationUnits {
+
+    NS
+    US
+    MS
+    SEC
+    MIN
+    HOUR
+    DAY
+    WEEK
+    MONTH
+    YEAR
+}
 class TrackingRecord {
+
     creationDate*: date-time
     description: string
     id*: string
@@ -100,12 +156,8 @@ class TrackingRecord {
     user: string
 }
 
-class TrackingRecord_Find {
-    creationDate*: date-time
-    description: string
-    id*: string
-    relatedObjectId*: string
-    user: string
-}
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
 
 @enduml

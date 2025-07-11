@@ -9,9 +9,7 @@ class PerformanceJob {
     rejectionReason: string
     state*: PerformanceJobStateType
 }
-PerformanceJob_Common <|-- PerformanceJob
-
-
+PerformanceJob_Create <|-- PerformanceJob
 
 enum PerformanceJobStateType {
 
@@ -24,9 +22,10 @@ enum PerformanceJobStateType {
     rejected
     resourcesUnavailable
     scheduled
-    suspended 
+    suspended
 }
-class PerformanceJob_Common {
+
+class PerformanceJob_Create {
 
     buyerJobId: string
     consumingApplicationId: string
@@ -34,20 +33,35 @@ class PerformanceJob_Common {
     producingApplicationId: string
 }
 
-class PerformanceJob_Create {
+PerformanceJob_Create *-u->"1" MonitoredObjectRef : monitoredObject
+PerformanceJob_Create *-->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Create *-u->"1" ScheduleDefinition : scheduleDefinition
+
+class PerformanceProfileRefOrValue {
 
 }
-PerformanceJob_Common <|-- PerformanceJob_Create
 
+class PerformanceProfileRef {
 
-PerformanceJob_Common *-u->"1" MonitoredObjectId : monitoredObjectId
-PerformanceJob_Common *-->"1" PerformanceProfileRefOrValue : performanceProfile
-PerformanceJob_Common *-u->"1" ScheduleDefinition : scheduleDefinition
-PerformanceJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-class ServicePayloadSpecificAttributes {
-
+    performanceProfileHref: string
+    performanceProfileId*: string
     @type*: string
 }
+
+class PerformanceProfileValue {
+
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
+    @type*: string
+}
+
+PerformanceProfileValue *-->"1" TimeDuration : granularity
+PerformanceProfileValue *-->"1" TimeDuration : reportingPeriod
+PerformanceProfileValue *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+PerformanceProfileRefOrValue <|-- PerformanceProfileRef
+PerformanceProfileRefOrValue <|-- PerformanceProfileValue
 
 @enduml

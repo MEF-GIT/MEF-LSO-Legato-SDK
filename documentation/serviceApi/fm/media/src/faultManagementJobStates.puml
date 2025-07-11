@@ -13,7 +13,7 @@ state validation_successful <<choice>>
  note top of validation_successful : Validation successful?
 
 state immediate <<choice>> 
- note left of immediate : Immediate start time?
+ note top of immediate : Immediate start time?
 
 state modification <<choice>> 
  note top of modification : Modification successful?
@@ -24,8 +24,10 @@ state resources <<choice>>
 state recurring <<choice>> 
  note left of recurring : Recurring job?
 
-state "inProgress" as inProgress
-state "resourcesUnavailable" as resourcesUnavailable
+state "inProgress" as in_progress
+state "resourcesUnavailable" as resource_unavailable
+
+state "pendingCancel" as pending_cancel
 
 ''' diagram'''
 [*] -d-> acknowledged
@@ -37,22 +39,22 @@ validation_successful -d-> rejected: No
 validation_successful -r-> immediate: Yes
 
 immediate -r-> scheduled: No
-scheduled -d-> pendingCancel: Cancel
+scheduled -d-> pending_cancel: Cancel
 scheduled -d-> resources: schedule start time
-resources -d-> resourcesUnavailable: No
-resources -l-> inProgress: Yes
+resources -d-> resource_unavailable: No
+resources -r-> in_progress: Yes
 
-immediate -d-> resources: Yes
-inProgress -d-> recurring
+immediate -r-> resources: Yes
+in_progress -d-> recurring
 recurring -d-> completed: No
 recurring -u-> immediate: Yes
 
-inProgress -d-> pendingCancel: Cancel
-inProgress -u-> suspended: Suspend
-suspended -r-> inProgress: Resume
-suspended -r-> pendingCancel: Cancel
+in_progress -d-> pending_cancel: Cancel
+in_progress -u-> suspended: Suspend
+suspended -r-> in_progress: Resume
+suspended -r-> pending_cancel: Cancel
 
-pendingCancel -> cancelled
+pending_cancel -> cancelled
 
 suspended -u-> modification: Modify
 modification -d-> suspended: No
@@ -63,11 +65,11 @@ modification -d-> scheduled: No
 
 modification -r-> pending: Yes
 
-pending -d-> immediate
+pending -r-> immediate
 
 rejected -d-> [*]
 completed -d-> [*]
 cancelled -d-> [*]
-resourcesUnavailable -d-> [*]
+resource_unavailable -d-> [*]
 
 @enduml

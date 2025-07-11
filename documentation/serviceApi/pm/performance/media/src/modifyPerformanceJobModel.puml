@@ -5,40 +5,32 @@ class ModifyPerformanceJob {
     creationDate*: date-time
     href: string
     id*: string
-    modificationDeniedReason: string
     state*: PerformanceJobProcessStateType
 }
-ModifyPerformanceJob_Common <|-- ModifyPerformanceJob
+ModifyPerformanceJob_Create <|-- ModifyPerformanceJob
 
-class ModifyPerformanceJob_Common {
+class ModifyPerformanceJob_Create {
 
     buyerJobId: string
     consumingApplicationId: string
     description: string
-    modificationReason: string
     producingApplicationId: string
 }
 
-ModifyPerformanceJob_Common *-->"0..1" ModifyPerformanceJob_PerformanceProfileValue : performanceProfile
-ModifyPerformanceJob_Common *-u->"0..1" ScheduleDefinition : scheduleDefinition
-ModifyPerformanceJob_Common *-u->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+ModifyPerformanceJob_Create *-l->"1" PerformanceJobRef : performanceJob
+ModifyPerformanceJob_Create *--> PerformanceProfileValue_Modify : performanceProfile
+ModifyPerformanceJob_Create *--> ScheduleDefinition : scheduleDefinition
 
-ModifyPerformanceJob *-d->"1" PerformanceJobRef : performanceJob
+class PerformanceProfileValue_Modify {
 
-class ModifyPerformanceJob_Create {
-    performanceJobId*: string
-
-}
-ModifyPerformanceJob_Common <|-l- ModifyPerformanceJob_Create
-
-class ModifyPerformanceJob_PerformanceProfileValue {
-
-    granularity: Interval
     jobPriority: integer
     outputFormat: OutputFormat
-    reportingPeriod: Interval
     resultFormat: ResultFormat
 }
+
+PerformanceProfileValue_Modify *--> TimeDuration : granularity
+PerformanceProfileValue_Modify *--> TimeDuration : reportingPeriod
+PerformanceProfileValue_Modify *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum PerformanceJobProcessStateType {
 

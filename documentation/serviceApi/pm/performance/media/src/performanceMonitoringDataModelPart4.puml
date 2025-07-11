@@ -5,6 +5,7 @@ skinparam {
 }
 
 class PerformanceReport {
+
     creationDate*: date-time
     failureReason: string
     href: uri
@@ -12,33 +13,23 @@ class PerformanceReport {
     lastModifiedDate: date-time
     state*: PerformanceReportStateType
 }
-PerformanceReport_Common <|-- PerformanceReport
+PerformanceReport_Create <|-- PerformanceReport
 
-PerformanceReport *-->"*" ReportContentItem : reportContent
-PerformanceReport *-u-> AttachmentURL : reportUrl
+PerformanceReport *--> PerformanceJobRef : performanceJob
+PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
+PerformanceReport *--> AttachmentURL : reportUrl
 
-class PerformanceReportComplexQuery {
-    creationDate*: date-time
-    description: string
-    lastModifiedDate: date-time
-    state*: PerformanceReportStateType
+class PerformanceJobRef {
+
+    performanceJobHref: string
+    performanceJobId*: string
 }
-PerformanceReportComplexQuery *-->"1" PerformanceJobRefOrValue : performanceJob
-PerformanceReportComplexQuery *-->"1" PerformanceReportRef : performanceReport
-PerformanceReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
-
 
 class PerformanceReportComplexQuery_Create {
-    consumingApplicationId: string
+
     creationDate.gt: date-time
     creationDate.lt: date-time
-    description: string
-    granularity: Interval
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
-    performanceJobId: string
-    producingApplicationId: string
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
     reportingTimeframe.endDate.gt: date-time
@@ -46,54 +37,80 @@ class PerformanceReportComplexQuery_Create {
     resultFormat: ResultFormat
     state: PerformanceReportStateType
 }
-PerformanceReportComplexQuery_Create *-r-> MonitoredObjectId : monitoredObjectId
-PerformanceReportComplexQuery_Create *-u-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
 
+PerformanceReportComplexQuery_Create *--> TimeDuration : granularity
+PerformanceReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-class PerformanceReportRef {
-    performanceReportHref: string
-    performanceReportId*: string
-}
 
 enum PerformanceReportStateType {
+
     acknowledged
     completed
     failed
     inProgress
     rejected
 }
-
-class PerformanceReport_Common {
-    description: string
-}
-PerformanceReport_Common *-->"1" PerformanceJobRefOrValue : performanceJob
-PerformanceReport_Common *-->"1" ReportingTimeframe : reportingTimeframe
-
 class PerformanceReport_Create {
+
+    description: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
 }
-PerformanceReport_Common <|-- PerformanceReport_Create
+
+PerformanceReport_Create *-->"1" TimeDuration : granularity
+PerformanceReport_Create *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Create *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
 
 class PerformanceReport_Find {
+
     creationDate*: date-time
     description: string
     id*: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
     state*: PerformanceReportStateType
 }
-PerformanceReport_Find *-->"1" PerformanceJobRefOrValue : performanceJob
+
+PerformanceReport_Find *-->"1" TimeDuration : granularity
+PerformanceReport_Find *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Find *-->"1" PerformanceJobRef : performanceJob
 PerformanceReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 class ReportContentItem {
+
 }
+
 ReportContentItem *-->"1" MeasurementTime : measurementTime
-ReportContentItem *-->"*" ResultPayload : measurementDataPoints
+ReportContentItem *-->"1..*" ServiceSpecificResult : measurementDataPoint
+
+
+class ReportContentPerMonitoredObject {
+
+}
+
+ReportContentPerMonitoredObject *-->"1" MonitoredObjectRef : monitoredObject
+ReportContentPerMonitoredObject *-->"1..*" ReportContentItem : reportContentItem
+
 
 class ReportingTimeframe {
+
     reportingStartDate: date-time
     reportingEndDate: date-time
 }
 
-class ResultPayload {
-    @type*: string
+
+class MeasurementTime {
+
+    measurementStartDate*: date-time
+    measurementEndDate: date-time
 }
+
+MeasurementTime *--> TimeDuration : measurementInterval
+
 
 @enduml

@@ -1,31 +1,10 @@
 @startuml performanceReportComplexQueryModel
 
-class PerformanceReportComplexQuery {
-
-    creationDate*: date-time
-    description: string
-    lastModifiedDate: date-time
-    state*: PerformanceReportStateType
-}
-
-PerformanceReportComplexQuery *-->"1" PerformanceJobRefOrValue : performanceJob
-PerformanceReportComplexQuery *-->"1" PerformanceReportRef : performanceReport
-PerformanceReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
-
-
-
 class PerformanceReportComplexQuery_Create {
 
-    consumingApplicationId: string
     creationDate.gt: date-time
     creationDate.lt: date-time
-    description: string
-    granularity: Interval
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
-    performanceJobId: string
-    producingApplicationId: string
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
     reportingTimeframe.endDate.gt: date-time
@@ -34,8 +13,10 @@ class PerformanceReportComplexQuery_Create {
     state: PerformanceReportStateType
 }
 
-PerformanceReportComplexQuery_Create *-->"0..1" MonitoredObjectId : monitoredObjectId
-PerformanceReportComplexQuery_Create *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+PerformanceReportComplexQuery_Create *--> TimeDuration : granularity
+PerformanceReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 
 @enduml

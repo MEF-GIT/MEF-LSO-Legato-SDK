@@ -57,12 +57,6 @@ class Error404 {
 }
 Error <|-- Error404
 
-class Error408 {
-
-    code*: string
-}
-Error <|-- Error408
-
 class Error409 {
 
     code*: string

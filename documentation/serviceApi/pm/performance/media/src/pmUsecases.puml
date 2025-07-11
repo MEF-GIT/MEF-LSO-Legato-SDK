@@ -6,29 +6,29 @@ actor "Buyer/Client" as B
 actor "Seller/Server" as S
 
 rectangle {
-Usecase UC1 as "1. Create Performance Monitoring Profile"
-Usecase UC2 as "2. Retrieve Performance Monitoring Profile List"
-Usecase UC3 as "3. Retrieve Performance Monitoring Profile by Profile Identifier"
-Usecase UC4 as "4. Modify Performance Monitoring Profile"
-Usecase UC5 as "5. Delete Performance Monitoring Profile"
-Usecase UC6 as "6. Create Performance Monitoring Job"
-Usecase UC7 as "7. Retrieve Performance Monitoring Job List"
-Usecase UC8 as "8. Retrieve Performance Monitoring Job by Job Identifier"
-Usecase UC9 as "9. Modify Performance Monitoring Job"
-Usecase UC10 as "10. Retrieve Modify Performance Monitoring Job List"
-Usecase UC11 as "11. Retrieve Modify Performance Monitoring Job by Identifier"
-Usecase UC12 as "12. Cancel Performance Monitoring Job"
-Usecase UC13 as "13. Retrieve Cancel Performance Monitoring Job List"
-Usecase UC14 as "14. Retrieve Cancel Performance Monitoring Job by Identifier"
-Usecase UC15 as "15. Suspend Performance Monitoring Job"
-Usecase UC16 as "16. Resume Performance Monitoring Job"
-Usecase UC17 as "17. Create Performance Monitoring Job Complex Query"
-Usecase UC18 as "18. Create Performance Monitoring Report"
-Usecase UC19 as "19. Retrieve Performance Monitoring Report List"
-Usecase UC20 as "20. Retrieve Performance Monitoring Report by Report Identifier"
-Usecase UC21 as "21. Create Performance Monitoring Report Complex Query"
-Usecase UC22 as "22. Retrieve Tracking Record List"
-Usecase UC23 as "23. Retrieve Tracking Record by Identifier"
+Usecase UC1 as "**1. Create Performance Monitoring Profile**"
+Usecase UC2 as "**2. Retrieve Performance Monitoring Profile List**"
+Usecase UC3 as "**3. Retrieve Performance Monitoring Profile by Identifier**"
+Usecase UC4 as "**4. Modify Performance Monitoring Profile**"
+Usecase UC5 as "**5. Delete Performance Monitoring Profile**"
+Usecase UC6 as "**6. Create Performance Monitoring Job**"
+Usecase UC7 as "**7. Retrieve Performance Monitoring Job List**"
+Usecase UC8 as "**8. Retrieve Performance Monitoring Job by Identifier**"
+Usecase UC9 as "**9. Modify Performance Monitoring Job**"
+Usecase UC10 as "**10. Retrieve Modify Performance Monitoring Job List**"
+Usecase UC11 as "**11. Retrieve Modify Performance Monitoring Job by Identifier**"
+Usecase UC12 as "**12. Cancel Performance Monitoring Job**"
+Usecase UC13 as "**13. Retrieve Cancel Performance Monitoring Job List**"
+Usecase UC14 as "**14. Retrieve Cancel Performance Monitoring Job by Identifier**"
+Usecase UC15 as "**15. Suspend Performance Monitoring Job**"
+Usecase UC16 as "**16. Resume Performance Monitoring Job**"
+Usecase UC17 as "**17. Performance Monitoring Job Complex Query**"
+Usecase UC18 as "**18. Create Performance Monitoring Report**"
+Usecase UC19 as "**19. Retrieve Performance Monitoring Report List**"
+Usecase UC20 as "**20. Retrieve Performance Monitoring Report by Identifier**"
+Usecase UC21 as "**21. Performance Monitoring Report Complex Query**"
+Usecase UC22 as "**22. Retrieve Tracking Record List**"
+Usecase UC23 as "**23. Retrieve Tracking Record by Identifier**"
 Usecase UC24 as "24. Register for Event Notifications"
 Usecase UC25 as "25. Send Event Notification"
 }
@@ -57,6 +57,6 @@ B --> UC21
 B --> UC22
 B --> UC23
 B --> UC24
-S --> UC25
+UC25 <-- S
 
 @enduml

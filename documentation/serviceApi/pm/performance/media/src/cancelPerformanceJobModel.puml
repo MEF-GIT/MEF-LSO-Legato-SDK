@@ -2,28 +2,21 @@
 
 class CancelPerformanceJob {
 
-    cancellationDeniedReason: string
     creationDate*: date-time
     href: string
     id*: string
     state*: PerformanceJobProcessStateType
 }
-CancelPerformanceJob_Common <|-- CancelPerformanceJob
+CancelPerformanceJob_Create <|-- CancelPerformanceJob
 
-
-
-class CancelPerformanceJob_Common {
-
-    cancellationReason: string
-}
-
-CancelPerformanceJob *-->"1" PerformanceJobRef : performanceJob
 
 
 class CancelPerformanceJob_Create {
-    performanceJobId*: string
+
 }
-CancelPerformanceJob_Common <|-- CancelPerformanceJob_Create
+
+CancelPerformanceJob_Create *-->"1" PerformanceJobRef : performanceJob
+
 
 enum PerformanceJobProcessStateType {
 

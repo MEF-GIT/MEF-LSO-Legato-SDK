@@ -11,15 +11,12 @@ activate PP
 
 autonumber
 
-note over PP: Performance Profile in `active` state
 B -> S : DELETE /performanceProfile/{{id}} request
 
 S -> S: find Performance Profile by id
-S -> S: check Performance Profile state
 S -> S: check if any Performance Job refers to Performance Profile
 
-S -> PP: (causes status change)
-PP -> PP: status: deleted
+S -> PP: (delete Performance Profile resource)
 S --> B: DELETE /performanceProfile/{{id}} response
 
 opt
