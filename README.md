@@ -81,7 +81,7 @@ The Mplify LSO Legato SDK is released under the Apache 2.0 license.
 More information about the LSO Legato API reference point and its roadmap can
 be found here:
 
-https://wiki.mef.net/display/CESG/LSO+Legato
+https://wiki.mplify.net/display/CESG/LSO+Legato
 
 ## Maturity Level
 
@@ -157,7 +157,7 @@ This SDK contains the following items:
 Issues should be reported with the use of GitHub issues. Questions and feedback
 should be asked either at
 [Legato SDK Discussions](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/discussions)
-or directly to community_manager@mef.net.
+or directly to community_manager@mplify.net.
 
 ## Reference Implementations
 

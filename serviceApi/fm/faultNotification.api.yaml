@@ -10,19 +10,19 @@ info:
     change.**
 
     Fault Management allows the Buyer/Client to request that the Seller/Server
-    performs FM Job on a Service, collect Fault Management Reports, as well as
-    receive notifications. This allows managing issues and situation that are
-    not part of normal operations of the Service provided by the Seller.
+    performs Fault Management Job on a service, an ordered pair, or an entity, 
+    collect Fault Management Reports, as well as receive notifications. This 
+    allows managing issues and situation that are not part of normal operations.
     
     List of supported use cases:
     - Send Event Notification
 
-    Copyright 2024 MEF Forum and its contributors.
+    Copyright 2025 MEF Forum and its contributors.
 
   title: Fault Management Notification
-  version: 1.0.0-RC
+  version: 2.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/faultNotification/v1/'
+  - url: 'https://{serverBase}/mefApi/legato/faultNotification/v2/'
     variables:
       serverBase:
         default: mef.net
@@ -43,7 +43,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobEvent'
+              $ref: '#/components/schemas/FaultManagementJobCreateEvent'
         description: The event data
         required: true
       responses:
@@ -67,12 +67,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -92,7 +86,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobEvent'
+              $ref: '#/components/schemas/FaultManagementJobStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -116,12 +110,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -141,7 +129,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobEvent'
+              $ref: '#/components/schemas/FaultManagementJobAttributeValueChangeEvent'
         description: The event data
         required: true
       responses:
@@ -165,12 +153,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -214,12 +196,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -263,12 +239,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -288,7 +258,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobProcessEvent'
+              $ref: '#/components/schemas/CancelFaultManagementJobStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -312,12 +282,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -337,7 +301,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobProcessEvent'
+              $ref: '#/components/schemas/ModifyFaultManagementJobStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -361,12 +325,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -386,7 +344,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementReportEvent'
+              $ref: '#/components/schemas/FaultManagementReportCreateEvent'
         description: The event data
         required: true
       responses:
@@ -410,12 +368,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -435,7 +387,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementReportEvent'
+              $ref: '#/components/schemas/FaultManagementReportStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -459,12 +411,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -476,6 +422,45 @@ paths:
         - Notification listeners
 components:
   schemas:
+    CancelFaultManagementJobStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          description: CancelFaultManagementJobStateChangeEvent structure
+          properties:
+            eventType:
+              description:
+                Indicates the type of Cancel Fault Management Job event.
+              type: string
+              enum:
+                - cancelFaultManagementJobStateChangeEvent            
+            event:
+              description: |
+                A reference to the Cancel Fault Management Job that is source 
+                of the notification.
+              $ref: '#/components/schemas/CancelFaultManagementJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    CancelFaultManagementJobStateChangeEventPayload:
+      type: object
+      description: |-
+        A reference to the Cancel Fault Management Job that is source
+        of the notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Cancel Fault Management Job.
+        id:
+          type: string
+          description: ID of the Cancel Fault Management Job.
+        state:
+          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
+          description: |-
+            The state of the Cancel Fault Management Job.
+      required:
+        - id
+        - state
     Error:
       type: object
       description: >
@@ -570,23 +555,6 @@ components:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-    Error408:
-      allOf:
-        - $ref: '#/components/schemas/Error'
-        - type: object
-          properties:
-            code:
-              type: string
-              description: >-
-                List of supported error codes:
-                - timeOut: Request Time-out - indicates that the server did not
-                receive a complete request message within the time that it was
-                prepared to wait.
-              enum:
-                - timeOut
-          required:
-            - code
-      description: 'Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)'
     Error500:
       allOf:
         - $ref: '#/components/schemas/Error'
@@ -622,14 +590,42 @@ components:
       required:
         - eventId
         - eventTime
-    FaultManagementJobEvent:
+    FaultManagementJobAttributeValueChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
         - type: object
+          description: FaultManagementJobAttributeValueChangeEvent structure
           properties:
             eventType:
-              $ref: '#/components/schemas/FaultManagementJobEventType'
+              description:
+                Indicates the type of Fault Management Job event.
+              type: string
+              enum:
+                - faultManagementJobAttributeValueChangeEvent
             event:
+              description: |
+                A reference to the Fault Management Job that is source
+                of the notification.
+              $ref: '#/components/schemas/FaultManagementJobEventPayload'
+          required:
+            - event
+            - eventType
+    FaultManagementJobCreateEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          description: FaultManagementJobCreateEvent structure
+          properties:
+            eventType:
+              description:
+                Indicates the type of Fault Management Job event.
+              type: string
+              enum:
+                - faultManagementJobCreateEvent
+            event:
+              description: |
+                A reference to the Fault Management Job that is source
+                of the notification.
               $ref: '#/components/schemas/FaultManagementJobEventPayload'
           required:
             - event
@@ -637,8 +633,8 @@ components:
     FaultManagementJobEventPayload:
       type: object
       description: >-
-        The identifier of the Fault Management Job being the subject to
-        this event and its state.
+        A reference to the Fault Management Job that is source
+        of the notification.
       properties:
         href:
           type: string
@@ -646,71 +642,41 @@ components:
         id:
           type: string
           description: ID of the Fault Management Job.
-        state:
-          type: string
-          description: State of the Fault Management Job.
-          enum:
-            - acknowledged
-            - cancelled
-            - completed
-            - inProgress
-            - pending
-            - pendingCancel
-            - rejected
-            - resourcesUnavailable
-            - scheduled
-            - suspended
       required:
         - id
-    FaultManagementJobEventType:
+    FaultManagementJobProcessStateType:
       type: string
-      description: Indicates the type of Fault Management Job event.
-      enum:
-        - faultManagementJobCreateEvent
-        - faultManagementJobStateChangeEvent
-        - faultManagementJobAttributeValueChangeEvent
-    FaultManagementJobProcessEvent:
-      allOf:
-        - $ref: '#/components/schemas/Event'
-        - type: object
-          properties:
-            eventType:
-              $ref: '#/components/schemas/FaultManagementJobProcessEventType'
-            event:
-              $ref: '#/components/schemas/FaultManagementJobProcessEventPayload'
-          required:
-            - event
-            - eventType
-    FaultManagementJobProcessEventPayload:
-      type: object
       description: |-
-        The identifier of the Fault Management Job Process, including: 
-          - Modify Fault Management Job
-          - Cancel Fault Management Job
-        being the subject of this event.
-      properties:
-        href:
-          type: string
-          description: Hyperlink to access the Fault Management Job Process.
-        id:
-          type: string
-          description: ID of the Fault Management Job Process.
-      required:
-        - id
-    FaultManagementJobProcessEventType:
-      type: string
-      description: Indicates the type of Fault Management Job Process event.
+        The state of the process related to the Fault Management Job
+
+        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed    | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
+        | `inProgress`   | In-Progress  | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`     | Rejected     | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
+
       enum:
-        - cancelFaultManagementJobStateChangeEvent
-        - modifyFaultManagementJobStateChangeEvent
+      - acknowledged
+      - completed
+      - inProgress
+      - rejected
     FaultManagementJobReportPreparationErrorEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: FaultManagementJobReportPreparationErrorEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/FaultManagementJobReportPreparationErrorEventType'
+              description:
+                Indicates the type of Fault Management Job event.
+              type: string
+              enum:
+                - faultManagementJobReportPreparationErrorEvent
             event:
+              description: |
+                A reference to the Fault Management Job that is source 
+                of the notification.
               $ref: '#/components/schemas/FaultManagementJobReportPreparationErrorEventPayload'
           required:
             - event
@@ -718,8 +684,8 @@ components:
     FaultManagementJobReportPreparationErrorEventPayload:
       type: object
       description: >-
-        The identifier of the Fault Management Job being the subject of
-        this event and reason for report preparation failure.
+        A reference to the Fault Management Job that is source
+        of the notification.
       properties:
         href:
           type: string
@@ -732,20 +698,22 @@ components:
           description: Reason for Report preparation failure.
       required:
         - id
-        - reportPreparationFailedReason
-    FaultManagementJobReportPreparationErrorEventType:
-      type: string
-      description: Indicates the type of Fault Management Job event.
-      enum:
-        - faultManagementJobReportPreparationErrorEvent
     FaultManagementJobReportReadyEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: FaultManagementJobReportReadyEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/FaultManagementJobReportReadyEventType'
+              description:
+                Indicates the type of Fault Management Job event.
+              type: string
+              enum:
+                - faultManagementJobReportReadyEvent
             event:
+              description: |
+                A reference to the Fault Management Job that is source 
+                of the notification.
               $ref: '#/components/schemas/FaultManagementJobReportReadyEventPayload'
           required:
             - event
@@ -753,8 +721,8 @@ components:
     FaultManagementJobReportReadyEventPayload:
       type: object
       description: >-
-        The identifier of the Fault Management Job and Report ID being the 
-        subjects of this event.
+        A reference to the Fault Management Job that is source
+        of the notification.
       properties:
         href:
           type: string
@@ -771,19 +739,89 @@ components:
       required:
         - id
         - reportId
-    FaultManagementJobReportReadyEventType:
-      type: string
-      description: Indicates the type of Fault Management Job event.
-      enum:
-        - faultManagementJobReportReadyEvent
-    FaultManagementReportEvent:
+    FaultManagementJobStateChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
         - type: object
+          description: FaultManagementJobStateChangeEvent structure
           properties:
             eventType:
-              $ref: '#/components/schemas/FaultManagementReportEventType'
+              description:
+                Indicates the type of Fault Management Job event.
+              type: string
+              enum:
+                - faultManagementJobStateChangeEvent
             event:
+              description: |
+                A reference to the Fault Management Job that is source
+                of the notification.
+              $ref: '#/components/schemas/FaultManagementJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    FaultManagementJobStateChangeEventPayload:
+      type: object
+      description: >-
+        A reference to the Fault Management Job that is source
+        of the notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Fault Management Job.
+        id:
+          type: string
+          description: ID of the Fault Management Job.
+        state:
+          $ref: '#/components/schemas/FaultManagementJobStateType'
+          description: |-
+            The state of the Fault Management Job.
+      required:
+        - id
+        - state
+    FaultManagementJobStateType:
+      type: string
+      description: |-
+        The state of the Fault Management Job.
+
+        | state                   | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | ----------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged`          | Acknowledged          | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
+        | `cancelled`             | Cancelled             | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+        | `completed`             | Completed             | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+        | `inProgress`            | In-Progress           | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
+        | `pending`               | Pending               | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
+        | `pendingCancel`         | Pending Cancel        | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`              | Rejected              | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `resourcesUnavailable`  | Resources Unavailable | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+        | `scheduled`             | Scheduled             | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
+        | `suspended`             | Suspended             | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
+      enum:
+        - acknowledged
+        - cancelled
+        - completed
+        - inProgress
+        - pending
+        - pendingCancel
+        - rejected
+        - resourcesUnavailable
+        - scheduled
+        - suspended
+    FaultManagementReportCreateEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementReportCreateEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Fault Management Report event.
+              type: string
+              enum:
+                - faultManagementReportCreateEvent
+            event:
+              description: |
+                A reference to the Fault Management Report that is source 
+                of the notification.
               $ref: '#/components/schemas/FaultManagementReportEventPayload'
           required:
             - event
@@ -791,8 +829,8 @@ components:
     FaultManagementReportEventPayload:
       type: object
       description: >-
-        The identifier of the Fault Management Report being the subject of
-        this event.
+        A reference to the Fault Management Report that is the 
+        source of the notification.
       properties:
         href:
           type: string
@@ -802,9 +840,99 @@ components:
           description: ID of the Fault Management Report.
       required:
         - id
-    FaultManagementReportEventType:
+    FaultManagementReportStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementReportStateChangeEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Fault Management Report event.
+              type: string
+              enum:
+                - faultManagementReportStateChangeEvent
+            event:
+              description: |
+                A reference to the Fault Management Report that is source 
+                of the notification.
+              $ref: '#/components/schemas/FaultManagementReportStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    FaultManagementReportStateChangeEventPayload:
+      type: object
+      description: >-
+        A reference to the Fault Management Report that is the 
+        source of the notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Fault Management Report.
+        id:
+          type: string
+          description: ID of the Fault Management Report.
+        state:
+          $ref: '#/components/schemas/FaultManagementReportStateType'
+          description: |-
+            Possible values for the state of a Fault Management Report.
+      required:
+        - id
+        - state
+    FaultManagementReportStateType:
       type: string
-      description: Indicates the type of Fault Management Report event.
+      description: |-
+        Possible values for the state of a Fault Management Report.
+
+        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                       |
+        | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | acknowledged | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+        | completed    | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
+        | failed       | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
+        | inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
+        | rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
       enum:
-        - faultManagementReportCreateEvent
-        - faultManagementReportStateChangeEvent
+        - acknowledged
+        - completed
+        - failed
+        - inProgress
+        - rejected
+    ModifyFaultManagementJobStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: ModifyFaultManagementJobStateChangeEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Modify Fault Management Job event.
+              type: string
+              enum:
+                - modifyFaultManagementJobStateChangeEvent            
+            event:
+              description: |
+                A reference to the Modify Fault Management Job that is source 
+                of the notification.
+              $ref: '#/components/schemas/ModifyFaultManagementJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    ModifyFaultManagementJobStateChangeEventPayload:
+      type: object
+      description: |-
+        A reference to the Modify Fault Management Job that is source
+        of the notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Modify Fault Management Job.
+        id:
+          type: string
+          description: ID of the Modify Fault Management Job.
+        state:
+          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
+          description: |-
+            The state of the Modify Fault Management Job.
+      required:
+        - id
+        - state

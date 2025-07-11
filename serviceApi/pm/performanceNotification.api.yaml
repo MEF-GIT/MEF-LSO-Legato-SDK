@@ -9,33 +9,34 @@ info:
     **This specification represents MEF work in progress and is subject to
     change.**
 
-    Performance monitoring allows the Buyer/Client to provision entities that
+    Performance Monitoring allows the Buyer/Client to provision entities that
     define performance objectives (Performance Profile, Performance Job),
     collect monitoring data (Performance Report), as well as receive
-    notifications about these objects. This allows managing issues and situations that
-    are not part of normal operations of the Service provided by the Seller.
+    notifications about these objects. This allows managing issues and 
+    situations that are not part of normal operations of the Service provided 
+    by the Seller.
 
     List of supported use cases:
     - Send Event Notification
 
-    Copyright 2024 MEF Forum and its contributors
+    Copyright 2025 MEF Forum and its contributors
 
     This file includes content based on the TM Forum Performance Management API 
     (TMF628 v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,
     which is licensed by the TM Forum under the Apache License version 2.0.
     Such content has been modified by the MEF Forum and its contributors.
   title: Performance Monitoring Notification
-  version: 3.0.0-RC
+  version: 4.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v3/'
+  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v4/'
     variables:
       serverBase:
         default: mef.net
         description: The base of Buyer/Client's URL.
 tags:
   - description: >-
-      The Buyer/Client's endpoint to send particular event types 
-      notifications to.
+      The Buyer/Client's endpoint to send particular event types  notifications
+      to.
     name: Notification listeners
 paths:
   /listener/performanceJobCreateEvent:
@@ -48,12 +49,13 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceJobEvent'
+              $ref: '#/components/schemas/PerformanceJobCreateEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -72,12 +74,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -90,19 +86,20 @@ paths:
   /listener/performanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobStateChangeEvent 
+        Client listener for receiving the performanceJobStateChangeEvent
         notification.
       operationId: performanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceJobEvent'
+              $ref: '#/components/schemas/PerformanceJobStateChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -121,12 +118,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -139,19 +130,20 @@ paths:
   /listener/performanceJobAttributeValueChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobAttributeValueChangeEvent 
-        notification.
+        Client listener for receiving the
+        performanceJobAttributeValueChangeEvent  notification.
       operationId: performanceJobAttributeValueChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceJobEvent'
+              $ref: '#/components/schemas/PerformanceJobAttributeValueChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -170,12 +162,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -188,7 +174,7 @@ paths:
   /listener/performanceJobReportReadyEvent:
     post:
       description: >-
-        Client listener for receiving the performanceJobReportReadyEvent 
+        Client listener for receiving the performanceJobReportReadyEvent
         notification.
       operationId: performanceJobReportReadyEvent
       requestBody:
@@ -200,7 +186,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -219,12 +206,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -237,7 +218,7 @@ paths:
   /listener/performanceJobReportPreparationErrorEvent:
     post:
       description: >-
-        Client listener for receiving the 
+        Client listener for receiving the
         performanceJobReportPreparationErrorEvent notification.
       operationId: performanceJobReportPreparationErrorEvent
       requestBody:
@@ -249,7 +230,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -268,12 +250,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -286,19 +262,20 @@ paths:
   /listener/cancelPerformanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the cancelPerformanceJobStateChangeEvent 
+        Client listener for receiving the cancelPerformanceJobStateChangeEvent
         notification.
       operationId: cancelPerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceJobProcessEvent'
+              $ref: '#/components/schemas/CancelPerformanceJobStateChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -317,12 +294,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -335,19 +306,20 @@ paths:
   /listener/modifyPerformanceJobStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the modifyPerformanceJobStateChangeEvent 
+        Client listener for receiving the modifyPerformanceJobStateChangeEvent
         notification.
       operationId: modifyPerformanceJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceJobProcessEvent'
+              $ref: '#/components/schemas/ModifyPerformanceJobStateChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -366,12 +338,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -384,19 +350,20 @@ paths:
   /listener/performanceProfileCreateEvent:
     post:
       description: >-
-        Client listener for receiving the performanceProfileCreateEvent 
+        Client listener for receiving the performanceProfileCreateEvent
         notification.
       operationId: performanceProfileCreateEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceProfileEvent'
+              $ref: '#/components/schemas/PerformanceProfileCreateEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -415,12 +382,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -433,19 +394,20 @@ paths:
   /listener/performanceProfileAttributeValueChangeEvent:
     post:
       description: >-
-        Client listener for receiving the 
+        Client listener for receiving the
         performanceProfileAttributeValueChangeEvent notification.
       operationId: performanceProfileAttributeValueChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceProfileEvent'
+              $ref: '#/components/schemas/PerformanceProfileAttributeValueChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -464,37 +426,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Performance Profile Attribute Value Change Notification endpoint.
+      summary:
+        Performance Profile Attribute Value Change Notification endpoint.
       tags:
         - Notification listeners
   /listener/performanceProfileDeleteEvent:
     post:
       description: >-
-        Client listener for receiving the performanceProfileDeleteEvent 
+        Client listener for receiving the performanceProfileDeleteEvent
         notification.
       operationId: performanceProfileDeleteEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceProfileEvent'
+              $ref: '#/components/schemas/PerformanceProfileDeleteEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -513,12 +471,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -531,19 +483,20 @@ paths:
   /listener/performanceReportCreateEvent:
     post:
       description: >-
-        Client listener for receiving the performanceReportCreateEvent 
+        Client listener for receiving the performanceReportCreateEvent
         notification.
       operationId: performanceReportCreateEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceReportEvent'
+              $ref: '#/components/schemas/PerformanceReportCreateEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -562,12 +515,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -580,19 +527,20 @@ paths:
   /listener/performanceReportStateChangeEvent:
     post:
       description: >-
-        Client listener for receiving the performanceReportStateChangeEvent 
+        Client listener for receiving the performanceReportStateChangeEvent
         notification.
       operationId: performanceReportStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/PerformanceReportEvent'
+              $ref: '#/components/schemas/PerformanceReportStateChangeEvent'
         description: The event data
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           content:
             application/json;charset=utf-8:
@@ -611,12 +559,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        '408':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         '500':
           content:
             application/json;charset=utf-8:
@@ -628,6 +570,46 @@ paths:
         - Notification listeners
 components:
   schemas:
+    CancelPerformanceJobStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          description: CancelPerformanceJobStateChangeEvent structure
+          properties:
+            eventType:
+              description:
+                Indicates the type of Cancel Performance Monitoring Job event.
+              type: string
+              enum:
+                - cancelPerformanceJobStateChangeEvent
+            event:
+              description: |
+                A reference to the Cancel Performance Monitoring Job that is source 
+                of the notification.
+              $ref: '#/components/schemas/CancelPerformanceJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    CancelPerformanceJobStateChangeEventPayload:
+      type: object
+      description: |-
+        A reference to the Cancel Performance Monitoring Job that is source
+        of the notification.
+      properties:
+        href:
+          type: string
+          description:
+            Hyperlink to access the Cancel Performance Monitoring Job.
+        id:
+          type: string
+          description: ID of the Cancel Performance Monitoring Job.
+        state:
+          $ref: '#/components/schemas/PerformanceJobProcessStateType'
+          description: |-
+            The state of the Cancel Performance Monitoring Job.
+      required:
+        - id
+        - state
     Error:
       type: object
       description: >
@@ -663,17 +645,16 @@ components:
               description: Error code
           required:
             - code
-      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
       type: string
       description: >-
-        One of the following error codes:
-        - missingQueryParameter: The URI is missing a required query-string
-        parameter.
-        - missingQueryValue: The URI is missing a required query-string
-        parameter value.
-        - invalidQuery: The query section of the URI is invalid.
-        - invalidBody: The request has an invalid body.
+        One of the following error codes: - missingQueryParameter: The URI is
+        missing a required query-string parameter. - missingQueryValue: The URI
+        is missing a required query-string parameter value. - invalidQuery: The
+        query section of the URI is invalid. - invalidBody: The request has an
+        invalid body.
       enum:
         - missingQueryParameter
         - missingQueryValue
@@ -689,7 +670,8 @@ components:
               description: Error code
           required:
             - code
-      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       type: string
       description: |-
@@ -709,7 +691,8 @@ components:
               description: Error code
           required:
             - code
-      description: 'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
+      description:
+        'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
     Error403Code:
       type: string
       description: |-
@@ -722,23 +705,6 @@ components:
         - accessDenied
         - forbiddenRequester
         - tooManyUsers
-    Error408:
-      allOf:
-        - $ref: '#/components/schemas/Error'
-        - type: object
-          properties:
-            code:
-              type: string
-              description: >-
-                List of supported error codes:
-                - timeOut: Request Time-out - indicates that the server did not
-                receive a complete request message within the time that it was
-                prepared to wait.
-              enum:
-                - timeOut
-          required:
-            - code
-      description: 'Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)'
     Error500:
       allOf:
         - $ref: '#/components/schemas/Error'
@@ -747,10 +713,9 @@ components:
             code:
               type: string
               description: >-
-                One of the following error codes:
-                - internalError: Internal server error - the server encountered
-                an unexpected condition that prevented it from fulfilling the
-                request.
+                One of the following error codes: - internalError: Internal
+                server error - the server encountered an unexpected condition
+                that prevented it from fulfilling the request.
               enum:
                 - internalError
           required:
@@ -774,14 +739,82 @@ components:
       required:
         - eventId
         - eventTime
-    PerformanceJobEvent:
+    ModifyPerformanceJobStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: ModifyPerformanceJobStateChangeEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Modify Performance Monitoring Job event.
+              type: string
+              enum:
+                - modifyPerformanceJobStateChangeEvent
+            event:
+              description: |
+                A reference to the Modify Performance Monitoring Job that is source 
+                of the notification.
+              $ref: '#/components/schemas/ModifyPerformanceJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    ModifyPerformanceJobStateChangeEventPayload:
+      type: object
+      description: |-
+        A reference to the Modify Performance Monitoring Job that is source
+        of the notification.
+      properties:
+        href:
+          type: string
+          description:
+            Hyperlink to access the Modify Performance Monitoring Job.
+        id:
+          type: string
+          description: ID of the Modify Performance Monitoring Job.
+        state:
+          $ref: '#/components/schemas/PerformanceJobProcessStateType'
+          description: |-
+            The state of the Modify Performance Monitoring Job.
+      required:
+        - id
+        - state
+    PerformanceJobAttributeValueChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
         - type: object
+          description: PerformanceJobAttributeValueChangeEvent structure
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceJobEventType'
+              description:
+                Indicates the type of Performance Monitoring Job event.
+              type: string
+              enum:
+                - performanceJobAttributeValueChangeEvent
             event:
+              description: |
+                A reference to the Performance Monitoring Job that is source
+                of the notification.
+              $ref: '#/components/schemas/PerformanceJobEventPayload'
+          required:
+            - event
+            - eventType
+    PerformanceJobCreateEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - type: object
+          description: PerformanceJobCreateEvent structure
+          properties:
+            eventType:
+              description:
+                Indicates the type of Performance Monitoring Job event.
+              type: string
+              enum:
+                - performanceJobCreateEvent
+            event:
+              description: |
+                A reference to the Performance Monitoring Job that is source
+                of the notification.
               $ref: '#/components/schemas/PerformanceJobEventPayload'
           required:
             - event
@@ -789,8 +822,8 @@ components:
     PerformanceJobEventPayload:
       type: object
       description: >-
-        The identifier of the Performance Job being the subject to
-        this event and its state.
+        A reference to the Performance Monitoring Job that is source of the
+        notification.
       properties:
         href:
           type: string
@@ -798,36 +831,78 @@ components:
         id:
           type: string
           description: ID of the Performance Job.
-        state:
-          type: string
-          description: State of the Performance Job.
-          enum:
-            - acknowledged
-            - cancelled
-            - completed
-            - inProgress
-            - pending
-            - rejected
-            - resourcesUnavailable
-            - scheduled
-            - suspended
       required:
         - id
-    PerformanceJobEventType:
+    PerformanceJobProcessStateType:
       type: string
-      description: Indicates the type of Performance Job event.
+      description: |-
+        The state of the process related to the Performance Job.
+
+        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed    | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
+        | `inProgress`   | In-Progress  | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
+        | `rejected`     | Rejected     | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
+
       enum:
-        - performanceJobCreateEvent
-        - performanceJobStateChangeEvent
-        - performanceJobAttributeValueChangeEvent
+        - acknowledged
+        - completed
+        - inProgress
+        - rejected
+    PerformanceJobReportPreparationErrorEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: PerformanceJobReportPreparationErrorEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Performance Monitoring Job event.
+              type: string
+              enum:
+                - performanceJobReportPreparationErrorEvent
+            event:
+              description: |
+                A reference to the Performance Monitoring Job that is source 
+                of the notification.
+              $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventPayload'
+          required:
+            - event
+            - eventType
+    PerformanceJobReportPreparationErrorEventPayload:
+      type: object
+      description: >-
+        A reference to the Performance Monitoring Job that is source of the
+        notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Performance Job.
+        id:
+          type: string
+          description: ID of the Performance Job.
+        reportPreparationFailedReason:
+          type: string
+          description: Reason for Report preparation failure.
+      required:
+        - id
     PerformanceJobReportReadyEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: PerformanceJobReportReadyEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceJobReportReadyEventType'
+              description:
+                Indicates the type of Performance Monitoring Job event.
+              type: string
+              enum:
+                - performanceJobReportReadyEvent
             event:
+              description: |
+                A reference to the Performance Monitoring Job that is source 
+                of the notification.
               $ref: '#/components/schemas/PerformanceJobReportReadyEventPayload'
           required:
             - event
@@ -835,8 +910,8 @@ components:
     PerformanceJobReportReadyEventPayload:
       type: object
       description: >-
-        The identifier of the Performance Job and Report ID being the subjects 
-        of this event.
+        A reference to the Performance Monitoring Job that is source of the
+        notification.
       properties:
         href:
           type: string
@@ -853,28 +928,31 @@ components:
       required:
         - id
         - reportId
-    PerformanceJobReportReadyEventType:
-      type: string
-      description: Indicates the type of Performance Job event.
-      enum:
-        - performanceJobReportReadyEvent
-    PerformanceJobReportPreparationErrorEvent:
+    PerformanceJobStateChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
         - type: object
+          description: PerformanceJobStateChangeEvent structure
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventType'
+              description:
+                Indicates the type of Performance Monitoring Job event.
+              type: string
+              enum:
+                - performanceJobStateChangeEvent
             event:
-              $ref: '#/components/schemas/PerformanceJobReportPreparationErrorEventPayload'
+              description: |
+                A reference to the Performance Monitoring Job that is source
+                of the notification.
+              $ref: '#/components/schemas/PerformanceJobStateChangeEventPayload'
           required:
             - event
             - eventType
-    PerformanceJobReportPreparationErrorEventPayload:
+    PerformanceJobStateChangeEventPayload:
       type: object
       description: >-
-        The identifier of the Performance Job being the subject of
-        this event and reason for report preparation failure.
+        A reference to the Performance Monitoring Job that is source of the
+        notification.
       properties:
         href:
           type: string
@@ -882,60 +960,97 @@ components:
         id:
           type: string
           description: ID of the Performance Job.
-        reportPreparationFailedReason:
-          type: string
-          description: Reason for Report preparation failure.
+        state:
+          $ref: '#/components/schemas/PerformanceJobStateType'
+          description: |-
+            The state of the Performance Monitoring Job.
       required:
         - id
-        - reportPreparationFailedReason
-    PerformanceJobReportPreparationErrorEventType:
+        - state
+    PerformanceJobStateType:
       type: string
-      description: Indicates the type of Performance Job event.
+      description: |-
+        The state of the Performance Monitoring Job.
+
+        | state                  | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | ---------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged`         | Acknowledged          | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. If scheduled, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                   |
+        | `cancelled`            | Cancelled             | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | `completed`            | Completed             | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+        | `inProgress`           | In-Progress           | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
+        | `pending`              | Pending               | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                               |
+        | `pendingCancel`        | Pending Cancel        | A Cancel Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                  |
+        | `rejected`             | Rejected              | A create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+        | `resourcesUnavailable` | Resources Unavailable | A Performance Monitoring Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+        | `scheduled`            | Scheduled             | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays Scheduled until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                              |
+        | `suspended`            | Suspended             | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                        |
       enum:
-        - performanceJobReportPreparationErrorEvent
-    PerformanceJobProcessEvent:
+        - acknowledged
+        - cancelled
+        - completed
+        - inProgress
+        - pending
+        - pendingCancel
+        - rejected
+        - resourcesUnavailable
+        - scheduled
+        - suspended
+    PerformanceProfileAttributeValueChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: performanceProfileCreateEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceJobProcessEventType'
+              description:
+                Indicates the type of Performance Monitoring Profile event.
+              type: string
+              enum:
+                - performanceProfileAttributeValueChangeEvent
             event:
-              $ref: '#/components/schemas/PerformanceJobProcessEventPayload'
+              description: |
+                A reference to the Performance Monitoring Profile that is source 
+                of the notification.
+              $ref: '#/components/schemas/PerformanceProfileEventPayload'
           required:
             - event
             - eventType
-    PerformanceJobProcessEventPayload:
-      type: object
-      description: |-
-        The identifier of the Performance Job Process, including: 
-          - Modify Performance Monitoring Job
-          - Cancel Performance Monitoring Job
-        being the subject of this event.
-      properties:
-        href:
-          type: string
-          description: Hyperlink to access the Performance Job Process.
-        id:
-          type: string
-          description: ID of the Performance Job Process.
-      required:
-        - id
-    PerformanceJobProcessEventType:
-      type: string
-      description: Indicates the type of Performance Job Process event.
-      enum:
-        - cancelPerformanceJobStateChangeEvent
-        - modifyPerformanceJobStateChangeEvent
-    PerformanceProfileEvent:
+    PerformanceProfileCreateEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: performanceProfileCreateEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceProfileEventType'
+              description:
+                Indicates the type of Performance Monitoring Profile event.
+              type: string
+              enum:
+                - performanceProfileCreateEvent
             event:
-              description: >
+              description: |
+                A reference to the Performance Monitoring Profile that is source 
+                of the notification.
+              $ref: '#/components/schemas/PerformanceProfileEventPayload'
+          required:
+            - event
+            - eventType
+    PerformanceProfileDeleteEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: PerformanceProfileDeleteEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Performance Monitoring Profile event.
+              type: string
+              enum:
+                - performanceProfileDeleteEvent
+            event:
+              description: |
+                A reference to the Performance Monitoring Profile that is source 
+                of the notification.
               $ref: '#/components/schemas/PerformanceProfileEventPayload'
           required:
             - event
@@ -943,8 +1058,8 @@ components:
     PerformanceProfileEventPayload:
       type: object
       description: >-
-        The identifier of the Performance Profile being the subject of
-        this event.
+        A reference to the Performance Monitoring Profile that is the  source
+        of the notification.
       properties:
         href:
           type: string
@@ -954,21 +1069,22 @@ components:
           description: ID of the Performance Profile.
       required:
         - id
-    PerformanceProfileEventType:
-      type: string
-      description: Indicates the type of Performance Profile event.
-      enum:
-        - performanceProfileAttributeValueChangeEvent
-        - performanceProfileCreateEvent
-        - performanceProfileDeleteEvent
-    PerformanceReportEvent:
+    PerformanceReportCreateEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
-        - type: object
+        - description: PerformanceReportCreateEvent structure
+          type: object
           properties:
             eventType:
-              $ref: '#/components/schemas/PerformanceReportEventType'
+              description:
+                Indicates the type of Performance Monitoring Report event.
+              type: string
+              enum:
+                - performanceReportCreateEvent
             event:
+              description: |
+                A reference to the Performance Monitoring Report that is source 
+                of the notification.
               $ref: '#/components/schemas/PerformanceReportEventPayload'
           required:
             - event
@@ -976,8 +1092,8 @@ components:
     PerformanceReportEventPayload:
       type: object
       description: >-
-        The identifier of the Performance Report being the subject of
-        this event.
+        A reference to the Performance Monitoring Report that is the  source of
+        the notification.
       properties:
         href:
           type: string
@@ -987,9 +1103,60 @@ components:
           description: ID of the Performance Report.
       required:
         - id
-    PerformanceReportEventType:
+    PerformanceReportStateChangeEvent:
+      allOf:
+        - $ref: '#/components/schemas/Event'
+        - description: PerformanceReportStateChangeEvent structure
+          type: object
+          properties:
+            eventType:
+              description:
+                Indicates the type of Performance Monitoring Report event.
+              type: string
+              enum:
+                - performanceReportStateChangeEvent
+            event:
+              description: |
+                A reference to the Performance Monitoring Report that is source 
+                of the notification.
+              $ref: '#/components/schemas/PerformanceReportStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+    PerformanceReportStateChangeEventPayload:
+      type: object
+      description: >-
+        A reference to the Performance Monitoring Report that is the  source of
+        the notification.
+      properties:
+        href:
+          type: string
+          description: Hyperlink to access the Performance Report.
+        id:
+          type: string
+          description: ID of the Performance Report.
+        state:
+          $ref: '#/components/schemas/PerformanceReportStateType'
+          description: |-
+            Possible values for the state of a Performance Report.
+      required:
+        - id
+        - state
+    PerformanceReportStateType:
       type: string
-      description: Indicates the type of Performance Report event.
+      description: |-
+        Possible values for the state of a Performance Report.
+
+        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                    |
+        | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | acknowledged | A Performance Report request has been received by Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+        | completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                   |
+        | failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                    |
+        | inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                     |
+        | rejected     | This state indicates that: <br>- Invalid information is provided in Create Performance Report request <br>- The request fails to meet validation rules for Performance Report delivery (processing).                                                                                                                                                                                                                           |
       enum:
-        - performanceReportCreateEvent
-        - performanceReportStateChangeEvent
+        - acknowledged
+        - completed
+        - failed
+        - inProgress
+        - rejected

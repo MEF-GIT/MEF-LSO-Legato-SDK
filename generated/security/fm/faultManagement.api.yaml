@@ -4,29 +4,31 @@ info:
     \ of Business Requirements & Use Cases described\nin MEF W133.1.**\n\n**This specification\
     \ represents MEF work in progress and is subject to\nchange.**\n\nMEF Fault Management\
     \ API allows to manage Fault Management Jobs, collect \nFault Management Reports,\
-    \ and receive notifications related to these\nentities. This provides the ability\
-    \ for the Buyer/Client to request that \nthe Seller/Server performs FM Job on\
-    \ a Service, and to retrieve the results\nof the Job. Examples of the Fault Management\
-    \ Job are Link Trace \nand Loopback. \n\nTwo types of entities are supported by\
-    \ the API:\n- **Fault Management Job** - specifies the Fault Management Job \n\
-    configuration. FM Job is typically run as part of a troubleshooting or \ndiagnostic\
-    \ process of a Service. \n\n- **Fault Management Report** - The execution of Fault\
-    \ Management Job \ncreates FM Reports that provide Buyer/Client with the results\
-    \ of the Job.\n\nList of use cases supported by the API:\n- Create Fault Management\
-    \ Job\n- Retrieve list of Fault Management Jobs\n- Retrieve Fault Management Job\
-    \ by Job Identifier\n- Modify Fault Management Job\n- Retrieve list of Modify\
-    \ Fault Management Job\n- Retrieve Modify Fault Management Job by Identifier\n\
-    - Cancel Fault Management Job\n- Retrieve list of Cancel Fault Management Job\n\
-    - Retrieve Cancel Fault Management Job by Identifier\n- Suspend Fault Management\
-    \ Job\n- Resume Fault Management Job\n- Subscribe to Fault Management Job Notifications\n\
-    - Unsubscribe from Fault Management Job Notifications\n- Retrieve list of Fault\
-    \ Management Reports\n- Retrieve Fault Management Report by Report Identifier\n\
-    - Subscribe to Fault Management Report Notifications\n- Unsubscribe from Fault\
-    \ Management Report Notifications\n\nCopyright 2024 MEF Forum and its contributors\n"
+    \ as well as receive notifications related to these\nentities. This provides the\
+    \ ability for the Buyer/Client to request that \nthe Seller/Server performs actions\
+    \ defined by FM Job, and to retrieve \nthe results of the Job. Examples of the\
+    \ Fault Management Job are Link Trace \nand Loopback. \n\nTwo types of entities\
+    \ are supported by the API:\n- **Fault Management Job** - specifies the Fault\
+    \ Management Job\n  configuration. FM Job is typically run as part of a troubleshooting\
+    \ or \n  diagnostic process of a service, an ordered pair (e.g., two UNIs), \n\
+    \  or an entity (e.g., port). \n\n- **Fault Management Report** - The execution\
+    \ of Fault Management Job \n  results in Fault Management Reports that provide\
+    \ Buyer/Client with the \n  job results.\n\nList of use cases supported by the\
+    \ API:\n- Create Fault Management Job\n- Retrieve list of Fault Management Jobs\n\
+    - Retrieve Fault Management Job by Identifier\n- Modify Fault Management Job\n\
+    - Retrieve list of Modify Fault Management Job\n- Retrieve Modify Fault Management\
+    \ Job by Identifier\n- Cancel Fault Management Job\n- Retrieve list of Cancel\
+    \ Fault Management Job\n- Retrieve Cancel Fault Management Job by Identifier\n\
+    - Suspend Fault Management Job\n- Resume Fault Management Job\n- Subscribe to\
+    \ Fault Management Job Notifications\n- Unsubscribe from Fault Management Job\
+    \ Notifications\n- Retrieve list of Fault Management Reports\n- Retrieve Fault\
+    \ Management Report by Identifier\n- Subscribe to Fault Management Report Notifications\n\
+    - Unsubscribe from Fault Management Report Notifications\n\nCopyright 2025 MEF\
+    \ Forum and its contributors\n"
   title: Fault Management
-  version: 1.0.0-RC
+  version: 2.0.0-RC
 servers:
-- url: "https://{serverBase}/mefApi/legato/faultManagement/v1/"
+- url: "https://{serverBase}/mefApi/legato/faultManagement/v2/"
   variables:
     serverBase:
       default: mef.net
@@ -36,13 +38,7 @@ security:
   - default
 tags:
 - name: faultManagementJob
-- name: modifyFaultManagementJob
-- name: suspendFaultManagementJob
-- name: resumeFaultManagementJob
-- name: cancelFaultManagementJob
-- name: faultManagementJobComplexQuery
 - name: faultManagementReport
-- name: faultManagementReportComplexQuery
 - name: trackingRecord
 - name: events subscription
 paths:
@@ -51,20 +47,32 @@ paths:
       description: "The Buyer/Client requests a list of FM Jobs based on a set of\
         \ filter criteria. The Seller/Server returns a summarized list of FM  Jobs.\
         \ For each FM Job returned, the Seller/Server also provides a  Fault Management\
-        \ Job Identifier that uniquely identifiers this FM Job  within the Seller/Server.\
+        \ Job Identifier that uniquely identifies this FM Job  within the Seller/Server.\
         \ The order of the elements returned to the  Buyer/Client is defined by the\
         \ Seller/Server (e.g. natural order) and does not change between the pages."
       operationId: listFaultManagementJob
       parameters:
-      - description: Identifier of a Service Endpoint.
+      - description: Identifier of a Service.
         in: query
-        name: serviceIdFrom
+        name: serviceId
         required: false
         schema:
           type: string
-      - description: Identifier of a Service Endpoint.
+      - description: Identifier of a Service From endpoint.
         in: query
-        name: serviceIdTo
+        name: serviceFromId
+        required: false
+        schema:
+          type: string
+      - description: Identifier of a Service To endpoint.
+        in: query
+        name: serviceToId
+        required: false
+        schema:
+          type: string
+      - description: Identifier of an Entity.
+        in: query
+        name: entityId
         required: false
         schema:
           type: string
@@ -74,18 +82,7 @@ paths:
         name: state
         required: false
         schema:
-          enum:
-          - acknowledged
-          - cancelled
-          - completed
-          - inProgress
-          - pending
-          - pendingCancel
-          - rejected
-          - resourcesUnavailable
-          - scheduled
-          - suspended
-          type: string
+          $ref: '#/components/schemas/FaultManagementJobStateType'
       - description: Date when the job was created - greater than.
         in: query
         name: creationDate.gt
@@ -106,19 +103,6 @@ paths:
         required: false
         schema:
           $ref: '#/components/schemas/JobType'
-      - description: Sampling rate of the collection or production of Fault Management
-          Job results.
-        in: query
-        name: granularity
-        required: false
-        schema:
-          $ref: '#/components/schemas/Interval'
-      - description: Defines the interval for the report generation.
-        in: query
-        name: reportingPeriod
-        required: false
-        schema:
-          $ref: '#/components/schemas/Interval'
       - description: The priority of the Fault Management Job.
         in: query
         name: jobPriority
@@ -145,7 +129,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/FaultManagementJob_Find'
+                  $ref: '#/components/schemas/FaultManagementJob'
                 type: array
           description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
           headers:
@@ -315,7 +299,7 @@ paths:
       - faultManagementJob
   /faultManagementJob/{id}/resume:
     post:
-      description: This operation sends a resumption request.
+      description: 'A request initiated by the Buyer/Client to resume a Fault Management  Job. '
       operationId: resumeFaultManagementJob
       parameters:
       - description: Identifier of the FaultManagementJob.
@@ -370,10 +354,11 @@ paths:
         - resumeFaultManagementJob
       summary: Resumes a Fault Management Job
       tags:
-      - resumeFaultManagementJob
+      - faultManagementJob
   /faultManagementJob/{id}/suspend:
     post:
-      description: This operation sends a suspension request.
+      description: A request initiated by the Buyer/Client to suspend a Fault Management
+        Job.
       operationId: suspendFaultManagementJob
       parameters:
       - description: Identifier of the FaultManagementJob.
@@ -428,14 +413,14 @@ paths:
         - suspendFaultManagementJob
       summary: Suspends a Fault Management Job.
       tags:
-      - suspendFaultManagementJob
+      - faultManagementJob
   /cancelFaultManagementJob:
     get:
       description: The Buyer/Client requests a list of Cancel Fault Management Job
         based on a set of filter criteria.
       operationId: listCancelFaultManagementJob
       parameters:
-      - description: Identifer of Fault Management Job that is a subject of CancelFaultManagementJob.
+      - description: Identifier of Fault Management Job that is a subject of CancelFaultManagementJob.
         in: query
         name: faultManagementJobId
         required: false
@@ -447,12 +432,7 @@ paths:
         name: state
         required: false
         schema:
-          enum:
-          - acknowledged
-          - completed
-          - inProgress
-          - rejected
-          type: string
+          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       - description: Date when the CancelFaultManagementJob was created - greater
           than.
         in: query
@@ -490,7 +470,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/CancelFaultManagementJob_Find'
+                  $ref: '#/components/schemas/CancelFaultManagementJob'
                 type: array
           description: Success
           headers:
@@ -546,7 +526,7 @@ paths:
         - listCancelFaultManagementJob
       summary: List or find CancelFaultManagementJob objects.
       tags:
-      - cancelFaultManagementJob
+      - faultManagementJob
     post:
       description: A request initiated by the Buyer/Client to cancel  a Fault Management
         Job in the Seller/Server system.
@@ -602,7 +582,7 @@ paths:
         - createCancelFaultManagementJob
       summary: Creates a Cancel Fault Management Job entity.
       tags:
-      - cancelFaultManagementJob
+      - faultManagementJob
   /cancelFaultManagementJob/{id}:
     get:
       description: The Buyer/Client requests detailed information about a single Cancel
@@ -657,14 +637,14 @@ paths:
         - retrieveCancelFaultManagementJob
       summary: Retrieves a CancelFaultManagementJob by ID.
       tags:
-      - cancelFaultManagementJob
+      - faultManagementJob
   /modifyFaultManagementJob:
     get:
       description: The Buyer/Client requests a list of Modify Fault Management Job
         based on a set of filter criteria.
       operationId: listModifyFaultManagementJob
       parameters:
-      - description: Identifer of Fault Management Job that is a subject of ModifyFaultManagementJob.
+      - description: Identifier of Fault Management Job that is a subject of ModifyFaultManagementJob.
         in: query
         name: faultManagementJobId
         required: false
@@ -676,12 +656,7 @@ paths:
         name: state
         required: false
         schema:
-          enum:
-          - acknowledged
-          - completed
-          - inProgress
-          - rejected
-          type: string
+          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       - description: Date when the ModifyFaultManagementJob was created - greater
           than.
         in: query
@@ -719,7 +694,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/ModifyFaultManagementJob_Find'
+                  $ref: '#/components/schemas/ModifyFaultManagementJob'
                 type: array
           description: Success
           headers:
@@ -775,7 +750,7 @@ paths:
         - listModifyFaultManagementJob
       summary: List or find ModifyFaultManagementJob objects.
       tags:
-      - modifyFaultManagementJob
+      - faultManagementJob
     post:
       description: A request initiated by the Buyer/Client to modify a Fault Management  Job
         in the Seller/Server system.
@@ -831,7 +806,7 @@ paths:
         - createModifyFaultManagementJob
       summary: Creates a Modify Fault Management Job entity.
       tags:
-      - modifyFaultManagementJob
+      - faultManagementJob
   /modifyFaultManagementJob/{id}:
     get:
       description: The Buyer/Client requests detailed information about a single Modify
@@ -886,18 +861,18 @@ paths:
         - retrieveModifyFaultManagementJob
       summary: Retrieves a ModifyFaultManagementJob by ID.
       tags:
-      - modifyFaultManagementJob
+      - faultManagementJob
   /faultManagementJobComplexQuery:
     post:
-      description: A request initiated by the Buyer/Client to create a Fault Management
+      description: A request initiated by the Buyer/Client to execute a Fault Management
         Job Complex Query in the Seller/Server system.
-      operationId: createFaultManagementJobComplexQuery
+      operationId: faultManagementJobComplexQuery
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/FaultManagementJobComplexQuery_Create'
-        description: The FaultManagementJobComplexQuery to be created.
+        description: The FaultManagementJobComplexQuery to be executed.
         required: true
       responses:
         "200":
@@ -905,7 +880,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/FaultManagementJobComplexQuery'
+                  $ref: '#/components/schemas/FaultManagementJob'
                 type: array
           description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
         "400":
@@ -942,18 +917,19 @@ paths:
           description: Internal Server Error
       security:
       - oauth2MEFLSOAPI:
-        - createFaultManagementJobComplexQuery
-      summary: Creates a FaultManagementJobComplexQuery.
+        - faultManagementJobComplexQuery
+      summary: Executes a FaultManagementJobComplexQuery.
       tags:
-      - faultManagementJobComplexQuery
+      - faultManagementJob
   /faultManagementReport:
     get:
-      description: "The Buyer/Client requests a list of FM Reports based on a set\
-        \ of filter criteria. The Seller/Server returns a summarized list of FM Reports.\
-        \ For each FM Report returned, the Seller/Server also provides a  Fault Management\
-        \ Report Identifier that uniquely identifiers this FM Report within the Seller/Server.\
-        \ The order of the elements returned to the  Buyer/Client is defined by the\
-        \ Seller/Server (e.g. natural order) and does not change between the pages."
+      description: "The Buyer/Client requests a list of Fault Management Reports based\
+        \  on a set of filter criteria. The Seller/Server returns a summarized list\
+        \ of FM Reports. For each FM Report returned, the Seller/Server also provides\
+        \ a Fault Management Report Identifier that uniquely identifies this FM Report\
+        \ within the Seller/Server. The order of the elements  returned to the Buyer/Client\
+        \ is defined by the Seller/Server  (e.g. natural order) and does not change\
+        \ between the pages."
       operationId: listFaultManagementReport
       parameters:
       - description: Identifier of Fault Management Job that generated Fault Management
@@ -963,15 +939,27 @@ paths:
         required: false
         schema:
           type: string
-      - description: Identifier of a Service Endpoint.
+      - description: Identifier of a Service From endpoint.
         in: query
-        name: serviceIdFrom
+        name: serviceFromId
         required: false
         schema:
           type: string
-      - description: Identifier of a Service Endpoint.
+      - description: Identifier of a Service To endpoint.
         in: query
-        name: serviceIdTo
+        name: serviceToId
+        required: false
+        schema:
+          type: string
+      - description: Identifier of a Service.
+        in: query
+        name: serviceId
+        required: false
+        schema:
+          type: string
+      - description: Identifier of a Entity.
+        in: query
+        name: entityId
         required: false
         schema:
           type: string
@@ -981,13 +969,7 @@ paths:
         name: state
         required: false
         schema:
-          enum:
-          - acknowledged
-          - completed
-          - failed
-          - inProgress
-          - rejected
-          type: string
+          $ref: '#/components/schemas/FaultManagementReportStateType'
       - description: Date when the report was created - greater than.
         in: query
         name: creationDate.gt
@@ -1030,18 +1012,6 @@ paths:
         schema:
           format: date-time
           type: string
-      - description: Sampling rate of the collection of measurements.
-        in: query
-        name: granularity
-        required: false
-        schema:
-          $ref: '#/components/schemas/Interval'
-      - description: Type of the Fault Management Job.
-        in: query
-        name: jobType
-        required: false
-        schema:
-          $ref: '#/components/schemas/JobType'
       - description: Format of report output.
         in: query
         name: outputFormat
@@ -1188,15 +1158,15 @@ paths:
       - faultManagementReport
   /faultManagementReportComplexQuery:
     post:
-      description: A request initiated by the Buyer/Client to create a Fault Management
+      description: A request initiated by the Buyer/Client to execute a Fault Management
         Report Complex Query in the Seller/Server system.
-      operationId: createFaultManagementReportComplexQuery
+      operationId: faultManagementReportComplexQuery
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/FaultManagementReportComplexQuery_Create'
-        description: The FaultManagementReportComplexQuery to be created.
+        description: The FaultManagementReportComplexQuery to be executed.
         required: true
       responses:
         "200":
@@ -1204,7 +1174,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/FaultManagementReportComplexQuery'
+                  $ref: '#/components/schemas/FaultManagementReport_Find'
                 type: array
           description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
         "400":
@@ -1241,16 +1211,16 @@ paths:
           description: Internal Server Error
       security:
       - oauth2MEFLSOAPI:
-        - createFaultManagementReportComplexQuery
-      summary: Creates a FaultManagementReportComplexQuery.
+        - faultManagementReportComplexQuery
+      summary: Executes a FaultManagementReportComplexQuery.
       tags:
-      - faultManagementReportComplexQuery
+      - faultManagementReport
   /trackingRecord:
     get:
       description: The Buyer/Client requests a list of Tracking Records based on a
-        set of filter criteria. The Seller/Server returns a summarized list of Tracking
-        Records. Tracking Record allows for tracking of modifications performed on
-        a Fault Management Job or Report.
+        set of filter criteria. The Seller/Server returns a list of Tracking Records.  Tracking
+        Record allows for tracking of modifications performed on  a Fault Management
+        Job or Report.
       operationId: listTrackingRecord
       parameters:
       - description: Identifier of Fault Management Job or Fault Management Report.
@@ -1299,7 +1269,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/TrackingRecord_Find'
+                  $ref: '#/components/schemas/TrackingRecord'
                 type: array
           description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
           headers:
@@ -1601,13 +1571,8 @@ components:
       type: object
     CancelFaultManagementJob:
       allOf:
-      - $ref: '#/components/schemas/CancelFaultManagementJob_Common'
+      - $ref: '#/components/schemas/CancelFaultManagementJob_Create'
       - properties:
-          cancellationDeniedReason:
-            description: "If the Cancel Fault Management Job request is denied by\
-              \ the  Seller/Server, the Seller/Server provides a reason to the Buyer/Client\
-              \ using this attribute."
-            type: string
           creationDate:
             description: Date when the Cancel Fault Management Job was created.
             format: date-time
@@ -1628,46 +1593,36 @@ components:
         - state
         type: object
       description: Request for cancellation of an existing Fault Management Job.
-    CancelFaultManagementJob_Common:
-      description: Request for cancellation of an existing Fault Management Job.
-      properties:
-        cancellationReason:
-          description: An optional attribute that allows the Buyer/Client to provide
-            additional details to the Seller/Server on the reason for cancelling Fault
-            Management Job.
-          type: string
-        faultManagementJob:
-          $ref: '#/components/schemas/FaultManagementJobRef'
-      required:
-      - faultManagementJob
-      type: object
     CancelFaultManagementJob_Create:
-      allOf:
-      - $ref: '#/components/schemas/CancelFaultManagementJob_Common'
-      - type: object
       description: Request for cancellation of an existing Fault Management Job.
-    CancelFaultManagementJob_Find:
-      description: This class represents a single list item for the response of  `listCancelFaultManagementJob`.
       properties:
-        creationDate:
-          description: Date when the Cancel Fault Management Job was created.
-          format: date-time
-          type: string
-        id:
-          description: Unique identifier for the Cancel Fault Management Job that
-            is generated by the Seller/Server when the Cancel Fault Management Job
-            request  `state` is set to `acknowledged`.
-          type: string
         faultManagementJob:
           $ref: '#/components/schemas/FaultManagementJobRef'
-        state:
-          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       required:
-      - creationDate
       - faultManagementJob
-      - id
-      - state
       type: object
+    EntityRef:
+      allOf:
+      - $ref: '#/components/schemas/MonitoredObjectRef'
+      - description: Reference to Entity.
+        properties:
+          '@referredType':
+            description: The type of the referred object. This is used to distinguish
+              between different types of objects that can be referred to by the EntityId.
+            type: string
+          entityHref:
+            description: Hyperlink to the Entity resource. This is used to provide
+              a link to the Entity resource in the Seller/Server system.
+            type: string
+          entityId:
+            description: Identifier of an Entity.
+            type: string
+        required:
+        - '@referredType'
+        - '@type'
+        - entityId
+        type: object
+      x-discriminator-value: EntityRef
     Error:
       description: Standard Class used to describe API response error Not intended
         to be used directly. The `code` in the HTTP header is used as a discriminator
@@ -1857,8 +1812,9 @@ components:
             \ Fault  Management Notification API (faultNotification.api.yaml). This\
             \ property is appended with the base path and notification resource path\
             \ specified in that API to construct a URL to which notification is sent.\
-            \ E.g. for 'callback':  \"https://buyer.co/listenerEndpoint\", the Fault\
-            \ Management Job state change event notification will be sent to `https://buyer.co/listenerEndpoint/mefApi/legato/faultManagement/v1/listener/faultManagementJobStateChangeEvent`"
+            \ E.g. for 'callback':  \"https://buyer.mef.com/listenerEndpoint\", the\
+            \ Fault Management Job state change event notification will be sent to\
+            \ `https://buyer.mef.com/listenerEndpoint/mefApi/legato/faultManagement/v2/listener/faultManagementJobStateChangeEvent`"
           type: string
         query:
           description: "This attribute is used to define which type of events to register\
@@ -1874,10 +1830,11 @@ components:
       type: object
     FaultManagementJob:
       allOf:
-      - $ref: '#/components/schemas/FaultManagementJob_Common'
-      - description: A Fault Management Job specifies the configuration of the job
-          to be executed by Seller/Server as part of the troubleshooting or  diagnostic
-          process of a Service.
+      - $ref: '#/components/schemas/FaultManagementJob_Create'
+      - description: "A Fault Management Job specifies the configuration of the job\
+          \ to be executed by Seller/Server as part of the troubleshooting or  diagnostic\
+          \ process of a service, an ordered pair (e.g., two UNIs),  or an entity\
+          \ (e.g., port)."
         properties:
           creationDate:
             description: Date when the Fault Management Job was created.
@@ -1904,65 +1861,10 @@ components:
         - id
         - state
         type: object
-    FaultManagementJobComplexQuery:
-      description: "Fault Management Job Complex Query entity is used to perform \
-        \ searches on Fault Management Job entities, including clauses based on ScheduleDefinition\
-        \ and ServicePayloadSpecificAttributes."
-      properties:
-        creationDate:
-          description: Date when the Fault Management Job was created.
-          format: date-time
-          type: string
-        description:
-          description: A free-text description of the Fault Management Job.
-          type: string
-        faultManagementJob:
-          $ref: '#/components/schemas/FaultManagementJobRef'
-        granularity:
-          $ref: '#/components/schemas/Interval'
-        jobPriority:
-          default: 5
-          description: The priority of the Fault Management Job. The way the management
-            application will use the Job priority to schedule Job execution is application-specific
-            and out the scope.
-          type: integer
-        jobType:
-          $ref: '#/components/schemas/JobType'
-        lastModifiedDate:
-          description: Date when the Fault Management Job was last modified.
-          format: date-time
-          type: string
-        outputFormat:
-          $ref: '#/components/schemas/OutputFormat'
-        reportingPeriod:
-          $ref: '#/components/schemas/Interval'
-        resultFormat:
-          $ref: '#/components/schemas/ResultFormat'
-        scheduleDefinition:
-          $ref: '#/components/schemas/ScheduleDefinition'
-        serviceId:
-          $ref: '#/components/schemas/ServiceId'
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-        state:
-          $ref: '#/components/schemas/FaultManagementJobStateType'
-      required:
-      - creationDate
-      - faultManagementJob
-      - granularity
-      - jobType
-      - outputFormat
-      - reportingPeriod
-      - resultFormat
-      - scheduleDefinition
-      - serviceId
-      - servicePayloadSpecificAttributes
-      - state
-      type: object
     FaultManagementJobComplexQuery_Create:
       description: "Fault Management Job Complex Query entity is used to perform \
         \ searches on Fault Management Job entities, including clauses based on ScheduleDefinition\
-        \ and ServicePayloadSpecificAttributes."
+        \ and ServiceSpecificConfiguration."
       properties:
         creationDate.gt:
           description: Date when the Fault Management Job was created - greater than.
@@ -1973,7 +1875,7 @@ components:
           format: date-time
           type: string
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         jobPriority:
           default: 5
           description: The priority of the Fault Management Job. The way the management
@@ -1992,18 +1894,18 @@ components:
             than.
           format: date-time
           type: string
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
         outputFormat:
           $ref: '#/components/schemas/OutputFormat'
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
-        serviceId:
-          $ref: '#/components/schemas/ServiceId'
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
         state:
           $ref: '#/components/schemas/FaultManagementJobStateType'
       type: object
@@ -2011,12 +1913,12 @@ components:
       description: |-
         The state of the process related to the Fault Management Job
 
-        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged` | Acknowledged | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
-        | `completed`    | Completed    | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
-        | `inProgress`   | In-Progress  | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
-        | `rejected`     | Rejected     | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
+        | state          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged   | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed      | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
+        | `inProgress`   | In-Progress    | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`     | Rejected       | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
       enum:
       - acknowledged
       - completed
@@ -2039,18 +1941,18 @@ components:
       description: |-
         The state of the Fault Management Job.
 
-        | state                   | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-        | ----------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged`          | Acknowledged          | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
-        | `cancelled`             | Cancelled             | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-        | `completed`             | Completed             | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-        | `inProgress`            | In-Progress           | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
-        | `pending`               | Pending               | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
-        | `pendingCancel`         | Pending Cancel        | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
-        | `rejected`              | Rejected              | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-        | `resourcesUnavailable`  | Resources Unavailable | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-        | `scheduled`             | Scheduled             | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
-        | `suspended`             | Suspended             | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
+        | state                   | MEF 133.1 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | ----------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged`          | Acknowledged            | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
+        | `cancelled`             | Cancelled               | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+        | `completed`             | Completed               | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+        | `inProgress`            | In-Progress             | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
+        | `pending`               | Pending                 | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
+        | `pendingCancel`         | Pending Cancel          | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`              | Rejected                | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `resourcesUnavailable`  | Resources Unavailable   | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+        | `scheduled`             | Scheduled               | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
+        | `suspended`             | Suspended               | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
       enum:
       - acknowledged
       - cancelled
@@ -2063,15 +1965,16 @@ components:
       - scheduled
       - suspended
       type: string
-    FaultManagementJob_Common:
-      description: 'A Fault Management Job specifies the configuration of FM Job to
-        be performed on a Service by the Seller/Server. '
+    FaultManagementJob_Create:
+      description: "A Fault Management Job specifies the configuration of FM Job to\
+        \ be performed on a service, an ordered pair (e.g., two UNIs), or an entity\
+        \ (e.g., port) by the Seller/Server. "
       properties:
         description:
           description: A free-text description of the Fault Management Job.
           type: string
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         jobPriority:
           default: 5
           description: The priority of the Fault Management Job. The way the management
@@ -2080,78 +1983,27 @@ components:
           type: integer
         jobType:
           $ref: '#/components/schemas/JobType'
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
         outputFormat:
           $ref: '#/components/schemas/OutputFormat'
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
-        serviceId:
-          $ref: '#/components/schemas/ServiceId'
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
       required:
       - granularity
       - jobType
+      - monitoredObject
       - outputFormat
       - reportingPeriod
       - resultFormat
       - scheduleDefinition
-      - serviceId
-      - servicePayloadSpecificAttributes
-      type: object
-    FaultManagementJob_Create:
-      allOf:
-      - $ref: '#/components/schemas/FaultManagementJob_Common'
-      - type: object
-      description: 'A Fault Management Job specifies the configuration of FM Job to
-        be executed on a Service by the Seller/Server. '
-    FaultManagementJob_Find:
-      description: This class represents a single list item for the response of the
-        `listFaultManagementJob` operation.
-      properties:
-        creationDate:
-          description: Date when the job was created.
-          format: date-time
-          type: string
-        description:
-          description: A free-text description of the Fault Management Job.
-          type: string
-        granularity:
-          $ref: '#/components/schemas/Interval'
-        id:
-          description: Unique identifier
-          type: string
-        jobPriority:
-          default: 5
-          description: The priority of the Fault Management Job. The way the management
-            application will use the Job priority to schedule Job execution is application-specific
-            and out the scope.
-          type: integer
-        jobType:
-          $ref: '#/components/schemas/JobType'
-        outputFormat:
-          $ref: '#/components/schemas/OutputFormat'
-        reportingPeriod:
-          $ref: '#/components/schemas/Interval'
-        scheduleDefinition:
-          $ref: '#/components/schemas/ScheduleDefinition'
-        serviceId:
-          $ref: '#/components/schemas/ServiceId'
-        state:
-          $ref: '#/components/schemas/FaultManagementJobStateType'
-      required:
-      - creationDate
-      - granularity
-      - id
-      - jobType
-      - outputFormat
-      - reportingPeriod
-      - scheduleDefinition
-      - serviceId
-      - state
+      - serviceSpecificConfiguration
       type: object
     FaultManagementReport:
       description: The execution of Fault Management Job creates FM Reports that provide
@@ -2169,6 +2021,8 @@ components:
           type: string
         faultManagementJob:
           $ref: '#/components/schemas/FaultManagementJobRef'
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
         href:
           description: Hyperlink reference
           format: uri
@@ -2180,6 +2034,10 @@ components:
           description: Date when the report was last modified.
           format: date-time
           type: string
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
         reportContent:
           items:
             $ref: '#/components/schemas/ReportContentItem'
@@ -2188,50 +2046,28 @@ components:
           $ref: '#/components/schemas/ReportingTimeframe'
         reportUrl:
           $ref: '#/components/schemas/AttachmentURL'
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
         state:
           $ref: '#/components/schemas/FaultManagementReportStateType'
       required:
       - creationDate
       - faultManagementJob
+      - granularity
       - id
+      - monitoredObject
+      - outputFormat
       - reportingTimeframe
-      - state
-      type: object
-    FaultManagementReportComplexQuery:
-      description: "Fault Management Report Complex Query entity is used to perform\
-        \  searches on Fault Management Report entities, including clauses based on\
-        \ ServicePayloadSpecificAttributes."
-      properties:
-        creationDate:
-          description: Date when the Fault Management Report was created.
-          format: date-time
-          type: string
-        description:
-          description: A free-text description of the Fault Management Report.
-          type: string
-        faultManagementJob:
-          $ref: '#/components/schemas/FaultManagementJobRef'
-        faultManagementReport:
-          $ref: '#/components/schemas/FaultManagementReportRef'
-        lastModifiedDate:
-          description: Date when the report was last modified.
-          format: date-time
-          type: string
-        reportingTimeframe:
-          $ref: '#/components/schemas/ReportingTimeframe'
-        state:
-          $ref: '#/components/schemas/FaultManagementReportStateType'
-      required:
-      - creationDate
-      - faultManagementJob
-      - faultManagementReport
-      - reportingTimeframe
+      - resultFormat
+      - serviceSpecificConfiguration
       - state
       type: object
     FaultManagementReportComplexQuery_Create:
       description: "Fault Management Report Complex Query entity is used to perform\
         \  searches on Fault Management Report entities, including clauses based on\
-        \ ServicePayloadSpecificAttributes."
+        \ ServiceSpecificConfiguration."
       properties:
         creationDate.gt:
           description: Date when the Fault Management Report was created - greater
@@ -2242,19 +2078,12 @@ components:
           description: Date when the Fault Management Report was created - lower than.
           format: date-time
           type: string
-        faultManagementJobId:
-          description: Identifier of the referenced Fault Management Job.
-          type: string
+        faultManagementJob:
+          $ref: '#/components/schemas/FaultManagementJobRef'
         granularity:
-          $ref: '#/components/schemas/Interval'
-        lastModifiedDate.gt:
-          description: Date when the report was last modified - greater than.
-          format: date-time
-          type: string
-        lastModifiedDate.lt:
-          description: Date when the report was last modified - lower than.
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/TimeDuration'
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
         outputFormat:
           $ref: '#/components/schemas/OutputFormat'
         reportingTimeframe.startDate.gt:
@@ -2275,36 +2104,22 @@ components:
           type: string
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
-        serviceId:
-          $ref: '#/components/schemas/ServiceId'
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
         state:
           $ref: '#/components/schemas/FaultManagementReportStateType'
-      type: object
-    FaultManagementReportRef:
-      description: A reference to a Fault Management Report resource.
-      properties:
-        faultManagementReportHref:
-          description: Hyperlink to the referenced Fault Management Report.
-          type: string
-        faultManagementReportId:
-          description: Identifier of the referenced Fault Management Report.
-          type: string
-      required:
-      - faultManagementReportId
       type: object
     FaultManagementReportStateType:
       description: |-
         Possible values for the state of a Fault Management Report.
 
-        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-        | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | acknowledged | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
-        | completed    | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
-        | failed       | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
-        | inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
-        | rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
+        | State          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                       |
+        | -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged   | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+        | `completed`    | Completed      | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
+        | `failed`       | Failed         | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
+        | `inProgress`   | In-Progress    | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
+        | `rejected`     | Rejected       | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
       enum:
       - acknowledged
       - completed
@@ -2325,50 +2140,56 @@ components:
           type: string
         faultManagementJob:
           $ref: '#/components/schemas/FaultManagementJobRef'
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
         id:
           description: Unique identifier
           type: string
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
         reportingTimeframe:
           $ref: '#/components/schemas/ReportingTimeframe'
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
         state:
           $ref: '#/components/schemas/FaultManagementReportStateType'
       required:
       - creationDate
       - faultManagementJob
+      - granularity
       - id
+      - monitoredObject
+      - outputFormat
       - reportingTimeframe
+      - resultFormat
+      - serviceSpecificConfiguration
       - state
       type: object
     HourRange:
-      description: Defines start and end date.
+      description: Defines start and end time.
       properties:
         start:
-          description: Start date
-          format: date-time
+          description: Start time in format HH24:mm or HH24:mm:ss.
+          pattern: "^(?:[01]\\d|2[0-3]):[0-5]\\d(:[0-5]\\d)?$"
           type: string
         end:
-          description: End date
-          format: date-time
+          description: End time in format HH:mm or HH:mm:ss.
+          pattern: "^(?:[01]\\d|2[0-3]):[0-5]\\d(:[0-5]\\d)?$"
           type: string
+      required:
+      - end
+      - start
       type: object
-    Interval:
-      description: Enumeration of applicable time intervals.
-      enum:
-      - 10 milliseconds
-      - 100 milliseconds
-      - 1 second
-      - 10 seconds
-      - 1 minute
-      - 5 minutes
-      - 15 minutes
-      - 30 minutes
-      - 1 hour
-      - 24 hours
-      - 1 month
-      - 1 year
-      type: string
     JobType:
-      description: The type of FM Job.
+      description: The type of a Job. Proactive jobs are carried on continuously to
+        permit timely reporting of fault or performance status. On-demand jobs are
+        actions that are  initiated for a limited time to carry out the measurements.
+        Passive  jobs support the collection and reporting of network and service
+        statistics/faults.
       enum:
       - proactive
       - on-demand
@@ -2387,11 +2208,13 @@ components:
           format: date-time
           type: string
         measurementInterval:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
+      required:
+      - measurementStartDate
       type: object
     ModifyFaultManagementJob:
       allOf:
-      - $ref: '#/components/schemas/ModifyFaultManagementJob_Common'
+      - $ref: '#/components/schemas/ModifyFaultManagementJob_Create'
       - properties:
           creationDate:
             description: Date when the Modify Fault Management Job was created.
@@ -2405,11 +2228,6 @@ components:
               is generated by the Seller/Server when the Modify Fault Management Job
               request  `state` is set to `acknowledged`.
             type: string
-          modificationDeniedReason:
-            description: "If the Modify Fault Management Job request is denied by\
-              \ the  Seller/Server, the Seller/Server provides a reason to the Buyer/Client\
-              \ using this attribute."
-            type: string
           state:
             $ref: '#/components/schemas/FaultManagementJobProcessStateType'
         required:
@@ -2418,7 +2236,7 @@ components:
         - state
         type: object
       description: Request for modification of an existing Fault Management Job.
-    ModifyFaultManagementJob_Common:
+    ModifyFaultManagementJob_Create:
       description: Request for modification of an existing Fault Management Job.
       properties:
         description:
@@ -2427,60 +2245,46 @@ components:
         faultManagementJob:
           $ref: '#/components/schemas/FaultManagementJobRef'
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         jobPriority:
           default: 5
           description: The priority of the Fault Management Job. The way the management
             application will use the Job priority to schedule Job execution is application-specific
             and out the scope.
           type: integer
-        modificationReason:
-          description: An optional attribute that allows the Buyer/Client to provide
-            additional detail to the Seller/Server on the reason for modifying Fault
-            Management Job.
-          type: string
         outputFormat:
           $ref: '#/components/schemas/OutputFormat'
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
       required:
       - faultManagementJob
       type: object
-    ModifyFaultManagementJob_Create:
-      allOf:
-      - $ref: '#/components/schemas/ModifyFaultManagementJob_Common'
-      - description: Request for modification of an existing Fault Management Job.
-        type: object
-    ModifyFaultManagementJob_Find:
-      description: This class represents a single list item for the response of  `listModifyFaultManagementJob`.
+    MonitoredObjectRef:
+      discriminator:
+        mapping:
+          EntityRef: '#/components/schemas/EntityRef'
+          ServiceFromToRef: '#/components/schemas/ServiceFromToRef'
+          ServiceRef: '#/components/schemas/ServiceRef'
+        propertyName: '@type'
       properties:
-        creationDate:
-          description: Date when the Modify Fault Management Job was created.
-          format: date-time
+        '@type':
+          description: Used to unambiguously designate the class type when using `oneOf`
+          enum:
+          - EntityRef
+          - ServiceFromToRef
+          - ServiceRef
           type: string
-        id:
-          description: Unique identifier for the Modify Fault Management Job that
-            is generated by the Seller/Server when the Modify Fault Management Job
-            request `state` is set to `acknowledged`.
-          type: string
-        faultManagementJob:
-          $ref: '#/components/schemas/FaultManagementJobRef'
-        state:
-          $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       required:
-      - creationDate
-      - faultManagementJob
-      - id
-      - state
+      - '@type'
       type: object
     OutputFormat:
-      description: List of possible output formats for the Fault Management Report.
+      description: List of possible output formats for the Report.
       enum:
       - json
       - xml
@@ -2495,52 +2299,53 @@ components:
         second:
           description: "A definition of time (seconds) to run a job. Allowed values:\
             \ 0-59,  and special characters: (,-*/), where:\n  - `*` -> any value\n\
-            \  - `,` -> value list seprator\n  - `-` -> range of values\n  - '/' ->\
-            \ step values\nFor example:\n  - */5 * * * * * -> run a job at every 5th\
-            \ second. \n  - */30 */1 * * * * -> run a job at every 30 seconds \n \
-            \ past every minute."
+            \  - `,` -> value list separator\n  - `-` -> range of values\n  - '/'\
+            \ -> step values\nFor example:\n  - */5 * * * * * -> run a job at every\
+            \ 5th second. \n  - */30 */1 * * * * -> run a job at every 30 seconds\
+            \ \n    past every minute."
           type: string
         minute:
           description: "A definition of time (minutes) to run a job. Allowed values:\
             \ 0-59,  and special characters: (,-*/), where:\n  - `*` -> any value\n\
-            \  - `,` -> value list seprator\n  - `-` -> range of values\n  - '/' ->\
-            \ step values\nFor example:\n  - 0 */10 * * * * -> run a job at every\
+            \  - `,` -> value list separator\n  - `-` -> range of values\n  - '/'\
+            \ -> step values\nFor example:\n  - 0 */10 * * * * -> run a job at every\
             \ 10th minute. \n  - 0 */30 0 * * * -> run a job at every 30th minute\
             \ past midnight.\n  - 0 */30 8 * * 1 -> run a job at every 30th minute\
-            \ \n  past hour 8 on Monday."
+            \ \n    past hour 8 on Monday."
           type: string
         hour:
-          description: "A definition of time (hours) to run a job. Allowed values:\
+          description: "A definition of time (hour) to run a job. Allowed values:\
             \ 0-23,  and special characters: (,-*/), where:\n  - `*` -> any value\n\
-            \  - `,` -> value list seprator\n  - `-` -> range of values\n  - '/' ->\
-            \ step values\nFor example:\n  - 0 0 10 10 * * -> run a job 10 am on 10th\
-            \ day of every month. \n  - 0 * 1,2 * * * -> run a job at every minute\
-            \ past hour 1 and 2.\n  - 0 0 */2 * * * -> run a job at every 2nd hour."
+            \  - `,` -> value list separator\n  - `-` -> range of values\n  - '/'\
+            \ -> step values\nFor example:\n  - 0 0 10 10 * * -> run a job at 10 am\
+            \ on 10th day of every month. \n  - 0 * 1,2 * * * -> run a job at every\
+            \ minute past hour 1 and 2.\n  - 0 0 */2 * * * -> run a job at every 2nd\
+            \ hour."
           type: string
         dayOfMonth:
           description: "A definition of time (day of month) to run a job.  Allowed\
             \ values: 1-31, and special characters: (,-*/), where:\n  - `*` -> any\
-            \ value\n  - `,` -> value list seprator\n  - `-` -> range of values\n\
+            \ value\n  - `,` -> value list separator\n  - `-` -> range of values\n\
             \  - '/' -> step values\nFor example:\n  - 0 0 0 1,5,10,15 * * -> run\
-            \ a job at midnight \n  on every 1st, 5th, 10th, 15th day of month. \n\
-            \  - 0 0 */1 1-10 1-3 * -> run a job at every full hour between 1st \n\
-            \  and 10th day of month in January, February, and March."
+            \ a job at midnight \n    on every 1st, 5th, 10th, 15th day of month.\
+            \ \n  - 0 0 */1 1-10 1-3 * -> run a job at every full hour between 1st\
+            \ \n    and 10th day of month in January, February, and March."
           type: string
         month:
           description: "A definition of time (month) to run a job. Allowed values:\
             \ 1-12 or JAN-DEC, and special characters: (,-*/), where:\n  - `*` ->\
-            \ any value\n  - `,` -> value list seprator\n  - `-` -> range of values\n\
+            \ any value\n  - `,` -> value list separator\n  - `-` -> range of values\n\
             \  - '/' -> step values\nFor example:\n  - 0 5 0 * 8 * -> run a job at\
             \ 00:05 on every day in August. \n  - 0 0 0,12 1 */2 * -> run a job at\
-            \ midnight and noon \n  on every 1st day of every 2nd month."
+            \ midnight and noon \n    on every 1st day of every 2nd month."
           type: string
         dayOfWeek:
           description: "A definition of time (day of week) to run a job. Allowed values:\
             \ 0-6 or SUN-SAT, and special characters: (,-*/), where:\n  - `*` -> any\
-            \ value\n  - `,` -> value list seprator\n  - `-` -> range of values\n\
+            \ value\n  - `,` -> value list separator\n  - `-` -> range of values\n\
             \  - '/' -> step values\nFor example:\n  - 0 0 22 * * 1-5 -> run a job\
-            \ at 22:00 on every day \n  between Monday and Friday. \n  - 0 5 4 * *\
-            \ sun -> run a job at 04:05 on Sunday."
+            \ at 22:00 on every day \n    between Monday and Friday. \n  - 0 5 4 *\
+            \ * sun -> run a job at 04:05 on Sunday."
           type: string
         hourRange:
           description: "A list of time ranges within a specific day that the schedule\
@@ -2550,16 +2355,16 @@ components:
           type: array
       type: object
     ReportContentItem:
-      description: Single item of the Fault Management Job results in case result
-        format was set to payload. Each item contains the timeframe of the collected
-        data and a list of values captured in that timeframe.
+      description: Single item of the results in case result format was set to payload.  Each
+        item contains the timeframe of the collected data and a list of  values captured
+        in that timeframe.
       properties:
         measurementTime:
           $ref: '#/components/schemas/MeasurementTime'
-        measurementDataPoints:
-          description: List of Fault Management Job results captured in the related  timeframe.
+        measurementDataPoint:
+          description: List of values captured in the related timeframe.
           items:
-            $ref: '#/components/schemas/ResultPayload'
+            $ref: '#/components/schemas/ServiceSpecificResult'
           type: array
       required:
       - measurementDataPoint
@@ -2580,26 +2385,11 @@ components:
       type: object
     ResultFormat:
       description: List of possible result formats that define how Seller/Server will
-        deliver Fault Management Report to the Buyer/Client.
+        deliver a Report to the Buyer/Client.
       enum:
       - attachment
       - payload
       type: string
-    ResultPayload:
-      description: ResultPayload is used as an extension point for MEF-specific fault  management
-        job results. The `@type` attribute is used as a discriminator.
-      discriminator:
-        propertyName: '@type'
-      properties:
-        '@type':
-          description: "The name that uniquely identifies the type of results that\
-            \ are returned by the Fault Management Report. In the case of MEF  services,\
-            \ this is the URN provided in the fault management results specification.\
-            \ The named type must be a subclass of ResultPayload."
-          type: string
-      required:
-      - '@type'
-      type: object
     ScheduleDefinition:
       description: The schedule definition for running jobs.
       properties:
@@ -2616,36 +2406,118 @@ components:
         recurringSchedule:
           $ref: '#/components/schemas/RecurringSchedule'
         executionDuration:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
       type: object
-    ServiceId:
-      description: Identifier of a Service.
-      properties:
-        serviceIdFrom:
-          description: Identifier of a Service Endpoint.
-          type: string
-        serviceIdTo:
-          description: Identifier of a Service Endpoint.
-          type: string
-      required:
-      - serviceIdFrom
-      - serviceIdTo
-      type: object
-    ServicePayloadSpecificAttributes:
-      description: ServicePayloadSpecificAttributes is used as an extension point
-        for  MEF-specific service fault management configuration. The `@type`  attribute
-        is used as a discriminator.
+    ServiceFromToRef:
+      allOf:
+      - $ref: '#/components/schemas/MonitoredObjectRef'
+      - description: Reference to Service From and Service To endpoints.
+        properties:
+          serviceFrom:
+            description: A reference to a Service From endpoint resource.
+            properties:
+              serviceFromHref:
+                description: Hyperlink to the Service From endpoint.
+                type: string
+              serviceFromId:
+                description: Identifier of the Service From endpoint.
+                type: string
+            required:
+            - serviceFromId
+            type: object
+          serviceTo:
+            description: A reference to a Service To endpoint resource.
+            properties:
+              serviceToHref:
+                description: Hyperlink to the Service To endpoint.
+                type: string
+              serviceToId:
+                description: Identifier of the Service To endpoint.
+                type: string
+            required:
+            - serviceToId
+            type: object
+        required:
+        - '@type'
+        - serviceFrom
+        - serviceTo
+        type: object
+      x-discriminator-value: ServiceFromToRef
+    ServiceRef:
+      allOf:
+      - $ref: '#/components/schemas/MonitoredObjectRef'
+      - description: Reference to a Service.
+        properties:
+          serviceHref:
+            description: 'Hyperlink to the Service resource. '
+            type: string
+          serviceId:
+            description: Identifier of the Service.
+            type: string
+        required:
+        - '@type'
+        - serviceId
+        type: object
+      x-discriminator-value: ServiceRef
+    ServiceSpecificConfiguration:
+      description: ServiceSpecificConfiguration is used as an extension point for  MEF-specific
+        service fault management configuration. The `@type`  attribute is used as
+        a discriminator.
       discriminator:
         propertyName: '@type'
       properties:
         '@type':
           description: "Uniquely identifies the type of fault management job configuration.\
             \ In the case of MEF services, this is the URN provided in the fault management\
-            \ configuration specification. The named type must be a  subclass of ServicePayloadSpecificAttributes."
+            \ configuration specification. The named type must be a  subclass of ServiceSpecificConfiguration."
           type: string
       required:
       - '@type'
       type: object
+    ServiceSpecificResult:
+      description: ServiceSpecificResult is used as an extension point for MEF-specific
+        fault  management job results. The `@type` attribute is used as a discriminator.
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: "The name that uniquely identifies the type of results that\
+            \ are returned by the Fault Management Report. In the case of MEF  services,\
+            \ this is the URN provided in the fault management results specification.\
+            \ The named type must be a subclass of ServiceSpecificResult."
+          type: string
+      required:
+      - '@type'
+      type: object
+    TimeDuration:
+      description: "This class is used to describe durations expressed as a 2-tuple,\
+        \ (value, units). The units from nanoseconds to years."
+      properties:
+        timeDurationValue:
+          description: "The value of the duration. For example, if the duration is\
+            \ 20 ms, this element is 20."
+          type: integer
+        timeDurationUnits:
+          $ref: '#/components/schemas/TimeDurationUnits'
+      required:
+      - timeDurationUnits
+      - timeDurationValue
+      type: object
+    TimeDurationUnits:
+      description: "The unit of measure in the duration. For example, if an interval\
+        \ is 2ms, this element is MS."
+      enum:
+      - NS
+      - US
+      - MS
+      - SEC
+      - MIN
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+      - YEAR
+      type: string
     TrackingRecord:
       description: Tracking Records allow the tracking of modifications of Fault  Management
         Job or Report.
@@ -2672,32 +2544,6 @@ components:
           type: string
         user:
           description: Describes the user doing the action.
-          type: string
-      required:
-      - creationDate
-      - id
-      - relatedObjectId
-      type: object
-    TrackingRecord_Find:
-      description: This class represents a single list item for the response of the
-        `listTrackingRecord` operation.
-      properties:
-        creationDate:
-          description: Date when the record was created.
-          format: date-time
-          type: string
-        description:
-          description: Free-text field describing the action that created the Tracking
-            Record and its details.
-          type: string
-        id:
-          description: Identifier of the Tracking Record.
-          type: string
-        relatedObjectId:
-          description: Identifier of Fault Management Job or Report.
-          type: string
-        user:
-          description: User that executed the action which created a Tracking Record.
           type: string
       required:
       - creationDate

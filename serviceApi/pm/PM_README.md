@@ -1,8 +1,194 @@
 # Performance Monitoring: Release notes
 
+## Release Janis:
+
+**Readiness status**: Call for Comments #3 completed
+
+**Summary**: Multiple updates related to CfC#3.
+
+### List of changes in the API:
+
+**performanceMonitoring.api.yaml:**
+
+- Unify list of tags and tag per endpoint assignment
+
+- Endpoint GET `/performanceJob`
+  - Introduced filtering by Service Id, Entity Id
+  - Replaced explicit enum in the `state` filter with the reference to the dedicated class
+  - Removed filters by `granularity` and `reportingPeriod`
+  - Return full representation of `PerformanceJob`
+
+- Endpoint GET `/cancelPerformanceJob`
+  - Replaced explicit enum in the `state` filter with the reference to the dedicated class
+  - Return full representation of `CancelPerformanceJob`
+
+- Endpoint GET `/modifyPerformanceJob`
+  - Replaced explicit enum in the `state` filter with the reference to the dedicated class
+  - Return full representation of `ModifyPerformanceJob`
+
+- Endpoint POST `/performanceJobComplexQuery`
+  - Return full representation of `PerformanceJob`
+
+- Endpoint GET `/performanceProfile`
+  - Removed filter by state
+  - Removed filter by `granularity` and `reportingPeriod`
+  - Added filter by `lifecycleStatus`
+  - Return full representation of `PerformanceProfile`
+
+- Removed error 501 for PerformanceProfile delete and update operations
+
+- Endpoint GET `/performanceReport`
+  - Introduced filtering by Service Id, Entity Id
+  - Replaced explicit enum in the `state` filter with the reference to the dedicated class
+  - Removed filters by `granularity` and `jobType`
+
+- Endpoint POST `/performanceReportComplexQuery`
+  - Return `PerformanceReport_Find`
+
+- Endpoint GET `/trackingRecord`
+  - Return full representation of `TrackingRecord`
+
+---
+
+- Class `CancelPerformanceJob`
+  - Removed property `cancellationDeniedReason`
+
+- Attributes of `CancelPerformanceJob_Common` moved to `CancelPerformanceJob_Create`
+
+- Class `ModifyPerformanceJob`
+  - Removed property `modificationDeniedReason`
+
+- Attributes of `ModifyPerformanceJob_Common` moved to `ModifyPerformanceJob_Create`
+
+- Class `ModifyPerformanceJob_Create`
+  - Removed property `servicePayloadSpecificAttributes`
+  - Removed property `modificationReason`
+
+- Attributes of `PerformanceJob_Common` moved to `PerformanceJob_Create`
+
+- Class `PerformanceJobComplexQuery_Create`
+  - Removed properties `lastModifiedDate.gt` and `lastModifiedDate.lt`
+  - Attributes related to `PerformanceProfile` moved to `performanceProfile` property of type `PerformanceProfileRefOrValue_Query`
+
+---
+
+- Class `PerformanceProfile`
+  - Removed state
+  - Added `isAssigned` and `lifecycleStatus`
+
+- Class `PerformanceProfile_Create` and `PerformanceProfile_Update`
+  - Added `lifecycleStatus`
+
+- Attributes of `PerformanceProfile_Common` moved to `PerformanceProfile_Create`
+
+---
+
+- Class `PerformanceReport`
+  - Added reference to `PerformanceJob`
+  - `reportContent` changed to type `ReportContentPerMonitoredObject`
+
+- Attributes of `PerformanceReport_Common` moved to `PerformanceReport_Create`
+
+- Class `PerformanceReport_Create`
+  - Added `granularity`, `monitoredObject`, `outputFormat`, `resultFormat`, `serviceSpecificConfiguration`
+  - Property `monitoredObject` changed to array
+
+- Class `PerformanceReport_Find`
+  - Added properties `granularity`, `monitoredObject`, `outputFormat`, `resultFormat`, `serviceSpecificConfiguration`
+
+- Class `PerformanceReportComplexQuery_Create`
+  - Changed `performanceJobId` to reference to `PerformanceJob`
+  - Removed filters by `lastModifiedDate`
+
+---
+
+- **Removed classes:**
+  - `CancelPerformanceJob_Common`
+  - `CancelPerformanceJob_Find`
+  - `ModifyPerformanceJob_Common`
+  - `ModifyPerformanceJob_Find`
+  - `PerformanceJob_Common`
+  - `PerformanceJob_Find`
+  - `PerformanceJobComplexQuery`
+  - `PerformanceJobRefOrValue`
+  - `PerformanceJobValue`
+  - `PerformanceProfile_Common`
+  - `PerformanceProfile_Find`
+  - `PerformanceReportComplexQuery`
+  - `PerformanceReport_Common`
+  - `PerformanceReportRef`
+  - `EntityId`
+  - `MonitoredObjectId`
+  - `TrackingRecord_Find`
+
+---
+
+- **Added classes:**
+  - `EntityRef`
+  - `MonitoredObjectRef`
+  - `PerformanceProfileRefOrValue_Query`
+  - `PerformanceProfileValue_Query`
+  - `ReportContentPerMonitoredObject`
+  - `ServiceFromToRef`
+  - `ServiceRef`
+
+---
+
+- **Other changes:**
+  - Class `ModifyPerformanceJob_PerformanceProfileValue` renamed to `PerformanceProfileValue_Modify`
+  - Class `Interval` replaced by `TimeDuration`
+  - Replaced `ServiceId` class with `MonitoredObjectRef` class which is a composite of `ServiceRef`, `ServiceFromToRef`, `EntityRef`
+  - All `serviceId` properties replaced by `monitoredObject` property of class `MonitoredObjectRef`
+  - Class `ServicePayloadSpecificAttributes` renamed to `ServiceSpecificConfiguration`
+  - Class `ResultPayload` renamed to `ServiceSpecificResult`
+  - Property `servicePayloadSpecificAttributes` renamed to `serviceSpecificConfiguration`
+  - Property `serviceSpecificConfiguration` moved to `PerformanceProfile`
+  - Properties of class `HourRange` changed format and applied pattern to force time format
+  - Property `measurementDataPoints` of class `ReportContentItem` renamed to `measurementDataPoint`
+  - Modified representation of dependencies between classes `PerformanceProfileRefOrValue`, `PerformanceProfileRef`, and `PerformanceProfileValue`
+
+**performanceNotification.api.yaml**
+
+- Separate Event Type per notification type by adding following classes:
+  - PerformanceJobCreateEvent
+  - PerformanceJobStateChangeEvent
+  - PerformanceJobAttributeValueChangeEvent
+  - CancelPerformanceJobStateChangeEvent
+  - ModifyPerformanceJobStateChangeEvent
+  - PerformanceProfileCreateEvent
+  - PerformanceProfileAttributeValueChangeEvent
+  - PerformanceProfileDeleteEvent
+  - PerformanceReportCreateEvent
+  - PerformanceReportStateChangeEvent
+- Removed generic classes
+  - PerformanceJobEvent
+  - PerformanceJobProcessEvent
+  - PerformanceJobProcessEventPayload
+  - PerformanceProfileEvent
+  - PerformanceReportEvent
+- Introduced classes representing Event Payload per Event Type:
+  - CancelPerformanceJobStateChangeEventPayload
+  - ModifyPerformanceJobStateChangeEventPayload
+  - PerformanceJobStateChangeEventPayload
+  - PerformanceReportStateChangeEventPayload
+- Removed classes representing Event Type and added Event Type directly to Event classes
+  - PerformanceJobEventType
+  - PerformanceJobReportPreparationErrorEventType
+  - PerformanceJobReportReadyEventType
+  - PerformanceJobProcessEventType
+  - PerformanceProfileEventType
+  - PerformanceReportEventType
+- Removed 408 error from all endpoints
+- Added missing and updated existing descriptions 
+- Replaced state enums with dedicated classes
+  - PerformanceJobProcessStateType
+  - PerformanceJobStateType
+  - PerformanceReportStateType
+
+
 ## Release Irene:
 
-**Readiness status**: Undergoing Call for Comments #1
+**Readiness status**: Undergoing Call for Comments #3
 
 **Summary**: 
 

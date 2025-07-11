@@ -11,29 +11,31 @@ info:
 
     MEF Performance Monitoring API allows to manage Performance Profiles, 
     Performance Jobs and collect Performance Reports, as well as receive 
-    notifications related to these entities. This allows managing the 
-    performance objectives that are typically associated with an SLS. 
+    notifications related to these entities. This enables the management 
+    of performance objectives typically associated with SLS, the on-demand
+    collection of performance data, and the retrieval of passive statistics.
 
     Three types of performance-related entities are supported by the API:
-    - **Performance Monitoring Profile** - templates used to simplify the PM 
-    Job provisioning. Common attributes for PM Jobs are defined in the PM 
-    Profile. One PM Profile can be used by multiple PM Jobs but PM Jobs can 
-    be created without relationship to PM Profile.
+    - **Performance Monitoring Profile** - templates used to simplify the 
+      Performance Monitoring Job provisioning. Common attributes for PM Jobs
+      are defined in the PM Profile. One PM Profile can be used by multiple
+      PM Jobs but PM Jobs can also be created without relationship to PM Profile.
 
     - **Performance Monitoring Job** - provisions the performance monitoring
-    objectives specific to each subject of monitoring which could be an 
-    ordered pair (i.e., two UNIs) or an entity (i.e., port).
+      objectives specific to each subject of monitoring which could be a service, 
+      an ordered pair (e.g., two UNIs), or an entity (e.g., port).
 
-    - **Performance Monitoring Report** - The execution of PM Job results in
-    Performance Monitoring collections that provide Buyer/Client with 
-    performance objective results. In some cases performance collection
-    can be produced on Buyer/Client request which can be useful for collecting
-    passive statistics or historical data.
+    - **Performance Monitoring Report** - the execution of PM Job results in
+      Performance Monitoring Report that provide Buyer/Client with 
+      performance objective results. In some cases, PM Report may be triggered
+      by a request from the Buyer/Client without being linked to a Performance
+      Job, which applies when retrieving data that already exists 
+      in the performance data database.
 
     List of use cases supported by the API:
     - Create Performance Monitoring Profile
     - Retrieve list of Performance Monitoring Profiles
-    - Retrieve Performance Monitoring Profile by Profile Identifier
+    - Retrieve Performance Monitoring Profile by Identifier
     - Modify Performance Monitoring Profile
     - Delete Performance Monitoring Profile
     - Subscribe to Performance Monitoring Profile Notifications
@@ -41,7 +43,7 @@ info:
 
     - Create Performance Monitoring Job
     - Retrieve list of Performance Monitoring Jobs
-    - Retrieve Performance Monitoring Job by Job Identifier
+    - Retrieve Performance Monitoring Job by Identifier
     - Modify Performance Monitoring Job
     - Retrieve Modify Performance Monitoring Job List
     - Retrieve Modify Performance Monitoring Job by Identifier
@@ -55,11 +57,11 @@ info:
 
     - Create Performance Monitoring Report
     - Retrieve list of Performance Monitoring Reports
-    - Retrieve Performance Report by Report Identifier
+    - Retrieve Performance Report by Identifier
     - Subscribe to Performance Monitoring Report Notifications
     - Unsubscribe from Performance Monitoring Report Notifications
 
-    Copyright 2024 MEF Forum and its contributors
+    Copyright 2025 MEF Forum and its contributors
 
     This file includes content based on the TM Forum Performance Management API
     (TMF628 v5.0.0) available at 
@@ -67,41 +69,34 @@ info:
     the TM Forum under the Apache License version 2.0. Such content has been
     modified by the MEF Forum and its contributors.
   title: Performance Monitoring
-  version: 3.0.0-RC
+  version: 4.0.0-RC
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/performanceMonitoring/v3/'
+  - url: 'https://{serverBase}/mefApi/legato/performanceMonitoring/v4/'
     variables:
       serverBase:
         default: mef.net
         description: The base of SOF's URL.
 tags:
   - name: performanceJob
-  - name: modifyPerformanceJob
-  - name: suspendPerformanceJob
-  - name: resumePerformanceJob
-  - name: cancelPerformanceJob
-  - name: performanceJobComplexQuery
   - name: performanceProfile
-  - name: performanceProfileOperations
   - name: performanceReport
-  - name: performanceReportComplexQuery
   - name: trackingRecord
   - name: events subscription
 paths:
   /performanceJob:
     get:
       description: >-
-        The Buyer/Client requests a list of PM Jobs based on a set
-        of filter criteria. The Seller/Server returns a summarized list of PM 
-        Jobs. For each PM Job returned, the Seller/Server also provides a 
-        Performance Job Identifier that uniquely identifiers this PM Job within
-        the Seller/Server. The order of the elements returned to the 
-        Buyer/Client is defined by the Seller/Server (e.g. natural order) and
-        does not change between the pages.
+        The Buyer/Client requests a list of PM Jobs based on a set of filter
+        criteria. The Seller/Server returns a summarized list of PM  Jobs. For
+        each PM Job returned, the Seller/Server also provides a  Performance
+        Job Identifier that uniquely identifies this PM Job within the
+        Seller/Server. The order of the elements returned to the  Buyer/Client
+        is defined by the Seller/Server (e.g. natural order) and does not
+        change between the pages.
       operationId: listPerformanceJob
       parameters:
         - description: >-
-            Identifier assigned and understandable by Buyer/Client to 
+            Identifier assigned and understandable by Buyer/Client to
             facilitate search requests.
           explode: true
           in: query
@@ -111,19 +106,28 @@ paths:
             type: string
           style: form
         - description: >-
-            Identifier of a Service Endpoint.
+            Identifier of a Service.
           explode: true
           in: query
-          name: serviceIdFrom
+          name: serviceId
           required: false
           schema:
             type: string
           style: form
         - description: >-
-            Identifier of a Service Endpoint.
+            Identifier of a Service From endpoint.
           explode: true
           in: query
-          name: serviceIdTo
+          name: serviceFromId
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: >-
+            Identifier of a Service To endpoint.
+          explode: true
+          in: query
+          name: serviceToId
           required: false
           schema:
             type: string
@@ -138,7 +142,7 @@ paths:
             type: string
           style: form
         - description: >-
-            Identifier of Performance Profile used as a template for 
+            Identifier of Performance Profile used as a template for
             Performance Job.
           explode: true
           in: query
@@ -148,25 +152,14 @@ paths:
             type: string
           style: form
         - description: >-
-            State of the Performance Job. See `PerformanceJobStateType` 
+            State of the Performance Job. See `PerformanceJobStateType`
             definition for details.
           explode: true
           in: query
           name: state
           required: false
           schema:
-            type: string
-            enum:
-              - acknowledged
-              - cancelled
-              - completed
-              - inProgress
-              - pending
-              - pendingCancel
-              - rejected
-              - resourcesUnavailable
-              - scheduled
-              - suspended
+            $ref: '#/components/schemas/PerformanceJobStateType'
           style: form
         - description: Date when the job was created - greater than.
           explode: true
@@ -194,23 +187,13 @@ paths:
           schema:
             $ref: '#/components/schemas/JobType'
           style: form
-        - description: Sampling rate of the collection of measurements.
+        - description: The priority of the Performance Job.
           explode: true
           in: query
-          name: granularity
+          name: jobPriority
           required: false
           schema:
-            $ref: '#/components/schemas/Interval'
-          style: form
-        - description: >-
-            Definition of time period during which report will be active 
-            and collect measurements.
-          explode: true
-          in: query
-          name: reportingPeriod
-          required: false
-          schema:
-            $ref: '#/components/schemas/Interval'
+            type: string
           style: form
         - description: Identifier of consuming application.
           explode: true
@@ -224,14 +207,6 @@ paths:
           explode: true
           in: query
           name: producingApplicationId
-          required: false
-          schema:
-            type: string
-          style: form
-        - description: The priority of the Performance Job.
-          explode: true
-          in: query
-          name: jobPriority
           required: false
           schema:
             type: string
@@ -263,7 +238,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PerformanceJob_Find'
+                  $ref: '#/components/schemas/PerformanceJob'
           description: >-
             'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
           headers:
@@ -329,9 +304,8 @@ paths:
         - performanceJob
     post:
       description: >-
-        A request initiated by the Buyer/Client to create a Performance Job
-        in the Seller/Server system to indicate performance monitoring
-        objectives.
+        A request initiated by the Buyer/Client to create a Performance Job in
+        the Seller/Server system to indicate performance monitoring objectives.
       operationId: createPerformanceJob
       requestBody:
         content:
@@ -442,7 +416,8 @@ paths:
         - performanceJob
   '/performanceJob/{id}/resume':
     post:
-      description: This operation sends a resumption request.
+      description: >-
+        A request initiated by the Buyer/Client to resume a Performance Job
       operationId: resumePerformanceJob
       parameters:
         - description: Identifier of the PerformanceJob.
@@ -495,10 +470,11 @@ paths:
           description: Internal Server Error
       summary: Resumes a Performance Job.
       tags:
-        - resumePerformanceJob
+        - performanceJob
   '/performanceJob/{id}/suspend':
     post:
-      description: This operation sends a suspension request.
+      description: >-
+        A request initiated by the Buyer/Client to suspend a Performance Job
       operationId: suspendPerformanceJob
       parameters:
         - description: Identifier of the PerformanceJob.
@@ -551,7 +527,7 @@ paths:
           description: Internal Server Error
       summary: Suspends a Performance Job.
       tags:
-        - suspendPerformanceJob
+        - performanceJob
   /cancelPerformanceJob:
     get:
       description: >-
@@ -560,7 +536,7 @@ paths:
       operationId: listCancelPerformanceJob
       parameters:
         - description: >-
-            Identifer of Performance Job that is a subject of
+            Identifier of Performance Job that is a subject of
             CancelPerformanceJob.
           explode: true
           in: query
@@ -577,12 +553,7 @@ paths:
           name: state
           required: false
           schema:
-            type: string
-            enum:
-              - acknowledged
-              - completed
-              - inProgress
-              - rejected
+            $ref: '#/components/schemas/PerformanceJobProcessStateType'
           style: form
         - description: >-
             Date when the CancelPerformanceJob was created - greater than.
@@ -633,7 +604,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CancelPerformanceJob_Find'
+                  $ref: '#/components/schemas/CancelPerformanceJob'
           description: Success
           headers:
             X-Pagination-Throttled:
@@ -695,11 +666,11 @@ paths:
           description: Internal Server Error
       summary: Lists or finds CancelPerformanceJob objects.
       tags:
-        - cancelPerformanceJob
+        - performanceJob
     post:
       description: >-
-        A request initiated by the Buyer/Client to cancel 
-        a Performance Monitoring Job in the Seller/Server system.
+        A request initiated by the Buyer/Client to cancel  a Performance
+        Monitoring Job in the Seller/Server system.
       operationId: createCancelPerformanceJob
       requestBody:
         content:
@@ -749,13 +720,13 @@ paths:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       tags:
-        - cancelPerformanceJob
+        - performanceJob
   /cancelPerformanceJob/{id}:
     get:
       description: >-
-        The Buyer/Client requests detailed information about a single 
-        Cancel Performance Monitoring Job based on the 
-        Cancel Performance Monitoring Job Identifier.
+        The Buyer/Client requests detailed information about a single  Cancel
+        Performance Monitoring Job based on the  Cancel Performance Monitoring
+        Job Identifier.
       operationId: retrieveCancelPerformanceJob
       parameters:
         - description: Identifier of the CancelPerformanceJob.
@@ -805,7 +776,7 @@ paths:
           description: Internal Server Error
       summary: Retrieves a CancelPerformanceJob by ID.
       tags:
-        - cancelPerformanceJob
+        - performanceJob
   /modifyPerformanceJob:
     get:
       description: >-
@@ -814,7 +785,7 @@ paths:
       operationId: listModifyPerformanceJob
       parameters:
         - description: >-
-            Identifer of Performance Job that is a subject of
+            Identifier of Performance Job that is a subject of
             ModifyPerformanceJob.
           explode: true
           in: query
@@ -831,12 +802,7 @@ paths:
           name: state
           required: false
           schema:
-            type: string
-            enum:
-              - acknowledged
-              - completed
-              - inProgress
-              - rejected
+            $ref: '#/components/schemas/PerformanceJobProcessStateType'
           style: form
         - description: >-
             Date when the ModifyPerformanceJob was created - greater than.
@@ -887,7 +853,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ModifyPerformanceJob_Find'
+                  $ref: '#/components/schemas/ModifyPerformanceJob'
           description: Success
           headers:
             X-Pagination-Throttled:
@@ -949,11 +915,11 @@ paths:
           description: Internal Server Error
       summary: Lists or finds ModifyPerformanceJob objects.
       tags:
-        - modifyPerformanceJob
+        - performanceJob
     post:
       description: >-
-        A request initiated by the Buyer/Client to modify
-        a Performance Monitoring Job in the Seller/Server system.
+        A request initiated by the Buyer/Client to modify a Performance
+        Monitoring Job in the Seller/Server system.
       operationId: createModifyPerformanceJob
       requestBody:
         content:
@@ -1003,13 +969,13 @@ paths:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       tags:
-        - modifyPerformanceJob
+        - performanceJob
   /modifyPerformanceJob/{id}:
     get:
       description: >-
-        The Buyer/Client requests detailed information about a single 
-        Modify Performance Monitoring Job based on the 
-        Modify Performance Monitoring Job Identifier.
+        The Buyer/Client requests detailed information about a single  Modify
+        Performance Monitoring Job based on the  Modify Performance Monitoring
+        Job Identifier.
       operationId: retrieveModifyPerformanceJob
       parameters:
         - description: Identifier of the ModifyPerformanceJob.
@@ -1059,19 +1025,19 @@ paths:
           description: Internal Server Error
       summary: Retrieves a ModifyPerformanceJob by ID.
       tags:
-        - modifyPerformanceJob
+        - performanceJob
   /performanceJobComplexQuery:
     post:
       description: >-
-        A request initiated by the Buyer/Client to create 
-        a Performance Monitoring Job Complex Query in the Seller/Server system.
-      operationId: createPerformanceJobComplexQuery
+        A request initiated by the Buyer/Client to execute  a Performance
+        Monitoring Job Complex Query in the Seller/Server system.
+      operationId: performanceJobComplexQuery
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/PerformanceJobComplexQuery_Create'
-        description: The PerformanceJobComplexQuery to be created.
+        description: The PerformanceJobComplexQuery to be executed.
         required: true
       responses:
         '200':
@@ -1080,7 +1046,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PerformanceJobComplexQuery'
+                  $ref: '#/components/schemas/PerformanceJob'
           description: >-
             'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
         '400':
@@ -1116,34 +1082,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Creates a PerformanceJobComplexQuery.
+      summary: Executes a PerformanceJobComplexQuery.
       tags:
-        - performanceJobComplexQuery
+        - performanceJob
   /performanceProfile:
     get:
       description: >-
-        The Buyer/Client requests a list of PM Profiles based
-        on a set of filter criteria. The Seller/Server returns a summarized
-        list of PM Profiles. For each PM Profile returned, the Seller/Server
-        also provides a Performance Profile Identifier that uniquely
-        identifiers this PM Profile within the Seller/Server. The order of the
+        The Buyer/Client requests a list of Performance Monitoring Profiles
+        based on a set of filter criteria. The Seller/Server returns a list of
+        PM Profiles. For each PM Profile returned, the Seller/Server also
+        provides a Performance Monitoring Profile Identifier that uniquely
+        identifies this PM Profile within the Seller/Server. The order of the
         elements returned to the Buyer is defined by the Seller/Server (e.g.
         natural order) and does not change between the pages.
       operationId: listPerformanceProfile
       parameters:
-        - description: >-
-            State of the Performance Profile. See `PerformanceProfileStateType`
-            definition for details.
-          explode: true
-          in: query
-          name: state
-          required: false
-          schema:
-            type: string
-            enum:
-              - active
-              - deleted
-          style: form
         - description: Date when the profile was created - greater than.
           explode: true
           in: query
@@ -1170,24 +1123,6 @@ paths:
           schema:
             $ref: '#/components/schemas/JobType'
           style: form
-        - description: Sampling rate of the collection of measurements.
-          explode: true
-          in: query
-          name: granularity
-          required: false
-          schema:
-            $ref: '#/components/schemas/Interval'
-          style: form
-        - description: >-
-            Definition of time period during which report will be active 
-            and collect measurements.
-          explode: true
-          in: query
-          name: reportingPeriod
-          required: false
-          schema:
-            $ref: '#/components/schemas/Interval'
-          style: form
         - description: The priority of the Performance Job.
           explode: true
           in: query
@@ -1195,6 +1130,14 @@ paths:
           required: false
           schema:
             type: string
+          style: form
+        - description: The lifecycle status of the Performance Profile.
+          explode: true
+          in: query
+          name: lifecycleStatus
+          required: false
+          schema:
+            $ref: '#/components/schemas/PerformanceProfileLifecycleStatusType'
           style: form
         - description: >-
             Requested index for start of item to be provided in response
@@ -1223,7 +1166,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PerformanceProfile_Find'
+                  $ref: '#/components/schemas/PerformanceProfile'
           description: >-
             'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
           headers:
@@ -1290,14 +1233,14 @@ paths:
     post:
       description: >-
         A request initiated by the Buyer/Client to create a Performance
-        Profile in the Seller/Server system.
+        Monitoring Profile in the Seller/Server system.
       operationId: createPerformanceProfile
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/PerformanceProfile_Create'
-        description: The Performance Profile to be created.
+        description: The Performance Monitoring Profile to be created.
         required: true
       responses:
         '201':
@@ -1346,8 +1289,8 @@ paths:
   '/performanceProfile/{id}':
     delete:
       description: >-
-        The Buyer/Client requests deletion of Performance Profile
-        by specifying Profile Identifier.
+        The Buyer/Client requests deletion of Performance Monitoring Profile by
+        specifying Performance Monitoring Profile Identifier.
       operationId: deletePerformanceProfile
       parameters:
         - description: Identifier of the Performance Profile.
@@ -1400,19 +1343,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-        '501':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error501'
-          description: Method not implemented.
       summary: Deletes a Performance Profile.
       tags:
-        - performanceProfileOperations
+        - performanceProfile
     get:
       description: >-
-        The Buyer/Client requests detailed information about
-        a single Performance Profile based on the Profile Identifier.
+        The Buyer/Client requests detailed information about a single
+        Performance Monitoring Profile based on the Performance Monitoring
+        Profile Identifier.
       operationId: retrievePerformanceProfile
       parameters:
         - description: Identifier of the Performance Profile.
@@ -1466,9 +1404,9 @@ paths:
         - performanceProfile
     patch:
       description: >-
-        A request initiated by the Buyer/Client to modify 
-        a Performance Profile in the Seller/Server system 
-        based on a Profile Identifier.
+        A request initiated by the Buyer/Client to modify a Performance
+        Monitoring Profile in the Seller/Server system based on a Performance
+        Monitoring Profile Identifier.
       operationId: modifyPerformanceProfile
       parameters:
         - description: Identifier of the Performance Profile.
@@ -1530,25 +1468,20 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-        '501':
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error501'
-          description: Method not implemented.
       summary: Updates partially a Performance Profile.
       tags:
-        - performanceProfileOperations
+        - performanceProfile
   /performanceReport:
     get:
       description: >-
-        The Buyer/Client requests a list of PM Reports based on a set of filter
-        criteria. The Seller/Server returns a summarized list of PM Reports.
-        For each PM Report returned, the Seller/Server also provides a 
-        Performance Report Identifier that uniquely identifiers this PM Report
-        within the Seller/Server. The order of the elements returned to the 
-        Buyer/Client is defined by the Seller/Server (e.g. natural order) and
-        does not change between the pages.
+        The Buyer/Client requests a list of Performance Monitoring Reports
+        based on a set of filter criteria. The Seller/Server returns  a
+        summarized list of PM Reports. For each PM Report returned,  the
+        Seller/Server also provides a Performance Monitoring Report  Identifier
+        that uniquely identifies this PM Report within the  Seller/Server. The
+        order of the elements returned to the Buyer/Client  is defined by the
+        Seller/Server (e.g. natural order) and does not  change between the
+        pages.
       operationId: listPerformanceReport
       parameters:
         - description: >-
@@ -1560,18 +1493,27 @@ paths:
           schema:
             type: string
           style: form
-        - description: Identifier of a Service From.
+        - description: Identifier of a Service From endpoint.
           explode: true
           in: query
-          name: serviceIdFrom
+          name: serviceFromId
           required: false
           schema:
             type: string
           style: form
-        - description: Identifier of a Service To.
+        - description: Identifier of a Service To endpoint.
           explode: true
           in: query
-          name: serviceIdTo
+          name: serviceToId
+          required: false
+          schema:
+            type: string
+          style: form
+        - description: >-
+            Identifier of a Service.
+          explode: true
+          in: query
+          name: serviceId
           required: false
           schema:
             type: string
@@ -1592,13 +1534,7 @@ paths:
           name: state
           required: false
           schema:
-            type: string
-            enum:
-              - acknowledged
-              - completed
-              - failed
-              - inProgress
-              - rejected
+            $ref: '#/components/schemas/PerformanceReportStateType'
           style: form
         - description: Date when the report was created - greater than.
           explode: true
@@ -1653,22 +1589,6 @@ paths:
           schema:
             format: date-time
             type: string
-          style: form
-        - description: Sampling rate of the collection of measurements.
-          explode: true
-          in: query
-          name: granularity
-          required: false
-          schema:
-            $ref: '#/components/schemas/Interval'
-          style: form
-        - description: Type of the Performance Job that generated the report.
-          explode: true
-          in: query
-          name: jobType
-          required: false
-          schema:
-            $ref: '#/components/schemas/JobType'
           style: form
         - description: Format of report output.
           explode: true
@@ -1779,9 +1699,8 @@ paths:
         - performanceReport
     post:
       description: >-
-        A request initiated by the Buyer/Client to create an ad-hoc
-        Performance Report based on existing performance data in the 
-        Seller/Server system.
+        A request initiated by the Buyer/Client to create a Performance Report
+        based on existing performance data in the Seller/Server system.
       operationId: createPerformanceReport
       requestBody:
         content:
@@ -1837,7 +1756,7 @@ paths:
   '/performanceReport/{id}':
     get:
       description: >-
-        The Buyer/Client requests detailed information about a single 
+        The Buyer/Client requests detailed information about a single
         Performance Report based on the Report Identifier.
       operationId: retrievePerformanceReport
       parameters:
@@ -1894,16 +1813,15 @@ paths:
   /performanceReportComplexQuery:
     post:
       description: >-
-        A request initiated by the Buyer/Client to create 
-        a Performance Monitoring Report Complex Query 
-        in the Seller/Server system.
-      operationId: createPerformanceReportComplexQuery
+        A request initiated by the Buyer/Client to execute a Performance
+        Monitoring Report Complex Query in the Seller/Server system.
+      operationId: performanceReportComplexQuery
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/PerformanceReportComplexQuery_Create'
-        description: The PerformanceReportComplexQuery to be created.
+        description: The PerformanceReportComplexQuery to be executed.
         required: true
       responses:
         '200':
@@ -1912,7 +1830,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PerformanceReportComplexQuery'
+                  $ref: '#/components/schemas/PerformanceReport_Find'
           description: >-
             'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
         '400':
@@ -1948,21 +1866,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-      summary: Creates a PerformanceReportComplexQuery.
+      summary: Executes a PerformanceReportComplexQuery.
       tags:
-        - performanceReportComplexQuery
+        - performanceReport
   /trackingRecord:
     get:
       description: >-
         The Buyer/Client requests a list of Tracking Records based on a set of
-        filter criteria. The Seller/Server returns a summarized list of
-        Tracking Records. Tracking Record allows for tracking of modifications
-        performed on a Performance Job, Profile or Report.
+        filter criteria. The Seller/Server returns a list of Tracking Records.
+        Tracking Record allows for tracking of modifications performed on  a
+        Performance Job, Profile or Report.
       operationId: listTrackingRecord
       parameters:
         - description: >-
-            Identifier of Performance Job, Performance Profile or
-            Performance Report.
+            Identifier of Performance Job, Performance Profile or Performance
+            Report.
           explode: true
           in: query
           name: relatedObjectId
@@ -2024,7 +1942,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TrackingRecord_Find'
+                  $ref: '#/components/schemas/TrackingRecord'
           description: >-
             'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'
           headers:
@@ -2091,8 +2009,8 @@ paths:
   '/trackingRecord/{id}':
     get:
       description: >-
-        The Buyer/Client requests detailed information about a single 
-        Tracking Record based on the Tracking Record Identifier.
+        The Buyer/Client requests detailed information about a single  Tracking
+        Record based on the Tracking Record Identifier.
       operationId: retrieveTrackingRecord
       parameters:
         - description: Identifier of the Tracking Record.
@@ -2147,8 +2065,8 @@ paths:
   /hub:
     post:
       description: >-
-        The Buyer/Client requests to subscribe to Performance Monitoring 
-        Profile, Performance Monitoring Job and/or Performance Monitoring 
+        The Buyer/Client requests to subscribe to Performance Monitoring
+        Profile, Performance Monitoring Job and/or Performance Monitoring
         Report Notifications.
       operationId: registerListener
       requestBody:
@@ -2202,9 +2120,9 @@ paths:
   '/hub/{id}':
     delete:
       description: >-
-        The Buyer/Client requests to unsubscribe from 
-        Performance Monitoring Profile, Performance Monitoring Job or 
-        Performance Monitoring Report Notifications.
+        The Buyer/Client requests to unsubscribe from  Performance Monitoring
+        Profile, Performance Monitoring Job or  Performance Monitoring Report
+        Notifications.
       operationId: unregisterListener
       parameters:
         - description: The id of the registered listener.
@@ -2259,8 +2177,8 @@ paths:
         - events subscription
     get:
       description: >-
-        The Buyer/Client requests detailed information about 
-        a single Notification Hub based on the Hub Identifier.
+        The Buyer/Client requests detailed information about  a single
+        Notification Hub based on the Hub Identifier.
       operationId: retrieveHub
       parameters:
         - description: Identifier of the Hub.
@@ -2335,15 +2253,9 @@ components:
         - url
     CancelPerformanceJob:
       allOf:
-        - $ref: '#/components/schemas/CancelPerformanceJob_Common'
+        - $ref: '#/components/schemas/CancelPerformanceJob_Create'
         - type: object
           properties:
-            cancellationDeniedReason:
-              type: string
-              description: >-
-                If the Cancel Performance Job request is denied by the 
-                Seller/Server, the Seller/Server provides a reason to the
-                Buyer/Client using this attribute.
             creationDate:
               type: string
               format: date-time
@@ -2354,12 +2266,9 @@ components:
             id:
               type: string
               description: >-
-                Unique identifier for the Cancel Performance Job that is generated
-                by the Seller/Server when the Cancel Performance Job request 
-                `state` is set to `acknowledged`.
-            performanceJob:
-              $ref: '#/components/schemas/PerformanceJobRef'
-              description: A reference to a Performance Job resource.
+                Unique identifier for the Cancel Performance Job that is
+                generated by the Seller/Server when the Cancel Performance Job
+                request  `state` is set to `acknowledged`.
             state:
               $ref: '#/components/schemas/PerformanceJobProcessStateType'
               description: |-
@@ -2367,72 +2276,46 @@ components:
           required:
             - creationDate
             - id
-            - performanceJob
             - state
       description: Request for cancellation of an existing Performance Job.
-    CancelPerformanceJob_Common:
-      type: object
-      description: Request for cancellation of an existing Performance Job.
-      properties:
-        cancellationReason:
-          type: string
-          description: >-
-            An optional attribute that allows the Buyer/Client to provide
-            additional detail to the Seller/Server on the reason for cancelling
-            Performance Job.
     CancelPerformanceJob_Create:
-      allOf:
-      - $ref: '#/components/schemas/CancelPerformanceJob_Common'
-      - type: object
-        properties:
-          performanceJobId: 
-            type: string
-            description: >-
-              Identifer of Performance Monitoring Job that is a subject of
-              CancelPerformanceJob.
-        required:
-          - performanceJobId
-      description: Request for cancellation of an existing Performance Job.
-    CancelPerformanceJob_Find:
       type: object
-      description: >-
-        This class represents a single list item for the response of 
-        `listCancelPerformanceJob`.
+      description: Request for cancellation of an existing Performance Job.
       properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the Cancel Performance Job was created.
-        id:
-          type: string
-          description: >-
-            Unique identifier for the Cancel Performance Job that is generated
-            by the Seller/Server when the Cancel Performance Job request 
-            `state` is set to `acknowledged`.
         performanceJob:
           $ref: '#/components/schemas/PerformanceJobRef'
           description: A reference to a Performance Job resource.
-        state:
-          $ref: '#/components/schemas/PerformanceJobProcessStateType'
-          description: |-
-            The state of the process related to the Performance Job.
       required:
-        - creationDate
-        - id
         - performanceJob
-        - state
-    EntityId:
-      allOf:
-        - $ref: '#/components/schemas/MonitoredObjectId'
-        - type: object
-          properties:
-            entityId:
-              type: string
-              description: Identifier of an Entity.
-          required:
-            - entityId
+    EntityRef:
+      type: object
       description: >-
-        Identifier of an Entity.
+        Reference to Entity.
+      properties:
+        '@referredType':
+          type: string
+          description: >-
+            The type of the referred object. This is used to distinguish
+            between different types of objects that can be referred to by the
+            EntityId.
+        entityHref:
+          type: string
+          description: >-
+            Hyperlink to the Entity resource. This is used to provide a link to
+            the Entity resource in the Seller/Server system.
+        entityId:
+          type: string
+          description: Identifier of an Entity.
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - EntityRef
+      required:
+        - '@type'
+        - '@referredType'
+        - entityId
     Error:
       type: object
       description: >-
@@ -2519,12 +2402,10 @@ components:
     Error403Code:
       type: string
       description: >-
-        This code indicates that the server understood
-        the request but refuses to authorize it because
-        of one of the following error codes:
-        - accessDenied: Access denied
-        - forbiddenRequester: Forbidden requester
-        - tooManyUsers: Too many users.
+        This code indicates that the server understood the request but refuses
+        to authorize it because of one of the following error codes: -
+        accessDenied: Access denied - forbiddenRequester: Forbidden requester -
+        tooManyUsers: Too many users.
       enum:
         - accessDenied
         - forbiddenRequester
@@ -2555,9 +2436,8 @@ components:
             code:
               type: string
               description: >-
-                The following error code:
-                - conflict: The client has provided a value whose semantics are
-                not appropriate for the property.
+                The following error code: - conflict: The client has provided a
+                value whose semantics are not appropriate for the property.
               enum:
                 - conflict
           required:
@@ -2626,10 +2506,9 @@ components:
             code:
               type: string
               description: >-
-                The following error code:
-                - internalError: Internal server error - the server encountered
-                an unexpected condition that prevented it from fulfilling the
-                request.
+                The following error code: - internalError: Internal server
+                error - the server encountered an unexpected condition that
+                prevented it from fulfilling the request.
               enum:
                 - internalError
           required:
@@ -2684,19 +2563,19 @@ components:
         callback:
           type: string
           description: >-
-            This callback value must be set to the *host* property from Performance
-            Notification API (performanceNotification.api.yaml). This
-            property is appended with the base path and notification resource
-            path specified in that API to construct a URL to which
-            notification is sent. E.g. for 'callback': 
-            "https://buyer.co/listenerEndpoint", the performance job state
+            This callback value must be set to the *host* property from
+            Performance Notification API (performanceNotification.api.yaml).
+            This property is appended with the base path and notification
+            resource path specified in that API to construct a URL to which
+            notification is sent. E.g. for 'callback':
+            "https://buyer.mef.com/listenerEndpoint", the performance job state
             change event notification will be sent to
-            `https://buyer.co/listenerEndpoint/mefApi/legato/performanceMonitoring/v2/listener/performanceJobStateChangeEvent`.
+            `https://buyer.mef.com/listenerEndpoint/mefApi/legato/performanceMonitoring/v4/listener/performanceJobStateChangeEvent`.
         query:
           type: string
           description: >-
-            This attribute is used to define which type of events to
-            register to. Example: 'query':'eventType = 
+            This attribute is used to define which type of events to register
+            to. Example: 'query':'eventType =
             performanceReportStateChangeEvent'. To subscribe for more than one
             event type, put the values separated by a comma:
             `eventType=performanceReportStateChangeEvent,performanceJobCreateEvent`.
@@ -2707,35 +2586,27 @@ components:
         - callback
     HourRange:
       type: object
-      description: Defines start and end date.
+      description: Defines start and end time.
       properties:
         start:
           type: string
-          format: date-time
-          description: Start date
+          pattern: '^(?:[01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$'
+          description: Start time in format HH24:mm or HH24:mm:ss.
         end:
           type: string
-          format: date-time
-          description: End date
-    Interval:
-      type: string
-      description: Enumeration of applicable time intervals.
-      enum:
-        - 10 milliseconds
-        - 100 milliseconds
-        - 1 second
-        - 10 seconds
-        - 1 minute
-        - 5 minutes
-        - 15 minutes
-        - 30 minutes
-        - 1 hour
-        - 24 hours
-        - 1 month
-        - 1 year
+          pattern: '^(?:[01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$'
+          description: End time in format HH:mm or HH:mm:ss.
+      required:
+        - start
+        - end
     JobType:
       type: string
-      description: The type of PM Job.
+      description: >-
+        The type of a Job. Proactive jobs are carried on continuously to permit
+        timely reporting of fault or performance status. On-demand jobs are
+        actions that are  initiated for a limited time to carry out the
+        measurements. Passive  jobs support the collection and reporting of
+        network and service statistics/faults.
       enum:
         - proactive
         - on-demand
@@ -2750,20 +2621,20 @@ components:
           type: string
           format: date-time
           description: >-
-            Start date of the period to which collected data
-            points belong.
+            Start date of the period to which collected data points belong.
         measurementEndDate:
           type: string
           format: date-time
           description: >-
-            End date of the period to which collected data
-            points belong.
+            End date of the period to which collected data points belong.
         measurementInterval:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: Length of the measurement interval.
+      required:
+        - measurementStartDate
     ModifyPerformanceJob:
       allOf:
-        - $ref: '#/components/schemas/ModifyPerformanceJob_Common'
+        - $ref: '#/components/schemas/ModifyPerformanceJob_Create'
         - type: object
           properties:
             creationDate:
@@ -2776,18 +2647,9 @@ components:
             id:
               type: string
               description: >-
-                Unique identifier for the Modify Performance Job that is generated
-                by the Seller/Server when the Modify Performance Job request 
-                `state` is set to `acknowledged`.
-            modificationDeniedReason:
-              type: string
-              description: >-
-                If the Modify Performance Job request is denied by the 
-                Seller/Server, the Seller/Server provides a reason to the
-                Buyer/Client using this attribute.
-            performanceJob:
-              $ref: '#/components/schemas/PerformanceJobRef'
-              description: A reference to a Performance Job resource.
+                Unique identifier for the Modify Performance Job that is
+                generated by the Seller/Server when the Modify Performance Job
+                request  `state` is set to `acknowledged`.
             state:
               $ref: '#/components/schemas/PerformanceJobProcessStateType'
               description: |-
@@ -2795,10 +2657,9 @@ components:
           required:
             - creationDate
             - id
-            - performanceJob
             - state
       description: Request for modification of an existing Performance Job.
-    ModifyPerformanceJob_Common:
+    ModifyPerformanceJob_Create:
       type: object
       description: Request for modification of an existing Performance Job.
       properties:
@@ -2812,16 +2673,13 @@ components:
         description:
           type: string
           description: A free-text description of the Performance Job.
-        modificationReason:
-          type: string
-          description: >-
-            An optional attribute that allows the Buyer/Client to provide
-            additional detail to the Seller/Server on the reason for modifying
-            Performance Job.
+        performanceJob:
+          $ref: '#/components/schemas/PerformanceJobRef'
+          description: A reference to a Performance Job resource.
         performanceProfile:
-          $ref: '#/components/schemas/ModifyPerformanceJob_PerformanceProfileValue'
+          $ref: '#/components/schemas/PerformanceProfileValue_Modify'
           description: >-
-            Direct assignment of values defined by PerformanceProfile type to 
+            Direct assignment of values defined by PerformanceProfile type to
             PerformanceJob object. Necessary when PerformanceJob is created
             without reference to PerformanceProfile.
         producingApplicationId:
@@ -2830,108 +2688,27 @@ components:
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
           description: The schedule definition for running jobs.
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-          description: >-
-            ServicePayloadSpecificAttributes is used as an extension point for 
-            MEF-specific service performance monitoring configuration. 
-    ModifyPerformanceJob_Create:
-      allOf:
-      - $ref: '#/components/schemas/ModifyPerformanceJob_Common'
-      - type: object
-        properties:
-          performanceJobId:
-            type: string
-            description: >-
-              Identifer of Performance Monitoring Job that is a subject of
-              ModifyPerformanceJob.
-        required:
-        - performanceJobId
-      description: Request for modification of an existing Performance Job.
-    ModifyPerformanceJob_Find:
-      type: object
-      description: >-
-        This class represents a single list item for the response of 
-        `listModifyPerformanceJob`.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the Modify Performance Job was created.
-        id:
-          type: string
-          description: >-
-            Unique identifier for the Modify Performance Job that is generated
-            by the Seller/Server when the Modify Performance Job request
-            `state` is set to `acknowledged`.
-        performanceJob:
-          $ref: '#/components/schemas/PerformanceJobRef'
-          description: A reference to a Performance Job resource.
-        state:
-          $ref: '#/components/schemas/PerformanceJobProcessStateType'
-          description: |-
-            The state of the process related to the Performance Job.
       required:
-        - creationDate
-        - id
         - performanceJob
-        - state
-    ModifyPerformanceJob_PerformanceProfileValue:
-      type: object
-      description: >-
-        Direct assignment of values defined by PerformanceProfile type to 
-        PerformanceJob object. This class is used for Performance Job 
-        modification to update attributes defined by PerformanceProfile.
-      properties:
-        granularity:
-          $ref: '#/components/schemas/Interval'
-          description: >-
-            Sampling rate of the collection or production of performance
-            indicators.
-        jobPriority:
-          type: integer
-          default: 5
-          description: >-
-            The priority of the Performance Job. The way the management
-            application will use the Job priority to schedule Job execution is
-            application-specific and out the scope.
-        outputFormat:
-          $ref: '#/components/schemas/OutputFormat'
-          description: >-
-            List of possible output formats for the Performance Report.
-        reportingPeriod:
-          $ref: '#/components/schemas/Interval'
-          description: Defines the interval for the report generation.
-        resultFormat:
-          $ref: '#/components/schemas/ResultFormat'
-          description: >-
-            List of possible result formats that define how Seller/Server will
-            deliver Performance Report to the Buyer/Client.
-    MonitoredObjectId: 
+    MonitoredObjectRef:
       type: object
       description: >-
         Defines the reference to object which is a subject of performance
         monitoring.
       discriminator:
-        mapping:
-          Entity: '#/components/schemas/EntityId'
-          Service: '#/components/schemas/ServiceId'
         propertyName: '@type'
-      properties:
-        '@type':
-          type: string
-          description: >-
-            This field is used as a discriminator to differentiate if monitored
-            object is an Entity or a Service.
-          enum:
-            - Entity
-            - Service
-      required:
-        - '@type'
+        mapping:
+          EntityRef: '#/components/schemas/EntityRef'
+          ServiceFromToRef: '#/components/schemas/ServiceFromToRef'
+          ServiceRef: '#/components/schemas/ServiceRef'
+      oneOf:
+        - $ref: '#/components/schemas/EntityRef'
+        - $ref: '#/components/schemas/ServiceFromToRef'
+        - $ref: '#/components/schemas/ServiceRef'
     OutputFormat:
       type: string
       description: >-
-        List of possible output formats for the Performance Report.
+        List of possible output formats for the Report.
       enum:
         - json
         - xml
@@ -2939,7 +2716,7 @@ components:
         - csv
     PerformanceJob:
       allOf:
-        - $ref: '#/components/schemas/PerformanceJob_Common'
+        - $ref: '#/components/schemas/PerformanceJob_Create'
         - type: object
           properties:
             creationDate:
@@ -2970,76 +2747,14 @@ components:
             - state
       description: >-
         A Performance Monitoring Job specifies the performance monitoring
-        objectives specific to each subject of monitoring which could be an
-        ordered pair (i.e., two UNIs) or an entity (i.e., port).
-    PerformanceJobComplexQuery:
-      type: object
-      description: >-
-        Performance Job Complex Query entity is used to perform 
-        searches on Performance Job entities, including clauses
-        based on ScheduleDefinition and ServicePayloadSpecificAttributes.
-      properties:
-        buyerJobId:
-          type: string
-          description: >-
-            Identifier of the job understood and assigned by the Buyer/Client.
-        consumingApplicationId:
-          type: string
-          description: Identifier of consuming application.
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the Performance Job was created.
-        description:
-          type: string
-          description: >- 
-            A free-text description of the Performance Monitoring Job.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: Date when the report was last modified.
-        monitoredObjectId:
-          $ref: '#/components/schemas/MonitoredObjectId'
-          description: >-
-            Defines the reference to object which is a subject of performance
-            monitoring.
-        performanceJob:
-          $ref: '#/components/schemas/PerformanceJobRef'
-          description: A reference to a Performance Job resource.
-        performanceProfile:
-          $ref: '#/components/schemas/PerformanceProfileRefOrValue'
-          description: >-
-            Defines the reference to Performance Monitoring Profile or defines
-            values from PerformanceProfile type.
-        producingApplicationId:
-          type: string
-          description: Identifier of producing application
-        scheduleDefinition:
-          $ref: '#/components/schemas/ScheduleDefinition'
-          description: The schedule definition for running jobs.
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-          description: >-
-            ServicePayloadSpecificAttributes is used as an extension point for 
-            MEF-specific service performance monitoring configuration. 
-        state:
-          $ref: '#/components/schemas/PerformanceJobStateType'
-          description: |-
-            The state of the Performance Monitoring Job.
-      required:
-        - creationDate
-        - monitoredObjectId
-        - performanceJob
-        - performanceProfile
-        - scheduleDefinition
-        - servicePayloadSpecificAttributes
-        - state
+        objectives specific to each subject of monitoring which could be  a
+        service, an ordered pair (e.g., two UNIs), or an entity (e.g., port).
     PerformanceJobComplexQuery_Create:
       type: object
       description: >-
-        Performance Job Complex Query entity is used to perform 
-        searches on Performance Job entities, including clauses
-        based on ScheduleDefinition and ServicePayloadSpecificAttributes.
+        Performance Job Complex Query entity is used to perform  searches on
+        Performance Job entities, including clauses based on ScheduleDefinition
+        and ServiceSpecificConfiguration.
       properties:
         buyerJobId:
           type: string
@@ -3051,65 +2766,28 @@ components:
         creationDate.gt:
           type: string
           format: date-time
-          description: Date when the Performance Job was created - greater than.
+          description:
+            Date when the Performance Job was created - greater than.
         creationDate.lt:
           type: string
           format: date-time
           description: Date when the Performance Job was created - lower than.
-        granularity:
-          $ref: '#/components/schemas/Interval'
-          description: >-
-            Sampling rate of the collection or production of performance
-            indicators.
-        jobPriority:
-          type: integer
-          default: 5
-          description: >-
-            The priority of the Performance Job. The way the management
-            application will use the Job priority to schedule Job execution
-            is application-specific and out the scope.
-        jobType:
-          $ref: '#/components/schemas/JobType'
-          description: The type of PM Job.
-        lastModifiedDate.gt:
-          type: string
-          format: date-time
-          description: Date when the report was last modified - greater than.
-        lastModifiedDate.lt:
-          type: string
-          format: date-time
-          description: Date when the report was last modified - lower than.
-        monitoredObjectId:
-          $ref: '#/components/schemas/MonitoredObjectId'
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
           description: >-
             Defines the reference to object which is a subject of performance
             monitoring.
-        outputFormat:
-          $ref: '#/components/schemas/OutputFormat'
+        performanceProfile:
+          $ref: '#/components/schemas/PerformanceProfileRefOrValue_Query'
           description: >-
-            List of possible output formats for the Performance Report.
-        performanceProfileId:
-          type: string
-          description: Identifier of the referenced Performance Profile.
+            Defines the reference to Performance Monitoring Profile or defines
+            values from PerformanceProfile type.
         producingApplicationId:
           type: string
           description: Identifier of producing application.
-        reportingPeriod:
-          $ref: '#/components/schemas/Interval'
-          description: Defines the interval for the report generation.
-        resultFormat:
-          $ref: '#/components/schemas/ResultFormat'
-          description: >-
-            List of possible result formats that define how Seller/Server will
-            deliver Performance Report to the Buyer/Client.
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
           description: The schedule definition for running jobs.
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-          description: >-
-            ServicePayloadSpecificAttributes is used as an extension point for 
-            MEF-specific service performance monitoring configuration. 
         state:
           $ref: '#/components/schemas/PerformanceJobStateType'
           description: |-
@@ -3119,12 +2797,12 @@ components:
       description: |-
         The state of the process related to the Performance Job.
 
-        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged` | Acknowledged | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
-        | `completed`    | Completed    | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
-        | `inProgress`   | In-Progress  | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
-        | `rejected`     | Rejected     | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
+        | state          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged   | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed      | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
+        | `inProgress`   | In-Progress    | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
+        | `rejected`     | Rejected       | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
 
       enum:
         - acknowledged
@@ -3132,44 +2810,23 @@ components:
         - inProgress
         - rejected
     PerformanceJobRef:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceJobRefOrValue'
-        - type: object
-          properties:
-            performanceJobHref:
-              type: string
-              description: Hyperlink to the referenced Performance Job.
-            performanceJobId:
-              type: string
-              description: Identifier of the referenced Performance Job.
-          required:
-            - performanceJobId
-      description: A reference to a Performance Job resource.
-    PerformanceJobRefOrValue:
       type: object
-      description: >-
-        Defines the reference to Performance Monitoring Job or defines values
-        from PerformanceJob type.
-      discriminator:
-        mapping:
-          PerformanceJobRef: '#/components/schemas/PerformanceJobRef'
-          PerformanceJobValue: '#/components/schemas/PerformanceJobValue'
-        propertyName: '@type'
+      description: A reference to a Performance Job resource.
       properties:
-        '@type':
+        performanceJobHref:
           type: string
-          description: >-
-            This field is used as a discriminator to differentiate if an object
-            relates directly to the Performance Job entity or defines values from
-            the PerformanceJob type.
+          description: Hyperlink to the referenced Performance Job.
+        performanceJobId:
+          type: string
+          description: Identifier of the referenced Performance Job.
       required:
-        - '@type'
+        - performanceJobId
     PerformanceJobStateType:
       type: string
       description: |-
         The state of the Performance Monitoring Job.
 
-        | state                  | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | state                  | MEF 133.1 name        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
         | ---------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
         | `acknowledged`         | Acknowledged          | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. If scheduled, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                   |
         | `cancelled`            | Cancelled             | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -3192,107 +2849,12 @@ components:
         - resourcesUnavailable
         - scheduled
         - suspended
-    PerformanceJobValue:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceJobRefOrValue'
-        - type: object
-          properties:
-            consumingApplicationId:
-              type: string
-              description: Identifier of consuming application.
-            granularity:
-              $ref: '#/components/schemas/Interval'
-              description: >-
-                Sampling rate of the collection or production of performance
-                indicators.
-            monitoredObjectId:
-              $ref: '#/components/schemas/MonitoredObjectId'
-              description: >-
-                Defines the reference to object which is a subject of performance
-                monitoring.
-            outputFormat:
-              $ref: '#/components/schemas/OutputFormat'
-              description: >-
-                List of possible output formats for the Performance Report.
-            producingApplicationId:
-              type: string
-              description: Identifier of producing application.
-            resultFormat:
-              $ref: '#/components/schemas/ResultFormat'
-              description: >-
-                List of possible result formats that define how Seller/Server will
-                deliver Performance Report to the Buyer/Client.
-            servicePayloadSpecificAttributes:
-              $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-              description: >-
-                ServicePayloadSpecificAttributes is used as an extension point for 
-                MEF-specific service performance monitoring configuration. 
-          required:
-            - granularity
-            - monitoredObjectId
-            - outputFormat
-            - resultFormat
-            - servicePayloadSpecificAttributes
-      description: >- 
-        Direct assignment of values defined by PerformanceJob type to 
-        PerformanceReport object. Necessary when PerformanceReport is not
-        created by PerformanceJob.
-    PerformanceJob_Common:
-      type: object
-      description: >-
-        A Performance Monitoring Job specifies the performance monitoring
-        objectives specific to each subject of monitoring which could be an 
-        ordered pair (i.e., two UNIs) or an entity (i.e., port).
-      properties:
-        buyerJobId:
-          type: string
-          description: >-
-            Identifier of the job understood and assigned by the Buyer/Client.
-        consumingApplicationId:
-          type: string
-          description: Identifier of consuming application.
-        description:
-          type: string
-          description: A free-text description of the Performance Job.
-        monitoredObjectId: 
-          $ref: '#/components/schemas/MonitoredObjectId'
-          description: >-
-            Defines the reference to object which is a subject of performance
-            monitoring.
-        performanceProfile:
-          $ref: '#/components/schemas/PerformanceProfileRefOrValue'
-          description: >-
-            Defines the reference to Performance Monitoring Profile or defines
-            values from PerformanceProfile type.
-        producingApplicationId:
-          type: string
-          description: Identifier of producing application.
-        scheduleDefinition:
-          $ref: '#/components/schemas/ScheduleDefinition'
-          description: The schedule definition for running jobs.
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
-          description: >-
-            ServicePayloadSpecificAttributes is used as an extension point for 
-            MEF-specific service performance monitoring configuration. 
-      required:
-        - monitoredObjectId
-        - performanceProfile
-        - scheduleDefinition
-        - servicePayloadSpecificAttributes
     PerformanceJob_Create:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceJob_Common'
-        - type: object
-      description: >-
-        A Performance Monitoring Job specifies the performance monitoring
-        objectives specific to each subject of monitoring which could be an
-        ordered pair (i.e., two UNIs) or an entity (i.e., port).
-    PerformanceJob_Find:
       type: object
       description: >-
-        This class represents a single list item for the response of
-        the `listPerformanceJob` operation.
+        A Performance Monitoring Job specifies the performance monitoring
+        objectives specific to each subject of monitoring which could be  a
+        service, an ordered pair (e.g., two UNIs), or an entity (e.g., port).
       properties:
         buyerJobId:
           type: string
@@ -3301,18 +2863,11 @@ components:
         consumingApplicationId:
           type: string
           description: Identifier of consuming application.
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the job was created.
         description:
           type: string
           description: A free-text description of the Performance Job.
-        id:
-          type: string
-          description: Unique identifier
-        monitoredObjectId:
-          $ref: '#/components/schemas/MonitoredObjectId'
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
           description: >-
             Defines the reference to object which is a subject of performance
             monitoring.
@@ -3327,20 +2882,13 @@ components:
         scheduleDefinition:
           $ref: '#/components/schemas/ScheduleDefinition'
           description: The schedule definition for running jobs.
-        state:
-          $ref: '#/components/schemas/PerformanceJobStateType'
-          description: |-
-            The state of the Performance Monitoring Job.
       required:
-        - creationDate
-        - id
-        - monitoredObjectId
+        - monitoredObject
         - performanceProfile
         - scheduleDefinition
-        - state
     PerformanceProfile:
       allOf:
-        - $ref: '#/components/schemas/PerformanceProfile_Common'
+        - $ref: '#/components/schemas/PerformanceProfile_Create'
         - type: object
           properties:
             creationDate:
@@ -3354,34 +2902,58 @@ components:
             id:
               type: string
               description: Unique identifier
+            isAssigned:
+              description: >-
+                Indicates if Performance Profile is assigned to a Performance
+                Job.
+              type: boolean
             lastModifiedDate:
               type: string
               format: date-time
               description: Date when the profile was last modified.
-            state:
-              $ref: '#/components/schemas/PerformanceProfileStateType'
-              description: The state of the Performance Monitoring Profile.
           required:
             - creationDate
             - id
-            - state
+            - isAssigned
       description: >-
         A Performance Monitoring Profile specifies the common performance
         configuration that can be reused by multiple Performance Jobs.
+    PerformanceProfileLifecycleStatusType:
+      type: string
+      description: |-
+        Possible values for the Performance Profile Status.
+
+        | State          | MEF 133.1 name  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | -------------- | --------------- | ----------------------------------------------------------------------------- |
+        | `approved`     | Approved        | Performance Monitoring Profile has been approved for general use.             |
+        | `deprecated`   | In-Deprecated   | Performance Monitoring Profile has been replaced by another profile.          |
+        | `experimental` | Experimental    | Performance Monitoring Profile use may be limited to a small number of users. |
+        | `pending`      | Pending         | Performance Monitoring Profile is waiting to be approved.                     |
+
+      enum:
+        - approved
+        - deprecated
+        - experimental
+        - pending
     PerformanceProfileRef:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceProfileRefOrValue'
-        - type: object
-          properties:
-            performanceProfileHref:
-              type: string
-              description: Hyperlink to the referenced Performance Profile.
-            performanceProfileId:
-              type: string
-              description: Identifier of the referenced Performance Profile.
-          required:
-            - performanceProfileId
+      type: object
       description: A reference to a Performance Profile resource.
+      properties:
+        performanceProfileHref:
+          type: string
+          description: Hyperlink to the referenced Performance Profile.
+        performanceProfileId:
+          type: string
+          description: Identifier of the referenced Performance Profile.
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - PerformanceProfileRef
+      required:
+        - '@type'
+        - performanceProfileId
     PerformanceProfileRefOrValue:
       type: object
       description: >-
@@ -3390,83 +2962,29 @@ components:
       discriminator:
         mapping:
           PerformanceProfileRef: '#/components/schemas/PerformanceProfileRef'
-          PerformanceProfileValue: 
-            '#/components/schemas/PerformanceProfileValue'
+          PerformanceProfileValue: '#/components/schemas/PerformanceProfileValue'
         propertyName: '@type'
-      properties:
-        '@type':
-          type: string
-          description: >-
-            This field is used as a discriminator to differentiate if an object
-            relates directly to the Performance Profile entity or defines values
-            from the PerformanceProfile type.
-      required:
-        - '@type'
-    PerformanceProfileStateType:
-      type: string
-      description: |-
-        The state of the Performance Monitoring Profile.
-
-        | state          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-        | -------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `active`       | Active         | A Create Performance Monitoring Profile request has been received by the Server and has passed basic validation. Performance Monitoring Profile has been created by the Seller and allocated a unique `id`. |
-        | `deleted`      | Deleted        | A Performance Monitoring Profile that does not have any Performance Monitoring Jobs attached is deleted.                                                                                                    |
-      enum:
-        - active
-        - deleted
-    PerformanceProfileValue:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceProfileRefOrValue'
-        - type: object
-          properties:
-            granularity:
-              $ref: '#/components/schemas/Interval'
-              description: >-
-                Sampling rate of the collection or production of performance
-                indicators.
-            jobPriority:
-              type: integer
-              default: 5
-              description: >-
-                The priority of the Performance Job. The way the management
-                application will use the Job priority to schedule Job execution
-                is application-specific and out the scope.
-            jobType:
-              $ref: '#/components/schemas/JobType'
-              description: The type of PM Job.
-            outputFormat:
-              $ref: '#/components/schemas/OutputFormat'
-              description: >-
-                List of possible output formats for the Performance Report.
-            reportingPeriod:
-              $ref: '#/components/schemas/Interval'
-              description: Defines the interval for the report generation.
-            resultFormat:
-              $ref: '#/components/schemas/ResultFormat'
-              description: >-
-                List of possible result formats that define how Seller/Server will
-                deliver Performance Report to the Buyer/Client.
-          required:
-            - granularity
-            - jobType
-            - outputFormat
-            - reportingPeriod
-            - resultFormat
-      description: >-
-        Direct assignment of values defined by PerformanceProfile type to 
-        PerformanceJob object. Necessary when PerformanceJob is created without
-        reference to PerformanceProfile.
-    PerformanceProfile_Common:
+      oneOf:
+        - $ref: '#/components/schemas/PerformanceProfileRef'
+        - $ref: '#/components/schemas/PerformanceProfileValue'
+    PerformanceProfileRefOrValue_Query:
       type: object
       description: >-
-        A Performance Monitoring Profile specifies the common performance
-        configuration that can be reused by multiple Performance Jobs.
+        Defines the reference to Performance Monitoring Profile or defines
+        values from PerformanceProfile type.
+      discriminator:
+        mapping:
+          PerformanceProfileRef: '#/components/schemas/PerformanceProfileRef'
+          PerformanceProfileValue: '#/components/schemas/PerformanceProfileValue_Query'
+        propertyName: '@type'
+      oneOf:
+        - $ref: '#/components/schemas/PerformanceProfileRef'
+        - $ref: '#/components/schemas/PerformanceProfileValue_Query'
+    PerformanceProfileValue:
+      type: object
       properties:
-        description:
-          type: string
-          description: A free-text description of the Performance Profile.
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
             Sampling rate of the collection or production of performance
             indicators.
@@ -3485,49 +3003,83 @@ components:
           description: >-
             List of possible output formats for the Performance Report.
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
+          description: Defines the Duration for the report generation.
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+          description: >-
+            List of possible result formats that define how Seller/Server will
+            deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - PerformanceProfileValue
+      required:
+        - '@type'
+        - granularity
+        - jobType
+        - outputFormat
+        - reportingPeriod
+        - resultFormat
+        - serviceSpecificConfiguration
+      description: >-
+        The setting of the attributes defined by the PerformanceProfile class
+        when the Performance Job does not have a reference to the Performance
+        Profile.
+    PerformanceProfileValue_Modify:
+      type: object
+      description: >-
+        The setting of the attributes defined by the PerformanceProfile class
+        when the Performance Job does not have a reference to the Performance
+        Profile. This class is used to modify these Performance Job attributes.
+      properties:
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
+          description: >-
+            Sampling rate of the collection or production of performance
+            indicators.
+        jobPriority:
+          type: integer
+          default: 5
+          description: >-
+            The priority of the Performance Job. The way the management
+            application will use the Job priority to schedule Job execution is
+            application-specific and out the scope.
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
+          description: >-
+            List of possible output formats for the Performance Report.
+        reportingPeriod:
+          $ref: '#/components/schemas/TimeDuration'
           description: Defines the interval for the report generation.
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
           description: >-
             List of possible result formats that define how Seller/Server will
             deliver Performance Report to the Buyer/Client.
-      required:
-        - granularity
-        - jobType
-        - outputFormat
-        - reportingPeriod
-        - resultFormat
-    PerformanceProfile_Create:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceProfile_Common'
-        - type: object
-      description: >-
-        A Performance Monitoring Profile specifies the common performance
-        configuration that can be reused by multiple Performance Jobs.
-    PerformanceProfile_Find:
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
+    PerformanceProfileValue_Query:
       type: object
-      description: >-
-        This class represents a single list item for the response of
-        the `listPerformanceProfile` operation.
       properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the profile was created.
-        description:
-          type: string
-          description: A free-text description of the Performance Profile.
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
             Sampling rate of the collection or production of performance
             indicators.
-        id:
-          type: string
-          description: Unique identifier
         jobPriority:
           type: integer
+          default: 5
           description: >-
             The priority of the Performance Job. The way the management
             application will use the Job priority to schedule Job execution is
@@ -3535,19 +3087,89 @@ components:
         jobType:
           $ref: '#/components/schemas/JobType'
           description: The type of PM Job.
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
+          description: >-
+            List of possible output formats for the Performance Report.
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
-          description: Defines the interval for the report generation.
-        state:
-          $ref: '#/components/schemas/PerformanceProfileStateType'
-          description: The state of the Performance Monitoring Profile.
+          $ref: '#/components/schemas/TimeDuration'
+          description: Defines the Duration for the report generation.
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+          description: >-
+            List of possible result formats that define how Seller/Server will
+            deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - PerformanceProfileValue
       required:
-        - creationDate
+        - '@type'
+      description: >-
+        The setting of the attributes defined by the PerformanceProfile class
+        when the Performance Job does not have a reference to the Performance
+        Profile.
+    PerformanceProfile_Create:
+      type: object
+      description: >-
+        A Performance Monitoring Profile specifies the common performance
+        configuration that can be reused by multiple Performance Jobs.
+      properties:
+        description:
+          type: string
+          description: A free-text description of the Performance Profile.
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
+          description: >-
+            Sampling rate of the collection or production of performance
+            indicators.
+        jobPriority:
+          type: integer
+          default: 5
+          description: >-
+            The priority of the Performance Job. The way the management
+            application will use the Job priority to schedule Job execution is
+            application-specific and out the scope.
+        jobType:
+          $ref: '#/components/schemas/JobType'
+          description: The type of PM Job.
+        lifecycleStatus:
+          $ref: '#/components/schemas/PerformanceProfileLifecycleStatusType'
+          description: >-
+            Lifecycle Status is used to indicate the lifecycle status of the
+            Performance Profile.
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
+          description: >-
+            List of possible output formats for the Performance Report.
+        reportingPeriod:
+          $ref: '#/components/schemas/TimeDuration'
+          description: Defines the interval for the report generation.
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+          description: >-
+            List of possible result formats that define how Seller/Server will
+            deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
+      required:
         - granularity
-        - id
         - jobType
+        - lifecycleStatus
+        - outputFormat
         - reportingPeriod
-        - state
+        - resultFormat
+        - serviceSpecificConfiguration
     PerformanceProfile_Update:
       type: object
       description: >-
@@ -3558,7 +3180,7 @@ components:
           type: string
           description: A free-text description of the Performance Profile.
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
             Sampling rate of the collection or production of performance
             indicators.
@@ -3569,21 +3191,31 @@ components:
             The priority of the Performance Job. The way the management
             application will use the Job priority to schedule Job execution is
             application-specific and out the scope.
+        lifecycleStatus:
+          $ref: '#/components/schemas/PerformanceProfileLifecycleStatusType'
+          description: >-
+            Lifecycle Status is used to indicate the lifecycle status of the
+            Performance Profile.
         outputFormat:
           $ref: '#/components/schemas/OutputFormat'
           description: >-
             List of possible output formats for the Performance Report.
         reportingPeriod:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: Defines the interval for the report generation.
         resultFormat:
           $ref: '#/components/schemas/ResultFormat'
           description: >-
             List of possible result formats that define how Seller/Server will
             deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
     PerformanceReport:
       allOf:
-        - $ref: '#/components/schemas/PerformanceReport_Common'
+        - $ref: '#/components/schemas/PerformanceReport_Create'
         - type: object
           properties:
             creationDate:
@@ -3604,13 +3236,18 @@ components:
               type: string
               format: date-time
               description: Date when the report was last modified.
+            performanceJob:
+              $ref: '#/components/schemas/PerformanceJobRef'
+              description: >-
+                Defines the reference to Performance Monitoring Job or defines
+                values from PerformanceJob type.
             reportContent:
               type: array
               items:
-                $ref: '#/components/schemas/ReportContentItem'
+                $ref: '#/components/schemas/ReportContentPerMonitoredObject'
             reportUrl:
               $ref: '#/components/schemas/AttachmentURL'
-              description: >- 
+              description: >-
                 The URL pointing to an Attachment for download.
             state:
               $ref: '#/components/schemas/PerformanceReportStateType'
@@ -3621,80 +3258,32 @@ components:
             - id
             - state
       description: >-
-        The execution of PM Job results in Performance Measurement
-        collections that provide Buyer/Client with performance objective
-        results.
-    PerformanceReportComplexQuery:
-      type: object
-      description: >-
-        Performance Report Complex Query entity is used to perform 
-        searches on Performance Report entities, including clauses
-        based on ServicePayloadSpecificAttributes.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the Performance Report was created.
-        description:
-          type: string
-          description: A free-text description of the performance report.
-        lastModifiedDate:
-          type: string
-          format: date-time
-          description: Date when the report was last modified.
-        performanceJob:
-          $ref: '#/components/schemas/PerformanceJobRefOrValue'
-          description: >-
-            Defines the reference to Performance Monitoring Job or defines values
-            from PerformanceJob type.
-        performanceReport:
-          $ref: '#/components/schemas/PerformanceReportRef'
-          description: A reference to a Performance Report resource.
-        reportingTimeframe:
-          $ref: '#/components/schemas/ReportingTimeframe'
-          description: >-
-            Specifies the date range between which data points will be included
-            in the report.
-        state:
-          $ref: '#/components/schemas/PerformanceReportStateType'
-          description: |-
-            Possible values for the state of a Performance Report.
-      required:
-        - creationDate
-        - performanceJob
-        - performanceReport
-        - reportingTimeframe
-        - state
+        The execution of PM Job results in Performance Measurement collections
+        that provide Buyer/Client with performance objective results.
     PerformanceReportComplexQuery_Create:
       type: object
       description: >-
-        Performance Report Complex Query entity is used to perform 
-        searches on Performance Report entities, including clauses
-        based on ServicePayloadSpecificAttributes.
+        Performance Report Complex Query entity is used to perform  searches on
+        Performance Report entities, including clauses based on
+        ServiceSpecificConfiguration.
       properties:
         creationDate.gt:
           type: string
           format: date-time
-          description: Date when the Performance Report was created - greater than.
+          description:
+            Date when the Performance Report was created - greater than.
         creationDate.lt:
           type: string
           format: date-time
-          description: Date when the Performance Report was created - lower than.
+          description:
+            Date when the Performance Report was created - lower than.
         granularity:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
             Sampling rate of the collection or production of performance
             indicators.
-        lastModifiedDate.gt:
-          type: string
-          format: date-time
-          description: Date when the report was last modified - greater than.
-        lastModifiedDate.lt:
-          type: string
-          format: date-time
-          description: Date when the report was last modified - lower than.
-        monitoredObjectId:
-          $ref: '#/components/schemas/MonitoredObjectId'
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
           description: >-
             Defines the reference to object which is a subject of performance
             monitoring.
@@ -3702,9 +3291,10 @@ components:
           $ref: '#/components/schemas/OutputFormat'
           description: >-
             List of possible output formats for the Performance Report.
-        performanceJobId:
-          type: string
-          description: Identifier of the referenced Performance Job.
+        performanceJob:
+          $ref: '#/components/schemas/PerformanceJobRef'
+          description: >-
+            Defines the reference to Performance Monitoring Job.
         reportingTimeframe.startDate.gt:
           type: string
           format: date-time
@@ -3726,79 +3316,87 @@ components:
           description: >-
             List of possible result formats that define how Seller/Server will
             deliver Performance Report to the Buyer/Client.
-        servicePayloadSpecificAttributes:
-          $ref: '#/components/schemas/ServicePayloadSpecificAttributes'
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
           description: >-
-            ServicePayloadSpecificAttributes is used as an extension point for 
-            MEF-specific service performance monitoring configuration. 
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
         state:
           $ref: '#/components/schemas/PerformanceReportStateType'
           description: |-
             Possible values for the state of a Performance Report.
-    PerformanceReportRef:
-      type: object
-      description: A reference to a Performance Report resource.
-      properties:
-        performanceReportHref:
-          type: string
-          description: Hyperlink to the referenced Performance Report.
-        performanceReportId:
-          type: string
-          description: Identifier of the referenced Performance Report.
-      required:
-        - performanceReportId
     PerformanceReportStateType:
       type: string
       description: |-
         Possible values for the state of a Performance Report.
 
-        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                    |
-        | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-        | acknowledged | A Performance Report request has been received by Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
-        | completed    | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                   |
-        | failed       | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                    |
-        | inProgress   | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                     |
-        | rejected     | This state indicates that: <br>- Invalid information is provided in Create Performance Report request <br>- The request fails to meet validation rules for Performance Report delivery (processing).                                                                                                                                                                                                                           |
+        | State          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                  |
+        | -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged   | Performance Report request has been received by Seller/Server and has passed basic validations. Performance Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Performance Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+        | `completed`    | Completed      | A Performance Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                                                 |
+        | `failed`       | Failed         | A Performance Report processing has failed.                                                                                                                                                                                                                                                                                                                                                                                  |
+        | `inProgress`   | In-Progress    | A Performance Report has successfully passed the validations checks and the report processing has started.                                                                                                                                                                                                                                                                                                                   |
+        | `rejected`     | Rejected       | This state indicates that: <br>- Invalid information is provided in Create Performance Report request <br>- The request fails to meet validation rules for Performance Report delivery (processing).                                                                                                                                                                                                                         |
       enum:
         - acknowledged
         - completed
         - failed
         - inProgress
         - rejected
-    PerformanceReport_Common:
+    PerformanceReport_Create:
       type: object
       description: >-
-        The execution of PM Job results in Performance Measurement collections
-        that provide Buyer/Client with performance objectives results.
+        The creation of the PM Report enables the collection of PM results,
+        which are stored in the PM database within the Seller/Server system.
       properties:
         description:
           type: string
           description: A free-text description of the performance report.
-        performanceJob:
-          $ref: '#/components/schemas/PerformanceJobRefOrValue'
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
-            Defines the reference to Performance Monitoring Job or defines values
-            from PerformanceJob type.
+            Sampling rate of the collection or production of performance
+            indicators.
+        monitoredObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoredObjectRef'
+          minItems: 1
+          uniqueItems: true
+          description: >-
+            Defines the reference to object which is a subject of performance
+            monitoring.
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
+          description: >-
+            List of possible output formats for the Performance Report.
         reportingTimeframe:
           $ref: '#/components/schemas/ReportingTimeframe'
           description: >-
             Specifies the date range between which data points will be included
             in the report.
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+          description: >-
+            List of possible result formats that define how Seller/Server will
+            deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
       required:
-        - performanceJob
+        - granularity
+        - monitoredObject
+        - outputFormat
         - reportingTimeframe
-    PerformanceReport_Create:
-      allOf:
-        - $ref: '#/components/schemas/PerformanceReport_Common'
-        - type: object
-      description: >-
-        In some cases, performance statistics exist in the system. These 
-        statistics can be collected with an ad-hoc Performance Report creation.
+        - resultFormat
+        - serviceSpecificConfiguration
     PerformanceReport_Find:
       type: object
       description: >-
-        This class represents a single list item for the response of
-        the `listPerformanceReport` operation.
+        This class represents a single list item for the response of the
+        `listPerformanceReport` operation.
       properties:
         creationDate:
           type: string
@@ -3807,115 +3405,149 @@ components:
         description:
           type: string
           description: A free-text description of the Performance Report.
+        granularity:
+          $ref: '#/components/schemas/TimeDuration'
+          description: >-
+            Sampling rate of the collection or production of performance
+            indicators.
         id:
           type: string
           description: Unique identifier
-        performanceJob:
-          $ref: '#/components/schemas/PerformanceJobRefOrValue'
+        monitoredObject:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonitoredObjectRef'
+          minItems: 1
+          uniqueItems: true
           description: >-
-            Defines the reference to Performance Monitoring Job or defines values
-            from PerformanceJob type.
+            Defines the reference to object which is a subject of performance
+            monitoring.
+        outputFormat:
+          $ref: '#/components/schemas/OutputFormat'
+          description: >-
+            List of possible output formats for the Performance Report.
+        performanceJob:
+          $ref: '#/components/schemas/PerformanceJobRef'
+          description: >-
+            Defines the reference to Performance Monitoring Job or defines
+            values from PerformanceJob type.
         reportingTimeframe:
           $ref: '#/components/schemas/ReportingTimeframe'
           description: >-
             Specifies the date range between which data points will be included
             in the report.
+        resultFormat:
+          $ref: '#/components/schemas/ResultFormat'
+          description: >-
+            List of possible result formats that define how Seller/Server will
+            deliver Performance Report to the Buyer/Client.
+        serviceSpecificConfiguration:
+          $ref: '#/components/schemas/ServiceSpecificConfiguration'
+          description: >-
+            ServiceSpecificConfiguration is used as an extension point for
+            MEF-specific service performance monitoring configuration.
         state:
           $ref: '#/components/schemas/PerformanceReportStateType'
           description: |-
             Possible values for the state of a Performance Report.
       required:
         - creationDate
+        - granularity
         - id
+        - monitoredObject
+        - outputFormat
         - performanceJob
         - reportingTimeframe
+        - resultFormat
+        - serviceSpecificConfiguration
         - state
     RecurringSchedule:
       type: object
       description: >-
-        A definition of recurring schedule to run a job based on the Cron 
-        utility in Linux-like systems. It defines how the job should 
-        periodically run at specified times, dates, or intervals. 
+        A definition of recurring schedule to run a job based on the Cron
+        utility in Linux-like systems. It defines how the job should
+        periodically run at specified times, dates, or intervals.
       properties:
         second:
           type: string
-          description: >- 
-            A definition of time (seconds) to run a job. Allowed values: 0-59, 
+          description: >-
+            A definition of time (seconds) to run a job. Allowed values: 0-59,
             and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
               - */5 * * * * * -> run a job at every 5th second. 
               - */30 */1 * * * * -> run a job at every 30 seconds 
-              past every minute.
+                past every minute.
         minute:
           type: string
           description: >-
-            A definition of time (minutes) to run a job. Allowed values: 0-59, 
+            A definition of time (minutes) to run a job. Allowed values: 0-59,
             and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
               - 0 */10 * * * * -> run a job at every 10th minute. 
               - 0 */30 0 * * * -> run a job at every 30th minute past midnight.
               - 0 */30 8 * * 1 -> run a job at every 30th minute 
-              past hour 8 on Monday.
+                past hour 8 on Monday.
         hour:
           type: string
           description: >-
-            A definition of time (hour) to run a job. Allowed values: 0-23, 
+            A definition of time (hour) to run a job. Allowed values: 0-23,
             and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
-              - 0 0 10 10 * * -> run a job at 10 am on 10th day of every month. 
+              - 0 0 10 10 * * -> run a job at 10 am on 10th day of every month.
+            
               - 0 * 1,2 * * * -> run a job at every minute past hour 1 and 2.
               - 0 0 */2 * * * -> run a job at every 2nd hour.
-        dayOfMonth: 
+        dayOfMonth:
           type: string
           description: >-
-            A definition of time (day of month) to run a job. 
-            Allowed values: 1-31, and special characters: (,-*/), where:
+            A definition of time (day of month) to run a job.  Allowed values:
+            1-31, and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
               - 0 0 0 1,5,10,15 * * -> run a job at midnight 
-              on every 1st, 5th, 10th, 15th day of month. 
+                on every 1st, 5th, 10th, 15th day of month. 
               - 0 0 */1 1-10 1-3 * -> run a job at every full hour between 1st 
-              and 10th day of month in January, February, and March.
-        month: 
+                and 10th day of month in January, February, and March.
+        month:
           type: string
           description: >-
-            A definition of time (month) to run a job. Allowed
-            values: 1-12 or JAN-DEC, and special characters: (,-*/), where:
+            A definition of time (month) to run a job. Allowed values: 1-12 or
+            JAN-DEC, and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
               - 0 5 0 * 8 * -> run a job at 00:05 on every day in August. 
               - 0 0 0,12 1 */2 * -> run a job at midnight and noon 
-              on every 1st day of every 2nd month.
+                on every 1st day of every 2nd month.
         dayOfWeek:
           type: string
           description: >-
-            A definition of time (day of week) to run a job. Allowed
-            values: 0-6 or SUN-SAT, and special characters: (,-*/), where:
+            A definition of time (day of week) to run a job. Allowed values:
+            0-6 or SUN-SAT, and special characters: (,-*/), where:
               - `*` -> any value
-              - `,` -> value list seprator
+              - `,` -> value list separator
               - `-` -> range of values
               - '/' -> step values
             For example:
               - 0 0 22 * * 1-5 -> run a job at 22:00 on every day 
-              between Monday and Friday. 
+                between Monday and Friday. 
               - 0 5 4 * * sun -> run a job at 04:05 on Sunday.
         hourRange:
           type: array
@@ -3928,28 +3560,47 @@ components:
     ReportContentItem:
       type: object
       description: >-
-        Single item of the performance monitoring results in case result format
-        was set to payload. Each item contains the timeframe of the collected data
-        and a list of values measured in that timeframe.
+        Single item of the results in case result format was set to payload.
+        Each item contains the timeframe of the collected data and a list of
+        values captured in that timeframe.
       properties:
         measurementTime:
           $ref: '#/components/schemas/MeasurementTime'
           description: Timeframe boundary for collected data.
-        measurementDataPoints:
+        measurementDataPoint:
           type: array
           items:
-            $ref: '#/components/schemas/ResultPayload'
+            $ref: '#/components/schemas/ServiceSpecificResult'
           description: >-
-            List of performance monitoring values measured in the related
-            timeframe.
+            List of values measured in the related timeframe.
+          minItems: 0
       required:
         - measurementTime
-        - measurementDataPoints
+        - measurementDataPoint
+    ReportContentPerMonitoredObject:
+      type: object
+      description: >-
+        Result of the performance monitoring for a specific monitored object.
+      properties:
+        monitoredObject:
+          $ref: '#/components/schemas/MonitoredObjectRef'
+          description: >-
+            Defines the reference to object which is a subject of performance
+            monitoring.
+        reportContentItem:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportContentItem'
+          description: List of result items for the monitored object.
+          minItems: 0
+      required:
+        - monitoredObject
+        - reportContentItem
     ReportingTimeframe:
       type: object
       description: >-
-        Specifies the date range between which data points will be included
-        in the report.
+        Specifies the date range between which data points will be included in
+        the report.
       properties:
         reportingStartDate:
           type: string
@@ -3963,28 +3614,10 @@ components:
       type: string
       description: >-
         List of possible result formats that define how Seller/Server will
-        deliver Performance Report to the Buyer/Client.
+        deliver a Report to the Buyer/Client.
       enum:
         - attachment
         - payload
-    ResultPayload:
-      type: object
-      description: >-
-        ResultPayload is used as an extension point for MEF-specific service
-        performance monitoring results. The `@type` attribute is used as a
-        discriminator.
-      discriminator:
-        propertyName: '@type'
-      properties:
-        '@type':
-          type: string
-          description: >-
-            The name that uniquely identifies the type of performance monitoring
-            results that are returned by the Performance Report. In the case of MEF
-            services, this is the URN provided in the performance monitoring results
-            specification. The named type must be a subclass of ResultPayload.
-      required:
-        - '@type'
     ScheduleDefinition:
       type: object
       description: The schedule definition for running jobs.
@@ -3993,8 +3626,9 @@ components:
           type: string
           format: date-time
           description: >-
-            The start time of the Schedule Definition. If the attribute is 
-            empty the Schedule starts immediately after provisioning of the Job.
+            The start time of the Schedule Definition. If the attribute is
+            empty the Schedule starts immediately after provisioning of the
+            Job.
         scheduleDefinitionEndTime:
           type: string
           format: date-time
@@ -4004,39 +3638,83 @@ components:
         recurringSchedule:
           $ref: '#/components/schemas/RecurringSchedule'
           description: >-
-            A recurring frequency to run a job within a timeframe defined 
-            by schedule definition, for example, every 5 minutes, 15 minutes, 
-            1 hour, 1 day. If the attribute is empty, job runs non-stop.
+            A recurring frequency to run a job within a timeframe defined  by
+            schedule definition, for example, every 5 minutes, 15 minutes,  1
+            hour, 1 day. If the attribute is empty, job runs non-stop.
         executionDuration:
-          $ref: '#/components/schemas/Interval'
+          $ref: '#/components/schemas/TimeDuration'
           description: >-
-            Total time for running one execution of a schedule. Depending 
-            on the reportingPeriod attribute, one execution of a schedule might
-            produce multiple reports (e.g., when reporting period is 15 minutes 
-            and executionDuration is 1 hour, every execution of a schedule will
-            produce 4 reports).
-    ServiceId:
-      allOf:
-        - $ref: '#/components/schemas/MonitoredObjectId'
-        - type: object
-          properties:
-            serviceIdFrom: 
-              type: string
-              description: >-
-                Identifier of a Service Endpoint.
-            serviceIdTo:
-              type: string
-              description: >-
-                Identifier of a Service Endpoint.
-          required:
-            - serviceIdFrom
-            - serviceIdTo
-      description: >-
-        Identifier of a Service.
-    ServicePayloadSpecificAttributes:
+            Total time for running one execution of a schedule. Depending  on
+            the reportingPeriod attribute, one execution of a schedule might
+            produce multiple reports (e.g., when reporting period is 15 minutes
+             and executionDuration is 1 hour, every execution of a schedule
+            will produce 4 reports).
+    ServiceFromToRef:
       type: object
       description: >-
-        ServicePayloadSpecificAttributes is used as an extension point for 
+        Reference to Service From and Service To endpoints.
+      properties:
+        serviceFrom:
+          type: object
+          description: >-
+            A reference to a Service From endpoint resource.
+          properties:
+            serviceFromHref:
+              type: string
+              description: Hyperlink to the Service From endpoint.
+            serviceFromId:
+              type: string
+              description: Identifier of the Service From endpoint.
+          required:
+            - serviceFromId
+        serviceTo:
+          type: object
+          description: >-
+            A reference to a Service To endpoint resource.
+          properties:
+            serviceToHref:
+              type: string
+              description: Hyperlink to the Service To endpoint.
+            serviceToId:
+              type: string
+              description: Identifier of the Service To endpoint.
+          required:
+            - serviceToId
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - ServiceFromToRef
+      required:
+        - '@type'
+        - serviceFrom
+        - serviceTo
+    ServiceRef:
+      type: object
+      description: >-
+        Reference to a Service.
+      properties:
+        serviceHref:
+          type: string
+          description: >-
+            Hyperlink to the Service resource.
+        serviceId:
+          type: string
+          description: Identifier of the Service.
+        '@type':
+          description:
+            Used to unambiguously designate the class type when using `oneOf`
+          type: string
+          enum:
+            - ServiceRef
+      required:
+        - '@type'
+        - serviceId
+    ServiceSpecificConfiguration:
+      type: object
+      description: >-
+        ServiceSpecificConfiguration is used as an extension point for
         MEF-specific service performance monitoring configuration. The `@type`
         attribute is used as a discriminator.
       discriminator:
@@ -4046,17 +3724,71 @@ components:
           type: string
           description: >-
             Uniquely identifies the type of performance monitoring
-            configuration that specifies PM objectives. In the case of MEF services,
-            this is the URN provided in the performance monitoring configuration
-            specification. The named type must be a subclass of
-            ServicePayloadSpecificAttributes.
+            configuration that specifies PM objectives. In the case of MEF
+            services, this is the URN provided in the performance monitoring
+            configuration specification. The named type must be a subclass of
+            ServiceSpecificConfiguration.
       required:
         - '@type'
+    ServiceSpecificResult:
+      type: object
+      description: >-
+        ServiceSpecificResult is used as an extension point for MEF-specific
+        service performance monitoring results. The `@type` attribute is used
+        as a discriminator.
+      discriminator:
+        propertyName: '@type'
+      properties:
+        '@type':
+          type: string
+          description: >-
+            The name that uniquely identifies the type of performance
+            monitoring results that are returned by the Performance Report. In
+            the case of MEF services, this is the URN provided in the
+            performance monitoring results specification. The named type must
+            be a subclass of ServiceSpecificResult.
+      required:
+        - '@type'
+    TimeDuration:
+      description: >-
+        This class is used to describe durations expressed as a 2-tuple,
+        (value, units). The units from nanoseconds to years.
+      type: object
+      properties:
+        timeDurationValue:
+          description: >-
+            The value of the duration. For example, if the duration is 20 ms,
+            this element is 20.
+          type: integer
+        timeDurationUnits:
+          description: >-
+            The unit of measure in the duration. For example, if an interval is
+            2ms, this element is MS.
+          $ref: '#/components/schemas/TimeDurationUnits'
+      required:
+        - timeDurationUnits
+        - timeDurationValue
+    TimeDurationUnits:
+      description: >-
+        The unit of measure in the duration. For example, if an interval is
+        2ms, this element is MS.
+      type: string
+      enum:
+        - NS
+        - US
+        - MS
+        - SEC
+        - MIN
+        - HOUR
+        - DAY
+        - WEEK
+        - MONTH
+        - YEAR
     TrackingRecord:
       type: object
       description: >-
-        Tracking Records allow the tracking of modifications of 
-        Performance Job, Profile, or Report.
+        Tracking Records allow the tracking of modifications of  Performance
+        Job, Profile, or Report.
       properties:
         creationDate:
           type: string
@@ -4065,8 +3797,8 @@ components:
         description:
           type: string
           description: >-
-            Free-text field describing the action that
-            created the Tracking Record and its details.
+            Free-text field describing the action that created the Tracking
+            Record and its details.
         id:
           type: string
           description: Identifier of the Tracking Record.
@@ -4082,35 +3814,6 @@ components:
         user:
           type: string
           description: Describes the user doing the action.
-      required:
-        - creationDate
-        - id
-        - relatedObjectId
-    TrackingRecord_Find:
-      type: object
-      description: >-
-        This class represents a single list item for the response of
-        the `listTrackingRecord` operation.
-      properties:
-        creationDate:
-          type: string
-          format: date-time
-          description: Date when the record was created.
-        description:
-          type: string
-          description: >-
-            Describes the action that created the Tracking Record, such as:
-            create, update.
-        id:
-          type: string
-          description: Identifier of the Tracking Record.
-        relatedObjectId:
-          type: string
-          description: Identifier of Performance Job, Profile or Report.
-        user:
-          type: string
-          description: >-
-            User that executed the action which created a Tracking Record.
       required:
         - creationDate
         - id
