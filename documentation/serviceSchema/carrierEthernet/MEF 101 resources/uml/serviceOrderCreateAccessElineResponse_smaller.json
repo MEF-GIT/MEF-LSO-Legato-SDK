@@ -1,0 +1,136 @@
+@startjson
+{
+    "coordinatedAction": [
+        {
+            "coordinatedActionDelay": {
+                "amount": 15,
+                "units": "businessHours"
+            },
+            "coordinationDependency": "startToFinish",
+            "orderId": "sof-order-0001"
+        }
+    ],
+    "description": "MEF-SO-Create-AccessELine",
+    "externalId": "sofOrder-0001",
+    "note": [
+        {
+            "author": "mef_admin",
+            "date": "2025-06-03T15:21:24.398517Z",
+            "id": "soc-note",
+            "source": "sof",
+            "text": "This is an auto-generated ServiceOrderCreate"
+        }
+    ],
+    "orderRelationship": [],
+    "relatedContactInformation": [],
+    "requestedCompletionDate": "2025-06-03T15:21:24.39981Z",
+    "requestedStartDate": "2025-06-03T15:21:24.399806Z",
+    "completionDate": "2025-06-03T15:21:24.39981Z",
+    "expectedCompletionDate": "2025-06-03T15:21:24.39981Z",
+    "serviceOrderItem": [
+        {
+            "id": "soi-operator-uni-0001",
+            "action": "add",
+            "coordinatedAction": [],
+            "note": [],
+            "relatedContactInformation": [],
+            "service": {
+                "note": [],
+                "serviceRelationship": [],
+                "relatedContactInformation": [],
+                "place": [],
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:all",
+                    "synchronousMode": [
+                        "DISABLED"
+                    ],
+                    "aggregationLinkMap": [],
+                    "envelopes": [],
+                    "l2cpPeering": []
+                },
+                "serviceOrderItem": []
+            },
+            "serviceOrderItemRelationship": [
+                {
+                    "orderItem": {
+                        "itemId": "soiref_enni_to_install",
+                        "serviceOrderHref": "localhost:8080/serviceOrderingManagement/location-0001",
+                        "serviceOrderId": "sofOrder-0001"
+                    },
+                    "relationshipType": "INSTALL_LOCATION"
+                }
+            ],
+            "terminationError": []
+        },
+        {
+            "id": "soi-enni-0001",
+            "action": "add",
+            "coordinatedAction": [],
+            "note": [],
+            "relatedContactInformation": [],
+            "service": {
+                "note": [],
+                "serviceRelationship": [],
+                "relatedContactInformation": [],
+                "place": [],
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:service:carrier-ethernet-enni:v1.0.0:all",
+                    "peeringIdentifier": "enni-peering-id-1111",
+                    "aggregationLinkMap": [],
+                    "l2cpPeering": []
+                },
+                "serviceOrderItem": []
+            },
+            "serviceOrderItemRelationship": [
+                {
+                    "orderItem": {
+                        "itemId": "INSTALL_LOCATION_Z",
+                        "serviceOrderHref": "localhost:8080/serviceOrderingManagement/location-0002",
+                        "serviceOrderId": "sofOrder-0001"
+                    },
+                    "relationshipType": "INSTALL_LOCATION"
+                },
+                {
+                    "orderItem": {
+                        "itemId": "soi-enni-service-0001",
+                        "serviceOrderHref": "localhost:8080/serviceOrderingManagement/enni-service-0001",
+                        "serviceOrderId": "sofOrder-0001"
+                    },
+                    "relationshipType": "REQUIRES"
+                }
+            ],
+            "terminationError": []
+        },
+        {
+            "id": "soi-ovc-0001",
+            "action": "add",
+            "coordinatedAction": [],
+            "note": [],
+            "relatedContactInformation": [],
+            "service": {
+                "note": [],
+                "serviceRelationship": [],
+                "relatedContactInformation": [],
+                "place": [],
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:service:carrier-ethernet-ovc:v1.0.0:all",
+                    "maximumNumberOfUniOvcEndPoints": 1,
+                    "maximumNumberOfEnniOvcEndPoints": 1,
+                    "ceVlanIdPreservation": "PRESERVE",
+                    "ceVlanPcpPreservation": "ENABLED",
+                    "ceVlanDeiPreservation": "ENABLED",
+                    "listOfCosNames": [
+                        "best-effort"
+                    ]
+                },
+                "serviceOrderItem": []
+            },
+            "serviceOrderItemRelationship": [],
+            "terminationError": []
+        }
+    ],
+    "startDate": "2025-06-04T07:16:03.888759-05:00",
+    "state": "completed",
+    "orderDate": "2025-06-04T07:16:03.889082-05:00"
+}
+@endjson   

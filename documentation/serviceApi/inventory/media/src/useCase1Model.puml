@@ -9,6 +9,8 @@ class MefServiceConfiguration {
 
 class Service {
 
+    id*: string
+    href: string
     description: string
     endDate: date-time
     externalId: string
@@ -16,7 +18,7 @@ class Service {
     serviceType: string
     startDate: date-time
     startMode: string
-    state: ServiceStateType
+    state*: ServiceStateType
 }
 
 Service *-->"*" Note_BusSof : note

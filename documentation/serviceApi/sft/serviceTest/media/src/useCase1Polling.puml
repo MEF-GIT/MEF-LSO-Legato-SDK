@@ -15,7 +15,7 @@ alt succesful inquiry
 
   loop periodically until TestProfile in completed state
       A -> SOF :   GET {{baseUrl}}/testProfile/{{id}}
-      return 200 TestProfile in completed state  end
+      return 200 TestProfile in completed state
 
 else validation or internal problem
   SOF --> A : 4xx or 5xx error response

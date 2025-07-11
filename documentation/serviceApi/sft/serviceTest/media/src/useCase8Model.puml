@@ -2,12 +2,25 @@
 
 class TestJob_Find {
 
-    id*: string
-    name: string
-    testProfileId: string
-    relatedServiceId: string
-    startDate: date-time
-    endDate: date-time
+    endDateTime*: string
+    id: string
+    name*: string
+    startDateTime*: string
 }
 
+TestJob_Find *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Find *-->"1" ServiceRef : relatedServiceTo
+TestJob_Find *-->"1" TestProfileRefOrValue : testProfile
+
+
+class ServiceRef {
+
+    <<... attributes are skipped ...>>
+}
+
+
+class TestProfileRefOrValue {
+
+    <<... attributes are skipped ...>>
+}
 @enduml

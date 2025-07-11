@@ -19,7 +19,7 @@ B -> PP: GET /testProfile request
 PP --> B: List Test Profiles
 deactivate PP
 
-note left of PJ: Buyer/Client is creating \na Test Job based on \nPerformance Profile
+note left of PJ: Buyer/Client is creating \na Test Job based on \nTest Profile
 B -> PJ: POST /testJob request
 activate PJ
 PJ --> B: Created

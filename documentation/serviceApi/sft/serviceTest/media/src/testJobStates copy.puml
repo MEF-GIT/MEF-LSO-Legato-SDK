@@ -1,0 +1,86 @@
+@startuml testJobStates
+
+'skinparam Linetype polyline
+'skinparam Linetype ortho
+skinparam state {
+    BackgroundColor White
+    BorderColor Black
+}
+hide empty description
+
+'''decisions'''
+state validation_successful <<choice>> 
+ note left of validation_successful : Request Passes\nValidation?
+
+state testScheduled <<choice>> 
+ note top of testScheduled : Test Job\nScheduled?
+
+state suspensionRequested <<choice>> 
+  note right of suspensionRequested : Suspend Test\nJob Accepted?
+
+state resumptionRequested <<choice>> 
+  note right of resumptionRequested : Resume Test\nJob Accepted?
+
+state cancellationFailed <<choice>> 
+  note left of cancellationFailed : Scheduled Test\nJob?
+
+state cancellationFailed_2 <<choice>> 
+  note left of cancellationFailed_2 : Suspended Test\nJob?
+
+
+''' diagram'''
+[*] -d-> acknowledged
+
+acknowledged -d-> validation_successful
+
+validation_successful --> rejected: No
+validation_successful -r-> testScheduled: Yes
+
+testScheduled -r-> scheduled: Yes
+testScheduled --> in_progress: No
+
+in_progress --> completed: Test Job\nCompletes
+in_progress -r-> assesingCancelation: Cancel Test\nJob Received
+
+scheduled -r-> assesingCancelation: Cancel Test\nJob Received
+assesingCancelation -l-> cancelled: Cancelation Successful
+assesingCancelation --> cancellationFailed: Cancelation Failed
+cancellationFailed --> scheduled: Yes
+cancellationFailed --> cancellationFailed_2: No
+cancellationFailed_2 --> in_progress: No
+cancellationFailed_2 --> suspend: Yes
+
+
+scheduled -r-> assesingModification: Modify Test\nJob Received
+assesingModification -l-> scheduled: Modify Test\nJob Completes
+
+
+in_progress -r-> suspensionRequested: Suspend Test\nJob Received
+suspensionRequested -d-> suspend: Yes
+suspensionRequested --> in_progress: No
+
+scheduled --> in_progress: Scheduled Test\nJob Started
+in_progress --> scheduled: Scheduled Test\nJob Completes
+
+
+suspend -r-> assesingCancelation: Cancel Test\nJob Received
+
+suspend --> assesingModification: Modify Test\nJob Received
+assesingModification --> suspend: Modify Test\nJob Completes
+
+' in_progress --> cancellationRequested: Cancel Test\nJob Received
+' cancellationRequested --> cancelled: Yes
+' cancellationRequested --> in_progress: No
+
+suspend --> resumptionRequested: Resume Test\nJob Received
+resumptionRequested --> in_progress: Yes
+resumptionRequested --> suspend: No
+
+
+
+rejected -d-> [*]
+completed -d-> [*]
+cancelled -d-> [*]
+' resource_unavailable -d-> [*]
+
+@enduml

@@ -5,7 +5,7 @@ participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
 
-B -> S : POST {{baseUrl}}/modifyTestJob (ModifyTestJob_Create)
+B -> S : POST {{baseUrl}}/modifyTestJob (ModifyTestJob_Common)
 S -> S : basic validation
 
 alt succesful inquiry
@@ -13,7 +13,7 @@ alt succesful inquiry
   
   ...
 
-  loop periodically until ModifyTestJob in active state
+  loop periodically until ModifyTestJob in accepted state
       B -> S :   GET {{baseUrl}}/modifyTestJob/{{id}}
       return 200 ModifyTestJob in current state
   end

@@ -7,48 +7,60 @@ skinparam {
 }
 set namespaceSeparator none
 
+class TestProfile_Common {
+
+    description: string
+    isBundled*: boolean
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    name*: string
+    validFor*: date-time
+}
+
+TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *-->"1" ServiceSpecificationRef : relatedServiceSpecification
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+
 class TestProfile {
 
     id: string 
-    description: string
     creationDateTime: date-time
-    isBundled: boolean
-    lifecycleStatus*: TestProfileLifecycleStatusType
-    state*: TestProfileStateType
-    name: string
-    validFor: date-time
+    lifecycleState TestProfileLifecycleStateType
     lastUpdate: date-time
 }
+TestProfile_Common <|-- TestProfile
 
-class ServiceSpecificTestProfileAttributes {
-    @type*: string <<discriminator>>
+
+
+enum TestProfileLifecycleStateType {
+
+    assigned
+    available
+}
+enum TestProfileLifecycleStatusType {
+
+    experimental
+    pending
+    approved
+    deprecated
 }
 
-class RelatedContactRef {
+class TestProfileRelationship {
+
     <<... attributes are skipped ...>>
 }
 
-class TestProfileRef {
-    relatedTestProfileId: string
+class ServiceSpecificTestProfileConfiguraton {
+
+    <<... attributes are skipped ...>>
 }
 
 class ServiceSpecificationRef {
-        relatedServiceSpecificationId: string
-}
-enum TestProfileLifecycleStatusType {
-    EXPERIMENTAL
-    PENDING
-    APPROVED
-    DEPRECATED
+
+    <<... attributes are skipped ...>>
 }
 
-enum TestProfileStateType {
-    ACKNOWLEDGED
-    COMPLETED
-    REJECTED
-}
+class RelatedContact {
 
-TestProfile *-->"0..1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
-TestProfile *-->"0..*" TestProfileRef : relatedTestProfile
-TestProfile *-->"0..*" ServiceSpecificationRef : relatedServiceSpecification
-TestProfile *-->"0..*" RelatedContactRef : relatedContact
+    <<... attributes are skipped ...>>
+}

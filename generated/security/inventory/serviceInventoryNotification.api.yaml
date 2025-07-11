@@ -1,19 +1,18 @@
 openapi: 3.0.3
 info:
-  description: "**This file forms part of MEF 135.1** \n \n**This draft represents\
-    \ MEF work in progress and is subject to change.**\n\nSupported use cases:\n-\
-    \ Send Notifications\n\nCopyright 2025 MEF Forum and its contributors.\n\nThis\
-    \ file includes content based on the TM Forum Service Inventory\nManagement API\
-    \ (TMF638 v4.0.1) available at\nhttps://github.com/tmforum-apis/TMF638_ServiceInventory,\
-    \ which is licensed\nby the TM Forum under the Apache License version 2.0. Such\
-    \ content has been\nmodified by the MEF Forum and its contributors.\n"
+  description: "**This file forms part of Mplify 135.1** \n \n\nSupported use cases:\n\
+    - Send Notifications\n\nCopyright 2025 Mplify Alliance and its contributors.\n\
+    \nThis file includes content based on the TM Forum Service Inventory Management\
+    \ API (TMF638\nv4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,\n\
+    which is licensed by the TM Forum under the Apache License version 2.0. Such\n\
+    content has been modified by the Mplify Alliance and its contributors.\n"
   title: Service Inventory Notification
-  version: 6.0.0-RC
+  version: 7.0.0
 servers:
-- url: "https://{serverBase}/mefApi/legato/serviceInventoryNotification/v6/"
+- url: "https://{serverBase}/mefApi/legato/serviceInventoryNotification/v7/"
   variables:
     serverBase:
-      default: mef.net
+      default: mplify.net
       description: The base of SOF's URL.
 security:
 - oauth2MEFLSOAPI:
@@ -417,7 +416,7 @@ components:
       type: object
     ServiceStateType:
       description: |
-        List of possible state for the Service.
+        Valid values for the lifecycle state of the Service.
 
         | State              | Description                                                                                                           |
         | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -431,8 +430,8 @@ components:
       - feasibilityChecked
       - designed
       - reserved
-      - active
       - inactive
+      - active
       - terminated
       type: string
   securitySchemes:

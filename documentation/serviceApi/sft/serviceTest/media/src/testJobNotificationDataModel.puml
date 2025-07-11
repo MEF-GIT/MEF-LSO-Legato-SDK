@@ -1,0 +1,103 @@
+@startuml testJobNotificationDataModel
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Event {
+
+    eventId*: string
+    eventTime*: date-time
+    eventType*: string
+    event*: object
+}
+
+
+
+class TestJobCreateEvent {
+
+    eventType*: string
+}
+Event <|-- TestJobCreateEvent
+
+TestJobCreateEvent *-->"1" TestJobEventPayload : event
+
+
+class TestJobAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestJobAttributeValueChangeEvent
+
+TestJobAttributeValueChangeEvent *-->"1" TestJobEventPayload : event
+
+
+class TestJobStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestJobStateChangeEvent
+
+TestJobStateChangeEvent *-->"1" TestJobStateChangeEventPayload : event
+
+
+class TestJobEventPayload {
+
+    id*: string
+    href: string
+}
+
+
+
+class TestJobStateChangeEventPayload {
+    state*: TestJobStateType
+}
+TestJobEventPayload <|-- TestJobStateChangeEventPayload
+
+
+class CancelTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- CancelTestJobProcessStateChangeEvent
+
+CancelTestJobProcessStateChangeEvent *-->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class ModifyTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ModifyTestJobProcessStateChangeEvent
+
+ModifyTestJobProcessStateChangeEvent *-->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class SuspendTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- SuspendTestJobProcessStateChangeEvent
+
+SuspendTestJobProcessStateChangeEvent *-->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class ResumeTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- ResumeTestJobProcessStateChangeEvent
+
+ResumeTestJobProcessStateChangeEvent *-->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class TestJobProcessStateChangeEventPayload {
+
+    id*: string
+    href: string
+    state*: TestJobProcessStateType
+}
+
+
+@enduml

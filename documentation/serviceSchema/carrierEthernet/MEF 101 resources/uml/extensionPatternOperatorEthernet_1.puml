@@ -1,0 +1,49 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+set namespaceSeparator none
+
+class ServiceValue{
+
+    id: string 
+    href: string 
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationshipWithGrouping
+   
+}
+
+
+class MefServiceConfiguration {
+    @type*: string <<discriminator>>
+}
+
+
+ServiceValue *-->"0..1" MefServiceConfiguration : serviceConfiguration
+
+class urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:order"
+
+
+class urn:mef:lso:spec:service:carrier-ethernet-ovc:v1.0.0:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:carrier-ethernet-ovc:v1.0.0:order"
+
+class urn:mef:lso:spec:service:carrier-ethernet-ovc-end-point:v1.0.0:order <<ServiceSpecification>> {
+
+    <<... attributes are skipped ...>>
+}
+MefServiceConfiguration <|-- "urn:mef:lso:spec:service:carrier-ethernet-ovc-end-point:v1.0.0:order"
+
+
+
+
+@enduml

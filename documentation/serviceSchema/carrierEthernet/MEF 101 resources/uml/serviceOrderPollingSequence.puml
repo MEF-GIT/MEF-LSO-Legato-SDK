@@ -1,0 +1,55 @@
+@startuml serviceOrderPollingSequence
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+
+note right of B : Buyer/Client builds a ServiceOrder with ServiceOrderItem(s) and CarrierEthernetOperatorUni,\nCarrierEthernetOvcEndPoint, CarrierEthernetOvc.
+B -> B : createCeServiceOrder(CarrierEthernetOperatorUni,CarrierEthernetOvcEndPoint,CarrierEthernetOvc)
+
+group createServiceOrder
+B -> B: ServiceOrderCreate()
+
+group createCarrierEthernetOperatorUni
+B -> B: createCarrierEthernetOperatorUni()
+B -> B: createServiceOrderItem()
+B -> B: addCarrierEthernetOperatorUniToServiceOrderItem()
+B -> B: addServiceOrderItemToServiceOrderCreate()
+end group
+
+group createCarrierEthernetOvcEndPoint
+B -> B: createCarrierEthernetOvcEndPoint()
+B -> B: createServiceOrderItem()
+B -> B: addCarrierEthernetOvcEndPointToServiceOrderItem()
+B -> B: addServiceOrderItemToServiceOrderCreate()
+end group
+
+group createCarrierEthernetOvc
+B -> B: createCarrierEthernetOvc()
+B -> B: createServiceOrderItem()
+B -> B: addCarrierEthernetOvcToServiceOrderItem()
+B -> B: addServiceOrderItemToServiceOrderCreate()
+end group
+
+end group
+
+note right of B : Buyer/Client sends the ServiceOrderCreate to the Seller/Server
+B -> S : POST {{baseUrl}}/serviceOrder (ServiceOrder_Create)
+S -> S : basic validation
+
+alt succesful inquiry
+  S --> B : 201 ServiceOrder with {{id}}, `acknowledged` state
+  
+  ...
+note right of B: Buyer/Client polls for the ServiceOrder status.
+  loop periodically until serviceOrder in completion state
+      B -> S :   GET {{baseUrl}}/serviceOrder/{{id}}
+      return 200 ServiceOrder in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end
+
+
+@enduml

@@ -1,19 +1,18 @@
 openapi: 3.0.3
 info:
-  description: "**This file forms part of MEF 135.1** \n \n**This draft represents\
-    \ MEF work in progress and is subject to change.**\n\nSupported use cases:\n-\
-    \ Retrieve Service List\n- Retrieve Service by Identifier\n\nCopyright 2025 MEF\
-    \ Forum and its contributors.\n\nThis file includes content based on the TM Forum\
-    \ Service Inventory Management API (TMF638\nv4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,\n\
+  description: "**This file forms part of MEF 135.1** \n\nSupported use cases:\n-\
+    \ Retrieve Service List\n- Retrieve Service by Identifier\n\nCopyright 2025 Mplify\
+    \ Alliance and its contributors.\n\nThis file includes content based on the TM\
+    \ Forum Service Inventory Management API (TMF638\nv4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,\n\
     which is licensed by the TM Forum under the Apache License version 2.0. Such\n\
-    content has been modified by the MEF Forum and its contributors."
+    content has been modified by the Mplify Alliance and its contributors."
   title: Service Inventory Management
-  version: 6.0.0-RC
+  version: 7.0.0
 servers:
-- url: "https://{serverBase}/mefApi/legato/serviceInventory/v6/"
+- url: "https://{serverBase}/mefApi/legato/serviceInventory/v7/"
   variables:
     serverBase:
-      default: mef.net
+      default: mplify.net
       description: The base of SOF's URL.
 security:
 - oauth2MEFLSOAPI:
@@ -652,7 +651,7 @@ components:
             \ This property is appended with the base path and notification resource\
             \ path specified in that API to construct an URL to which notification\
             \ is sent. E.g. for \"callback\": \"https://client.mef.com/listenerEndpoint\"\
-            , the service state change event notification will be sent to: `https://client.mef.com/listenerEndpoint/mefApi/legato/serviceInventoryNotification/v6/listener/serviceStateChangeEvent`"
+            , the service state change event notification will be sent to: `https://client.mef.com/listenerEndpoint/mefApi/legato/serviceInventoryNotification/v7/listener/serviceStateChangeEvent`"
           type: string
         query:
           description: "This attribute is used to define to which type of events to\
@@ -996,9 +995,14 @@ components:
       - role
       type: object
     Service:
-      description: "The Service instance managed by SOF and retrievable by an BA over\
-        \ the \nLegato IRP via the Service Inventory API."
+      description: The Service instance managed by SOF and retrievable by BA
       properties:
+        id:
+          description: unique identifier of a Service
+          type: string
+        href:
+          description: Hyperlink reference to a Service
+          type: string
         description:
           description: Free-text description of the service
           type: string
@@ -1066,6 +1070,9 @@ components:
             \ 5: Any of the above"
         state:
           $ref: '#/components/schemas/ServiceStateType'
+      required:
+      - id
+      - state
       type: object
     ServiceOrderItemRef:
       description: "A reference to a Service Order Item. When referencing item from\
@@ -1091,7 +1098,6 @@ components:
       properties:
         href:
           description: Hyperlink reference to Service
-          format: uri
           type: string
         id:
           description: unique identifier of Service
@@ -1123,7 +1129,7 @@ components:
       type: object
     ServiceStateType:
       description: |
-        List of possible state for the Service.
+        Valid values for the lifecycle state of the Service.
 
         | State              | Description                                                                                                           |
         | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -1137,8 +1143,8 @@ components:
       - feasibilityChecked
       - designed
       - reserved
-      - active
       - inactive
+      - active
       - terminated
       type: string
     SubUnit:

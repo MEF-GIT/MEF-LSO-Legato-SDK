@@ -8,79 +8,63 @@ skinparam {
 set namespaceSeparator none
 
 
-class TestJob {
-    id: string
-    href: string
-    description: string
-    name: string
-    startDateTime: date-time
-    actualStartDateTime: date-time
-    endDateTime: date-time
-    actualdateTime: date-time
-    validFor: date-time
-    recurencePeriod*: RecurencePeriodType
-    state*: TestJobStateType
+class TestJob_Common {
 
+    name*: string
+    description: string
+    startDateTime: date-time
+    endDateTime*: date-time
+    validFor*: date-time
 }
 
+TestJob_Common *--> Duration : recurrencePeriod
+TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
+TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Common *-->"1" ServiceRef : relatedServiceTo
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
 
-class TestAttributeSchema {
-    @type*: string <<discriminator>>
+
+class TestJob {
+
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    creationDate*: date-time
+    href*: uri
+    id*: string
+    lastModifiedDate*: date-time
+    state*: TestJobStateType
+}
+
+TestJob_Common <|-- TestJob
+
+enum TestJobStateType {
+
+    acknowledged
+    assessing_cancelation
+    assessing_modification
+    cancelled
+    completed
+    in_progress
+    rejected
+    scheduled
+    suspended
+}
+
+class Duration {
+
+<<... attributes are skipped ...>>
+}
+
+class TestProfileRefOrValue {
+
+<<... attributes are skipped ...>>
 }
 
 class ServiceRef {
-    relatedServiceId: string
-    relatedServiceName: string
+
+<<... attributes are skipped ...>>
 }
 
-class TestProfileRef {
-    relatedTestProfileId: string
-}
-
-enum RecurencePeriodType {
-    NONE
-    HOURLY
-    DAILY
-    WEEKLY
-    MONTHLY
-}
-
-enum TestJobStateType{
-    ACKNOWLEDGED
-    CANCELED
-    COMPLETED
-    IN_PROGRESS
-    PENDING
-    REJECTED
-    RESOURCE_UNAVAILABLE
-    SCHEDULED
-    SUSPENDED
-}
-
-
-class TestAttributesRef{
-    description: string
-    creationDateTime: date-time
-
-}
-
-class ServiceSpecificTestProfileAttributes {
-    @type*: string <<discriminator>>
-}
-class ServiceSpecificationRef {
-        relatedServiceSpecificationId: string
-}
-
-class RelatedContactRef {
+class ServiceSpecificTestJobConfiguraton {
     <<... attributes are skipped ...>>
 }
-
-TestAttributesRef *-->"0..1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
-TestAttributesRef *-->"0..*" ServiceSpecificationRef : relatedServiceSpecification
-TestAttributesRef *-->"0..*" RelatedContactRef : relatedContact
-
-
-TestJob *-->"0..1" TestAttributeSchema : testAttributeSchema
-TestJob *-->"1..1" ServiceRef : relatedService
-TestJob *-->"0..1" TestProfileRef : testProfile
-TestJob *-->"0..1" TestAttributesRef: testAttributes

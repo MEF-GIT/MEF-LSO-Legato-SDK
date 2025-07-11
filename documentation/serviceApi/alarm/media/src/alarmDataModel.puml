@@ -6,19 +6,27 @@ skinparam {
 
 class Alarm {
 
-    alarmRaisedTime: date-time
     externalAlarmId: string
-    isRootCause: boolean
+    isRootCause*: boolean
     probableCause: ProbableCause
     sourceSystemId: string
     specificProblem: string
 }
 Alarm_Common <|-- Alarm
 
-Alarm *-->"*" AlarmedObjectRef : alarmedObject
+Alarm *-->"1..*" AlarmedObjectRef : alarmedObject
 Alarm *-->"*" Comment : comment
 Alarm *--> AlarmRef : parentAlarm
 Alarm *--> AlarmSpecificAttributes : alarmSpecificAttributes
+
+
+class AlarmedObjectRef {
+
+    id*: string
+    href: string
+    @referredType*: string
+}
+
 
 
 class AlarmRef {
@@ -36,22 +44,12 @@ class AlarmSpecificAttributes {
 
 
 
-class AlarmSubscription {
+enum AlarmState {
 
-    id: string
+    acknowledged
+    cleared
+    un-acknowledged
 }
-AlarmSubscriptionInput <|-- AlarmSubscription
-
-
-
-class AlarmSubscriptionInput {
-
-    callback*: string
-    query: string
-}
-
-
-
 enum AlarmType {
 
     communicationsAlarm
@@ -74,33 +72,18 @@ class Alarm_Common {
     alarmClearedTime: date-time
     alarmDetails*: string
     alarmedObjectType: string
+    alarmRaisedTime*: date-time
     alarmReportingTime*: date-time
     alarmType*: AlarmType
     perceivedSeverity*: PerceivedSeverity
     plannedOutageIndicator: PlannedOutageIndicator
     reportingSystemId: string
-    serviceAffecting: boolean
-    state*: State
+    serviceAffecting*: boolean
+    state*: AlarmState
 }
 
 Alarm_Common *-->"*" ServiceRef : affectedService
 Alarm_Common *-->"*" AlarmRef : correlatedAlarm
-
-
-class Alarm_Find {
-
-}
-Alarm_Common <|-- Alarm_Find
-
-
-
-class AlarmedObjectRef {
-
-    id*: string
-    href: string
-    @referredType: string
-}
-
 
 
 class Comment {
@@ -111,6 +94,19 @@ class Comment {
     userIdentifier: string
 }
 
+class EventSubscription {
+
+    id: string
+}
+EventSubscriptionInput <|-- EventSubscription
+
+
+
+class EventSubscriptionInput {
+
+    callback*: string
+    query: string
+}
 
 
 
@@ -123,6 +119,7 @@ enum PerceivedSeverity {
     minor
     warning
 }
+
 enum PlannedOutageIndicator {
 
     inPlannedMaintenance
@@ -190,18 +187,11 @@ enum ProbableCause {
 }
 class ServiceRef {
 
-    id*: string
     href: string
+    id*: string
 }
 
 
-
-enum State {
-
-    acknowledged
-    cleared
-    un-acknowledged
-}
 class TcaStatefulClearAlarm {
 
     performanceMetricName: string

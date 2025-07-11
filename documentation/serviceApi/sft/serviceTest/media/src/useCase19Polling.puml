@@ -5,7 +5,7 @@ participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
 
-B -> S : POST {{baseUrl}}/resumeTestJob (ResumeTestJob_Create)
+B -> S : POST {{baseUrl}}/resumeTestJob (ResumeTestJob_Common)
 S -> S : basic validation
 
 alt succesful inquiry
@@ -13,7 +13,7 @@ alt succesful inquiry
   
   ...
 
-  loop periodically until ResumeTestJob in active state
+  loop periodically until ResumeTestJob in accepted state
       B -> S :   GET {{baseUrl}}/resumeTestJob/{{id}}
       return 200 ResumeTestJob in current state
   end

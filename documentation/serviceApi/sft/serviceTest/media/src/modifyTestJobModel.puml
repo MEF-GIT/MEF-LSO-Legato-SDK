@@ -1,63 +1,39 @@
 @startuml modifyTestJobModel
 
 
+class ModifyTestJob {
+
+    modificationDeniedReason: string
+    creationDate*: date-time
+    href*: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+ModifyTestJob_Common <|-- ModifyTestJob
+
+
+
 class ModifyTestJob_Common {
+
     modificationReason: string
     name: string
     description: string
     startDateTime: date-time
     endDateTime: date-time
 }
-ModifyTestJob_Common <|-- ModifyTestJob
 
-class ModifyTestJob {
-    modificationDeniedReason: string
-    creationDate: date-time
-    href: string
-    id*: string
-    state*: TestJobProcessStateType
-}
+ModifyTestJob_Common *-->"1" TestJobRef : testJob
+ModifyTestJob_Common *--> TestProfileRefOrValue : testProfile
+ModifyTestJob_Common *--> ServiceRef : relatedServiceFrom
+ModifyTestJob_Common *--> ServiceRef : relatedServiceTo
+ModifyTestJob_Common *--> ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
 
-enum TestJobProcessStateType{
+
+enum TestJobProcessStateType {
+
     accepted
     acknowledged
-    completed
-    declined
     rejected
 }
-
-
-class ModifyTestJob_Create {
-
-}
-
-ModifyTestJob_Common <|-- ModifyTestJob_Create
-ModifyTestJob_Common *-->"1" ServiceRef : relatedService
-ModifyTestJob_Common *-->"1" TestProfileRefOrValue : testProfile
-ModifyTestJob_Common *-->"1" TestMeasureAttributes : testMeasureAttributes
-ModifyTestJob_Common *-->"1" TestJobRef : testJob
-
-
-class ModifyTestJob_Find {
-    creationDate: date-time
-    id*: string
-    state*: TestJobProcessStateType
-}
-ModifyTestJob_Find *-->"1" TestJobRef : testJob
-
-
-class TestMeasureAttributes {
-    @type*: string
-}
-
-class TestProfileRefOrValue {
-    @type*: string
-}
-
-class ServiceRef {
-    id*: string
-    name: string
-}
-
 
 @enduml

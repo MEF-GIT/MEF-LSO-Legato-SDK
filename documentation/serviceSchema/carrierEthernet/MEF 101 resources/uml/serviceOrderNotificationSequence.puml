@@ -1,0 +1,61 @@
+@startuml
+
+hide footbox
+
+participant "Buyer/Client" as B
+participant "Seller/Server" as S
+note right of B: Buyer/Client subscribes to ServiceOrderNotification with callbackUrl and baseUrl.
+B -> S : POST {{baseUrl}}/hub with {{callbackUrl}} details
+S --> B: 201 confirmation with {{id}}
+note right of B : Buyer/Client builds a ServiceOrder with ServiceOrderItem(s) and CarrierEthernetOperatorUni,\nCarrierEthernetOvcEndPoint, CarrierEthernetOvc.
+B -> B : createCeServiceOrder(CarrierEthernetOperatorUni,CarrierEthernetOvcEndPoint,CarrierEthernetOvc)
+
+group createServiceOrder
+    B -> B: ServiceOrderCreate()
+
+    group createCarrierEthernetOperatorUni
+    B -> B: createCarrierEthernetOperatorUni()
+    B -> B: createServiceOrderItem()
+    B -> B: addCarrierEthernetOperatorUniToServiceOrderItem()
+    B -> B: addServiceOrderItemToServiceOrderCreate()
+    end group
+
+    group createCarrierEthernetOvcEndPoint
+    B -> B: createCarrierEthernetOvcEndPoint()
+    B -> B: createServiceOrderItem()
+    B -> B: addCarrierEthernetOvcEndPointToServiceOrderItem()
+    B -> B: addServiceOrderItemToServiceOrderCreate()
+    end group
+
+    group createCarrierEthernetOvc
+    B -> B: createCarrierEthernetOvc()
+    B -> B: createServiceOrderItem()
+    B -> B: addCarrierEthernetOvcToServiceOrderItem()
+    B -> B: addServiceOrderItemToServiceOrderCreate()
+    end group
+end group
+
+note right of B : Buyer/Client sends the ServiceOrderCreate to the Seller/Server
+B -> S : POST {{baseUrl}}/serviceOrder (ServiceOrder_Create)
+S -> S : basic validation
+
+alt succesful inquiry
+  S --> B : 201 ServiceOrder with {{id}}, `acknowledged` state 
+
+  ...
+note left of S : Seller/Server sends asynchronous notification to the Buyer/Client\nwith the ServiceOrderStateChangeEvent
+  group loop [until Service Order in terminal state]
+      S -> B: {{callbackUrl}}/listener/serviceOrderStateChangeEvent ({{id}})
+      B --> S : 204 confirmation
+      B -> S :   GET {{baseUrl}}/serviceOrder/{{id}}
+      return 200 ServiceOrder in current state
+  end
+
+else validation or internal problem
+  S --> B : 4xx or 5xx error response
+end 
+
+B -> S : DELETE {{baseUrl}}/hub/{{id}} 
+S -->  B : 204 confirmation
+
+@enduml

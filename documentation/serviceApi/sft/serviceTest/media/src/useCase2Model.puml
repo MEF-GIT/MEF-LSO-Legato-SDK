@@ -1,29 +1,60 @@
 @startuml useCase2Model
 
-class TestProfile_Find {
+class TestProfile_Common {
 
-    id*: string
-    name*: string
-    description*: string
+    description: string
+    isBundled*: boolean
     lifecycleStatus*: TestProfileLifecycleStatusType
-    creationDate*: date-time
-    lastUpdate*: date-time
-    state*: TestProfileStateType
+    name*: string
+    validFor*: date-time
 }
 
-enum TestProfileStateType {
+TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *-->"1" ServiceSpecificationRef : relatedServiceSpecification
+TestProfile_Common *-->"*" RelatedContact : relatedContact
 
-    acknowledged
-    completed
-    rejected
+
+class TestProfile {
+
+    id: string 
+    creationDateTime: date-time
+    lifecycleState TestProfileLifecycleStateType
+    lastUpdate: date-time
 }
+TestProfile_Common <|-- TestProfile
 
+enum TestProfileLifecycleStateType {
 
+    assigned
+    available
+}
 enum TestProfileLifecycleStatusType {
-    experimantal
+
+    experimental
     pending
     approved
     deprecated
+}
+
+class TestProfileRelationship {
+
+    <<... attributes are skipped ...>>
+}
+
+class ServiceSpecificTestProfileConfiguraton {
+
+    <<... attributes are skipped ...>>
+}
+
+class ServiceSpecificationRef {
+
+    <<... attributes are skipped ...>>
+}
+
+class RelatedContact {
+
+    <<... attributes are skipped ...>>
 }
 
 @enduml

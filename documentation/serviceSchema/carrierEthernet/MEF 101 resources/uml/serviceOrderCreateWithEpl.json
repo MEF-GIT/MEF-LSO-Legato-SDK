@@ -1,0 +1,132 @@
+@startjson
+{
+    "coordinatedAction" : null,
+    "note" : null,
+    "orderRelationship" : null,
+    "relatedContactInformation" : null,
+    "requestedCompletionDate" : null,
+    "requestedStartDate" : null,
+    "serviceOrderItem" : [ {
+      "id" : null,
+      "action" : null,
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-subscriber-uni:v0.0.2:all",
+          "atType" : null,
+          "identifier" : "Subscriber_Uni_Z",
+          "listOfPhyLinks" : null,
+          "aggregationLinkMap" : null,
+          "maximumFrameSize" : 2000,
+          "envelopes" : null,
+          "l2cpPeering" : null
+        }
+      },
+      "serviceOrderItemRelationship" : null
+    }, {
+      "id" : null,
+      "action" : null,
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-evc-end-point:v0.0.2:all",
+          "atType" : null,
+          "identifier" : null,
+          "role" : "ROOT",
+          "cosIngressBwp" : null,
+          "cosEgressBwp" : null
+        }
+      },
+      "serviceOrderItemRelationship" : [ {
+        "orderItem" : {
+          "itemId" : null
+        },
+        "relationshipType" : "CONNECTS_TO_UNI"
+      } ]
+    }, {
+      "id" : null,
+      "action" : null,
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-subscriber-uni:v0.0.2:all",
+          "atType" : null,
+          "listOfPhyLinks" : null,
+          "aggregationLinkMap" : null,
+          "envelopes" : null,
+          "l2cpPeering" : null
+        }
+      },
+      "serviceOrderItemRelationship" : null
+    }, {
+      "id" : null,
+      "action" : null,
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-evc-end-point:v0.0.2:all",
+          "atType" : null,
+          "identifier" : null,
+          "role" : null,
+          "cosIngressBwp" : null,
+          "cosEgressBwp" : null
+        }
+      },
+      "serviceOrderItemRelationship" : [ {
+        "orderItem" : {
+          "itemId" : null
+        },
+        "relationshipType" : "CONNECTS_TO_UNI"
+      } ]
+    }, {
+      "id" : null,
+      "action" : null,
+      "coordinatedAction" : null,
+      "note" : null,
+      "service" : {
+        "note" : null,
+        "serviceRelationship" : null,
+        "relatedContactInformation" : null,
+        "place" : null,
+        "serviceConfiguration" : {
+          "@type" : "urn:mef:lso:spec:service:carrier-ethernet-evc:v0.0.2:all",
+          "ctagPcpPreservation" : null,
+          "ctagDeiPreservation" : null,
+          "atType" : null,
+          "listOfCosNames" : null
+        }
+      },
+      "serviceOrderItemRelationship" : [ {
+        "orderItem" : {
+          "itemId" : null
+        },
+        "relationshipType" : "ENDPOINT_OF_EVC"
+      }, {
+        "orderItem" : {
+          "itemId" : null
+        },
+        "relationshipType" : "ENDPOINT_OF_EVC"
+      } ]
+    } ]
+  }
+  @endjson   

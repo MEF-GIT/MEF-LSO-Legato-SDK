@@ -34,7 +34,7 @@ definitions:
         $ref: "#/definitions/AddressFamilyIpv4Ipv6"
       peeringAddresses:
         description: Peering Addresses.
-        $ref: "../../../common/ip/ipCommon.yaml#/definitions/PeeringAddress"
+        $ref: "../../../common/ip/ipRoutingProtocolsCommon.yaml#/definitions/PeeringAddress"
       authentication:
         description:
           BGP Authentication. It is either None or if present is it a value of

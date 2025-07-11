@@ -2,58 +2,47 @@
 
 
 class TestJob_Common {
-    name: string
+
+    name*: string
     description: string
     startDateTime: date-time
-    endDateTime: date-time
-    recurencePeriod: RecurencePeriodType
-    validFor: date-time
+    endDateTime*: date-time
+    validFor*: date-time
+}
+
+class TestJob {
+
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    creationDate*: date-time
+    href*: uri
+    id*: string
+    lastModifiedDate*: date-time
+    state*: TestJobStateType
 }
 TestJob_Common <|-- TestJob
 
-class TestJob {
-    id: string
-    actualStartDateTime: date-time
-    actualEndDateTime: date-time
-    state: TestJobStateType
-}
+enum TestJobStateType {
 
-
-
-enum RecurencePeriodType {
-    none
-    hourly
-    daily
-    weekly
-    monthly
-}
-
-enum TestJobStateType{
     acknowledged
-    canceled
+    assessing_cancelation
+    assessing_modification
+    cancelled
     completed
     in_progress
-    pending
     rejected
-    resource_unavailable
     scheduled
     suspended
 }
 
 
-class TestJob_Create {
-
-}
-TestJob_Common <|-- TestJob_Create
-TestJob_Common *-->"1" ServiceRef : relatedService
+TestJob_Common *--> Duration : recurrencePeriod
 TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
-TestJob_Common *-->"1" TestMeasureAttributes : testMeasureAttributes
+TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Common *-->"1" ServiceRef : relatedServiceTo
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
 
-class TestMeasureAttributes {
-    @type*: string
-}
-
-class TestProfileRefOrValue {
+class ServiceSpecificTestJobConfiguraton {
     @type*: string
 }
 
@@ -64,12 +53,38 @@ class TestProfileRef {
 }
 TestProfileRefOrValue <|-- TestProfileRef
 
+class Duration {
 
+    amount*: integer
+    units*: TimeUnit
+}
 
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
+TestProfileRefOrValue <|-- TestProfileValue
+
+TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
+TestProfileValue *-->"*" RelatedContact : relatedContact
+
+class ServiceSpecificTestProfileConfiguraton {
+    @type*: string <<discriminator>>
+}
+class ServiceSpecificationRef {
+        ServiceSpecificationRef: string
+}
+
+class RelatedContact {
+    <<... attributes are skipped ...>>
+}
 
 class ServiceRef {
+
+    href: string
     id*: string
-    name: string
 }
 
 

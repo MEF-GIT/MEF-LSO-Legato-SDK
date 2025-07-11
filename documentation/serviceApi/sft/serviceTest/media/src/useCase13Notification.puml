@@ -8,15 +8,15 @@ participant "Seller/Server" as S
 B -> S: POST {{baseUrl}}/hub with {{callbackUrl}} details
 S --> B: 201 confirmation with {{id}}
 ...
-B -> S: POST {{baseUrl}}/cancelTestJob (CancelTestJob_Create)
+B -> S: POST {{baseUrl}}/cancelTestJob (CancelTestJob_Common)
 S -> S: basic validation
 
 alt succesful inquiry
   S --> B: 201 CancelTestJob with {{id}}, `acknowledged` state 
   ...
 
-  group loop [until Cancel Performance Job in terminal state]
-      S -> B: {{callbackUrl}}/listener/testJobStateChangeEvent ({{id}})
+  group loop [until Cancel Test Job in accepted state]
+      S -> B: {{callbackUrl}}/listener/cancelTestJobStateChangeEvent ({{id}})
       B --> S: 204 confirmation
       B -> S:   GET {{baseUrl}}/cancelTestJob/{{id}}
       return 200 CancelTestJob in current state

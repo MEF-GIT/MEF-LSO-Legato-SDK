@@ -1,0 +1,125 @@
+@startuml testJobProcessDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    scale 4096 width
+}
+
+class CancelTestJob {
+
+    cancellationDeniedReason: string
+    creationDate*: date-time
+    href*: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+CancelTestJob_Common <|-- CancelTestJob
+
+
+
+class CancelTestJob_Common {
+
+    cancellationReason: string
+}
+
+CancelTestJob_Common *-->"1" TestJobRef : testJob
+
+
+class ModifyTestJob {
+
+    modificationDeniedReason: string
+    creationDate*: date-time
+    href*: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+ModifyTestJob_Common <|-- ModifyTestJob
+
+
+
+class ModifyTestJob_Common {
+
+    modificationReason: string
+    name: string
+    description: string
+    startDateTime: date-time
+    endDateTime: date-time
+}
+
+ModifyTestJob_Common *-->"1" TestJobRef : testJob
+ModifyTestJob_Common *--> TestProfileRefOrValue : testProfile
+ModifyTestJob_Common *--> ServiceRef : relatedServiceFrom
+ModifyTestJob_Common *--> ServiceRef : relatedServiceTo
+ModifyTestJob_Common *--> ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+
+
+class ResumeTestJob {
+
+    resumptionDeniedReason: string
+    creationDate*: date-time
+    href*: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+ResumeTestJob_Common <|-- ResumeTestJob
+
+
+
+class ResumeTestJob_Common {
+
+    resumptionReason: string
+}
+
+ResumeTestJob_Common *-->"1" TestJobRef : testJob
+
+
+
+class SuspendTestJob {
+
+    suspensionDeniedReason: string
+    creationDate*: date-time
+    href*: string
+    id*: string
+    state*: TestJobProcessStateType
+}
+SuspendTestJob_Common <|-- SuspendTestJob
+
+
+
+class SuspendTestJob_Common {
+
+    suspensionReason: string
+}
+
+SuspendTestJob_Common *-->"1" TestJobRef : testJob
+
+class ServiceRef {
+
+    href: string
+    id*: string
+}
+
+class TestJobRef {
+
+    href: string
+    id*: string
+}
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    rejected
+}
+
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
+class ServiceSpecificTestJobConfiguraton {
+
+    @type*: string
+}
+
+@enduml

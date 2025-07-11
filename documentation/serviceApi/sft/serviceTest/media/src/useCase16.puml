@@ -6,7 +6,7 @@ hide footbox
 participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
-B -> S : POST {{baseUrl}}/suspendTestJob (SuspendTestJob_Create)
+B -> S : POST {{baseUrl}}/suspendTestJob (SuspendTestJob_Common)
 
 S -> S : basic validation
 S -> S : assign id

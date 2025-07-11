@@ -8,7 +8,7 @@ participant "Seller/Server" as S
 B -> S: POST {{baseUrl}}/hub with {{callbackUrl}} details
 S --> B: 201 confirmation with {{id}}
 ...
-B -> S: POST {{baseUrl}}/testJob (TestJob_Create)
+B -> S: POST {{baseUrl}}/testJob (TestJob_Common)
 S -> S: basic validation
 
 alt succesful inquiry

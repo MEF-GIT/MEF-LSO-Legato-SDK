@@ -10,13 +10,13 @@ hide empty description
 
 '''decisions'''
 state is_status_deprecated <<choice>> 
- note right of is_status_deprecated : Is Status Deprecated?
+ note right of is_status_deprecated : Is Lifecycle Status Deprecated?
 
 state is_status_pending <<choice>> 
- note right of is_status_pending : Is Status Pending
+ note right of is_status_pending : Is Lifecycle Status Pending
 
 state is_status_experimental <<choice>> 
- note right of is_status_experimental : Is Status Experimental
+ note right of is_status_experimental : Is Lifecycle Status Experimental
 
 state is_user_authorised_experimental <<choice>> 
  note right of is_user_authorised_experimental : Is User Authorised to use Experimental

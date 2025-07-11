@@ -1,0 +1,34 @@
+@startuml trDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    scale 4096 width
+}
+
+class ServiceSpecificTestResultConfguration {
+
+    @type*: string
+}
+
+class TestResult {
+
+}
+TestResult_Common <|-- TestResult
+
+TestResult *-->"1" ServiceSpecificTestResultConfguration : serviceSpecificTestResultConfguration
+
+
+class TestResult_Common {
+
+    actualStartDateTime*: date-time
+    actualEndDateTime*: date-time
+    href*: uri
+    id*: string
+}
+
+TestResult_Common *-->"1" ServiceRef : relatedServiceFrom
+TestResult_Common *-->"1" ServiceRef : relatedServiceTo
+TestResult_Common *-->"1" TestJobRef : testJob
+
+
+@enduml

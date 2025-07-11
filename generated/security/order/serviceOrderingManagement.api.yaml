@@ -1,20 +1,19 @@
 openapi: 3.0.1
 info:
-  description: "**This file forms part of MEF 99.1** \n \n**This draft represents\
-    \ MEF work in progress and is subject to change.**\n\nSupported use cases:\n-\
-    \ Create Service Order\n- Retrieve List of Service Orders\n- Retrieve Service\
+  description: "**This file forms part of Mplify 99.1** \n \n\nSupported use cases:\n\
+    - Create Service Order\n- Retrieve List of Service Orders\n- Retrieve Service\
     \ Order by Service Order Identifier\n- Register for Notifications\n\nCopyright\
-    \ 2025 MEF Forum and its contributors.\n\nThis file includes content based on\
-    \ the TM Forum Service Order API (TMF641\nv4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,\n\
+    \ 2025 Mplify Alliance and its contributors.\n\nThis file includes content based\
+    \ on the TM Forum Service Order API (TMF641\nv4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,\n\
     which is licensed by the TM Forum under the Apache License version 2.0. Such\n\
-    content has been modified by the MEF Forum and its contributors.\n"
+    content has been modified by the Mplify Alliance and its contributors.\n"
   title: Service Ordering Management
-  version: 6.0.0-RC
+  version: 6.0.0
 servers:
 - url: "https://{serverBase}/mefApi/legato/serviceOrderingManagement/v6/"
   variables:
     serverBase:
-      default: mef.net
+      default: mplify.net
       description: The base of SOF's URL.
 security:
 - oauth2MEFLSOAPI:
@@ -909,7 +908,7 @@ components:
       - label
       type: object
     MefServiceConfiguration:
-      description: MEFServiceConfiguration is used as an extension point for MEF specific
+      description: MefServiceConfiguration is used as an extension point for MEF specific
         service payload. The `@type` attribute is used as a discriminator
       discriminator:
         propertyName: '@type'
@@ -1099,7 +1098,6 @@ components:
       - properties:
           href:
             description: Hyperlink reference
-            format: uri
             type: string
           id:
             description: unique identifier

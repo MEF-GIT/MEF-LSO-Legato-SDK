@@ -1,18 +1,56 @@
 @startuml alarmNotificationModel
 
-class AlarmSubscription {
+class AlarmEvent {
 
-    id: string
+    eventType*: string
 }
-AlarmSubscriptionInput <|-- AlarmSubscription
+Event <|-- AlarmEvent
+
+AlarmEvent *-->"1" AlarmEventPayload : event
 
 
+class AlarmAttributeValueChangeEvent {
 
-class AlarmSubscriptionInput {
-
-    callback*: string
-    query: string
+    eventType*: string
 }
+Event <|-- AlarmAttributeValueChangeEvent
+
+AlarmAttributeValueChangeEvent *-->"1" AlarmEventPayload : event
+
+
+class AlarmCreateEvent {
+
+    eventType*: string
+}
+Event <|-- AlarmCreateEvent
+
+AlarmCreateEvent *-->"1" AlarmEventPayload : event
+
+
+class AlarmDeleteEvent {
+
+    eventType*: string
+}
+Event <|-- AlarmDeleteEvent
+
+AlarmDeleteEvent *-->"1" AlarmEventPayload : event
+
+
+class AlarmEventPayload {
+
+}
+
+AlarmEventPayload *-->"1" Alarm : alarm
+
+
+class AlarmStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- AlarmStateChangeEvent
+
+AlarmStateChangeEvent *-->"1" AlarmEventPayload : event
+
 
 
 @enduml

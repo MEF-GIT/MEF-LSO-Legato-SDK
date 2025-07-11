@@ -1,56 +1,83 @@
 @startuml testProfileModel
 
+class TestProfile_Common {
+
+    description: string
+    isBundled*: boolean
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    name*: string
+    validFor*: date-time
+}
+
+TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *-->"1" ServiceSpecificationRef : relatedServiceSpecification
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+
 class TestProfile {
+
     id: string 
     creationDateTime: date-time
-    state*: TestProfileStateType
-    isAssigned: boolean
+    lifecycleState TestProfileLifecycleStateType
     lastUpdate: date-time
 }
-
-class TestProfile_Common {
-    description: string
-    isBundled: boolean
-    lifecycleStatus*: TestProfileLifecycleStatusType
-    name: string
-    validFor: date-time
-    relatedServiceSpecificationId: string
-    creationDateTime: date-time
-    lastUpdate: date-time
-}
-TestProfile_Common <|-- TestProfile_Create
 TestProfile_Common <|-- TestProfile
 
-enum TestProfileStateType {
 
-    acknowledged
-    completed
-    rejected
+
+enum TestProfileLifecycleStateType {
+
+    assigned
+    available
 }
-
 enum TestProfileLifecycleStatusType {
-    experimantal
+
+    experimental
     pending
     approved
     deprecated
 }
 
-class ServiceSpecificTestProfileAttributes {
+class TestProfileRelationship {
+
+    id*: string
+    name*: string
+    order: integer
+    role*: TestProfileRelationshipRole
+    validFor: date-time
+}
+
+class ServiceSpecificTestProfileConfiguraton {
+
     @type*: string
 }
-class RelatedContact {
 
-    name: string
-    phoneNumber: string
-    phoneNumberExtension: string
-    emailAddress: string
-    postalAddress: string
-    organization: string
+class ServiceSpecificationRef {
+
+    href: uri
+    id*: string
 }
 
-TestProfile_Common *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
-TestProfile_Common *-->"*" RelatedContact : relatedContact
-TestProfile_Common *-->"*" RelatedTestProfileRef : relatedTestProfile
+class RelatedContact {
 
+    emailAddress: string
+    name: string
+    organization: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    postalAddress: string
+}
+
+class TestProfile_Create {
+
+}
+TestProfile_Common <|-- TestProfile_Create
+
+
+
+class TestProfile_Modify {
+
+}
+TestProfile_Common <|-- TestProfile_Modify
 
 @enduml

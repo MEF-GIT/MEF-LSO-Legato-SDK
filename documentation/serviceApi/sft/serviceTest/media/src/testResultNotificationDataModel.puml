@@ -1,0 +1,31 @@
+@startuml testResultNotificationDataModel
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class Event {
+
+    eventId*: string
+    eventTime*: date-time
+    eventType*: string
+    event*: object
+}
+
+class TestResultCreateEvent {
+
+    eventType*: string
+}
+Event <|-- TestResultCreateEvent
+
+TestResultCreateEvent *-->"1" TestResultEventPayload : event
+
+
+class TestResultEventPayload {
+
+    id*: string
+    href: string
+}
+
+@enduml

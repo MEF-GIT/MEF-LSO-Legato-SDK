@@ -2,10 +2,9 @@
 
 class Alarm {
 
-    alarmRaisedTime: date-time
     externalAlarmId: string
-    isRootCause: boolean
-    probableCause: string
+    isRootCause*: boolean
+    probableCause: ProbableCause
     sourceSystemId: string
     specificProblem: string
 }
@@ -25,13 +24,14 @@ class Alarm_Common {
     alarmClearedTime: date-time
     alarmDetails*: string
     alarmedObjectType: string
+    alarmRaisedTime*: date-time
     alarmReportingTime*: date-time
     alarmType*: AlarmType
     perceivedSeverity*: PerceivedSeverity
-    plannedOutageIndicator: string
+    plannedOutageIndicator: PlannedOutageIndicator
     reportingSystemId: string
-    serviceAffecting: boolean
-    state*: string
+    serviceAffecting*: boolean
+    state*: AlarmState
 }
 
 Alarm_Common *-->"*" ServiceRef : affectedService
@@ -43,7 +43,7 @@ class AlarmedObjectRef {
 
     id*: string
     href: string
-    @referredType: string
+    @referredType*: string
 }
 
 
@@ -98,8 +98,8 @@ enum PerceivedSeverity {
 }
 class ServiceRef {
 
-    id*: string
     href: string
+    id*: string
 }
 
 

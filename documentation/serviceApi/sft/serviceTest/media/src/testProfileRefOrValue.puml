@@ -2,13 +2,6 @@
 
 
 
-class TestProfileRefOrValue {
-
-    @type*: string
-}
-
-
-
 class TestProfileRef {
 
     href: string
@@ -18,27 +11,50 @@ TestProfileRefOrValue <|-- TestProfileRef
 
 
 
-class TestProfileValue {
+class TestProfileRefOrValue {
 
-    description: string
-    relatedServiceSpecificationId: string
+    @type*: string
 }
 
 TestProfileRefOrValue <|-- TestProfileValue
+
+TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
+TestProfileValue *-->"*" RelatedContact : relatedContact
+
+
+class TestProfileValue {
+
+}
+
+class ServiceSpecificTestProfileConfiguraton {
+
+    @type*: string
+}
+
+class ServiceSpecificationRef {
+
+    href: uri
+    id*: string
+}
+
+class RelatedContact {
+
+    emailAddress: string
+    name: string
+    organization: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    postalAddress: string
+}
+
 
 class TestJob {}
 
 class TestJob_Common {}
 
-class TestJob_Create {}
-TestJob_Common <|-- TestJob_Create
-
 TestJob_Common <|-- TestJob
 
 TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
-
-
-TestProfileValue *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
-TestProfileValue *-->"1" RelatedContactRef : relatedContact
 
 @enduml

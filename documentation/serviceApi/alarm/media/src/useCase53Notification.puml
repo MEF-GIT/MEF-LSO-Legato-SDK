@@ -11,7 +11,7 @@ A -> S : POST {{baseUrl}}/hub with {{callbackUrl}}
 S --> A: 201 confirmation with {{id}}
 ...
 SOF -> S : createAlarm
-S -> A: {{callbackUrl}}/listener/createAlarm ({{Alarm}})
+S -> A: {{callbackUrl}}/listener/alarmCreateEvent ({{AlarmCreateEvent}})
 A --> S : 204 confirmation
 ...
 

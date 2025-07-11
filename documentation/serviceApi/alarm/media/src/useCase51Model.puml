@@ -8,27 +8,18 @@ class Alarm_Common {
     alarmClearedTime: date-time
     alarmDetails*: string
     alarmedObjectType: string
+    alarmRaisedTime*: date-time
     alarmReportingTime*: date-time
     alarmType*: AlarmType
     perceivedSeverity*: PerceivedSeverity
-    plannedOutageIndicator: string
+    plannedOutageIndicator: PlannedOutageIndicator
     reportingSystemId: string
-    serviceAffecting: boolean
-    state*: string
+    serviceAffecting*: boolean
+    state*: AlarmState
 }
 
 Alarm_Common *-->"*" ServiceRef : affectedService
 Alarm_Common *-->"*" AlarmRef : correlatedAlarm
-
-
-class Alarm_Find {
-
-}
-Alarm_Common <|-- Alarm_Find
-
-
-
-
 
 class AlarmRef {
 
@@ -63,10 +54,11 @@ enum PerceivedSeverity {
     minor
     warning
 }
+
 class ServiceRef {
 
-    id*: string
     href: string
+    id*: string
 }
 
 

@@ -1,0 +1,84 @@
+@startjson
+{
+  "startTime" : "2024-09-13T12:03:11Z",
+  "timeDuration" : {
+    "timeDurationValue" : 100,
+    "timeDurationUnits" : "MS"
+  },
+  "slsCosNameEntry" : [ {
+    "cosName" : "Gold",
+    "deltaT" : 10,
+    "consecutiveIntervalN" : 5,
+    "oneWayFrameDelayPmMetric" : [ {
+      "orderedPairList" : [ {
+        "fromCarrierEthernetServiceEndPoint" : "a",
+        "toCarrierEthernetServiceEndPoint" : "b"
+      } ],
+      "oneWayFdPercentile" : 95
+    }, {
+      "orderedPairList" : [ {
+        "fromCarrierEthernetServiceEndPoint" : "a",
+        "toCarrierEthernetServiceEndPoint" : "c"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "c",
+        "toCarrierEthernetServiceEndPoint" : "a"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "b",
+        "toCarrierEthernetServiceEndPoint" : "c"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "c",
+        "toCarrierEthernetServiceEndPoint" : "b"
+      } ],
+      "oneWayFdPercentile" : 95,
+      "oneWayFdObjective" : {
+        "timeDurationValue" : 100,
+        "timeDurationUnits" : "SEC"
+      }
+    } ],
+    "oneWayMeanFrameDelayPmMetric" : [ ],
+    "oneWayFrameDelayRangePmMetric" : [ ],
+    "oneWayInterFrameDelayVariationPmMetric" : [ ],
+    "oneWayFrameLossRatioPmMetric" : [ ],
+    "oneWayAvailabilityPmMetric" : [ ],
+    "oneWayHighLossIntervalsPmMetric" : [ ],
+    "oneWayConsecutiveHighLossIntervalsPmMetric" : [ ],
+    "oneWayCompositePmMetric" : [ ],
+    "oneWayGroupAvailabilityPmMetric" : [ ]
+  }, {
+    "cosName" : "Silver",
+    "deltaT" : 60,
+    "consecutiveIntervalN" : 5,
+    "oneWayFrameDelayPmMetric" : [ ],
+    "oneWayMeanFrameDelayPmMetric" : [ ],
+    "oneWayFrameDelayRangePmMetric" : [ ],
+    "oneWayInterFrameDelayVariationPmMetric" : [ ],
+    "oneWayFrameLossRatioPmMetric" : [ ],
+    "oneWayAvailabilityPmMetric" : [ {
+      "orderedPairList" : [ {
+        "fromCarrierEthernetServiceEndPoint" : "a",
+        "toCarrierEthernetServiceEndPoint" : "b"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "b",
+        "toCarrierEthernetServiceEndPoint" : "a"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "a",
+        "toCarrierEthernetServiceEndPoint" : "c"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "c",
+        "toCarrierEthernetServiceEndPoint" : "a"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "b",
+        "toCarrierEthernetServiceEndPoint" : "c"
+      }, {
+        "fromCarrierEthernetServiceEndPoint" : "c",
+        "toCarrierEthernetServiceEndPoint" : "b"
+      } ],
+      "oneWayAvailabilityObjective" : 95
+    } ],
+    "oneWayHighLossIntervalsPmMetric" : [ ],
+    "oneWayConsecutiveHighLossIntervalsPmMetric" : [ ],
+    "oneWayCompositePmMetric" : [ ],
+    "oneWayGroupAvailabilityPmMetric" : [ ]
+  } ]
+}
+@endjson

@@ -1,0 +1,168 @@
+@startjson
+[
+    {
+        "coordinatedAction": [
+            {
+                "coordinatedActionDelay": {
+                    "amount": 10,
+                    "units": "minutes"
+                },
+                "coordinationDependency": "startToStart",
+                "orderId": "mef-so-id-0000"
+            }
+        ],
+        "description": "MEF Service Order 0000",
+        "externalId": "so-external-id-0000",
+        "note": [],
+        "orderRelationship": [],
+        "relatedContactInformation": [],
+        "completionDate": "2025-06-03T10:04:30.47403-05:00",
+        "expectedCompletionDate": "2025-06-03T10:04:30.474035-05:00",
+        "serviceOrderItem": [
+            {
+                "action": "add",
+                "coordinatedAction": [],
+                "note": [],
+                "relatedContactInformation": [],
+                "service": {
+                    "note": [],
+                    "serviceRelationship": [],
+                    "relatedContactInformation": [],
+                    "place": [],
+                    "serviceConfiguration": {
+                        "@type": "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:all",
+                        "identifier": "CarrierEthernetOperatorUni-1",
+                        "physicalLayer": [
+                            {
+                                "id": "op-uni-phy-0001",
+                                "physicalLink": "1000BASE_LX"
+                            }
+                        ],
+                        "synchronousMode": [
+                            "DISABLED"
+                        ],
+                        "numberOfLinks": 1,
+                        "linkAggregation": "NONE",
+                        "aggregationLinkMap": [],
+                        "maximumFrameSize": 1522,
+                        "defaultCeVlanId": 100,
+                        "maximumNumberOfEndPoints": 1,
+                        "maxNumOfCtagVlanIdsPerEndPoint": 100,
+                        "egressBandwidthProfile": {
+                            "cir": {
+                                "irValue": 10,
+                                "irUnits": "GBPS"
+                            },
+                            "cirMax": {
+                                "irValue": 10,
+                                "irUnits": "GBPS"
+                            },
+                            "couplingFlag": false,
+                            "colorMode": {
+                                "value": "COLOR_BLIND"
+                            },
+                            "envelopeId": "envelope-id-0001",
+                            "envelopeRank": 10,
+                            "tokenRequestOffset": 5
+                        },
+                        "linkOam": "DISABLED",
+                        "meg": "DISABLED",
+                        "lagLinkMeg": "DISABLED",
+                        "elmi": "DISABLED",
+                        "tokenShare": "DISABLED",
+                        "envelopes": [],
+                        "l2cpPeering": []
+                    },
+                    "serviceOrderItem": []
+                },
+                "serviceOrderItemRelationship": [],
+                "state": "completed",
+                "terminationError": []
+            }
+        ],
+        "startDate": "2025-06-03T10:04:30.473449-05:00"
+    },
+    {
+        "coordinatedAction": [
+            {
+                "coordinatedActionDelay": {
+                    "amount": 10,
+                    "units": "minutes"
+                },
+                "coordinationDependency": "startToStart",
+                "orderId": "mef-so-id-0001"
+            }
+        ],
+        "description": "MEF Service Order 0001",
+        "externalId": "so-external-id-0001",
+        "note": [],
+        "orderRelationship": [],
+        "relatedContactInformation": [],
+        "completionDate": "2025-06-03T10:04:30.50831-05:00",
+        "expectedCompletionDate": "2025-06-03T10:04:30.508313-05:00",
+        "serviceOrderItem": [
+            {
+                "action": "add",
+                "coordinatedAction": [],
+                "note": [],
+                "relatedContactInformation": [],
+                "service": {
+                    "note": [],
+                    "serviceRelationship": [],
+                    "relatedContactInformation": [],
+                    "place": [],
+                    "serviceConfiguration": {
+                        "@type": "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:all",
+                        "identifier": "CarrierEthernetOperatorUni-1",
+                        "physicalLayer": [
+                            {
+                                "id": "op-uni-phy-0001",
+                                "physicalLink": "1000BASE_LX"
+                            }
+                        ],
+                        "synchronousMode": [
+                            "DISABLED"
+                        ],
+                        "numberOfLinks": 1,
+                        "linkAggregation": "NONE",
+                        "aggregationLinkMap": [],
+                        "maximumFrameSize": 1522,
+                        "defaultCeVlanId": 100,
+                        "maximumNumberOfEndPoints": 1,
+                        "maxNumOfCtagVlanIdsPerEndPoint": 100,
+                        "egressBandwidthProfile": {
+                            "cir": {
+                                "irValue": 10,
+                                "irUnits": "GBPS"
+                            },
+                            "cirMax": {
+                                "irValue": 10,
+                                "irUnits": "GBPS"
+                            },
+                            "couplingFlag": false,
+                            "colorMode": {
+                                "value": "COLOR_BLIND"
+                            },
+                            "envelopeId": "envelope-id-0001",
+                            "envelopeRank": 10,
+                            "tokenRequestOffset": 5
+                        },
+                        "linkOam": "DISABLED",
+                        "meg": "DISABLED",
+                        "lagLinkMeg": "DISABLED",
+                        "elmi": "DISABLED",
+                        "tokenShare": "DISABLED",
+                        "envelopes": [],
+                        "l2cpPeering": []
+                    },
+                    "serviceOrderItem": []
+                },
+                "serviceOrderItemRelationship": [],
+                "state": "completed",
+                "terminationError": []
+            }
+        ],
+        "startDate": "2025-06-03T10:04:30.508295-05:00"
+    }
+]
+@endjson      

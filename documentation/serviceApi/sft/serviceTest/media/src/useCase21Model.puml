@@ -1,0 +1,25 @@
+@startuml useCase21Model
+
+class TestResult_Common {
+
+    actualStartDateTime*: date-time
+    actualEndDateTime*: date-time
+    href*: uri
+    id*: string
+}
+
+TestResult_Common *-->"1" ServiceRef : relatedServiceFrom
+TestResult_Common *-->"1" ServiceRef : relatedServiceTo
+TestResult_Common *-->"1" TestJobRef : testJob
+
+class ServiceRef {
+
+    <<... attributes are skipped ...>>
+}
+
+
+class TestJobRef {
+
+    <<... attributes are skipped ...>>
+}
+@enduml

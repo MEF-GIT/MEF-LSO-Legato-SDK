@@ -1,0 +1,146 @@
+@startuml testJobDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    scale 4096 width
+}
+
+class RelatedContact {
+
+    emailAddress: string
+    name: string
+    organization: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    postalAddress: string
+}
+
+class ServiceRef {
+
+    href: string
+    id*: string
+}
+
+
+
+class ServiceSpecificTestJobConfiguraton {
+
+    @type*: string
+}
+
+
+
+class ServiceSpecificTestProfileConfiguraton {
+
+    @type*: string
+}
+
+
+
+class ServiceSpecificationRef {
+
+    href: uri
+    id*: string
+}
+
+class TestJob {
+
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    creationDate*: date-time
+    href*: uri
+    id*: string
+    lastModifiedDate*: date-time
+    state*: TestJobStateType
+}
+TestJob_Common <|-- TestJob
+
+TestJob *-->"*" TerminationError : terminationError
+
+
+class TestJob_Common {
+
+    name*: string
+    description: string
+    startDateTime: date-time
+    endDateTime*: date-time
+    validFor*: date-time
+}
+
+TestJob_Common *--> Duration : recurrencePeriod
+TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
+TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Common *-->"1" ServiceRef : relatedServiceTo
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+
+
+class TestJob_Find {
+
+    endDateTime*: string
+    id: string
+    name*: string
+    startDateTime*: string
+}
+
+TestJob_Find *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Find *-->"1" ServiceRef : relatedServiceTo
+TestJob_Find *-->"1" TestProfileRefOrValue : testProfile
+
+
+class TestProfileRef {
+
+    href: string
+    id*: string
+}
+TestProfileRefOrValue <|-- TestProfileRef
+
+
+
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
+
+
+class TestProfileValue {
+
+}
+TestProfileRefOrValue <|-- TestProfileValue
+
+TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
+TestProfileValue *-->"*" RelatedContact : relatedContact
+
+enum TestJobProcessStateType {
+
+    accepted
+    acknowledged
+    rejected
+}
+
+enum TestJobStateType {
+
+    acknowledged
+    assessingCancelation
+    assessingModification
+    cancelled
+    completed
+    inProgress
+    rejected
+    scheduled
+    suspended
+}
+
+enum TimeUnit {
+
+    seconds
+    minutes
+    businessHours
+    calendarHours
+    businessDays
+    calendarDays
+    months
+    years
+}
+@enduml

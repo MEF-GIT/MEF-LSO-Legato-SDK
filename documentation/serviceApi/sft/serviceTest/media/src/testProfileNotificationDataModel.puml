@@ -1,0 +1,69 @@
+@startuml testProfileNotificationDataModel
+
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+
+class Event {
+
+    eventId*: string
+    eventTime*: date-time
+    eventType*: string
+    event*: object
+}
+
+
+
+class TestProfileCreateEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileCreateEvent
+
+TestProfileCreateEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileAttributeValueChangeEvent
+
+TestProfileAttributeValueChangeEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileDeleteEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileDeleteEvent
+
+TestProfileDeleteEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileLifecycleStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileLifecycleStateChangeEvent
+
+TestProfileLifecycleStateChangeEvent *-->"1" TestProfileLifecycleStateChangeEventPayload : event
+
+
+class TestProfileEventPayload {
+
+    id*: string
+    href: string
+}
+
+
+
+class TestProfileLifecycleStateChangeEventPayload {
+    state*: TestProfileLifecycleStateType
+}
+TestProfileEventPayload <|-- TestProfileLifecycleStateChangeEventPayload
+
+
+@enduml

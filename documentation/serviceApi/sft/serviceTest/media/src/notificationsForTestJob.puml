@@ -18,37 +18,49 @@ alt succesful inquiry
   B --> SOF : 204 confirmation  
   ...
 
-  note over B, SOF : TestJob moves to `scheduled`
-  SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
-      B --> SOF : 204 confirmation
-  ...
-
-  note over B, SOF : Schedule start time is reached\nTestJob moves to `in-progress`
+  
+  note over B, SOF : TestJob moves to `in_progress`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
   ...
   
-  note over B, SOF : SuspendTestJob request is completed
+  note over B, SOF : SuspendTestJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/suspendTestJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  
+  note over B, SOF : TestJob moves to `suspended`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
+  
   ...
 
   note over B, SOF : ModifyTestJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/modifyTestJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
+  
+  note over B, SOF : TestJob state changes to `assessingModification`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
-  ...
 
   note over B, SOF : ModifyTestJob request is completed
   SOF -> B: {{callbackUrl}}/listener/testJobAttributeValueChangeEvent {{id}}
   B --> SOF : 204 confirmation
 
+  note over B, SOF : TestJob state changes to `suspended`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
 
+  ...
+
+  note over B, SOF : ResumeTestJob request is accepted
+  SOF -> B: {{callbackUrl}}/listener/resumeTestJobStateChangeEvent {{id}}
+  B --> SOF : 204 confirmation
   
-  note over B, SOF : TestJob is not recurring
+  note over B, SOF : TestJob moves to `in_progress`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
+  
+  ...
 
 
 else validation or internal problem

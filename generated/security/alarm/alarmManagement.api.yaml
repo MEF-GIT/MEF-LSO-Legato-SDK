@@ -20,11 +20,11 @@ info:
     - Subscribe for Alarms
     - Unsubscribe to Alarms
 
-    Copyright 2024 MEF Forum and its contributors
+    Copyright 2025 MEF Forum and its contributors
   title: Alarm Management
-  version: 1.0.0-RC
+  version: 2.0.0-RC
 servers:
-- url: "https://{serverBase}/mefApi/legato/alarmManagement/v1/"
+- url: "https://{serverBase}/mefApi/legato/alarmManagement/v2/"
   variables:
     serverBase:
       default: mef.net
@@ -105,19 +105,7 @@ paths:
         name: alarmType
         required: false
         schema:
-          enum:
-          - communicationsAlarm
-          - processingErrorAlarm
-          - environmentalAlarm
-          - qualityOfServiceAlarm
-          - equipmentAlarm
-          - integrityViolation
-          - operationalViolation
-          - physicalViolation
-          - securityService
-          - mechanismViolation
-          - timeDomainViolation
-          type: string
+          $ref: '#/components/schemas/AlarmType'
       - description: Type of the Alarm Object.
         in: query
         name: alarmedObjectType
@@ -129,23 +117,13 @@ paths:
         name: perceivedSeverity
         required: false
         schema:
-          enum:
-          - cleared
-          - critical
-          - indeterminate
-          - major
-          - minor
-          - warning
-          type: string
+          $ref: '#/components/schemas/PerceivedSeverity'
       - description: Planned Outage Indicator of the Alarm.
         in: query
         name: plannedOutageIndicator
         required: false
         schema:
-          enum:
-          - inPlannedMaintenance
-          - outOfService
-          type: string
+          $ref: '#/components/schemas/PlannedOutageIndicator'
       - description: Alarm Reporting system identity.
         in: query
         name: reportingSystemId
@@ -163,11 +141,7 @@ paths:
         name: state
         required: false
         schema:
-          enum:
-          - acknowledged
-          - cleared
-          - un-acknowledged
-          type: string
+          $ref: '#/components/schemas/AlarmState'
       - description: Affected Service Id.
         in: query
         name: affectedServiceId
@@ -200,7 +174,7 @@ paths:
             application/json;charset=utf-8:
               schema:
                 items:
-                  $ref: '#/components/schemas/Alarm_Find'
+                  $ref: '#/components/schemas/Alarm_Common'
                 type: array
           description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
           headers:
@@ -321,7 +295,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/AlarmSubscriptionInput'
+              $ref: '#/components/schemas/EventSubscriptionInput'
         description: Data containing the callback endpoint to deliver the information.
         required: true
       responses:
@@ -329,7 +303,7 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/AlarmSubscription'
+                $ref: '#/components/schemas/EventSubscription'
           description: Subscribed
         "400":
           content:
@@ -440,7 +414,7 @@ paths:
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/AlarmSubscription'
+                $ref: '#/components/schemas/EventSubscription'
           description: Success
         "400":
           content:
@@ -491,11 +465,6 @@ components:
       - $ref: '#/components/schemas/Alarm_Common'
       - description: A definition of an Alarm.
         properties:
-          alarmRaisedTime:
-            description: The time that an alarm was raised.  This time may differ
-              from the Alarm  Reported Time
-            format: date-time
-            type: string
           alarmedObject:
             description: Identifies the Managed Object instance associated with the
               alarm.
@@ -516,8 +485,6 @@ components:
             $ref: '#/components/schemas/AlarmRef'
           probableCause:
             $ref: '#/components/schemas/ProbableCause'
-            description: list of alarm probable cause as defined in ITU - T Recommendation
-              X.733 or 3GPP TS 32.111 - 2 Annex B.
           alarmSpecificAttributes:
             $ref: '#/components/schemas/AlarmSpecificAttributes'
           sourceSystemId:
@@ -526,7 +493,25 @@ components:
           specificProblem:
             description: Provides more specific information about the alarm.
             type: string
+        required:
+        - alarmedObject
+        - isRootCause
         type: object
+    AlarmedObjectRef:
+      properties:
+        id:
+          description: unique identifier of the Alarm
+          type: string
+        href:
+          description: hyperlink to the referenced Alarm
+          type: string
+        '@referredType':
+          description: The actual type of the target instance when needed for disambiguation.
+          type: string
+      required:
+      - '@referredType'
+      - id
+      type: object
     AlarmRef:
       properties:
         id:
@@ -550,83 +535,42 @@ components:
       required:
       - '@type'
       type: object
-    AlarmSubscription:
-      allOf:
-      - $ref: '#/components/schemas/AlarmSubscriptionInput'
-      - description: This resource is used to respond to notification subscriptions.
-        properties:
-          id:
-            description: An identifier of this Event Subscription assigned when a
-              resource is created.
-            type: string
-        type: object
-      required:
-      - id
-    AlarmSubscriptionInput:
-      description: This class is used to register for Notifications.
-      properties:
-        callback:
-          description: "This callback value must be set to *host* property from Alarm\
-            \ Notification API (alarmNotification.api.yaml). This property is appended\
-            \ with the base path and notification resource path specified in that\
-            \ API to construct an URL to which  notification is sent. E.g. for 'callback':\
-            \  \"https://buyer.co/listenerEndpoint\", the alarm event notification\
-            \ will be  sent to: `https://buyer.co/listenerEndpoint/mefApi/legato/alarmNotification/v1/listener/`"
-          type: string
-        query:
-          description: "This attribute is used to define which type of events to register\
-            \ to. Example: 'query':'eventType = createAlarm'. "
-          enum:
-          - eventType = createAlarm
-          type: string
-      required:
-      - callback
-      type: object
+    AlarmState:
+      description: |-
+        Defines the alarm state during its life cycle.
+
+        | state            | MEF 133 name    |        Description                                                                                                                               |
+        | ---------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | `acknowledged`   | Acknowledged    | An alarm that is still active but has been acknowledged by an operator, meaning the operator is aware of the issue and has taken note for action.|
+        | `cleared`        | Cleared         | Indicates that the underlying fault or abnormal condition that triggered the alarm has been resolved, and the alarm is no longer active.         |
+        | `unAcknowledged` | Unacknowledged  | An alarm that has been raised and is still visible to the operator, but has not yet been acknowledged.                                           |
+      enum:
+      - acknowledged
+      - cleared
+      - unAcknowledged
+      type: string
     AlarmType:
-      description: "Categorize the alarm. Values as defined in X.733 8.1.1 or 3GPP\
-        \ TS 32.111.\n\n| state                            | MEF 133 name        \
-        \     | Description                                                      \
-        \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                                                 |\n| --------------------------------\
-        \ | -------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
-        \ |\n| `communicationsAlarm`            | Communications Alarm     |  An alarm\
-        \ of this type is principally associated with the procedures and/or processes\
-        \ required to convey information from one point to another. |\n| `processingErrorAlarm`\
-        \           | Processing Error Alarm   |  An alarm of this type is principally\
-        \ associated with a software or processing fault. |\n| `environmentalAlarm`\
-        \             | Environmental Alarm      |  An alarm of this type is principally\
-        \ associated with a condition relating to an enclosure in which the equipment\
-        \ resides.|\n| `qualityOfServiceAlarm`          | Quality of Service Alarm\
-        \ |  An alarm of this type is principally associated with a degradation in\
-        \ the quality of a service. |\n| `equipmentAlarm`                 | Equipment\
-        \ Alarm          |  An alarm of this type is principally associated with an\
-        \ equipment fault. |\n| `communicationsAlarm`            | Communications\
-        \ Alarm     |  An alarm of this type is principally associated with the procedures\
-        \ and/or processes required to convey information from one point to another.\
-        \ |\n| `processingErrorAlarm`           | Processing Error Alarm   |  An alarm\
-        \ of this type is principally associated with a software or processing fault.\
-        \ |\n| `environmentalAlarm`             | Environmental Alarm      |  An alarm\
-        \ of this type is principally associated with a condition relating to an enclosure\
-        \ in which the equipment resides.|\n| `qualityOfServiceAlarm`          | Quality\
-        \ of Service Alarm |  An alarm of this type is principally associated with\
-        \ a degradation in the quality of a service. |\n| `equipmentAlarm`       \
-        \          | Equipment Alarm          |  An alarm of this type is principally\
-        \ associated with an equipment fault. |\n| `integrityViolation`          \
-        \   | Integrity Violation      |  Information may have been illegally modified,\
-        \ inserted or deleted|\n| `operationalViolation`           | Operational Violation\
-        \    |  The unavailability, malfunction or incorrect invocation of a service.|\n\
-        | `physicalViolation`              | Physical Violation       |  A physical\
-        \ resource has been violated in a way that suggests a security attack.|\n\
-        | `securityService`                | Security Service         |  A security\
-        \ attack has been detected by a security service. |\n| `mechanismViolation`\
-        \             | Mechanism Violation      |  A security attack has been detected\
-        \ by a security mechanism.|\n| `timeDomainViolation`            | Time Domain\
-        \ Violation    |  An event has occurred at an unexpected or prohibited time.|\
-        \       "
+      description: |-
+        Categorize the alarm. Values as defined in X.733 8.1.1 or 3GPP TS32.111.
+
+        | state                            | MEF 133 name             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+        | -------------------------------- | -------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `communicationsAlarm`            | Communications Alarm     | An alarm of this type is principally associated with the procedures and/or processes required to convey information from one point to another. |
+        | `processingErrorAlarm`           | Processing Error Alarm   | An alarm of this type is principally associated with a software or processing fault.                                                           |
+        | `environmentalAlarm`             | Environmental Alarm      | An alarm of this type is principally associated with a condition relating to an enclosure in which the equipment resides.                      |
+        | `qualityOfServiceAlarm`          | Quality of Service Alarm | An alarm of this type is principally associated with a degradation in the quality of a service.                                                |
+        | `equipmentAlarm`                 | Equipment Alarm          | An alarm of this type is principally associated with an equipment fault.                                                                       |
+        | `communicationsAlarm`            | Communications Alarm     | An alarm of this type is principally associated with the procedures and/or processes required to convey information from one point to another. |
+        | `processingErrorAlarm`           | Processing Error Alarm   | An alarm of this type is principally associated with a software or processing fault.                                                           |
+        | `environmentalAlarm`             | Environmental Alarm      | An alarm of this type is principally associated with a condition relating to an enclosure in which the equipment resides.                      |
+        | `qualityOfServiceAlarm`          | Quality of Service Alarm | An alarm of this type is principally associated with a degradation in the quality of a service.                                                |
+        | `equipmentAlarm`                 | Equipment Alarm          | An alarm of this type is principally associated with an equipment fault.                                                                       |
+        | `integrityViolation`             | Integrity Violation      | Information may have been illegally modified, inserted or deleted.                                                                             |
+        | `operationalViolation`           | Operational Violation    | The unavailability, malfunction or incorrect invocation of a service.                                                                          |
+        | `physicalViolation`              | Physical Violation       | A physical resource has been violated in a way that suggests a security attack.                                                                |
+        | `securityService`                | Security Service         | A security attack has been detected by a security service.                                                                                     |
+        | `mechanismViolation`             | Mechanism Violation      | A security attack has been detected by a security mechanism.                                                                                   |
+        | `timeDomainViolation`            | Time Domain Violation    | An event has occurred at an unexpected or prohibited time.                                                                                     |
       enum:
       - communicationsAlarm
       - processingErrorAlarm
@@ -673,6 +617,11 @@ components:
           description: The type (class) of the Managed Object associated with the
             event e.g. port.
           type: string
+        alarmRaisedTime:
+          description: The time that an alarm was raised.  This time may differ from
+            the Alarm  Reported Time
+          format: date-time
+          type: string
         alarmReportingTime:
           description: "Indicates the time (as a date + time) at which the alarm was\
             \ reported by  the owning OSS. It might be different from the alarm-RaisedTime.\
@@ -692,8 +641,6 @@ components:
           $ref: '#/components/schemas/PerceivedSeverity'
         plannedOutageIndicator:
           $ref: '#/components/schemas/PlannedOutageIndicator'
-          description: "Indicates that the Managed Object (related to this alarm)\
-            \ is in in planned maintenance, or out of service"
         reportingSystemId:
           description: Reporting system identity.
           type: string
@@ -701,33 +648,16 @@ components:
           description: Indicates whether the alarm affects service or not.
           type: boolean
         state:
-          $ref: '#/components/schemas/State'
-          description: Defines the alarm state during its life cycle.
+          $ref: '#/components/schemas/AlarmState'
       required:
       - alarmDetails
+      - alarmRaisedTime
       - alarmReportingTime
       - alarmType
       - id
       - perceivedSeverity
+      - serviceAffecting
       - state
-      type: object
-    Alarm_Find:
-      allOf:
-      - $ref: '#/components/schemas/Alarm_Common'
-      - type: object
-    AlarmedObjectRef:
-      properties:
-        id:
-          description: unique identifier of the Alarm
-          type: string
-        href:
-          description: hyperlink to the referenced Alarm
-          type: string
-        '@referredType':
-          description: The actual type of the target instance when needed for disambiguation.
-          type: string
-      required:
-      - id
       type: object
     Comment:
       description: A comment entered on the alarm
@@ -747,9 +677,8 @@ components:
           type: string
       type: object
     Error:
-      description: Standard Class used to describe API response error Not intended
-        to be used directly. The `code` in the HTTP header is used as a discriminator
-        for the type of error returned in runtime.
+      description: |
+        Standard Class used to describe API response error Not intended to be used directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
       properties:
         message:
           description: Text that provides mode details and corrective actions related
@@ -761,7 +690,7 @@ components:
           maxLength: 255
           type: string
         referenceError:
-          description: URL pointing to documentation describing the error.
+          description: URL pointing to documentation describing the error
           format: uri
           type: string
       required:
@@ -776,13 +705,16 @@ components:
         required:
         - code
         type: object
-      description: '''Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'''
+      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
     Error400Code:
-      description: "One of the following error codes:\n- missingQueryParameter: The\
-        \ URI is missing a required query-string \n  parameter\n- missingQueryValue:\
-        \ The URI is missing a required query-string \n  parameter value\n- invalidQuery:\
-        \ The query section of the URI is invalid\n- invalidBody: The request has\
-        \ an invalid body."
+      description: |
+        One of the following error codes:
+        - missingQueryParameter: The URI is missing a required query-string
+        parameter
+        - missingQueryValue: The URI is missing a required query-string
+        parameter value
+        - invalidQuery: The query section of the URI is invalid.
+        - invalidBody: The request has an invalid body
       enum:
       - missingQueryParameter
       - missingQueryValue
@@ -798,12 +730,12 @@ components:
         required:
         - code
         type: object
-      description: '''Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'''
+      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
     Error401Code:
-      description: |-
+      description: |
         One of the following error codes:
-        - missingCredentials: No credentials provided
-        - invalidCredentials: Provided credentials are invalid or expired.
+        - missingCredentials: No credentials provided.
+        - invalidCredentials: Provided credentials are invalid or expired
       enum:
       - missingCredentials
       - invalidCredentials
@@ -821,10 +753,12 @@ components:
         but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
     Error403Code:
       description: |-
-        This code indicates that the server understood the request but refuses to authorize it because of one of the following error codes:
+        This code indicates that the server understood
+        the request but refuses to authorize it because
+        of one of the following error codes:
         - accessDenied: Access denied
         - forbiddenRequester: Forbidden requester
-        - tooManyUsers: Too many users.
+        - tooManyUsers: Too many users
       enum:
       - accessDenied
       - forbiddenRequester
@@ -835,8 +769,10 @@ components:
       - $ref: '#/components/schemas/Error'
       - properties:
           code:
-            description: "The following error code:\n- notFound: A current representation\
-              \ for the target resource \n  not found."
+            description: |
+              The following error code:
+              - notFound: A current representation for the target resource
+              not found
             enum:
             - notFound
             type: string
@@ -844,6 +780,22 @@ components:
         - code
         type: object
       description: Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+    Error409:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |
+              The following error code:
+              - conflict: The client has provided a value whose semantics are
+              not appropriate for the property.
+            enum:
+            - conflict
+            type: string
+        required:
+        - code
+        type: object
+      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
     Error422:
       allOf:
       - $ref: '#/components/schemas/Error'
@@ -851,7 +803,7 @@ components:
           code:
             $ref: '#/components/schemas/Error422Code'
           propertyPath:
-            description: |-
+            description: |
               A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
               Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
             type: string
@@ -860,27 +812,22 @@ components:
         type: object
       description: Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
     Error422Code:
-      description: "One of the following error codes:\n- missingProperty: The property\
-        \ that was expected is not present in the\n  payload\n- invalidValue: The\
-        \ property has an incorrect value\n- invalidFormat: The property value does\
-        \ not comply with the expected \n  value format\n- referenceNotFound: The\
-        \ object referenced by the property cannot be \n  identified in the target\
-        \ system\n- unexpectedProperty: Additional, not expected property has been\
-        \ \n  provided\n- tooLargeDataset: Requested entity will produce too many\
-        \ data\n- tooManyRecords: The number of records to be provided in the response\n\
-        \  exceeds the  threshold\n- tooManyRequests: The number of simultaneous requests\
-        \ from one API \n  client exceeds the threshold\n- otherIssue: Other problem\
-        \ was identified (detailed information\n  provided in a reason)."
+      description: |
+        One of the following error codes:
+          - missingProperty: The property the Seller has expected is not present in the payload
+          - invalidValue: The property has an incorrect value
+          - invalidFormat: The property value does not comply with the expected value format
+          - referenceNotFound: The object referenced by the property cannot be identified in the Seller system
+          - unexpectedProperty: Additional property, not expected by the Seller has been provided
+          - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
+          - otherIssue: Other problem was identified (detailed information provided in a reason)
       enum:
       - missingProperty
       - invalidValue
       - invalidFormat
       - referenceNotFound
       - unexpectedProperty
-      - tooLargeDataset
       - tooManyRecords
-      - tooManyRequests
-      - performanceProfileInUse
       - otherIssue
       type: string
     Error500:
@@ -888,9 +835,11 @@ components:
       - $ref: '#/components/schemas/Error'
       - properties:
           code:
-            description: |-
+            description: |
               The following error code:
-              - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
+              - internalError: Internal server error - the server encountered
+              an unexpected condition that prevented it from fulfilling the
+              request.
             enum:
             - internalError
             type: string
@@ -905,7 +854,7 @@ components:
           code:
             description: |-
               The following error code:
-              - notImplemented: Method not supported by the server.
+              - notImplemented: Method not supported by the server
             enum:
             - notImplemented
             type: string
@@ -914,32 +863,71 @@ components:
         type: object
       description: Not Implemented. Used in case Seller is not supporting an optional
         operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
+    EventSubscription:
+      allOf:
+      - $ref: '#/components/schemas/EventSubscriptionInput'
+      - description: This resource is used to respond to notification subscriptions.
+        properties:
+          id:
+            description: An identifier of this Event Subscription assigned when a
+              resource is created.
+            type: string
+        type: object
+      required:
+      - id
+    EventSubscriptionInput:
+      description: This class is used to register for Notifications.
+      properties:
+        callback:
+          description: "This callback value must be set to *host* property from Alarm\
+            \ Notification API (alarmNotification.api.yaml). This property is appended\
+            \ with the base path and notification resource path specified in that\
+            \ API to construct an URL to which  notification is sent. E.g. for 'callback':\
+            \  \"https://bus.mef.com/listenerEndpoint\", the alarm event notification\
+            \ will be  sent to: `https://bus.mef.com/listenerEndpoint/mefApi/legato/alarmNotification/v2/listener/`"
+          type: string
+        query:
+          description: "This attribute is used to define which type of events to register\
+            \ to. Example: 'query':'eventType =  createAlarm'. To subscribe for more\
+            \ than one event type, put the values separated by a comma: `eventType=alarmCreateEvent,\
+            \ alarmAttributeValueChangeEvent`. The possible values are enumerated\
+            \ by Event type enums in alarmNotification.api.yaml. An empty query is\
+            \ treated as specifying no filters - ending in subscription for all event\
+            \ types."
+          type: string
+      required:
+      - callback
+      type: object
     PerceivedSeverity:
       description: "List of possible severities that can be allocated to an Alarm.\
-        \ \nThe values are consistent with ITU - T Recommendation X.733. \nOnce an\
+        \ \nThe values are consistent with ITU - T Recommendation X.733.\nOnce an\
         \ alarm has been cleared, its perceived severity is set to \n'cleared' and\
-        \ can no longer be set\n\n\n| state           | MEF 133 name    | Description\
+        \ can no longer be set.\n\n| state           | MEF 133 name    |        Description\
         \                                                                        \
         \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                                                                        \
-        \                               |\n| --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
+        \                                                |\n| --------------- | ---------------\
+        \ | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
         \ |\n| `cleared`       | Cleared         |  The Cleared severity level indicates\
-        \ the clearing of one or more previously reported alarms. |\n| `critical`\
-        \      | Critical        |  The Critical severity level indicates that a service\
-        \ affecting condition has occurred and an immediate corrective action is required|\n\
-        | `indeterminate` | Indeterminate   |  The Indeterminate severity level indicates\
-        \ that the severity level cannot be determined. |\n| `major`         | Major\
-        \           |  The Major severity level indicates that a service affecting\
-        \ condition has developed and an urgent corrective action is required|\n|\
-        \ `minor`         | Minor           |  The Minor severity level indicates\
-        \ the existence of a non-service affecting fault condition and that corrective\
-        \ action should be taken in order to prevent a more serious (for example,\
-        \ service affecting) fault|\n| `warning`       | Warning         |  The Warning\
-        \ severity level indicates the detection of a potential or impending service\
-        \ affecting fault, before any significant effects have been felt|"
+        \ the clearing of one or more previously reported alarms.                \
+        \                                                                        \
+        \                             |\n| `critical`      | Critical        |  The\
+        \ Critical severity level indicates that a service affecting condition has\
+        \ occurred and an immediate corrective action is required.               \
+        \                                                             |\n| `indeterminate`\
+        \ | Indeterminate   |  The Indeterminate severity level indicates that the\
+        \ severity level cannot be determined.                                   \
+        \                                                                        \
+        \              |\n| `major`         | Major           |  The Major severity\
+        \ level indicates that a service affecting condition has developed and an\
+        \ urgent corrective action is required.                                  \
+        \                                               |\n| `minor`         | Minor\
+        \           |  The Minor severity level indicates the existence of a non-service\
+        \ affecting fault condition and that corrective action should be taken in\
+        \ order to prevent a more serious (for example, service affecting) fault.|\n\
+        | `warning`       | Warning         |  The Warning severity level indicates\
+        \ the detection of a potential or impending service affecting fault, before\
+        \ any significant effects have been felt.                                \
+        \                           |"
       enum:
       - cleared
       - critical
@@ -948,17 +936,13 @@ components:
       - minor
       - warning
       type: string
-    ServiceRef:
-      properties:
-        id:
-          description: unique identifier of the Service
-          type: string
-        href:
-          description: hyperlink to the referenced Alarm
-          type: string
-      required:
-      - id
-      type: object
+    PlannedOutageIndicator:
+      description: "Indicates that the Managed Object (related to this alarm) is in\
+        \ in planned maintenance, or out of service."
+      enum:
+      - inPlannedMaintenance
+      - outOfService
+      type: string
     ProbableCause:
       description: list of alarm probable cause as defined in ITU - T Recommendation
         X.733 or 3GPP TS 32.111 - 2 Annex B.
@@ -1021,20 +1005,18 @@ components:
       - underlyingResourceUnavailable
       - versionMismatch
       type: string
-    PlannedOutageIndicator:
-      description: "Indicates that the Managed Object (related to this alarm) is in\
-        \ in planned maintenance, or out of service"
-      enum:
-      - inPlannedMaintenance
-      - outOfService
-      type: string
-    State:
-      description: Defines the alarm state during its life cycle.
-      enum:
-      - acknowledged
-      - cleared
-      - un-acknowledged
-      type: string
+    ServiceRef:
+      description: Reference to a Service instance.
+      properties:
+        href:
+          description: Hyperlink reference to Service
+          type: string
+        id:
+          description: unique identifier of Service
+          type: string
+      required:
+      - id
+      type: object
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code

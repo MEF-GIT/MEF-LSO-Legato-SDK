@@ -1,0 +1,98 @@
+@startuml tpDataModel
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+}
+
+class TestProfile {
+    creationDate*: date-time
+    href*: string
+    id*: string
+    lifecycleState: TestProfileLifecycleStateType
+    lastUpdate: date-time
+
+}
+TestProfile_Common <|-- TestProfile
+
+
+
+enum TestProfileLifecycleStateType {
+
+    assigned
+    available
+}
+enum TestProfileLifecycleStatusType {
+
+    experimental
+    pending
+    approved
+    deprecated
+}
+
+class TestProfileRelationship {
+
+    id*: string
+    name*: string
+    order: integer
+    role*: TestProfileRelationshipRole
+    validFor: date-time
+}
+
+TestProfileRelationship *-->"1" ServiceSpecificationRef : relatedServiceSpecification
+
+
+enum TestProfileRelationshipRole {
+
+    primary
+    secondary
+}
+
+
+class TestProfile_Common {
+
+    description: string
+    isBundled: boolean
+    lifecycleStatus: TestProfileLifecycleStatusType
+    name: string
+    validFor: date-time
+}
+
+TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *--> ServiceSpecificationRef : relatedServiceSpecification
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+
+class ServiceSpecificTestProfileConfiguraton {
+
+    @type*: string
+}
+
+class RelatedContact {
+
+    emailAddress: string
+    name: string
+    organization: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    postalAddress: string
+}
+
+class ServiceSpecificationRef {
+
+    href: uri
+    id*: string
+}
+
+class TestProfile_Create {
+
+}
+TestProfile_Common <|-- TestProfile_Create
+
+
+
+class TestProfile_Modify {
+
+}
+TestProfile_Common <|-- TestProfile_Modify
+
+@enduml

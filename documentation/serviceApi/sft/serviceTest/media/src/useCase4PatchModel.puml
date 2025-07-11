@@ -1,43 +1,49 @@
 @startuml useCase4PatchModel
 
 class TestProfile_Modify {
-    
+
+}
+TestProfile_Common <|-- TestProfile_Modify
+
+class TestProfile_Common {
+
     description: string
-    isBundled: boolean
-    lifecycleStatus: TestProfileLifecycleStatusType
-    name: string
-    relatedTestProfile: TestProfileRef
-    serviceSpecificTestProfileAttributes: ServiceSpecificTestProfileAttributes
-    relatedServiceSpecification: ServiceSpecificationRef
-    relatedContact: RelatedContact
+    isBundled*: boolean
+    lifecycleStatus*: TestProfileLifecycleStatusType
+    name*: string
+    validFor*: date-time
 }
 
+TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *-->"1" ServiceSpecificationRef : relatedServiceSpecification
+TestProfile_Common *-->"*" RelatedContact : relatedContact
+
 enum TestProfileLifecycleStatusType {
-    experimantal
+
+    experimental
     pending
     approved
     deprecated
 }
 
-class ServiceSpecificTestProfileAttributes {
-    @type*: string <<discriminator>>
-}
+class TestProfileRelationship {
 
-class RelatedContactRef {
     <<... attributes are skipped ...>>
 }
 
-class TestProfileRef {
-    relatedTestProfileId: string
+class ServiceSpecificTestProfileConfiguraton {
+
+    <<... attributes are skipped ...>>
 }
 
 class ServiceSpecificationRef {
-        relatedServiceSpecificationId: string
+
+    <<... attributes are skipped ...>>
 }
 
-TestProfile_Modify *-->"0..1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
-TestProfile_Modify *-->"0..*" TestProfileRef : relatedTestProfile
-TestProfile_Modify *-->"0..*" ServiceSpecificationRef : relatedServiceSpecification
-TestProfile_Modify *-->"0..*" RelatedContactRef : relatedContact
+class RelatedContact {
 
+    <<... attributes are skipped ...>>
+}
 @enduml

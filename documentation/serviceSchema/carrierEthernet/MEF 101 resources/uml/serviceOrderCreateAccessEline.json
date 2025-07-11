@@ -1,0 +1,237 @@
+@startjson
+{
+  "coordinatedAction" : [ {
+    "coordinatedActionDelay" : {
+      "amount" : 15,
+      "units" : "businessHours"
+    },
+    "coordinationDependency" : "startToFinish",
+    "orderId" : "sof-order-0001"
+  } ],
+  "description" : "MEF-SO-Create-AccessELine",
+  "externalId" : "sofOrder-0001",
+  "note" : [ {
+    "author" : "mef_admin",
+    "date" : "2025-06-03T10:21:24.398517-05:00",
+    "id" : "soc-note",
+    "source" : "sof",
+    "text" : "This is an auto-generated ServiceOrderCreate"
+  } ],
+  "orderRelationship" : [ ],
+  "relatedContactInformation" : [ ],
+  "requestedCompletionDate" : "2025-06-03T10:21:24.39981-05:00",
+  "requestedStartDate" : "2025-06-03T10:21:24.399806-05:00",
+  "serviceOrderItem" : [ {
+    "id" : "soi-operator-uni-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:all",
+        "physicalLayer" : [ {
+          "id" : "operator-uni-0001",
+          "physicalLink" : "1000BASE_LX"
+        } ],
+        "synchronousMode" : [ "DISABLED" ],
+        "aggregationLinkMap" : [ ],
+        "envelopes" : [ ],
+        "l2cpPeering" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ {
+      "orderItem" : {
+        "itemId" : "soiref_enni_to_install",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/location-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "INSTALL_LOCATION"
+    } ]
+  }, {
+    "id" : "soi-operator-uni-ovc-ep-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-ovc-end-point:v1.0.0:all",
+        "identifier" : "operator-uni-ovc-ep-0000-1111",
+        "endPointMap" : {
+          "ovcEndPointMapFormT" : [ ],
+          "ovcEndPointMapFormV" : [ ],
+          "ovcEndPointMapFormU" : [ {
+            "ceVlanIdList" : {
+              "vlanIdList" : [ 100, 101, 102, 103 ]
+            }
+          } ],
+          "ovcEndPointMapFormE" : [ ]
+        },
+        "egressMap" : [ ],
+        "cosIngressBwp" : [ ],
+        "egressBwpPerEec" : [ ],
+        "maintenanceEndPointList" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ {
+      "orderItem" : {
+        "itemId" : "soi-operator-uni-0001",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/operator-uni-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "CONNECTS_TO_UNI"
+    }, {
+      "orderItem" : {
+        "itemId" : "soi-ovc-0001",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/ovc-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "UNI_ENDPOINT_OF_OVC"
+    } ]
+  }, {
+    "id" : "soi-enni-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-enni:v1.0.0:all",
+        "peeringIdentifier" : "enni-peering-id-1111",
+        "physicalLayer" : [ {
+          "id" : "enni-phy-id-0001",
+          "physicalLink" : "1000BASE_CX"
+        } ],
+        "aggregationLinkMap" : [ ],
+        "l2cpPeering" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ {
+      "orderItem" : {
+        "itemId" : "INSTALL_LOCATION_Z",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/location-0002",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "INSTALL_LOCATION"
+    }, {
+      "orderItem" : {
+        "itemId" : "soi-enni-service-0001",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/enni-service-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "REQUIRES"
+    } ]
+  }, {
+    "id" : "soi-enni-service-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-enni-service:v1.0.0:all",
+        "operatorEnniIdentifier" : "operator-enni-id-0001",
+        "svlanIdControl" : {
+          "value" : "FULL"
+        },
+        "maximumNumberOfOvcs" : 1,
+        "maximumNumberOfOvcEndPointsPerOvc" : 1,
+        "tokenShare" : "DISABLED",
+        "envelopes" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ ]
+  }, {
+    "id" : "soi-enni-ovc-ep-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-ovc-end-point:v1.0.0:all",
+        "identifier" : "ovc-ep-0000-2222",
+        "endPointMap" : {
+          "ovcEndPointMapForm" : "FORM_E",
+          "ovcEndPointMapFormT" : [ ],
+          "ovcEndPointMapFormV" : [ ],
+          "ovcEndPointMapFormU" : [ ],
+          "ovcEndPointMapFormE" : [ {
+            "sVlanIdList" : {
+              "vlanIdList" : [ 100, 101, 102, 103 ]
+            }
+          } ]
+        },
+        "egressMap" : [ ],
+        "cosIngressBwp" : [ ],
+        "egressBwpPerEec" : [ ],
+        "maintenanceEndPointList" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ {
+      "orderItem" : {
+        "itemId" : "soi-enni-0001",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/operator-enni-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "CONNECTS_TO_ENNI"
+    }, {
+      "orderItem" : {
+        "itemId" : "soi-ovc-0001",
+        "serviceOrderHref" : "{{baseUrl}}/serviceOrderingManagement/ovc-0001",
+        "serviceOrderId" : "sofOrder-0001"
+      },
+      "relationshipType" : "ENNI_ENDPOINT_OF_OVC"
+    } ]
+  }, {
+    "id" : "soi-ovc-0001",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:carrier-ethernet-ovc:v1.0.0:all",
+        "maximumNumberOfUniOvcEndPoints" : 1,
+        "maximumNumberOfEnniOvcEndPoints" : 1,
+        "ceVlanIdPreservation" : "PRESERVE",
+        "ceVlanPcpPreservation" : "ENABLED",
+        "ceVlanDeiPreservation" : "ENABLED",
+        "listOfCosNames" : [ "best-effort" ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ ]
+  } ]
+}
+@endjson

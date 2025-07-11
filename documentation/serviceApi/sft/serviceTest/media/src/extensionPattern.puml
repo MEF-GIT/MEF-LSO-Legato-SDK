@@ -2,8 +2,9 @@
 skinparam {
     ClassBackgroundColor White
     ClassBorderColor Black
-    ClassBorderColor<<ServiceSpecificTestProfileAttributes>> FireBrick
-    ClassBorderColor<<ResultPayload>> FireBrick
+    ClassBorderColor<<ServiceSpecificTestProfileConfiguration>> FireBrick
+    ClassBorderColor<<ServiceSpecificTestJobConfiguration>> FireBrick
+    ClassBorderColor<<ServiceSpecificTestResultConfiguration>> FireBrick
 }
 set namespaceSeparator none
 
@@ -11,24 +12,22 @@ class TestProfile {
 
     id: string
     href: string
-    description: string
-    name: string
     <<... attributes are skipped ...>>
 }
 
 
-class ServiceSpecificTestProfileAttributes {
+class ServiceSpecificTestProfileConfiguration {
     @type*: string <<discriminator>>
 }
 
 
-TestProfile *-->"0..1" ServiceSpecificTestProfileAttributes : servicePayloadSpecificAttributes
+TestProfile *-->"0..1" ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 
-class urn:mef:lso:spec:legato:ip-ping-configuration:v0.0.1:all <<ServiceSpecificTestProfileAttributes>> {
+class urn:mef:lso:spec:legato:ip-ping-test-profile:v0.0.1:all <<serviceSpecificTestProfileConfiguration>> {
 
     <<... attributes are skipped ...>>
 }
-ServiceSpecificTestProfileAttributes <|-- "urn:mef:lso:spec:legato:ip-ping-configuration:v0.0.1:all"
+ServiceSpecificTestProfileConfiguration <|-- "urn:mef:lso:spec:legato:ip-ping-test-profile:v0.0.1:all"
 
 
 
@@ -39,17 +38,36 @@ class TestJob {
     <<... attributes are skipped ...>>
 }
 
-class TestMeasureAttributes {
+class ServiceSpecificTestJobConfiguration {
     @type*: string <<discriminator>>
 }
 
-TestJob *-->"0..1" TestMeasureAttributes : testMeasureAttributes
+TestJob *-->"0..1" ServiceSpecificTestJobConfiguration : serviceSpecificTestJobConfiguration
 
-class urn:mef:lso:spec:legato:ip-ping-results:v0.0.1:all <<TestMeasureAttributes>> {
+class urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all <<serviceSpecificTestJobConfiguration>> {
 
     <<... attributes are skipped ...>>
 }
-TestMeasureAttributes <|-- "urn:mef:lso:spec:legato:ip-ping-results:v0.0.1:all"
+ServiceSpecificTestJobConfiguration <|-- "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all"
 
 
+
+class TestResult {
+
+    id: string 
+    href: string 
+    <<... attributes are skipped ...>>
+}
+
+class ServiceSpecificTestResultConfiguration {
+    @type*: string <<discriminator>>
+}
+
+TestResult *-->"0..1" ServiceSpecificTestResultConfiguration : serviceSpecificTestResultConfiguration
+
+class urn:mef:lso:spec:legato:ping-report:v0.0.1:all <<serviceSpecificTestResultConfiguration>> {
+
+    <<... attributes are skipped ...>>
+}
+ServiceSpecificTestResultConfiguration <|-- "urn:mef:lso:spec:legato:ping-report:v0.0.1:all"
 @enduml

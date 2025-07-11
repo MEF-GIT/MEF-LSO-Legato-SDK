@@ -1,0 +1,132 @@
+@startjson
+
+{
+    "coordinatedAction": [
+        {
+            "coordinatedActionDelay": {
+                "amount": 10,
+                "units": "businessHours"
+            },
+            "coordinationDependency": "startToFinish",
+            "orderId": "100"
+        }
+    ],
+    "description": "MEF Service Order",
+    "externalId": "External-Id-Mef-1",
+    "note": [
+        {
+            "author": "mef-admin",
+            "date": "2025-06-04T08:03:33.287058-05:00",
+            "id": "mef-so-0001",
+            "source": "sof",
+            "text": "Service Order Note"
+        }
+    ],
+    "orderRelationship": [
+        {
+            "serviceOrder": {
+                "href": "{{baseUrl}}/serviceOrderingManagement/LOCATION_A",
+                "id": "LOCATION_A"
+            },
+            "relationshipType": "COMPONENT_OF_ORDER"
+        }
+    ],
+    "relatedContactInformation": [],
+    "requestedCompletionDate": "2025-06-04T08:03:33.287678-05:00",
+    "requestedStartDate": "2025-06-04T08:03:33.287682-05:00",
+    "id": "100",
+    "completionDate": "2025-06-04T08:03:33.287687-05:00",
+    "expectedCompletionDate": "2025-06-04T08:03:33.287685-05:00",
+    "serviceOrderItem": [
+        {
+            "id": "100",
+            "action": "add",
+            "coordinatedAction": [],
+            "note": [],
+            "relatedContactInformation": [],
+            "service": {
+                "href": "{{baseUrl}}/serviceOrderingManagement/op_uni-0001",
+                "id": "100",
+                "description": "MEF Operator UNI",
+                "note": [],
+                "serviceRelationship": [],
+                "relatedContactInformation": [],
+                "place": [],
+                "serviceConfiguration": {
+                    "@type": "urn:mef:lso:spec:service:carrier-ethernet-operator-uni:v1.0.0:all",
+                    "physicalLayer": [
+                        {
+                            "id": "operator-uni-0001",
+                            "physicalLink": "1000BASE_LX"
+                        }
+                    ],
+                    "synchronousMode": [
+                        "DISABLED"
+                    ],
+                    "numberOfLinks": 1,
+                    "linkAggregation": "NONE",
+                    "aggregationLinkMap": [],
+                    "serviceFrameFormat": {
+                        "type": "ETHERNET"
+                    },
+                    "maximumFrameSize": 9000,
+                    "defaultCeVlanId": 100,
+                    "maximumNumberOfEndPoints": 100,
+                    "maxNumOfCtagVlanIdsPerEndPoint": 10,
+                    "ingressBandwidthProfile": {
+                        "cir": {
+                            "irValue": 10,
+                            "irUnits": "GBPS"
+                        },
+                        "cirMax": {
+                            "irValue": 10,
+                            "irUnits": "GBPS"
+                        },
+                        "cbs": {
+                            "dataSizeValue": 10,
+                            "dataSizeUnits": "MBYTES"
+                        },
+                        "eir": {
+                            "irValue": 10,
+                            "irUnits": "GBPS"
+                        },
+                        "eirMax": {
+                            "irValue": 100,
+                            "irUnits": "GBPS"
+                        },
+                        "ebs": {
+                            "dataSizeValue": 5,
+                            "dataSizeUnits": "MBYTES"
+                        }
+                    },
+                    "egressBandwidthProfile": {},
+                    "linkOam": "ENABLED",
+                    "meg": "ENABLED",
+                    "lagLinkMeg": "DISABLED",
+                    "elmi": "DISABLED",
+                    "tokenShare": "DISABLED",
+                    "envelopes": [],
+                    "l2cpAddressSet": "CTA",
+                    "l2cpPeering": [
+                        {
+                            "protocolID": {
+                                "l2cpProtocolType": "ETHERTYPE",
+                                "subType": 3
+                            },
+                            "destinationAddress": "01-80-C2-00-00-02",
+                            "linkIdList": []
+                        }
+                    ]
+                },
+                "serviceOrderItem": []
+            },
+            "serviceOrderItemRelationship": [],
+            "state": "completed",
+            "terminationError": []
+        }
+    ],
+    "startDate": "2025-06-04T08:03:33.287507-05:00",
+    "state": "completed",
+    "orderDate": "2025-06-04T08:03:33.28754-05:00"
+}
+@endjson  

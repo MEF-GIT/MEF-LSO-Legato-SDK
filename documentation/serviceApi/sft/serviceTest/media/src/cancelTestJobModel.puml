@@ -3,8 +3,8 @@
 class CancelTestJob {
 
     cancellationDeniedReason: string
-    creationDate: date-time
-    href: string
+    creationDate*: date-time
+    href*: string
     id*: string
     state*: TestJobProcessStateType
 }
@@ -19,25 +19,11 @@ class CancelTestJob_Common {
 
 CancelTestJob_Common *-->"1" TestJobRef : testJob
 
-class CancelTestJob_Find {
-    creationDate: date-time
-    id*: string
-    state*: TestJobProcessStateType
-}
-CancelTestJob_Find *-->"1" TestJobRef : testJob
-
-
-class CancelTestJob_Create {
-
-}
-CancelTestJob_Common <|-- CancelTestJob_Create
 
 enum TestJobProcessStateType {
 
     accepted
     acknowledged
-    completed
-    declined
     rejected
 }
 

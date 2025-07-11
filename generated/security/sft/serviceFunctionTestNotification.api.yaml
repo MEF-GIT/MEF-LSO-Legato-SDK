@@ -3,20 +3,17 @@ info:
   description: "**This file forms part of MEF W149**\n\n**This specification represents\
     \ MEF work in progress and is subject to\nchange.** \n\nThis API implements Business\
     \ Requirements described in MEF W136.\n\nThis is the API to manage notifications\
-    \ for Test Job and Test Profile. This API must be\ndeployed on notification subscriber\
-    \ side (buyer side / listener).\n\nList of supported use cases:\n  - Send Event\
-    \ Notification\n\nCopyright 2021 MEF Forum and its contributors.\n\nThis file\
-    \ includes content based on the TM Forum Service Test Management API\n(TMF653\
-    \ v4.1.0) available at \nhttps://github.com/tmforum-apis/TMF653_ServiceTestManagement,\
+    \ for Test Job, Test Profile and Test Result. This API must be\ndeployed on notification\
+    \ subscriber side (buyer side / listener).\n\nList of supported use cases:\n \
+    \ - Send Event Notification\n\nCopyright 2025 MEF Forum and its contributors.\n\
+    \nThis file includes content based on the TM Forum Service Test Management API\n\
+    (TMF653 v4.1.0) available at \nhttps://github.com/tmforum-apis/TMF653_ServiceTestManagement,\
     \ which is licensed by \nthe TM Forum under the Apache License version 2.0. Such\
     \ content has been\nmodified by the MEF Forum and its contributors.\n"
   title: Service Function Testing Notification
-  version: 1.0.0-RC
-  x-logo:
-    url: /redoc/logo.png
-    backgroundColor: '#FFFFFF'
+  version: 2.0.0-RC
 servers:
-- url: "https://{serverBase}/mefApi/legato/serviceFunctionTestingNotification/v1/"
+- url: "https://{serverBase}/mefApi/legato/serviceFuctionTestNotification/v2/"
   variables:
     serverBase:
       default: mef.net
@@ -38,7 +35,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/TestJobEvent'
+              $ref: '#/components/schemas/TestJobCreateEvent'
         description: The event data
         required: true
       responses:
@@ -62,12 +59,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -80,56 +71,6 @@ paths:
       summary: Test Job Create Notification endpoint
       tags:
       - Notification listeners
-  /listener/testJobStateChangeEvent:
-    post:
-      description: Client listener for receiving the testJobStateChangeEvent notification
-      operationId: testJobStateChangeEvent
-      requestBody:
-        content:
-          application/json;charset=utf-8:
-            schema:
-              $ref: '#/components/schemas/TestJobEvent'
-        description: The event data
-        required: true
-      responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error400'
-          description: Bad Request
-        "401":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error401'
-          description: Unauthorized
-        "403":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error403'
-          description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
-        "500":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error500'
-          description: Internal Server Error
-      security:
-      - oauth2MEFLSOAPI:
-        - testJobStateChangeEvent
-      summary: Test Job State Change Notification endpoint
-      tags:
-      - Notification listeners
   /listener/testJobAttributeValueChangeEvent:
     post:
       description: This endpoint is used to receive notifications on Test Job attribute
@@ -139,7 +80,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/TestJobEvent'
+              $ref: '#/components/schemas/TestJobAttributeValueChangeEvent'
         description: The event data
         required: true
       responses:
@@ -163,12 +104,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -181,16 +116,15 @@ paths:
       summary: Test Job Attribute Value Change Notification endpoint
       tags:
       - Notification listeners
-  /listener/cancelTestJobStateChangeEvent:
+  /listener/testJobStateChangeEvent:
     post:
-      description: Client listener for receiving the cancelTestJobStateChangeEvent
-        notification
-      operationId: cancelTestJobStateChangeEvent
+      description: Client listener for receiving the testJobStateChangeEvent notification
+      operationId: testJobStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/TestJobProcessEvent'
+              $ref: '#/components/schemas/TestJobStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -214,12 +148,51 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
+        "500":
           content:
             application/json;charset=utf-8:
               schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - testJobStateChangeEvent
+      summary: Test Job State Change Notification endpoint
+      tags:
+      - Notification listeners
+  /listener/cancelTestJobStateChangeEvent:
+    post:
+      description: Client listener for receiving the cancelTestJobStateChangeEvent
+        notification
+      operationId: cancelTestJobStateChangeEvent
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/CancelTestJobProcessStateChangeEvent'
+        description: The event data
+        required: true
+      responses:
+        "204":
+          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
         "500":
           content:
             application/json;charset=utf-8:
@@ -241,7 +214,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/TestJobProcessEvent'
+              $ref: '#/components/schemas/ModifyTestJobProcessStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -265,12 +238,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -292,7 +259,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/TestJobProcessEvent'
+              $ref: '#/components/schemas/SuspendTestJobProcessStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -316,12 +283,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -343,7 +304,7 @@ paths:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/TestJobProcessEvent'
+              $ref: '#/components/schemas/ResumeTestJobProcessStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -367,12 +328,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -394,7 +349,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/TestProfileEvent'
+              $ref: '#/components/schemas/TestProfileCreateEvent'
         description: The event data
         required: true
       responses:
@@ -418,12 +373,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -445,7 +394,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/TestProfileEvent'
+              $ref: '#/components/schemas/TestProfileAttributeValueChangeEvent'
         description: The event data
         required: true
       responses:
@@ -469,12 +418,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -487,15 +430,16 @@ paths:
       summary: Test Profile Attribute Value Change Notification endpoint
       tags:
       - Notification listeners
-  /listener/testProfileStateChangeEvent:
+  /listener/testProfileLifecycleStateChangeEvent:
     post:
-      description: Client listener for receiving the testProfileStateChangeEvent notification
-      operationId: testProfileStateChangeEvent
+      description: Client listener for receiving the testProfileLifecycleStateChangeEvent
+        notification
+      operationId: testProfileLifecycleStateChangeEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/TestProfileEvent'
+              $ref: '#/components/schemas/TestProfileLifecycleStateChangeEvent'
         description: The event data
         required: true
       responses:
@@ -519,12 +463,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -533,8 +471,8 @@ paths:
           description: Internal Server Error
       security:
       - oauth2MEFLSOAPI:
-        - testProfileStateChangeEvent
-      summary: Test Profile State Change Notification endpoint
+        - testProfileLifecycleStateChangeEvent
+      summary: Test Profile Lifecycle State Change Notification endpoint
       tags:
       - Notification listeners
   /listener/testProfileDeleteEvent:
@@ -546,7 +484,7 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/TestProfileEvent'
+              $ref: '#/components/schemas/TestProfileDeleteEvent'
         description: The event data
         required: true
       responses:
@@ -570,12 +508,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "408":
-          content:
-            application/json;charset=utf-8:
-              schema:
-                $ref: '#/components/schemas/Error408'
-          description: Request Time-out
         "500":
           content:
             application/json;charset=utf-8:
@@ -588,24 +520,84 @@ paths:
       summary: Test Profile Delete Notification endpoint
       tags:
       - Notification listeners
+  /listener/testResultCreateEvent:
+    post:
+      description: This endpoint is used to receive notifications on Test Result Create
+        Event
+      operationId: testResultCreateEvent
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/TestResultCreateEvent'
+        description: The event data
+        required: true
+      responses:
+        "204":
+          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      security:
+      - oauth2MEFLSOAPI:
+        - testResultCreateEvent
+      summary: Test Result Create Notification endpoint
+      tags:
+      - Notification listeners
 components:
   schemas:
+    CancelTestJobProcessStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - cancelTestJobStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobProcessEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
     Error:
       description: |
-        Standard Class used to describe API response error
-        Not intended to be use directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
+        Standard Class used to describe API response error Not intended to be used directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
       properties:
+        message:
+          description: Text that provides mode details and corrective actions related
+            to the error. This can be shown to a client user.
+          type: string
         reason:
-          description: Text that explains the reason for error. This can be shown
+          description: Text that explains the reason for the error. This can be shown
             to a client user.
           maxLength: 255
           type: string
-        message:
-          description: Text that provide mode details and corrective actions related
-            to the error. This can be shown to a client user.
-          type: string
         referenceError:
-          description: url pointing to documentation describing the error
+          description: URL pointing to documentation describing the error
           format: uri
           type: string
       required:
@@ -622,10 +614,12 @@ components:
         type: object
       description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
     Error400Code:
-      description: |-
+      description: |
         One of the following error codes:
-        - missingQueryParameter: The URI is missing a required query-string parameter
-        - missingQueryValue: The URI is missing a required query-string parameter value
+        - missingQueryParameter: The URI is missing a required query-string
+        parameter
+        - missingQueryValue: The URI is missing a required query-string
+        parameter value
         - invalidQuery: The query section of the URI is invalid.
         - invalidBody: The request has an invalid body
       enum:
@@ -645,7 +639,7 @@ components:
         type: object
       description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
     Error401Code:
-      description: |-
+      description: |
         One of the following error codes:
         - missingCredentials: No credentials provided.
         - invalidCredentials: Provided credentials are invalid or expired
@@ -662,7 +656,8 @@ components:
         required:
         - code
         type: object
-      description: Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+      description: Forbidden. This code indicates that the server understood the request
+        but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
     Error403Code:
       description: |-
         This code indicates that the server understood
@@ -676,29 +671,82 @@ components:
       - forbiddenRequester
       - tooManyUsers
       type: string
-    Error408:
+    Error404:
       allOf:
       - $ref: '#/components/schemas/Error'
       - properties:
           code:
-            description: |-
-              List of supported error codes:
-              - timeOut: Request Time-out - indicates that the server did not receive a complete request message within the time that it was prepared to wait.
+            description: |
+              The following error code:
+              - notFound: A current representation for the target resource
+              not found
             enum:
-            - timeOut
+            - notFound
             type: string
         required:
         - code
         type: object
-      description: Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)
+      description: Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+    Error409:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |
+              The following error code:
+              - conflict: The client has provided a value whose semantics are
+              not appropriate for the property.
+            enum:
+            - conflict
+            type: string
+        required:
+        - code
+        type: object
+      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
+    Error422:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error422Code'
+          propertyPath:
+            description: |
+              A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
+              Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
+            type: string
+        required:
+        - code
+        type: object
+      description: Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
+    Error422Code:
+      description: |
+        One of the following error codes:
+          - missingProperty: The property the Seller has expected is not present in the payload
+          - invalidValue: The property has an incorrect value
+          - invalidFormat: The property value does not comply with the expected value format
+          - referenceNotFound: The object referenced by the property cannot be identified in the Seller system
+          - unexpectedProperty: Additional property, not expected by the Seller has been provided
+          - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
+          - otherIssue: Other problem was identified (detailed information provided in a reason)
+      enum:
+      - missingProperty
+      - invalidValue
+      - invalidFormat
+      - referenceNotFound
+      - unexpectedProperty
+      - tooManyRecords
+      - otherIssue
+      type: string
     Error500:
       allOf:
       - $ref: '#/components/schemas/Error'
       - properties:
           code:
-            description: |-
-              One of the following error codes:
-              - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
+            description: |
+              The following error code:
+              - internalError: Internal server error - the server encountered
+              an unexpected condition that prevented it from fulfilling the
+              request.
             enum:
             - internalError
             type: string
@@ -706,6 +754,22 @@ components:
         - code
         type: object
       description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+    Error501:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - notImplemented: Method not supported by the server
+            enum:
+            - notImplemented
+            type: string
+        required:
+        - code
+        type: object
+      description: Not Implemented. Used in case Seller is not supporting an optional
+        operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
     Event:
       description: Event class is used to describe information structure used for
         notification.
@@ -717,18 +781,110 @@ components:
           description: Date-time when the event occurred
           format: date-time
           type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
+      - event
       - eventId
       - eventTime
+      - eventType
       type: object
-    TestJobEvent:
+    ModifyTestJobProcessStateChangeEvent:
       allOf:
       - $ref: '#/components/schemas/Event'
       - properties:
           eventType:
-            $ref: '#/components/schemas/TestJobEventType'
+            description: |
+              Indicates the type of the event.
+            enum:
+            - modifyTestJobStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobProcessEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    SuspendTestJobProcessStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - suspendTestJobStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobProcessEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    ResumeTestJobProcessStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - resumeTestJobStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobProcessEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestJobCreateEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testJobCreateEvent
+            type: string
           event:
             $ref: '#/components/schemas/TestJobEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestJobAttributeValueChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testJobAttributeValueChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestJobStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testJobStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestJobStateChangeEventPayload'
         required:
         - event
         - eventType
@@ -745,25 +901,41 @@ components:
       required:
       - id
       type: object
-    TestJobEventType:
-      description: Indicates the type of Test Job event.
-      enum:
-      - testJobCreateEvent
-      - testJobAttributeValueChangeEvent
-      - testJobStateChangeEvent
-      type: string
-    TestJobProcessEvent:
+    TestJobStateChangeEventPayload:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - properties:
-          eventType:
-            $ref: '#/components/schemas/TestJobProcessEventType'
-          event:
-            $ref: '#/components/schemas/TestJobProcessEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+      - $ref: '#/components/schemas/TestJobEventPayload'
+      - type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/TestJobStateType'
+      required:
+      - state
+    TestJobStateType:
+      description: |-
+        The state of the Test Job.
+
+        | State                    | MEF W136.1 name        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | -------------------------| -----------------------| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | `acknowledged`           | ACKNOWLEDGED           | The Create Test Job request has been received from the Buyer/Client and the Seller/Server has assigned a Test Job Identifier to it. If the request attributes fail validation, the Create Test Job moves to the REJECTED state. If the attributes pass validation, it is then determined if the Create Test Job Start Date Time is immediate or if the Create Test Job Start Date Time indicates that the Test Job is to be scheduled for a later date time. If the Test Job is to be scheduled the Test Job moves to the SCHEDULED state and awaits the scheduled date and time. If the Test Job is to be performed immediately, the Test Job moves to the IN_PROGRESS state and Test Results begin.|
+        | `assessingCancelation`   | ASSESSING_CANCELLATION | A Cancel Test Job  request is received while the Test Job is in the IN_PROGRESS, SUSPENDED or SCHEDULED state. If the Cancel Test Job request is approved, the Test Job moves to the CANCELLED state. If not, the Test Job returns to the IN_PROGRESS, SUSPENDED or SCHEDULED state.                                                                                                                                                                                                                                                                                                                                                                                                                 |
+        | `assessingModification`  | ASSESSING_MODIFICATION | A Modify Test Job request was received while the Test Job is in the SUSPENDED or SCHEDULED state. If the Modify Test Job is accepted, the Test Job is updated. If the Modify Test Job is declined, the Test Job is not updated and returns to the SUSPENDED or SCHEDULED state.                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | `cancelled`              | CANCELLED              | A Cancel Test Job request is received from the Buyer/Client.  If the request is accepted, the Test Job moves to the CANCELLED state.  The Test Job must be in the IN_PROGRESS, SCHEDULED, or SUSPENDED, state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+        | `completed`              | COMPLETED              | The Test Job has reached the End Date Time or has completed all Test Measurements and provided Test Results.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+        | `inProgress`             | IN_PROGRESS            | Whether an immediate request or a scheduled request, the Test Job moves to the IN_PROGRESS state when it begins performing Test Results. If a Cancel Test Job request is received and accepted, the Test Job moves to the CANCELLED state. If the Cancel Test Job request is declined, the Test Job returns to the IN_PROGRESS state and continues Test Results until they are completed. If a Suspend Test Job request is received, the Test Job moves to the SUSPENDED state.                                                                                                                                                                                                                      |
+        | `rejected`               | REJECTED               | The Create Test Job request fails validation and is rejected.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+        | `scheduled`              | SCHEDULED              | The Test Job is scheduled to start at a later time. The Test Job stays in the SCHEDULED state until the Start Date and Time is reached. The Test Job moves to IN_PROGRESS when the Start Date and Time is reached. A Test Job with the state SCHEDULED can be moved to the SUSPENDED or CANCELLED state.                                                                                                                                                                                                                                                                                                                                                                                             |
+        | `suspended`              | SUSPENDED              | A Test Job in the IN_PROGRESS or SCHEDULED state receives a Suspend Test Job request. The Test Job moves to the SUSPENDED state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+      enum:
+      - acknowledged
+      - assessingCancelation
+      - assessingModification
+      - cancelled
+      - completed
+      - inProgress
+      - rejected
+      - scheduled
+      - suspended
+      type: string
     TestJobProcessEventPayload:
       description: The identifier of the Test Job Process being subject of this event.
       properties:
@@ -773,25 +945,86 @@ components:
         href:
           description: Hyperlink to access the Test Job Process
           type: string
+        state:
+          $ref: '#/components/schemas/TestJobProcessStateType'
       required:
       - id
+      - state
       type: object
-    TestJobProcessEventType:
-      description: Indicates the type of Test Job Process Event.
+    TestJobProcessStateType:
+      description: |-
+        The state of the process related to Test Job
+
+        | state          | MEF W136.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+        | -------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `accepted`     | ACCEPTED        | The Modify/Cancel/Resume/Suspend Test Job request has been accepted and processed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                               |
+        | `acknowledged` | ACKNOWLEDGED    | The Modify/Cancel/Resume/Suspend Test Job request has been received by the Seller/Server and has passed basic validation. Test Job Process Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated, the request moves to the Accepted state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `rejected`     | REJECTED        | The Modify/Cancel/Resume/Suspend Test Job request has been rejected by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                             |
       enum:
-      - cancelTestJobStateChangeEvent
-      - modifyTestJobStateChangeEvent
-      - suspendTestJobStateChangeEvent
-      - resumeTestJobStateChangeEvent
+      - accepted
+      - acknowledged
+      - rejected
       type: string
-    TestProfileEvent:
+    TestProfileCreateEvent:
       allOf:
       - $ref: '#/components/schemas/Event'
       - properties:
           eventType:
-            $ref: '#/components/schemas/TestProfileEventType'
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testProfileCreateEvent
+            type: string
           event:
             $ref: '#/components/schemas/TestProfileEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestProfileAttributeValueChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testProfileAttributeValueChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestProfileEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestProfileDeleteEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testProfileDeleteEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestProfileEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestProfileLifecycleStateChangeEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testProfileLifecycleStateChangeEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestProfileLifecycleStateChangeEventPayload'
         required:
         - event
         - eventType
@@ -808,14 +1041,55 @@ components:
       required:
       - id
       type: object
-    TestProfileEventType:
-      description: Indicates the type of Test Profile event.
+    TestProfileLifecycleStateChangeEventPayload:
+      allOf:
+      - $ref: '#/components/schemas/TestProfileEventPayload'
+      - type: object
+      properties:
+        lifecycleState:
+          $ref: '#/components/schemas/TestProfileLifecycleStateType'
+      required:
+      - state
+    TestProfileLifecycleStateType:
+      description: |-
+        Current lifecycle status of the Test Profile.
+
+        | State          | MEF W136.1 name     | Description                                                                                    |
+        | -------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
+        | `assigned`     | ASSIGNED            | The Test Profile has been  assigned to a Test Job.                                             |
+        | `available`    | AVAILABLE           | The Test Profile has been created or modified and is ready for users to specify in a Test Job. |
       enum:
-      - testProfileCreateEvent
-      - testProfileAttributeValueChangeEvent
-      - testProfileDeleteEvent
-      - testProfileStateChangeEvent
+      - assigned
+      - available
       type: string
+    TestResultCreateEvent:
+      allOf:
+      - $ref: '#/components/schemas/Event'
+      - properties:
+          eventType:
+            description: |
+              Indicates the type of the event.
+            enum:
+            - testResultCreateEvent
+            type: string
+          event:
+            $ref: '#/components/schemas/TestResultEventPayload'
+        required:
+        - event
+        - eventType
+        type: object
+    TestResultEventPayload:
+      description: The identifier of the Test Result being subject of this event.
+      properties:
+        id:
+          description: ID of the Test Result
+          type: string
+        href:
+          description: Hyperlink to access the Test Result
+          type: string
+      required:
+      - id
+      type: object
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code

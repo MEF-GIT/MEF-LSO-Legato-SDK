@@ -63,6 +63,14 @@ Error <|-- Error404
 
 
 
+class Error409 {
+
+    code*: string
+}
+Error <|-- Error409
+
+
+
 class Error422 {
 
     code*: Error422Code
@@ -79,10 +87,7 @@ enum Error422Code {
     invalidFormat
     referenceNotFound
     unexpectedProperty
-    tooLargeDataset
     tooManyRecords
-    tooManyRequests
-    performanceProfileInUse
     otherIssue
 }
 class Error500 {
@@ -98,6 +103,7 @@ class Error501 {
     code*: string
 }
 Error <|-- Error501
+
 
 
 @enduml

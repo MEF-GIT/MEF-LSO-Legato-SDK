@@ -2,11 +2,11 @@
 
 class SuspendTestJob {
 
-    creationDate: date-time
-    href: string
+    suspensionDeniedReason: string
+    creationDate*: date-time
+    href*: string
     id*: string
     state*: TestJobProcessStateType
-    suspensionDeniedReason: string
 }
 SuspendTestJob_Common <|-- SuspendTestJob
 
@@ -19,25 +19,10 @@ class SuspendTestJob_Common {
 
 SuspendTestJob_Common *-->"1" TestJobRef : testJob
 
-
-class SuspendTestJob_Create {
-
-}
-SuspendTestJob_Common <|-- SuspendTestJob_Create
-
-class SuspendTestJob_Find {
-    creationDate: date-time
-    id*: string
-    state*: TestJobProcessStateType
-}
-SuspendTestJob_Find *-->"1" TestJobRef : testJob
-
 enum TestJobProcessStateType {
 
     accepted
     acknowledged
-    completed
-    declined
     rejected
 }
 

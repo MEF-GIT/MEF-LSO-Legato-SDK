@@ -1,77 +1,85 @@
 @startuml testJobWithoutTestProfileModel
 
-enum RecurencePeriodType {
-    none
-    hourly
-    daily
-    weekly
-    monthly
+class TestJob_Common {
+
+    name*: string
+    description: string
+    startDateTime: date-time
+    endDateTime*: date-time
+    validFor*: date-time
 }
-enum TestJobStateType{
+
+class TestJob {
+
+    actualStartDateTime: date-time
+    actualEndDateTime: date-time
+    creationDate*: date-time
+    href*: uri
+    id*: string
+    lastModifiedDate*: date-time
+    state*: TestJobStateType
+}
+TestJob_Common <|-- TestJob
+
+enum TestJobStateType {
+
     acknowledged
-    canceled
+    assessing_cancelation
+    assessing_modification
+    cancelled
     completed
     in_progress
-    pending
     rejected
-    resource_unavailable
     scheduled
     suspended
 }
 
-class TestJob_Common {
-    name: string
-    description: string
-    startDateTime: date-time
-    endDateTime: date-time
-    recurencePeriod: RecurencePeriodType
-    validFor: date-time
-}
-class TestJob {
-    id: string
-    actualStartDateTime: date-time
-    actualEndDateTime: date-time
-    state: TestJobStateType
-}
-class TestJob_Create {
 
-}
-class TestMeasureAttributes {
-    @type*: string
-}
-class TestProfileRefOrValue {
-    @type*: string
-}
-class ServiceRef {
-    id*: string
-    name: string
-}
-class TestProfileValue {
-
-    description: string
-    relatedServiceSpecificationId: string
-}
-class ServiceSpecificTestProfileAttributes {
-    @type*: string
-}
-class RelatedContact {
-
-    name: string
-    phoneNumber: string
-    phoneNumberExtension: string
-    emailAddress: string
-    postalAddress: string
-    organization: string
-}
-
-
-TestJob_Common <|-- TestJob
-TestJob_Common <|-- TestJob_Create
-TestJob_Common *-->"1" ServiceRef : relatedService
+TestJob_Common *--> Duration : recurrencePeriod
 TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
-TestJob_Common *-->"1" TestMeasureAttributes : testMeasureAttributes
+TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
+TestJob_Common *-->"1" ServiceRef : relatedServiceTo
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+
+class ServiceSpecificTestJobConfiguraton {
+    <<... attributes are skipped ...>>
+}
+
+class Duration {
+
+    <<... attributes are skipped ...>>
+}
+
+class TestProfileRefOrValue {
+
+    @type*: string
+}
+
 TestProfileRefOrValue <|-- TestProfileValue
-TestProfileValue *-->"1" ServiceSpecificTestProfileAttributes : serviceSpecificTestProfileAttributes
+
+TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
 TestProfileValue *-->"*" RelatedContact : relatedContact
 
+class ServiceSpecificTestProfileConfiguraton {
+    @type*: string
+}
+class ServiceSpecificationRef {
+    href: uri
+    id*: string
+}
+
+class RelatedContact {
+    emailAddress: string
+    name: string
+    organization: string
+    phoneNumber: string
+    phoneNumberExtension: string
+    postalAddress: string
+}
+
+class ServiceRef {
+
+<<... attributes are skipped ...>>
+}
 @enduml
