@@ -9,7 +9,7 @@ class FaultManagementJob {
     rejectionReason: string
     state*: FaultManagementJobStateType
 }
-FaultManagementJob_Common <|-- FaultManagementJob
+FaultManagementJob_Create <|-d- FaultManagementJob
 
 
 
@@ -26,28 +26,23 @@ enum FaultManagementJobStateType {
     scheduled
     suspended
 }
-class FaultManagementJob_Common {
-
-    description: string
-    granularity*: Interval
-    jobPriority: integer
-    jobType*: JobType
-    outputFormat*: OutputFormat
-    reportingPeriod*: Interval
-    resultFormat*: ResultFormat
-}
 
 class FaultManagementJob_Create {
 
+    description: string
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
 }
-FaultManagementJob_Common <|-- FaultManagementJob_Create
 
+FaultManagementJob_Create *-u->"1" TimeDuration : granularity
+FaultManagementJob_Create *-r->"1" MonitoredObjectRef : monitoredObject
+FaultManagementJob_Create *-u->"1" TimeDuration : reportingPeriod
+FaultManagementJob_Create *-l->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJob_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-FaultManagementJob_Common *-l->"1" ScheduleDefinition : scheduleDefinition
-FaultManagementJob_Common *-->"1" ServiceId : serviceId
-FaultManagementJob_Common *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-class ServicePayloadSpecificAttributes {
+class ServiceSpecificConfiguration {
 
     @type*: string
 }

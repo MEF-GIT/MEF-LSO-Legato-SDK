@@ -4,56 +4,6 @@ skinparam {
     ClassBorderColor Black
 }
 
-class AttachmentURL {
-
-    retentionPeriod: date-time
-    url*: uri
-}
-
-class HourRange {
-
-    start: date-time
-    end: date-time
-}
-
-enum Interval {
-
-    10 milliseconds
-    100 milliseconds
-    1 second
-    10 seconds
-    1 minute
-    5 minutes
-    15 minutes
-    30 minutes
-    1 hour
-    24 hours
-    1 month
-    1 year
-}
-
-enum JobType {
-
-    proactive
-    on-demand
-    passive
-}
-
-class MeasurementTime {
-
-    measurementStartDate: date-time
-    measurementEndDate: date-time
-    measurementInterval: Interval
-}
-
-enum OutputFormat {
-
-    json
-    xml
-    avro
-    csv
-}
-
 class FaultManagementJob {
 
     creationDate*: date-time
@@ -63,51 +13,26 @@ class FaultManagementJob {
     rejectionReason: string
     state*: FaultManagementJobStateType
 }
-FaultManagementJob_Common <|-- FaultManagementJob
-
-class FaultManagementJobComplexQuery {
-
-    creationDate*: date-time
-    description: string
-    granularity*: Interval
-    jobPriority: integer
-    jobType*: JobType
-    lastModifiedDate: date-time
-    outputFormat*: OutputFormat
-    reportingPeriod*: Interval
-    resultFormat*: ResultFormat
-    state*: FaultManagementJobStateType
-}
-
-FaultManagementJobComplexQuery *-u->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementJobComplexQuery *-->"1" ScheduleDefinition : scheduleDefinition
-FaultManagementJobComplexQuery *-->"1" ServiceId : serviceId
-FaultManagementJobComplexQuery *-u->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+FaultManagementJob_Create <|-- FaultManagementJob
 
 class FaultManagementJobComplexQuery_Create {
 
     creationDate.gt: date-time
     creationDate.lt: date-time
-    granularity: Interval
     jobPriority: integer
     jobType: JobType
     lastModifiedDate.gt: date-time
     lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
-    reportingPeriod: Interval
     resultFormat: ResultFormat
     state: FaultManagementJobStateType
 }
 
+FaultManagementJobComplexQuery_Create *--> TimeDuration : granularity
+FaultManagementJobComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+FaultManagementJobComplexQuery_Create *--> TimeDuration : reportingPeriod
 FaultManagementJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
-FaultManagementJobComplexQuery_Create *--> ServiceId : serviceId
-FaultManagementJobComplexQuery_Create *-u-> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
-
-class FaultManagementJobRef {
-
-    faultManagementJobHref: string
-    faultManagementJobId*: string
-}
+FaultManagementJobComplexQuery_Create *-u-> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum FaultManagementJobStateType {
 
@@ -122,42 +47,72 @@ enum FaultManagementJobStateType {
     scheduled
     suspended
 }
-
-class FaultManagementJob_Common {
+class FaultManagementJob_Create {
 
     description: string
-    granularity*: Interval
     jobPriority: integer
     jobType*: JobType
     outputFormat*: OutputFormat
-    reportingPeriod*: Interval
     resultFormat*: ResultFormat
 }
 
-FaultManagementJob_Common *-->"1" ScheduleDefinition : scheduleDefinition
-FaultManagementJob_Common *-->"1" ServiceId : serviceId
-FaultManagementJob_Common *-u->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+FaultManagementJob_Create *-->"1" TimeDuration : granularity
+FaultManagementJob_Create *-->"1" MonitoredObjectRef : monitoredObject
+FaultManagementJob_Create *-->"1" TimeDuration : reportingPeriod
+FaultManagementJob_Create *-->"1" ScheduleDefinition : scheduleDefinition
+FaultManagementJob_Create *-u->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-class FaultManagementJob_Create {
+
+class MonitoredObjectRef {
 
 }
-FaultManagementJob_Common <|-u- FaultManagementJob_Create
 
-class FaultManagementJob_Find {
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
 
-    creationDate*: date-time
-    description: string
-    granularity*: Interval
-    id*: string
-    jobPriority: integer
-    jobType*: JobType
-    outputFormat*: OutputFormat
-    reportingPeriod*: Interval
-    state*: FaultManagementJobStateType
+class EntityRef {
+
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
 }
 
-FaultManagementJob_Find *-->"1" ScheduleDefinition : scheduleDefinition
-FaultManagementJob_Find *-->"1" ServiceId : serviceId
+class ServiceFromToRef {
+
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+class ServiceRef {
+
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class HourRange {
+
+    start*: string
+    end*: string
+}
+
+enum JobType {
+
+    proactive
+    on-demand
+    passive
+}
+
+enum OutputFormat {
+
+    json
+    xml
+    avro
+    csv
+}
 
 class RecurringSchedule {
 
@@ -177,29 +132,38 @@ enum ResultFormat {
     payload
 }
 
-class ResultPayload {
-
-    @type*: string
-}
-
 class ScheduleDefinition {
 
     scheduleDefinitionStartTime: date-time
     scheduleDefinitionEndTime: date-time
-    executionDuration: Interval
 }
 
 ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+ScheduleDefinition *--> TimeDuration : executionDuration
 
-class ServiceId {
-
-    serviceIdFrom*: string
-    serviceIdTo*: string
-}
-
-class ServicePayloadSpecificAttributes {
+class ServiceSpecificConfiguration {
 
     @type*: string
+}
+
+class TimeDuration {
+
+    timeDurationValue*: integer
+    timeDurationUnits*: TimeDurationUnits
+}
+
+enum TimeDurationUnits {
+
+    NS
+    US
+    MS
+    SEC
+    MIN
+    HOUR
+    DAY
+    WEEK
+    MONTH
+    YEAR
 }
 
 class TrackingRecord {
@@ -210,15 +174,6 @@ class TrackingRecord {
     relatedObjectId*: string
     request: string
     system: string
-    user: string
-}
-
-class TrackingRecord_Find {
-
-    creationDate*: date-time
-    description: string
-    id*: string
-    relatedObjectId*: string
     user: string
 }
 

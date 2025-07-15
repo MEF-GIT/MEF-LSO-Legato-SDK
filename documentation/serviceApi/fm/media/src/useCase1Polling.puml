@@ -14,7 +14,7 @@ alt successful inquiry
   
   ...
 
-  loop periodically until FaultManagementJob in Scheduled/In-Progress/\nRejected/ResourceUnavailable state
+  loop periodically until FaultManagementJob in scheduled/inProgress/\nrejected/resourceUnavailable state
       B -> S :   GET {{baseUrl}}/faultManagementJob/{{id}}
       return 200 FaultManagementJob in current state
   end

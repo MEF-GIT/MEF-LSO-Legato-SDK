@@ -1,27 +1,9 @@
 @startuml faultManagementReportComplexQueryModel
 
-class FaultManagementReportComplexQuery {
-
-    creationDate*: date-time
-    description: string
-    lastModifiedDate: date-time
-    state*: FaultManagementReportStateType
-}
-
-FaultManagementReportComplexQuery *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReportComplexQuery *-->"1" FaultManagementReportRef : faultManagementReport
-FaultManagementReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
-
-
-
 class FaultManagementReportComplexQuery_Create {
 
     creationDate.gt: date-time
     creationDate.lt: date-time
-    faultManagementJobId: string
-    granularity: Interval
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
@@ -31,7 +13,10 @@ class FaultManagementReportComplexQuery_Create {
     state: FaultManagementReportStateType
 }
 
-FaultManagementReportComplexQuery_Create *-->"0..1" ServiceId : serviceId
-FaultManagementReportComplexQuery_Create *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+FaultManagementReportComplexQuery_Create *--> FaultManagementJobRef : faultManagementJob
+FaultManagementReportComplexQuery_Create *--> TimeDuration : granularity
+FaultManagementReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+FaultManagementReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
 
 @enduml

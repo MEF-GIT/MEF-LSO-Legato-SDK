@@ -2,8 +2,8 @@
 skinparam {
     ClassBackgroundColor White
     ClassBorderColor Black
-    ClassBorderColor<<ServicePayloadSpecificAttributes>> FireBrick
-    ClassBorderColor<<ResultPayload>> FireBrick
+    ClassBorderColor<<ServiceSpecificConfiguration>> FireBrick
+    ClassBorderColor<<ServiceSpecificResult>> FireBrick
 }
 set namespaceSeparator none
 
@@ -18,18 +18,18 @@ class FaultManagementJob {
 }
 
 
-class ServicePayloadSpecificAttributes {
+class ServiceSpecificConfiguration {
     @type*: string <<discriminator>>
 }
 
 
-FaultManagementJob *-->"1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+FaultManagementJob *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-class urn:mef:lso:spec:legato:ip-fault-management-test-configuration:v0.0.1:all <<ServicePayloadSpecificAttributes>> {
+class urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all <<ServiceSpecificConfiguration>> {
 
     <<... attributes are skipped ...>>
 }
-ServicePayloadSpecificAttributes <|-- "urn:mef:lso:spec:legato:ip-fault-management-test-configuration:v0.0.1:all"
+ServiceSpecificConfiguration <|-- "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all"
 
 
 
@@ -44,17 +44,17 @@ class ReportContentItem {
 
 }
 
-class ResultPayload {
+class ServiceSpecificResult {
     @type*: string <<discriminator>>
 }
 
 FaultManagementReport *-->"0..*" ReportContentItem : reportContent
-ReportContentItem -->"*" ResultPayload : measurementDataPoints
+ReportContentItem -->"*" ServiceSpecificResult : measurementDataPoint
 
-class urn:mef:lso:spec:legato:ip-fault-management-test-results:v0.0.1:all <<ResultPayload>> {
+class urn:mef:lso:spec:legato:ping-report:v0.0.1:all <<ServiceSpecificResult>> {
 
     <<... attributes are skipped ...>>
 }
-ResultPayload <|-- "urn:mef:lso:spec:legato:ip-fault-management-test-results:v0.0.1:all"
+ServiceSpecificResult <|-- "urn:mef:lso:spec:legato:ping-report:v0.0.1:all"
 
 @enduml

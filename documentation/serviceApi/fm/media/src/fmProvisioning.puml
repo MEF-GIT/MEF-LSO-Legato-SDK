@@ -33,37 +33,36 @@ FMJ -> Hub: stateChangeEvent
 Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
 end
 
-FMJ -> FMJ: generateData
+create entity FaultManagementReport as FMR
+FMJ -> FMR: <<create>>
 
-note right of FMJ: reportingPeriod elapses
-
-create entity FaultManagementReport as PR
-FMJ -> PR: <<create>>
-
-activate PR
+activate FMR
 
 opt
-PR -> Hub: createEvent
+FMR -> Hub: createEvent
 Hub -> B: notifyListeners (faultManagementReportCreateEvent)
 end
 
-PR -> PR: state: inProgress
+FMR -> FMR: state: inProgress
 
 opt
-PR -> Hub: stateChangeEvent
+FMR -> Hub: stateChangeEvent
 Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
 end
 
-PR -> PR: collectData
+FMJ -> FMR: collectData
 
-PR -> PR: state: completed
+note right of FMJ: reportingPeriod elapses
+
+
+FMR -> FMR: state: completed
 
 opt
-PR -> Hub: stateChangeEvent
+FMR -> Hub: stateChangeEvent
 Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
 end
 
-PR --> FMJ: (report completed)
+FMR --> FMJ: (report completed)
 
 opt
 FMJ -> Hub: reportReadyEvent
@@ -80,7 +79,7 @@ Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
 end
 
 B -> SOF: getReport
-SOF -> PR: <<retrieve>>
+SOF -> FMR: <<retrieve>>
 SOF --> B: Response (FaultManagementReport)
 
 entity Hub

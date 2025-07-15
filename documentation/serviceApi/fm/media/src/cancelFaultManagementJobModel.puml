@@ -2,27 +2,21 @@
 
 class CancelFaultManagementJob {
 
-    cancellationDeniedReason: string
     creationDate*: date-time
     href: string
     id*: string
     state*: FaultManagementJobProcessStateType
 }
-CancelFaultManagementJob_Common <|-- CancelFaultManagementJob
+CancelFaultManagementJob_Create <|-- CancelFaultManagementJob
 
-
-
-class CancelFaultManagementJob_Common {
-    cancellationReason: string
-}
-
-CancelFaultManagementJob_Common *-->"1" FaultManagementJobRef : faultManagementJob
 
 
 class CancelFaultManagementJob_Create {
 
 }
-CancelFaultManagementJob_Common <|-- CancelFaultManagementJob_Create
+
+CancelFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
+
 
 enum FaultManagementJobProcessStateType {
     acknowledged

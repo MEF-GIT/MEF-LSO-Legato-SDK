@@ -4,7 +4,7 @@ autonumber
 actor "Buyer/Client" as B
 
 entity FaultManagementJob as FJ
-entity FaultManagementReport as PR
+entity FaultManagementReport as FMR
 
 B -> FJ: POST /faultManagementJob request
 activate FJ
@@ -14,24 +14,22 @@ note right of FJ: On scheduled date
 
 FJ -> FJ: state: inProgress
 
-FJ -> FJ: generate data
+FJ --> FMR: (causes report creation)
 
-FJ --> PR: (causes report creation)
+activate FMR
 
-activate PR
+FMR -> FMR: state: inProgress
 
-PR -> PR: state: inProgress
+FJ -> FMR: collect data
 
-PR -> PR: collect data
+FMR -> FMR: state: completed
 
-PR -> PR: state: completed
-
-PR --> FJ: (report completed)
+FMR --> FJ: (report completed)
 
 note right of FJ: non-recurring Job
 FJ -> FJ: state: completed
 
-B -> PR: GET /faultManagementReport
-PR --> B: FaultManagement Report content
+B -> FMR: GET /faultManagementReport
+FMR --> B: Fault Management Report content
 
 @enduml

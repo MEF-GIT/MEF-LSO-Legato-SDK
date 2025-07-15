@@ -1,14 +1,21 @@
 @startuml useCase13Model
 
 class FaultManagementReport_Find {
+
     creationDate*: date-time
     description: string
     id*: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
     state*: FaultManagementReportStateType
 }
 
-FaultManagementReport_Find *--> "1" FaultManagementJobRef : faultManagementJob
-FaultManagementReport_Find *--> "1" ReportingTimeframe : reportingTimeframe
+FaultManagementReport_Find *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport_Find *-->"1" TimeDuration : granularity
+FaultManagementReport_Find *-->"1" MonitoredObjectRef : monitoredObject
+FaultManagementReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+FaultManagementReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
 
 enum FaultManagementReportStateType {
 
@@ -24,5 +31,6 @@ class FaultManagementJobRef {
     faultManagementJobHref: string
     faultManagementJobId*: string
 }
+
 
 @enduml

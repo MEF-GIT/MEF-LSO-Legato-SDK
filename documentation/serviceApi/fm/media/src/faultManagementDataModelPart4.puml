@@ -11,11 +11,15 @@ class Error {
     referenceError: uri
 }
 
+
+
 class Error400 {
 
     code*: Error400Code
 }
 Error <|-- Error400
+
+
 
 enum Error400Code {
 
@@ -30,6 +34,8 @@ class Error401 {
 }
 Error <|-- Error401
 
+
+
 enum Error401Code {
 
     missingCredentials
@@ -40,6 +46,8 @@ class Error403 {
     code*: Error403Code
 }
 Error <|-- Error403
+
+
 
 enum Error403Code {
 
@@ -60,6 +68,7 @@ class Error422 {
 }
 Error <|-- Error422
 
+
 enum Error422Code {
 
     missingProperty
@@ -75,6 +84,8 @@ class Error500 {
     code*: string
 }
 Error <|-- Error500
+
+
 
 class Error501 {
 

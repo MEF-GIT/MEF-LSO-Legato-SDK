@@ -13,14 +13,14 @@ img
 <div style="font-weight:bold; font-size:33pt; font-family: Sansation;  text-align:center">
 Working Draft
 </br>
-MEF W148 v0.1
+MEF W148 v0.2
 </br>
 </br>
 LSO Allegro, LSO Interlude and LSO Legato Fault Management API - Developer Guide
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">This draft represents MEF work in progress and is subject to change.</p>
 </br>
-December 2024
+June 2025
 <p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
 </div>
 
@@ -28,7 +28,7 @@ December 2024
 
 **Disclaimer**
 
-© MEF Forum 2024. All Rights Reserved.
+© MEF Forum 2025. All Rights Reserved.
 
 The information in this publication is freely available for reproduction and
 use by any recipient and is believed to be accurate as of its publication date.
@@ -68,7 +68,7 @@ endorse or promote any specific products or services.
 
 **Copyright**
 
-© MEF Forum 2024. Any reproduction of this document, or any portion thereof,
+© MEF Forum 2025. Any reproduction of this document, or any portion thereof,
 shall contain the following statement: "Reproduced with permission of MEF
 Forum." No user of this document is authorized to modify any of the information
 contained herein.
@@ -145,74 +145,69 @@ contained herein.
       - [7.1.1.6. Type Error403](#7116-type-error403)
       - [7.1.1.7. `enum` Error403Code](#7117-enum-error403code)
       - [7.1.1.8. Type Error404](#7118-type-error404)
-      - [7.1.1.9. Type Error408](#7119-type-error408)
-      - [7.1.1.10. Type Error422](#71110-type-error422)
-      - [7.1.1.11. `enum` Error422Code](#71111-enum-error422code)
-      - [7.1.1.12. Type Error500](#71112-type-error500)
-      - [7.1.1.13. Type Error501](#71113-type-error501)
+      - [7.1.1.9. Type Error422](#7119-type-error422)
+      - [7.1.1.10. `enum` Error422Code](#71110-enum-error422code)
+      - [7.1.1.11. Type Error500](#71111-type-error500)
+      - [7.1.1.12. Type Error501](#71112-type-error501)
   - [7.2. Management API Data model](#72-management-api-data-model)
     - [7.2.1. FaultManagementJob](#721-faultmanagementjob)
-      - [7.2.1.1. Type FaultManagementJob\_Common](#7211-type-faultmanagementjob_common)
-      - [7.2.1.2. Type FaultManagementJob\_Create](#7212-type-faultmanagementjob_create)
-      - [7.2.1.3. Type FaultManagementJob](#7213-type-faultmanagementjob)
-      - [7.2.1.4. Type FaultManagementJob\_Find](#7214-type-faultmanagementjob_find)
-      - [7.2.1.5. Type CancelFaultManagementJob\_Common](#7215-type-cancelfaultmanagementjob_common)
-      - [7.2.1.6. Type CancelFaultManagementJob\_Create](#7216-type-cancelfaultmanagementjob_create)
-      - [7.2.1.7. Type CancelFaultManagementJob](#7217-type-cancelfaultmanagementjob)
-      - [7.2.1.8. Type CancelFaultManagementJob\_Find](#7218-type-cancelfaultmanagementjob_find)
-      - [7.2.1.9. Type ModifyFaultManagementJob\_Common](#7219-type-modifyfaultmanagementjob_common)
-      - [7.2.1.10. Type ModifyFaultManagementJob\_Create](#72110-type-modifyfaultmanagementjob_create)
-      - [7.2.1.11. Type ModifyFaultManagementJob](#72111-type-modifyfaultmanagementjob)
-      - [7.2.1.12. Type ModifyFaultManagementJob\_Find](#72112-type-modifyfaultmanagementjob_find)
-      - [7.2.1.13. Type FaultManagementJobComplexQuery\_Create](#72113-type-faultmanagementjobcomplexquery_create)
-      - [7.2.1.14. Type FaultManagementJobComplexQuery](#72114-type-faultmanagementjobcomplexquery)
-      - [7.2.1.15. `enum` FaultManagementJobProcessStateType](#72115-enum-faultmanagementjobprocessstatetype)
-      - [7.2.1.16. Type FaultManagementJobRef](#72116-type-faultmanagementjobref)
-      - [7.2.1.17. `enum` FaultManagementJobStateType](#72117-enum-faultmanagementjobstatetype)
+      - [7.2.1.1. Type FaultManagementJob\_Create](#7211-type-faultmanagementjob_create)
+      - [7.2.1.2. Type FaultManagementJob](#7212-type-faultmanagementjob)
+      - [7.2.1.3. Type CancelFaultManagementJob\_Create](#7213-type-cancelfaultmanagementjob_create)
+      - [7.2.1.4. Type CancelFaultManagementJob](#7214-type-cancelfaultmanagementjob)
+      - [7.2.1.5. Type ModifyFaultManagementJob\_Create](#7215-type-modifyfaultmanagementjob_create)
+      - [7.2.1.6. Type ModifyFaultManagementJob](#7216-type-modifyfaultmanagementjob)
+      - [7.2.1.7. Type FaultManagementJobComplexQuery\_Create](#7217-type-faultmanagementjobcomplexquery_create)
+      - [7.2.1.8. `enum` FaultManagementJobProcessStateType](#7218-enum-faultmanagementjobprocessstatetype)
+      - [7.2.1.9. Type FaultManagementJobRef](#7219-type-faultmanagementjobref)
+      - [7.2.1.10. `enum` FaultManagementJobStateType](#72110-enum-faultmanagementjobstatetype)
     - [7.2.2. FaultManagementReport](#722-faultmanagementreport)
       - [7.2.2.1. Type FaultManagementReport](#7221-type-faultmanagementreport)
       - [7.2.2.2. Type FaultManagementReport\_Find](#7222-type-faultmanagementreport_find)
       - [7.2.2.3. Type FaultManagementReportComplexQuery\_Create](#7223-type-faultmanagementreportcomplexquery_create)
-      - [7.2.2.4. Type FaultManagementReportComplexQuery](#7224-type-faultmanagementreportcomplexquery)
-      - [7.2.2.5. Type FaultManagementReportRef](#7225-type-faultmanagementreportref)
-      - [7.2.2.6. `enum` FaultManagementReportStateType](#7226-enum-faultmanagementreportstatetype)
+      - [7.2.2.4. `enum` FaultManagementReportStateType](#7224-enum-faultmanagementreportstatetype)
     - [7.2.3. Common](#723-common)
       - [7.2.3.1. Type AttachmentURL](#7231-type-attachmenturl)
-      - [7.2.3.2. Type HourRange](#7232-type-hourrange)
-      - [7.2.3.3. `enum` Interval](#7233-enum-interval)
+      - [7.2.3.2. Type EntityRef](#7232-type-entityref)
+      - [7.2.3.3. Type HourRange](#7233-type-hourrange)
       - [7.2.3.4. `enum` JobType](#7234-enum-jobtype)
       - [7.2.3.5. Type MeasurementTime](#7235-type-measurementtime)
-      - [7.2.3.6. `enum` OutputFormat](#7236-enum-outputformat)
-      - [7.2.3.7. Type RecurringSchedule](#7237-type-recurringschedule)
-      - [7.2.3.8. Type ReportContentItem](#7238-type-reportcontentitem)
-      - [7.2.3.9. Type ReportingTimeframe](#7239-type-reportingtimeframe)
-      - [7.2.3.10. `enum` ResultFormat](#72310-enum-resultformat)
-      - [7.2.3.11. Type ServiceSpecificResult](#72311-type-servicespecificresult)
+      - [7.2.3.6. Type MonitoredObjectRef](#7236-type-monitoredobjectref)
+      - [7.2.3.7. `enum` OutputFormat](#7237-enum-outputformat)
+      - [7.2.3.8. Type RecurringSchedule](#7238-type-recurringschedule)
+      - [7.2.3.9. Type ReportContentItem](#7239-type-reportcontentitem)
+      - [7.2.3.10. Type ReportingTimeframe](#72310-type-reportingtimeframe)
+      - [7.2.3.11. `enum` ResultFormat](#72311-enum-resultformat)
       - [7.2.3.12. Type ScheduleDefinition](#72312-type-scheduledefinition)
-      - [7.2.3.13. Type ServiceId](#72313-type-serviceid)
-      - [7.2.3.14. Type ServiceSpecificConfiguration](#72314-type-servicespecificconfiguration)
-      - [7.2.3.15. Type TrackingRecord](#72315-type-trackingrecord)
-      - [7.2.3.16. Type TrackingRecord\_Find](#72316-type-trackingrecord_find)
+      - [7.2.3.13. Type ServiceFromToRef](#72313-type-servicefromtoref)
+      - [7.2.3.14. Type ServiceRef](#72314-type-serviceref)
+      - [7.2.3.15. Type ServiceSpecificConfiguration](#72315-type-servicespecificconfiguration)
+      - [7.2.3.16. Type ServiceSpecificResult](#72316-type-servicespecificresult)
+      - [7.2.3.17. Type TimeDuration](#72317-type-timeduration)
+      - [7.2.3.18. `enum` TimeDurationUnits](#72318-enum-timedurationunits)
+      - [7.2.3.19. Type TrackingRecord](#72319-type-trackingrecord)
     - [7.2.4. Notification Registration](#724-notification-registration)
       - [7.2.4.1. Type EventSubscriptionInput](#7241-type-eventsubscriptioninput)
       - [7.2.4.2. Type EventSubscription](#7242-type-eventsubscription)
   - [7.3. Notification API Data model](#73-notification-api-data-model)
     - [7.3.1. Type Event](#731-type-event)
-    - [7.3.2. Type FaultManagementJobEvent](#732-type-faultmanagementjobevent)
-    - [7.3.3. `enum` FaultManagementJobEventType](#733-enum-faultmanagementjobeventtype)
-    - [7.3.4. Type FaultManagementJobEventPayload](#734-type-faultmanagementjobeventpayload)
-    - [7.3.5. Type FaultManagementJobProcessEvent](#735-type-faultmanagementjobprocessevent)
-    - [7.3.6. `enum` FaultManagementJobProcessEventType](#736-enum-faultmanagementjobprocesseventtype)
-    - [7.3.7. Type FaultManagementJobProcessEventPayload](#737-type-faultmanagementjobprocesseventpayload)
-    - [7.3.8. Type FaultManagementJobReportPreparationErrorEvent](#738-type-faultmanagementjobreportpreparationerrorevent)
-    - [7.3.9. `enum` FaultManagementJobReportPreparationErrorEventType](#739-enum-faultmanagementjobreportpreparationerroreventtype)
+    - [7.3.2. Type FaultManagementJobCreateEvent](#732-type-faultmanagementjobcreateevent)
+    - [7.3.3. Type FaultManagementJobEventPayload](#733-type-faultmanagementjobeventpayload)
+    - [7.3.4. Type FaultManagementJobStateChangeEvent](#734-type-faultmanagementjobstatechangeevent)
+    - [7.3.5. Type FaultManagementJobStateChangeEventPayload](#735-type-faultmanagementjobstatechangeeventpayload)
+    - [7.3.6. Type FaultManagementJobAttributeValueChangeEvent](#736-type-faultmanagementjobattributevaluechangeevent)
+    - [7.3.7. Type FaultManagementJobReportReadyEvent](#737-type-faultmanagementjobreportreadyevent)
+    - [7.3.8. Type FaultManagementJobReportReadyEventPayload](#738-type-faultmanagementjobreportreadyeventpayload)
+    - [7.3.9. Type FaultManagementJobReportPreparationErrorEvent](#739-type-faultmanagementjobreportpreparationerrorevent)
     - [7.3.10. Type FaultManagementJobReportPreparationErrorEventPayload](#7310-type-faultmanagementjobreportpreparationerroreventpayload)
-    - [7.3.11. Type FaultManagementJobReportReadyEvent](#7311-type-faultmanagementjobreportreadyevent)
-    - [7.3.12. `enum` FaultManagementJobReportReadyEventType](#7312-enum-faultmanagementjobreportreadyeventtype)
-    - [7.3.13. Type FaultManagementJobReportReadyEventPayload](#7313-type-faultmanagementjobreportreadyeventpayload)
-    - [7.3.14. Type FaultManagementReportEvent](#7314-type-faultmanagementreportevent)
-    - [7.3.15. `enum` FaultManagementReportEventType](#7315-enum-faultmanagementreporteventtype)
+    - [7.3.11. Type CancelFaultManagementJobStateChangeEvent](#7311-type-cancelfaultmanagementjobstatechangeevent)
+    - [7.3.12. Type CancelFaultManagementJobStateChangeEventPayload](#7312-type-cancelfaultmanagementjobstatechangeeventpayload)
+    - [7.3.13. Type ModifyFaultManagementJobStateChangeEvent](#7313-type-modifyfaultmanagementjobstatechangeevent)
+    - [7.3.14. Type ModifyFaultManagementJobStateChangeEventPayload](#7314-type-modifyfaultmanagementjobstatechangeeventpayload)
+    - [7.3.15. Type FaultManagementReportCreateEvent](#7315-type-faultmanagementreportcreateevent)
     - [7.3.16. Type FaultManagementReportEventPayload](#7316-type-faultmanagementreporteventpayload)
+    - [7.3.17. Type FaultManagementReportStateChangeEvent](#7317-type-faultmanagementreportstatechangeevent)
+    - [7.3.18. Type FaultManagementReportStateChangeEventPayload](#7318-type-faultmanagementreportstatechangeeventpayload)
 - [8. References](#8-references)
 
 <!-- /code_chunk_output -->
@@ -278,7 +273,7 @@ In addition, terms defined in the standards referenced below are included in
 this document by reference and are not repeated in the table below:
 
 - MEF W133.1 _Allegro, Interlude and Legato Fault Management and Performance
-  Monitoring BR&UC_ February 2023 [[MEF W133.1](#8-references)]
+  Monitoring BR&UC_ July 2025 [[MEF W133.1](#8-references)]
 - MEF 55.1, _Lifecycle Service Orchestration (LSO): Reference Architecture and
   Framework_ February 2021 [[MEF 55.1](#8-references)]
 
@@ -290,7 +285,7 @@ this document by reference and are not repeated in the table below:
 | On-Demand							  | Fault Management Job actions that are initiated for a limited time to carry out the Fault Management measurements.																																																			                    | MEF W133.1 																		 |
 | OpenAPI                             | The OpenAPI 3.0 Specification, formerly known as the Swagger specification is an API description format for REST APIs.                                                           																																								| [spec.openapis.org](http://spec.openapis.org/oas/v3.0.3)                           |
 | Operation                           | An interaction between the Server and Client, potentially involving multiple back-and-forth transactions.                                                                              																																							| This document                                                                      |
-| Passive							  | Fault Management Job action to support the collection and reporting of network and service faults.   															                                                                                                                                                                                | MEF W133.1 																		                                                                                            |
+| Passive							  | Fault Management Job action to support the collection and reporting of network. The statistics collections include but are not limited to telemetry associated with an interface, (Net/Application) Flow, VLAN, bridging/Ethernet, IP, TCP, UDP layers.   															                                                                                                                                                                                | MEF W133.1 																		                                                                                            |
 | Proactive							  |	Fault Management Job actions that are carried on continuously to permit timely reporting of fault  status.																																																				                        | MEF W133.1 																		 |
 | Representational State Transfer     | Representational State Transfer. REST provides a set of architectural constraints that, when applied as a whole, emphasizes scalability of component interactions, generality of interfaces, independent deployment of components, and intermediary components to reduce interaction latency, enforce security, and encapsulate legacy systems.	| [Chapter 5: Representational State Transfer (REST)](http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) |
 | SchemaObject                        | The construct that allows the definition of input and output data types. These types can represent object classes, as well as primitives and array specifications.              																																								| [spec.openapis.org](http://spec.openapis.org/oas/v3.0.3#schema-object)             |
@@ -342,8 +337,9 @@ Optional Requirement that **MAY** be followed if the condition(s) following the
 Fault Management API allows to manage Fault Management Jobs, collect 
 Fault Management Reports, and receive notifications related to these
 entities. This provides the ability for the Buyer/Client to request that 
-the Seller/Server performs FM Job on a Service, and to retrieve the results of
-the Job. Examples of the Fault Management Job are Link Trace or Loopback. 
+the Seller/Server performs FM Job on a service, a service pair or an entity,
+and to retrieve the results of that job. Examples of the Fault Management Job
+are Link Trace or Loopback. 
 
 This standard specification document describes the Application Programming
 Interface (API) for Fault Management functionality of the LSO Allegro
@@ -377,10 +373,6 @@ Functionalities:
   - Includes management of Fault Management Jobs and collecting Fault Reports
 - Fault Management Notification
   - Includes Event Subscription/Hub and Listener notification functions
-
-This document supports interactions over the Legato interface within a single
-operator as well as interaction with Partner Domain and Customer Domain
-through Interlude and Allegro interfaces respectively.
 
 Business Applications (BUS), Customer Application Coordinator (CUS) and
 Service Orchestration Functionality (SOF) systems use the information contained
@@ -449,7 +441,7 @@ by or compliant with MEF. MEF service fault management schemas are defined by:
 - MEF 153: IP/IPVPN Schema/Guide for SOAM 
 - MEF 154: SD-WAN Schema/Guide for SOAM 
 
-Figure 3 presents the relationship between the Fault Mamagement API 
+Figure 3 presents the relationship between the Fault Management API 
 entities and the fault management specification model. 
 The `ServiceSpecificConfiguration` serves as an extension point for 
 configuring service-specific fault parameters. On the other hand, the 
@@ -463,11 +455,11 @@ fault management results.
 ## 4.5. High-Level Flow
 
 The Fault Management API in essence allows the Buyer/Client to request SOF 
-to provision intervals, schedules, and fault indicators between ordered pairs. 
-An ordered pair is an association between two endpoints. The Fault Management 
-Notifications API provides means to exchange information about significant 
-changes in the system state between interested parties. Figure 4 presents 
-an exemplary high-level flow of Fault Management Job provisioning.
+to provision intervals, schedules, and fault indicators for a service, 
+an ordered pair, or entity. The Fault Management Notifications API provides
+means to exchange information about significant changes in the system state
+between interested parties. Figure 4 presents an exemplary high-level flow
+of Fault Management Job provisioning.
 
 ![Figure 4: High Level Flow](media/fmProvisioning.png)
 
@@ -479,16 +471,17 @@ The following steps describe the high-level flow:
 Fault Management Notifications are optional and do not impact end-to-end flow
 - The BUS system triggers provisioning of Fault Management Job. 
   - The SOF provisions Fault Management by creating a `FaultManagementJob`
-    which contains the configuration of fault indicators and related service.
+    which contains the configuration of fault indicators for monitored object.
   - `FaultManagementJob` also carries a configuration including granularity,
     reporting period, schedule definition, and output format.
   - The `FaultManagementJob` is processed by the SOF as per the state transition
     rules described in [6.1.4.](#614-fault-management-job-state-machine)
   - (optional) The SOF reports the `FaultManagementJob` state changes.
-  - On a scheduled date according to schedule definition, fault job is executed 
-    and data generation is started.
-  - When the configured reporting period elapses, a `FaultManagementReport` entity
-    is created to collect the fault management results.
+  - On a scheduled date according to schedule definition, a `FaultManagementReport` 
+    entity is created and data generation is started.
+  - Fault data is collected in the `FaultManagementReport`.
+  - When the configured reporting period elapses, collection of results is 
+    completed.
   - `FaultManagementReport` is processed as per the state transition rules 
     described in [6.13.1.](#6131-fault-management-report-state-machine)
   - (optional) The SOF reports the `FaultManagementReport` state change.
@@ -552,8 +545,8 @@ endpoints and corresponding data model are defined in
 | API Endpoint                            | Description                                                                                                                 | MEF W133.1 Use Case Mapping |
 | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
 | POST /faultManagementJob                | A request initiated by the Buyer/Client to create a Fault Management Job in the Seller/Server system.                       | 1                           |
-| GET /faultManagementJob                 | The Buyer/Client requests a list of Fault Management Jobs based on a set of filter criteria.                                | N/A                         |
-| GET /faultManagementJob/{{id}}          | The Buyer/Client requests detailed information about a single Fault Management Job.                                         | N/A                         |
+| GET /faultManagementJob                 | The Buyer/Client requests a list of Fault Management Jobs based on a set of filter criteria.                                | 6                         |
+| GET /faultManagementJob/{{id}}          | The Buyer/Client requests detailed information about a single Fault Management Job.                                         | 7                         |
 | POST /modifyFaultManagementJob          | A request initiated by the Buyer/Client to modify a Fault Management Job in the Seller/Server system.                       | 2                           |
 | GET /modifyFaultManagementJob           | The Buyer/Client requests a list of Modify Fault Management Job based on a set of filter criteria.                          | 2                           |
 | GET /modifyFaultManagementJob/{{id}}    | The Buyer/Client requests detailed information about a single Modify Fault Management Job.                                  | 2                           |
@@ -562,25 +555,25 @@ endpoints and corresponding data model are defined in
 | GET /cancelFaultManagementJob/{{id}}    | The Buyer/Client requests detailed information about a single Cancel Fault Management Job.                                  | 3                           |
 | POST /faultManagementJob/{{id}}/suspend | A request initiated by the Buyer/Client to suspend a Fault Management Job in the Seller/Server system.                  	| 4                           |
 | POST /faultManagementJob/{{id}}/resume  | A request initiated by the Buyer/Client to resume a Fault Management Job in the Seller/Server system.                   	| 5                           |
-| POST /faultManagementJobComplexQuery    | A request initiated by the Buyer/Client to create a Fault Management Job Complex Query in the Seller/Server system.         | N/A                         |
-| GET /faultManagementReport              | The Buyer/Client requests a list of Fault Management Reports based on a set of filter criteria.                             | 9                           |
-| GET /faultManagementReport/{{id}}       | The Buyer/Client requests detailed information about a single Fault Management Report, including the content of the report. | 10                          |
-| POST /faultManagementReportComplexQuery | A request initiated by the Buyer/Client to create a Fault Management Report Complex Query in the Seller/Server system.      | 9                           |
+| POST /faultManagementJobComplexQuery    | A request initiated by the Buyer/Client to execute a Fault Management Job Complex Query in the Seller/Server system.         | 6                         |
+| GET /faultManagementReport              | The Buyer/Client requests a list of Fault Management Reports based on a set of filter criteria.                             | 11                           |
+| GET /faultManagementReport/{{id}}       | The Buyer/Client requests detailed information about a single Fault Management Report, including the content of the report. | 12                          |
+| POST /faultManagementReportComplexQuery | A request initiated by the Buyer/Client to execute a Fault Management Report Complex Query in the Seller/Server system.      | 11                           |
 | GET /trackingRecord                     | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria.                                     | N/A                         |
 | GET /trackingRecord/{{id}}              | The Buyer/Client requests detailed information about a single Tracking Record.                                              | N/A                         |
 
 **Table 4. Seller/Server (SOF) Fault Management mandatory API endpoints**
 
 **[R1]** Seller/Server (SOF) **MUST** support all API endpoints listed in 
-Table 4. [MEF W133.1 R33, MEF 133.1 R34]
+Table 4. 
 
 API endpoints listed in Table 5 are optional and may be supported by the SOF.
 
 | API Endpoint                      | Description                                                                                                                           | MEF W133.1 Use Case Mapping |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| POST /hub                         | The Buyer/Client requests to subscribe to the Fault Management Notifications.                          | 6                           |
+| POST /hub                         | The Buyer/Client requests to subscribe to the Fault Management Notifications.                          | 8                           |
 | GET /hub/{{id}}                   | The Buyer/Client retrieves a specific `EventSubscription` from the SOF, that matches the _`id`_ value provided as _`path`_ parameter. | N/A                         |
-| DELETE /hub/{{id}}                | The Buyer/Client requests to unsubscribe from the Fault Management Notifications.                      | 8                           |
+| DELETE /hub/{{id}}                | The Buyer/Client requests to unsubscribe from the Fault Management Notifications.                      | 10                           |
 
 **Table 5. Seller/Server (SOF) Fault Management optional API endpoints**
 
@@ -598,21 +591,20 @@ API endpoints listed in Table 5 are optional and may be supported by the SOF.
 
 `https://{{serverBase}}:{{port}}{{?/bus_cus_sof_prefix}}/mefApi/legato/faultNotification/v2/`
 
-The following API Endpoints are used by SOF to post notifications to registered
-CUS, BUS, or SOF listeners. The endpoints and corresponding data model are 
-defined in `serviceApi/fm/faultNotification.api.yaml`
+The following API Endpoints are used by the SOF to post notifications to 
+registered CUS, BUS, or SOF listeners. The endpoints and corresponding data model are defined in `serviceApi/fm/faultNotification.api.yaml`
 
 | API Endpoint                                                  | Description                                                                                                                                                           | MEF W133.1 Use Case Mapping |
 | ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| POST /listener/faultManagementJobCreateEvent                  | A request initiated by the Seller/Server to notify Buyer/Client on `FaultManagementJob` instance creation.                                                            | 7                           |
-| POST /listener/faultManagementJobStateChangeEvent             | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementJob` instance state change.                                                    | 7                           |
-| POST /listener/faultManagementJobAttributeValueChangeEvent    | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementJob` instance attribute value change.                                          | 7                           |
-| POST /listener/faultManagementJobReportReadyEvent             | A request initiated by the Seller/Server to notify Buyer/Client that `FaultManagementReport` was generated for the `FaultManagementJob` instance.                     | 7                           |
-| POST /listener/faultManagementJobReportPreparationErrorEvent  | A request initiated by the Seller/Server to notify Buyer/Client that `FaultManagementReport` was not generated for the `FaultManagementJob` instance due to an error. | 7                           |
-| POST /listener/cancelFaultManagementJobStateChangeEvent       | A request initiated by the Seller/Server to notify Buyer/Client on the `CancelFaultManagementJob` instance state change.                                              | 7                           |
-| POST /listener/modifyFaultManagementJobStateChangeEvent       | A request initiated by the Seller/Server to notify Buyer/Client on the `ModifyFaultManagementJob` instance state change.                                              | 7                           |
-| POST /listener/faultManagementReportCreateEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `FaultManagementReport` instance creation.                                                         | 7                           |
-| POST /listener/faultManagementReportStateChangeEvent          | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementReport` instance state change.                                                 | 7                           |
+| POST /listener/faultManagementJobCreateEvent                  | A request initiated by the Seller/Server to notify Buyer/Client on `FaultManagementJob` instance creation.                                                            | 9                           |
+| POST /listener/faultManagementJobStateChangeEvent             | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementJob` instance state change.                                                    | 9                           |
+| POST /listener/faultManagementJobAttributeValueChangeEvent    | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementJob` instance attribute value change.                                          | 9                           |
+| POST /listener/faultManagementJobReportReadyEvent             | A request initiated by the Seller/Server to notify Buyer/Client that `FaultManagementReport` was generated for the `FaultManagementJob` instance.                     | 9                           |
+| POST /listener/faultManagementJobReportPreparationErrorEvent  | A request initiated by the Seller/Server to notify Buyer/Client that `FaultManagementReport` was not generated for the `FaultManagementJob` instance due to an error. | 9                           |
+| POST /listener/cancelFaultManagementJobStateChangeEvent       | A request initiated by the Seller/Server to notify Buyer/Client on the `CancelFaultManagementJob` instance state change.                                              | 9                           |
+| POST /listener/modifyFaultManagementJobStateChangeEvent       | A request initiated by the Seller/Server to notify Buyer/Client on the `ModifyFaultManagementJob` instance state change.                                              | 9                           |
+| POST /listener/faultManagementReportCreateEvent               | A request initiated by the Seller/Server to notify Buyer/Client on `FaultManagementReport` instance creation.                                                         | 9                           |
+| POST /listener/faultManagementReportStateChangeEvent          | A request initiated by the Seller/Server to notify Buyer/Client on the `FaultManagementReport` instance state change.                                                 | 9                           |
 
 **Table 6. Buyer/Client (CUS, BUS, SOF) Fault Management API endpoints**
 
@@ -623,7 +615,7 @@ in Table 6.
 Fault Management Notifications.
 
 **[CR1]<[O2]** The Seller/Server FM Notifications MUST be sent to Buyer/Clients who
-have subscribed to FM Notifications. [MEF W133.1 R30]
+have subscribed to FM Notifications. [MEF133.1 R36]
 
 ## 5.3. Integration of Service Fault Management Specification into Fault Management API
 
@@ -652,8 +644,8 @@ Use of non-MEF standard fault management configuration is allowed. In such
 a case the schema identifier must be agreed upon between the Buyer/Client and
 the Seller/Server.
 
-The example below shows a header of a schema, which describes the IP service
-Fault Management configuration, where `"$id": 
+The example below shows a header of a schema, which describes the configuration
+of `ping` command to be executed by `FaultManagementJob`, where `"$id": 
 urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all` is 
 the above-mentioned URN:
 
@@ -669,9 +661,9 @@ a `serviceSpecificConfiguration` attribute of type
 configuration attributes.
 
 In terms of fault results, the appropriate payload is introduced via 
-`ReportContent`. This entity has a `measurementDataPoints` array of items of 
-type `ServiceSpecificResult` which is used as an extension point for service-specific
-output content.
+`reportContent` property. This entity has a `measurementDataPoint` array 
+of items of type `ServiceSpecificResult` which is used as an extension point 
+for service-specific output content.
 
 Implementations might choose to integrate selected Fault Management
 specifications to data model during development. In such a case an integrated 
@@ -703,11 +695,11 @@ ServiceSpecificConfiguration:
 ```
 
 ```yaml
-IpFaultManagementConfiguration:
+PingConfiguration:
   allOf:
     - $ref: '#/components/schemas/ServiceSpecificConfiguration'
     - type: object
-      description: IP Fault Management Configuration Schema.
+      description: Ping Configuration Schema.
 ```
 
 ```yaml
@@ -731,11 +723,11 @@ ServiceSpecificResult:
 ```
 
 ```yaml
-IpFaultManagementResults:
+PingReport:
   allOf:
     - $ref: '#/components/schemas/ServiceSpecificResult'
     - type: object
-      description: IP Fault Management Results Schema.
+      description: Ping Results Schema.
 ```
 
 Alternatively, implementations might choose not to build an integrated model
@@ -748,14 +740,14 @@ Regardless of the chosen implementation pattern, the HTTP payload is
 the same. Both implementation approaches must conform to the requirements 
 specified below.
 
-**[R6]** `ServiceSpecificConfiguration` and `ServiceSpecificResult` types are
+**[R2]** `ServiceSpecificConfiguration` and `ServiceSpecificResult` types are
 extension points that **MUST** be used to integrate service fault management 
 properties into a request/response payload.
 
-**[R7]** The `@type` property of `ServiceSpecificConfiguration` and 
+**[R3]** The `@type` property of `ServiceSpecificConfiguration` and 
 `ServiceSpecificResult` **MUST** be used to specify the type of the extending entity.
 
-**[R8]** Attributes specified in the payload must conform to the fault 
+**[R4]** Attributes specified in the payload must conform to the fault 
 management configuration specified in the `@type` property.
 
 ![Figure 7: Extension pattern](media/extensionPattern.png)
@@ -780,10 +772,10 @@ Fault Management API endpoints is defined using:
 - OpenAPI version 3.0 for the service-agnostic part of the payload
 - JsonSchema (draft 7) for the service-specific part of the payload
 
-**[R9]** Implementations **MUST** use payloads that conform to these
+**[R5]** Implementations **MUST** use payloads that conform to these
 definitions.
 
-**[R10]** The Buyer/Client and the Seller/Server **MUST NOT** use any operation,
+**[R6]** The Buyer/Client and the Seller/Server **MUST NOT** use any operation,
 entity or attribute that is not explicitly defined or allowed by this standard.
 
 ## 5.5. Security Considerations
@@ -811,7 +803,7 @@ examples for each of the use cases.
 | Use Case # | Use Case Name                                         | Use Case Description                                                                                                                                                 |
 | ---------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1          | Create Fault Management Job                           | A request initiated by the Buyer/Client to create a Fault Management Job in the Seller/Server system to indicate Fault Management Job configuration.                 |
-| 2          | Retrieve Fault Management Job List                    | The Buyer/Client requests a list of Fault Management Job based on a set of filter criteria. The Seller/Server returns a summarized list of FM Jobs.                  |
+| 2          | Retrieve Fault Management Job List                    | The Buyer/Client requests a list of Fault Management Job based on a set of filter criteria. The Seller/Server returns a list of matched FM Jobs.                  |
 | 3          | Retrieve Fault Management Job by Identifier       | The Buyer/Client requests detailed information about a single Fault Management Job based on the Fault Management Job Identifier.                                     |
 | 4          | Modify Fault Management Job                           | A request initiated by the Buyer/Client to modify a Fault Management Job in the Seller/Server system.                                                                |
 | 5          | Retrieve Modify Fault Management Job List             | The Buyer/Client requests a list of Modify Fault Management Job based on a set of filter criteria.                                                                   |
@@ -821,11 +813,11 @@ examples for each of the use cases.
 | 9          | Retrieve Cancel Fault Management Job by Identifier    | The Buyer/Client requests detailed information about a single Cancel Fault Management Job based on the Cancel Fault Management Job Identifier.                       |
 | 10         | Suspend Fault Management Job                          | A request initiated by the Buyer/Client to suspend a Fault Management Job in the Seller/Server system.                                                               |
 | 11         | Resume Fault Management Job                           | A request initiated by the Buyer/Client to resume a Fault Management Job in the Seller/Server system.                                                                |
-| 12         | Create Fault Management Job Complex Query             | A request initiated by the Buyer/Client to create a Fault Management Job Complex Query in the Seller/Server system.                                                  |
+| 12         | Fault Management Job Complex Query             | A request initiated by the Buyer/Client to execute a Fault Management Job Complex Query in the Seller/Server system.                                                  |
 | 13         | Retrieve Fault Management Report List                 | The Buyer/Client requests a list of Fault Management Reports based on a set of filter criteria. The Seller/Server returns a summarized list of FM Reports.           |
-| 14         | Retrieve Fault Management Report by Report Identifier | The Buyer/Client requests detailed information, including generated content, about a single Fault Management Report based on the Fault Management Report Identifier. |
-| 15         | Create Fault Management Report Complex Query          | A request initiated by the Buyer/Client to create a Fault Management Report Complex Query in the Seller/Server system.                                               |
-| 16         | Retrieve Tracking Record List                         | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria. The Seller/Server returns a summarized list of Tracking Records.             |
+| 14         | Retrieve Fault Management Report by Identifier | The Buyer/Client requests detailed information, including generated content, about a single Fault Management Report based on the Fault Management Report Identifier. |
+| 15         | Fault Management Report Complex Query          | A request initiated by the Buyer/Client to execute a Fault Management Report Complex Query in the Seller/Server system.                                               |
+| 16         | Retrieve Tracking Record List                         | The Buyer/Client requests a list of Tracking Records based on a set of filter criteria.              |
 | 17         | Retrieve Tracking Record List by Identifier           | The Buyer/Client requests detailed information about a single Tracking Record based on the Tracking Record Identifier.                                               |
 | 18         | Register for Fault Management Notifications           | The Buyer/Client requests to subscribe to Fault Management Notifications.                                                             |
 | 19         | Send Event Notification                               | A request initiated by the Seller/Server to notify the Buyer/Client.                                                                                                 |
@@ -840,9 +832,9 @@ This provides the ability for the Buyer/Client to request that the
 Seller/Server performs FM activities on a service, and consequently to retrieve
 the fault results. Examples of fault management job are Link Trace 
 and Loopback. FM Job is typically run as part of a troubleshooting 
-or diagnostic process of a service. Besides, Fault Management Job entity
-provides configuration, including measurement intervals and schedules of FM job
-execution. 
+or diagnostic process of a service, a service pair, or an entity. Besides, 
+Fault Management Job entity provides configuration, including measurement 
+intervals and schedules of FM job execution. 
 
 The Fault Management Jobs produce Fault Management Collections 
 (Reports) that will provide the Buyer/Client with fault indicator results. 
@@ -893,13 +885,6 @@ a subset of the `FaultManagementJob` model and contains only attributes that
 can (or must) be set by the Buyer/Client. The Seller/Server (SOF) then enriches
 the entity in the response with additional information.
 
-**_Note:_** `FaultManagementJob_Create` is an entity used by the Buyer/Client
-to make a request. `FaultManagementJob` is an entity used by the Seller/Server
-to provide a response. The request entity has a subset of attributes
-of the response entity. Thus for visibility of these shared attributes 
-`FaultManagementJob_Common` has been introduced (this class is not supposed
-to be used directly in the exchange).
-
 A `FaultManagementJob_Create` defines measurement intervals, schedules, and
 service-specific configuration of FM job (in `serviceSpecificConfiguration`
 section). 
@@ -916,8 +901,8 @@ the API specification which is an integral part of this standard.
 **Figure 11. Fault Management Job Key Entities**
 
 To send a create Fault Management Job request the Buyer/Client uses the 
-`createFaultManagementJob` operation from the API: `POST /faultManagementJob`.
-Some of the create Fault Management Job payload's attributes might be omitted
+`createFaultManagementJob` operation from the API: `POST /faultManagementJob`, 
+as in the snippet below. Some of the payload's attributes might be omitted
 to improve examples' readability.
 
 **`Fault Management Job` Create Request**
@@ -925,11 +910,21 @@ to improve examples' readability.
 ```json
 {
   "description": "Exemplary Create Fault Management Job request",
-  "granularity": "15 minutes",
+  "granularity": {
+    "timeDurationValue": 15,
+    "timeDurationUnits": "MIN"
+  },
   "jobPriority": 5,
-  "jobType": "proactive",
+  "jobType": "on-demand",
+  "monitoredObject": {
+    "@type": "ServiceRef",
+    "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c",
+  },
   "outputFormat": "json",
-  "reportingPeriod": "1 hour",
+  "reportingPeriod": {
+    "timeDurationValue": 1,
+    "timeDurationUnits": "HOUR"
+  },
   "resultFormat": "payload",
   "scheduleDefinition": {
     "scheduleDefinitionStartTime": "2025-01-01T00:00:00.000Z",
@@ -943,10 +938,6 @@ to improve examples' readability.
       "dayOfWeek": "*"
     },
     "executionDuration": "1 hour"
-  },
-  "serviceId": {
-    "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
-    "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
   },
   "serviceSpecificConfiguration": {
     "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
@@ -965,28 +956,29 @@ to improve examples' readability.
 
 ```
 
-**[R11]** The Buyer/Client’s Create Fault Management Job request **MUST** 
-provide the following attributes: [MEF W133.1 R1]
+**[R7]** The Buyer/Client’s Create Fault Management Job request **MUST** 
+provide the following attributes: [MEF133.1 R1]
 - `jobType`
-- `granularity`
+- `granularity`'
+- `monitoredObject`
 - `reportingPeriod`
 - `outputFormat`
 - `resultFormat`
 - `scheduleDefinition`
 - `serviceSpecificConfiguration`
 
-**[R29]** If the Buyer/Client requests to provision a Fault Management Job for
+**[R8]** If the Buyer/Client requests to provision a Fault Management Job for
 an ordered pair, they **MUST** provide reference to service endpoints by 
-specifying the following: []
-- `serviceIdFrom`
-- `serviceIdTo`
+specifying the following:
+- `serviceFromId`
+- `serviceToId`
 
-**[R30]** If the Buyer/Client requests to provision a Fault Management Job for 
+**[R9]** If the Buyer/Client requests to provision a Fault Management Job for 
 a service, they **MUST** provide reference to a service by specifying 
 `serviceId`
 
-**[R30]** If the Buyer/Client requests to provision a Fault Management Job for 
-an entity other than a service, they **MUST** provide `entityId` []
+**[R10]** If the Buyer/Client requests to provision a Fault Management Job for 
+an entity other than a service, they **MUST** provide `entityId`
 
 **[O3]** The Buyer/Client’s Create FM Job request **MAY** provide the 
 following attributes: [MEF W133.1 O1]
@@ -1012,11 +1004,21 @@ structure as in the retrieve by identifier operation.
 ```json
 {
   "description": "Exemplary Create Fault Management Job request",
-  "granularity": "15 minutes",
+  "granularity": {
+    "timeDurationValue": 15,
+    "timeDurationUnits": "MIN"
+  },
   "jobPriority": 5,
-  "jobType": "proactive",
+  "jobType": "on-demand",
+  "monitoredObject": {
+    "@type": "ServiceRef",
+    "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c",
+  },
   "outputFormat": "json",
-  "reportingPeriod": "1 hour",
+  "reportingPeriod": {
+    "timeDurationValue": 1,
+    "timeDurationUnits": "HOUR"
+  },
   "resultFormat": "payload",
   "scheduleDefinition": {
     "scheduleDefinitionStartTime": "2025-01-01T00:00:00.000Z",
@@ -1030,10 +1032,6 @@ structure as in the retrieve by identifier operation.
       "dayOfWeek": "*"
     },
     "executionDuration": "1 hour"
-  },
-  "serviceId": {
-    "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
-    "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
   },
   "serviceSpecificConfiguration": {
     "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
@@ -1059,22 +1057,22 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with 
 the `<< added by SOF >>` tag.
 
-**[R12]** The Seller/Server sets the `creationDate` and `id` 
+**[R11]** The Seller/Server sets the `creationDate` and `id` 
 attribute. [MEF W133.1 R2]
 
-**[R13]** The Seller’s/Server’s response **MUST** echo back all Buyer/Client 
+**[R12]** The Seller’s/Server’s response **MUST** echo back all Buyer/Client 
 provided attributes. [MEF W133.1 R3]
 
-**[R14]** The FM Job Identifier supplied by the Seller/Server **MUST** be unique
+**[R13]** The FM Job Identifier supplied by the Seller/Server **MUST** be unique
 within the Seller/Server’s system. [MEF W133.1 R4]
 
-**[R15]** The Seller/Server **MUST** specify the following attributes in a 
+**[R14]** The Seller/Server **MUST** specify the following attributes in a 
 response:
 - `id`
 - `state`
 - `creationDate`
 
-**[R16]** The `id` **MUST** remain the same value for the life of the 
+**[R15]** The `id` **MUST** remain the same value for the life of the 
 Fault Management Job.
 
 ### 6.1.4. Fault Management Job State Machine
@@ -1126,7 +1124,7 @@ naming, together with the statuses' description.
 
 **Table 8. Fault Management Job State Machine states**
 
-**[R17]** The Seller/Server **MUST** support all Fault Management Job statuses 
+**[R16]** The Seller/Server **MUST** support all Fault Management Job statuses 
 and their associated transitions as described in Figure 12 and Table 8.
 
 ## 6.2. Use Case 2: Retrieve List of Fault Management Job
@@ -1135,16 +1133,16 @@ The Buyer/Client can retrieve a list of `FaultManagementJob` by using a
 `GET /faultManagementJob` operation with desired filtering criteria.
 
 **[O4]** The Buyer/Client Retrieve List of Fault Management Jobs request 
-**MAY** contain none or more of the following attributes as filter criteria: 
+**MUST** contain none or more of the following attributes as filter criteria [MEF133.1 R27]: 
 
-- `serviceIdFrom`
-- `serviceIdTo`
+- `serviceId`
+- `serviceFromIf`
+- `serviceToId`
+- `entityId`
 - `state`
 - `creationDate.gt`
 - `creationDate.lt`
 - `jobType`
-- `granularity`
-- `reportingPeriod`
 - `jobPriority`
 
 If the quantity of the records requested to be returned exceeds a Seller/Server 
@@ -1167,7 +1165,7 @@ https://serverRoot/mefApi/legato/faultManagement/v2/faultManagementJob?state=sus
 
 The example above shows a Buyer's request to get the first twenty 
 `FaultManagementJob` that are in `suspended` state. The correct response
-(HTTP code `200`) contains a list of `PerformanceProfile` objects matching
+(HTTP code `200`) contains a list of `FaultManagementJob` objects matching
 the criteria in the response body.
 
 The Seller/Server returns a list of elements that comply with the requested 
@@ -1185,29 +1183,30 @@ that there are additional results available using:
 `X-Pagination-Throttled` to indicate that the page was truncated and additional
 results are available.
 
-**[R18]** The Seller/Server's response to the Buyer’s/Client’s Retrieve List of 
+**[R17]** The Seller/Server's response to the Buyer’s/Client’s Retrieve List of 
 Fault Management Jobs **MUST** include the following attributes as applicable:
 
 - `creationDate`
-- `description`
 - `granularity`
 - `id`
-- `jobPriority`
 - `jobType`
+- `monitoredObject`
 - `outputFormat`
 - `reportingPeriod`
+- `resultFormat`
 - `scheduleDefinition`
-- `serviceId`
+- `serviceSpecificConfiguration`
 - `state`
 
-**[R19]** If the Seller/Server validates the Buyer’s/Client’s request but finds 
-no matching Fault Management Jobs, the Seller/Server **MUST** return an empty list.
+**[R18]** The Seller/Server’s response **MUST** include a list of Fault 
+Management Job Identifiers that match the filter criteria. [MEF133.1 R29]
 
-Figure 13 presents entities related to the use case. 
+**[R19]** In case no items matching the criteria are found, the Seller/Server 
+**MUST** return a valid response with an empty list. [MEF133.1 R30]
 
-![Figure 13: Use Case 2](media/useCase2Model.png)
-
-**Figure 13. Use Case 2: Retrieve Fault Management Job List - Model**
+Get List returns full representation of matched Fault Management Job which 
+includes all attributes as shown in the Create Fault Management Job Response 
+in [section 6.1.3](#613-create-fault-management-job-response).
 
 ## 6.3. Use Case 3: Retrieve Fault Management Job by Identifier
 
@@ -1218,12 +1217,8 @@ Management Job and includes all attributes the Buyer/Client has provided while
 sending a Fault Management Job create request, together with additional 
 attributes set by Seller/Server. 
 
-Get List and Get by Identifier operations return different representations
-of Fault Management Job. Get List returns the `FaultManagementJob_Find` object 
-which is a subset of `FaultManagementJob` returned by Get by Identifier 
-operation. A response to a Get by ID for a `FaultManagementJob` with 
-`id=755e55e2-72b0-4e3b-af00-693e3beac691` would return exactly the same response as
-presented in [section 6.1.3](#613-create-fault-management-job-response).
+**[R20]** The Seller/Server MUST return full representation 
+of `FaultManagementJob`. [MEF133.1 R32]
 
 **[R21]** In case `id` does not match a `FaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
@@ -1237,11 +1232,11 @@ separate lifecycle process.
 
 ### 6.4.1. Interaction flow
 
-The flow of this use case is shown in Figure 14.
+The flow of this use case is shown in Figure 13.
 
-![Figure 14: Use Case 4](media/useCase4.png)
+![Figure 13: Use Case 4](media/useCase4.png)
 
-**Figure 14. Use Case 4 - Modify Fault Management Job create request flow**
+**Figure 13. Use Case 4 - Modify Fault Management Job create request flow**
 
 The Buyer/Client sends a request with a `ModifyFaultManagementJob_Create` type in
 the body. The Seller/Server performs request validation, assigns an `id`, and 
@@ -1252,39 +1247,26 @@ the progress of the process either by subscribing for notifications or by
 periodically polling the `ModifyFaultManagementJob`. The two patterns are presented
 in the following diagrams.
 
-![Figure 15: Modify Fault Management Job Notification](media/useCase4Notification.png)
+![Figure 14: Modify Fault Management Job Notification](media/useCase4Notification.png)
 
-**Figure 15. Modify Fault Management Job progress tracking - Notifications**
+**Figure 14. Modify Fault Management Job progress tracking - Notifications**
 
-![Figure 16: Modify Fault Management Job Polling](media/useCase4Polling.png)
+![Figure 15: Modify Fault Management Job Polling](media/useCase4Polling.png)
 
-**Figure 16. Modify Fault Management Job progress tracking - Polling**
-
-**_Note_**: The context of notifications is not a part of the considered use
-case itself. It is presented to show the big picture of end-to-end flow. This
-applies also to all further use case flow diagrams with notifications.
+**Figure 15. Modify Fault Management Job progress tracking - Polling**
 
 ### 6.4.2. Modify Fault Management Job Request
 
-Figure 17 presents the most important part of the data model used during 
+Figure 16 presents the most important part of the data model used during 
 the Modify Fault Management Job request (`POST /modifyFaultManagementJob`) 
 and response. The model of the request message - `ModifyFaultManagementJob_Create` 
 is a subset of the `ModifyFaultManagementJob` model and contains only 
 attributes that can (or must) be set by the Buyer/Client. The Seller/Server (SOF)
 then enriches the entity in the response with additional information.
 
-**_Note:_** `ModifyFaultManagementJob_Create` is an entity
-used by the Buyer/Client to make a request. `ModifyFaultManagementJob` is an 
-entity used by the Seller/Server to provide a response. The request entity has 
-a subset of attributes of the response entity. Thus for visibility of these
-shared attributes `ModifyFaultManagementJob_Common` has been
-introduced (this class is not supposed to be used directly in the exchange).
-
-A `ModifyFaultManagementJob_Create` is a subset that includes only 
-the updateable attributes. The `FaultManagementJobRef` section 
-of `ModifyFaultManagementJob_Create` is used to specify which Fault Management
-Job object is a subject of the modification process (relationship by reference 
-using `id` of the Job).
+The `FaultManagementJobRef` section of `ModifyFaultManagementJob_Create` is 
+used to specify which Fault Management Job object is a subject of 
+the modification process (relationship by reference using `id` of the Job).
 
 **_Note:_** Only those attributes of the Fault Management Job that should be 
 modified, should be included in the Modify Fault Management Job Request. 
@@ -1297,9 +1279,9 @@ in detail in [Section 5.3](#53-integration-of-service-fault-management-specifica
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 17: Modify Fault Management Job Key Entities](media/modifyFaultManagementJobModel.png)
+![Figure 16: Modify Fault Management Job Key Entities](media/modifyFaultManagementJobModel.png)
 
-**Figure 17. Modify Fault Management Job Key Entities**
+**Figure 16. Modify Fault Management Job Key Entities**
 
 To send a Modify Fault Management Job request the Buyer/Client uses the 
 `createModifyFaultManagementJob` operation from the API: `POST /modifyFaultManagementJob`. 
@@ -1317,8 +1299,10 @@ The request below aims to:
 ```json
 {
   "description": "Fault Management Job after modification",
-  "granularity": "1 minute",
-  "modificationReason": "Modify Fault Management Job sample",
+  "granularity": {
+    "timeDurationValue": 30,
+    "timeDurationUnits": "MIN"
+  },
   "faultManagementJob": {
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   }
@@ -1326,14 +1310,14 @@ The request below aims to:
 ```
 
 **[R22]** The Buyer’s/Client’s Modify FM Job request **MUST** include the 
-Fault Management Job Identifier. [MEF W133.1 R6]
+Fault Management Job Identifier. [MEF133.1 R6]
 
 **[R23]** The Buyer’s/Client’s Modify FM Job request **MUST** contain one 
-or more of the following attributes: [MEF W133.1 R7]
-- `outputFormat`
-- `granularity`
+or more of the following attributes: [MEF133.1 R7]
 - `description`
+- `granularity`
 - `jobPriority`
+- `outputFormat`
 - `reportingPeriod`
 - `resultFormat`
 - `scheduleDefinition`
@@ -1342,7 +1326,7 @@ or more of the following attributes: [MEF W133.1 R7]
 ### 6.4.3. Modify Fault Management Job Response
 
 Entities used for providing a response to Modify Fault Management Job requests
-are presented in Figure 17. The Seller/Server responds with a 
+are presented in Figure 16. The Seller/Server responds with a 
 `ModifyFaultManagementJob` type, which adds some attributes (like `id` or `state`) 
 to the `ModifyFaultManagementJob_Create` that was used in the Buyer/Client request.
 
@@ -1352,8 +1336,10 @@ structure as in the retrieve by identifier operation.
 ```json
 {
   "description": "Fault Management Job after modification",
-  "granularity": "1 minute",
-  "modificationReason": "Modify Fault Management Job sample",
+  "granularity": {
+    "timeDurationValue": 30,
+    "timeDurationUnits": "MIN"
+  },
   "faultManagementJob": {
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
@@ -1368,16 +1354,16 @@ Attributes that are set by the Seller/Server in the response are marked with
 the `<< added by SOF >>` tag. 
 
 **[R24]** The Seller’s/Server’s response to the Buyer’s/Client’s Modify FM Job
-request **MUST** echo back the attributes in the Client’s request. [MEF W133.1 R8]
+request **MUST** echo back the attributes in the Client’s request. [MEF133.1 R8]
 
-**[R26]** The Seller/Server **MUST** specify the following attributes in a 
+**[R25]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
 
 - `id`
 - `state`
 - `creationDate`
 
-**[R27]** The `id` **MUST** remain the same value for the life of the Modify 
+**[R26]** The `id` **MUST** remain the same value for the life of the Modify 
 Fault Management Job.
 
 In case Seller/Server cannot successfully validate the request, Modify 
@@ -1391,11 +1377,11 @@ Seller/Server's system
 
 ### 6.4.4. Modify Fault Management Job State Machine
 
-Figure 18 presents the Modify Fault Management Job state machine:
+Figure 17 presents the Modify Fault Management Job state machine:
 
-![Figure 18: Modify Fault Management Job State Machine](media/modifyFaultManagementJobStates.png)
+![Figure 17: Modify Fault Management Job State Machine](media/modifyFaultManagementJobStates.png)
 
-**Figure 18. Modify Fault Management Job State Machine**
+**Figure 17. Modify Fault Management Job State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
@@ -1418,15 +1404,15 @@ for all processes related to Fault Management Job (cancel/modify).
 
 | state          | MEF W 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | -------------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged` | Acknowledged     | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+| `acknowledged` | Acknowledged     | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the `acknowledged` state. The request remains `acknowledged` until all validations as applicable are completed. If the attributes are validated, the request moves to the `inProgress` state. If not all attributes are validated, the request moves to the `rejected` state. |
 | `completed`    | Completed        | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
-| `inProgress`   | In-Progress      | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
+| `inProgress`   | In-Progress      | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is `inProgress`.                                                                                                                                                                                                                                                                                                                              |
 | `rejected`     | Rejected         | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
 
 **Table 9. Fault Management Job Process State Machine states**
 
-**[R28]** The Seller/Server **MUST** support all Modify Fault Management Job 
-statuses and their associated transitions as described in Figure 18 and Table 9. 
+**[R27]** The Seller/Server **MUST** support all Modify Fault Management Job 
+statuses and their associated transitions as described in Figure 17 and Table 9. 
 
 ## 6.5. Use Case 5: Retrieve Modify Fault Management Job List
 
@@ -1442,22 +1428,11 @@ criteria.
 - `creationDate.gt`
 - `creationDate.lt`
 
-**[R29]** The Seller **MUST** include following attributes (if set) in the
-`ModifyFaultManagementJob_Find` object in the response: 
-
-- `creationDate`
-- `id`
-- `faultManagementJobId`
-- `state`
-
-**[R30]** In case no items matching the criteria are found, the Seller/Server 
+**[R28]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 19 presents entities related to the use case. 
-
-![Figure 19: Use Case 5](media/useCase5Model.png)
-
-**Figure 19. Use Case 5: Retrieve Modify Fault Management Job List - Model**
+Get List returns full representation of matched `ModifyFaultManagementJob` 
+objects which includes all attributes as shown in [section 6.4.3](#643-modify-fault-management-job-response).
 
 ## 6.6. Use Case 6: Retrieve Modify Fault Management Job by Identifier
 
@@ -1468,18 +1443,10 @@ Modify Fault Management Job and includes all attributes the Buyer/Client has
 provided while sending a Modify Fault Management Job create request, together
 with additional attributes set by Seller/Server. 
 
-Get List and Get by Identifier operations return different representations
-of Modify Fault Management Job. Get List returns the 
-`ModifyFaultManagementJob_Find` object which is a subset of the 
-`ModifyFaultManagementJob` returned by the Get by Identifier operation. 
-A response to a Get by Identifier for a `ModifyFaultManagementJob` with
-`id=9c51d971-185d-403e-952f-2110f33a9628` would return exactly the same response 
-as presented in [section 6.4.3](#643-modify-fault-management-job-response).
-
-**[R31]** In case `id` does not match a `ModifyFaultManagementJob` in 
+**[R29]** In case `id` does not match a `ModifyFaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R32]** The Seller/Server **MUST** include following attributes in the
+**[R30]** The Seller/Server **MUST** include following attributes in the
 `ModifyFaultManagementJob` object in the response: 
 
 - `creationDate`
@@ -1487,7 +1454,7 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 - `faultManagementJob`
 - `state`
 
-**[R33]** The Seller **MUST** provide all remaining optional attributes if they
+**[R31]** The Seller **MUST** provide all remaining optional attributes if they
 were previously set by the Buyer or the Seller. 
 
 ## 6.7. Use Case 7: Cancel Fault Management Job
@@ -1499,11 +1466,11 @@ a separate lifecycle process.
 
 ### 6.7.1. Interaction flow
 
-The flow of this use case is shown in Figure 20.
+The flow of this use case is shown in Figure 18.
 
-![Figure 20: Use Case 7](media/useCase7.png)
+![Figure 18: Use Case 7](media/useCase7.png)
 
-**Figure 20. Use Case 7 - Cancel Fault Management Job create request flow**
+**Figure 18. Use Case 7 - Cancel Fault Management Job create request flow**
 
 The Buyer/Client sends a request with a `CancelFaultManagementJob_Create` type 
 in the body. The Seller/Server performs request validation, assigns an `id`, 
@@ -1514,29 +1481,22 @@ The Buyer/Client can track the progress of the process either by subscribing
 for notifications or by periodically polling the `CancelFaultManagementJob`. 
 The two patterns are presented in the following diagrams.
 
-![Figure 21: Cancel Fault Management Job Notification](media/useCase7Notification.png)
+![Figure 19: Cancel Fault Management Job Notification](media/useCase7Notification.png)
 
-**Figure 21. Cancel Fault Management Job progress tracking - Notifications**
+**Figure 19. Cancel Fault Management Job progress tracking - Notifications**
 
-![Figure 22: Cancel Fault Management Job Polling](media/useCase7Polling.png)
+![Figure 20: Cancel Fault Management Job Polling](media/useCase7Polling.png)
 
-**Figure 22. Cancel Fault Management Job progress tracking - Polling**
+**Figure 20. Cancel Fault Management Job progress tracking - Polling**
 
 ### 6.7.2. Cancel Fault Management Job Request
 
-Figure 23 presents the most important part of the data model used during 
+Figure 21 presents the most important part of the data model used during 
 the Cancel Fault Management Job request (`POST /cancelFaultManagementJob`) 
 and response. The model of the request message - `CancelFaultManagementJob_Create` 
 is a subset of the `CancelFaultManagementJob` model and contains only attributes
 that can (or must) be set by the Buyer/Client. The Seller/Server (SOF) then 
 enriches the entity in the response with additional information.
-
-**_Note:_** `CancelFaultManagementJob_Create` is an entity used by the 
-Buyer/Client to make a request. `CancelFaultManagementJob` is an entity used
-by the Seller/Server to provide a response. The request entity has a subset
-of attributes of the response entity. Thus for visibility of these shared 
-attributes `CancelFaultManagementJob_Common` has been introduced 
-(this class is not supposed to be used directly in the exchange).
 
 The `FaultManagementJobRef` section of `CancelFaultManagementJob_Create` is 
 used to specify which Fault Management Job object is a subject of the 
@@ -1545,9 +1505,9 @@ cancellation process (relationship by reference using `id` of the Job).
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 23: Cancel Fault Management Job Key Entities](media/cancelFaultManagementJobModel.png)
+![Figure 21: Cancel Fault Management Job Key Entities](media/cancelFaultManagementJobModel.png)
 
-**Figure 23. Cancel Fault Management Job Key Entities** 
+**Figure 21. Cancel Fault Management Job Key Entities** 
 
 To send a Cancel Fault Management Job request the Buyer/Client uses the 
 `createCancelFaultManagementJob` operation from the API: `POST /cancelFaultManagementJob`. 
@@ -1557,20 +1517,19 @@ The example below shows a request to create a cancellation process for
 
 ```json
 {
-  "cancellationReason": "Cancel Fault Management Job sample",
   "faultManagementJob": {
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   }
 }
 ```
 
-**[R34]** The Buyer’s/Client’s Cancel FM Job request **MUST** include 
-the FM Job Identifier. [MEF W133.1 R10]
+**[R32]** The Buyer’s/Client’s Cancel FM Job request **MUST** include 
+the FM Job Identifier. [MEF133.1 R10]
 
 ### 6.7.3. Cancel Fault Management Job Response
 
 Entities used for providing a response to Cancel Fault Management Job requests 
-are presented in Figure 23. The Seller/Server responds with 
+are presented in Figure 21. The Seller/Server responds with 
 a `CancelFaultManagementJob` type, which adds some attributes 
 (like `id` or `state`) to the `CancelFaultManagementJob_Create` that was used 
 in the Buyer/Client request.
@@ -1580,7 +1539,6 @@ structure as in the retrieve by identifier operation.
 
 ```json
 {
-  "cancellationReason": "Cancel Fault Management Job sample",
   "faultManagementJob": {
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
@@ -1594,25 +1552,25 @@ structure as in the retrieve by identifier operation.
 Attributes that are set by the Seller/Server in the response are marked with the
 `<< added by SOF >>` tag. 
 
-**[R35]** The Seller/Server's response **MUST** include all and unchanged 
+**[R33]** The Seller/Server's response **MUST** include all and unchanged 
 attributes' values as provided by the Buyer/Client in the request.
 
-**[R36]** The Seller/Server **MUST** specify the following attributes in a 
+**[R34]** The Seller/Server **MUST** specify the following attributes in a 
 response: 
 - `id`
 - `state`
 - `creationDate`
 
-**[R37]** The `id` **MUST** remain the same value for the life of the Cancel 
+**[R35]** The `id` **MUST** remain the same value for the life of the Cancel 
 Fault Management Job.
 
-**[R39]** If the Seller/Server accepts the Buyer’s/Client’s Cancel FM Job 
-request, the Job **MUST** stop. [MEF W133.1 R12]
+**[R36]** If the Seller/Server accepts the Buyer’s/Client’s Cancel FM Job 
+request, the Job **MUST** stop. [MEF133.1 R12]
 
-**[R40]** If the Seller/Server declines the Buyer’s/Client’s Cancel FM Job 
-request, the Job **MUST NOT** stop. [MEF W133.1 R13]
+**[R37]** If the Seller/Server declines the Buyer’s/Client’s Cancel FM Job 
+request, the Job **MUST NOT** stop. [MEF133.1 R13]
 
-**[R41]** If the Seller/Server declines the Client’s Cancel FM Job request,
+**[R38]** If the Seller/Server declines the Client’s Cancel FM Job request,
 they **MUST** provide a reason the request was declined. [MEF W133.1 R14]
 
 In case Seller/Server cannot successfully validate the request, Cancel 
@@ -1625,11 +1583,11 @@ Seller/Server's system
 
 ### 6.7.4. Cancel Fault Management Job State Machine
 
-Figure 24 presents the Cancel Fault Management Job state machine:
+Figure 22 presents the Cancel Fault Management Job state machine:
 
-![Figure 24: Cancel Fault Management Job State Machine](media/cancelFaultManagementJobStates.png)
+![Figure 22: Cancel Fault Management Job State Machine](media/cancelFaultManagementJobStates.png)
 
-**Figure 24. Cancel Fault Management Job State Machine**
+**Figure 22. Cancel Fault Management Job State Machine**
 
 After receiving the request, the Seller/Server (SOF) performs basic checks of 
 the message. If any problem is found an Error response is provided. If the
@@ -1662,22 +1620,11 @@ criteria.
 - `creationDate.gt`
 - `creationDate.lt`
 
-**[R42]** The Seller **MUST** include following attributes in the
-`CancelFaultManagementJob_Find` object in the response: 
-
-- `creationDate`
-- `id`
-- `faultManagementJobId`
-- `state`
-
-**[R43]** In case no items matching the criteria are found, the Seller/Server 
+**[R39]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 25 presents entities related to the use case. 
-
-![Figure 25: Use Case 8](media/useCase8Model.png)
-
-**Figure 25. Use Case 8: Retrieve Cancel Fault Management Job List - Model**
+Get List returns full representation of matched `CancelFaultManagementJob` 
+objects which includes all attributes as shown in [section 6.7.3](#673-cancel-fault-management-job-response).
 
 ## 6.9. Use Case 9: Retrieve Cancel Fault Management Job by Identifier
 
@@ -1688,18 +1635,10 @@ of the Cancel Fault Management Job and includes all attributes the Buyer/Client
 has provided while sending a Cancel Fault Management Job create request, 
 together with additional attributes set by Seller/Server. 
 
-Get List and Get by Identifier operations return different representations of 
-Cancel Fault Management Job. Get List returns the 
-`CancelFaultManagementJob_Find` object which is a subset 
-of the `CancelFaultManagementJob` returned by the Get by Identifier operation. 
-A response to a Get by Id for a `CancelFaultManagementJob` with
-`id=aea2769a-23f3-4ddc-b095-542a63b12481` would return exactly the same response
-as presented in [section 6.7.3](#673-cancel-fault-management-job-response).
-
-**[R44]** In case `id` does not match a `CancelFaultManagementJob` in 
+**[R40]** In case `id` does not match a `CancelFaultManagementJob` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
-**[R45]** The Seller/Server **MUST** include following attributes in the
+**[R41]** The Seller/Server **MUST** include following attributes in the
 `CancelFaultManagementJob` object in the response: 
 
 - `creationDate`
@@ -1707,7 +1646,7 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 - `faultManagementJob`
 - `state`
 
-**[R46]** The Seller **MUST** provide all remaining optional attributes if they
+**[R42]** The Seller **MUST** provide all remaining optional attributes if they
 were previously set by the Buyer or the Seller. 
 
 ## 6.10. Use Case 10: Suspend Fault Management Job
@@ -1717,11 +1656,11 @@ The Buyer/Client may request to suspend a Fault Management Job by using
 providing the `id` of the Fault Management Job in the path and has an empty 
 `204` confirmation response.
 
-The sequence diagram in Figure 26 presents this use case in detail.
+The sequence diagram in Figure 23 presents this use case in detail.
 
-![Figure 26: Use Case 10](media/useCase10.png)
+![Figure 23: Use Case 10](media/useCase10.png)
 
-**Figure 26. Use Case 10 - Suspend Fault Management Job Flow**
+**Figure 23. Use Case 10 - Suspend Fault Management Job Flow**
 
 The Buyer/Client sends a request specifying `id` of the Fault Management
 Job to be suspended. The Seller/Server performs request validation, then 
@@ -1734,21 +1673,20 @@ response to a suspension request optionally followed by
 When the Fault Management Job is suspended, it does not generate 
 Fault Management Reports.
 
-**[R48]** In case `id` does not match a `FaultManagementJob` that is to be
+**[R43]** In case `id` does not match a `FaultManagementJob` that is to be
 suspended, an error response `Error404` **MUST** be returned. 
 
-**[R49]** The FM Job **MUST** be in the `inProgress` state to be suspended. [MEF W133.1 16]
+**[R44]** The FM Job **MUST** be in the `inProgress` state to be suspended. [MEF133.1 R16]
 
-**[R51]** If the Seller/Server accepts the Client’s Suspend FM Job request,
-the Job **MUST** be suspended. [MEF W133.1 R18]
+**[R45]** If the Seller/Server accepts the Client’s Suspend FM Job request,
+the job **MUST** be suspended. [MEF133.1 R18]
 
-**[R52]** If the Seller/Server declines the Buyer/Client’s suspend FM Job 
-request, the Job **MUST NOT** be suspended. [MEF W133.1 R19]
+**[R46]** If the Seller/Server declines the Buyer/Client’s suspend FM Job 
+request, the job **MUST NOT** be suspended. [MEF133.1 R19]
 
-**[R53]** If the Seller/Server declines the Buyer/Client’s request to suspend 
+**[R47]** If the Seller/Server declines the Buyer/Client’s request to suspend 
 a Performance Job, they **MUST** provide an Error with a meaningful explanation
-in `reason` field.
-[MEF W133.1 R20]
+in `reason` field. [MEF133.1 R20]
 
 ## 6.11. Use Case 11: Resume Fault Management Job
 
@@ -1757,11 +1695,11 @@ The Buyer/Client may request to resume a Fault Management Job by using
 providing the `id` of the Fault Management Job in the path and has an empty 
 `204` confirmation response.
 
-The sequence diagram in Figure 27 presents this use case in detail.
+The sequence diagram in Figure 24 presents this use case in detail.
 
-![Figure 27: Use Case 11](media/useCase11.png)
+![Figure 24: Use Case 11](media/useCase11.png)
 
-**Figure 27. Use Case 11 - Resume Fault Management Job Flow**
+**Figure 24. Use Case 11 - Resume Fault Management Job Flow**
 
 The Buyer/Client sends a request specifying `id` of the Fault Management Job 
 to be resumed. The Seller/Server performs request validation, then searches for
@@ -1771,20 +1709,20 @@ Job to `scheduled` or `inProgress` status depending on the schedule, and sends
 a successful response to a resumption request optionally followed by 
 `faultManagementJobStateChangeEvent`.
 
-**[R55]** In case `id` does not match a `FaultManagementJob` 
+**[R48]** In case `id` does not match a `FaultManagementJob` 
 that is to be resumed, an error response `Error404` **MUST** be returned. 
 
-**[R56]** The FM Job **MUST** be in the `suspended` state. [MEF W133.1 R22]
+**[R49]** The FM Job **MUST** be in the `suspended` state. [MEF133.1 R22]
 
-**[R58]** If the Seller/Server accepts the Client’s Resume FM Job request, 
-the Job **MUST** be resumed and return to the `inProgress` or `scheduled` state. [MEF W133.1 R24]
+**[R50]** If the Seller/Server accepts the Client’s Resume FM Job request, 
+the job **MUST** be resumed and return to the `inProgress` or `scheduled` state. [MEF133.1 R24]
 
-**[R59]** If the Seller/Server declines the Buyer/Client’s Resume FM Job 
-request, the FM Job **MUST NOT** be resumed. [MEF W133.1 R25]
+**[R51]** If the Seller/Server declines the Buyer/Client’s Resume FM Job 
+request, the FM Job **MUST NOT** be resumed. [MEF133.1 R25]
 
-**[R60]** If the Seller/Server declines the Buyer/Client’s request to resume
+**[R52]** If the Seller/Server declines the Buyer/Client’s request to resume
 a Performance Job, they **MUST** provide an Error with a meaningful explanation
-in `reason` field. [MEF W133.1 26]
+in `reason` field. [MEF133.1 R26]
 
 ## 6.12. Use Case 12: Fault Management Job Complex Query
 
@@ -1797,28 +1735,26 @@ filters.
 
 ### 6.12.1. Fault Management Job Complex Query Request
 
-Figure 28 depicts the key components of the data model utilized in the 
-Fault Management Job Complex Query request (`POST /faultManagementJobComplexQuery`) 
-and its corresponding response. The request message model,
-`FaultManagementJobComplexQuery_Create`, is a subset of the 
-`FaultManagementJobComplexQuery` model and includes only attributes that can 
-be specified by the Buyer/Client, representing filtering options. 
-In response, the Seller/Server provides a list of `FaultManagementJobComplexQuery`
-entities that contain the matched FM Job objects.
+Figure 25 depicts the key components of the data model utilized in the 
+Fault Management Job Complex Query request and its corresponding response. 
+The request message model, `FaultManagementJobComplexQuery_Create`, includes
+only attributes that can be specified by the Buyer/Client, representing 
+filtering options. In response, the Seller/Server provides a list of 
+`FaultManagementJob` entities that contain the matched FM Job objects.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 28: Fault Management Job Complex Query Key Entities](media/FaultManagementJobComplexQueryModel.png)
+![Figure 25: Fault Management Job Complex Query Key Entities](media/FaultManagementJobComplexQueryModel.png)
 
-**Figure 28. Fault Management Job Complex Query Key Entities**
+**Figure 25. Fault Management Job Complex Query Key Entities**
 
 To send a request the Buyer/Client uses the `faultManagementJobComplexQuery`
 operation from the API. The snippet below presents an example of a Fault 
 Management Job Complex Query request. It filters for `FaultManagementJob`
 objects that:
 
-- have granularity set to 1 minute
+- have granularity set to 30 minutes
 - run on a schedule with the recurring frequency set to every full hour
 - are in a `scheduled` state
 
@@ -1826,7 +1762,10 @@ objects that:
 
 ```json
 {
-  "granularity": "1 minute",
+  "granularity": {
+    "timeDurationValue": 30,
+    "timeDurationUnits": "MIN"
+  },
   "scheduleDefinition": {
     "recurringSchedule": {
       "second": "0",
@@ -1843,10 +1782,8 @@ objects that:
 
 ### 6.12.2. Fault Management Job Complex Query Response
 
-Entities used for providing a response to Fault Management Job Complex 
-Query request are presented in Figure 28. The Seller/Server responds with a list
-of `FaultManagementJobComplexQuery` objects, which represent matched Fault 
-Management Jobs. 
+The Seller/Server responds with a list of `FaultManagementJob` objects, which
+represent matched Fault Management Jobs. 
 
 The following snippet presents the Seller/Server response. 
 
@@ -1855,17 +1792,22 @@ The following snippet presents the Seller/Server response.
 ```json
 [
   {
-    "creationDate": "2025-01-01T00:00:00.000Z",
     "description": "Exemplary Create Fault Management Job request",
-    "faultManagementJob": {
-      "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
+    "granularity": {
+      "timeDurationValue": 15,
+      "timeDurationUnits": "MIN"
     },
-    "granularity": "1 minute",
     "jobPriority": 5,
-    "jobType": "proactive",
-    "lastModifiedDate": "2025-01-01T00:00:00.000Z",
+    "jobType": "on-demand",
+    "monitoredObject": {
+      "@type": "ServiceRef",
+      "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c",
+    },
     "outputFormat": "json",
-    "reportingPeriod": "1 hour",
+    "reportingPeriod": {
+      "timeDurationValue": 1,
+      "timeDurationUnits": "HOUR"
+    },
     "resultFormat": "payload",
     "scheduleDefinition": {
       "scheduleDefinitionStartTime": "2025-01-01T00:00:00.000Z",
@@ -1873,16 +1815,12 @@ The following snippet presents the Seller/Server response.
       "recurringSchedule": {
         "second": "0",
         "minute": "0",
-        "hour": "*/1",
+        "hour": "*/2",
         "dayOfMonth": "*",
         "month": "*",
         "dayOfWeek": "*"
       },
       "executionDuration": "1 hour"
-    },
-    "serviceId": {
-      "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c",
-      "serviceIdTo": "1d7dd934-7aa3-4997-9b6a-906a3e35a08e"
     },
     "serviceSpecificConfiguration": {
       "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
@@ -1897,7 +1835,11 @@ The following snippet presents the Seller/Server response.
       "timeout": 5,
       "waitTime": 2
     },
-    "state": "scheduled"
+    "creationDate": "2025-01-01T00:00:00.000Z", << added by SOF >>
+    "href": "{{baseUrl}}/faultManagement/v2/755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
+    "id": "755e55e2-72b0-4e3b-af00-693e3beac691", << added by SOF >>
+    "lastModifiedDate": "2025-01-01T00:00:00.000Z", << added by SOF >>
+    "state": "acknowledged" << added by SOF >>
   }
 ]
 ```
@@ -1911,8 +1853,10 @@ The Buyer/Client can retrieve a list of `FaultManagementReport` objects by using
 **MAY** contain none or more of the following attributes as filter criteria: 
 
 - `faultManagementJobId`
-- `serviceIdFrom`
-- `serviceIdTo`
+- `serviceFromId`
+- `serviceToId`
+- `serviceId`
+- `entityId`
 - `state`
 - `creationDate.gt`
 - `creationDate.lt`
@@ -1920,40 +1864,43 @@ The Buyer/Client can retrieve a list of `FaultManagementReport` objects by using
 - `reportingTimeframe.startDate.lt`
 - `reportingTimeframe.endDate.gt`
 - `reportingTimeframe.endDate.lt`
-- `granularity`
-- `jobType`
 - `outputFormat`
 - `resultFormat`
 
-**[R61]** The Seller/Server **MUST** support the retrieval of a List of 
-Fault Management Reports Use Case. [MEF W133.1 R33]
-
-**[R62]** The Buyer/Client **MUST** support the retrieval of a List of 
-Fault Management Reports Use Case. [MEF W133.1 R34]
-
-**[R63]** The Seller/Server's response to the Buyer’s/Client’s retrieve List 
+**[R53]** The Seller/Server's response to the Buyer’s/Client’s retrieve List 
 of Fault Management Reports **MUST** include the following attributes as 
-applicable: [MEF W133.1 R35]
+applicable: [MEF133.1 R41]
 
-- `description`
+- `creationDate`
+- `faultManagementJob`
+- `granularity`
 - `id`
+- `monitoredObject`
+- `outputFormat`
+- `reportingTimeframe`
+- `resultFormat`
+- `serviceSpecificConfiguration`
+- `state`
 
-**[R64]** In case no items matching the criteria are found, the Seller/Server 
-**MUST** return a valid response with an empty list. 
+**[O8]** The Seller/Server’s response to the Buyer/Client’s retrieve List 
+of Fault Management Reports **MAY** include `description`. [MEF133.1 O4]
 
-Figure 29 presents entities related to the use case. 
+**[R54]** In case no items matching the criteria are found, the Seller/Server 
+**MUST** return a valid response with an empty list. [MEF133.1 R42]
 
-![Figure 29: Use Case 13](media/useCase13Model.png)
+Figure 26 presents entities related to the use case. 
 
-**Figure 29. Use Case 13: Retrieve Fault Management Report List - Model**
+![Figure 26: Use Case 13](media/useCase13Model.png)
+
+**Figure 26. Use Case 13: Retrieve Fault Management Report List - Model**
 
 ### 6.13.1. Fault Management Report State Machine
 
-Figure 30 presents the Fault Management Report state machine:
+Figure 27 presents the Fault Management Report state machine:
 
-![Figure 30: Fault Management Report State Machine](media/faultManagementReportStates.png)
+![Figure 27: Fault Management Report State Machine](media/faultManagementReportStates.png)
 
-**Figure 30. Fault Management Report State Machine**
+**Figure 27. Fault Management Report State Machine**
 
 `FaultManagementReport` is created in `acknowledged` status. In case any issues
 are found in report validation, `FaultManagementReport` moves to a `rejected` 
@@ -1967,16 +1914,16 @@ Table 10 presents the list of `status` names and their descriptions.
 
 | State        | Description                                                                                                                                                                                                                                                                                                                                                                                       |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+| acknowledged | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the `acknowledged` state. The report remains `acknowledged` until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the `inProgress` state. If not all attributes are validated, the report moves to the `rejected` state. |
 | completed    | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
 | failed       | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
 | inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
-| rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
-In case id does not 
+| rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                         |
+
 **Table 10. Fault Management Report State Machine states**
 
-**[R65]** The Seller/Server **MUST** support all Fault Management Report 
-statuses and their associated transitions as described in Figure 30 and Table 10. 
+**[R55]** The Seller/Server **MUST** support all Fault Management Report 
+statuses and their associated transitions as described in Figure 27 and Table 10. 
 
 ## 6.14. Use Case 14: Retrieve Fault Management Report by Identifier
 
@@ -2004,15 +1951,24 @@ A response to Get by Identifier request is presented in the following snippet.
   "faultManagementJob": {
     "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
   },
+  "granularity": {
+    "timeDurationValue": 30,
+    "timeDurationUnits": "MIN"
+  },
   "id": "c7ad584f-506a-4db1-bbeb-acbd6672f0a7",
   "lastModifiedDate": "2025-01-01T01:00:00.000Z",
+  "monitoredObject": {
+    "@type": "ServiceRef",
+    "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c",
+  },
+  "outputFormat": "json",
   "reportContent": [
     {
       "measurementTime": {
         "measurementStartDate": "2025-01-01T00:00:00.000Z",
         "measurementEndDate": "2025-01-01T01:00:00.000Z"
       },
-      "measurementDataPoints": [
+      "measurementDataPoint": [
         {
           "@type": "urn:mef:lso:spec:legato:ping-report:v0.0.1:all",
           "numberOfTxPackets": 10,
@@ -2039,24 +1995,46 @@ A response to Get by Identifier request is presented in the following snippet.
     "reportingStartDate": "2025-01-01T00:00:00.000Z",
     "reportingEndDate": "2025-01-01T01:00:00.000Z"
   },
+  "resultFormat": "payload",
+  "serviceSpecificConfiguration": {
+    "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+    "sourceIpAddress": "192.0.2.1",
+    "destinationIpAddress": "192.0.2.2",
+    "transmissionInterval": {
+      "amount": 1,
+      "units": "seconds"
+    },
+    "count": 10,
+    "packetSize": 128,
+    "timeout": 5,
+    "waitTime": 2
+  },
   "state": "completed"
 }
 
 ```
 
-**[R66]** The Seller/Server **MUST** include following attributes in the
+**[R56]** The Seller/Server **MUST** include following attributes in the
 `FaultManagementReport` object in the response: 
 
-- `creationDate`
-- `id`
+  - `creationDate`
+  - `faultManagementJob`
+  - `granularity`
+  - `id`
+  - `monitoredObject`
+  - `outputFormat`
+  - `reportingTimeframe`
+  - `resultFormat`
+  - `serviceSpecificConfiguration`
+  - `state`
 
-**[R67]** The Seller/Server **MUST** provide all remaining optional attributes 
+**[R57]** The Seller/Server **MUST** provide all remaining optional attributes 
 if they were previously set by the Buyer or the Seller. 
 
-**[R68]** The results regardless of the format **MUST** contain the FM results
-as specified with FM Job request. [MEF W133.1 R36]
+**[R58]** The results regardless of the format **MUST** contain the FM results
+as specified with FM Job request. [MEF133.1 R43]
 
-**[R69]** In case `id` does not match `FaultManagementReport` in 
+**[R59]** In case `id` does not match `FaultManagementReport` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned. 
 
 ## 6.15. Use Case 15: Fault Management Report Complex Query
@@ -2064,27 +2042,24 @@ Seller/Server's system, an error response `Error404` **MUST** be returned.
 The `FaultManagementReport` defines complex structures with multiple levels of 
 nesting, such as `serviceSpecificConfiguration`. To facilitate filtering
 based on these structures, the API provides an additional endpoint 
-`POST /faultManagementReportComplexQuery`. This endpoint allows filtering by values
-defined by the `FaultManagementReport` and `FaultManagementJob` types and returns 
-a list of Fault Management Report objects that match the specified filters.
+`POST /faultManagementReportComplexQuery`. 
 
 ### 6.15.1. Fault Management Report Complex Query Request
 
-Figure 31 depicts the key components of the data model utilized in the 
-Fault Management Report Complex Query request (`POST /faultManagementReportComplexQuery`)
-and its corresponding response. The request message model,
-`FaultManagementReportComplexQuery_Create`, is a subset of the 
-`FaultManagementReportComplexQuery` model and includes only attributes that can
-specified by the Buyer/Client, representing filtering options. In
-response, the Seller/Server provides a list of `FaultManagementReportComplexQuery`
-entities that contain the matched Fault Management Report objects.
+Figure 28 depicts the key components of the data model utilized in the 
+Fault Management Report Complex Query request and its corresponding response.
+The request message model, `FaultManagementReportComplexQuery_Create`, includes
+only attributes that can specified by the Buyer/Client, representing filtering
+options. In the response, the Seller/Server provides a list of
+`FaultManagementReport_Find` entities that contain the matched Fault 
+Management Report objects.
 
 The full list of attributes is available in [Section 7](#7-api-details) and in
 the API specification which is an integral part of this standard.
 
-![Figure 31: Fault Management Report Complex Query Key Entities](media/FaultManagementReportComplexQueryModel.png)
+![Figure 28: Fault Management Report Complex Query Key Entities](media/FaultManagementReportComplexQueryModel.png)
 
-**Figure 31. Fault Management Report Complex Query Key Entities**
+**Figure 28. Fault Management Report Complex Query Key Entities**
 
 To send a request the Buyer/Client uses the `faultManagementReportComplexQuery`
 operation from the API. The snippet below presents an example of a Fault
@@ -2092,7 +2067,7 @@ Management Report Complex Query request. It filters for Fault Management Report
 objects that:
 - were created between 2025-01-01 00:00:00 and 2025-01-02 00:00:00
 - Output format is JSON
-- relate to specific Ordered Pair (Service Id From/To)
+- relate to specific Service Id
 
 **`Fault Management Report Complex Query` Request**
 
@@ -2101,8 +2076,8 @@ objects that:
   "creationDate.gt": "2025-01-01T00:00:00.000Z",
   "creationDate.lt": "2025-01-02T00:00:00.000Z",
   "outputFormat": "json",
-  "serviceId": {
-    "serviceIdFrom": "905d9f87-6478-4153-a5de-fcc70257f03c"
+  "serviceRef": {
+    "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c"
   },
   "state": "completed"
 }
@@ -2110,10 +2085,8 @@ objects that:
 
 ### 6.15.2. Fault Management Report Complex Query Response
 
-Entities used for providing a response to Fault Management Report 
-Complex Query requests are presented in Figure 31. The Seller/Server responds 
-with a list of `FaultManagementReportComplexQuery` objects, which represent 
-matched Fault Management Reports. 
+The Seller/Server responds with a list of `FaultManagementReport` objects, which
+represent matched Fault Management Reports. 
 
 The following snippet presents the Seller/Server response. 
 
@@ -2127,13 +2100,33 @@ The following snippet presents the Seller/Server response.
     "faultManagementJob": {
       "faultManagementJobId": "755e55e2-72b0-4e3b-af00-693e3beac691"
     },
-    "faultManagementReport": {
-      "faultManagementReportId": "c7ad584f-506a-4db1-bbeb-acbd6672f0a7"
+    "granularity": {
+      "timeDurationValue": 30,
+      "timeDurationUnits": "MIN"
     },
-    "lastModifiedDate": "2025-01-01T01:00:00.000Z",
+    "id": "c7ad584f-506a-4db1-bbeb-acbd6672f0a7",
+    "monitoredObject": {
+      "@type": "ServiceRef",
+      "serviceId": "905d9f87-6478-4153-a5de-fcc70257f03c",
+    },
+    "outputFormat": "json",
     "reportingTimeframe": {
       "reportingStartDate": "2025-01-01T00:00:00.000Z",
       "reportingEndDate": "2025-01-01T01:00:00.000Z"
+    },
+    "resultFormat": "payload",
+    "serviceSpecificConfiguration": {
+      "@type": "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all",
+      "sourceIpAddress": "192.0.2.1",
+      "destinationIpAddress": "192.0.2.2",
+      "transmissionInterval": {
+        "amount": 1,
+        "units": "seconds"
+      },
+      "count": 10,
+      "packetSize": 128,
+      "timeout": 5,
+      "waitTime": 2
     },
     "state": "completed"
   }
@@ -2156,7 +2149,7 @@ entities can be established through the `relatedObjectId` attribute of the
 The Buyer/Client can retrieve a list of `TrackingRecord` by using a 
 `GET /trackingRecord` operation with desired filtering criteria.
 
-**[O8]** The Buyer/Client Retrieve List of Tracking Record request **MAY** 
+**[O9]** The Buyer/Client Retrieve List of Tracking Record request **MAY** 
 contain none or more of the following attributes: 
 
 - `relatedObjectId`
@@ -2164,25 +2157,27 @@ contain none or more of the following attributes:
 - `creationDate.lt`
 - `user`
 
-**[R70]** The Seller/Server **MUST** include following attributes (if set) in 
-the `TrackingRecord_Find` object in the response: 
+**[R60]** The Seller/Server **MUST** include following attributes (if set) in 
+the `TrackingRecord` object in the response: 
 
 - `creationDate`
 - `id`
 - `relatedObjectId`
 
-**[R71]** Optionally The Seller/Server **MAY** return : 
+**[R61]** Optionally The Seller/Server **MAY** return : 
 - `description`
+- `request`
+- `system`
 - `user`
 
-**[R72]** In case no items matching the criteria are found, the Seller/Server 
+**[R62]** In case no items matching the criteria are found, the Seller/Server 
 **MUST** return a valid response with an empty list. 
 
-Figure 32 presents the main Tracking Record entities. 
+Figure 29 presents the main Tracking Record entities. 
 
-![Figure 32: Tracking Record Model](media/trackingRecordModel.png)
+![Figure 29: Tracking Record Model](media/trackingRecordModel.png)
 
-**Figure 32. Tracking Record Model**
+**Figure 29. Tracking Record Model**
 
 ## 6.17. Use Case 17: Retrieve Tracking Record by Identifier
 
@@ -2190,14 +2185,10 @@ The Buyer/Client can get detailed information about the Tracking Record from the
 Seller/Server by using a `GET /trackingRecord/{{id}}` operation. The payload 
 returned in the response is a full representation of the Tracking Record. 
 
-Get List and Get by Identifier operations return different representations
-of Tracking Record. Get List returns the `TrackingRecord_Find` object which is a 
-subset of `TrackingRecord` returned by the Get by Identifier operation. 
-
-**[R73]** In case `id` does not match a `TrackingRecord` in 
+**[R63]** In case `id` does not match a `TrackingRecord` in 
 Seller/Server's system, an error response `Error404` **MUST** be returned.
 
-**[R74]** The Seller/Server **MUST** include following attributes in the
+**[R64]** The Seller/Server **MUST** include following attributes in the
 `TrackingRecord` object in the response: 
 
 - `creationDate`
@@ -2211,11 +2202,11 @@ the API specification which is an integral part of this standard.
 
 The Buyer/Client can track the lifecycle of the Fault Management objects by
 subscribing to notifications. An exemplary use case for exchanging 
-notifications is presented in Figure 33. 
+notifications is presented in Figure 30. 
 
-![Figure 33: Fault Management Notification Example](media/useCase1Notification.png)
+![Figure 30: Fault Management Notification Example](media/useCase1Notification.png)
 
-**Figure 33. Fault Management Notification Example**
+**Figure 30. Fault Management Notification Example**
 
 The Seller/Server communicates with the Buyer/Client with notifications 
 provided that:
@@ -2230,11 +2221,11 @@ operation from the API: `POST /hub`. The request contains only 2 attributes:
   notified to,
 - `query` - optional, to provide the required types of event.
 
-Figure 34 shows all entities involved in the notification use cases.
+Figure 31 shows all entities involved in the notification use cases.
 
-![Figure 34: Fault Management Notification Data Model](media/faultManagementNotificationModel.png)
+![Figure 31: Fault Management Notification Data Model](media/faultManagementNotificationModel.png)
 
-**Figure 34. Fault Management Notification Data Model**
+**Figure 31. Fault Management Notification Data Model**
 
 By using a request in the following snippet, the Buyer/Client subscribes for 
 notification of all types of events. Those are:
@@ -2255,12 +2246,13 @@ notification of all types of events. Those are:
 }
 ```
 
-**[R75]** The Client request **MUST** contain the following: [MEF W133.1 R27]
+**[R65]** The Client request **MUST** contain the following: [MEF133.1 R33]
 - `callback`
-- `query`
 
-**[R77]** If the Seller/Server rejects the Client’s Register for FM 
-Notifications request, the response **MUST** include a reason for the rejection. [MEF W133.1 R29]
+**[O10]** The Buyer/Client request **MAY** contain the `query` parameter. [MEF133.1 O3]
+
+**[R66]** If the Seller/Server rejects the Client’s Register for FM 
+Notifications request, the response **MUST** include a reason for the rejection. [MEF133.1 R35]
 
 If the Buyer/Client wishes to receive only notifications of a certain type, 
 a `query` must be added:
@@ -2311,12 +2303,12 @@ Example of a final address that the notifications will be sent to (for
 Notifications are used to asynchronously inform the Buyer/Client about the 
 respective objects and attributes changes.
 
-Figure 35 presents notifications produced by Seller/Server for the whole lifecycle
+Figure 32 presents notifications produced by Seller/Server for the whole lifecycle
 of `FaultManagementJob` assuming that Buyer/Client subscribed to all event types.
 
-![Figure 35: Fault Management Job lifecycle](media/notificationsForFaultManagementJob.png)
+![Figure 32: Fault Management Job lifecycle](media/notificationsForFaultManagementJob.png)
 
-**Figure 35. Fault Management Job lifecycle with all notifications**
+**Figure 32. Fault Management Job lifecycle with all notifications**
 
 After a successful notification subscription, the Seller/Server sends a 
 `FaultManagementJob` create request. The SOF responds with `FaultManagementJob` 
@@ -2367,21 +2359,21 @@ The Buyer/Client needs to query it later by `id` to get details.
 attribute changes its value. There are no status change notifications
 sent upon Fault Management Job creation.
 
-**[R78]** The Seller/Server FM Notifications **MUST** be sent to Buyer/Clients
-who have subscribed to FM Notifications. [MEF W133.1 R30]
+**[R67]** The Seller/Server FM Notifications **MUST** be sent to Buyer/Clients
+who have subscribed to FM Notifications. [MEF133.1 R36]
 
-**[R79]** The Seller/Server FM Notifications **MUST NOT** be sent 
-to Buyer/Clients who have not subscribed to FM Notifications. [MEF W133.1 R31]
+**[R68]** The Seller/Server FM Notifications **MUST NOT** be sent 
+to Buyer/Clients who have not subscribed to FM Notifications. [MEF133.1 R37]
 
-**[R80]** The Seller/Server’s FM Notification **MUST** include the following
-attributes: [MEF W133.1 R32]
+**[R69]** The Seller/Server’s FM Notification **MUST** include the following
+attributes: [MEF W133.1 R38]
 - `eventType`
 - `eventId`
 - `eventTime`
 - object that trigerred the notification
 
-**[R81]** If the Buyer/Client registered for FM Notifications, the Seller/Server
-**MUST** notify the Buyer/Client when FM Job results are available. [MEF W133.1 R5]
+**[R70]** If the Buyer/Client registered for FM Notifications, the Seller/Server
+**MUST** notify the Buyer/Client when FM Job results are available. [MEF133.1 R5]
 
 To stop receiving events, the Buyer/Client has to use the `unregisterListener`
 operation from the `DELETE /hub/{id}` endpoint. The `id` is the identifier
@@ -2404,9 +2396,9 @@ Implementations can use HTTP error codes not specified in this standard in
 compliance with rules defined in RFC 7231 [[RFC7231](#8-references)]. In such a
 case, the error message body structure might be aligned with the `Error`.
 
-![Figure 36: Error response data model](media/errorEntities.png)
+![Figure 33: Error response data model](media/errorEntities.png)
 
-**Figure 36. Data model types to represent an erroneous response**
+**Figure 33. Data model types to represent an erroneous response**
 
 #### 7.1.1.1. Type Error
 
@@ -2455,7 +2447,7 @@ Inherits from:
         <tr>
             <td>code*</td>
             <td><a href="#T_Error400Code">Error400Code</a></td>
-            <td></td>
+            <td>Error code</td>
         </tr>
     </tbody>
 </table>
@@ -2489,7 +2481,7 @@ Inherits from:
         <tr>
             <td>code*</td>
             <td><a href="#T_Error401Code">Error401Code</a></td>
-            <td></td>
+            <td>Error code</td>
         </tr>
     </tbody>
 </table>
@@ -2519,7 +2511,7 @@ Inherits from:
         <tr>
             <td>code*</td>
             <td><a href="#T_Error403Code">Error403Code</a></td>
-            <td></td>
+            <td>Error code</td>
         </tr>
     </tbody>
 </table>
@@ -2557,32 +2549,7 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.1.1.9. Type Error408
-
-**Description:** Request Time-out (https://tools.ietf.org/html/rfc7231#section-6.5.7)
-
-Inherits from:
-- <a href="#T_Error">Error</a>
-
-<table id="T_Error408">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>code*</td>
-            <td>string</td>
-            <td>List of supported error codes:
-- timeOut: Request Time-out - indicates that the server did not receive a complete request message within the time that it was prepared to wait.</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.1.1.10. Type Error422
+#### 7.1.1.9. Type Error422
 
 **Description:** Unprocessable entity due to a business validation problem. (https://datatracker.ietf.org/doc/html/rfc4918#section-11.2)
 
@@ -2611,7 +2578,7 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
     </tbody>
 </table>
 
-#### 7.1.1.11. `enum` Error422Code
+#### 7.1.1.10. `enum` Error422Code
 
 **Description:** One of the following error codes:
 - missingProperty: The property that was expected is not present in the
@@ -2628,7 +2595,7 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
 - otherIssue: Other problem was identified (detailed information
   provided in a reason).
 
-#### 7.1.1.12. Type Error500
+#### 7.1.1.11. Type Error500
 
 **Description:** Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
 
@@ -2653,7 +2620,7 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.1.1.13. Type Error501
+#### 7.1.1.12. Type Error501
 
 **Description:** Not Implemented. Used in case Seller is not supporting an optional operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
 
@@ -2680,28 +2647,28 @@ Inherits from:
 
 ## 7.2. Management API Data model
 
-Figure 37 presents the full Fault Management data model. The data types,
+Figure 34 presents the full Fault Management data model. The data types,
 requirements related to them, and mapping to MEF W133.1 specification are
 discussed later in this section.
 
-![Figure 37: Fault Management Data Model Part 1](media/faultManagementDataModel.png)
-![Figure 37: Fault Management Data Model Part 2](media/faultManagementDataModelPart2.png)
-![Figure 37: Fault Management Data Model Part 3](media/faultManagementDataModelPart3.png)
-![Figure 37: Fault Management Data Model Part 4](media/faultManagementDataModelPart4.png)
-**Figure 37. Fault Management Data Model**
+![Figure 34: Fault Management Data Model Part 1](media/faultManagementDataModel.png)
+![Figure 34: Fault Management Data Model Part 2](media/faultManagementDataModelPart2.png)
+![Figure 34: Fault Management Data Model Part 3](media/faultManagementDataModelPart3.png)
+![Figure 34: Fault Management Data Model Part 4](media/faultManagementDataModelPart4.png)
+**Figure 34. Fault Management Data Model**
 
 ### 7.2.1. FaultManagementJob
 
-#### 7.2.1.1. Type FaultManagementJob_Common
+#### 7.2.1.1. Type FaultManagementJob_Create
 
-**Description:** A Fault Management Job specifies the configuration of FM Job to be performed on a Service by the Seller/Server. 
-<table id="T_FaultManagementJob_Common">
+**Description:** A Fault Management Job specifies the configuration of FM Job to be performed on a service, an ordered pair (e.g., two UNIs), or an entity (e.g., port) by the Seller/Server. 
+<table id="T_FaultManagementJob_Create">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -2712,7 +2679,7 @@ discussed later in this section.
             <td>Description</td>
         </tr><tr>
             <td>granularity*</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Sampling rate of the collection or production of Fault Management Job results.</td>
             <td>Granularity</td>
         </tr><tr>
@@ -2726,13 +2693,18 @@ discussed later in this section.
             <td>The type of FM Job.</td>
             <td>FM Job Type</td>
         </tr><tr>
+            <td>monitoredObject*</td>
+            <td><a href="#T_MonitoredObjectRef">MonitoredObjectRef</a></td>
+            <td>Defines the reference to object which is a subject of fault management.</td>
+            <td>Service ID/Service Pair/Entity Reference</td>
+        </tr><tr>
             <td>outputFormat*</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
             <td>List of possible output formats for the Fault Management Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>reportingPeriod*</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
@@ -2746,32 +2718,20 @@ discussed later in this section.
             <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
-            <td>serviceId*</td>
-            <td><a href="#T_ServiceId">ServiceId</a></td>
-            <td>Identifier of a Service.</td>
-            <td>Service ID</td>
-        </tr><tr>
             <td>serviceSpecificConfiguration*</td>
             <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
-            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
-            <td>Service Payload Specific Attributes</td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration.</td>
+            <td>Service Specific Configuration</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.1.2. Type FaultManagementJob_Create
+#### 7.2.1.2. Type FaultManagementJob
 
-**Description:** A Fault Management Job specifies the configuration of FM Job to be executed on a Service by the Seller/Server. 
-
-Inherits from:
-- <a href="#T_FaultManagementJob_Common">FaultManagementJob_Common</a>
-
-#### 7.2.1.3. Type FaultManagementJob
-
-**Description:** A Fault Management Job specifies the configuration of the job to be executed by Seller/Server as part of the troubleshooting or diagnostic process of a Service.
+**Description:** A Fault Management Job specifies the configuration of the job to be executed by Seller/Server as part of the troubleshooting or  diagnostic process of a service, an ordered pair (e.g., two UNIs),  or an entity (e.g., port).
 
 Inherits from:
-- <a href="#T_FaultManagementJob_Common">FaultManagementJob_Common</a>
+- <a href="#T_FaultManagementJob_Create">FaultManagementJob_Create</a>
 
 <table id="T_FaultManagementJob">
     <thead style="font-weight:bold;">
@@ -2779,20 +2739,20 @@ Inherits from:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>creationDate*</td>
             <td>date-time</td>
-            <td>Date when Fault Management Job was created.</td>
-            <td>Creation Date</td>
+            <td>Date when the Fault Management Job was created.</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>href</td>
             <td>uri</td>
             <td>Hyperlink reference</td>
-            <td>Href</td>
+            <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
@@ -2802,7 +2762,7 @@ Inherits from:
             <td>lastModifiedDate</td>
             <td>date-time</td>
             <td>Date when the job was last modified.</td>
-            <td>Last Modified Date</td>
+            <td>Last Time Modified</td>
         </tr><tr>
             <td>rejectionReason</td>
             <td>string</td>
@@ -2817,97 +2777,20 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.2.1.4. Type FaultManagementJob_Find
-
-**Description:** This class represents a single list item for the response of the `listFaultManagementJob` operation.
-<table id="T_FaultManagementJob_Find">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when the job was created.</td>
-            <td>Creation Date</td>
-        </tr><tr>
-            <td>description</td>
-            <td>string</td>
-            <td>A free-text description of the Fault Management Job.</td>
-            <td>Description</td>
-        </tr><tr>
-            <td>granularity*</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Sampling rate of the collection or production of Fault Management Job results.</td>
-            <td>Granularity</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>jobPriority</td>
-            <td>integer</td>
-            <td>The priority of the Fault Management Job. The way the management application will use the Job priority to schedule Job execution is application-specific and out the scope.</td>
-            <td>FM Job Priority</td>
-        </tr><tr>
-            <td>jobType*</td>
-            <td><a href="#T_JobType">JobType</a></td>
-            <td>The type of FM Job.</td>
-            <td>FM Job Type</td>
-        </tr><tr>
-            <td>outputFormat*</td>
-            <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td>List of possible output formats for the Fault Management Report.</td>
-            <td>Output Format</td>
-        </tr><tr>
-            <td>reportingPeriod*</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Defines the interval for the report generation.</td>
-            <td>Reporting Period</td>
-        </tr><tr>
-            <td>scheduleDefinition*</td>
-            <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td>The schedule definition for running jobs.</td>
-            <td>Schedule Definition</td>
-        </tr><tr>
-            <td>serviceId*</td>
-            <td><a href="#T_ServiceId">ServiceId</a></td>
-            <td>Identifier of a Service.</td>
-            <td>Service ID</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_FaultManagementJobStateType">FaultManagementJobStateType</a></td>
-            <td>The state of the Fault Management Job.</td>
-            <td>State</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.1.5. Type CancelFaultManagementJob_Common
+#### 7.2.1.3. Type CancelFaultManagementJob_Create
 
 **Description:** Request for cancellation of an existing Fault Management Job.
-<table id="T_CancelFaultManagementJob_Common">
+<table id="T_CancelFaultManagementJob_Create">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>cancellationReason</td>
-            <td>string</td>
-            <td>An optional attribute that allows the Buyer/Client to provide additional details to the Seller/Server on the reason for cancelling Fault Management Job.</td>
-            <td>Not present</td>
-        </tr><tr>
             <td>faultManagementJob*</td>
             <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
             <td>A reference to a Fault Management Job resource.</td>
@@ -2916,19 +2799,12 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.2.1.6. Type CancelFaultManagementJob_Create
+#### 7.2.1.4. Type CancelFaultManagementJob
 
 **Description:** Request for cancellation of an existing Fault Management Job.
 
 Inherits from:
-- <a href="#T_CancelFaultManagementJob_Common">CancelFaultManagementJob_Common</a>
-
-#### 7.2.1.7. Type CancelFaultManagementJob
-
-**Description:** Request for cancellation of an existing Fault Management Job
-
-Inherits from:
-- <a href="#T_CancelFaultManagementJob_Common">CancelFaultManagementJob_Common</a>
+- <a href="#T_CancelFaultManagementJob_Create">CancelFaultManagementJob_Create</a>
 
 <table id="T_CancelFaultManagementJob">
     <thead style="font-weight:bold;">
@@ -2936,24 +2812,19 @@ Inherits from:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>cancellationDeniedReason</td>
-            <td>string</td>
-            <td>If the Cancel Fault Management Job request is denied by the Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
-            <td>Not present</td>
-        </tr><tr>
             <td>creationDate*</td>
             <td>date-time</td>
-            <td>Date when Cancel Fault Management Job was created.</td>
-            <td>Not present</td>
+            <td>Date when the Cancel Fault Management Job was created.</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>href</td>
             <td>string</td>
-            <td>Hyperlink to the Cancel Fault Management Job entity</td>
+            <td>Hyperlink to the Cancel Fault Management Job entity.</td>
             <td>Not present</td>
         </tr><tr>
             <td>id*</td>
@@ -2964,58 +2835,21 @@ Inherits from:
             <td>state*</td>
             <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
             <td>The state of the process related to the Fault Management Job.</td>
-            <td>Not present</td>
+            <td>State</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.1.8. Type CancelFaultManagementJob_Find
+#### 7.2.1.5. Type ModifyFaultManagementJob_Create
 
-**Description:** This class represents a single list item for the response of `listCancelFaultManagementJob`
-<table id="T_CancelFaultManagementJob_Find">
+**Description:** Request for modification of an existing Fault Management Job.
+<table id="T_ModifyFaultManagementJob_Create">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when Cancel Fault Management Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Cancel Fault Management Job that is generated by the Seller/Server when the Cancel Fault Management Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>faultManagementJob*</td>
-            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
-            <td>A reference to a Fault Management Job resource.</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
-            <td>The state of the process related to the Fault Management Job.</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.1.9. Type ModifyFaultManagementJob_Common
-
-**Description:** Request for modification of an existing Fault Management Job
-<table id="T_ModifyFaultManagementJob_Common">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -3031,7 +2865,7 @@ Inherits from:
             <td>FM Job Identifier</td>
         </tr><tr>
             <td>granularity</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Sampling rate of the collection or production of Fault Management Job results.</td>
             <td>Granularity</td>
         </tr><tr>
@@ -3040,18 +2874,13 @@ Inherits from:
             <td>The priority of the Fault Management Job. The way the management application will use the Job priority to schedule Job execution is application-specific and out the scope.</td>
             <td>FM Job Priority</td>
         </tr><tr>
-            <td>modificationReason</td>
-            <td>string</td>
-            <td>An optional attribute that allows the Buyer/Client to provide additional detail to the Seller/Server on the reason for modifying Fault Management Job.</td>
-            <td>Not present</td>
-        </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
             <td>List of possible output formats for the Fault Management Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>reportingPeriod</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
@@ -3068,24 +2897,17 @@ Inherits from:
             <td>serviceSpecificConfiguration</td>
             <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
             <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration. </td>
-            <td>Service Payload Specific Attributes</td>
+            <td>Service Specific Configuration</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.1.10. Type ModifyFaultManagementJob_Create
+#### 7.2.1.6. Type ModifyFaultManagementJob
 
 **Description:** Request for modification of an existing Fault Management Job.
 
 Inherits from:
-- <a href="#T_ModifyFaultManagementJob_Common">ModifyFaultManagementJob_Common</a>
-
-#### 7.2.1.11. Type ModifyFaultManagementJob
-
-**Description:** Request for modification of an existing Fault Management Job
-
-Inherits from:
-- <a href="#T_ModifyFaultManagementJob_Common">ModifyFaultManagementJob_Common</a>
+- <a href="#T_ModifyFaultManagementJob_Create">ModifyFaultManagementJob_Create</a>
 
 <table id="T_ModifyFaultManagementJob">
     <thead style="font-weight:bold;">
@@ -3093,77 +2915,35 @@ Inherits from:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>creationDate*</td>
             <td>date-time</td>
-            <td>Date when Modify Fault Management Job was created.</td>
-            <td>Not present</td>
+            <td>Date when the Modify Fault Management Job was created.</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>href</td>
             <td>string</td>
-            <td>Hyperlink to the Modify Fault Management Job entity</td>
+            <td>Hyperlink to the Modify Fault Management Job entity.</td>
             <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
-            <td>Unique identifier for the Modify Fault Management Job that is generated by the Seller/Server when the Modify Fault Management Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>modificationDeniedReason</td>
-            <td>string</td>
-            <td>If the Modify Fault Management Job request is denied by the Seller/Server, the Seller/Server provides a reason to the Buyer/Client using this attribute.</td>
+            <td>Unique identifier for the Modify Fault Management Job that is generated by the Seller/Server when the Modify Fault Management Job request  &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
             <td>Not present</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
             <td>The state of the process related to the Fault Management Job.</td>
-            <td>Not present</td>
+            <td>State</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.1.12. Type ModifyFaultManagementJob_Find
-
-**Description:** This class represents a single list item for the response of `listModifyFaultManagementJob`
-<table id="T_ModifyFaultManagementJob_Find">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when Modify Fault Management Job was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Unique identifier for the Modify Fault Management Job that is generated by the Seller/Server when the Modify Fault Management Job request &#x60;state&#x60; is set to &#x60;acknowledged&#x60;.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>faultManagementJob*</td>
-            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
-            <td>A reference to a Fault Management Job resource.</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
-            <td>The state of the process related to the Fault Management Job.</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.1.13. Type FaultManagementJobComplexQuery_Create
+#### 7.2.1.7. Type FaultManagementJobComplexQuery_Create
 
 **Description:** Fault Management Job Complex Query entity is used to perform  searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServiceSpecificConfiguration.
 <table id="T_FaultManagementJobComplexQuery_Create">
@@ -3180,15 +2960,15 @@ Inherits from:
             <td>creationDate.gt</td>
             <td>date-time</td>
             <td>Date when the Fault Management Job was created - greater than.</td>
-            <td>Creation Date</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>creationDate.lt</td>
             <td>date-time</td>
             <td>Date when the Fault Management Job was created - lower than.</td>
-            <td>Creation Date</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>granularity</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Sampling rate of the collection or production of Fault Management Job results.</td>
             <td>Granularity</td>
         </tr><tr>
@@ -3212,13 +2992,18 @@ Inherits from:
             <td>Date when the Fault Management Job was last modified - lower than.</td>
             <td>Last Time Modified</td>
         </tr><tr>
+            <td>monitoredObject</td>
+            <td><a href="#T_MonitoredObjectRef">MonitoredObjectRef</a></td>
+            <td>Defines the reference to object which is a subject of fault management.</td>
+            <td>Service ID/Service Pair/Entity Reference</td>
+        </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
             <td>List of possible output formats for the Fault Management Report.</td>
             <td>Output Format</td>
         </tr><tr>
             <td>reportingPeriod</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Defines the interval for the report generation.</td>
             <td>Reporting Period</td>
         </tr><tr>
@@ -3232,15 +3017,10 @@ Inherits from:
             <td>The schedule definition for running jobs.</td>
             <td>Schedule Definition</td>
         </tr><tr>
-            <td>serviceId</td>
-            <td><a href="#T_ServiceId">ServiceId</a></td>
-            <td>Identifier of a Service.</td>
-            <td>Service ID</td>
-        </tr><tr>
             <td>serviceSpecificConfiguration</td>
             <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
             <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration. </td>
-            <td>Service Payload Specific Attributes</td>
+            <td>Service Specific Configuration</td>
         </tr><tr>
             <td>state</td>
             <td><a href="#T_FaultManagementJobStateType">FaultManagementJobStateType</a></td>
@@ -3250,105 +3030,18 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.2.1.14. Type FaultManagementJobComplexQuery
-
-**Description:** Fault Management Job Complex Query entity is used to perform searches on Fault Management Job entities, including clauses based on ScheduleDefinition and ServiceSpecificConfiguration.
-<table id="T_FaultManagementJobComplexQuery">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when the Fault Management Job was created.</td>
-            <td>Creation Date</td>
-        </tr><tr>
-            <td>description</td>
-            <td>string</td>
-            <td>A free-text description of the Fault Management Job.</td>
-            <td>Description</td>
-        </tr><tr>
-            <td>faultManagementJob*</td>
-            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
-            <td>A reference to a Fault Management Job resource.</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>granularity*</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Sampling rate of the collection or production of Fault Management Job results.</td>
-            <td>Granularity</td>
-        </tr><tr>
-            <td>jobPriority</td>
-            <td>integer</td>
-            <td>The priority of the Fault Management Job. The way the management application will use the Job priority to schedule Job execution is application-specific and out the scope.</td>
-            <td>FM Job Priority</td>
-        </tr><tr>
-            <td>jobType*</td>
-            <td><a href="#T_JobType">JobType</a></td>
-            <td>The type of FM Job.</td>
-            <td>FM Job Type</td>
-        </tr><tr>
-            <td>lastModifiedDate</td>
-            <td>date-time</td>
-            <td>Date when the Fault Management Job was last modified.</td>
-            <td>Last Time Modified</td>
-        </tr><tr>
-            <td>outputFormat*</td>
-            <td><a href="#T_OutputFormat">OutputFormat</a></td>
-            <td>List of possible output formats for the Fault Management Report.</td>
-            <td>Output Format</td>
-        </tr><tr>
-            <td>reportingPeriod*</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Defines the interval for the report generation.</td>
-            <td>Reporting Period</td>
-        </tr><tr>
-            <td>resultFormat*</td>
-            <td><a href="#T_ResultFormat">ResultFormat</a></td>
-            <td>List of possible result formats that define how Seller/Server will deliver Fault Management Report to the Buyer/Client.</td>
-            <td>Result Format</td>
-        </tr><tr>
-            <td>scheduleDefinition*</td>
-            <td><a href="#T_ScheduleDefinition">ScheduleDefinition</a></td>
-            <td>The schedule definition for running jobs.</td>
-            <td>Schedule Definition</td>
-        </tr><tr>
-            <td>serviceId*</td>
-            <td><a href="#T_ServiceId">ServiceId</a></td>
-            <td>Identifier of a Service.</td>
-            <td>Service ID</td>
-        </tr><tr>
-            <td>serviceSpecificConfiguration*</td>
-            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
-            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
-            <td>Service Payload Specific Attributes</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_FaultManagementJobStateType">FaultManagementJobStateType</a></td>
-            <td>The state of the Fault Management Job.</td>
-            <td>State</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.1.15. `enum` FaultManagementJobProcessStateType
+#### 7.2.1.8. `enum` FaultManagementJobProcessStateType
 
 **Description:** The state of the process related to the Fault Management Job
 
-| state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged` | Acknowledged | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
-| `completed`    | Completed    | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
-| `inProgress`   | In-Progress  | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
-| `rejected`     | Rejected     | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
+| state          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| -------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged` | Acknowledged   | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+| `completed`    | Completed      | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
+| `inProgress`   | In-Progress    | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
+| `rejected`     | Rejected       | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
 
-#### 7.2.1.16. Type FaultManagementJobRef
+#### 7.2.1.9. Type FaultManagementJobRef
 
 **Description:** A reference to a Fault Management Job resource.
 <table id="T_FaultManagementJobRef">
@@ -3365,7 +3058,7 @@ Inherits from:
             <td>faultManagementJobHref</td>
             <td>string</td>
             <td>Hyperlink to the referenced Fault Management Job.</td>
-            <td>Href</td>
+            <td>Not present</td>
         </tr><tr>
             <td>faultManagementJobId*</td>
             <td>string</td>
@@ -3375,22 +3068,24 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.2.1.17. `enum` FaultManagementJobStateType
+
+#### 7.2.1.10. `enum` FaultManagementJobStateType
 
 **Description:** The state of the Fault Management Job.
 
-| state                   | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ----------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `acknowledged`          | Acknowledged          | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
-| `cancelled`             | Cancelled             | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `completed`             | Completed             | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| `inProgress`            | In-Progress           | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
-| `pending`               | Pending               | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
-| `pendingCancel`         | Pending Cancel        | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `rejected`              | Rejected              | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-| `resourcesUnavailable`  | Resources Unavailable | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-| `scheduled`             | Scheduled             | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
-| `suspended`             | Suspended             | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
+| state                   | MEF 133.1 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ----------------------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged`          | Acknowledged            | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
+| `cancelled`             | Cancelled               | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `completed`             | Completed               | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `inProgress`            | In-Progress             | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
+| `pending`               | Pending                 | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
+| `pendingCancel`         | Pending Cancel          | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `rejected`              | Rejected                | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `resourcesUnavailable`  | Resources Unavailable   | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| `scheduled`             | Scheduled               | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
+| `suspended`             | Suspended               | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
+
 
 ### 7.2.2. FaultManagementReport
 
@@ -3403,20 +3098,20 @@ Inherits from:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>creationDate*</td>
             <td>date-time</td>
-            <td>Date when Fault Management Report was created.</td>
-            <td>Not present</td>
+            <td>Date when the Fault Management Report was created.</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>description</td>
             <td>string</td>
             <td>A free-text description of the Fault Management Report.</td>
-            <td>Not present</td>
+            <td>Description</td>
         </tr><tr>
             <td>failureReason</td>
             <td>string</td>
@@ -3426,7 +3121,12 @@ Inherits from:
             <td>faultManagementJob*</td>
             <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
             <td>A reference to a Fault Management Job resource.</td>
-            <td>FM Job</td>
+            <td>FM Job Identifier</td>
+        </tr><tr>
+            <td>granularity*</td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
+            <td>Sampling rate of the collection or production of Fault Management Job results.</td>
+            <td>Granularity</td>
         </tr><tr>
             <td>href</td>
             <td>uri</td>
@@ -3436,12 +3136,22 @@ Inherits from:
             <td>id*</td>
             <td>string</td>
             <td>Unique identifier</td>
-            <td>Report Identifier</td>
+            <td>FM Report Identifier</td>
         </tr><tr>
             <td>lastModifiedDate</td>
             <td>date-time</td>
             <td>Date when the report was last modified.</td>
-            <td>Not present</td>
+            <td>Last Time Modified</td>
+        </tr><tr>
+            <td>monitoredObject*</td>
+            <td><a href="#T_MonitoredObjectRef">MonitoredObjectRef</a></td>
+            <td>Defines the reference to object which is a subject of fault management.</td>
+            <td>Service ID/Service Pair/Entity Reference</td>
+        </tr><tr>
+            <td>outputFormat*</td>
+            <td><a href="#T_OutputFormat">OutputFormat</a></td>
+            <td>List of possible output formats for the Fault Report.</td>
+            <td>Output Format</td>
         </tr><tr>
             <td>reportContent</td>
             <td><a href="#T_ReportContentItem">ReportContentItem</a>[]</td>
@@ -3451,12 +3161,22 @@ Inherits from:
             <td>reportingTimeframe*</td>
             <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
             <td>Specifies the date range between which data points will be included in the report.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>reportUrl</td>
             <td><a href="#T_AttachmentURL">AttachmentURL</a></td>
             <td>The URL pointing to an Attachment for download.</td>
             <td>File Transfer Data</td>
+        </tr><tr>
+            <td>resultFormat*</td>
+            <td><a href="#T_ResultFormat">ResultFormat</a></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Fault Report to the Buyer/Client.</td>
+            <td>Result Format</td>
+        </tr><tr>
+            <td>serviceSpecificConfiguration*</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific fault management configuration. </td>
+            <td>Service Specific Configuration</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_FaultManagementReportStateType">FaultManagementReportStateType</a></td>
@@ -3475,7 +3195,7 @@ Inherits from:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -3483,27 +3203,52 @@ Inherits from:
             <td>creationDate*</td>
             <td>date-time</td>
             <td>Date when the report was created.</td>
-            <td>Not present</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>description</td>
             <td>string</td>
-            <td>A free-text description of the Fault Management Report</td>
-            <td>Not present</td>
+            <td>A free-text description of the Fault Management Report.</td>
+            <td>Description</td>
         </tr><tr>
             <td>faultManagementJob*</td>
-            <td><a href="#T_FaultManagementJobRefOrValue">FaultManagementJobRef</a></td>
+            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
             <td>A reference to a Fault Management Job resource.</td>
             <td>FM Job Identifier</td>
+        </tr><tr>
+            <td>granularity*</td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
+            <td>Sampling rate of the collection or production of Fault Management Job results.</td>
+            <td>Granularity</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
             <td>Unique identifier</td>
-            <td>Report Identifier</td>
+            <td>FM Report Identifier</td>
+        </tr><tr>
+            <td>monitoredObject*</td>
+            <td><a href="#T_MonitoredObjectRef">MonitoredObjectRef</a></td>
+            <td>Defines the reference to object which is a subject of fault management.</td>
+            <td>Service ID/Service Pair/Entity Reference</td>
+        </tr><tr>
+            <td>outputFormat*</td>
+            <td><a href="#T_OutputFormat">OutputFormat</a></td>
+            <td>List of possible output formats for the Fault Report.</td>
+            <td>Output Format</td>
         </tr><tr>
             <td>reportingTimeframe*</td>
             <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
             <td>Specifies the date range between which data points will be included in the report.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
+        </tr><tr>
+            <td>resultFormat*</td>
+            <td><a href="#T_ResultFormat">ResultFormat</a></td>
+            <td>List of possible result formats that define how Seller/Server will deliver Fault Report to the Buyer/Client.</td>
+            <td>Result Format</td>
+        </tr><tr>
+            <td>serviceSpecificConfiguration*</td>
+            <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific fault management configuration. </td>
+            <td>Service Specific Configuration</td>
         </tr><tr>
             <td>state*</td>
             <td><a href="#T_FaultManagementReportStateType">FaultManagementReportStateType</a></td>
@@ -3515,47 +3260,42 @@ Inherits from:
 
 #### 7.2.2.3. Type FaultManagementReportComplexQuery_Create
 
-**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServiceSpecificConfiguration.
+**Description:** Fault Management Report Complex Query entity is used to perform  searches on Fault Management Report entities, including clauses based on ServiceSpecificConfiguration.
 <table id="T_FaultManagementReportComplexQuery_Create">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>creationDate.gt</td>
             <td>date-time</td>
-            <td>Date when Fault Management Report was created - greater than.</td>
-            <td>Not present</td>
+            <td>Date when the Fault Management Report was created - greater than.</td>
+            <td>Creation Time</td>
         </tr><tr>
             <td>creationDate.lt</td>
             <td>date-time</td>
-            <td>Date when Fault Management Report was created - lower than.</td>
-            <td>Not present</td>
+            <td>Date when the Fault Management Report was created - lower than.</td>
+            <td>Creation Time</td>
         </tr><tr>
-            <td>faultManagementJobId</td>
-            <td>string</td>
-            <td>Identifier of the referenced Fault Management Job.</td>
+            <td>faultManagementJob</td>
+            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
+            <td>Defines the reference to Fault Management Job.</td>
             <td>FM Job Identifier</td>
         </tr><tr>
             <td>granularity</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Sampling rate of the collection or production of Fault Management Job results.</td>
             <td>Granularity</td>
         </tr><tr>
-            <td>lastModifiedDate.gt</td>
-            <td>date-time</td>
-            <td>Date when the report was last modified - greater than.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>lastModifiedDate.lt</td>
-            <td>date-time</td>
-            <td>Date when the report was last modified - lower than.</td>
-            <td>Not present</td>
+            <td>monitoredObject</td>
+            <td><a href="#T_MonitoredObjectRef">MonitoredObjectRef</a></td>
+            <td>Defines the reference to object which is a subject of fault  management.</td>
+            <td>Service ID/Service Pair/Entity Reference</td>
         </tr><tr>
             <td>outputFormat</td>
             <td><a href="#T_OutputFormat">OutputFormat</a></td>
@@ -3565,37 +3305,32 @@ Inherits from:
             <td>reportingTimeframe.startDate.gt</td>
             <td>date-time</td>
             <td>Start date of reporting timeframe - greater than.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>reportingTimeframe.startDate.lt</td>
             <td>date-time</td>
             <td>Start date of reporting timeframe - lower than.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>reportingTimeframe.endDate.gt</td>
             <td>date-time</td>
             <td>End date of reporting timeframe - greater than.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>reportingTimeframe.endDate.lt</td>
             <td>date-time</td>
             <td>End date of reporting timeframe - lower than.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>resultFormat</td>
             <td><a href="#T_ResultFormat">ResultFormat</a></td>
             <td>List of possible result formats that define how Seller/Server will deliver Fault Management Report to the Buyer/Client.</td>
             <td>Result Format</td>
         </tr><tr>
-            <td>serviceId</td>
-            <td><a href="#T_ServiceId">ServiceId</a></td>
-            <td>Identifier of a Service.</td>
-            <td>Service ID</td>
-        </tr><tr>
             <td>serviceSpecificConfiguration</td>
             <td><a href="#T_ServiceSpecificConfiguration">ServiceSpecificConfiguration</a></td>
-            <td>ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration.</td>
-            <td>Service Payload Specific Attributes</td>
+            <td>ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration.</td>
+            <td>Service Specific Configuration</td>
         </tr><tr>
             <td>state</td>
             <td><a href="#T_FaultManagementReportStateType">FaultManagementReportStateType</a></td>
@@ -3605,96 +3340,17 @@ Inherits from:
     </tbody>
 </table>
 
-#### 7.2.2.4. Type FaultManagementReportComplexQuery
-
-**Description:** Fault Management Report Complex Query entity is used to perform searches on Fault Management Report entities, including clauses based on ServiceSpecificConfiguration.
-<table id="T_FaultManagementReportComplexQuery">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when Fault Management Report was created.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>description</td>
-            <td>string</td>
-            <td>A free-text description of the Fault Management Report.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>faultManagementJob*</td>
-            <td><a href="#T_FaultManagementJobRef">FaultManagementJobRef</a></td>
-            <td>A reference to a Fault Management Job resource.</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>faultManagementReport*</td>
-            <td><a href="#T_FaultManagementReportRef">FaultManagementReportRef</a></td>
-            <td>A reference to a Fault Management Report resource.</td>
-            <td>Report Identifier</td>
-        </tr><tr>
-            <td>lastModifiedDate</td>
-            <td>date-time</td>
-            <td>Date when the report was last modified.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>reportingTimeframe*</td>
-            <td><a href="#T_ReportingTimeframe">ReportingTimeframe</a></td>
-            <td>Specifies the date range between which data points will be included in the report.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>state*</td>
-            <td><a href="#T_FaultManagementReportStateType">FaultManagementReportStateType</a></td>
-            <td></td>
-            <td>State</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.5. Type FaultManagementReportRef
-
-**Description:** A reference to a Fault Management Report resource.
-<table id="T_FaultManagementReportRef">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>faultManagementReportHref</td>
-            <td>string</td>
-            <td>Hyperlink to the referenced Fault Management Report.</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>faultManagementReportId*</td>
-            <td>string</td>
-            <td>Identifier of the referenced Fault Management Report.</td>
-            <td>Report Identifier</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.2.6. `enum` FaultManagementReportStateType
+#### 7.2.2.4. `enum` FaultManagementReportStateType
 
 **Description:** Possible values for the state of a Fault Management Report.
 
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
-| completed    | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
-| failed       | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
-| inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
-| rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
+| State          | MEF 133.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                       |
+| -------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `acknowledged` | Acknowledged   | A Fault Management Report is created by the Seller/Server. Fault Management Report Identifier is assigned in the Acknowledged state. The report remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the Fault Management Report moves to the In-Progress state. If not all attributes are validated, the report moves to the Rejected state. |
+| `completed`    | Completed      | A Fault Management Report is completed and results are available.                                                                                                                                                                                                                                                                                                                                 |
+| `failed`       | Failed         | A Fault Management Report processing has failed.                                                                                                                                                                                                                                                                                                                                                  |
+| `inProgress`   | In-Progress    | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
+| `rejected`     | Rejected       | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
 
 ### 7.2.3. Common
 
@@ -3702,8 +3358,8 @@ Types described in this subsection are shared among two or more LSO APIs.
 
 #### 7.2.3.1. Type AttachmentURL
 
-**Description:** The URL pointing to an Attachment for download. 
-<table id="AttachmentURL">
+**Description:** The URL pointing to an Attachment for download.
+<table id="T_AttachmentURL">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -3716,7 +3372,7 @@ Types described in this subsection are shared among two or more LSO APIs.
         <tr>
             <td>retentionPeriod</td>
             <td>date-time</td>
-            <td>A date until which the file will be retained. </td>
+            <td>A date until which the file will be retained.</td>
             <td>Retention Period</td>
         </tr><tr>
             <td>url*</td>
@@ -3727,89 +3383,73 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.3.2. Type HourRange
+#### 7.2.3.2. Type EntityRef
 
-**Description:** Defines start and end date,
+**Description:** Reference to Entity.
+<table id="T_EntityRef">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@referredType*</td>
+            <td>string</td>
+            <td>The type of the referred object. This is used to distinguish between different types of objects that can be referred to by the EntityId.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>entityHref</td>
+            <td>string</td>
+            <td>Hyperlink to the Entity resource. This is used to provide a link to the Entity resource in the Seller/Server system.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>entityId*</td>
+            <td>string</td>
+            <td>Identifier of an Entity.</td>
+            <td>Entity Reference</td>
+        </tr><tr>
+            <td>@type*</td>
+            <td>string</td>
+            <td>Used to unambiguously designate the class type when using &#x60;oneOf&#x60;</td>
+            <td>Not present</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.3.3. Type HourRange
+
+**Description:** Defines start and end time.
 <table id="T_HourRange">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>start</td>
-            <td>date-time</td>
-            <td>Start date</td>
-            <td>Hour Range</td>
-        </tr><tr>
-            <td>end</td>
-            <td>date-time</td>
-            <td>End date</td>
-            <td>Hour Range</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.3.3. `enum` Interval
-
-**Description:** Enumeration of applicable time intervals.
-
-
-<table id="T_Interval">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
             <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>10 milliseconds</td>
-            <td>10 milliseconds</td>
+            <td>start*</td>
+            <td>string</td>
+            <td>Start time in format HH24:mm or HH24:mm:ss.</td>
+            <td>HourRange</td>
         </tr><tr>
-            <td>100 milliseconds</td>
-            <td>100 milliseconds</td>
-        </tr><tr>
-            <td>1 second</td>
-            <td>1 second</td>
-        </tr><tr>
-            <td>10 seconds</td>
-            <td>10 seconds</td>
-        </tr><tr>
-            <td>1 minute</td>
-            <td>1 minute</td>
-        </tr><tr>
-            <td>5 minutes</td>
-            <td>5 minutes</td>
-        </tr><tr>
-            <td>15 minutes</td>
-            <td>15 minutes</td>
-        </tr><tr>
-            <td>30 minutes</td>
-            <td>30 minutes</td>
-        </tr><tr>
-            <td>1 hour</td>
-            <td>1 hour</td>
-        </tr><tr>
-            <td>24 hours</td>
-            <td>24 hours</td>
-        </tr><tr>
-            <td>1 month</td>
-            <td>1 month</td>
-        </tr><tr>
-            <td>1 year</td>
-            <td>1 year</td>
+            <td>end*</td>
+            <td>string</td>
+            <td>End time in format HH:mm or HH:mm:ss.</td>
+            <td>HourRange</td>
         </tr>
     </tbody>
 </table>
 
 #### 7.2.3.4. `enum` JobType
 
-**Description:** The type of FM Job.
+**Description:** The type of a Job. Proactive jobs are carried on continuously to permit timely reporting of fault or performance status. On-demand jobs are actions that are  initiated for a limited time to carry out the measurements. Passive  jobs support the collection and reporting of network and service statistics/faults.
 
 
 <table id="T_JobType">
@@ -3842,12 +3482,12 @@ Types described in this subsection are shared among two or more LSO APIs.
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>measurementStartDate</td>
+            <td>measurementStartDate*</td>
             <td>date-time</td>
             <td>Start date of the period to which collected data points belong.</td>
             <td>Not present</td>
@@ -3858,23 +3498,40 @@ Types described in this subsection are shared among two or more LSO APIs.
             <td>Not present</td>
         </tr><tr>
             <td>measurementInterval</td>
-            <td><a href="#T_Interval">Interval</a></td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
             <td>Length of the measurement interval.</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.3.6. `enum` OutputFormat
+#### 7.2.3.6. Type MonitoredObjectRef
 
-**Description:** List of possible output formats for the Fault Management Report.
+**Description:** Defines the reference to object which is a subject of fault management.
+<table id="T_MonitoredObjectRef">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        
+    </tbody>
+</table>
+
+#### 7.2.3.7. `enum` OutputFormat
+
+**Description:** List of possible output formats for the Report.
 
 
 <table id="T_OutputFormat">
     <thead style="font-weight:bold;">
         <tr>
             <td>Value</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -3894,7 +3551,7 @@ Types described in this subsection are shared among two or more LSO APIs.
     </tbody>
 </table>
 
-#### 7.2.3.7. Type RecurringSchedule
+#### 7.2.3.8. Type RecurringSchedule
 
 **Description:** A definition of recurring schedule to run a job based on the Cron utility in Linux-like systems. It defines how the job should periodically run at specified times, dates, or intervals. 
 <table id="T_RecurringFrequency">
@@ -4008,16 +3665,16 @@ For example:
     </tbody>
 </table>
 
-#### 7.2.3.8. Type ReportContentItem
+#### 7.2.3.9. Type ReportContentItem
 
-**Description:** Single item of the Fault Management Job results in case result format was set to payload. Each item contains the timeframe of the collected data and a list of values measured in that timeframe.
+**Description:** Single item of the results in case result format was set to payload.  Each item contains the timeframe of the collected data and a list of  values captured in that timeframe.
 <table id="T_ReportContentItem">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -4027,15 +3684,15 @@ For example:
             <td>Timeframe boundary for collected data.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>measurementDataPoints</td>
+            <td>measurementDataPoint*</td>
             <td><a href="#T_ServiceSpecificResult">ServiceSpecificResult</a>[]</td>
-            <td>List of Fault Management Job results measured in the related timeframe.</td>
+            <td>List of values captured in the related timeframe.</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.3.9. Type ReportingTimeframe
+#### 7.2.3.10. Type ReportingTimeframe
 
 **Description:** Specifies the date range between which data points will be included in the report.
 <table id="T_ReportingTimeframe">
@@ -4044,7 +3701,7 @@ For example:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -4052,57 +3709,35 @@ For example:
             <td>reportingStartDate</td>
             <td>date-time</td>
             <td>Start date of reporting timeframe.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr><tr>
             <td>reportingEndDate</td>
             <td>date-time</td>
             <td>End date of reporting timeframe.</td>
-            <td>Not present</td>
+            <td>Reporting Timeframe</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.3.10. `enum` ResultFormat
+#### 7.2.3.11. `enum` ResultFormat
 
-**Description:** List of possible result formats that define how Seller/Server will deliver Fault Management Report to the Buyer/Client.
+**Description:** List of possible result formats that define how Seller/Server will deliver a Report to the Buyer/Client.
 
 
 <table id="T_ResultFormat">
     <thead style="font-weight:bold;">
         <tr>
             <td>Value</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>attachment</td>
-            <td>Attachment</td>
+            <td>ATTACHMENT</td>
         </tr><tr>
             <td>payload</td>
-            <td>Payload</td>
-        </tr>
-    </tbody>
-</table>
-
-#### 7.2.3.11. Type ServiceSpecificResult
-
-**Description:** ServiceSpecificResult is used as an extension point for MEF-specific fault management job results. The `@type` attribute is used as a discriminator.
-<table id="T_ServiceSpecificResult">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>@type*</td>
-            <td>string</td>
-            <td>The name that uniquely identifies the type of results that are returned by the Fault Management Report. In the case of MEF services, this is the URN provided in the fault management results specification. The named type must be a subclass of ServiceSpecificResult.</td>
-            <td>Not present</td>
+            <td>PAYLOAD</td>
         </tr>
     </tbody>
 </table>
@@ -4116,38 +3751,38 @@ For example:
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>scheduleDefinitionStartTime</td>
             <td>date-time</td>
-            <td>The start time of the Schedule Definition. If the attribute is empty the Schedule starts immediately after provisioning of the Job. </td>
-            <td>Start Time</td>
+            <td>The start time of the Schedule Definition. If the attribute is  empty the Schedule starts immediately after provisioning of the Job.</td>
+            <td>Schedule Definition Start Time</td>
         </tr><tr>
             <td>scheduleDefinitionEndTime</td>
             <td>date-time</td>
             <td>The end time of the Schedule Definition. If the attribute is empty the Schedule runs forever, not having a time constraint.</td>
-            <td>End Time</td>
+            <td>Schedule Definition End Time</td>
         </tr><tr>
             <td>recurringSchedule</td>
             <td><a href="#T_RecurringSchedule">RecurringSchedule</a></td>
-            <td>A recurring frequency to run a job within a timeframe defined by schedule definition, for example, every 5 minutes, 15 minutes, 1 hour, 1 day. If the attribute is empty, job runs non-stop.</td>
-            <td>Recurring Frequency</td>
+            <td>A recurring frequency to run a job within a timeframe defined  by schedule definition, for example, every 5 minutes, 15 minutes,  1 hour, 1 day. If the attribute is empty, job runs non-stop.</td>
+            <td>Recurring Schedule</td>
         </tr><tr>
             <td>executionDuration</td>
-            <td><a href="#T_Interval">Interval</a></td>
-            <td>Total time for running one execution of a schedule. Depending on the reportingPeriod attribute, one execution of a schedule might produce multiple reports (e.g., when reporting period is 15 minutes and executionDuration is 1 hour, every execution of a schedule will produce 4 reports).</td>
-            <td>Not present</td>
+            <td><a href="#T_TimeDuration">TimeDuration</a></td>
+            <td>Total time for running one execution of a schedule. Depending  on the reportingPeriod attribute, one execution of a schedule might produce multiple reports (e.g., when reporting period is 15 minutes  and executionDuration is 1 hour, every execution of a schedule will produce 4 reports).</td>
+            <td>Execution Duration</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.3.13. Type ServiceId
+#### 7.2.3.13. Type ServiceFromToRef
 
-**Description:** Identifier of a Service.
-<table id="T_ServiceId">
+**Description:** Reference to Service From and Service To endpoints.
+<table id="T_ServiceFromToRef">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4158,29 +3793,66 @@ For example:
     </thead>
     <tbody>
         <tr>
-            <td>serviceIdFrom*</td>
-            <td>string</td>
-            <td>Identifier of a Service Endpoint.</td>
-            <td>Service ID From</td>
+            <td>serviceFrom*</td>
+            <td>object</td>
+            <td>A reference to a Service From endpoint resource.</td>
+            <td>Service From ID</td>
         </tr><tr>
-            <td>serviceIdTo*</td>
+            <td>serviceTo*</td>
+            <td>object</td>
+            <td>A reference to a Service To endpoint resource.</td>
+            <td>Service From To</td>
+        </tr><tr>
+            <td>@type*</td>
             <td>string</td>
-            <td>Identifier of a Service Endpoint.</td>
-            <td>Service ID To</td>
+            <td>Used to unambiguously designate the class type when using &#x60;oneOf&#x60;</td>
+            <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-#### 7.2.3.14. Type ServiceSpecificConfiguration
+#### 7.2.3.14. Type ServiceRef
 
-**Description:** ServiceSpecificConfiguration is used as an extension point for MEF-specific service fault management configuration. The `@type` attribute is used as a discriminator.
+**Description:** Reference to a Service.
+<table id="T_ServiceRef">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>serviceHref</td>
+            <td>string</td>
+            <td>Hyperlink to the Service resource. </td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>serviceId*</td>
+            <td>string</td>
+            <td>Identifier of the Service.</td>
+            <td>Service Id</td>
+        </tr><tr>
+            <td>@type*</td>
+            <td>string</td>
+            <td>Used to unambiguously designate the class type when using &#x60;oneOf&#x60;</td>
+            <td>Not present</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.3.15. Type ServiceSpecificConfiguration
+
+**Description:** ServiceSpecificConfiguration is used as an extension point for  MEF-specific service fault management configuration. The `@type`  attribute is used as a discriminator.
 <table id="T_ServiceSpecificConfiguration">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -4193,7 +3865,103 @@ For example:
     </tbody>
 </table>
 
-#### 7.2.3.15. Type TrackingRecord
+#### 7.2.3.16. Type ServiceSpecificResult
+
+**Description:** ServiceSpecificResult is used as an extension point for MEF-specific fault  management job results. The `@type` attribute is used as a discriminator.
+<table id="T_ServiceSpecificResult">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@type*</td>
+            <td>string</td>
+            <td>The name that uniquely identifies the type of results that are returned by the Fault Management Report. In the case of MEF  services, this is the URN provided in the fault management results specification. The named type must be a subclass of ServiceSpecificResult.</td>
+            <td>Not present</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.3.17. Type TimeDuration
+
+**Description:** This class is used to describe durations expressed as a 2-tuple, (value, units). The units from nanoseconds to years.
+<table id="T_TimeDuration">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>timeDurationValue*</td>
+            <td>integer</td>
+            <td>The value of the duration. For example, if the duration is 20 ms, this element is 20.</td>
+            <td>Duration Value</td>
+        </tr><tr>
+            <td>timeDurationUnits*</td>
+            <td><a href="#T_TimeDurationUnits">TimeDurationUnits</a></td>
+            <td>The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.</td>
+            <td>Duration Unit</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.3.18. `enum` TimeDurationUnits
+
+**Description:** The unit of measure in the duration. For example, if an interval is 2ms, this element is MS.
+
+
+<table id="T_TimeDurationUnits">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Value</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>NS</td>
+            <td>NS</td>
+        </tr><tr>
+            <td>US</td>
+            <td>US</td>
+        </tr><tr>
+            <td>MS</td>
+            <td>MS</td>
+        </tr><tr>
+            <td>SEC</td>
+            <td>SEC</td>
+        </tr><tr>
+            <td>MIN</td>
+            <td>MIN</td>
+        </tr><tr>
+            <td>HOUR</td>
+            <td>HOUR</td>
+        </tr><tr>
+            <td>DAY</td>
+            <td>DAY</td>
+        </tr><tr>
+            <td>WEEK</td>
+            <td>WEEK</td>
+        </tr><tr>
+            <td>MONTH</td>
+            <td>MONTH</td>
+        </tr><tr>
+            <td>YEAR</td>
+            <td>YEAR</td>
+        </tr>
+    </tbody>
+</table>
+
+#### 7.2.3.19. Type TrackingRecord
 
 **Description:** Tracking Records allow the tracking of modifications of Fault Management Job or Report.
 <table id="T_TrackingRecord">
@@ -4245,48 +4013,6 @@ For example:
     </tbody>
 </table>
 
-#### 7.2.3.16. Type TrackingRecord_Find
-
-**Description:** This class represents a single list item for the response of the `listTrackingRecord` operation.
-<table id="T_TrackingRecord_Find">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Description</td>
-            <td>MEF W133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>creationDate*</td>
-            <td>date-time</td>
-            <td>Date when record was created.</td>
-            <td>Creation Date</td>
-        </tr><tr>
-            <td>description</td>
-            <td>string</td>
-            <td>Free-text field describing the action that created the Tracking Record and its details.</td>
-            <td>Description</td>
-        </tr><tr>
-            <td>id*</td>
-            <td>string</td>
-            <td>Identifier of the Tracking Record.</td>
-            <td>Identifier</td>
-        </tr><tr>
-            <td>relatedObjectId*</td>
-            <td>string</td>
-            <td>Identifier of Fault Management Job or Report.</td>
-            <td>Related Object Identifier</td>
-        </tr><tr>
-            <td>user</td>
-            <td>string</td>
-            <td>User that executed the action which created a Tracking Record.</td>
-            <td>User</td>
-        </tr>
-    </tbody>
-</table>
-
 ### 7.2.4. Notification Registration
 
 Notification registration and management are done through the `/hub` API endpoint.
@@ -4294,21 +4020,21 @@ The below sections describe data models related to this endpoint.
 
 #### 7.2.4.1. Type EventSubscriptionInput
 
-**Description:** This class is used to register for notifications.
+**Description:** This class is used to register for Notifications.
 <table id="T_EventSubscriptionInput">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>callback*</td>
             <td>string</td>
-            <td>This callback value must be set to the *host* property from Fault Management Notification API (faultNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.co/listenerEndpoint&quot;, the Fault Management Job state change event notification will be sent to &#x60;https://buyer.co/listenerEndpoint/mefApi/legato/faultManagement/v2/listener/faultManagementJobStateChangeEvent&#x60;</td>
+            <td>This callback value must be set to the *host* property from Fault  Management Notification API (faultNotification.api.yaml). This property is appended with the base path and notification resource path specified in that API to construct a URL to which notification is sent. E.g. for &#x27;callback&#x27;:  &quot;https://buyer.mef.com/listenerEndpoint&quot;, the Fault Management Job state change event notification will be sent to &#x60;https://buyer.mef.com/listenerEndpoint/mefApi/legato/faultManagement/v2/listener/faultManagementJobStateChangeEvent&#x60;</td>
             <td>Notification Target Information</td>
         </tr><tr>
             <td>query</td>
@@ -4328,7 +4054,7 @@ The below sections describe data models related to this endpoint.
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
@@ -4341,7 +4067,7 @@ The below sections describe data models related to this endpoint.
             <td>id*</td>
             <td>string</td>
             <td>An identifier of this Event Subscription assigned when a resource is created.</td>
-            <td>Register Notification Identifier</td>
+            <td>Not present</td>
         </tr><tr>
             <td>query</td>
             <td>string</td>
@@ -4351,15 +4077,13 @@ The below sections describe data models related to this endpoint.
     </tbody>
 </table>
 
-<div class="page"/>
-
 ## 7.3. Notification API Data model
 
-Figure 38 presents the Fault Management Notification data model.
+Figure 35 presents the Fault Management Notification data model.
 
-![Figure 38: Fault Management Notification Data Model](media/faultManagementNotificationModel.png)
+![Figure 35: Fault Management Notification Data Model](media/faultManagementNotificationModel.png)
 
-**Figure 38. Fault Management Notification Data Model**
+**Figure 35. Fault Management Notification Data Model**
 
 This data model is used to construct requests and responses of the API
 endpoints described in [5.2.2. Buyer/Client (CUS, BUS, SOF) side Fault Management API Endpoints](#522-buyerclient-cus-bus-sof-side-fault-management-api-endpoints).
@@ -4373,32 +4097,32 @@ endpoints described in [5.2.2. Buyer/Client (CUS, BUS, SOF) side Fault Managemen
             <td>Name</td>
             <td>Type</td>
             <td>Description</td>
-            <td>MEF W133.1</td>
+            <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
             <td>eventId*</td>
             <td>string</td>
-            <td>Id of the event</td>
+            <td>Id of the event.</td>
             <td>Not present</td>
         </tr><tr>
             <td>eventTime*</td>
             <td>date-time</td>
-            <td>Date-time when the event occurred</td>
+            <td>Date-time when the event occurred.</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.2. Type FaultManagementJobEvent
+### 7.3.2. Type FaultManagementJobCreateEvent
 
-**Description:** 
+**Description:** FaultManagementJobCreateEvent structure
 
 Inherits from:
 - <a href="#T_Event">Event</a>
 
-<table id="T_FaultManagementJobEvent">
+<table id="T_FaultManagementJobCreateEvent">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4410,47 +4134,23 @@ Inherits from:
     <tbody>
         <tr>
             <td>eventType*</td>
-            <td><a href="#T_FaultManagementJobEventType">FaultManagementJobEventType</a></td>
-            <td></td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Job event.</td>
             <td>Not present</td>
         </tr><tr>
             <td>event*</td>
             <td><a href="#T_FaultManagementJobEventPayload">FaultManagementJobEventPayload</a></td>
-            <td></td>
+            <td>A reference to the Fault Management Job that is source
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.3. `enum` FaultManagementJobEventType
+### 7.3.3. Type FaultManagementJobEventPayload
 
-**Description:** Indicates the type of Fault Management Job event.
-
-
-<table id="T_FaultManagementJobEventType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF 133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>faultManagementJobCreateEvent</td>
-            <td>FM Job createdT</td>
-        </tr><tr>
-            <td>faultManagementJobStateChangeEvent</td>
-            <td>FM Job state changed</td>
-        </tr><tr>
-            <td>faultManagementJobAttributeValueChangeEvent</td>
-            <td>FM Job attribute value changed</td>
-        </tr>
-    </tbody>
-</table>
-
-### 7.3.4. Type FaultManagementJobEventPayload
-
-**Description:** The identifier of the Fault Management Job being the subject to this event and its state.
+**Description:** A reference to the Fault Management Job that is source of the notification.
 <table id="T_FaultManagementJobEventPayload">
     <thead style="font-weight:bold;">
         <tr>
@@ -4465,29 +4165,24 @@ Inherits from:
             <td>href</td>
             <td>string</td>
             <td>Hyperlink to access the Fault Management Job.</td>
-            <td>Href</td>
+            <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
             <td>ID of the Fault Management Job.</td>
             <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>state</td>
-            <td>string</td>
-            <td>State of the Fault Management Job.</td>
-            <td>State</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.5. Type FaultManagementJobProcessEvent
+### 7.3.4. Type FaultManagementJobStateChangeEvent
 
-**Description:** 
+**Description:** FaultManagementJobStateChangeEvent structure
 
 Inherits from:
 - <a href="#T_Event">Event</a>
 
-<table id="T_FaultManagementJobProcessEvent">
+<table id="T_FaultManagementJobStateChangeEvent">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4499,48 +4194,24 @@ Inherits from:
     <tbody>
         <tr>
             <td>eventType*</td>
-            <td><a href="#T_FaultManagementJobProcessEventType">FaultManagementJobProcessEventType</a></td>
-            <td></td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Job event.</td>
             <td>Not present</td>
         </tr><tr>
             <td>event*</td>
-            <td><a href="#T_FaultManagementJobProcessEventPayload">FaultManagementJobProcessEventPayload</a></td>
-            <td></td>
+            <td><a href="#T_FaultManagementJobStateChangeEventPayload">FaultManagementJobStateChangeEventPayload</a></td>
+            <td>A reference to the Fault Management Job that is source
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.6. `enum` FaultManagementJobProcessEventType
+### 7.3.5. Type FaultManagementJobStateChangeEventPayload
 
-**Description:** Indicates the type of Fault Management Job Process event.
-
-
-<table id="T_FaultManagementJobProcessEventType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF 133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>cancelFaultManagementJobStateChangeEvent</td>
-            <td>Not present</td>
-        </tr><tr>
-            <td>modifyFaultManagementJobStateChangeEvent</td>
-            <td>Not present</td>
-        </tr>
-    </tbody>
-</table>
-
-### 7.3.7. Type FaultManagementJobProcessEventPayload
-
-**Description:** The identifier of the Fault Management Job Process, including: 
-  - Modify Fault Management Job
-  - Cancel Fault Management Job
-being the subject of this event.
-<table id="T_FaultManagementJobProcessEventPayload">
+**Description:** A reference to the Fault Management Job that is source of the notification.
+<table id="T_FaultManagementJobStateChangeEventPayload">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4553,20 +4224,128 @@ being the subject of this event.
         <tr>
             <td>href</td>
             <td>string</td>
-            <td>Hyperlink to access the Fault Management Job Process.</td>
+            <td>Hyperlink to access the Fault Management Job.</td>
             <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
-            <td>ID of the Fault Management Job Process.</td>
+            <td>ID of the Fault Management Job.</td>
+            <td>FM Job Identifier</td>
+        </tr><tr>
+            <td>state*</td>
+            <td><a href="#T_FaultManagementJobStateType">FaultManagementJobStateType</a></td>
+            <td>The state of the Fault Management Job.</td>
+            <td>State</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.6. Type FaultManagementJobAttributeValueChangeEvent
+
+**Description:** FaultManagementJobAttributeValueChangeEvent structure
+
+Inherits from:
+- <a href="#T_Event">Event</a>
+
+<table id="T_FaultManagementJobAttributeValueChangeEvent">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>eventType*</td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Job event.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>event*</td>
+            <td><a href="#T_FaultManagementJobEventPayload">FaultManagementJobEventPayload</a></td>
+            <td>A reference to the Fault Management Job that is source
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.8. Type FaultManagementJobReportPreparationErrorEvent
+### 7.3.7. Type FaultManagementJobReportReadyEvent
 
-**Description:** 
+**Description:** FaultManagementJobReportReadyEvent structure
+
+Inherits from:
+- <a href="#T_Event">Event</a>
+
+<table id="T_FaultManagementJobReportReadyEvent">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>eventType*</td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Job event.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>event*</td>
+            <td><a href="#T_FaultManagementJobReportReadyEventPayload">FaultManagementJobReportReadyEventPayload</a></td>
+            <td>A reference to the Fault Management Job that is source 
+of the notification.
+</td>
+            <td>Not present</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.8. Type FaultManagementJobReportReadyEventPayload
+
+**Description:** A reference to the Fault Management Job that is source of the notification.
+<table id="T_FaultManagementJobReportReadyEventPayload">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>href</td>
+            <td>string</td>
+            <td>Hyperlink to access the Fault Management Job.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>id*</td>
+            <td>string</td>
+            <td>ID of the Fault Management Job.</td>
+            <td>FM Job Identifier</td>
+        </tr><tr>
+            <td>reportHref</td>
+            <td>string</td>
+            <td>Hyperlink to access the Fault Management Report.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>reportId*</td>
+            <td>string</td>
+            <td>ID of generated Fault Management Report.</td>
+            <td>FM Report Identifier</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.9. Type FaultManagementJobReportPreparationErrorEvent
+
+**Description:** FaultManagementJobReportPreparationErrorEvent structure
 
 Inherits from:
 - <a href="#T_Event">Event</a>
@@ -4582,39 +4361,21 @@ Inherits from:
     <tbody>
         <tr>
             <td>eventType*</td>
-            <td><a href="#T_FaultManagementJobReportPreparationErrorEventType">FaultManagementJobReportPreparationErrorEventType</a></td>
-            <td></td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Job event.</td>
         </tr><tr>
             <td>event*</td>
             <td><a href="#T_FaultManagementJobReportPreparationErrorEventPayload">FaultManagementJobReportPreparationErrorEventPayload</a></td>
-            <td></td>
-        </tr>
-    </tbody>
-</table>
-
-### 7.3.9. `enum` FaultManagementJobReportPreparationErrorEventType
-
-**Description:** Indicates the type of Fault Management Job event.
-
-
-<table id="T_FaultManagementJobReportPreparationErrorEventType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF 133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>faultManagementJobReportPreparationErrorEvent</td>
-            <td>FM Job Report Failed</td>
+            <td>A reference to the Fault Management Job that is source 
+of the notification.
+</td>
         </tr>
     </tbody>
 </table>
 
 ### 7.3.10. Type FaultManagementJobReportPreparationErrorEventPayload
 
-**Description:** The identifier of the Fault Management Job being the subject of this event and reason for report preparation failure.
+**Description:** A reference to the Fault Management Job that is source of the notification.
 <table id="T_FaultManagementJobReportPreparationErrorEventPayload">
     <thead style="font-weight:bold;">
         <tr>
@@ -4633,21 +4394,21 @@ Inherits from:
             <td>string</td>
             <td>ID of the Fault Management Job.</td>
         </tr><tr>
-            <td>reportPreparationFailedReason*</td>
+            <td>reportPreparationFailedReason</td>
             <td>string</td>
             <td>Reason for Report preparation failure.</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.11. Type FaultManagementJobReportReadyEvent
+### 7.3.11. Type CancelFaultManagementJobStateChangeEvent
 
-**Description:** 
+**Description:** CancelFaultManagementJobStateChangeEvent structure
 
 Inherits from:
 - <a href="#T_Event">Event</a>
 
-<table id="T_FaultManagementJobReportReadyEvent">
+<table id="T_CancelFaultManagementJobStateChangeEvent">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4659,42 +4420,25 @@ Inherits from:
     <tbody>
         <tr>
             <td>eventType*</td>
-            <td><a href="#T_FaultManagementJobReportReadyEventType">FaultManagementJobReportReadyEventType</a></td>
-            <td></td>
+            <td>string</td>
+            <td>Indicates the type of Cancel Fault Management Job event.</td>
             <td>Not present</td>
         </tr><tr>
             <td>event*</td>
-            <td><a href="#T_FaultManagementJobReportReadyEventPayload">FaultManagementJobReportReadyEventPayload</a></td>
-            <td></td>
+            <td><a href="#T_CancelFaultManagementJobStateChangeEventPayload">CancelFaultManagementJobStateChangeEventPayload</a></td>
+            <td>A reference to the Cancel Fault Management Job that is source 
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.12. `enum` FaultManagementJobReportReadyEventType
+### 7.3.12. Type CancelFaultManagementJobStateChangeEventPayload
 
-**Description:** Indicates the type of Fault Management Job event.
-
-
-<table id="T_FaultManagementJobReportReadyEventType">
-    <thead style="font-weight:bold;">
-        <tr>
-            <td>Value</td>
-            <td>MEF 133.1</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>faultManagementJobReportReadyEvent</td>
-            <td>FM Collection ready</td>
-        </tr>
-    </tbody>
-</table>
-
-### 7.3.13. Type FaultManagementJobReportReadyEventPayload
-
-**Description:** The identifier of the Fault Management Job and Report ID being the  subjects of this event.
-<table id="T_FaultManagementJobReportReadyEventPayload">
+**Description:** A reference to the Cancel Fault Management Job that is source
+of the notification.
+<table id="T_CancelFaultManagementJobStateChangeEventPayload">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4707,35 +4451,30 @@ Inherits from:
         <tr>
             <td>href</td>
             <td>string</td>
-            <td>Hyperlink to access the Fault Management Job.</td>
-            <td>Href</td>
+            <td>Hyperlink to access the Cancel Fault Management Job.</td>
+            <td>Not present</td>
         </tr><tr>
             <td>id*</td>
             <td>string</td>
-            <td>ID of the Fault Management Job.</td>
-            <td>FM Job Identifier</td>
-        </tr><tr>
-            <td>reportHref</td>
-            <td>string</td>
-            <td>Hyperlink to access the Fault Management Report.</td>
+            <td>ID of the Cancel Fault Management Job.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>reportId*</td>
-            <td>string</td>
-            <td>ID of generated Fault Management Report.</td>
-            <td>Report Identifier</td>
+            <td>state*</td>
+            <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
+            <td>The state of the Cancel Fault Management Job.</td>
+            <td>State</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.14. Type FaultManagementReportEvent
+### 7.3.13. Type ModifyFaultManagementJobStateChangeEvent
 
-**Description:** 
+**Description:** ModifyFaultManagementJobStateChangeEvent structure
 
 Inherits from:
 - <a href="#T_Event">Event</a>
 
-<table id="T_FaultManagementReportEvent">
+<table id="T_ModifyFaultManagementJobStateChangeEvent">
     <thead style="font-weight:bold;">
         <tr>
             <td>Name</td>
@@ -4747,36 +4486,81 @@ Inherits from:
     <tbody>
         <tr>
             <td>eventType*</td>
-            <td><a href="#T_FaultManagementReportEventType">FaultManagementReportEventType</a></td>
-            <td></td>
+            <td>string</td>
+            <td>Indicates the type of Modify Fault Management Job event.</td>
             <td>Not present</td>
         </tr><tr>
             <td>event*</td>
-            <td><a href="#T_FaultManagementReportEventPayload">FaultManagementReportEventPayload</a></td>
-            <td></td>
+            <td><a href="#T_ModifyFaultManagementJobStateChangeEventPayload">ModifyFaultManagementJobStateChangeEventPayload</a></td>
+            <td>A reference to the Modify Fault Management Job that is source 
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
 </table>
 
-### 7.3.15. `enum` FaultManagementReportEventType
+### 7.3.14. Type ModifyFaultManagementJobStateChangeEventPayload
 
-**Description:** Indicates the type of Fault Management Report event.
-
-
-<table id="T_FaultManagementReportEventType">
+**Description:** A reference to the Modify Fault Management Job that is source
+of the notification.
+<table id="T_ModifyFaultManagementJobStateChangeEventPayload">
     <thead style="font-weight:bold;">
         <tr>
-            <td>Value</td>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
             <td>MEF 133.1</td>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td>faultManagementReportCreateEvent</td>
+            <td>href</td>
+            <td>string</td>
+            <td>Hyperlink to access the Modify Fault Management Job.</td>
             <td>Not present</td>
         </tr><tr>
-            <td>faultManagementReportStateChangeEvent</td>
+            <td>id*</td>
+            <td>string</td>
+            <td>ID of the Modify Fault Management Job.</td>
+            <td>FM Job Identifier</td>
+        </tr><tr>
+            <td>state*</td>
+            <td><a href="#T_FaultManagementJobProcessStateType">FaultManagementJobProcessStateType</a></td>
+            <td>The state of the Modify Fault Management Job.</td>
+            <td>State</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.15. Type FaultManagementReportCreateEvent
+
+**Description:** FaultManagementReportCreateEvent structure
+
+Inherits from:
+- <a href="#T_Event">Event</a>
+
+<table id="T_FaultManagementReportCreateEvent">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>eventType*</td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Report event.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>event*</td>
+            <td><a href="#T_FaultManagementReportEventPayload">FaultManagementReportEventPayload</a></td>
+            <td>A reference to the Fault Management Report that is source 
+of the notification.
+</td>
             <td>Not present</td>
         </tr>
     </tbody>
@@ -4784,7 +4568,7 @@ Inherits from:
 
 ### 7.3.16. Type FaultManagementReportEventPayload
 
-**Description:** The identifier of the Fault Management Report being the subject of this event.
+**Description:** A reference to the Fault Management Report that is the  source of the notification.
 <table id="T_FaultManagementReportEventPayload">
     <thead style="font-weight:bold;">
         <tr>
@@ -4804,7 +4588,72 @@ Inherits from:
             <td>id*</td>
             <td>string</td>
             <td>ID of the Fault Management Report.</td>
-            <td>Report Identifier</td>
+            <td>FM Report Identifier</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.17. Type FaultManagementReportStateChangeEvent
+
+**Description:** FaultManagementReportStateChangeEvent structure
+
+Inherits from:
+- <a href="#T_Event">Event</a>
+
+<table id="T_FaultManagementReportStateChangeEvent">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>eventType*</td>
+            <td>string</td>
+            <td>Indicates the type of Fault Management Report event.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>event*</td>
+            <td><a href="#T_FaultManagementReportStateChangeEventPayload">FaultManagementReportStateChangeEventPayload</a></td>
+            <td>A reference to the Fault Management Report that is source 
+of the notification.
+</td>
+            <td>Not present</td>
+        </tr>
+    </tbody>
+</table>
+
+### 7.3.18. Type FaultManagementReportStateChangeEventPayload
+
+**Description:** A reference to the Fault Management Report that is the  source of the notification.
+<table id="T_FaultManagementReportStateChangeEventPayload">
+    <thead style="font-weight:bold;">
+        <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Description</td>
+            <td>MEF 133.1</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>href</td>
+            <td>string</td>
+            <td>Hyperlink to access the Fault Management Report.</td>
+            <td>Not present</td>
+        </tr><tr>
+            <td>id*</td>
+            <td>string</td>
+            <td>ID of the Fault Management Report.</td>
+            <td>FM Report Identifier</td>
+        </tr><tr>
+            <td>state*</td>
+            <td><a href="#T_FaultManagementReportStateType">FaultManagementReportStateType</a></td>
+            <td>Possible values for the state of a Fault Management Report.</td>
+            <td>State</td>
         </tr>
     </tbody>
 </table>

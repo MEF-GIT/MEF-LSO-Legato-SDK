@@ -5,31 +5,25 @@ class ModifyFaultManagementJob {
     creationDate*: date-time
     href: string
     id*: string
-    modificationDeniedReason: string
     state*: FaultManagementJobProcessStateType
 }
-ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob
+ModifyFaultManagementJob_Create <|-- ModifyFaultManagementJob
 
-class ModifyFaultManagementJob_Common {
-
-    description: string
-    granularity: Interval
-    jobPriority: integer
-    modificationReason: string
-    outputFormat: OutputFormat
-    reportingPeriod: Interval
-    resultFormat: ResultFormat
-}
-
-ModifyFaultManagementJob_Common *-l->"1" FaultManagementJobRef : faultManagementJob
-ModifyFaultManagementJob_Common *-->"0..1" ScheduleDefinition : scheduleDefinition
-ModifyFaultManagementJob_Common *-->"0..1" ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
 
 
 class ModifyFaultManagementJob_Create {
 
+    description: string
+    jobPriority: integer
+    outputFormat: OutputFormat
+    resultFormat: ResultFormat
 }
-ModifyFaultManagementJob_Common <|-- ModifyFaultManagementJob_Create
+
+ModifyFaultManagementJob_Create *-l->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Create *--> TimeDuration : granularity
+ModifyFaultManagementJob_Create *--> TimeDuration : reportingPeriod
+ModifyFaultManagementJob_Create *--> ScheduleDefinition : scheduleDefinition
+ModifyFaultManagementJob_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum FaultManagementJobProcessStateType {
     acknowledged

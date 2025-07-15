@@ -4,90 +4,60 @@ skinparam {
     ClassBorderColor Black
 }
 
-class FaultManagementReport {
+class CancelFaultManagementJob {
 
     creationDate*: date-time
-    description: string
-    failureReason: string
-    href: uri
+    href: string
     id*: string
-    lastModifiedDate: date-time
-    state*: FaultManagementReportStateType
+    state*: FaultManagementJobProcessStateType
+}
+CancelFaultManagementJob_Create <|-- CancelFaultManagementJob
+
+
+
+class CancelFaultManagementJob_Create {
+
 }
 
-FaultManagementReport *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReport *-u->"*" ReportContentItem : reportContent
-FaultManagementReport *-->"1" ReportingTimeframe : reportingTimeframe
-FaultManagementReport *-u-> AttachmentURL : reportUrl
+CancelFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
 
-class FaultManagementReportComplexQuery {
+class ModifyFaultManagementJob {
 
     creationDate*: date-time
+    href: string
+    id*: string
+    state*: FaultManagementJobProcessStateType
+}
+ModifyFaultManagementJob_Create <|-- ModifyFaultManagementJob
+
+
+
+class ModifyFaultManagementJob_Create {
+
     description: string
-    lastModifiedDate: date-time
-    state*: FaultManagementReportStateType
-}
-
-FaultManagementReportComplexQuery *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReportComplexQuery *-u->"1" FaultManagementReportRef : faultManagementReport
-FaultManagementReportComplexQuery *-->"1" ReportingTimeframe : reportingTimeframe
-
-class FaultManagementReportComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
-    faultManagementJobId: string
-    granularity: Interval
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
+    jobPriority: integer
     outputFormat: OutputFormat
-    reportingTimeframe.startDate.gt: date-time
-    reportingTimeframe.startDate.lt: date-time
-    reportingTimeframe.endDate.gt: date-time
-    reportingTimeframe.endDate.lt: date-time
     resultFormat: ResultFormat
-    state: FaultManagementReportStateType
 }
 
-FaultManagementReportComplexQuery_Create *--> ServiceId : serviceId
-FaultManagementReportComplexQuery_Create *--> ServicePayloadSpecificAttributes : servicePayloadSpecificAttributes
+ModifyFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Create *--> TimeDuration : granularity
+ModifyFaultManagementJob_Create *--> TimeDuration : reportingPeriod
+ModifyFaultManagementJob_Create *--> ScheduleDefinition : scheduleDefinition
+ModifyFaultManagementJob_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-class FaultManagementReportRef {
+class FaultManagementJobRef {
 
-    faultManagementReportHref: string
-    faultManagementReportId*: string
+    faultManagementJobHref: string
+    faultManagementJobId*: string
 }
 
-enum FaultManagementReportStateType {
+enum FaultManagementJobProcessStateType {
 
     acknowledged
     completed
-    failed
     inProgress
     rejected
-}
-class FaultManagementReport_Find {
-
-    creationDate*: date-time
-    description: string
-    id*: string
-    state*: FaultManagementReportStateType
-}
-
-FaultManagementReport_Find *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
-
-class ReportContentItem {
-
-}
-
-ReportContentItem *-u->"1" MeasurementTime : measurementTime
-ReportContentItem *-u->"*" ResultPayload : measurementDataPoints
-
-class ReportingTimeframe {
-
-    reportingStartDate: date-time
-    reportingEndDate: date-time
 }
 
 @enduml
