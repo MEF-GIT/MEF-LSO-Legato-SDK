@@ -73,11 +73,17 @@ loop List.OrderItem
     deactivate BUS
 
     opt action.delete
-        ServiceOrder -> Service : retire|cancel
-        activate Service #LightCoral
-        destroy Service
+        ServiceOrder -> Service : configureService (state)
+        note right
+            **state**: terminated
+        end note
+        activate Service #LightSkyBlue
+            Service ->>] : configureResources
+            Service -> Hub : changeEvent
+        deactivate Service
+        activate Hub #aqua
     end
-    activate Hub #aqua
+    Hub -> BUS : notifyListeners (serviceStateChangeEvent)
     deactivate Hub
 
     ServiceOrder -> Hub : changeEvent

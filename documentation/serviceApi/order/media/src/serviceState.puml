@@ -8,32 +8,40 @@ state active : Resources have been activated and\nService is ready for use
 state terminated : Service is shut down
 
 
-[*] --> feasibilityChecked : checkFeasibility\n(action=add)
-[*] --> inactive : provisionService\n(action=add)
-[*] --> designed : designService\n(action=add)
-[*] --> reserved : reserveService\n(action=add)
-[*] --> active : activateService\n(action=add)
+[*] --> feasibilityChecked : checkFeasibility
+[*] --> inactive : provisionService
+[*] --> designed : designService
+[*] --> reserved : reserveService
+[*] --> active : activateService
 
 feasibilityChecked --> designed : designService
 feasibilityChecked --> reserved : reserveService
 feasibilityChecked --> inactive : provisionService
-feasibilityChecked --> active : activateService
+feasibilityChecked -down-> active : activateService
+feasibilityChecked --> feasibilityChecked
 
-designed -> reserved : reserveService
+designed -right-> reserved : reserveService
 designed --> inactive : provisionService
 designed --> active : activateService
+designed --> designed
 
-reserved -> designed : designService
+reserved -d-> designed : designService
 reserved --> inactive : provisionService
 reserved --> active : activateService
+reserved --> reserved 
 
-inactive -right-> active : activateService
+inactive -d-> active : activateService
 inactive --> terminated : terminateService
+inactive --> inactive 
 
 active -left-> inactive : deactivateService
 active --> terminated : terminateService
+active --> active
 
+feasibilityChecked --> terminated : terminateService
+designed -down-> terminated : terminateService
+reserved -down-> terminated : terminateService
 
-terminated --> [*] : retireService\n(action=delete)
+terminated --> [*] : retireService
 
 @enduml

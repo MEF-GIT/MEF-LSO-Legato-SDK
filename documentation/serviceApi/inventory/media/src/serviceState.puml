@@ -1,6 +1,5 @@
 @startuml
 
-
 state feasibilityChecked : Resources have been checked\nfor availability
 state designed : Resources have been identified/allocated 
 state reserved : Resources have been reserved/blocked
@@ -18,22 +17,30 @@ state terminated : Service is shut down
 feasibilityChecked --> designed : designService
 feasibilityChecked --> reserved : reserveService
 feasibilityChecked --> inactive : provisionService
-feasibilityChecked --> active : activateService
+feasibilityChecked -down-> active : activateService
+feasibilityChecked --> feasibilityChecked
 
-designed -> reserved : reserveService
+designed -right-> reserved : reserveService
 designed --> inactive : provisionService
 designed --> active : activateService
+designed --> designed
 
-reserved -> designed : designService
+reserved -d-> designed : designService
 reserved --> inactive : provisionService
 reserved --> active : activateService
+reserved --> reserved 
 
-inactive -right-> active : activateService
+inactive -d-> active : activateService
 inactive --> terminated : terminateService
+inactive --> inactive 
 
 active -left-> inactive : deactivateService
 active --> terminated : terminateService
+active --> active
 
+feasibilityChecked --> terminated : terminateService
+designed -down-> terminated : terminateService
+reserved -down-> terminated : terminateService
 
 terminated --> [*] : retireService
 

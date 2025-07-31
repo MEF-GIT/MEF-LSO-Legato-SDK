@@ -25,6 +25,7 @@ inProgress -l-> pending : actionRequired
 inProgress -l-> held : orderFallOut
 
 pending -r-> inProgress : actionCompleted
+pending -d-> failed : failed
 
 held -r-> inProgress : issueResolved
 

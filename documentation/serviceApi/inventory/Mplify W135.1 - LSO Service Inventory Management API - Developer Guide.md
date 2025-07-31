@@ -39,7 +39,7 @@ not responsible for any errors. Mplify does not assume responsibility to update
 or correct any information in this publication. No representation or warranty,
 expressed or implied, is made by Mplify concerning the completeness, accuracy,
 or applicability of any information contained herein and no liability of any
-kind shall be assumed by Mplift as a result of reliance upon such information.
+kind shall be assumed by Mplify as a result of reliance upon such information.
 
 The information contained herein is intended to be used without modification by
 the recipient or user of this document. Mplify is not responsible or liable for
@@ -190,26 +190,26 @@ they were part of this document from the GitHub repository:
 [MEF-LSO-Allegro-SDK](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK)
 
 commit id:
-[8d2e103695b896dac3a079b3e32893a698df3198](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/8d2e103695b896dac3a079b3e32893a698df3198)
+[094031e00e58872a9837e437760f706436131e9d](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/094031e00e58872a9837e437760f706436131e9d)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/8d2e103695b896dac3a079b3e32893a698df3198/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/8d2e103695b896dac3a079b3e32893a698df3198/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
 [MEF-LSO-Interlude-SDK](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK)
 
 commit id:
-[54a67a2a397fa0a69c3ecf8d834176410a3d50d5](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/54a67a2a397fa0a69c3ecf8d834176410a3d50d5)
+[a3ad75d86a61a6b8f1fd31b8db5742225690c83d](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/a3ad75d86a61a6b8f1fd31b8db5742225690c83d)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/54a67a2a397fa0a69c3ecf8d834176410a3d50d5/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/54a67a2a397fa0a69c3ecf8d834176410a3d50d5/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
-[MEF-LSO-Interlude-SDK](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK)
+[MEF-LSO-Legato-SDK](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK)
 
 commit id:
-[95ba0a91c8461860d35b02d13351c4abef16c14a](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/95ba0a91c8461860d35b02d13351c4abef16c14a)
+[6f8dcdac8ce8676b7b4c8c28dfa4766a94661671](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/95ba0a91c8461860d35b02d13351c4abef16c14a/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/95ba0a91c8461860d35b02d13351c4abef16c14a/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
 <div class="page"/>
 
@@ -420,7 +420,7 @@ The following steps describe the high-level flow:
   - The SOF reports the `Service` instance state changes
 - The BUS system uses the same _Service Order API_ to create **new** `Service`
   instances as well as update **existing** `Service` instance's properties or
-  trigger state transitions, and delete **existing** `Service` instance.
+  trigger state transitions, and disconnect **existing** `Service` instance.
 
 <div class="page"/>
 
@@ -821,6 +821,9 @@ informative "use cases" names.
 
 **Figure 11. Service State Machine**
 
+It is up to the Seller's discretion on what is the retention period of Service
+being in the `terminated` state.
+
 Additions and changes to Services in the Service Inventory can be performed
 with use of Service Orders and the Service Order Management API, or by the
 request of the SOF.
@@ -909,6 +912,7 @@ attributes:
 - `geographicSite.id`
 - `geographicAddress.id`
 - `serviceType`
+- `@type`
 - `startMode`
 
 The flow is a simple request-response pattern, as presented in Figure 13:
@@ -2653,6 +2657,8 @@ Inherits from:
 | inactive           | The service is deactivated and is no longer available.                                                                |
 | active             | The service is fully available and active                                                                             |
 | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
+
+<div class="page"/>
 
 # 8. References
 
