@@ -7,11 +7,15 @@ as a standard without further changes.
 
 **Summary:**
 
-- Fixed `Service` missing `id`
+- Fixed `Service` missing `id`.
+- Added `@type` to Service get list filter criteria
 
 ### List of changes in the API:
 
 **serviceInventoryManagement.api.yaml:**
+
+- `GET /service`:
+  - added `@type` to query params
 
 - `Service`:
   - `id` - added

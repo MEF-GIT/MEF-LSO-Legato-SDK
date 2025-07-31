@@ -14,7 +14,7 @@ info:
     v4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the Mplify Alliance and its contributors.
-  version: 7.0.0
+  version: 7.0.1
 servers:
   - url: 'https://{serverBase}/mefApi/legato/serviceInventory/v7/'
     variables:
@@ -126,6 +126,14 @@ paths:
         - name: serviceType
           in: query
           description: Business type of the service
+          required: false
+          schema:
+            type: string
+        - name: '@type'
+          in: query
+          description:
+            The `@type` of `MefServiceConfiguration`. This is used to filter
+            the services by the precise `urn` of the Product Schema they have.
           required: false
           schema:
             type: string

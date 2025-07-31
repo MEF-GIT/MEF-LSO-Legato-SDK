@@ -7,7 +7,19 @@ as a standard without further changes.
 
 **Summary:**
 
-TODO
+Document:
+
+- Clarified that `action=delete` only moves Service to the `terminated` state
+  and not directly removes Service from the SOF's Service Inventory.
+- Clarified that `partial` state only applies to `ServiceOrder`.
+- Added transitions from `feasibilityChecked`, `designed`, `reserved` states to
+  `terminated` for `Service`.
+- Added transition from `pending` states to `failed` state for `ServiceOrder`
+  and `ServiceOrderItem`.
+- Removed description of `relatedContactInformation` stating that _For
+  providing Notification Contact, role=notificationContact; MUST be used._
+- Removed all references to `cancel` state or cancellation use case as it is
+  not in the scope.
 
 ### List of changes in the API:
 
@@ -18,18 +30,20 @@ TODO
 
 **serviceOrderingNotification.api.yaml:**
 
-TODO
+None
 
 ## Release Irene:
 
-**Readiness status**: Call for Comments Ballot #1. Work in progress and is subject to change.
+**Readiness status**: Call for Comments Ballot #1. Work in progress and is
+subject to change.
 
 **Summary:**
 
 - Updating Address model according to new definition in MEF 150
 - Revised, fully specialized Event model.
 - State change events now carry the value of the new `state`
-- `buyerId` and `sellerId` in notification now carried vie query params (consistent with seller side API)
+- `buyerId` and `sellerId` in notification now carried vie query params
+  (consistent with seller side API)
 
 ### List of changes in the API:
 
@@ -40,8 +54,8 @@ TODO
 - `DELETE /hub/(id)`:
   - `422` - response code added
 - `GET /serviceOrder:`
-  - `422` - response code added
 
+  - `422` - response code added
 
 - `ContactInformation` - added
 - `Duration`:
@@ -109,16 +123,15 @@ TODO
     - `businessMinutes`
     - `calendarMonths`
 
-
 **serviceOrderingNotification.api.yaml:**
 
 - `408` - response code removed
 - `Error408` - removed
 
 - `Event` - made a generic Event
+
   - `event` - added
   - `eventType` - added
-
 
 - `ServiceOrderCreateEvent` - added
 - `ServiceOrderEvent` - removed
