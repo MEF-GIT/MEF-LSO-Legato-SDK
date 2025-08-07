@@ -1185,7 +1185,7 @@ For each `serviceOrderItem`:
 **[R18]** The response **MUST** have the `state` attribute set.
 
 **[R19]** If the Service Order Item `state` in the SOF's response is not
-`completed`, the response **MUST NOT** contain the `expectedCompletionDate`.
+`completed`, the response **MUST NOT** contain the `completionDate`.
 
 ### 6.1.4. Use Case 1a: Service Order Item to Add Service
 
