@@ -17,7 +17,7 @@ info:
     v4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the Mplify Alliance and its contributors.
-  version: 6.0.0
+  version: 6.0.1
 servers:
   - url: "https://{serverBase}/mefApi/legato/serviceOrderingManagement/v6/"
     variables:
@@ -1303,7 +1303,7 @@ components:
           properties:
             state:
               description: State of the Service Order Item
-              $ref: "#/components/schemas/ServiceOrderStateType"
+              $ref: "#/components/schemas/ServiceOrderItemStateType"
             terminationError:
               description: >-
                 When the SOF cannot process the request, the SOF returns a
@@ -1360,6 +1360,27 @@ components:
       required:
         - orderItem
         - relationshipType
+    ServiceOrderItemStateType:
+      description: |
+        Possible values for the state of a Service Order
+
+        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+        | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+        | acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+        | rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is rejected, then the entire `ServiceOrder` request is rejected and a _Error Response_ is sent.                                                                                                                                                                                                                             |
+        | inProgress   | This state indicates that `ServiceOrderItem` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started.                                                                                                                                                                                                                                                                                                                                                                                              |
+        | pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                              |
+        | held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
+        | failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                               |
+        | completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                         |
+      enum:
+        - acknowledged
+        - rejected
+        - pending
+        - held
+        - inProgress
+        - completed
+        - failed
     ServiceOrderItem_Common:
       description: >-
         An identified part of the order. A service order is decomposed into one

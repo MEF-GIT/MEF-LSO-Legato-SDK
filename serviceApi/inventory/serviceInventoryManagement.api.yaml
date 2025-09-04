@@ -14,7 +14,7 @@ info:
     v4.0.1) available at https://github.com/tmforum-apis/TMF638_ServiceInventory,
     which is licensed by the TM Forum under the Apache License version 2.0. Such
     content has been modified by the Mplify Alliance and its contributors.
-  version: 7.0.1
+  version: 7.0.2
 servers:
   - url: 'https://{serverBase}/mefApi/legato/serviceInventory/v7/'
     variables:
@@ -1257,9 +1257,7 @@ components:
         - state
     ServiceOrderItemRef:
       description: >-
-        A reference to a Service Order Item. When referencing item from within
-        the same Service Order, the `serviceOrderId` and `serviceOrderHref`
-        MUST be empty.
+        A reference to a Service Order Item.
       type: object
       properties:
         itemId:
@@ -1276,6 +1274,7 @@ components:
           type: string
       required:
         - itemId
+        - serviceOrderId
     ServiceRef:
       description: Reference to a Service instance.
       type: object

@@ -1,5 +1,24 @@
 # Service Inventory Management: Release notes
 
+## Release Kylie:
+
+**Readiness status**: Published Standard
+
+**Summary:**
+
+- Fixed `ServiceOrderItemRef` to require `serviceOrderId`
+
+### List of changes in the API:
+
+**serviceInventoryManagement.api.yaml:**
+
+- `ServiceOrderItemRef`:
+  - `serviceOrderId` - marked as required
+
+**serviceInventoryNotification.api.yaml:**
+
+No changes
+
 ## Release Janis:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
