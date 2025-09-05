@@ -20,7 +20,7 @@ Mplify 135.1
 LSO Service Inventory Management API - Developer Guide
 </br>
 </br>
-July 2025
+September 2025
 </br>
 </br>
 <p style="color:red;font-weight:bold; font-size:18pt">EXPORT CONTROL: This document contains technical data. The download, export, re-export or disclosure of the technical data contained in this document may be restricted by applicable U.S. or foreign export laws, regulations and rules and/or applicable U.S. or foreign sanctions ("Export Control Laws or Sanctions"). You agree that you are solely responsible for determining whether any Export Control Laws or Sanctions may apply to your download, export, reexport or disclosure of this document, and for obtaining (if available) any required U.S. or foreign export or reexport licenses and/or other required authorizations.</p>
@@ -190,26 +190,26 @@ they were part of this document from the GitHub repository:
 [MEF-LSO-Allegro-SDK](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK)
 
 commit id:
-[094031e00e58872a9837e437760f706436131e9d](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/094031e00e58872a9837e437760f706436131e9d)
+[e79d2e77dc818aa913f8b66e9108c4ff4e2f1297](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
 [MEF-LSO-Interlude-SDK](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK)
 
 commit id:
-[a3ad75d86a61a6b8f1fd31b8db5742225690c83d](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/a3ad75d86a61a6b8f1fd31b8db5742225690c83d)
+[dda56a69cf22a63660c0e03a726c310cd3b29dbc](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/dda56a69cf22a63660c0e03a726c310cd3b29dbc)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/dda56a69cf22a63660c0e03a726c310cd3b29dbc/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/dda56a69cf22a63660c0e03a726c310cd3b29dbc/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
 [MEF-LSO-Legato-SDK](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK)
 
 commit id:
-[6f8dcdac8ce8676b7b4c8c28dfa4766a94661671](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671)
+[f4bc5595fb5283d3c30a485099a9d12ba29757ee](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/f4bc5595fb5283d3c30a485099a9d12ba29757ee)
 
-- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/inventory/serviceInventoryManagement.api.yaml)
-- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/inventory/serviceInventoryNotification.api.yaml)
+- [`serviceApi/inventory/serviceInventoryManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/f4bc5595fb5283d3c30a485099a9d12ba29757ee/serviceApi/inventory/serviceInventoryManagement.api.yaml)
+- [`serviceApi/inventory/serviceInventoryNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/f4bc5595fb5283d3c30a485099a9d12ba29757ee/serviceApi/inventory/serviceInventoryNotification.api.yaml)
 
 <div class="page"/>
 
@@ -1653,9 +1653,7 @@ Service Specification.
 
 #### 7.2.1.4. Type ServiceOrderItemRef
 
-**Description:** A reference to a Service Order Item. When referencing item
-from within the same Service Order, the `serviceOrderId` and `serviceOrderHref`
-MUST be empty.
+**Description:** A reference to a Service Order Item.
 
 <table id="T_ServiceOrderItemRef" style="width:100%">
     <thead style="font-weight:bold">
@@ -1680,7 +1678,7 @@ MUST be empty.
         </tr><tr>
         <td>serviceOrderId</td>
             <td>string</td>
-            <td>O</td>
+            <td>M</td>
             <td>Identifier of the order to which the referenced item belongs to</td>
         </tr>
     </tbody>

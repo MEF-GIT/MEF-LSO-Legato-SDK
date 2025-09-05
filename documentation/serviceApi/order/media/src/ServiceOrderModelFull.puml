@@ -226,7 +226,7 @@ ServiceOrder *-->"1..*" ServiceOrderItem : serviceOrderItem
 
 class ServiceOrderItem {
 
-    state*: ServiceOrderStateType
+    state*: ServiceOrderItemStateType
 }
 ServiceOrderItem_Common <|-- ServiceOrderItem
 
@@ -297,6 +297,18 @@ enum ServiceOrderStateType {
     failed
     partial
 }
+
+enum ServiceOrderItemStateType {
+
+    acknowledged
+    rejected
+    pending
+    held
+    inProgress
+    completed
+    failed
+}
+
 class ServiceOrder_Common {
 
     description: string

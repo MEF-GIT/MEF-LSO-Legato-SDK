@@ -1,42 +1,5 @@
 # Service Order Management: Release notes
 
-## Release Kylie:
-
-**Readiness status**: Published Standard
-
-**Summary:**
-
-Minor clarification changes:
-
-- Clarified that modification of place and service relationships depends on the
-  service specification
-- Split `ServiceOrderStateType` to also include `ServiceOrderItemStateType`.
-
-Document:
-
-- [R27] - reworded to allow modification of place and/or service relationships
-- [R28] - removed and replaced with new one.
-- [R28] - added to clarify that the service specification defines which
-  attributes can be modified.
-- [O3] - added
-- [R29] - added (changes existing text about Error 422 into requirement)
-- [R30] - added
-- provided examples of Service relationship modifications
-
-### List of changes in the API:
-
-**serviceOrderingManagement.api.yaml:**
-
-- `ServiceOrderItem`:
-  - `state` - changed type to `ServiceOrderItemStateType`
-- `ServiceOrderItemStateType` - added
-
-**serviceOrderingNotification.api.yaml:**
-
-- `ServiceOrderItemStateChangeEventPayload`:
-  - `state` - changed type to `ServiceOrderItemStateType`
-- `ServiceOrderItemStateType` - added
-
 ## Release Janis:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
@@ -57,6 +20,18 @@ Document:
   providing Notification Contact, role=notificationContact; MUST be used._
 - Removed all references to `cancel` state or cancellation use case as it is
   not in the scope.
+- Clarified that modification of place and service relationships depends on the
+  service specification
+- Split `ServiceOrderStateType` to also include `ServiceOrderItemStateType`.
+
+- [R27] - reworded to allow modification of place and/or service relationships
+- [R28] - removed and replaced with new one.
+- [R28] - added to clarify that the service specification defines which
+  attributes can be modified.
+- [O3] - added
+- [R29] - added (changes existing text about Error 422 into requirement)
+- [R30] - added
+- provided examples of Service relationship modifications
 
 ### List of changes in the API:
 
@@ -64,10 +39,15 @@ Document:
 
 - `ServiceOrder`:
   - `href` - removed `format: uri`
+- `ServiceOrderItem`:
+  - `state` - changed type to `ServiceOrderItemStateType`
+- `ServiceOrderItemStateType` - added
 
 **serviceOrderingNotification.api.yaml:**
 
-None
+- `ServiceOrderItemStateChangeEventPayload`:
+  - `state` - changed type to `ServiceOrderItemStateType`
+- `ServiceOrderItemStateType` - added
 
 ## Release Irene:
 

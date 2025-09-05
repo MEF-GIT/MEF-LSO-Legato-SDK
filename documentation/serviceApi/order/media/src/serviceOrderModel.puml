@@ -80,7 +80,7 @@ ServiceOrder *-->"1..*" ServiceOrderItem : serviceOrderItem
 
 class ServiceOrderItem {
 
-    state*: ServiceOrderStateType
+    state*: ServiceOrderItemStateType
 }
 ServiceOrderItem_Common <|-- ServiceOrderItem
 

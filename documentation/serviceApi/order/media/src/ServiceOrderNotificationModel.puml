@@ -42,7 +42,7 @@ class ServiceOrderItemStateChangeEventPayload {
     id*: string
     orderItemId*: string
     href: string
-    state*: ServiceOrderStateType
+    state*: ServiceOrderItemStateType
 }
 
 

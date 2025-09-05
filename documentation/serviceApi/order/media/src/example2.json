@@ -1,0 +1,47 @@
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "item-1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_001"
+            }
+          },
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          }
+        ]
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": [ // To be added - relation to item creating new Service
+        {
+          "relationshipType": "TERMINATES_ON",
+          "orderItem": {
+            "itemId": "item-2"
+          }
+        }
+      ],
+      //other service order item attributes
+    },
+    {
+      "id": "item-2",
+      "action": "add",
+      "service": {
+        "state": "active",
+        "serviceRelationship": [],
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": [],
+      //other service order item attributes
+    }
+  ]
+}

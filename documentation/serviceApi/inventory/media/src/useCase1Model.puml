@@ -33,7 +33,7 @@ class ServiceOrderItemRef {
 
     itemId*: string
     serviceOrderHref: string
-    serviceOrderId: string
+    serviceOrderId*: string
 }
 
 

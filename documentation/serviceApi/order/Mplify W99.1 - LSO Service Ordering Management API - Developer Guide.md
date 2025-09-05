@@ -21,7 +21,7 @@ Mplify 99.1
 LSO Service Ordering Management API - Developer Guide
 </br>
 </br>
-July 2025
+September 2025
 </br>
 </br>
 </div>
@@ -145,6 +145,7 @@ information contained herein.
       - [7.2.2.4. `enum` ServiceActionType](#7224-enum-serviceactiontype)
       - [7.2.2.5. Type ServiceOrderItemRef](#7225-type-serviceorderitemref)
       - [7.2.2.6. Type ServiceOrderItemRelationship](#7226-type-serviceorderitemrelationship)
+      - [7.2.2.7. `enum` ServiceOrderItemStateType](#7227-enum-serviceorderitemstatetype)
     - [7.2.3. Service representation](#723-service-representation)
       - [7.2.3.1. Type ServiceValue](#7231-type-servicevalue)
       - [7.2.3.2. Type MefServiceConfiguration](#7232-type-mefserviceconfiguration)
@@ -185,7 +186,6 @@ information contained herein.
     - [7.3.2. Type ServiceOrderItemStateChangeEventPayload](#732-type-serviceorderitemstatechangeeventpayload)
     - [7.3.3. Type ServiceOrderStateChangeEvent](#733-type-serviceorderstatechangeevent)
     - [7.3.4. Type ServiceOrderStateChangeEventPayload](#734-type-serviceorderstatechangeeventpayload)
-    - [7.3.1. `enum` ServiceOrderStateType](#731-enum-serviceorderstatetype)
 - [8. References](#8-references)
 - [Appendix A Acknowledgments](#appendix-a-acknowledgments)
 
@@ -224,26 +224,26 @@ they were part of this document from the GitHub repository:
 [MEF-LSO-Allegro-SDK](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK)
 
 commit id:
-[094031e00e58872a9837e437760f706436131e9d](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/094031e00e58872a9837e437760f706436131e9d)
+[e79d2e77dc818aa913f8b66e9108c4ff4e2f1297](https://github.com/MEF-GIT/MEF-LSO-Allegro-SDK/tree/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297)
 
-- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/order/serviceOrderingManagement.api.yaml)
-- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/094031e00e58872a9837e437760f706436131e9d/serviceApi/order/serviceOrderingNotification.api.yaml)
+- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297/serviceApi/order/serviceOrderingManagement.api.yaml)
+- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Allegro-SDK/e79d2e77dc818aa913f8b66e9108c4ff4e2f1297/serviceApi/order/serviceOrderingNotification.api.yaml)
 
 [MEF-LSO-Interlude-SDK](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK)
 
 commit id:
-[a3ad75d86a61a6b8f1fd31b8db5742225690c83d](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/a3ad75d86a61a6b8f1fd31b8db5742225690c83d)
+[dda56a69cf22a63660c0e03a726c310cd3b29dbc](https://github.com/MEF-GIT/MEF-LSO-Interlude-SDK/tree/dda56a69cf22a63660c0e03a726c310cd3b29dbc)
 
-- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/order/serviceOrderingManagement.api.yaml)
-- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/a3ad75d86a61a6b8f1fd31b8db5742225690c83d/serviceApi/order/serviceOrderingNotification.api.yaml)
+- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/dda56a69cf22a63660c0e03a726c310cd3b29dbc/serviceApi/order/serviceOrderingManagement.api.yaml)
+- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Interlude-SDK/dda56a69cf22a63660c0e03a726c310cd3b29dbc/serviceApi/order/serviceOrderingNotification.api.yaml)
 
 [MEF-LSO-Legato-SDK](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK)
 
 commit id:
-[6f8dcdac8ce8676b7b4c8c28dfa4766a94661671](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671)
+[f4bc5595fb5283d3c30a485099a9d12ba29757ee](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/tree/f4bc5595fb5283d3c30a485099a9d12ba29757ee)
 
-- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/order/serviceOrderingManagement.api.yaml)
-- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/6f8dcdac8ce8676b7b4c8c28dfa4766a94661671/serviceApi/order/serviceOrderingNotification.api.yaml)
+- [`serviceApi/order/serviceOrderingManagement.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/f4bc5595fb5283d3c30a485099a9d12ba29757ee/serviceApi/order/serviceOrderingManagement.api.yaml)
+- [`serviceApi/order/serviceOrderingNotification.api.yaml`](https://raw.githubusercontent.com/MEF-GIT/MEF-LSO-Legato-SDK/f4bc5595fb5283d3c30a485099a9d12ba29757ee/serviceApi/order/serviceOrderingNotification.api.yaml)
 
 <div class="page"/>
 
@@ -1240,31 +1240,268 @@ provide the desired `service.serviceConfiguration`.
 - `service.state`
 - `service.serviceConfiguration`
 
-**[R27]** The modify request **MUST** repeat the same values (specified or
-empty) of `service.serviceRelationship`, and `service.place` as they are
-available in the inventory for a given service instance. These values cannot be
-updated or deleted.
+**[R27]** The BUS **MUST** send the full `serviceOrderItem` including a full
+`serviceOrderItem.service`, containing all attributes that are expected to be
+set once the `serviceOrderItem` is successfully fulfilled, even if some of them
+remain unchanged.
 
-**[R28]** If there is a relationship with another Service Order Item, the
-`serviceOrderItemRelationship` **MUST** be also specified unchanged.
+**[R28]** The BUS request **MUST** comply to the rules of modification defined
+by Service specification (incl. whether `serviceRelationship` and/or `place`
+can be modified).
 
-There is no possibility to send an update to single attributes. The BUS must
-send a full service description (the whole `service.serviceConfiguration`
-section and if set previously or to be set: `service.serviceRelationship` and
-`service.place`), which means all attributes that represent the desired state,
-even if some of them do not change.  
-If SOF does not allow for some of the attributes to change an appropriate error
-response (`422`) must be returned to the BUS.
+**[O3]** The SOF **MAY** introduce additional (to ones defined by Service
+specification) business constraints on which attributes can be modified.
+
+**[R29]** If the modification request violates any of modification restriction
+rules, the SOF **MUST** return an appropriate error response (422) to the BUS.
+
+**[R30]** The modification request **MUST** contain the full "to-be" list of
+Service Relationships ( that eventually will be stored in the Service Inventory
+as `service.serviceRelationship`). This is expressed by a combination of
+`serviceOrderItem.service.serviceRelationship` and
+`serviceOrderItem.serviceOrderItemRelationship`.
+
+Following examples provide a guide on how the requests should look like in use
+cases of adding or removing relations to existing or added Services.
+
+![Figure 14](media/example0.png)
+
+**Figure 14. Service relationship modification - starting point.**
+
+Figure 14 presents a starting point for each of the examples. It is a simplified view on
+the Service Inventory with 4 Services present (imaginary model). One
+"Connection" and three "EndPoints". The `relationshipType` between these
+Services types is called `TERMINATES_ON`. Arrows represent existing Service
+relationships. The assumption is that the modification of the relationships is
+allowed and the number of relationships is not restricted. The example payloads
+show only a subset of attributes relevant to use cases. Even mandatory
+parameter are hidden.
+
+***Note:*** Each example builds on Figure 14 as starting point.
+
+**Example 1:**
+
+Add service relationship to a Service already existing in the Service
+Inventory.
+
+When adding a relationship to an existing Service -
+`serviceOrderItem.service.serviceRelationship` is used.
+
+```json
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "item-1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_001"
+            }
+          },
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          },
+          {
+            "relationshipType": "TERMINATES_ON", // To be added
+            "service": {
+              "id": "Endpoint_003"
+            }
+          }
+        ]
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": []
+      //other service order item attributes
+    }
+  ]
+}
+```
+
+![Figure 15](media/example1.png)
+
+**Figure 15. Service relationship modification - Example 1 outcome.**
+
+**Example 2:**
+
+Add service relationship to a Service created in the same Service Order as
+modification request.
+
+When adding a relationship to newly created Service -
+`serviceOrderItem.serviceOrderItemRelationship` is used.
+
+```json
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "item-1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_001"
+            }
+          },
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          }
+        ]
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": [
+        // To be added - relation to item creating new Service
+        {
+          "relationshipType": "TERMINATES_ON",
+          "orderItem": {
+            "itemId": "item-2"
+          }
+        }
+      ]
+      //other service order item attributes
+    },
+    {
+      "id": "item-2",
+      "action": "add",
+      "service": {
+        "state": "active",
+        "serviceRelationship": []
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": []
+      //other service order item attributes
+    }
+  ]
+}
+```
+
+![Figure 16](media/example2.png)
+
+**Figure 16. Service relationship modification - Example 2 outcome.**
+
+**Example 3:**
+
+Delete the existing relationship.
+
+```json
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [
+          // Relation to "Endpoint_001" missing
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          }
+        ]
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": []
+      //other service order item attributes
+    }
+  ]
+}
+```
+
+![Figure 17](media/example3.png)
+
+**Figure 17. Service relationship modification - Example 3 outcome.**
+
+**Example 4:**
+
+This example shows a combination of all previous examples in one request:
+
+- Add service relationship to a Service already existing in the Service
+  Inventory.
+- Add service relationship to a Service created in the same Service Order as
+  modification request.
+- Delete the existing relationship.
+
+```json
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "item-1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [
+          // Relation to "Endpoint_001" missing
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          },
+          {
+            "relationshipType": "TERMINATES_ON", // To be added
+            "service": {
+              "id": "Endpoint_003"
+            }
+          }
+        ]
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": [
+        // To be added - relation to item creating new Service
+        {
+          "relationshipType": "TERMINATES_ON",
+          "orderItem": {
+            "itemId": "item-2"
+          }
+        }
+      ]
+      //other service order item attributes
+    },
+    {
+      "id": "item-2",
+      "action": "add",
+      "service": {
+        "state": "active",
+        "serviceRelationship": []
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": []
+      //other service order item attributes
+    }
+  ]
+}
+```
+
+![Figure 18](media/example4.png)
+
+**Figure 18. Service relationship modification - Example 4 outcome.**
 
 Please also note, that in the `add` case, a reference to the IPVC service used
 the `serviceOrderItemRelationship` pointing to another `serviceOrderItem` in
 the same Service Order Request. This is because the IPVC did not exist at that
 moment and was also a part of the order. In the case of ordering the update of
 an existing IPVC End Point, the IPVC is also existing and it must be referenced
-with the use of `serviceRelationship`. This example assumes that the IPVC
+with the use of `serviceRelationship`. This example below assumes that the IPVC
 service is available in SOF's Inventory with the `id` equals
 `"00000000-5555-6666-7777-000000008888"` (as provided in SOF response presented
-in [Chapter 6.1.3](#613-create-service-order-response).
+in [chapter 6.1.3](#613-create-service-order-response)).
 
 **Service Order Item to Modify Existing Service**
 
@@ -1368,19 +1605,24 @@ this action is equal to using a request with `action=modify` and
 The following requirements apply to `serviceOrderItem` when `action` is
 `delete`:
 
-**[R29]** `service.id` **MUST** be provided.
+**[R31]** `service.id` **MUST** be provided.
 
-**[R30]** The BUS **MUST NOT** provide any `service` attributes other than
+**[R32]** The BUS **MUST NOT** provide any `service` attributes other than
 `service.id`.
 
 ### 6.1.7. Service Order and Service Order Items State Machine
 
-![Figure 14](media/serviceOrderState.png)
+![Figure 19](media/serviceOrderState.png)
 
-**Figure 14. Service Order and Service Order Items State Machine**
+**Figure 19. Service Order State Machine**
 
-Service Order and Service Order Item share the same list of possible states and
-states' transitions. They are presented in Figure 14.
+![Figure 20](media/serviceOrderItemState.png)
+
+**Figure 20. Service Order Item State Machine**
+
+Service Order and Service Order Item share almost the same list of possible
+states and states' transitions (Service Order Item does not have the `partial`
+state available). They are presented in Figures 14 and 15.
 
 After receiving the request, the SOF performs basic checks of the message. If
 any problem is found an Error response is provided. If the validation passes a
@@ -1392,30 +1634,43 @@ point, an Error response cannot be provided anymore so the order moves to a
 `serviceOrderItem.terminationError` acts as a placeholder to provide a detailed
 description of what caused the problem.
 
-Table 7 presents the states' descriptions.
+Tables 7 and 8 present the Service Order and Service Order Item states'
+descriptions.
 
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is `rejected`, then the entire `ServiceOrder` request is `rejected` and a _Error Response_ is sent.                                                                                                                                                                                                             |
-| inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                  |
-| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                                 |
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is `rejected`, then the entire `ServiceOrder` request is `rejected` and a _Error Response_ is sent.                                                                                                                                                                                                          |
+| inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                   |
+| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                                |
 | held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate the supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of a `ServiceOrderItem` if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
-| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                                |
-| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                          |
-| partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                                                                       |
+| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                                 |
+| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                           |
+| partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                                                      |
 
-**Table 7. Service Order and Service Order Item states**
+**Table 7. Service Order states**
+
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is rejected, then the entire `ServiceOrder` request is rejected and a _Error Response_ is sent.                                                                                                                                                                                                                             |
+| inProgress   | This state indicates that `ServiceOrderItem` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started.                                                                                                                                                                                                                                                                                                                                                                                              |
+| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                              |
+| held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
+| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                               |
+| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                         |
+
+**Table 8. Service Order Item states**
 
 ### 6.1.8. Providing the place information
 
 When required by service specification, the Service must point to the place
 where the Service is provided. This is done with the use of the `place`
-attribute of type `RelatedPlaceRefOrQuery`, which is presented in Figure 15.
+attribute of type `RelatedPlaceRefOrQuery`, which is presented in Figure 21.
 
 ![referring a place](media/placeEntities.png)
 
-**Figure 15. Data model - referring to a place**
+**Figure 21. Data model - referring to a place**
 
 The `role` defines the function that the place plays for a given Service. The
 name of the role to be provided is strictly defined by the service
@@ -1462,7 +1717,7 @@ identify the intended type when using in the context of the `oneOf` section of
 The BUS can retrieve a list of `ServiceOrders` by using a `GET /serviceOrder`
 operation with desired filtering criteria.
 
-**[O3]** The BUS's request **MAY** contain none or more of the following
+**[O4]** The BUS's request **MAY** contain none or more of the following
 attributes:
 
 - `state`
@@ -1507,7 +1762,7 @@ pack of 10 results (`limit=10`) to be returned. The correct response (HTTP code
 `200`) in the response body contains a list of `ServiceOrder` objects matching
 the criteria.
 
-**[R31]** In case no items matching the criteria are found, the SOF **MUST**
+**[R33]** In case no items matching the criteria are found, the SOF **MUST**
 return a valid response with an empty list.
 
 ## 6.3. Use Case 3: Retrieve Service Order by Service Order Identifier
@@ -1523,10 +1778,10 @@ representation, so a response to a get by id for a `ServiceOrder` with
 `id=00000000-3333-4444-5555-000000004567` would return exactly sae response as
 presented in [section 6.1.3](#613-create-service-order-response).
 
-**[R32]** In case `id` does not allow finding a `ServiceOrder` in SOF's system,
+**[R34]** In case `id` does not allow finding a `ServiceOrder` in SOF's system,
 an error response `Error404` **MUST** be returned.
 
-**[R33]** Once the service identifier
+**[R35]** Once the service identifier
 (`serviceOrder.serviceOrderItem.service.id`) is assigned, it **MUST** be
 provided in the SOF's response.
 
@@ -1537,7 +1792,7 @@ The SOF communicates with the BUS with Notifications provided that:
 - BUS supports a notification mechanism
 - BUS has registered to receive notifications from the SOF
 
-**[O4]** BUS **MAY** register for Notifications.
+**[O5]** BUS **MAY** register for Notifications.
 
 Supporting Notification is mandatory for SOF.
 
@@ -1548,11 +1803,11 @@ from the API: `POST /hub`. The request contains only 2 attributes:
   notified to,
 - `query` - optional, to provide the required types of event.
 
-Figure 16 shows all entities involved in the Notification use cases.
+Figure 22 shows all entities involved in the Notification use cases.
 
 ![Service Order Management Notification Data Model](media/ServiceOrderNotificationModel.png)
 
-**Figure 16. Service Ordering Notification Data Model**
+**Figure 22. Service Ordering Notification Data Model**
 
 By using a simple request:
 
@@ -1597,7 +1852,7 @@ According to it, every attribute defined in the Event model (from notification
 API) can be used in the `query`. However, this standard requires only
 `eventType` attribute to be supported.
 
-**[R34]** `eventType` is the only attribute that the SOF **MUST** support in
+**[R36]** `eventType` is the only attribute that the SOF **MUST** support in
 the query.
 
 The SOF responds to the subscription request by adding the `id` of the
@@ -1622,14 +1877,14 @@ Notifications are used to asynchronously inform the BUS about the respective
 objects and attributes changes.
 
 For sake of readability, all previous flow diagrams presented only cases of
-using only the `serviceOrderStateChangeEvent`. Figure 17 presents the an
+using only the `serviceOrderStateChangeEvent`. Figure 23 presents the an
 end-to-end sequence of communication in Use Case 1 - Create Service Order with
 BUS's subscription to both `serviceOrderStateChangeEvent` and
 `serviceOrderItemStateChangeEvent` event types.
 
-![Figure 17](media/notificationWithItems.png)
+![Figure 23](media/notificationWithItems.png)
 
-**Figure 17. Use Case 1 - Create Service Order with all Notifications**
+**Figure 23. Use Case 1 - Create Service Order with all Notifications**
 
 After a successful Notification subscription, the BUS sends a Service Order
 create request. The SOF responds with Service Order and all items in
@@ -1647,10 +1902,10 @@ details.
 attribute actually changes it's value. There are no status change notifications
 sent upon Service Order or Service Order Item creation.
 
-**[R35]** The SOF **MUST NOT** send Notifications to BUS that have not
+**[R37]** The SOF **MUST NOT** send Notifications to BUS that have not
 registered for them.
 
-**[R36]** The SOF **MUST** send Notifications to BUS that have registered for
+**[R38]** The SOF **MUST** send Notifications to BUS that have registered for
 them.
 
 Following snippets present examples of `serviceOrderStateChangeEvent` and
@@ -1668,7 +1923,7 @@ Following snippets present examples of `serviceOrderStateChangeEvent` and
 }
 ```
 
-**[R37]** An event triggered by the Service Order Item
+**[R39]** An event triggered by the Service Order Item
 (`serviceOrderItemStateChangeEvent`) **MUST** additionally contain the relative
 `orderItemId`.
 
@@ -1697,11 +1952,11 @@ Above chapters focus on the requirements and the lifecycle of `ServiceOrder`
 and `ServiceOrderItem`. It is also very important to understand the lifecycle
 of the `Service` itself and how to manage it with the Service Ordering.
 
-![Figure 18](media/serviceState.png)
+![Figure 24](media/serviceState.png)
 
-**Figure 18. Service Lifecycle**
+**Figure 24. Service Lifecycle**
 
-Figure 18 depicts the Service available states and their transitions.
+Figure 24 depicts the Service available states and their transitions.
 
 The service is created by a request `action=add` and a desired `state`. All but
 `terminated` can be the initial state.
@@ -1709,9 +1964,9 @@ The service is created by a request `action=add` and a desired `state`. All but
 BUS can order Service state transition by placing a `ServiceOrderItem` with
 `action=modify` and providing the desired `service.state` attribute. State
 transitions form sort of use cases that can be performed on a Service. They are
-gathered in Table 8 together with requirements on the Service state they are
+gathered in Table 9 together with requirements on the Service state they are
 applicable for. A `modify` request does not have to change the Service state.
-This is indicated as a loop arrow on Figure 18.
+This is indicated as a loop arrow on Figure 24.
 
 A request with `action=delete` acts as a `terminateService` use case.
 
@@ -1730,12 +1985,12 @@ A request with `action=delete` acts as a `terminateService` use case.
 | terminateService | modify | terminated         | feasibilityChecked</br>designed</br>reserved</br>inactive</br>active |
 |                  | delete | N/A                | feasibilityChecked</br>designed</br>reserved</br>inactive</br>active |
 
-**Table 8. Service Life Use Cases**
+**Table 9. Service Life cycle Use Cases**
 
 It is up to the Seller's discretion on what is the retention period of Service
 being in the `terminated` state.
 
-Table 9 summarizes the states and their descriptions:
+Table 10 summarizes the states and their descriptions:
 
 | State              | Description                                                                                                           |
 | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
@@ -1746,7 +2001,7 @@ Table 9 summarizes the states and their descriptions:
 | active             | The service is fully available and active                                                                             |
 | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
 
-**Table 9. Service states**
+**Table 10. Service states**
 
 <div class="page"/>
 
@@ -1767,7 +2022,7 @@ case, the error message body structure might be aligned with the `Error`.
 
 ![Error response data model](media/errorEntities.png)
 
-**Figure 19. Data model types to represent an erroneous response**
+**Figure 25. Data model types to represent an erroneous response**
 
 #### 7.1.1.1. Type Error
 
@@ -2034,12 +2289,12 @@ Inherits from:
 
 ## 7.2. Management API Data model
 
-Figure 20 presents the whole Service Order Management data model. The data
+Figure 26 presents the whole Service Order Management data model. The data
 types are discussed later in this section.
 
 ![Service Order Management Data Model](media/ServiceOrderModelFull.png)
 
-**Figure 20. Service Order Management Data Model**
+**Figure 26. Service Order Management Data Model**
 
 ### 7.2.1. ServiceOrder
 
@@ -2224,16 +2479,16 @@ Inherits from:
 
 **Description:** Possible values for the state of a Service Order
 
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is `rejected`, then the entire `ServiceOrder` request is `rejected` and a _Error Response_ is sent.                                                                                                                                                                                                           |
-| inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                |
-| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                               |
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is `rejected`, then the entire `ServiceOrder` request is `rejected` and a _Error Response_ is sent.                                                                                                                                                                                                        |
+| inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                 |
+| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                              |
 | held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
-| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                              |
-| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                        |
-| partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                                                                     |
+| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                               |
+| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                         |
+| partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                                                    |
 
 #### 7.2.1.5. Type ServiceOrderRef
 
@@ -2395,7 +2650,7 @@ Inherits from:
     <tbody>
         <tr>
         <td>state</td>
-            <td><a href="#T_ServiceOrderStateType">ServiceOrderStateType</a></td>
+            <td><a href="#T_ServiceOrderItemStateType">ServiceOrderItemStateType</a></td>
             <td>M</td>
             <td>State of the Service Order Item</td>
         </tr><tr>
@@ -2489,6 +2744,20 @@ from other one. When referencing item from within the same Service Order, the
         </tr>
     </tbody>
 </table>
+
+#### 7.2.2.7. `enum` ServiceOrderItemStateType
+
+**Description:** Possible values for the state of a Service Order
+
+| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is rejected, then the entire `ServiceOrder` request is rejected and a _Error Response_ is sent.                                                                                                                                                                                                                             |
+| inProgress   | This state indicates that `ServiceOrderItem` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started.                                                                                                                                                                                                                                                                                                                                                                                              |
+| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                              |
+| held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
+| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                               |
+| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                         |
 
 ### 7.2.3. Service representation
 
@@ -3512,11 +3781,11 @@ Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/
 
 ## 7.3. Notification API Data model
 
-Figure 21 presents the Service Order Management Notification data model.
+Figure 27 presents the Service Order Management Notification data model.
 
 ![Service Order Management Notification Data Model](media/ServiceOrderNotificationModel.png)
 
-**Figure 21. Service Order Management Notification Data Model**
+**Figure 27. Service Order Management Notification Data Model**
 
 This data model is used to construct requests and responses of the API
 endpoints described in
@@ -3724,7 +3993,7 @@ event.
             <td>Hyperlink to access the ServiceOrder</td>
         </tr><tr>
         <td>state</td>
-            <td><a href="#T_ServiceOrderStateType">ServiceOrderStateType</a></td>
+            <td><a href="#ServiceOrderItemStateType">ServiceOrderItemStateType</a></td>
             <td>M</td>
             <td>The state of the Service Order</td>
         </tr>
@@ -3798,21 +4067,6 @@ event.
         </tr>
     </tbody>
 </table>
-
-### 7.3.1. `enum` ServiceOrderStateType
-
-**Description:** Possible values for the state of a Service Order
-
-| State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is `rejected`, then the entire `ServiceOrder` request is `rejected` and a _Error Response_ is sent.                                                                                                                                                                                                           |
-| inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                |
-| pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel).<br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                               |
-| held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
-| failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                              |
-| completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                        |
-| partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                                                                    |
 
 <div class="page"/>
 

@@ -1,0 +1,23 @@
+{
+  //other Service Order attributes
+  "serviceOrderItem": [
+    {
+      "id": "1",
+      "action": "modify",
+      "service": {
+        "id": "Connection_001",
+        "serviceRelationship": [// Relation to "Endpoint_001" missing
+          {
+            "relationshipType": "TERMINATES_ON", // Existing in Service Inventory
+            "service": {
+              "id": "Endpoint_002"
+            }
+          },
+        ],
+        //other service attributes
+      },
+      "serviceOrderItemRelationship": [],
+      //other service order item attributes
+    }
+  ]
+}

@@ -1,24 +1,5 @@
 # Service Inventory Management: Release notes
 
-## Release Kylie:
-
-**Readiness status**: Published Standard
-
-**Summary:**
-
-- Fixed `ServiceOrderItemRef` to require `serviceOrderId`
-
-### List of changes in the API:
-
-**serviceInventoryManagement.api.yaml:**
-
-- `ServiceOrderItemRef`:
-  - `serviceOrderId` - marked as required
-
-**serviceInventoryNotification.api.yaml:**
-
-No changes
-
 ## Release Janis:
 
 **Readiness status**: Requested Letter Ballot. It will be most likely published
@@ -26,7 +7,8 @@ as a standard without further changes.
 
 **Summary:**
 
-- Fixed `Service` missing `id`.
+- Fixed `Service` missing `id` Fixed `ServiceOrderItemRef` to require
+  `serviceOrderId`
 - Added `@type` to Service get list filter criteria
 
 ### List of changes in the API:
@@ -34,6 +16,7 @@ as a standard without further changes.
 **serviceInventoryManagement.api.yaml:**
 
 - `GET /service`:
+
   - added `@type` to query params
 
 - `Service`:
@@ -42,6 +25,8 @@ as a standard without further changes.
   - `state` - made required
 - `ServiceRef`:
   - `href` - removed `format: uri`
+- `ServiceOrderItemRef`:
+  - `serviceOrderId` - marked as required
 
 **serviceInventoryNotification.api.yaml:**
 
