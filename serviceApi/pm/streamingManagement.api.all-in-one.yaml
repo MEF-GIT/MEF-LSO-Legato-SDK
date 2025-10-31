@@ -1,26 +1,34 @@
 openapi: 3.0.1
 info:
-  contact:
-    email: editor@mef.net
-  description:
-    "**This file forms part of MEF W147**\n\n**This API implements part\
-    \ of the Business Requirements & Use Cases described \nin MEF W133 section 14.**\n\
-    \n**This specification represents MEF work in progress and is subject to\nchange.**\n\
-    \nList of use cases supported by Performance Monitoring Data Streaming Management\
-    \ API: \n- List Available Topics for Subscription\n- List Subscribed Topics\n\
-    - Subscribe to a Topic\n- Unsubscribe from a Topic\n\n\nMost important entities\
-    \ supported by the API:\n- **Topic** - metadata describing a topic available for\
-    \ subscription\n\n- **Subscription** - contains metadata information describing\
-    \ a data stream that provides the details allowing for data consumption\n\nThis\
-    \ API uses by reference AsyncAPI v2.6.0 models.\n\nCopyright 2023 MEF Forum and\
-    \ its contributors\n"
+  description: |
+    **This file forms part of Mplify 147**
+
+    **This API implements part of the Business Requirements & Use Cases described 
+    in Mplify 133.1 section 12.**
+
+    List of use cases supported by Performance Monitoring Data Streaming Management API: 
+    - List Available Topics for Subscription
+    - List Subscribed Topics
+    - Subscribe to a Topic
+    - Unsubscribe from a Topic
+
+
+    Most important entities supported by the API:
+    - **Topic** - metadata describing a topic available for subscription
+
+    - **Subscription** - contains metadata information describing a data stream that provides the details allowing for data consumption
+
+    This API uses by reference AsyncAPI v2.6.0 models.
+
+    Copyright 2025 Mplify Alliance and its contributors
+
   title: Streaming Management
-  version: 1.0.0-RC
+  version: 1.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/legato/streamingManagement/v1'
     variables:
       serverBase:
-        default: mef.net
+        default: mplify.net
         description: The base of SOF's URL.
 tags:
   - description: Groups all operations related to the available topic.

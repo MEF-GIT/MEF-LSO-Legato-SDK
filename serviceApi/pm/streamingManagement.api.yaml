@@ -1,13 +1,10 @@
 openapi: 3.0.1
 info:
   description: |
-    **This file forms part of MEF W147**
+    **This file forms part of Mplify 147**
 
     **This API implements part of the Business Requirements & Use Cases described 
-    in MEF W133 section 14.**
-
-    **This specification represents MEF work in progress and is subject to
-    change.**
+    in Mplify 133.1 section 12.**
 
     List of use cases supported by Performance Monitoring Data Streaming Management API: 
     - List Available Topics for Subscription
@@ -23,17 +20,15 @@ info:
 
     This API uses by reference AsyncAPI v2.6.0 models.
 
-    Copyright 2023 MEF Forum and its contributors
+    Copyright 2025 Mplify Alliance and its contributors
 
   title: Streaming Management
-  version: 1.0.0-RC
-  contact:
-    email: editor@mef.net
+  version: 1.0.0
 servers:
   - url: 'https://{serverBase}/mefApi/legato/streamingManagement/v1'
     variables:
       serverBase:
-        default: mef.net
+        default: mplify.net
         description: The base of SOF's URL.
 tags:
   - name: topic
