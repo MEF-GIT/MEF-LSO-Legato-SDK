@@ -1,5 +1,37 @@
 # Service Function Testing Release notes
+## Release Kylie
 
+**Readiness status**: Letter Ballot.
+
+**Summary:**
+
+- Updated Service Function Testing API after Call for Comments Ballot #2
+
+### List of changes in the API:
+**serviceFunctionTest.api.yaml:**
+
+## Paths & Endpoints
+- **Parameter Changes:**  
+  - `/testJob` GET:
+    - param `startDateTime` renamed to `requestedStartDateTime`.
+    - param `endDateTime` renamed to `requestedStartDateTime`.
+  - `/testResult` GET:
+    - param `startDateTime` renamed to `requestedStartDateTime`.
+    - param `endDateTime` renamed to `requestedStartDateTime`.
+
+## Schema & Components Changes
+
+- **Property Changes:**  
+
+  - `ServiceSpecificTestResultConfguration` - corrected spelling to `ServiceSpecificTestResultConfiguration`
+  - `TestJob_Common` and `TestJob_Find` property `startDateTime` renamed to  `requestedStartDateTime`.
+  - `TestJob_Common` and `TestJob_Find` property `endDateTime` renamed to  `requestedEndDateTime`.
+  - `TestJob_Common`:
+    - property `validFor` deleted.
+    - property `requestedEndDateTime` made required
+  - `TestJobStateType`  enum value `assessingCancelation` corrected spelling to `assessingCancellation`
+  - `TestResult`:
+    - `serviceSpecificTestResultConfguration` corrected spelling to `serviceSpecificTestResultConfiguration`
 ## Release Janis:
 
 **Readiness status**: Call for Comments Ballot #2. Work in progress and is subject to change.
@@ -27,7 +59,7 @@
 
 ---
 
-## 3. Schema & Components Changes
+## Schema & Components Changes
 
 - **Schema Consolidation:**  
   - v2 uses more consolidated/common schemas for create/update operations (e.g., `TestJob_Common` instead of `TestJob_Create`).

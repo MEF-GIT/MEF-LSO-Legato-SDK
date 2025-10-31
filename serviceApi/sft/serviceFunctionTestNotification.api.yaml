@@ -2,30 +2,24 @@ openapi: 3.0.1
 info:
   title: Service Function Testing Notification
   description: >
-    **This file forms part of MEF W149**
+    **This file forms part of Mplify 149**
 
-
-    **This specification represents MEF work in progress and is subject to
-
-    change.** 
-
-
-    This API implements Business Requirements described in MEF W136.
-
+    **This API implements part of Business Requirements & Use Cases described
+    in Mplify 136.1**
 
     This is the API to manage notifications for Test Job, Test Profile and Test
-    Result. This API must be
-
-    deployed on notification subscriber side (buyer side / listener).
+    Result. This API must be deployed on notification subscriber side  (buyer
+    side / listener).
 
 
     List of supported use cases:
       - Send Event Notification
 
-    Copyright 2025 MEF Forum and its contributors.
+    Copyright 2025 Mplify Alliance and its contributors.
 
 
-    This file includes content based on the TM Forum Service Test Management API
+    This file includes content based on the TM Forum Service Test Management
+    API
 
     (TMF653 v4.1.0) available at 
 
@@ -34,10 +28,10 @@ info:
 
     the TM Forum under the Apache License version 2.0. Such content has been
 
-    modified by the MEF Forum and its contributors.
-  version: 2.0.0-RC
+    modified by the Mplify Alliance and its contributors.
+  version: 3.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/serviceFuctionTestNotification/v2/'
+  - url: 'https://{serverBase}/mefApi/legato/serviceFunctionTestingNotification/v3/'
     variables:
       serverBase:
         description: The base of Buyer's URL.
@@ -53,7 +47,8 @@ paths:
       tags:
         - Notification listeners
       summary: Test Job Create Notification endpoint
-      description: This endpoint is used to receive notifications on Test Job Create Event
+      description:
+        This endpoint is used to receive notifications on Test Job Create Event
       operationId: testJobCreateEvent
       requestBody:
         description: The event data
@@ -64,7 +59,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -107,7 +103,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -137,7 +134,8 @@ paths:
       tags:
         - Notification listeners
       summary: Test Job State Change Notification endpoint
-      description: Client listener for receiving the testJobStateChangeEvent notification
+      description:
+        Client listener for receiving the testJobStateChangeEvent notification
       operationId: testJobStateChangeEvent
       requestBody:
         description: The event data
@@ -148,7 +146,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -191,7 +190,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -234,7 +234,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -277,7 +278,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -320,7 +322,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -363,7 +366,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -394,8 +398,8 @@ paths:
         - Notification listeners
       summary: Test Profile Attribute Value Change Notification endpoint
       description: >-
-        This endpoint is used to receive notifications on Test Profile attribute
-        value change event
+        This endpoint is used to receive notifications on Test Profile
+        attribute value change event
       operationId: testProfileAttributeValueChangeEvent
       requestBody:
         description: The event data
@@ -406,7 +410,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -449,7 +454,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -492,7 +498,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -535,7 +542,8 @@ paths:
         required: true
       responses:
         '204':
-          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+          description:
+            'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
         '400':
           description: Bad Request
           content:
@@ -605,9 +613,10 @@ components:
       required:
         - reason
     Error400:
-      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+      description:
+        Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -619,7 +628,7 @@ components:
                 parameter value
                 - invalidQuery: The query section of the URI is invalid.
                 - invalidBody: The request has an invalid body
-              $ref: "#/components/schemas/Error400Code"
+              $ref: '#/components/schemas/Error400Code'
           required:
             - code
     Error400Code:
@@ -638,9 +647,10 @@ components:
         - invalidQuery
         - invalidBody
     Error401:
-      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
+      description:
+        Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -649,7 +659,7 @@ components:
                 - missingCredentials: No credentials provided.
                 - invalidCredentials: Provided credentials are invalid or
                 expired
-              $ref: "#/components/schemas/Error401Code"
+              $ref: '#/components/schemas/Error401Code'
           required:
             - code
     Error401Code:
@@ -667,7 +677,7 @@ components:
         but refuses to authorize it.
         (https://tools.ietf.org/html/rfc7231#section-6.5.3)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -678,7 +688,7 @@ components:
                 - accessDenied: Access denied
                 - forbiddenRequester: Forbidden requester
                 - tooManyUsers: Too many users
-              $ref: "#/components/schemas/Error403Code"
+              $ref: '#/components/schemas/Error403Code'
           required:
             - code
     Error403Code:
@@ -699,7 +709,7 @@ components:
         Resource for the requested path not found.
         (https://tools.ietf.org/html/rfc7231#section-6.5.4)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -713,9 +723,10 @@ components:
           required:
             - code
     Error409:
-      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
+      description:
+        Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -733,7 +744,7 @@ components:
         Unprocessable entity due to a business validation problem.
         (https://tools.ietf.org/html/rfc4918#section-11.2)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -746,7 +757,7 @@ components:
                   - unexpectedProperty: Additional property, not expected by the Seller has been provided
                   - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
                   - otherIssue: Other problem was identified (detailed information provided in a reason)
-              $ref: "#/components/schemas/Error422Code"
+              $ref: '#/components/schemas/Error422Code'
             propertyPath:
               description: >
                 A pointer to a particular property of the payload that caused
@@ -782,7 +793,7 @@ components:
         Internal Server Error.
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -801,7 +812,7 @@ components:
         Not Implemented. Used in case Seller is not supporting an optional
         operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -971,10 +982,10 @@ components:
       description: |-
         The state of the Test Job.
 
-        | State                    | MEF W136.1 name        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | State                    | Mplify 136.1 name        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
         | -------------------------| -----------------------| -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
         | `acknowledged`           | ACKNOWLEDGED           | The Create Test Job request has been received from the Buyer/Client and the Seller/Server has assigned a Test Job Identifier to it. If the request attributes fail validation, the Create Test Job moves to the REJECTED state. If the attributes pass validation, it is then determined if the Create Test Job Start Date Time is immediate or if the Create Test Job Start Date Time indicates that the Test Job is to be scheduled for a later date time. If the Test Job is to be scheduled the Test Job moves to the SCHEDULED state and awaits the scheduled date and time. If the Test Job is to be performed immediately, the Test Job moves to the IN_PROGRESS state and Test Results begin.|
-        | `assessingCancelation`   | ASSESSING_CANCELLATION | A Cancel Test Job  request is received while the Test Job is in the IN_PROGRESS, SUSPENDED or SCHEDULED state. If the Cancel Test Job request is approved, the Test Job moves to the CANCELLED state. If not, the Test Job returns to the IN_PROGRESS, SUSPENDED or SCHEDULED state.                                                                                                                                                                                                                                                                                                                                                                                                                 |
+        | `assessingCancellation`   | ASSESSING_CANCELLATION | A Cancel Test Job  request is received while the Test Job is in the IN_PROGRESS, SUSPENDED or SCHEDULED state. If the Cancel Test Job request is approved, the Test Job moves to the CANCELLED state. If not, the Test Job returns to the IN_PROGRESS, SUSPENDED or SCHEDULED state.                                                                                                                                                                                                                                                                                                                                                                                                                 |
         | `assessingModification`  | ASSESSING_MODIFICATION | A Modify Test Job request was received while the Test Job is in the SUSPENDED or SCHEDULED state. If the Modify Test Job is accepted, the Test Job is updated. If the Modify Test Job is declined, the Test Job is not updated and returns to the SUSPENDED or SCHEDULED state.                                                                                                                                                                                                                                                                                                                                                                                                                      |
         | `cancelled`              | CANCELLED              | A Cancel Test Job request is received from the Buyer/Client.  If the request is accepted, the Test Job moves to the CANCELLED state.  The Test Job must be in the IN_PROGRESS, SCHEDULED, or SUSPENDED, state.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
         | `completed`              | COMPLETED              | The Test Job has reached the End Date Time or has completed all Test Measurements and provided Test Results.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
@@ -985,7 +996,7 @@ components:
       type: string
       enum:
         - acknowledged
-        - assessingCancelation
+        - assessingCancellation
         - assessingModification
         - cancelled
         - completed
@@ -994,7 +1005,8 @@ components:
         - scheduled
         - suspended
     TestJobProcessEventPayload:
-      description: The identifier of the Test Job Process being subject of this event.
+      description:
+        The identifier of the Test Job Process being subject of this event.
       type: object
       properties:
         id:
@@ -1014,7 +1026,7 @@ components:
       description: |-
         The state of the process related to Test Job
 
-        | state          | MEF W136.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+        | state          | Mplify 136.1 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                           |
         | -------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
         | `accepted`     | ACCEPTED        | The Modify/Cancel/Resume/Suspend Test Job request has been accepted and processed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                               |
         | `acknowledged` | ACKNOWLEDGED    | The Modify/Cancel/Resume/Suspend Test Job request has been received by the Seller/Server and has passed basic validation. Test Job Process Identifier is assigned in the Acknowledged state. The request remains in the Acknowledged state until all validations as applicable are completed. If the attributes are validated, the request moves to the Accepted state. If not all attributes are validated, the request moves to the Rejected state. |
@@ -1033,7 +1045,7 @@ components:
                 Indicates the type of the event.
               type: string
               enum:
-              - testProfileCreateEvent
+                - testProfileCreateEvent
             event:
               description: |
                 A reference to the object that is source of the notification.
@@ -1051,7 +1063,7 @@ components:
                 Indicates the type of the event.
               type: string
               enum:
-              - testProfileAttributeValueChangeEvent
+                - testProfileAttributeValueChangeEvent
             event:
               description: |
                 A reference to the object that is source of the notification.
@@ -1069,7 +1081,7 @@ components:
                 Indicates the type of the event.
               type: string
               enum:
-              - testProfileDeleteEvent
+                - testProfileDeleteEvent
             event:
               description: |
                 A reference to the object that is source of the notification.
@@ -1087,16 +1099,17 @@ components:
                 Indicates the type of the event.
               type: string
               enum:
-              - testProfileLifecycleStateChangeEvent
+                - testProfileLifecycleStateChangeEvent
             event:
               description: |
                 A reference to the object that is source of the notification.
               $ref: '#/components/schemas/TestProfileLifecycleStateChangeEventPayload'
           required:
             - event
-            - eventType                        
+            - eventType
     TestProfileEventPayload:
-      description: The identifier of the Test Profile being subject of this event.
+      description:
+        The identifier of the Test Profile being subject of this event.
       type: object
       properties:
         id:
@@ -1116,12 +1129,12 @@ components:
           description: The current state of the Test Job
           $ref: '#/components/schemas/TestProfileLifecycleStateType'
       required:
-        - state  
+        - state
     TestProfileLifecycleStateType:
       description: |-
         Current lifecycle status of the Test Profile.
 
-        | State          | MEF W136.1 name     | Description                                                                                    |
+        | State          | Mplify 136.1 name     | Description                                                                                    |
         | -------------- | ------------------- | ---------------------------------------------------------------------------------------------- |
         | `assigned`     | ASSIGNED            | The Test Profile has been  assigned to a Test Job.                                             |
         | `available`    | AVAILABLE           | The Test Profile has been created or modified and is ready for users to specify in a Test Job. |
@@ -1139,7 +1152,7 @@ components:
                 Indicates the type of the event.
               type: string
               enum:
-              - testResultCreateEvent
+                - testResultCreateEvent
             event:
               description: |
                 A reference to the object that is source of the notification.
@@ -1148,7 +1161,8 @@ components:
             - event
             - eventType
     TestResultEventPayload:
-      description: The identifier of the Test Result being subject of this event.
+      description:
+        The identifier of the Test Result being subject of this event.
       type: object
       properties:
         id:
