@@ -2,21 +2,16 @@ openapi: 3.0.1
 info:
   title: Alarm Management
   description: >
-    **This file forms part of MEF W146**
+    **This file forms part of Mplify 146**
 
 
     **This API implements part of Business Requirements & Use Cases described
 
-    in MEF W133.**
+    in Mplify 133.1**
 
 
-    **This specification represents MEF work in progress and is subject to
-
-    change.**
-
-
-    MEF Alarm Management is used to notify listening client about a specific
-    event that has occured.
+    Mplify Alarm Management is used to notify listening client about a specific
+    event that has occurred.
 
     An alarm may or may not represent an error. The Alarm can indicate that a
     TCA has been crossed.
@@ -36,14 +31,20 @@ info:
     - Unsubscribe to Alarms
 
 
-    Copyright 2025 MEF Forum and its contributors
-  version: 2.0.0-RC
+    Copyright 2025 Mplify Alliance and its contributors
+
+    This file includes content based on the TM Forum Alarm Management API
+    (TMF642 v5.0.0) available at
+    https://www.tmforum.org/oda/open-apis/directory/alarm-management-api-TMF642/v5.0,
+    which is licensed by the TM Forum under the Apache License version 2.0.
+    Such content has been modified by the Mplify Alliance and its contributors.
+  version: 3.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/alarmManagement/v2/'
+  - url: 'https://{serverBase}/mefApi/legato/alarmManagement/v3/'
     variables:
       serverBase:
         description: The base of SOF's URL.
-        default: mef.net
+        default: mplify.net
 tags:
   - name: alarm
 paths:
@@ -54,9 +55,9 @@ paths:
       summary: List or find Alarm objects.
       description: >-
         The Buyer/Client  requests a list of Alarms using none or more of the
-        filter criteria. The Seller/Server returns a summarized list of  Alarms.
-        For each Alarm returned, the Seller/Server also  provides a Alarm
-        Identifier that uniquely identifiers this  Alarm within the
+        filter criteria. The Seller/Server returns a summarized list
+        of  Alarms. For each Alarm returned, the Seller/Server also  provides a
+        Alarm Identifier that uniquely identifiers this  Alarm within the
         Seller/Server. The order of the elements  returned to the Buyer/Client
         is defined by the Seller/Server (e.g.  natural order) and does not
         change between the pages.
@@ -65,14 +66,6 @@ paths:
         - name: id
           in: query
           description: The identifier of the Alarm.
-          required: false
-          schema:
-            type: string
-        - name: description
-          in: query
-          description: >-
-            Requested index for start of item to be provided in response
-            requested by the client. Note that the index starts with "0".
           required: false
           schema:
             type: string
@@ -182,14 +175,16 @@ paths:
             type: integer
         - name: limit
           in: query
-          description: Requested number of resources to be provided in response.
+          description:
+            Requested number of resources to be provided in response.
           required: false
           schema:
             type: integer
             format: int32
       responses:
         '200':
-          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+          description:
+            "'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'"
           headers:
             X-Pagination-Throttled:
               description: >-
@@ -234,7 +229,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error403'
         '422':
-          description: Unprocessable entity due to the business validation problems
+          description:
+            Unprocessable entity due to the business validation problems
           content:
             application/json;charset=utf-8:
               schema:
@@ -265,7 +261,8 @@ paths:
             type: string
       responses:
         '200':
-          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+          description:
+            "'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'"
           content:
             application/json;charset=utf-8:
               schema:
@@ -310,7 +307,8 @@ paths:
         Notifications.
       operationId: registerListener
       requestBody:
-        description: Data containing the callback endpoint to deliver the information.
+        description:
+          Data containing the callback endpoint to deliver the information.
         content:
           application/json;charset=utf-8:
             schema:
@@ -541,17 +539,18 @@ components:
       type: object
       properties:
         '@type':
-          description: The named type must be a subclass of AlarmSpecificAttributes.
+          description:
+            The named type must be a subclass of AlarmSpecificAttributes.
           type: string
       required:
         - '@type'
       discriminator:
         propertyName: '@type'
     AlarmState:
-      description: |- 
+      description: |-
         Defines the alarm state during its life cycle.
 
-        | state            | MEF 133 name    |        Description                                                                                                                               |
+        | state            | Mplify 133.1 name    |        Description                                                                                                                               |
         | ---------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
         | `acknowledged`   | Acknowledged    | An alarm that is still active but has been acknowledged by an operator, meaning the operator is aware of the issue and has taken note for action.|
         | `cleared`        | Cleared         | Indicates that the underlying fault or abnormal condition that triggered the alarm has been resolved, and the alarm is no longer active.         |
@@ -565,7 +564,7 @@ components:
       description: |-
         Categorize the alarm. Values as defined in X.733 8.1.1 or 3GPP TS32.111.
 
-        | state                            | MEF 133 name             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+        | state                            | Mplify 133.1 name             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
         | -------------------------------- | -------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
         | `communicationsAlarm`            | Communications Alarm     | An alarm of this type is principally associated with the procedures and/or processes required to convey information from one point to another. |
         | `processingErrorAlarm`           | Processing Error Alarm   | An alarm of this type is principally associated with a software or processing fault.                                                           |
@@ -644,7 +643,7 @@ components:
             Indicates the time (as a date + time) at which the alarm was
             reported by  the owning OSS. It might be different from the
             alarm-RaisedTime. For instance,  if the alarm list is maintained by
-            an EMS, the alarmRaisedtime would be  the time the alarm was
+            an EMS, the alarmRaisedTime would be  the time the alarm was
             detected by the NE, while the alarmReportingTime  would be the time
             this alarm was stored in the alarm list of the EMS.
           type: string
@@ -685,7 +684,8 @@ components:
           description: The text of the comment.
           type: string
         systemIdentifier:
-          description: The system identifier of the system that set the comment.
+          description:
+            The system identifier of the system that set the comment.
           type: string
         time:
           description: The time commenting the alarm
@@ -719,9 +719,10 @@ components:
       required:
         - reason
     Error400:
-      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+      description:
+        Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -733,7 +734,7 @@ components:
                 parameter value
                 - invalidQuery: The query section of the URI is invalid.
                 - invalidBody: The request has an invalid body
-              $ref: "#/components/schemas/Error400Code"
+              $ref: '#/components/schemas/Error400Code'
           required:
             - code
     Error400Code:
@@ -752,9 +753,10 @@ components:
         - invalidQuery
         - invalidBody
     Error401:
-      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
+      description:
+        Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -763,7 +765,7 @@ components:
                 - missingCredentials: No credentials provided.
                 - invalidCredentials: Provided credentials are invalid or
                 expired
-              $ref: "#/components/schemas/Error401Code"
+              $ref: '#/components/schemas/Error401Code'
           required:
             - code
     Error401Code:
@@ -781,7 +783,7 @@ components:
         but refuses to authorize it.
         (https://tools.ietf.org/html/rfc7231#section-6.5.3)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -792,7 +794,7 @@ components:
                 - accessDenied: Access denied
                 - forbiddenRequester: Forbidden requester
                 - tooManyUsers: Too many users
-              $ref: "#/components/schemas/Error403Code"
+              $ref: '#/components/schemas/Error403Code'
           required:
             - code
     Error403Code:
@@ -813,7 +815,7 @@ components:
         Resource for the requested path not found.
         (https://tools.ietf.org/html/rfc7231#section-6.5.4)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -827,9 +829,10 @@ components:
           required:
             - code
     Error409:
-      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
+      description:
+        Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -847,7 +850,7 @@ components:
         Unprocessable entity due to a business validation problem.
         (https://tools.ietf.org/html/rfc4918#section-11.2)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -860,7 +863,7 @@ components:
                   - unexpectedProperty: Additional property, not expected by the Seller has been provided
                   - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
                   - otherIssue: Other problem was identified (detailed information provided in a reason)
-              $ref: "#/components/schemas/Error422Code"
+              $ref: '#/components/schemas/Error422Code'
             propertyPath:
               description: >
                 A pointer to a particular property of the payload that caused
@@ -896,7 +899,7 @@ components:
         Internal Server Error.
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -915,7 +918,7 @@ components:
         Not Implemented. Used in case Seller is not supporting an optional
         operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
       allOf:
-        - $ref: "#/components/schemas/Error"
+        - $ref: '#/components/schemas/Error'
         - type: object
           properties:
             code:
@@ -932,7 +935,8 @@ components:
         - id
       allOf:
         - $ref: '#/components/schemas/EventSubscriptionInput'
-        - description: This resource is used to respond to notification subscriptions.
+        - description:
+            This resource is used to respond to notification subscriptions.
           type: object
           properties:
             id:
@@ -948,22 +952,22 @@ components:
           description: >-
             This callback value must be set to *host* property from Alarm
             Notification API (alarmNotification.api.yaml). This property is
-            appended with the base path and notification resource path specified
-            in that API to construct an URL to which  notification is sent. E.g.
-            for 'callback':  "https://bus.mef.com/listenerEndpoint", the alarm
+            appended with the base path and notification resource path
+            specified in that API to construct an URL to which  notification is
+            sent. E.g. for
+            'callback':  "https://buyer.mplify.com/listenerEndpoint", the alarm
             event notification will be  sent to:
-            `https://bus.mef.com/listenerEndpoint/mefApi/legato/alarmNotification/v2/listener/`
+            `https://buyer.mplify.com/listenerEndpoint/mefApi/legato/alarmNotification/v2/listener/`
           type: string
         query:
           description: >-
-            This attribute is used to define which type of events to
-            register to. Example: 'query':'eventType = 
-            createAlarm'. To subscribe for more than one
-            event type, put the values separated by a comma:
-            `eventType=alarmCreateEvent, alarmAttributeValueChangeEvent`.
-            The possible values are enumerated by Event type enums in
-            alarmNotification.api.yaml. An empty query is treated as
-            specifying no filters - ending in subscription for all event types.
+            This attribute is used to define which type of events to register
+            to. Example: 'query':'eventType =  createAlarm'. To subscribe for
+            more than one event type, put the values separated by a comma:
+            `eventType=alarmCreateEvent, alarmAttributeValueChangeEvent`. The
+            possible values are enumerated by Event type enums in
+            alarmNotification.api.yaml. An empty query is treated as specifying
+            no filters - ending in subscription for all event types.
           type: string
       required:
         - callback
@@ -974,7 +978,7 @@ components:
         Once an alarm has been cleared, its perceived severity is set to 
         'cleared' and can no longer be set.
 
-        | state           | MEF 133 name    |        Description                                                                                                                                                                                                |
+        | state           | Mplify 133.1 name    |        Description                                                                                                                                                                                                |
         | --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
         | `cleared`       | Cleared         |  The Cleared severity level indicates the clearing of one or more previously reported alarms.                                                                                                                     |
         | `critical`      | Critical        |  The Critical severity level indicates that a service affecting condition has occurred and an immediate corrective action is required.                                                                            |
@@ -1073,4 +1077,3 @@ components:
           type: string
       required:
         - id
-
