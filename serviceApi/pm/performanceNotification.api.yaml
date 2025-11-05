@@ -1,13 +1,10 @@
 openapi: 3.0.1
 info:
   description: |
-    **This file forms part of MEF W143**
+    **This file forms part of Mplify 143**
 
     **This API implements part of Business Requirements & Use Cases described 
-    in MEF W133.1.**
-
-    **This specification represents MEF work in progress and is subject to
-    change.**
+    in Mplify 133.1.**
 
     Performance Monitoring allows the Buyer/Client to provision entities that
     define performance objectives (Performance Profile, Performance Job),
@@ -19,23 +16,23 @@ info:
     List of supported use cases:
     - Send Event Notification
 
-    Copyright 2025 MEF Forum and its contributors
+    Copyright 2025 Mplify Alliance and its contributors
 
     This file includes content based on the TM Forum Performance Management API 
     (TMF628 v14.5.1) available at https://www.tmforum.org/resources/standard/tmf628-performance-management-api-rest-specification-r14-5-0/,
     which is licensed by the TM Forum under the Apache License version 2.0.
-    Such content has been modified by the MEF Forum and its contributors.
+    Such content has been modified by the Mplify Alliance and its contributors.
   title: Performance Monitoring Notification
-  version: 4.0.0-RC
+  version: 5.0.0
 servers:
-  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v4/'
+  - url: 'https://{serverBase}/mefApi/legato/performanceNotification/v5/'
     variables:
       serverBase:
-        default: mef.net
+        default: mplify.net
         description: The base of Buyer/Client's URL.
 tags:
   - description: >-
-      The Buyer/Client's endpoint to send particular event types  notifications
+      The Buyer/Client's endpoint to send particular event types notifications
       to.
     name: Notification listeners
 paths:
@@ -724,21 +721,29 @@ components:
         Internal Server Error.
         (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
-      type: object
       description: >-
-        Event class is used to describe the information structure used for
+        Event class is used to describe information structure used for
         notification.
+      type: object
       properties:
         eventId:
-          type: string
           description: Id of the event
-        eventTime:
           type: string
-          description: Date-time when the event occurred.
+        eventTime:
+          description: Date-time when the event occurred
+          type: string
           format: date-time
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
+        - event
         - eventId
         - eventTime
+        - eventType
     ModifyPerformanceJobStateChangeEvent:
       allOf:
         - $ref: '#/components/schemas/Event'
@@ -838,13 +843,12 @@ components:
       description: |-
         The state of the process related to the Performance Job.
 
-        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged` | Acknowledged | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
-        | `completed`    | Completed    | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
-        | `inProgress`   | In-Progress  | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
-        | `rejected`     | Rejected     | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
-
+        | state          | Mplify 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged    | The Cancel/Modify Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed       | The Cancel/Modify Performance Monitoring Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                    |
+        | `inProgress`   | In-Progress     | The Cancel/Modify Performance Monitoring Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                                    |
+        | `rejected`     | Rejected        | The Cancel/Modify Performance Monitoring Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                           |
       enum:
         - acknowledged
         - completed
@@ -882,9 +886,6 @@ components:
         id:
           type: string
           description: ID of the Performance Job.
-        reportPreparationFailedReason:
-          type: string
-          description: Reason for Report preparation failure.
       required:
         - id
     PerformanceJobReportReadyEvent:
@@ -972,18 +973,18 @@ components:
       description: |-
         The state of the Performance Monitoring Job.
 
-        | state                  | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-        | ---------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged`         | Acknowledged          | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. If scheduled, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                   |
-        | `cancelled`            | Cancelled             | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-        | `completed`            | Completed             | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-        | `inProgress`           | In-Progress           | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
-        | `pending`              | Pending               | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                               |
-        | `pendingCancel`        | Pending Cancel        | A Cancel Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                  |
-        | `rejected`             | Rejected              | A create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-        | `resourcesUnavailable` | Resources Unavailable | A Performance Monitoring Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-        | `scheduled`            | Scheduled             | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays Scheduled until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                              |
-        | `suspended`            | Suspended             | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                        |
+        | state                  | Mplify 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | ---------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged`         | Acknowledged             | A Create Performance Monitoring Job request has been received by the Seller/Server and has passed basic validation. Performance Monitoring Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Performance Monitoring Job moves to the In-progress state. If scheduled, the Performance Monitoring Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                   |
+        | `cancelled`            | Cancelled                | A Performance Monitoring Job that was In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | `completed`            | Completed                | A non-recurring Performance Monitoring Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+        | `inProgress`           | In-Progress              | A Performance Monitoring Job is running. Upon completion of the Job, a determination if the Performance Monitoring Job is a one-time Job or is recurring is performed. If the Performance Monitoring Job is a one-time Job, the state of the Performance Monitoring Job moves to the Completed state. If the Performance Monitoring Job is recurring, the Performance Monitoring Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Performance Monitoring Job request is accepted, the Job moves to the Suspended state. If a Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. |
+        | `pending`              | Pending                  | A Modify Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                               |
+        | `pendingCancel`        | Pending Cancel           | A Cancel Performance Monitoring Job request has been accepted by the Seller/Server. The Performance Monitoring Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                  |
+        | `rejected`             | Rejected                 | A create Performance Monitoring Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+        | `resourcesUnavailable` | Resources Unavailable    | A Performance Monitoring Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+        | `scheduled`            | Scheduled                | A Performance Monitoring Job is created that does not have an immediate start time. The Performance Monitoring Job stays Scheduled until the start time is reached. The Performance Monitoring Job then moves to In-Progress. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                              |
+        | `suspended`            | Suspended                | A Suspend Performance Monitoring Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Performance Monitoring Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Performance Monitoring Job request is accepted, the Job moves to the Cancelled state. If the Modify Performance Monitoring Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                        |
       enum:
         - acknowledged
         - cancelled

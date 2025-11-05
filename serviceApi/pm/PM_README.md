@@ -1,5 +1,81 @@
 # Performance Monitoring: Release notes
 
+## Release Kylie:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary**: Multiple updates related to CfC#4.
+
+### List of changes in the API:
+
+**performanceMonitoring.api.yaml:**
+
+- Modify filters for `relatedObjectId` in `GET /trackingRecord` endpoint
+- Remove endpoint `GET /trackingRecord/{id}`
+- Change `GET /trackingRecord` endpoint to optional
+
+---
+
+- Class `TrackingRecord`
+  - Renamed to `PmTrackingRecord`
+  - Property `user` removed
+  - Property `system` removed
+  - Property `source` added
+  - Property `relatedObjectId` reworked to use class `RelatedObjectRef`
+
+- Class `RecurringSchedule`
+  - `hourRange` property removed 
+
+- Class `PerformanceJob`
+  - `rejectionReason` property removed
+  - `terminationError` property added
+
+- Class `PerformanceProfileRefOrValue_Query`
+  - Fix mapping
+
+- Class `PerformanceReport`
+  - `failureReason` property removed
+  - `lastModifiedDate` property removed
+  - `terminationError` property added
+
+- Class `PerformanceReportComplexQuery_Create`
+  - Property `monitoredObject` changed to array
+---
+
+- **Removed classes:**
+  - `HourRange`
+
+---
+
+- **Added classes:**
+  - `RelatedObjectRef`
+  - `TerminationError`
+  - `PerformanceReportRef`
+
+---
+
+- **Other changes:**
+  - Rebrand MEF to Mplify
+  - Rename `creationDate` to `creationDateTime` in all classes
+  - Rename `lastModifiedDate` to `lastTimeModified` in all classes
+  - Rename `measurementDataPoint` to `measurementData`
+
+
+**performanceNotification.api.yaml**
+
+- Class `Event`
+  - `eventType` property added
+  - `event` property added
+
+- Class `PerformanceJobReportPreparationErrorEventPayload`
+  - `reportPreparationFailedReason` property removed
+
+---
+
+- **Other changes:**
+  - Rebrand MEF to Mplify
+
 ## Release Janis:
 
 **Readiness status**: Call for Comments #3 completed
