@@ -1,5 +1,78 @@
 # Fault Management: Release notes
 
+## Release Kylie:
+
+**Readiness status**: Requested Letter Ballot. It will be most likely published
+as a standard without further changes.
+
+**Summary**: Multiple updates related to CfC#4.
+
+### List of changes in the API:
+
+**faultManagement.api.yaml:**
+
+- Modify filters for `relatedObjectId` in `GET /trackingRecord` endpoint
+- Remove endpoint `GET /trackingRecord/{id}`
+- Change `GET /trackingRecord` endpoint to optional
+
+---
+
+- Class `TrackingRecord`
+  - Renamed to `FmTrackingRecord`
+  - Property `user` removed
+  - Property `system` removed
+  - Property `source` added
+  - Property `relatedObjectId` reworked to use class `RelatedObjectRef`
+
+- Class `RecurringSchedule`
+  - `hourRange` property removed 
+
+- Class `FaultManagementJob`
+  - `rejectionReason` property removed
+  - `terminationError` property added
+
+- Class `FaultManagementReport`
+  - `failureReason` property removed
+  - `lastModifiedDate` property removed
+  - `terminationError` property added
+
+- Class `FaultManagementJobComplexQuery_Create`
+  - `lastModifiedDate.gt` and `lastModifiedDate.lt` removed
+---
+
+- **Removed classes:**
+  - `HourRange`
+
+---
+
+- **Added classes:**
+  - `RelatedObjectRef`
+  - `TerminationError`
+  - `FaultManagementReportRef`
+
+---
+
+- **Other changes:**
+  - Rebrand MEF to Mplify
+  - Rename `creationDate` to `creationDateTime` in all classes
+  - Rename `lastModifiedDate` to `lastTimeModified` in all classes
+  - Rename `measurementDataPoint` to `measurementData`
+
+
+**faultNotification.api.yaml**
+
+- Class `Event`
+  - `eventType` property added
+  - `event` property added
+
+- Class `FaultManagementJobReportPreparationErrorEventPayload`
+  - `reportPreparationFailedReason` property removed
+
+---
+
+- **Other changes:**
+  - Rebrand MEF to Mplify
+
 ## Release Janis:
 
 **Readiness status**: Call for Comments #1 completed
