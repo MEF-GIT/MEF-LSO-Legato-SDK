@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:ip-tca:bwutil:v0.0.1:all
+$id: urn:mef:xid:spec:service:ip-tca-bwutil:v0.0.1:all
 x-mef-target: AlarmSpecificAttributes
 description: IP TCA - Bandwidth Utilization.
 title: 

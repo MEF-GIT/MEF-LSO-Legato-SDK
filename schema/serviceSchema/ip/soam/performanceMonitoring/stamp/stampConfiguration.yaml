@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:ip:soam:stamp.configuration:v0.0.1:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:ip:soam:stamp-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificConfiguration
 description: STAMP Performance Monitoring Configuration Schema
 title: 
     MEF LSO - IP STAMP Configuration
@@ -59,7 +59,7 @@ properties:
     STAMP is an Active Measurement protocol for IP networks defined in RFC 8762. It uses UDP
     encapsulation. Reference MEF 66 Section 8.4.1.2 STAMP.
   interface:
-    $ref: '../../soamCommon.yaml#/definitions/Location'
+    $ref: "../../ipSls.yaml#/definitions/Location"
   vlan:
     type: integer
   modeOfOperation:

@@ -1,10 +1,10 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:bfd-configuration:v0.0.1:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:service:bfd-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificConfiguration
 description: IP Performance Monitoring BFD Configuration Schema.
 title: 
     MEF LSO Service - IP Bi-Directional Forwarding Configuration
-    # MEF Forum - Date: 20241217  Edit-level: 
+    # MEF Forum - Date: 20251222  Edit-level: 
     # File: ip/sat/faultManagment/bfd/bfdConfiguration.yaml
     #
     # ---------------------
@@ -59,13 +59,13 @@ properties:
     Ping configuration attributes. Reference MEF 66 SOAM for IP Services, Section 7.3
     FM Reporting.
   interface:
-    $ref: '../fmCommon.yaml#/definitions/Location'
+    $ref: '../../ipSls.yaml#/definitions/Location'
   vlan:
     type: integer
   sourceIpAddress:
-    $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+    $ref: '../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   destinationIpAddress:
-    $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+    $ref: '../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   transmissionInterval:
     description: Transmission interval.
     $ref: '../fmCommon.yaml#/definitions/BfdDuration'

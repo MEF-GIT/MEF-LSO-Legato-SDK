@@ -1,16 +1,16 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:xid:spec:legato:ip-tca-configuration:v0.0.1:all
+$id: urn:mef:lso:spec:legato:carrier-ethernet-performance-monitoring-configuration:v0.0.2:all
 x-mef-target: ServiceSpecificConfiguration
-description: IP Threshold Configuration Schema.
+description: Carrier Ethernet Performance Monitoring Configuration Schema.
 title: 
-    MEF LSO Legato - IP TCA Configuration
-    # MEF Forum - Date: 20260109  Edit-level: 
-    # File: ip/faultAndPerformanceManagement/ipTcaConfiguration.yaml
+    MEF LSO Legato - Carrier Ethernet Performance Monitoring Configuration
+    # MEF Forum - Date: 20251222  Edit-level: 
+    # File: carrierEthernet/faultAndPerformanceManagement/carrierEthernetPerformanceMonitoringConfiguration.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2026. All Rights Reserved.
+    # © MEF Forum 2024. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
@@ -56,70 +56,71 @@ title:
 type: object
 properties:
   description: >-
-    Data type representing the IP packet performance statistics configuration
+    Data type representing the Carrier Ethernet Layer 2 frame performance statistics configuration
     for receive and transmit.
-  interface:
-    $ref: '../../ipSls.yaml#/definitions/Location'
-  vlan:
-    type: integer
-  startTime:
-    format: date-time
-    type: string
-  endTime:
-    format: date-time
-    type: string
-  protocol:
-    description: Protocol type
-    type: string
-    enum:
-      - IPV4
-      - IPV6
-      - ARP
-  packetsIn:
+  rxEthIINum:
+    description: Number of frames encapsulated by using Ethernet II.
     type: boolean
-  charsIn:
+  rxSnapNum:
+    description: Number of frames encapsulated by using SNAP.
     type: boolean
-  packetsOut:
+  rxRawNum:
+    description: Number of frames encapsulated by using RAW.
     type: boolean
-  charsOut:
+  rxIsisNum:
+    description: Number of frames encapsulated by using IS-IS.
+    type: boolean
+  rxLlcNum:
+    description: Number of frames encapsulated by using LLC.
+    type: boolean
+  rxUnknownNum:
+    description: Number of frames encapsulated by using unknown methods.
+    type: boolean
+  rxForwardNum:
+    description: Number of frames forwarded at Layer 2.
+    type: boolean
+  rxArp:
+    description: Number of ARP frames.
+    type: boolean
+  rxMpls:
+    description: Number of MPLS frames.
+    type: boolean
+  rxIsis:
+    description: Number of IS-IS frames.
+    type: boolean
+  rxIsis2:
+    description: Number of large 802.3/802.2 frames encapsulated by using IS-IS.
+    type: boolean
+  rxIpv4:
+    description: Number of IPv4 frames.
+    type: boolean
+  rxIpv6:
+    description: Number of IPv6 frames.
+    type: boolean
+  txL3OutNum:
+    description: Number of frames sent out of Layer 3 Ethernet interfaces.
+    type: boolean
+  txVlanOutNum:
+    description: Number of frames sent out of VLAN interfaces.
+    type: boolean
+  txFastOutNum:
+    description: Number of frames fast forwarded.
+    type: boolean
+  rxL2OutNum:
+    description: Number of frames sent out of Layer 2 Ethernet interfaces.
+    type: boolean
+  txMbufRelayNum:
+    description: Number of frames transparently sent.
     type: boolean
   utilizationIn:
+    description: Enable or disable collection of input Ethernet bandwidth utilization on monitored interface.
     type: boolean
   utilizationOut:
+    description: Enable or disable collection of output Ethernet bandwidth utilization on monitored interface.
     type: boolean
   peakUtilizationIn:
+    description: Enable or disable collection of input peak Ethernet bandwidth utilization on monitored interface.
     type: boolean
   peakUtilizationOut:
+    description: Enable or disable collection of output peak Ethernet bandwidth utilization on monitored interface.
     type: boolean
-definitions:
-  IpvcEndPoint:
-    description: A subclass of a SlsReferencePoint.
-    properties:
-      id:
-        description: IPVC End Point unique identifier
-        type: string
-      description:
-        description: IPVC End Point description
-        type: string
-    type: object
-  Percentage:
-    description: This is a number of percent - a number between 0 and 100.
-    maximum: 100
-    minimum: 0
-    type: number
-  TimePeriod:
-    description:
-      A period of time, either as a deadline (endDateTime only) a startDateTime
-      only, or both
-    properties:
-      startDateTime:
-        description: Start of the time period, using IETC-RFC-3339 format
-        example: '1985-04-12T23:20:50.520Z'
-        format: date-time
-        type: string
-      endDateTime:
-        description: End of the time period, using IETC-RFC-3339 format
-        example: '1985-04-12T23:20:50.520Z'
-        format: date-time
-        type: string
-    type: object

@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-title: MEF LSO Legato - Common SD-WAN Service Specifications
+title: Mplify LSO Service - Common SD-WAN Service Specifications
 definitions:
   ApplicationFlowSpecification:
     description:
@@ -255,28 +255,28 @@ definitions:
           address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+          $ref: "#/definitions/Ipv4AddressOrAny"
       dav4:
         description:
           'A list of IPv4 destination addresses or a value of ANY meaning any
           IPv4 address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+          $ref: "#/definitions/Ipv4AddressOrAny"
       sav6:
         description:
           'A list of IPv6 source addresses or a value of ANY meaning any IPv6
           address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+          $ref: "#/definitions/Ipv6AddressOrAny"
       dav6:
         description:
           'A list of IPv6 destination addresses or a value of ANY meaning any
           IPv6 address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+          $ref: "#/definitions/Ipv6AddressOrAny"
       dnsMessageType:
         description: One of the DNS messages, as specified in RFC 6895.
         type: string
@@ -374,6 +374,10 @@ definitions:
         $ref: ../../common/common.yaml#/definitions/TimeDuration
   L2Interface:
     type: object
+    description: >-
+      L2Interface is a data type that describes the underlying network layer that carries 
+      IP Packets across the UNI. The possible values are UT/PT and CVLANx. Reference MEF 
+      70 Section 10.2 SD-WAN UNI L2 Interface Service Attribute.
     properties:
       l2InterfaceType:
         type: string
@@ -397,6 +401,199 @@ definitions:
       that carries IP Packets across the UNI. The possible values are UT/PT and
       CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service
       Attribute.
+  IanaProtocols:
+    description: >-
+      Protocol Numbers values. Reference IANA, Protocol Numbers.
+    type: string
+    enum:
+      - HOPOPT
+      - ICMP
+      - IGMP
+      - GGP
+      - IPV4
+      - ST
+      - TCP
+      - CBT
+      - EGP
+      - IGP
+      - BBN_RCC_MON
+      - NVP_II
+      - PUP
+      - ARGUS
+      - EMCON
+      - XNET
+      - CHAOS
+      - UDP
+      - MUX
+      - DCN_MEAS
+      - HMP
+      - PRM
+      - XNS_IDP
+      - TRUNK_1
+      - TRUNK_2
+      - LEAF_1
+      - LEAF_2
+      - RDP
+      - IRTP
+      - ISO_TP4
+      - NETBLT
+      - MFE_NSP
+      - DCCP
+      - 3PC
+      - IDPR
+      - XTP
+      - DDP
+      - IDRP_CMTP
+      - TP_PLUS_PLUS
+      - IL
+      - IPV6
+      - SDRP
+      - IPV6_ROUTE
+      - IPV6_FRAG
+      - IDRP
+      - RSVP
+      - GRE
+      - DSR
+      - BNA
+      - ESP
+      - AH
+      - I_NLSP
+      - SWIPE
+      - NARP
+      - MOBILE
+      - TLSP
+      - SKIP
+      - IPV6_ICMP
+      - IPV6_NO_NXT
+      - IPV6_OPTS
+      - CFTP
+      - SAT_EXPAK
+      - KRYPTOLAN
+      - RVD
+      - IPPC
+      - SAT_MON
+      - VISA
+      - IPCV
+      - CPNX
+      - CPHB
+      - WSN
+      - PVP
+      - BR_SAT_MON
+      - SUN_ND
+      - WB_MON
+      - WB_EXPAK
+      - ISO_IP
+      - VMTP
+      - SECURE_VMTP
+      - VINES
+      - IPTM
+      - NSFNET-IGP
+      - DGP
+      - TCF
+      - EIGRP
+      - OSPFIGP
+      - SPRITE_RPC
+      - LARP
+      - MTP
+      - AX_25
+      - IPIP
+      - MICP
+      - SCC_SP
+      - ETHERIP
+      - ENCAP
+      - GMTP
+      - IFMP
+      - PNNI
+      - PIM
+      - ARIS
+      - SCPS
+      - QNX
+      - A_N
+      - IP_COMP
+      - SNP
+      - COMPAQ_PEER
+      - IPX_IN_IP
+      - VRRP
+      - PGM
+      - L2TP
+      - DDX
+      - IATP
+      - STP
+      - SRP
+      - UTI
+      - SMP
+      - SM
+      - PTP
+      - ISIS_OVER_IPV4
+      - FIRE
+      - CRTP
+      - CRUDP
+      - SSCOPMCE
+      - IPLT
+      - SPS
+      - PIPE
+      - SCTP
+      - FC
+      - RSVP_E2E_IGNORE
+      - MOBILITY_HEADER
+      - UDP_LITE
+      - MPLS_IN_IP
+      - MANET
+      - HIP
+      - SHIM6
+      - WESP
+      - ROHC
+      - ETHERNET
+      - AGGFRAG
+      - UNASSIGNED
+      - EXPERIMENTATION
+      - RESERVED
+  IanaProtocolsIntegerOrKeyword:
+    description: >-
+      Data type which allows Iana Protocols Integer values or keywords.
+    type: object
+    properties:
+      ianaProtocolKeyword: 
+        $ref: '#/definitions/IanaProtocols'
+      ianaProtocolInteger:
+        $ref: '#/definitions/IanaProtocolsIntegers'
+    minProperties: 1
+    maxProperties: 1
+  IanaProtocolsIntegers:
+    description: >-
+      Protocol Number as Integer.
+    type: integer
+    minimum: 0
+    maximum: 255
+  Ipv4AddressOrAny:
+    description: >-
+      Data type representing IPv4 address or any IPv4 address to be specified.
+    properties:
+      ipv4Address:
+        description: IPv4 address.
+        $ref: "../../common/ip/ipCommon.yaml#/definitions/Ipv4Address"
+      ipv4Any:
+        description: Any IPv4 address.
+        type: string
+        enum:
+          - ANY
+    type: object
+    minProperties: 1
+    maxProperties: 1
+  Ipv6AddressOrAny:
+    description: Data type representing IPv6 address or any IPv6 address to be specified.
+    properties:
+      ipv6Address:
+        description: IPv6 address.
+        $ref: "../../common/ip/ipCommon.yaml#/definitions/Ipv6Address"
+      ipv6Any:
+        description: Any IPv6 address.
+        type: string
+        enum:
+          - ANY
+    type: object
+    minProperties: 1
+    maxProperties: 1
   IpPortProtocolFilteringSecurityFunctionPolicy:
     type: object
     description:
@@ -409,14 +606,14 @@ definitions:
           address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+          $ref: "#/definitions/Ipv4AddressOrAny"
       dav4:
         description:
           'A list of IPv4 destination addresses or a value of ANY meaning any
           IPv4 address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv4AddressOrAny
+          $ref: "#/definitions/Ipv4AddressOrAny"
       protov4:
         description:
           The IPv4 protocol list, is a list of integers in range 0 to 255 or a
@@ -424,21 +621,21 @@ definitions:
           keywords.
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/IanaProtocolsIntegerOrKeyword
+          $ref: "#/definitions/IanaProtocolsIntegerOrKeyword"
       sav6:
         description:
           'A list of IPv6 source addresses or a value of ANY meaning any IPv6
           address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+          $ref: "#/definitions/Ipv6AddressOrAny"
       dav6:
         description:
           'A list of IPv6 destination addresses or a value of ANY meaning any
           IPv6 address. '
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/Ipv6AddressOrAny
+          $ref: "#/definitions/Ipv6AddressOrAny"
       nextheadv6:
         description:
           The IPv6 protocol list, is a list of integers in the range 0 to 255
@@ -446,7 +643,7 @@ definitions:
           integers and keywords.
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/IanaProtocolsIntegerOrKeyword
+          $ref: "#/definitions/IanaProtocolsIntegerOrKeyword"
       sport:
         description:
           Transport Source Port, is a list of integers in the range 0 to 65535
@@ -455,7 +652,7 @@ definitions:
           port number is on the list.
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/ServiceNameAndTransportProtocolsOrAny
+          $ref: "#/definitions/ServiceNameAndTransportProtocolsOrAny"
       dport:
         description:
           Transport Destination Port, is a list of integers in the range 0 to
@@ -464,7 +661,7 @@ definitions:
           port number is on the list.
         type: array
         items:
-          $ref: ./common/ipCommon.yaml#/definitions/ServiceNameAndTransportProtocolsOrAny
+          $ref: "#/definitions/ServiceNameAndTransportProtocolsOrAny"
   IpPortProtocolFilter:
     type: object
     description:
@@ -1017,6 +1214,38 @@ definitions:
       Parameter of a Security Function Policy that provides a unique
       identifier. Reference MEF 138 Section 9.1 Security Policy Identifier
       Parameter.
+  ServiceNameAndTransportProtocols:
+    type: object
+    description: >-
+      Service names and port numbers are used to distinguish between different services
+      that run over transport protocols such as TCP, UDP, DCCP, and SCTP.
+    properties:
+      serviceName:
+        type: string
+      portNumber:
+        type: integer
+      min: 0
+      max: 65535
+      transportProtocol:
+        type: string
+        enum:
+          - TCP
+          - UDP
+  ServiceNameAndTransportProtocolsOrAny:
+    description: >-
+      Data type which allows an ServiceNameAndTransportProtocol or Any.
+    properties:
+      service:
+        description: Service names and port numbers.
+        $ref: '#/definitions/ServiceNameAndTransportProtocols'
+      serviceNameAndTransportProtocolsAny:
+        description: Any Service Name and Transport Protocols.
+        type: string
+        enum:
+          - ANY
+    type: object
+    minProperties: 1
+    maxProperties: 1
   ServicePerformanceObjectivesReportingPeriods:
     type: object
     properties:
@@ -1116,7 +1345,6 @@ definitions:
       UcsType is an enumeration that represents the type of Underlay
       Connectivity Service types. Reference  MEF 70.2 Section 12.1.2 UCS Type
       Service Attribute.
-    readOnly: true
     enum:
       - PRIVATE
       - PUBLIC

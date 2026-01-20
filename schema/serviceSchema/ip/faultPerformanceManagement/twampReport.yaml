@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:twamp-report:v0.0.1:all
-x-mef-target: ResultPayload
+$id: urn:mef:xid:spec:service:twamp-report:v0.0.1:all
+x-mef-target: ServiceSpecificResult
 description: IP Performance Monitoring TWAMP Results Schema
 title: MEF LSO - TWAMP Results
 type: object
@@ -36,41 +36,41 @@ properties:
     maxItems: 1
   outboundDelayMinimum:
     description: Outbound delay minimum value.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   outboundDelayMaximum:
     description: Outbound delay maximum value.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   outboundDelayAverage:
     description: Outbound delay average.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   inboundDelayMinimum:
     description: Inbound delay minimum value.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   inboundDelayMaximum:
     description: Inbound delay maximum value.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   inboundDelayAverage:
     description: Inbound delay average.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   minimumRoundTripDelay:
     description: Round trip delay maximum
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   maximumRoundTripDelay:
     description: Round trip delay maximum
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   averageRoundTripDelay:
     description: Round trip delay average.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   inboundJitter:
     description: Outbound jitter.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   outboundJitter:
     description: Imbound jitter.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   roundTripJitter:
     description: Round trip jitter.
-    $ref: ../../../common/common.yaml#/definitions/TimeDuration
+    $ref: "../../../common/common.yaml#/definitions/TimeDuration"
   countOfLostPackets:
     type: integer
   percentageOfLostPackets:
-    $ref: ../../../common/common.yaml#/definitions/Percentage
+    $ref: "../../../common/common.yaml#/definitions/Percentage"

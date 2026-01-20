@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:iperf-configuration:v0.0.1:all
-x-mef-target: ServiceSpecificTestProfileAttributes
+$id: urn:mef:xid:spec:service:iperf-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificTestProfileConfiguration
 description: Service Function Testing for iPerf Configuration
 title: 
     MEF LSO - iPerf Configuration for Service Function Testing
@@ -112,7 +112,7 @@ definitions:
         type: integer
         description: Option to specify the client-side port.
       format:
-        $ref: '../satCommon.yaml#/definitions/InformationRateUnits'
+        $ref: '../../../../../common/common.yaml#/definitions/InformationRateUnits'
       interval:
         type: integer
         description: >-
@@ -133,7 +133,7 @@ definitions:
         $ref: '#/definitions/Affinity'
       bind:
         description: Bind to the host.
-        $ref: '../satCommon.yaml#/definitions/Ipv4OrIpv6Address'
+        $ref: '../../../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
       verbose:
         type: boolean
         description: Set verbose mode.

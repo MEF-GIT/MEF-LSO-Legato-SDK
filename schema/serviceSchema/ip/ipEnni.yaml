@@ -1,27 +1,27 @@
-$id: urn:mef:lso:spec:legato:ip-enni:v0.0.4:all
+$id: urn:mef:lso:spec:service:ip-enni:v1.0.0:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - IP ENNI Specification
-    # MEF Forum - Date: 20231009  Edit-level: 
+    Mplify LSO Service - IP ENNI Specification
+    # Mplify Alliance - Date: 20250925  Edit-level: 
     # File: ip/ipEnni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2023. All Rights Reserved.
+    # © Mplify Alliance 2025. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
     # publication date. Such information is subject to change without notice
-    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # and Mplify Alliance (Mplify) is not responsible for any errors. Mplify does not
     # assume responsibility to update or correct any information in this
     # publication. No representation or warranty, expressed or implied, is
-    # made by MEF concerning the completeness, accuracy, or applicability of
+    # made by Mplify concerning the completeness, accuracy, or applicability of
     # any information contained herein and no liability of any kind shall be
-    # assumed by MEF as a result of reliance upon such information.
+    # assumed by Mplify as a result of reliance upon such information.
     # 
     # The information contained herein is intended to be used without
-    # modification by the recipient or user of this document. MEF is not
+    # modification by the recipient or user of this document. Mplify is not
     # responsible or liable for any modifications to this document made by any
     # other party.
     # 
@@ -29,76 +29,51 @@ title:
     # does not in any way create, by implication or otherwise:
     # 
     # a) any express or implied license or right to or under any patent,
-    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # copyright, trademark or trade secret rights held or claimed by any Mplify
     # member which are or may be associated with the ideas, techniques,
     # concepts or expressions contained herein; nor
     # 
-    # b) any warranty or representation that any MEF members will announce
+    # b) any warranty or representation that any Mplify members will announce
     # any product(s) and/or service(s) related thereto, or if such
     # announcements are made, that such announced product(s) and/or service(s)
     # embody any or all of the ideas, technologies, or concepts contained
     # herein; nor
     # 
-    # c) any form of relationship between any MEF member and the recipient
+    # c) any form of relationship between any Mplify member and the recipient
     # or user of this document.
     # 
-    # Implementation or use of specific MEF standards, specifications, or
+    # Implementation or use of specific Mplify standards, specifications, or
     # recommendations will be voluntary, and no Member shall be obliged to
-    # implement them by virtue of participation in MEF Forum. MEF is a
+    # implement them by virtue of participation in Mplify Alliance. Mplify is a
     # non-profit international organization to enable the development and
     # worldwide adoption of agile, assured and orchestrated network services.
-    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # Mplify does not, expressly or otherwise, endorse or promote any specific
     # products or services.
     # ---------------------
     #
-description:
-  An External Network Network Interface (ENNI) is the demarcation point between the responsibility of one Operator and another -
-  in other words, it is the interface where the two Operators interconnect. Reference MEF 61.1 Section 8.2 ENNI and ENNI Links.
-type: object
-properties:
-  enniType:
-    $ref: '#/definitions/EnniType'
-  routingInformation:
-    $ref: '#/definitions/EnniRoutingInformation'
-  ingressBwpEnvelopes:
-    $ref: './ipCommon.yaml#/definitions/IpEnniIngressBwpEnvelopePerEnniLink'
-  egressBwpEnvelopes:
-    $ref: './ipCommon.yaml#/definitions/IpEnniEgressBwpEnvelopePerEnniLink'
-  enniCommon:
-    $ref: './ipEnniCommon.yaml'
-  required: 
-    - enniType
-    - routingInformation
-    - ingressBwpEnvelopes
-    - egressBwpEnvelopes
-    - enniCommon
-definitions:
-  EnniType:
-    type: string
-    description: Indication of the type of BGP Peering at the ENNI. Reference MEF 61.1 Section 14 ENNI Service Attributes.
-    enum:
-    - OPTION_A
-    - OPTION_B
-    - OPTION_C
-  EnniRoutingInformation:
-    type: object
-    properties:
-      enniServiceMappingIdentifier:
-        type: string
-        description: A string identifier that is used at the ENNI to match the IPVC EP on one side of the ENNI with IPVC EPs on the other side. Reference MEF 61.1 Section 11.6 IPVC EP ENNI Service Mapping Identifier Service Attribute.
-      administrativeDistance:
-        type: integer
-        description: The Administrative Distance for a given ENNI Service Mapping Identifi-er is an integer greater than 0 that indicates the value of the admin-istrative distance assigned by the Op-erator to eBGP routes received from another Operator over the ENNI Links that are assigned to that ENNI Service Mapping Identifier at an ENNI using Option A. Reference MEF 61.1 Section 14.3.1.1 Administrative Distance.
-      routeFlapDaming:
-        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
-      asOverride:
-        $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
-      staticRoute:
-        description: The Static Routes parameter for a given ENNI Service Mapping Identifi-er is a list of static routes over the ENNI for the service identified by that ENNI Service Mapping Identifier. The list can be empty. Reference MEF 61.1 Section 14.3.1.4 Static Routes.
-        items:
-          $ref: './ipCommon.yaml#/definitions/StaticRoute'
-        minItems: 0
-        type: array  
-    description: For an ENNI Option A, the ENNI Routing Information Service Attribute is a mapping of ENNI Service Mapping Identifiers to four-tuples of the form (Administrative Distance, Route Flap Damping, AS Override, Static Routes). Each four-tuple applies to the corresponding ENNI Service Mapping Identifier. Reference MEF 61.1 Section 14.3.1 ENNI Routing Protocols for Option A.
+description: >-
+  An External Network Network Interface (ENNI) is the demarcation point between the 
+  responsibility of one Operator and another in other words, it is the interface 
+  where the two Operators interconnect. Reference MEF 61.1 Section 8.2 ENNI and ENNI Links.
+
 allOf:
-  - $ref: './ipServicesExternalInterface.yaml'
+    # Access E-Line OVC Service Attributes used in all 4 Business Functions POQ/Quote/Order/Inventory
+    - $ref: "./ipEnniCommon.yaml#/definitions/IpEnniCommon"
+    - type: object
+      properties:
+        identifier:
+          type: string
+          minLength: 1
+          maxLength: 53
+          pattern: "[\x20-\x7F]+"
+          description: >- 
+            Unique String identifier for the ENNI. Reference MEF 61.1 Section 14.1 ENNI 
+            Identifier Attribute.
+        enniType:
+          $ref: '../../common/ip/ipCommon.yaml#/definitions/EnniType'
+        routingInformation:
+          $ref: "../../common/ip/ipCommon.yaml#/definitions/EnniRoutingInformation"
+        ingressBwpEnvelopes:
+          $ref: '../../common/ip/ipCommon.yaml#/definitions/IpEnniIngressBwpEnvelopePerEnniLink'
+        egressBwpEnvelopes:
+          $ref: '../../common/ip/ipCommon.yaml#/definitions/IpEnniEgressBwpEnvelopePerEnniLink'

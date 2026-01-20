@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:twamp-report:v0.0.1:all
-x-mef-target: ResultPayload
+$id: urn:mef:xid:spec:service:twamp-report:v0.0.1:all
+x-mef-target: ServiceSpecificResult
 description: IP Performance Monitoring TWAMP Results Schema
 title: MEF LSO - TWAMP Results
 type: object

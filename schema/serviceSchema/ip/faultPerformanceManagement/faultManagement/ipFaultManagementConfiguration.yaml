@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:ip-fault-management-configuration:v0.0.1:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:legato:ip-fault-management-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificConfiguration
 description: IP Fault Management Configuration Schema.
 title: 
     MEF LSO Legato - IP Fault Management Configuration

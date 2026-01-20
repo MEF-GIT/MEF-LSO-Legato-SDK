@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.2:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:legato:ip-performance-monitoring-configuration:v0.0.2:all
+x-mef-target: ServiceSpecificConfiguration
 description: IP Performance Monitoring Configuration Schema.
 title: 
     MEF LSO Legato - IP Performance Monitoring Configuration

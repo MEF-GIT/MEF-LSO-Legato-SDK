@@ -1,33 +1,46 @@
 $schema: http://json-schema.org/draft-07/schema#
-title: MEF LSO Service - SD-WAN Types
+title: Mplify LSO Service - SD-WAN Types
 definitions:
   InternetBreakout:
     type: string
-    description: Represents a Policy Criterion indicating whether the Application Flow should be forwarded directly to the Internet using Internet Breakout. Reference MEF 70 Section 8.5.4 INTERNET-BREAKOUT Policy Criterion.
+    description: >-
+      Represents a Policy Criterion indicating whether the Application Flow should be 
+      forwarded directly to the Internet using Internet Breakout. Reference MEF 70 Section 
+      8.5.4 INTERNET-BREAKOUT Policy Criterion.
     enum:
         - "YES"
         - "NO"
   Encryption:
     type: string
-    description: Represents a Policy Criterion used to specify whether or not encryption is required. Reference MEF 70 Section 8.5.2 ENCRYPTION Policy Criterion.
+    description: >-
+      Represents a Policy Criterion used to specify whether or not encryption is required. 
+      Reference MEF 70 Section 8.5.2 ENCRYPTION Policy Criterion.
     enum:
         - "YES"
         - EITHER
   PublicPrivate:
     type: string
-    description: Represents a Policy Criterion that provides control over whether or not an Application Flow can traverse a public Internet Underlay Connectivity Service. Reference MEF 70 Section 8.5.3 PUBLIC-PRIVATE Policy Criterion.
+    description: >-
+      Represents a Policy Criterion that provides control over whether or not an Application 
+      Flow can traverse a public Internet Underlay Connectivity Service. Reference MEF 70 
+      Section 8.5.3 PUBLIC-PRIVATE Policy Criterion.
     enum:
         - PRIVATE_ONLY
         - EITHER
   BillingMethod:
     type: string
-    description: Represents a Policy Criterion that provides control over the charge type of the network that can be used to forward an Application Flow. Reference MEF 70 Section 8.5.5 BILLING-METHOD Policy Criterion.
+    description: >-
+      Represents a Policy Criterion that provides control over the charge type of the network 
+      that can be used to forward an Application Flow. Reference MEF 70 Section 8.5.5 BILLING-METHOD 
+      Policy Criterion.
     enum:
         - FLAT_RATE_ONLY
         - EITHER
   Backup:
     type: string
-    description: Represents a Policy Criterion when at least one non-Backup UCS available at an SD-WAN Edge. Reference MEF 70 Section 8.5.6 BACKUP Policy Criterion.
+    description: >-
+      Represents a Policy Criterion when at least one non-Backup UCS available at an SD-WAN Edge. 
+      Reference MEF 70 Section 8.5.6 BACKUP Policy Criterion.
     enum:
         - "YES"
         - "NO"

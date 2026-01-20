@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.2:all
-x-mef-target: ResultPayload
+$id: urn:mef:xid:spec:legato:ip-performance-monitoring-results:v0.0.2:all
+x-mef-target: ServiceSpecificResult
 description: IP Performance Monitoring Results Schema.
 title: MEF LSO Legato - IP Performance Monitoring Results
 type: object
@@ -28,28 +28,17 @@ properties:
     type: integer
   utilizationIn:
     description: Input interface utilization.
-    $ref: ../../../common/common.yaml#/definitions/Percentage
+    $ref: "../../../common/common.yaml#/definitions/Percentage"
   utilizationOut:
     description: Output interface utilization.
-    $ref: ../../../common/common.yaml#/definitions/Percentage
+    $ref: "../../../common/common.yaml#/definitions/Percentage"
   peakUtilizationIn:
     description: Input interface peak utilization.
-    $ref: ../../../common/common.yaml#/definitions/Percentage
+    $ref: "../../../common/common.yaml#/definitions/Percentage"
   peakUtilizationOut:
     description: Output interface peak utilization.
-    $ref: ../../../common/common.yaml#/definitions/Percentage
+    $ref: "../../../common/common.yaml#/definitions/Percentage"
 definitions:
-  ServiceUptime:
-    description: The Service Uptime Performance Metric is the proportion of time,
-      during a given time period Tk, that the service is working from the perspective
-      of the Subscriber (for a Subscriber IP Service) or the  perspective of the SP/SO
-      (for an Operator IP Service), excluding any pre-agreed exceptions, for  example
-      maintenance intervals. Reference MEF 61.1[1] Section 10.9 Service Uptime Performance
-      Metric.
-    properties:
-      serviceUptimeObjective:
-        $ref: ../../../common/common.yaml#/definitions/Percentage
-    type: object
   TimePeriod:
     description: A period of time, either as a deadline (endDateTime only) a startDateTime
       only, or both

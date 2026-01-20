@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:twamp-configuration:v0.0.1:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:service:twamp-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificConfiguration
 description: TWAMP Performance Monitoring Configuration Schema
 title: 
     MEF LSO - TWAMP Configuration

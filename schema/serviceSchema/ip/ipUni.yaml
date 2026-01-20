@@ -1,27 +1,27 @@
-$id: urn:mef:lso:spec:legato:ip-uni:v0.0.4:all
+$id: urn:mef:lso:spec:service:ip-uni:v1.0.0:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
-    MEF LSO Legato - IP UNI Specification
-    # MEF Forum - Date: 20231009  Edit-level: 
+    Mplify LSO Service - IP UNI Specification
+    # Mplify Alliance - Date: 20250925  Edit-level: 
     # File: ip/ipUni.yaml
     #
     # ---------------------
     # Disclaimer
     # 
-    # © MEF Forum 2023. All Rights Reserved.
+    # © Mplify Alliance 2025. All Rights Reserved.
     # 
     # The information in this publication is freely available for reproduction
     # and use by any recipient and is believed to be accurate as of its
     # publication date. Such information is subject to change without notice
-    # and MEF Forum (MEF) is not responsible for any errors. MEF does not
+    # and Mplify Alliance (Mplify) is not responsible for any errors. Mplify does not
     # assume responsibility to update or correct any information in this
     # publication. No representation or warranty, expressed or implied, is
-    # made by MEF concerning the completeness, accuracy, or applicability of
+    # made by Mplify concerning the completeness, accuracy, or applicability of
     # any information contained herein and no liability of any kind shall be
-    # assumed by MEF as a result of reliance upon such information.
+    # assumed by Mplify as a result of reliance upon such information.
     # 
     # The information contained herein is intended to be used without
-    # modification by the recipient or user of this document. MEF is not
+    # modification by the recipient or user of this document. Mplify is not
     # responsible or liable for any modifications to this document made by any
     # other party.
     # 
@@ -29,25 +29,25 @@ title:
     # does not in any way create, by implication or otherwise:
     # 
     # a) any express or implied license or right to or under any patent,
-    # copyright, trademark or trade secret rights held or claimed by any MEF
+    # copyright, trademark or trade secret rights held or claimed by any Mplify
     # member which are or may be associated with the ideas, techniques,
     # concepts or expressions contained herein; nor
     # 
-    # b) any warranty or representation that any MEF members will announce
+    # b) any warranty or representation that any Mplify members will announce
     # any product(s) and/or service(s) related thereto, or if such
     # announcements are made, that such announced product(s) and/or service(s)
     # embody any or all of the ideas, technologies, or concepts contained
     # herein; nor
     # 
-    # c) any form of relationship between any MEF member and the recipient
+    # c) any form of relationship between any Mplify member and the recipient
     # or user of this document.
     # 
-    # Implementation or use of specific MEF standards, specifications, or
+    # Implementation or use of specific Mplify standards, specifications, or
     # recommendations will be voluntary, and no Member shall be obliged to
-    # implement them by virtue of participation in MEF Forum. MEF is a
+    # implement them by virtue of participation in Mplify Alliance. Mplify is a
     # non-profit international organization to enable the development and
     # worldwide adoption of agile, assured and orchestrated network services.
-    # MEF does not, expressly or otherwise, endorse or promote any specific
+    # Mplify does not, expressly or otherwise, endorse or promote any specific
     # products or services.
     # ---------------------
     #
@@ -56,13 +56,33 @@ description: |
   of the SP and the responsibility of the Subscriber. Note that a given UNI always 
   relates to a single SP and a single Subscriber. Reference MEF 61.1 Section 7.3 UNIs 
   and UNI Access Links.
+type: object
 properties:
+  identifier:
+    type: string
+    minLength: 1
+    maxLength: 53
+    pattern: "[\x20-\x7F]+"
+    description: >- 
+      Unique string identifier for the UNI. Reference MEF 61.1 Section 12.1 UNI 
+      Identifier Service Attribute.
   managementType:
-    $ref: "./ipCommon.yaml#/definitions/UniManagementType"
+    description: >- 
+      Indicates whether the CE is the responsibility of the Subscriber or the Service 
+      Provider. Reference MEF 61.1 Section 12.2 UNI Management Type Service Attribute.
+    $ref: "../../common/ip/ipCommon.yaml#/definitions/UniManagementType"
   ingressBwpEnvelope:
-    $ref: "./ipCommon.yaml#/definitions/IpUniIngressBwpEnvelope"
-  egressBwpEnvelope:
-    $ref: "./ipCommon.yaml#/definitions/IpUniEgressBwpEnvelope"
+    description: >- 
+      None, or a single Bandwidth Profile Envelope consisting of parameters and Bandwidth 
+      Profile Flow specifications. Reference MEF 61.1 Section 12.4 UNI Ingress Bandwidth
+      Profile Service Attribute.
+    $ref: "../../common/ip/ipCommon.yaml#/definitions/IpUniIngressBwpEnvelope"
+  egressBwpEnvelope: 
+    description: >- 
+      None, or a single Bandwidth Profile Envelope consisting of parameters and Bandwidth 
+      Profile Flow specifications. Reference MEF 61.1 Section 12.5 UNI Egress Bandwidth
+      Profile Service Attribute.
+    $ref: "../../common/ip/ipCommon.yaml#/definitions/IpUniEgressBwpEnvelope"
   listOfControlProtocols:
     description:
       Indication of IP Control Protocols that are not forwarded transparently by
@@ -72,24 +92,17 @@ properties:
     type: array
     minItems: 0
     items:
-      $ref: "./ipCommon.yaml#/definitions/ControlProtocols"
+      $ref: "../../common/ip/ipRoutingProtocolsCommon.yaml#/definitions/ControlProtocol"
   routingProtocols:
     description:
       List of Routing Protocols used across the UNI. Reference MEF 61.1 Section
       12.7 UNI Routing Protocols Service Attribute. Absence of this attribute
       corresponds to a value of "None".
-    $ref: "./ipCommon.yaml#/definitions/RoutingProtocols"
+    $ref: "../../common/ip/ipRoutingProtocolsCommon.yaml#/definitions/RoutingProtocols"
   reversePathForwarding:
     $ref: "../../common/common.yaml#/definitions/EnabledDisabled"
     description: >-
       Indicates whether Reverse Path Forwarding checks are used by the SP at the
       UNI. Reference MEF 61.1 Section 12.8 UNI Reverse Path Forwarding Service
       Attribute.  [D11]	At a UNI with an IPVC EP for an Internet Access Service,
-      reversePathForwarding SHOULD be ENABLED. Reference MEF 69.1 Section 9.3
-      Internet Access UNI Requirements.
-required:
-  - managementType
-  - reversePathForwarding
-allOf:
-  - $ref: "./ipServicesExternalInterface.yaml"
-  - type: object
+      reversePathForwarding SHOULD be ENABLED.

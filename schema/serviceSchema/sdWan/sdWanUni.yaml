@@ -1,39 +1,86 @@
 $schema: http://json-schema.org/draft-07/schema#
 $id: urn:mef:lso:spec:service:sd-wan-uni:v0.0.3:all
-title: MEF LSO Service SD-WAN UNI Service Specifications
-description: SdWanUni is a resource that represents the boundary between the responsibility
-  of the Subscriber and the responsibility of the Service Provider. Reference MEF
-  70.2, Section 7.4 SD-WAN UNI.
+title: Mplify LSO Service SD-WAN UNI Service Specifications
+    # Mplify Alliance - Date: 20251127  Edit-level: 
+    # File: sdWan/sdWanUni.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © Mplify Alliance 2025. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and Mplify Alliance (Mplify) is not responsible for any errors. Mplify does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by Mplify concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by Mplify as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. Mplify is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any Mplify
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any Mplify members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any Mplify member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific Mplify standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in Mplify Alliance. Mplify is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # Mplify does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
+description: >- 
+  SdWanUni is a resource that represents the boundary between the responsibility of the 
+  Subscriber and the responsibility of the Service Provider. Reference MEF 70.2, Section 
+  7.4 SD-WAN UNI.
 type: object
 properties:
   uniIdentifier:
     type: string
-    description: A String that is used to allow the Subscriber and Service Provider
-      to uniquely identify the UNI. Reference MEF 70.2, Section 11.1 SD-WAN UNI Identifier
-      Service Attribute.
+    description: >-
+      A String that is used to allow the Subscriber and Service Provider to uniquely identify 
+      the UNI. Reference MEF 70.2, Section 11.1 SD-WAN UNI Identifier Service Attribute.
+    minLength: 1
     maxLength: 53
-    pattern: "[ -\x7F]+"
+    pattern: "[\x20-\x7F]+"
   l2Interface:
-    $ref: sdWanCommon.yaml#/definitions/L2Interface
+    $ref: 'sdWanCommon.yaml#/definitions/L2Interface'
   maxL2FrameSize:
     type: integer
-    description: Specifies the maximum length L2 frame that is accepted by the Service
-      Provider at the UNI. Reference MEF 70.2, Section 11.3 SD-WAN UNI Maximum L2
-      Frame Size Service Attribute.
+    description: >-
+      Specifies the maximum length L2 frame that is accepted by the Service Provider at the UNI. 
+      Reference MEF 70.2, Section 11.3 SD-WAN UNI Maximum L2 Frame Size Service Attribute.
     minimum: 1522
   ipv4ConnectionAddressing:
-    $ref: ./common/ipCommon.yaml#/definitions/Ipv4ConnectionAddressing
+    $ref: '../../common/ip/ipCommon.yaml#/definitions/UniIpv4ConnectionAddressing'
     nullable: true
   ipv6ConnectionAddressing:
-    $ref: ./common/ipCommon.yaml#/definitions/Ipv6ConnectionAddressing
+    $ref: '../../common/ip/ipCommon.yaml#/definitions/UniIpv6ConnectionAddressing'
     nullable: true
   routingProtocols:
-    $ref: ./common/ipCommon.yaml#/definitions/RoutingProtocolsSdWan
+    $ref: '../../common/ip/ipRoutingProtocolsCommon.yaml#/definitions/RoutingProtocols'
   availabilityObjective:
-    $ref: ../../common/common.yaml#/definitions/Percentage
+    $ref: '../../common/common.yaml#/definitions/Percentage'
   meanTimeToRepairObjective:
-    $ref: ../../common/common.yaml#/definitions/TimeDuration
-  required:
-  - uniIdentifier
-  - l2Interface
-  - maxL2FrameSize
+    $ref: '../../common/common.yaml#/definitions/TimeDuration'

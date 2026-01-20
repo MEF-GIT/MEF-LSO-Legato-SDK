@@ -1,5 +1,55 @@
 $schema: http://json-schema.org/draft-07/schema#
-title: MEF LSO Legato - IP Service Level Specification
+title: 
+    Mplify Service - IP Service Level Specification
+    # Mplify Alliance - Date: 20250818  Edit-level: 
+    # File: ip/ipSls.yaml
+    #
+    # ---------------------
+    # Disclaimer
+    # 
+    # © Mplify Alliance 2025. All Rights Reserved.
+    # 
+    # The information in this publication is freely available for reproduction
+    # and use by any recipient and is believed to be accurate as of its
+    # publication date. Such information is subject to change without notice
+    # and Mplify Alliance (Mplify) is not responsible for any errors. Mplify does not
+    # assume responsibility to update or correct any information in this
+    # publication. No representation or warranty, expressed or implied, is
+    # made by Mplify concerning the completeness, accuracy, or applicability of
+    # any information contained herein and no liability of any kind shall be
+    # assumed by Mplify as a result of reliance upon such information.
+    # 
+    # The information contained herein is intended to be used without
+    # modification by the recipient or user of this document. Mplify is not
+    # responsible or liable for any modifications to this document made by any
+    # other party.
+    # 
+    # The receipt or any use of this document or its contents
+    # does not in any way create, by implication or otherwise:
+    # 
+    # a) any express or implied license or right to or under any patent,
+    # copyright, trademark or trade secret rights held or claimed by any Mplify
+    # member which are or may be associated with the ideas, techniques,
+    # concepts or expressions contained herein; nor
+    # 
+    # b) any warranty or representation that any Mplify members will announce
+    # any product(s) and/or service(s) related thereto, or if such
+    # announcements are made, that such announced product(s) and/or service(s)
+    # embody any or all of the ideas, technologies, or concepts contained
+    # herein; nor
+    # 
+    # c) any form of relationship between any Mplify member and the recipient
+    # or user of this document.
+    # 
+    # Implementation or use of specific Mplify standards, specifications, or
+    # recommendations will be voluntary, and no Member shall be obliged to
+    # implement them by virtue of participation in Mplify Alliance. Mplify is a
+    # non-profit international organization to enable the development and
+    # worldwide adoption of agile, assured and orchestrated network services.
+    # Mplify does not, expressly or otherwise, endorse or promote any specific
+    # products or services.
+    # ---------------------
+    #
 definitions:
   IpSls:
     description: The IPVC Service Level Specification (SLS) describes the performance
@@ -15,7 +65,7 @@ definitions:
         type: string
         format: date-time
       periodOfTime:
-        $ref: ../../common/common.yaml#/definitions/TimeDuration
+        $ref: "../../common/common.yaml#/definitions/TimeDuration"
       oneWayMeanPacketDelay:
         type: array
         items:
@@ -72,7 +122,7 @@ definitions:
       name:
         type: string
       mttrObjective:
-        $ref: ../../common/common.yaml#/definitions/TimeDuration
+        $ref: "../../common/common.yaml#/definitions/TimeDuration"
   OneWayMeanPacketDelay:
     type: object
     description: The One-way Mean Packet Delay Performance Metric is the maximum,
@@ -124,7 +174,7 @@ definitions:
           Table 6.
         type: number
       interPacketDelayVariationPercentile:
-        $ref: ../../common/common.yaml#/definitions/Percentage
+        $ref: "../../common/common.yaml#/definitions/Percentage"
       interPacketDelayVariationObjective:
         description: Inter-Packet Delay Variation Objective. Reference MEF 61.1 Section
           10.9.6 One-way Inter-Packet Delay Variation Performance Metric, Table 6.
@@ -150,7 +200,7 @@ definitions:
           Percentile Performance Metric, Table-4.
         type: string
       packetDelayRangePercentile:
-        $ref: ../../common/common.yaml#/definitions/Percentage
+        $ref: "../../common/common.yaml#/definitions/Percentage"
       packetDelayRangeObjective:
         description: Packet Delay Objective. Reference MEF 61.1 Section 10.9.4 One-way
           Packet Delay Percentile Performance Metric, Table-4.
@@ -172,7 +222,7 @@ definitions:
         items:
           $ref: '#/definitions/SlsRpPair'
       packetDelayRangePercentile:
-        $ref: ../../common/common.yaml#/definitions/Percentage
+        $ref: "../../common/common.yaml#/definitions/Percentage"
       packetDelayRangeObjective:
         description: Packet Delay Range Objective. Reference MEF 61.1 Section 10.9.7
           One-way Packet Delay Range Performance Metric, Table 7.
@@ -198,7 +248,7 @@ definitions:
         items:
           $ref: '#/definitions/SlsRpPair'
       packetLossRatioObjective:
-        $ref: ../../common/common.yaml#/definitions/Percentage
+        $ref: "../../common/common.yaml#/definitions/Percentage"
       cosName:
         description: One of the values in the IPVC List of Class of Service Names
           Service Attribute. Reference MEF 61.1 Section 10.9.8 One-way Packet Loss
@@ -214,8 +264,9 @@ definitions:
       Metric..
     properties:
       serviceUptimeObjective:
-        $ref: ../../common/common.yaml#/definitions/Percentage
-        description: Service Uptime Objective. Reference MEF 61.1 Section 10.9.9 Service
+        $ref: "../../common/common.yaml#/definitions/Percentage"
+        description:
+          Service Uptime Objective. Reference MEF 61.1 Section 10.9.9 Service
           Uptime Performance Metric, Table 9.
   SlsReferencePoint:
     type: object
@@ -241,22 +292,23 @@ definitions:
     - toSlsReferencePoint
   Location:
     allOf:
-    - $ref: '#/definitions/SlsReferencePoint'
-    - type: object
-      description: A subclass of a SlsReferencePoint.
-      properties:
-        name:
-          description: Location name
-          type: string
-        description:
-          description: Location description
-          type: string
-        cloudService:
-          description: Attribute to indicate if associated with a cloud service.
-          type: boolean
-        ipvcEndpointIdentifier:
-          description: Pointer to IPVC End Point.
-          type: array
-          items:
-            $ref: '#/definitions/IpvcEndPointRef'
-          minItems: 1
+      - $ref: "#/definitions/SlsReferencePoint"
+      - type: object
+        description: A subclass of a SlsReferencePoint.
+        properties:
+          name:
+            description: Location name
+            type: string
+          description:
+            description: Location description
+            type: string
+          cloudService:
+            description:
+              Attribute to indicate if associated with a cloud service.
+            type: boolean
+          ipvcEndpointIdentifier:
+            description: Pointer to IPVC End Point.
+            type: array
+            items:
+              $ref: "#/definitions/IpvcEndPointRef"
+            minItems: 1

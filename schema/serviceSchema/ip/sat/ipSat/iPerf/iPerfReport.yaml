@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:iperf-report:v0.0.1:all
-x-mef-target: TestMeasureAttributes
+$id: urn:mef:xid:spec:service:iperf-report:v0.0.1:all
+x-mef-target: ServiceSpecificTestResultConfiguration
 description: iPerf Report Schema.
 title: 
     MEF LSO - Service Activation Testing for Service Function Testing

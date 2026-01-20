@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:bfd-report:v0.0.1:all
-x-mef-target: ResultPayload
+$id: urn:mef:xid:spec:legato:bfd-report:v0.0.1:all
+x-mef-target: ServiceSpecificResult
 description: IP Performance Monitoring BFD Report Schema.
 title: 
     MEF LSO Service - IP Bi-Directional Forwarding Report
@@ -66,9 +66,9 @@ properties:
       The bfdSessionId is a unique identifier for the BFD session.
     type: string
   sourceIpAddress: 
-      - $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+      - $ref: '../../../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   destinationIpAddress: 
-      - $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+      - $ref: '../../../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   status: 
     description: >-
       The status is the status of the BFD session.

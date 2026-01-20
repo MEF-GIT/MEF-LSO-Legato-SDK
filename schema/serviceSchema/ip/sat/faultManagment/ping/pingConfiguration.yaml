@@ -1,6 +1,6 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all
-x-mef-target: ServicePayloadSpecificAttributes
+$id: urn:mef:xid:spec:legato:ping-configuration:v0.0.1:all
+x-mef-target: ServiceSpecificConfiguration
 description: IP Performance Monitoring Configuration Schema
 title: 
     MEF LSO - IP SOAM Ping Configuration
@@ -59,14 +59,14 @@ properties:
     Ping configuration attributes. Reference MEF 66 SOAM for IP Services, Section 7.3
     FM Reporting.
   interface:
-    $ref: '../fmCommon.yaml#/definitions/Location'
+    $ref: "../../../ipSls.yaml#/definitions/Location"
   vlan:
     description: VLAN ID
     type: integer
   sourceIpAddress:
-    $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+    $ref: '../../../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   destinationIpAddress:
-    $ref: '../fmCommon.yaml#/definitions/Ipv4OrIpv6Address'
+    $ref: '../../../../../common/ip/ipCommon.yaml#/definitions/Ipv4OrIpv6Address'
   transmissionInterval:
     $ref: "../../../../../common/common.yaml#/definitions/TimeDuration"
   protocol:
