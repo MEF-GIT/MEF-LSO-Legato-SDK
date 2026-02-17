@@ -107,7 +107,7 @@ properties:
       The set of performance objectives for each CoS Name in the IPVC. The absence of this 
       attribute corresponds to a value of "NONE". Reference MEF 61.1 Section 10.9 IPVC 
       Service Level Specification Service Attribute.
-    $ref: "./IpSls.yaml#/definitions/IpSls"
+    $ref: "./ipSls.yaml#/definitions/IpSls"
   maximumTransferUnit:
     type: integer
     description: >- 
