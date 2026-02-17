@@ -1,0 +1,100 @@
+@startjson
+{
+  "coordinatedAction" : [ {
+    "coordinatedActionDelay" : {
+      "amount" : 1,
+      "units" : "minutes"
+    },
+    "coordinationDependency" : "startToFinish",
+    "orderId" : "so-id-0000-00001"
+  } ],
+  "note" : [ ],
+  "orderRelationship" : [ ],
+  "relatedContactInformation" : [ ],
+  "requestedCompletionDate" : "2025-11-25T06:46:32.555221-06:00",
+  "requestedStartDate" : "2025-11-25T06:46:32.553267-06:00",
+  "serviceOrderItem" : [ {
+    "id" : "mplify-soitem-ipvcep-0000-1111",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:ipvc-end-point:v1.0.0:all",
+        "identifier" : "mplify-ipvcep-0000-1111",
+        "prefixMapping" : {
+          "ipv4Prefix" : {
+            "ipv4Address" : "10.1.1.100",
+            "prefixLength" : 24
+          }
+        },
+        "maximumNumberOfIpv4Routes" : {
+          "numOfIpv4RoutesUnlimited" : "UNLIMITED"
+        },
+        "ingressBandwthProfileEnvelope" : {
+          "ingressBwpEnvelopeValue" : {
+            "maxIrE" : {
+              "irValue" : 50,
+              "irUnits" : "GBPS"
+            },
+            "tE" : 1,
+            "ipvcEpIngressBwp" : [ {
+              "burstBehavior" : "OPTIMIZE_THROUGHPUT",
+              "cir" : {
+                "irValue" : 1,
+                "irUnits" : "GBPS"
+              },
+              "maxIr" : {
+                "irValue" : 5,
+                "irUnits" : "GBPS"
+              },
+              "weight" : 1,
+              "cosName" : [ "cos-name-gold" ]
+            } ]
+          }
+        }
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ {
+      "orderItem" : {
+        "itemId" : "mplify-ipvcep-0000-2222",
+        "serviceOrderId" : "mplify-soid-0000-1111"
+      },
+      "relationshipType" : "IPUNI_ENDPOINT_OF_IPVC"
+    } ]
+  }, {
+    "id" : "mplify-soitem-ipvc-0000-1111",
+    "action" : "add",
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ {
+        "relationshipType" : "CONNECTS_TO_IPUNI",
+        "service" : {
+          "id" : "IP_UNI_0000_2222"
+        }
+      } ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:ipvc:v1.0.0:all",
+        "identifier" : "mplify-ipvc-0000-2222",
+        "listOfClassOfServiceNames" : [ "GOLD" ],
+        "maximumTransferUnit" : 9000,
+        "reservedPrefixes" : [ ]
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ ]
+  } ]
+}
+
+@endjson

@@ -1,9 +1,5 @@
 # Mplify W100 SD-WAN Service Schemas and Developer Guide - Cfc#3
 
-## Download Link
-
-Download the entire set of schemas by clicking [here](https://github.com/MEF-GIT/MEF-LSO/tree/develop_sdWan_service/schema/serviceSchema/sdWan)
-
 ## Introduction
 
 This repository contains the Mplify W100 SD-WAN Service Schemas and Developer Guide and corresponding YAML schemas. The work is based on MEF 70.2 SD-WAN Service Attributes and Framework. It includes YAML definitions for the following resources:

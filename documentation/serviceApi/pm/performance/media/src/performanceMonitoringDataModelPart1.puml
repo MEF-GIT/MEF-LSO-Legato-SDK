@@ -1,0 +1,90 @@
+@startuml performanceMonitoringDataModelPart1
+
+class PerformanceProfile {
+    creationDateTime*: date-time
+    href: uri
+    id*: string
+    isAssigned*: boolean
+    lastTimeModified: date-time
+}
+
+PerformanceProfile_Create <|-- PerformanceProfile
+
+class PerformanceProfile_Create {
+    description: string
+    jobPriority: integer
+    jobType*: JobType
+    lifecycleStatus*: PerformanceProfileLifecycleStatusType
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
+}
+
+PerformanceProfile_Create *-->"1" TimeDuration : granularity
+PerformanceProfile_Create *-->"1" TimeDuration : reportingPeriod
+PerformanceProfile_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+class PerformanceProfile_Update {
+
+    description: string
+    jobPriority: integer
+    lifecycleStatus: PerformanceProfileLifecycleStatusType
+    outputFormat: OutputFormat
+    resultFormat: ResultFormat
+}
+
+PerformanceProfile_Update *--> TimeDuration : granularity
+PerformanceProfile_Update *--> TimeDuration : reportingPeriod
+PerformanceProfile_Update *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+
+class TimeDuration {
+    timeDurationValue*: integer
+    timeDurationUnits*: TimeDurationUnits
+}
+
+class ServiceSpecificConfiguration {
+    @type*: string
+}
+
+enum PerformanceProfileLifecycleStatusType {
+    approved
+    deprecated
+    experimental
+    pending
+}
+
+
+
+
+enum JobType {
+    proactive
+    on-demand
+    passive
+}
+
+enum OutputFormat {
+    json
+    xml
+    avro
+    csv
+}
+
+enum ResultFormat {
+    attachment
+    payload
+}
+
+enum TimeDurationUnits {
+    NS
+    US
+    MS
+    SEC
+    MIN
+    HOUR
+    DAY
+    WEEK
+    MONTH
+    YEAR
+}
+
+@enduml

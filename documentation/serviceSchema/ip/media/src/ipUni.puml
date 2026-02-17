@@ -1,0 +1,70 @@
+@startuml
+
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class IpUni {
+    identifier: String[1]
+    managementType: UniManagementType [1]
+    ingressBwpProfileEnvelope: IpUniIngressBwpEnvelope [0..1]
+    egressBwpProfileEnvelope: IpIniEgressBwpEnvelope [0..1]
+    listOfControlProtocols: ControlProtocol [0..*]
+    routingProtocols: RoutingProtocols [0..1]
+    reversePathForwarding: EnabledDisabled [1]
+}
+
+
+IpUni "1" *--> "0..1" IpUniIngressBwpEnvelope : ingressBwpProfileEnvelope
+IpUni "1" *--> "0..1" IpUniEgressBwpEnvelope : egressBwpProfileEnvelope
+IpUni "1" *-->"*" ControlProtocol : listOfControlProtocols
+IpUni "1" *--> "0..1" RoutingProtocols : routingProtocols
+
+class IpUniIngressBwpEnvelope {
+    "attributes not shown"
+}
+
+class IpUniEgressBwpEnvelope {
+    "attributes not shown"
+}
+
+class ControlProtocol {
+    reference: string
+    addressing: Addressing
+    protocolName: string
+}
+
+class RoutingProtocols {
+    "attributes not shown"
+}
+
+class Static {
+    "attributes not shown"
+}
+
+class Bgp {
+    "attributes not shown"
+}
+
+class Ospf {
+    "attributes not shown"
+}
+
+RoutingProtocols *-->"*" Static : static
+RoutingProtocols *-->"*" Bgp : bgp
+RoutingProtocols *-->"*" Ospf : ospf
+
+MefServiceConfiguration <|-- IpUni
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

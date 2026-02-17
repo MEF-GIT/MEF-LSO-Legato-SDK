@@ -1,8 +1,5 @@
 @startuml tpDataModel
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
+
 
 class TestProfile {
     creationDate*: date-time
@@ -58,11 +55,11 @@ class TestProfile_Common {
 }
 
 TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
-TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 TestProfile_Common *--> ServiceSpecificationRef : relatedServiceSpecification
 TestProfile_Common *-->"*" RelatedContact : relatedContact
 
-class ServiceSpecificTestProfileConfiguraton {
+class ServiceSpecificTestProfileConfiguration {
 
     @type*: string
 }

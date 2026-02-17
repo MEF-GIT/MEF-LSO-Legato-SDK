@@ -1,0 +1,49 @@
+@startjson
+{
+  "startTime" : "2025-11-04T07:01:02.563905-06:00",
+  "periodOfTime" : {
+    "timeDurationValue" : 1,
+    "timeDurationUnits" : "MONTH"
+  },
+  "oneWayMeanPacketDelay" : [ {
+    "slsRpPair" : [ {
+      "fromSlsReferencePoint" : {
+        "ipvcEndPointIdentifier" : "la-ipvc-ep-0000-3333"
+      },
+      "toSlsReferencePoint" : {
+        "ipvcEndPointIdentifier" : "bn-ipvc-ep-0000-4444"
+      }
+    } ],
+    "meanPacketDelayObjective" : 10,
+    "cosName" : "mplify-gold"
+  } ],
+  "oneWayInterPacketDelayVariation" : [ ],
+  "oneWayPacketDelayPercentile" : [ ],
+  "oneWayPacketDelayRange" : [ ],
+  "oneWayPacketDelayLossRatio" : [ ],
+  "serviceUptime" : [ ],
+  "meanTimeToRepair" : [ {
+    "name" : "mplify-ipsls-mttr-0000-5555",
+    "mttrObjective" : {
+      "timeDurationValue" : 1,
+      "timeDurationUnits" : "HOUR"
+    }
+  } ],
+  "locationList" : [ {
+    "name" : "cloud-la-0000-1111",
+    "description" : "Los Angeles Data Center",
+    "cloudService" : true,
+    "ipvcEndpointIdentifier" : [ {
+      "ipvcEndPointIdentifier" : "la-ipvc-ep-0000-3333"
+    } ]
+  }, {
+    "name" : "cloud-bn-0000-2222",
+    "description" : "Boston Data Center",
+    "cloudService" : true,
+    "ipvcEndpointIdentifier" : [ {
+      "ipvcEndPointIdentifier" : "bn-ipvc-ep-0000-4444"
+    } ]
+  } ]
+}
+
+@endjson

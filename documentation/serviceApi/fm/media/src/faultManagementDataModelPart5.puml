@@ -1,0 +1,85 @@
+@startuml faultManagementDataModelPart5
+
+class FaultManagementReportComplexQuery_Create {
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
+    granularity: TimeDuration
+    outputFormat: OutputFormat
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: FaultManagementReportStateType
+}
+
+FaultManagementReportComplexQuery_Create *--> FaultManagementJobRef : faultManagementJob
+FaultManagementReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+FaultManagementReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+enum FaultManagementReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
+
+class FaultManagementReport_Find {
+    creationDateTime*: date-time
+    description: string
+    granularity*: TimeDuration
+    id*: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
+    state*: FaultManagementReportStateType
+}
+
+FaultManagementReport_Find *-->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport_Find *-->"1" MonitoredObjectRef : monitoredObject
+FaultManagementReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+FaultManagementReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+class MonitoredObjectRef {
+
+}
+
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
+
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type*: string    
+}
+
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+class ServiceSpecificConfiguration {
+    @type*: string
+}
+
+@enduml

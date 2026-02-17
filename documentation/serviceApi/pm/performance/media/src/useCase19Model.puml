@@ -1,8 +1,7 @@
 @startuml useCase19Model
 
 class PerformanceReport_Find {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     description: string
     id*: string
     outputFormat*: OutputFormat
@@ -17,7 +16,6 @@ PerformanceReport_Find *-u->"1" ReportingTimeframe : reportingTimeframe
 PerformanceReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum PerformanceReportStateType {
-
     acknowledged
     completed
     failed
@@ -26,9 +24,9 @@ enum PerformanceReportStateType {
 }
 
 class PerformanceJobRef {
-
     performanceJobHref: string
     performanceJobId*: string
+    @type*: string
 }
 
 @enduml

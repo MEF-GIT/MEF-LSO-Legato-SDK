@@ -1,8 +1,5 @@
 @startuml extensionPattern
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
+
 set namespaceSeparator none
 
 class Alarm {

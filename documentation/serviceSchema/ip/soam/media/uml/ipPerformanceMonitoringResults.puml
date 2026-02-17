@@ -1,0 +1,34 @@
+@startuml
+skinparam {
+    ClassBackgroundColor White
+    ClassBorderColor Black
+    ClassBorderColor<<ServiceSpecification>> FireBrick
+}
+set namespaceSeparator none
+
+!define datatype(x) class x << (D,#FF7700) DataType>>
+
+class IpPerformanceMonitoringResult {
+    protocol: Protocol[1]
+    packetsIn: integer[1]
+    charsIn: integer[1]
+    packetsOut: integer[1]
+    charsOut: integer[1]
+    utilizationIn: Percentage[1]
+    utilizationOut: Percentage[1]
+    peakUntilizationIn: Percentage[1]
+    peakUtilizationOut: Percentage[1]
+    
+}
+
+enum Protocol {
+    ARP 
+    IPV4 
+    IPV6
+    }
+
+datatype(Percentage) {
+    type: number: minimum=0,maximum=100
+}
+
+@enduml

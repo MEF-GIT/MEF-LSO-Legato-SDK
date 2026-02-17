@@ -1,9 +1,8 @@
 @startuml faultManagementReportComplexQueryModel
 
 class FaultManagementReportComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
     outputFormat: OutputFormat
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
@@ -17,6 +16,5 @@ FaultManagementReportComplexQuery_Create *--> FaultManagementJobRef : faultManag
 FaultManagementReportComplexQuery_Create *--> TimeDuration : granularity
 FaultManagementReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
 FaultManagementReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
-
 
 @enduml

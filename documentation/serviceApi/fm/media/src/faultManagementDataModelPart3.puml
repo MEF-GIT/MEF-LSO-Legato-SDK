@@ -1,105 +1,51 @@
 @startuml faultManagementDataModelPart3
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
-class FaultManagementReport {
-
-    creationDate*: date-time
-    description: string
-    failureReason: string
-    href: uri
+class CancelFaultManagementJob {
+    creationDateTime*: date-time
+    href: string
     id*: string
-    lastModifiedDate: date-time
-    outputFormat*: OutputFormat
-    resultFormat*: ResultFormat
-    state*: FaultManagementReportStateType
+    state*: FaultManagementJobProcessStateType
+}
+CancelFaultManagementJob_Create <|-- CancelFaultManagementJob
+
+class CancelFaultManagementJob_Create {
+
 }
 
-FaultManagementReport *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReport *-u->"1" TimeDuration : granularity
-FaultManagementReport *-->"1" MonitoredObjectRef : monitoredObject
-FaultManagementReport *-l->"*" ReportContentItem : reportContent
-FaultManagementReport *-u->"1" ReportingTimeframe : reportingTimeframe
-FaultManagementReport *--> AttachmentURL : reportUrl
-FaultManagementReport *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+CancelFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
 
+class ModifyFaultManagementJob {
+    creationDateTime*: date-time
+    href: string
+    id*: string
+    state*: FaultManagementJobProcessStateType
+}
+ModifyFaultManagementJob_Create <|-- ModifyFaultManagementJob
 
-class FaultManagementReportComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
+class ModifyFaultManagementJob_Create {
+    description: string
+    jobPriority: integer
     outputFormat: OutputFormat
-    reportingTimeframe.startDate.gt: date-time
-    reportingTimeframe.startDate.lt: date-time
-    reportingTimeframe.endDate.gt: date-time
-    reportingTimeframe.endDate.lt: date-time
     resultFormat: ResultFormat
-    state: FaultManagementReportStateType
 }
 
-FaultManagementReportComplexQuery_Create *--> FaultManagementJobRef : faultManagementJob
-FaultManagementReportComplexQuery_Create *-u-> TimeDuration : granularity
-FaultManagementReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
-FaultManagementReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+ModifyFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
+ModifyFaultManagementJob_Create *--> TimeDuration : granularity
+ModifyFaultManagementJob_Create *--> TimeDuration : reportingPeriod
+ModifyFaultManagementJob_Create *--> ScheduleDefinition : scheduleDefinition
+ModifyFaultManagementJob_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type: string
+}
 
-enum FaultManagementReportStateType {
-
+enum FaultManagementJobProcessStateType {
     acknowledged
     completed
-    failed
     inProgress
     rejected
 }
-class FaultManagementReport_Find {
-
-    creationDate*: date-time
-    description: string
-    id*: string
-    outputFormat*: OutputFormat
-    resultFormat*: ResultFormat
-    state*: FaultManagementReportStateType
-}
-
-FaultManagementReport_Find *-->"1" FaultManagementJobRef : faultManagementJob
-FaultManagementReport_Find *-u->"1" TimeDuration : granularity
-FaultManagementReport_Find *-->"1" MonitoredObjectRef : monitoredObject
-FaultManagementReport_Find *-u->"1" ReportingTimeframe : reportingTimeframe
-FaultManagementReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-class ReportContentItem {
-
-}
-
-ReportContentItem *-->"1" MeasurementTime : measurementTime
-ReportContentItem *-->"1..*" ServiceSpecificResult : measurementDataPoint
-
-class MeasurementTime {
-
-    measurementStartDate*: date-time
-    measurementEndDate: date-time
-}
-
-MeasurementTime *--> TimeDuration : measurementInterval
-
-class ReportingTimeframe {
-
-    reportingStartDate: date-time
-    reportingEndDate: date-time
-}
-
-class ServiceSpecificResult {
-
-    @type*: string
-}
-
-class AttachmentURL {
-
-    retentionPeriod: date-time
-    url*: uri
-}
-
 
 @enduml

@@ -1,0 +1,41 @@
+@startuml sftTestJobUsecases
+
+left to right direction
+
+actor "Buyer/Client" as B
+
+rectangle {
+Usecase UC6 as "6. Create Test Job"
+Usecase UC7 as "7. Retrieve Test Job List"
+Usecase UC8 as "8. Retrieve Test Job by Job Identifier"
+Usecase UC9 as "9. Modify Test Job"
+Usecase UC10 as "10. Retrieve Modify Test Job List"
+Usecase UC11 as "11. Retrieve Modify Test Job List by Identifier"
+Usecase UC12 as "12. Cancel Test Job"
+Usecase UC13 as "13. Retrieve Cancel Test Job List"
+Usecase UC14 as "14. Retrieve Cancel Test Job List by Identifier"
+Usecase UC15 as "15. Suspend Test Job"
+Usecase UC16 as "16. Retrieve Suspend Test Job List"
+Usecase UC17 as "17. Retrieve Suspend Test Job List by Identifier"
+Usecase UC18 as "18. Resume Test Job"
+Usecase UC19 as "19. Retrieve Resume Test Job List"
+Usecase UC20 as "20. Retrieve Resume Test Job List by Identifier"
+}
+
+B --> UC6
+B --> UC7
+B --> UC8
+B --> UC9
+B --> UC10
+B --> UC11
+B --> UC12
+B --> UC13
+B --> UC14
+B --> UC15
+B --> UC16
+B --> UC17
+B --> UC18
+B --> UC19
+B --> UC20
+
+@enduml

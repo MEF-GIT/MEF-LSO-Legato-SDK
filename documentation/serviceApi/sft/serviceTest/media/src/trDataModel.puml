@@ -1,11 +1,10 @@
 @startuml trDataModel
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
     scale 4096 width
 }
 
-class ServiceSpecificTestResultConfguration {
+
+class ServiceSpecificTestResultConfiguration {
 
     @type*: string
 }
@@ -15,7 +14,7 @@ class TestResult {
 }
 TestResult_Common <|-- TestResult
 
-TestResult *-->"1" ServiceSpecificTestResultConfguration : serviceSpecificTestResultConfguration
+TestResult *-->"1" ServiceSpecificTestResultConfiguration : ServiceSpecificTestResultConfiguration
 
 
 class TestResult_Common {

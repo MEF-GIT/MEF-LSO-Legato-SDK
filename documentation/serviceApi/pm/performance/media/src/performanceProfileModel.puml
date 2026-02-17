@@ -2,11 +2,11 @@
 
 class PerformanceProfile {
 
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: uri
     id*: string
     isAssigned*: boolean
-    lastModifiedDate: date-time
+    lastTimeModified: date-time
 }
 
 PerformanceProfile_Create <|-- PerformanceProfile

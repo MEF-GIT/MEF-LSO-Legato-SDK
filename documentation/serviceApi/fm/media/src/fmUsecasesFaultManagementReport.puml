@@ -1,0 +1,17 @@
+@startuml fmUsecasesFaultManagementReport
+
+left to right direction
+
+actor "Buyer/Client" as B
+
+rectangle {
+Usecase UC13 as "**13. Retrieve Fault Management Report List**"
+Usecase UC14 as "**14. Retrieve Fault Management Report by Identifier**"
+Usecase UC15 as "**15. Create Fault Management Report Complex Query**"
+}
+
+B --> UC13
+B --> UC14
+B --> UC15
+
+@enduml

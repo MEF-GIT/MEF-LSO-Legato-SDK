@@ -11,7 +11,7 @@ SOF --> A: 201 confirmation with {{id}}
 A -> SOF : POST {{baseUrl}}/testProfile (TestProfile_Create)
 SOF -> SOF : basic validation
 
-alt succesful inquiry
+alt successful inquiry
   SOF --> A : 201 TestProfile with {{id}}, `acknowledged` state 
   SOF -> A: {{callbackUrl}}/listener/testProfileCreateEvent ({{id}})
   A --> SOF : 204 confirmation

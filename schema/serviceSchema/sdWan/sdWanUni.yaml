@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:sd-wan-uni:v0.0.3:all
+$id: urn:mef:lso:spec:service:sd-wan-uni:v0.0.4:all
 title: Mplify LSO Service SD-WAN UNI Service Specifications
     # Mplify Alliance - Date: 20251127  Edit-level: 
     # File: sdWan/sdWanUni.yaml

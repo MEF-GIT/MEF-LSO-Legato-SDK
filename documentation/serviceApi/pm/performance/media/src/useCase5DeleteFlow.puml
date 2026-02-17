@@ -6,9 +6,6 @@ participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
 
-entity "Performance Profile" as PP
-activate PP
-
 autonumber
 
 B -> S : DELETE /performanceProfile/{{id}} request
@@ -16,11 +13,12 @@ B -> S : DELETE /performanceProfile/{{id}} request
 S -> S: find Performance Profile by id
 S -> S: check if any Performance Job refers to Performance Profile
 
-S -> PP: (delete Performance Profile resource)
+S -> S: (delete Performance Profile resource)
+
 S --> B: DELETE /performanceProfile/{{id}} response
 
 opt
-    PP -> B: POST performanceProfileDeleteEvent
+    S -> B: POST {{callbackUrl}}/listener/performanceProfileDeleteEvent
 end
 
 @enduml

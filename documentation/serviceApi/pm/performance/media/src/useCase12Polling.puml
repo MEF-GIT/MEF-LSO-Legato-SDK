@@ -13,8 +13,8 @@ alt succesful inquiry
   
   ...
 
-  loop periodically until CancelPerformanceJob in active state
-      B -> S :   GET {{baseUrl}}/cancelPerformanceJob/{{id}}
+  loop periodically until CancelPerformanceJob in final state
+      B -> S : GET {{baseUrl}}/cancelPerformanceJob/{{id}}
       return 200 CancelPerformanceJob in current state
   end
 

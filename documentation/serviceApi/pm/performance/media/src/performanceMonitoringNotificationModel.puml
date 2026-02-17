@@ -1,186 +1,142 @@
 @startuml performanceMonitoringNotificationModel
 
 class CancelPerformanceJobStateChangeEvent {
-
     eventType*: string
 }
 Event <|-u- CancelPerformanceJobStateChangeEvent
 
 CancelPerformanceJobStateChangeEvent *-u->"1" CancelPerformanceJobStateChangeEventPayload : event
 
-
 class CancelPerformanceJobStateChangeEventPayload {
-
     href: string
     id*: string
     state*: PerformanceJobProcessStateType
 }
-class Event {
 
+class Event {
     eventId*: string
     eventTime*: date-time
+    eventType*: string
+    event*: object
 }
 
-
-
 class ModifyPerformanceJobStateChangeEvent {
-
     eventType*: string
 }
 Event <|-u- ModifyPerformanceJobStateChangeEvent
 
 ModifyPerformanceJobStateChangeEvent *-u->"1" ModifyPerformanceJobStateChangeEventPayload : event
 
-
 class ModifyPerformanceJobStateChangeEventPayload {
-
     href: string
     id*: string
     state*: PerformanceJobProcessStateType
 }
 
-
-
 class PerformanceJobAttributeValueChangeEvent {
-
     eventType*: string
 }
 Event <|-- PerformanceJobAttributeValueChangeEvent
 
 PerformanceJobAttributeValueChangeEvent *-->"1" PerformanceJobEventPayload : event
 
-
 class PerformanceJobCreateEvent {
-
     eventType*: string
 }
 Event <|-- PerformanceJobCreateEvent
 
 PerformanceJobCreateEvent *-->"1" PerformanceJobEventPayload : event
 
-
 class PerformanceJobEventPayload {
-
     href: string
     id*: string
 }
 
 class PerformanceJobReportPreparationErrorEvent {
-
     eventType*: string
 }
 Event <|-- PerformanceJobReportPreparationErrorEvent
 
 PerformanceJobReportPreparationErrorEvent *-->"1" PerformanceJobReportPreparationErrorEventPayload : event
 
-
 class PerformanceJobReportPreparationErrorEventPayload {
-
     href: string
     id*: string
-    reportPreparationFailedReason: string
 }
 
-
-
 class PerformanceJobReportReadyEvent {
-
     eventType*: string
 }
 Event <|-l- PerformanceJobReportReadyEvent
 
 PerformanceJobReportReadyEvent *-l->"1" PerformanceJobReportReadyEventPayload : event
 
-
 class PerformanceJobReportReadyEventPayload {
-
     href: string
     id*: string
     reportHref: string
     reportId*: string
 }
 
-
-
 class PerformanceJobStateChangeEvent {
-
     eventType*: string
 }
 Event <|-- PerformanceJobStateChangeEvent
 
 PerformanceJobStateChangeEvent *-->"1" PerformanceJobStateChangeEventPayload : event
 
-
 class PerformanceJobStateChangeEventPayload {
-
     href: string
     id*: string
     state*: PerformanceJobStateType
 }
 
 class PerformanceProfileAttributeValueChangeEvent {
-
     eventType*: string
 }
 Event <|-u- PerformanceProfileAttributeValueChangeEvent
 
 PerformanceProfileAttributeValueChangeEvent *-u->"1" PerformanceProfileEventPayload : event
 
-
 class PerformanceProfileCreateEvent {
-
     eventType*: string
 }
 Event <|-u- PerformanceProfileCreateEvent
 
 PerformanceProfileCreateEvent *-u->"1" PerformanceProfileEventPayload : event
 
-
 class PerformanceProfileDeleteEvent {
-
     eventType*: string
 }
 Event <|-u- PerformanceProfileDeleteEvent
 
 PerformanceProfileDeleteEvent *-u->"1" PerformanceProfileEventPayload : event
 
-
 class PerformanceProfileEventPayload {
-
     href: string
     id*: string
 }
 
-
-
 class PerformanceReportCreateEvent {
-
     eventType*: string
 }
 Event <|-r- PerformanceReportCreateEvent
 
 PerformanceReportCreateEvent *-r->"1" PerformanceReportEventPayload : event
 
-
 class PerformanceReportEventPayload {
-
     href: string
     id*: string
 }
 
-
-
 class PerformanceReportStateChangeEvent {
-
     eventType*: string
 }
 Event <|-- PerformanceReportStateChangeEvent
 
 PerformanceReportStateChangeEvent *-->"1" PerformanceReportStateChangeEventPayload : event
 
-
 class PerformanceReportStateChangeEventPayload {
-
     href: string
     id*: string
     state*: PerformanceReportStateType

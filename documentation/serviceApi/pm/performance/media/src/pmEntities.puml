@@ -11,14 +11,14 @@ entity PerformanceReport as PR
 
 B -> PP: POST /performanceProfile request
 activate PP
-note right of PP: Performance Profile is created 
+note over PP: Performance Profile is created 
 PP --> B: Created
 
 B -> PP: GET /performanceProfile request
 PP --> B: List Performance Profiles
 
 B -> PP: PATCH /performanceProfile/{id} request
-note right of PP: Performance Profile is updated
+note over PP: Performance Profile is updated
 PP --> B: Updated
 
 note over B: Buyer/Client is getting list of Performance Profiles
@@ -31,7 +31,7 @@ B -> PJ: POST /performanceJob request
 activate PJ
 PJ --> B: Created
 
-note right of PJ: On scheduled date
+note over PJ: On scheduled date
 
 PJ -> PJ: state: inProgress
 
@@ -47,11 +47,7 @@ PR -> PR: state: completed
 
 PR --> PJ: (report completed)
 
-opt
-    PJ -> B: POST /performanceJobReportReadyEvent
-end
-
-note right of PJ: non-recurring Job
+note over PJ: non-recurring Job
 PJ -> PJ: state: completed
 
 B -> PR: GET /performanceReport

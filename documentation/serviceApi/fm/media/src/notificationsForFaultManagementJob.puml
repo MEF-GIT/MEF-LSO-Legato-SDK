@@ -3,7 +3,7 @@
 hide footbox
 
 participant "Buyer/Client" as B
-participant SOF
+participant "Seller/Server" as SOF
 
 B -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
 SOF --> B: 201 confirmation with {{id}}
@@ -51,7 +51,7 @@ alt successful inquiry
   B --> SOF : 204 confirmation
 
   note over B, SOF : FaultManagementReport generation failed
-  SOF -> B: {{callbackUrl}}/listener/faultManagementJobReportPreparationErrorEvent {{id}}, failureReason
+  SOF -> B: {{callbackUrl}}/listener/faultManagementJobReportPreparationErrorEvent {{id}}
   B --> SOF : 204 confirmation
 
   note over B, SOF : FaultManagementJob is not recurring
@@ -62,7 +62,6 @@ alt successful inquiry
 else validation or internal problem
   SOF --> B : 4xx or 5xx error response
 end 
-
 ...
 
 B -> SOF : DELETE {{baseUrl}}/hub/{{id}} 

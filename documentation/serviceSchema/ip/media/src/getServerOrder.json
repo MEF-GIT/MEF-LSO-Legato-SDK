@@ -1,0 +1,61 @@
+@startjson
+{
+  "coordinatedAction" : [ ],
+  "note" : [ ],
+  "orderRelationship" : [ ],
+  "relatedContactInformation" : [ ],
+  "requestedCompletionDate" : "2025-11-03T08:38:32.833883-06:00",
+  "requestedStartDate" : "2025-11-03T08:38:32.833887-06:00",
+  "id" : "mplify-so-0000-1111",
+  "completionDate" : "2025-11-03T08:38:32.833852-06:00",
+  "serviceOrderItem" : [ {
+    "coordinatedAction" : [ ],
+    "note" : [ ],
+    "relatedContactInformation" : [ ],
+    "service" : {
+      "note" : [ ],
+      "serviceRelationship" : [ ],
+      "relatedContactInformation" : [ ],
+      "place" : [ ],
+      "serviceConfiguration" : {
+        "@type" : "urn:mef:lso:spec:service:ip-uni:v1.0.0:all",
+        "identifier" : "mplify-ip-uni-0000-2222",
+        "ingressBwpEnvelope" : {
+          "maxIrE" : {
+            "irValue" : 100,
+            "irUnits" : "GBPS"
+          },
+          "tE" : 1,
+          "ipUniIngressBwpAccessLink" : [ ],
+          "ipUniIngressBwpIpvcEp" : [ ],
+          "ipUniIngressBwpIpvcEpAccessLink" : [ ],
+          "ipUniIngressBwpIpvcEpCos" : [ ],
+          "ipUniIngressBwpIpvcEpCosAccessLink" : [ ],
+          "ipUniIngressBwpUni" : {
+            "burstBehavior" : "OPTIMIZE_THROUGHPUT",
+            "cir" : {
+              "irValue" : 5,
+              "irUnits" : "GBPS"
+            },
+            "flowIdentifier" : 1,
+            "maxIr" : {
+              "irValue" : 100,
+              "irUnits" : "GBPS"
+            },
+            "weight" : 1
+          }
+        },
+        "listOfControlProtocols" : [ ],
+        "reversePathForwarding" : "ENABLED"
+      },
+      "serviceOrderItem" : [ ]
+    },
+    "serviceOrderItemRelationship" : [ ],
+    "terminationError" : [ ]
+  } ],
+  "state" : "completed",
+  "orderDate" : "2025-11-03T08:38:32.833929-06:00"
+}
+
+
+@endjson

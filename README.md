@@ -1,9 +1,9 @@
-# Mplify-LSO-Legato-SDK Janis Release
+# Mplify-LSO-Legato-SDK Kylie Release
 
 ## Download Link
 
 Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/janis/Mplify-LSO-Legato-SDK-janis.zip)
+[here](https://github.com/MEF-GIT/MEF-LSO-Legato-SDK/releases/download/kylie/Mplify-LSO-Legato-SDK-kylie.zip)
 
 ## Introduction
 
@@ -26,22 +26,17 @@ Also included are Service schemas and Performance Monitoring definitions.
 ## High-level release notes
 
 - Updated documents:
-
-  - Mplify W99.1 - LSO Service Ordering Management API - Developer Guide
-  - Mplify 101 - LSO Carrier Ethernet Service Schemas and Developer Guide
-  - Mplify 133.1 - Draft Release 1 Allegro, Interlude and Legato Fault
-    Management and Performance Monitoring BR&UC
-  - Mplify W135.1 - LSO Service Inventory Management API - Developer Guide
-  - Mplify 136.1 - Draft Release 1 Allegro, Interlude and Legato Service
-    Function Testing Business Requirements & Use Cases
-  - MEF W143 - LSO Allegro, LSO Interlude and LSO Legato Performance Monitoring
-    API - Developer Guide
-  - Mplify W146 - LSO Allegro, LSO Interlude and LSO Legato Threshold Crossing
-    Alerts API and Developer Guide - Developer Guide
-  - MEF W148 - LSO Allegro, LSO Interlude and LSO Legato Fault Management API -
-    Developer Guide
-  - Mplify W149 - LSO Allegro, LSO Interlude and LSO Legato Service Function
-    Testing API - Developer Guide
+  - Mplify 99.1 - LSO Service Ordering Management API - Developer Guide
+  - Mplify 133.1 - Allegro, Interlude and Legato Fault Management and
+    Performance Monitoring BR&UC
+  - Mplify 135.1 - LSO Service Inventory Management API - Developer Guide
+  - Mplify 136.1 - Allegro, Interlude, Legato Service Function Testing Business
+    Requirements and Use Cases
+  - Mplify 143 - Performance Monitoring API - Developer Guide
+  - Mplify 146 - Alarms and Threshold Crossing Alerts (Alarms) API - Developer
+    Guide
+  - Mplify 148 - Fault Management API - Developer Guide
+  - Mplify 149 - Service Function Testing API - Developer Guide
 
 - No new Documents:
 
@@ -99,47 +94,45 @@ release.
 APIs and Developer Guides:
 
 - Service Catalog API - **early draft version, on hold, not to be used**
-- \*Mplify W99.1 - LSO Service Ordering Management API - Developer Guide -
-  **Done. Ready for Letter Ballot**
-- \*Mplify W135.1 - LSO Legato Service Inventory Management API - Developer
-  Guide - **Done. Ready for Letter Ballot**
+- \*Mplify 99.1 - LSO Service Ordering Management API - Developer Guide -
+  **Published Standard**
+- \*Mplify 135.1 - LSO Legato Service Inventory Management API - Developer
+  Guide - **Published Standard**
 
 Service Schemas:
 
-- SD-WAN (MEF W100) - **work in progress - CfC#2**
-- \*Carrier Ethernet (Mplify W101) - **Done. Ready for Letter Ballot**
-- Internet Protocol (MEF W102) - **work in progress - CfC#4**
-- LSO Legato Service Provisioning Specification - L1 (MEF W103) - **work in
-  progress - ready for CfC#1**
+- \*SD-WAN (Mplify W100) - **work in progress - CfC#3**
+- Carrier Ethernet (Mplify 101) - **Published Standard**
+- \*Internet Protocol (Mplify W102) - **Done. Ready for Letter Ballot**
+- LSO Legato Service Provisioning Specification - L1 (Mplify W103) -
+  **on-hold - ready for CfC#1**
 
 SOAM:
 
-- Mplify \*W133.1 - Allegro, Interlude and Legato Fault Management and
-  Performance Monitoring BR&UC - **Draft Release 2**
-- Mplify \*W136.1 - Service Function Testing Business Requirements and Use
-  Cases - **Draft Release 2**
-- Mplify \*W143 - Performance Monitoring API and Developer Guide - **work in
-  progress - CfC#4**
-- Mplify \*W146 - LSO Allegro, LSO Interlude and LSO Legato Threshold Crossing
-  Alerts API and Developer Guide - Developer Guide - **work in progress - ready
-  for CfC#2**
-- Mplify W147 - Streaming Management API and Developer Guide - **Done. Ready
-  for Letter Ballot**
-- Mplify \*W148 - LSO Allegro, LSO Interlude and LSO Legato Fault Management
-  API - Developer Guide - **work in progress - ready for CfC#2**
-- Mplify \*W149 - LSO Allegro, LSO Interlude and LSO Legato Service Function
-  Testing API - Developer Guide - **work in progress - ready for CfC#2**
-- Mplify W153 - LSO IP Schemas and Developer Guide for SOAM **early draft
-  version, schemas only**
+- Mplify \*133.1 - Allegro, Interlude and Legato Fault Management and
+  Performance Monitoring BR&UC - **Published Standard**
+- Mplify \*136.1 - Mplify 136.1 - Allegro, Interlude, Legato Service Function
+  Testing Business Requirements and Use Cases - **Published Standard**
+- Mplify \*143 - Performance Monitoring API - Developer Guide - **Published
+  Standard**
+- Mplify \*146 - Alarms and Threshold Crossing Alerts (Alarms) API - Developer
+  Guide - **Published Standard**
+- Mplify 147 - Streaming Management API - Developer Guide - **Published
+  Standard**
+- Mplify \*148 - Fault Management API - Developer Guide - **Published
+  Standard**
+- Mplify \*149 - Service Function Testing API - Developer Guide - **Published
+  Standard**
 
-- Security:
-  - MEF 128.1 - **Published Standard**
+Security:
+
+- MEF 128.1 - **Published Standard**
 
 ## Contents
 
 This SDK contains the following items:
 
-- `COPYRIGHT` - Copyright 2025 Mplify Forum
+- `COPYRIGHT` - Copyright 2026 Mplify Forum
 - `LICENSE` - Contains a copy of the Apache 2.0 license
 - `README` - This file
 - `serviceApi` - Definitions of the APIs are found in this directory, provided
@@ -168,7 +161,7 @@ https://wiki.onap.org/display/DW/External+API+Framework+Project
 
 ## Copyright
 
-© Mplify Alliance 2025. All Rights Reserved.
+© Mplify Alliance 2026. All Rights Reserved.
 
 **Disclaimer**
 

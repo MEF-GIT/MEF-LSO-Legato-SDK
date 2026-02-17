@@ -1,9 +1,8 @@
 @startuml performanceReportComplexQueryModel
 
 class PerformanceReportComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
     outputFormat: OutputFormat
     reportingTimeframe.startDate.gt: date-time
     reportingTimeframe.startDate.lt: date-time
@@ -14,9 +13,8 @@ class PerformanceReportComplexQuery_Create {
 }
 
 PerformanceReportComplexQuery_Create *--> TimeDuration : granularity
-PerformanceReportComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+PerformanceReportComplexQuery_Create *--> "*" MonitoredObjectRef : monitoredObject
 PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
 PerformanceReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
-
 
 @enduml

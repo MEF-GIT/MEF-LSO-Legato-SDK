@@ -1,9 +1,4 @@
-# Mplify-LSO-Carrier-Ethernet-Service-Schemas and Developer Guide - Letter Ballot
-
-## Download Link
-
-Download the entire repository by clicking
-[here](https://github.com/MEF-GIT/MEF-LSO/tree/develop_ce_service)
+# Mplify-LSO-Carrier-Ethernet-Service-Schemas and Developer Guide
 
 ## Introduction
 
@@ -22,19 +17,19 @@ schemas to support Mplify W101 include:
 - Carrier Ethernet Service Level Specification (SLS)
 - Carrier Ethernet Common
 
-## Release Janis:
+## Release Kylie:
 
 **NOTE**:
 
 All references to 'MEF Forum' or 'MEF' in the documentation and YAML files should be interpreted to be references to 'Mplify Alliance' and 'Mplify' respectively.  Since the approval process for this standard and associated assets coincides with the transition of the name of MEF Forum to Mplify Alliance, changes were not made to the files on this release.
 
-**Readiness status**: Letter Ballot - proposed
+**Readiness status**: Published Standard
 
 **Summary**:
  
- - Mplify W101 YAML schemas are now Letter Ballot.
+ - Mplify 101 YAML schemas are now Published Standard
 
- - Mplify W101 provides a set of Postman scripts for testing the set of REST operations with valid Mplify W101 payloads.
+ - Mplify 101 provides a set of Postman scripts for testing the set of REST operations with valid Mplify 101 payloads.
  
  - Alignment of data types used in Carrier Ethernet Service Schemas with Carrier Ethernet Product Schemas.
 
@@ -53,13 +48,13 @@ invite wider industry review.
 - Layer 2 Control Protocols in Ethernet Services
   - MEF 45.1 **Published Standard**
 - Developer Guide/API:
-  - Mplify W101 - **Proposed - Letter Ballot**
+  - Mplify 101 - **Published Standard**
 
 ## Contents
 
 This repository contains the following items:
 
-- `COPYRIGHT` - Copyright 2025 MEF Forum
+- `COPYRIGHT` - Copyright 2026 MEF Forum
 - `LICENSE` - Contains a copy of the Apache 2.0 license
 - `README` - This file
 - `serviceApi` - MEF 99.1 Service Ordering blended with Mplify W101 Carrier Ethernet YAML Payload.
@@ -77,7 +72,7 @@ content in any of these artifacts, please quote the line number to which you are
 
 ## Copyright
 
-© Mplify Forum 2025. All Rights Reserved.
+© Mplify Forum 2026. All Rights Reserved.
 
 ## Disclaimer
 

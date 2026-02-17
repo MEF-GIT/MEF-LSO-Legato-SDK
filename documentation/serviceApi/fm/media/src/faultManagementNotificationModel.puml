@@ -1,159 +1,119 @@
 @startuml faultManagementNotificationModel
 
-class Event {
-    eventId*: string
-    eventTime*: date-time
-}
-
 class CancelFaultManagementJobStateChangeEvent {
-
     eventType*: string
 }
-Event <|-l- CancelFaultManagementJobStateChangeEvent
+Event <|-u- CancelFaultManagementJobStateChangeEvent
 
-CancelFaultManagementJobStateChangeEvent *-->"1" CancelFaultManagementJobStateChangeEventPayload : event
-
+CancelFaultManagementJobStateChangeEvent *-u->"1" CancelFaultManagementJobStateChangeEventPayload : event
 
 class CancelFaultManagementJobStateChangeEventPayload {
-
     href: string
     id*: string
     state*: FaultManagementJobProcessStateType
 }
 
 class Event {
-
     eventId*: string
     eventTime*: date-time
+    eventType*: string
+    event*: object
 }
 
-
-
-class FaultManagementJobAttributeValueChangeEvent {
-
+class ModifyFaultManagementJobStateChangeEvent {
     eventType*: string
 }
-Event <|-u- FaultManagementJobAttributeValueChangeEvent
+Event <|-u- ModifyFaultManagementJobStateChangeEvent
+
+ModifyFaultManagementJobStateChangeEvent *-u->"1" ModifyFaultManagementJobStateChangeEventPayload : event
+
+class ModifyFaultManagementJobStateChangeEventPayload {
+    href: string
+    id*: string
+    state*: FaultManagementJobProcessStateType
+}
+
+class FaultManagementJobAttributeValueChangeEvent {
+    eventType*: string
+}
+Event <|-- FaultManagementJobAttributeValueChangeEvent
 
 FaultManagementJobAttributeValueChangeEvent *-->"1" FaultManagementJobEventPayload : event
 
-
 class FaultManagementJobCreateEvent {
-
     eventType*: string
 }
 Event <|-- FaultManagementJobCreateEvent
 
 FaultManagementJobCreateEvent *-->"1" FaultManagementJobEventPayload : event
 
-
 class FaultManagementJobEventPayload {
-
     href: string
     id*: string
 }
 
 class FaultManagementJobReportPreparationErrorEvent {
-
     eventType*: string
 }
-Event <|-u- FaultManagementJobReportPreparationErrorEvent
+Event <|-- FaultManagementJobReportPreparationErrorEvent
 
-FaultManagementJobReportPreparationErrorEvent *-r->"1" FaultManagementJobReportPreparationErrorEventPayload : event
-
+FaultManagementJobReportPreparationErrorEvent *-->"1" FaultManagementJobReportPreparationErrorEventPayload : event
 
 class FaultManagementJobReportPreparationErrorEventPayload {
-
     href: string
     id*: string
-    reportPreparationFailedReason: string
 }
-
-
 
 class FaultManagementJobReportReadyEvent {
-
     eventType*: string
 }
-Event <|-u- FaultManagementJobReportReadyEvent
+Event <|-l- FaultManagementJobReportReadyEvent
 
 FaultManagementJobReportReadyEvent *-l->"1" FaultManagementJobReportReadyEventPayload : event
 
-
 class FaultManagementJobReportReadyEventPayload {
-
     href: string
     id*: string
     reportHref: string
     reportId*: string
 }
 
-
-
 class FaultManagementJobStateChangeEvent {
-
     eventType*: string
 }
 Event <|-- FaultManagementJobStateChangeEvent
 
 FaultManagementJobStateChangeEvent *-->"1" FaultManagementJobStateChangeEventPayload : event
 
-
 class FaultManagementJobStateChangeEventPayload {
-
     href: string
     id*: string
     state*: FaultManagementJobStateType
 }
 
 class FaultManagementReportCreateEvent {
-
     eventType*: string
 }
-Event <|-- FaultManagementReportCreateEvent
+Event <|-r- FaultManagementReportCreateEvent
 
-FaultManagementReportCreateEvent *-->"1" FaultManagementReportEventPayload : event
-
+FaultManagementReportCreateEvent *-r->"1" FaultManagementReportEventPayload : event
 
 class FaultManagementReportEventPayload {
-
     href: string
     id*: string
 }
 
-
-
 class FaultManagementReportStateChangeEvent {
-
     eventType*: string
 }
-Event <|-r- FaultManagementReportStateChangeEvent
+Event <|-- FaultManagementReportStateChangeEvent
 
 FaultManagementReportStateChangeEvent *-->"1" FaultManagementReportStateChangeEventPayload : event
 
-
 class FaultManagementReportStateChangeEventPayload {
-
     href: string
     id*: string
     state*: FaultManagementReportStateType
 }
-
-class ModifyFaultManagementJobStateChangeEvent {
-
-    eventType*: string
-}
-Event <|-l- ModifyFaultManagementJobStateChangeEvent
-
-ModifyFaultManagementJobStateChangeEvent *-->"1" ModifyFaultManagementJobStateChangeEventPayload : event
-
-
-class ModifyFaultManagementJobStateChangeEventPayload {
-
-    href: string
-    id*: string
-    state*: FaultManagementJobProcessStateType
-}
-
 
 @enduml

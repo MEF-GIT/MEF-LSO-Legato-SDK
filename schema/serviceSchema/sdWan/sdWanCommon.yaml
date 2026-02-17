@@ -396,11 +396,6 @@ definitions:
         description: VLAN ID.
         items:
           type: integer
-    description:
-      L2Interface is a data type that describes the underlying network layer
-      that carries IP Packets across the UNI. The possible values are UT/PT and
-      CVLANx. Reference MEF 70 Section 10.2 SD-WAN UNI L2 Interface Service
-      Attribute.
   IanaProtocols:
     description: >-
       Protocol Numbers values. Reference IANA, Protocol Numbers.

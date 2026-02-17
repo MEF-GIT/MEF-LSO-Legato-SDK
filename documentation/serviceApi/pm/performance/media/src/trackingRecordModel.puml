@@ -1,14 +1,39 @@
 @startuml trackingRecordModel
 
-class TrackingRecord {
-
-    creationDate*: date-time
+class PmTrackingRecord {
+    creationDateTime*: date-time
     description: string
     id*: string
-    relatedObjectId*: string
     request: string
-    system: string
-    user: string
+    source: string
 }
+
+PmTrackingRecord *-->"1" RelatedObjectRef : relatedObjectId
+
+class RelatedObjectRef {
+
+}
+
+class PerformanceProfileRef {
+    performanceProfileHref: string
+    performanceProfileId*: string
+    @type*: string
+}
+
+class PerformanceJobRef {
+    performanceJobHref: string
+    performanceJobId*: string
+    @type*: string    
+}
+
+class PerformanceReportRef {
+    performanceReportHref: string
+    performanceReportId*: string
+    @type*: string
+}
+
+RelatedObjectRef <|-- PerformanceProfileRef
+RelatedObjectRef <|-- PerformanceJobRef
+RelatedObjectRef <|-- PerformanceReportRef
 
 @enduml

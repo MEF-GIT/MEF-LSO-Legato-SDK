@@ -18,7 +18,7 @@ class TestProfileRefOrValue {
 
 TestProfileRefOrValue <|-- TestProfileValue
 
-TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
 TestProfileValue *-->"*" RelatedContact : relatedContact
 
@@ -27,7 +27,7 @@ class TestProfileValue {
 
 }
 
-class ServiceSpecificTestProfileConfiguraton {
+class ServiceSpecificTestProfileConfiguration {
 
     @type*: string
 }

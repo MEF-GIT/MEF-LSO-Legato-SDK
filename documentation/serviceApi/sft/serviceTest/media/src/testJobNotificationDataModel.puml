@@ -1,9 +1,5 @@
 @startuml testJobNotificationDataModel
 
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 class Event {
 

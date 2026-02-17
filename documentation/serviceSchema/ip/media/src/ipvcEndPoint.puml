@@ -1,0 +1,71 @@
+@startuml
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class IpvcEndPoint {
+    identifier: String[1]
+    eiType:ExternalInterfaceType[1]
+    role: IpvcEndPointRole[1]
+    prefixMapping: Ipv4Ipv6Prefixes[1]
+    enniServiceMappingIdentifier: String[0..1]
+    maximumNumberOfIpv4Routes: Integer[1] or "UNLIMITED"
+    maximumNumberOfIpv6Routes: Integer[1] or "UNLIMITED"
+    ingressClassOfServiceMap: IngressClassOfServiceMap 1]
+    egressClassOfServiceMap: EgressClassOfServiceMap[1]
+    ingressBandwidthProfileEnvelope: IpvcEpIngressBwpEnvelopeOrNone[1]
+    egressBandwidthProfileEnvelope: IpvcEpEgressBwpEnvelopeOrNone[1]
+    }
+
+enum ExternalInterfaceType {
+    UNI
+    ENNI
+}
+
+enum IpvcEndPointRole {
+    ROOT
+    LEAF
+    TRUNK
+}
+
+class Ipv4Ipv6Prefixes {
+    "attributes not shown"
+}
+
+class IngressClassOfServiceMap {
+    "attributes not shown"
+}
+
+class EgressClassOfServiceMap {
+    "attributes not shown"
+}
+
+class IpvcEpIngressBwpEnvelopeOrNone {
+    "attributes not shown"
+}  
+
+class IpvcEpEgressBwpEnvelopeOrNone {
+    "attributes not shown"
+}
+
+
+IpvcEndPoint "1" *--> "1" Ipv4Ipv6Prefixes
+IpvcEndPoint "1" *--> "1" IngressClassOfServiceMap
+IpvcEndPoint "1" *--> "1" EgressClassOfServiceMap
+IpvcEndPoint "1" *--> "0..1" IpvcEpIngressBwpEnvelopeOrNone
+IpvcEndPoint "1" *--> "0..1" IpvcEpEgressBwpEnvelopeOrNone
+
+MefServiceConfiguration <|-- IpvcEndPoint
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

@@ -1,8 +1,4 @@
 @startuml alarmDataModel
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 class Alarm {
 
@@ -43,27 +39,6 @@ class AlarmSpecificAttributes {
 }
 
 
-
-enum AlarmState {
-
-    acknowledged
-    cleared
-    un-acknowledged
-}
-enum AlarmType {
-
-    communicationsAlarm
-    processingErrorAlarm
-    environmentalAlarm
-    qualityOfServiceAlarm
-    equipmentAlarm
-    integrityViolation
-    operationalViolation
-    physicalViolation
-    securityService
-    mechanismViolation
-    timeDomainViolation
-}
 class Alarm_Common {
 
     id*: string
@@ -109,82 +84,6 @@ class EventSubscriptionInput {
 }
 
 
-
-enum PerceivedSeverity {
-
-    cleared
-    critical
-    indeterminate
-    major
-    minor
-    warning
-}
-
-enum PlannedOutageIndicator {
-
-    inPlannedMaintenance
-    outOfService
-}
-enum ProbableCause {
-
-    adapterError
-    applicationSubsystemFailure
-    bandwidthReduced
-    callEstablishmentError
-    communicationsProtocolError
-    communicationsSubsystemFailure
-    configurationOrCustomizationError
-    congestion
-    corruptData
-    cpuCyclesLimitExceeded
-    datasetOrModemError
-    degradedSignal
-    dteDceInterfaceError
-    enclosureDoorOpen
-    equipmentMalfunction
-    excessiveVibration
-    fileError
-    fireDetected
-    floodDetected
-    framingError
-    heatingVentilationCoolingSystemProblem
-    humidityUnacceptable
-    ioDeviceError
-    inputDeviceError
-    lanError
-    leakDetected
-    localNodeTransmissionError
-    lossOfFrame
-    lossOfSignal
-    materialSupplyExhausted
-    multiplexerProblem
-    outOfMemory
-    outputDeviceError
-    performanceDegraded
-    powerProblem
-    pressureUnacceptable
-    processorProblem
-    pumpFailure
-    queueSizeExceeded
-    receiveFailure
-    receiverFailure
-    remoteNodeTransmissionError
-    resourceNearingCapacity
-    responseTimeExcessive
-    retransmissionRateExcessive
-    softwareError
-    softwareProgramTerminated
-    softwareProgramError
-    storageCapacityProblem
-    temperatureUnacceptable
-    thresholdCrossed
-    timingProblem
-    toxicLeakDetected
-    transmitFailure
-    transmitterFailure
-    underlyingResourceUnavailable
-    versionMismatch
-}
 class ServiceRef {
 
     href: string

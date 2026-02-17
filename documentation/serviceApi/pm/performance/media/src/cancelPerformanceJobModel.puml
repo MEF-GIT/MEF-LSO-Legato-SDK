@@ -1,15 +1,12 @@
 @startuml cancelPerformanceJobModel
 
 class CancelPerformanceJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: string
     id*: string
     state*: PerformanceJobProcessStateType
 }
 CancelPerformanceJob_Create <|-- CancelPerformanceJob
-
-
 
 class CancelPerformanceJob_Create {
 
@@ -17,9 +14,13 @@ class CancelPerformanceJob_Create {
 
 CancelPerformanceJob_Create *-->"1" PerformanceJobRef : performanceJob
 
+class PerformanceJobRef {
+    performanceJobHref: string
+    performanceJobId*: string
+    @type*: string
+}
 
 enum PerformanceJobProcessStateType {
-
     acknowledged
     completed
     inProgress

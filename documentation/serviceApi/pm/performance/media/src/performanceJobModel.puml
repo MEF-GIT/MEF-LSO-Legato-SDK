@@ -1,18 +1,22 @@
 @startuml performanceJobModel
 
 class PerformanceJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: uri
     id*: string
-    lastModifiedDate: date-time
-    rejectionReason: string
+    lastTimeModified: date-time
     state*: PerformanceJobStateType
+    terminationError: TerminationError
 }
 PerformanceJob_Create <|-- PerformanceJob
 
-enum PerformanceJobStateType {
+class TerminationError {
+    code: Error422Code
+    propertyPath: string
+    value: string
+}
 
+enum PerformanceJobStateType {
     acknowledged
     cancelled
     completed
@@ -26,7 +30,6 @@ enum PerformanceJobStateType {
 }
 
 class PerformanceJob_Create {
-
     buyerJobId: string
     consumingApplicationId: string
     description: string
@@ -49,7 +52,6 @@ class PerformanceProfileRef {
 }
 
 class PerformanceProfileValue {
-
     jobPriority: integer
     jobType*: JobType
     outputFormat*: OutputFormat

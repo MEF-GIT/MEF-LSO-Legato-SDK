@@ -1,6 +1,5 @@
 @startuml useCase7
 
-
 hide footbox
 
 participant "Buyer/Client" as B
@@ -16,6 +15,5 @@ alt successful inquiry
 else validation or internal problem
     B <-- S: 4xx/5xx : error response
 end
-
 
 @enduml

@@ -1,163 +1,106 @@
 @startuml performanceMonitoringDataModelPart5
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
+
+class PerformanceReport {
+    creationDateTime*: date-time
+    href: uri
+    id*: string
+    state*: PerformanceReportStateType
+    terminationError: TerminationError
+}
+PerformanceReport_Create <|-- PerformanceReport
+
+PerformanceReport *--> PerformanceJobRef : performanceJob
+PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
+PerformanceReport *--> AttachmentURL : reportUrl
+
+class PerformanceJobRef {
+    performanceJobHref: string
+    performanceJobId*: string
+    @type*: string
+}
+
+class PerformanceReport_Create {
+    description: string
+    granularity: TimeDuration
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
+}
+
+PerformanceReport_Create *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Create *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+class ReportContentItem {
+
+}
+
+ReportContentItem *-->"1" MeasurementTime : measurementTime
+ReportContentItem *-->"1..*" ServiceSpecificResult : measurementData
+
+class ReportContentPerMonitoredObject {
+
+}
+
+ReportContentPerMonitoredObject *-->"1" MonitoredObjectRef : monitoredObject
+ReportContentPerMonitoredObject *-->"1..*" ReportContentItem : reportContentItem
+
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+class MeasurementTime {
+    measurementStartDate*: date-time
+    measurementEndDate: date-time
+    measurementInterval: TimeDuration
 }
 
 class AttachmentURL {
-
     retentionPeriod: date-time
     url*: uri
 }
 
+class MonitoredObjectRef {
 
-
+}
 
 class EntityRef {
-
     @referredType*: string
     entityHref: string
     entityId*: string
     @type*: string
 }
 
-class HourRange {
-
-    start*: string
-    end*: string
-}
-
-
-
-enum JobType {
-
-    proactive
-    on-demand
-    passive
-}
-
-
-
-
-class MonitoredObjectRef {
-
-}
-
-
-
-enum OutputFormat {
-
-    json
-    xml
-    avro
-    csv
-}
-
-
-
-
-
-
-
-
-
-class RecurringSchedule {
-
-    second: string
-    minute: string
-    hour: string
-    dayOfMonth: string
-    month: string
-    dayOfWeek: string
-}
-
-RecurringSchedule *-->"*" HourRange : hourRange
-
-
-
-
-
-enum ResultFormat {
-
-    attachment
-    payload
-}
-class ScheduleDefinition {
-
-    scheduleDefinitionStartTime: date-time
-    scheduleDefinitionEndTime: date-time
-}
-
-ScheduleDefinition *--> RecurringSchedule : recurringSchedule
-ScheduleDefinition *--> TimeDuration : executionDuration
-
-
-class ServiceFromToRef {
-
-    serviceFrom*: object
-    serviceTo*: object
-    @type*: string
-}
-
-
-
 class ServiceRef {
-
     serviceHref: string
     serviceId*: string
     @type*: string
 }
 
-
-
-class ServiceSpecificConfiguration {
-
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
     @type*: string
-}
-
-
-
-class ServiceSpecificResult {
-
-    @type*: string
-}
-
-
-
-class TimeDuration {
-
-    timeDurationValue*: integer
-    timeDurationUnits*: TimeDurationUnits
-}
-
-
-
-enum TimeDurationUnits {
-
-    NS
-    US
-    MS
-    SEC
-    MIN
-    HOUR
-    DAY
-    WEEK
-    MONTH
-    YEAR
-}
-class TrackingRecord {
-
-    creationDate*: date-time
-    description: string
-    id*: string
-    relatedObjectId*: string
-    request: string
-    system: string
-    user: string
 }
 
 MonitoredObjectRef <|-- EntityRef
 MonitoredObjectRef <|-- ServiceFromToRef
 MonitoredObjectRef <|-- ServiceRef
+
+class ServiceSpecificConfiguration {
+    @type*: string
+}
+
+class ServiceSpecificResult {
+    @type*: string
+}
+
+enum PerformanceReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
+}
 
 @enduml

@@ -1,0 +1,38 @@
+@startuml
+
+class IpBwpFlow {
+    burstBehavior: BurstBehavior[1]
+    cir: InformationRate[1]
+    maxIr: InformationRate[1]
+    flowIdentifier: Integer[1]
+    weight: Integer[1]
+}
+
+enum BurstBehavior {
+    OPTIMIZE_DELAY
+    OPTIMIZE_THROUGHPUT
+}
+
+
+class InformationRate {
+    irValue: Number[1]
+    irUnit: InformationRateUnit[1]
+}
+
+enum InformationRateUnits {
+    BPS
+    KBPS
+    MBPS
+    GBPS
+    TBPS
+    PBPS 
+    EBPS
+    ZPBS
+    YBPS
+}
+
+IpBwpFlow "1" *-->"1" BurstBehavior
+IpBwpFlow "1" *-->"1" InformationRate: cir
+IpBwpFlow "1" *-->"1" InformationRate: maxIr
+
+@enduml

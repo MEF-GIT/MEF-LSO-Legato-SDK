@@ -1,6 +1,5 @@
 @startuml useCase9
 
-
 hide footbox
 
 participant "Buyer/Client" as B

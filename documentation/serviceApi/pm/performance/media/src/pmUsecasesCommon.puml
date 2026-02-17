@@ -1,0 +1,18 @@
+@startuml pmUsecasesCommon
+
+left to right direction
+
+actor "Buyer/Client" as B
+actor "Seller/Server" as S
+
+rectangle {
+Usecase UC22 as "22. Retrieve Tracking Record List"
+Usecase UC23 as "23. Register for Event Notifications"
+Usecase UC24 as "24. Send Event Notification"
+}
+
+B --> UC22
+B --> UC23
+UC24 <-- S
+
+@enduml

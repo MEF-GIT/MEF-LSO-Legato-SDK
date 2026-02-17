@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:swvc:v0.0.3:all
+$id: urn:mef:lso:spec:service:swvc:v0.0.4:all
 title: Mplify LSO Service - SD-WAN Virtual Connection Service Specifications
     # Mplify Alliance - Date: 20251230  Edit-level: 
     # File: /schema/serviceSchema/sdWan/swVc.yaml

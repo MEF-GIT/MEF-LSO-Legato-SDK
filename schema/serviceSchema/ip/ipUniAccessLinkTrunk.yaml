@@ -1,4 +1,4 @@
-$id: urn:mef:lso:spec:service:ip-uni-access-link-trunk:1.0.0:all
+$id: urn:mef:lso:spec:service:ip-uni-access-link-trunk:v1.0.0:all
 $schema: http://json-schema.org/draft-07/schema#
 title: 
     Mplify LSO Service - IP UNI Access Link Trunk Specification

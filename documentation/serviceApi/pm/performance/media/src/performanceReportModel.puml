@@ -1,28 +1,25 @@
 @startuml performanceReportModel
 
 class PerformanceReport {
-
-    creationDate*: date-time
-    failureReason: string
+    creationDateTime*: date-time
     href: uri
     id*: string
-    lastModifiedDate: date-time
     state*: PerformanceReportStateType
+    terminationError: TerminationError
 }
 PerformanceReport_Create <|-- PerformanceReport
 
 PerformanceReport *--> PerformanceJobRef : performanceJob
 PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
-PerformanceReport *-u-> AttachmentURL : reportUrl
+PerformanceReport *-l-> AttachmentURL : reportUrl
 
 class PerformanceReport_Create {
-
     description: string
+    granularity*: TimeDuration
     outputFormat*: OutputFormat
     resultFormat*: ResultFormat
 }
 
-PerformanceReport_Create *-u->"1" TimeDuration : granularity
 PerformanceReport_Create *-->"1..*" MonitoredObjectRef : monitoredObject
 PerformanceReport_Create *-->"1" ReportingTimeframe : reportingTimeframe
 PerformanceReport_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
@@ -39,10 +36,9 @@ class ReportContentItem {
 }
 
 ReportContentItem *-->"1" MeasurementTime : measurementTime
-ReportContentItem *-->"1..*" ResultPayload : measurementDataPoints
+ReportContentItem *-->"0..*" ServiceSpecificResult : measurementData
 
-class ResultPayload {
-
+class ServiceSpecificResult {
     @type*: string
 }
 
@@ -54,5 +50,47 @@ enum PerformanceReportStateType {
     rejected
 }
 
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+class MeasurementTime {
+    measurementStartDate*: date-time
+    measurementEndDate: date-time
+    measurementInterval: TimeDuration
+}
+
+class AttachmentURL {
+    retentionPeriod: date-time
+    url*: uri
+}
+
+class MonitoredObjectRef {
+
+}
+
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
 
 @enduml

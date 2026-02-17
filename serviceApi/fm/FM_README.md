@@ -2,8 +2,7 @@
 
 ## Release Kylie:
 
-**Readiness status**: Requested Letter Ballot. It will be most likely published
-as a standard without further changes.
+**Readiness status**: Published Standard
 
 **Summary**: Multiple updates related to CfC#4.
 

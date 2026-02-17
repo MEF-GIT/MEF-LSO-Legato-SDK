@@ -1,32 +1,42 @@
 openapi: 3.0.1
 info:
-  description: "**This file forms part of MEF W148**\n\n**This API implements part\
-    \ of Business Requirements & Use Cases described \nin MEF W133.1**\n\n**This specification\
-    \ represents MEF work in progress and is subject to\nchange.**\n\nFault Management\
-    \ allows the Buyer/Client to request that the Seller/Server\nperforms Fault Management\
-    \ Job on a service, an ordered pair, or an entity, \ncollect Fault Management\
-    \ Reports, as well as receive notifications. This \nallows managing issues and\
-    \ situation that are not part of normal operations.\n\nList of supported use cases:\n\
-    - Send Event Notification\n\nCopyright 2025 MEF Forum and its contributors.\n"
+  description: |
+    **This file forms part of Mplify 148**
+
+    **This API implements part of Business Requirements & Use Cases described 
+    in Mplify 133.1**
+
+    Fault Management allows the Buyer/Client to request that the Seller/Server
+    performs Fault Management Job on a service, an ordered pair, or an entity, 
+    collect Fault Management Reports, as well as receive notifications. This 
+    allows managing issues and situation that are not part of normal operations.
+
+    List of supported use cases:
+    - Send Event Notification
+
+    Copyright 2025 Mplify Alliance and its contributors.
   title: Fault Management Notification
-  version: 2.0.0-RC
+  version: 3.0.0
 servers:
-- url: "https://{serverBase}/mefApi/legato/faultNotification/v2/"
-  variables:
-    serverBase:
-      default: mef.net
-      description: The base of Buyer/Client's URL.
+  - url: 'https://{serverBase}/mefApi/legato/faultNotification/v3/'
+    variables:
+      serverBase:
+        default: mplify.net
+        description: The base of Buyer/Client's URL.
 security:
-- oauth2MEFLSOAPI:
-  - default
+  - oauth2MEFLSOAPI:
+      - default
 tags:
-- description: The Buyer/Client's endpoint to send particular event types  notifications
-    to.
-  name: Notification listeners
+  - description: >-
+      The Buyer/Client's endpoint to send particular event types  notifications
+      to.
+    name: Notification listeners
 paths:
   /listener/faultManagementJobCreateEvent:
     post:
-      description: Client listener for receiving the faultManagementJobCreateEvent  notification.
+      description: >-
+        Client listener for receiving the faultManagementJobCreateEvent
+        notification.
       operationId: faultManagementJobCreateEvent
       requestBody:
         content:
@@ -36,41 +46,43 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementJobCreateEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementJobCreateEvent
       summary: Fault Management Job Create Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementJobStateChangeEvent:
     post:
-      description: Client listener for receiving the faultManagementJobStateChangeEvent  notification.
+      description: >-
+        Client listener for receiving the faultManagementJobStateChangeEvent
+        notification.
       operationId: faultManagementJobStateChangeEvent
       requestBody:
         content:
@@ -80,42 +92,43 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementJobStateChangeEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementJobStateChangeEvent
       summary: Fault Management Job State Change Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementJobAttributeValueChangeEvent:
     post:
-      description: Client listener for receiving the  faultManagementJobAttributeValueChangeEvent
-        notification.
+      description: >-
+        Client listener for receiving the
+        faultManagementJobAttributeValueChangeEvent notification.
       operationId: faultManagementJobAttributeValueChangeEvent
       requestBody:
         content:
@@ -125,41 +138,43 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementJobAttributeValueChangeEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementJobAttributeValueChangeEvent
       summary: Fault Management Job Attribute Value Change Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementJobReportReadyEvent:
     post:
-      description: Client listener for receiving the faultManagementJobReportReadyEvent  notification.
+      description: >-
+        Client listener for receiving the faultManagementJobReportReadyEvent
+        notification.
       operationId: faultManagementJobReportReadyEvent
       requestBody:
         content:
@@ -169,87 +184,90 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementJobReportReadyEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementJobReportReadyEvent
       summary: Fault Management Job Report Ready Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementJobReportPreparationErrorEvent:
     post:
-      description: Client listener for receiving the  faultManagementJobReportPreparationErrorEvent
-        notification.
+      description: >-
+        Client listener for receiving the
+        faultManagementJobReportPreparationErrorEvent notification.
       operationId: faultManagementJobReportPreparationErrorEvent
       requestBody:
         content:
           application/json;charset=utf-8:
             schema:
-              $ref: '#/components/schemas/FaultManagementJobReportPreparationErrorEvent'
+              $ref: >-
+                #/components/schemas/FaultManagementJobReportPreparationErrorEvent
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementJobReportPreparationErrorEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementJobReportPreparationErrorEvent
       summary: Fault Management Job Report Preparation Error Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/cancelFaultManagementJobStateChangeEvent:
     post:
-      description: Client listener for receiving the  cancelFaultManagementJobStateChangeEvent
-        notification.
+      description: >-
+        Client listener for receiving the
+        cancelFaultManagementJobStateChangeEvent notification.
       operationId: cancelFaultManagementJobStateChangeEvent
       requestBody:
         content:
@@ -259,42 +277,43 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - cancelFaultManagementJobStateChangeEvent
+        - oauth2MEFLSOAPI:
+            - cancelFaultManagementJobStateChangeEvent
       summary: Cancel Fault Management Job State Change Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/modifyFaultManagementJobStateChangeEvent:
     post:
-      description: Client listener for receiving the  modifyFaultManagementJobStateChangeEvent
-        notification.
+      description: >-
+        Client listener for receiving the
+        modifyFaultManagementJobStateChangeEvent notification.
       operationId: modifyFaultManagementJobStateChangeEvent
       requestBody:
         content:
@@ -304,41 +323,43 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - modifyFaultManagementJobStateChangeEvent
+        - oauth2MEFLSOAPI:
+            - modifyFaultManagementJobStateChangeEvent
       summary: Modify Fault Management Job State Change Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementReportCreateEvent:
     post:
-      description: Client listener for receiving the faultManagementReportCreateEvent  notification.
+      description: >-
+        Client listener for receiving the faultManagementReportCreateEvent
+        notification.
       operationId: faultManagementReportCreateEvent
       requestBody:
         content:
@@ -348,41 +369,42 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementReportCreateEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementReportCreateEvent
       summary: Fault Management Report Create Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
   /listener/faultManagementReportStateChangeEvent:
     post:
-      description: Client listener for receiving the  faultManagementReportStateChangeEvent
+      description: >-
+        Client listener for receiving the faultManagementReportStateChangeEvent
         notification.
       operationId: faultManagementReportStateChangeEvent
       requestBody:
@@ -393,56 +415,57 @@ paths:
         description: The event data
         required: true
       responses:
-        "204":
-          description: No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)
-        "400":
+        '204':
+          description: 'No Content (https://tools.ietf.org/html/rfc7231#section-6.3.5)'
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - faultManagementReportStateChangeEvent
+        - oauth2MEFLSOAPI:
+            - faultManagementReportStateChangeEvent
       summary: Fault Management Report State Change Notification endpoint.
       tags:
-      - Notification listeners
+        - Notification listeners
 components:
   schemas:
     CancelFaultManagementJobStateChangeEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: CancelFaultManagementJobStateChangeEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Cancel Fault Management Job event.
-            enum:
-            - cancelFaultManagementJobStateChangeEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/CancelFaultManagementJobStateChangeEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: CancelFaultManagementJobStateChangeEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Cancel Fault Management Job event.
+              enum:
+                - cancelFaultManagementJobStateChangeEvent
+              type: string
+            event:
+              $ref: >-
+                #/components/schemas/CancelFaultManagementJobStateChangeEventPayload
+          required:
+            - event
+            - eventType
+          type: object
     CancelFaultManagementJobStateChangeEventPayload:
       description: |-
         A reference to the Cancel Fault Management Job that is source
@@ -457,155 +480,176 @@ components:
         state:
           $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       required:
-      - id
-      - state
+        - id
+        - state
       type: object
     Error:
-      description: |
+      description: >
         Standard Class used to describe API response error.
-        Not intended to be use directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
+
+        Not intended to be use directly. The `code` in the HTTP header is used
+        as a discriminator for the type of error returned in runtime.
       properties:
         reason:
-          description: Text that explains the reason for error. This can be shown
-            to a client user.
+          description: >-
+            Text that explains the reason for error. This can be shown to a
+            client user.
           maxLength: 255
           type: string
         message:
-          description: Text that provide mode details and corrective actions related
-            to the error. This can be shown to a client user.
+          description: >-
+            Text that provide mode details and corrective actions related to the
+            error. This can be shown to a client user.
           type: string
         referenceError:
           description: url pointing to documentation describing the error.
           format: uri
           type: string
       required:
-      - reason
+        - reason
       type: object
     Error400:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error400Code'
-        required:
-        - code
-        type: object
-      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error400Code'
+          required:
+            - code
+          type: object
+      description: 'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
-      description: "One of the following error codes: - missingQueryParameter: The\
-        \ URI is missing a required query-string parameter. - missingQueryValue: The\
-        \ URI is missing a required query-string parameter value. - invalidQuery:\
-        \ The query section of the URI is invalid. - invalidBody: The request has\
-        \ an invalid body."
+      description: >-
+        One of the following error codes: - missingQueryParameter: The URI is
+        missing a required query-string parameter. - missingQueryValue: The URI
+        is missing a required query-string parameter value. - invalidQuery: The
+        query section of the URI is invalid. - invalidBody: The request has an
+        invalid body.
       enum:
-      - missingQueryParameter
-      - missingQueryValue
-      - invalidQuery
-      - invalidBody
+        - missingQueryParameter
+        - missingQueryValue
+        - invalidQuery
+        - invalidBody
       type: string
     Error401:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error401Code'
-        required:
-        - code
-        type: object
-      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error401Code'
+          required:
+            - code
+          type: object
+      description: 'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |-
         One of the following error codes:
         - missingCredentials: No credentials provided.
         - invalidCredentials: Provided credentials are invalid or expired.
       enum:
-      - missingCredentials
-      - invalidCredentials
+        - missingCredentials
+        - invalidCredentials
       type: string
     Error403:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error403Code'
-        required:
-        - code
-        type: object
-      description: Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error403Code'
+          required:
+            - code
+          type: object
+      description: 'Forbidden. (https://tools.ietf.org/html/rfc7231#section-6.5.3)'
     Error403Code:
-      description: "This code indicates that the server understood the request but\
-        \ refuses \nto authorize it because of one of the following error codes:\n\
-        - accessDenied: Access denied.\n- forbiddenRequester: Forbidden requester.\n\
-        - tooManyUsers: Too many users."
+      description: |-
+        This code indicates that the server understood the request but refuses 
+        to authorize it because of one of the following error codes:
+        - accessDenied: Access denied.
+        - forbiddenRequester: Forbidden requester.
+        - tooManyUsers: Too many users.
       enum:
-      - accessDenied
-      - forbiddenRequester
-      - tooManyUsers
+        - accessDenied
+        - forbiddenRequester
+        - tooManyUsers
       type: string
     Error500:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: "One of the following error codes: - internalError: Internal\
-              \ server error - the server encountered an unexpected condition that\
-              \ prevented it from fulfilling the request."
-            enum:
-            - internalError
-            type: string
-        required:
-        - code
-        type: object
-      description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              description: >-
+                One of the following error codes: - internalError: Internal
+                server error - the server encountered an unexpected condition
+                that prevented it from fulfilling the request.
+              enum:
+                - internalError
+              type: string
+          required:
+            - code
+          type: object
+      description: >-
+        Internal Server Error.
+        (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Event:
-      description: Event class is used to describe the information structure used
-        for notification.
+      description: >-
+        Event class is used to describe information structure used for
+        notification.
       properties:
         eventId:
-          description: Id of the event.
+          description: Id of the event
           type: string
         eventTime:
-          description: Date-time when the event occurred.
+          description: Date-time when the event occurred
           format: date-time
           type: string
+        eventType:
+          description: The type of the notification.
+          type: string
+        event:
+          description: The event linked to the involved resource object
+          type: object
       required:
-      - eventId
-      - eventTime
+        - event
+        - eventId
+        - eventTime
+        - eventType
       type: object
     FaultManagementJobAttributeValueChangeEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementJobAttributeValueChangeEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Job event.
-            enum:
-            - faultManagementJobAttributeValueChangeEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementJobEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementJobAttributeValueChangeEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Job event.
+              enum:
+                - faultManagementJobAttributeValueChangeEvent
+              type: string
+            event:
+              $ref: '#/components/schemas/FaultManagementJobEventPayload'
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementJobCreateEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementJobCreateEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Job event.
-            enum:
-            - faultManagementJobCreateEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementJobEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementJobCreateEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Job event.
+              enum:
+                - faultManagementJobCreateEvent
+              type: string
+            event:
+              $ref: '#/components/schemas/FaultManagementJobEventPayload'
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementJobEventPayload:
-      description: A reference to the Fault Management Job that is source of the notification.
+      description: >-
+        A reference to the Fault Management Job that is source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Job.
@@ -614,42 +658,45 @@ components:
           description: ID of the Fault Management Job.
           type: string
       required:
-      - id
+        - id
       type: object
     FaultManagementJobProcessStateType:
-      description: |-
+      description: >-
         The state of the process related to the Fault Management Job
 
-        | state          | MEF 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-        | -------------- | ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged` | Acknowledged | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
-        | `completed`    | Completed    | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
-        | `inProgress`   | In-Progress  | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
-        | `rejected`     | Rejected     | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
+        | state          | Mplify 133 name | Description                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+        | -------------- | --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged` | Acknowledged    | The Cancel/Modify Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Process Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated, the request moves to the In-Progress state. If not all attributes are validated, the request moves to the Rejected state. |
+        | `completed`    | Completed       | The Cancel/Modify Fault Management Job request has been completed by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                              |
+        | `inProgress`   | In-Progress     | The Cancel/Modify Fault Management Job request has been validated and accepted by the Seller/Server and is in-progress.                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`     | Rejected        | The Cancel/Modify Fault Management Job request has failed validation and has been declined by the Seller/Server.                                                                                                                                                                                                                                                                                                                                     |
       enum:
-      - acknowledged
-      - completed
-      - inProgress
-      - rejected
+        - acknowledged
+        - completed
+        - inProgress
+        - rejected
       type: string
     FaultManagementJobReportPreparationErrorEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementJobReportPreparationErrorEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Job event.
-            enum:
-            - faultManagementJobReportPreparationErrorEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementJobReportPreparationErrorEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementJobReportPreparationErrorEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Job event.
+              enum:
+                - faultManagementJobReportPreparationErrorEvent
+              type: string
+            event:
+              $ref: >-
+                #/components/schemas/FaultManagementJobReportPreparationErrorEventPayload
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementJobReportPreparationErrorEventPayload:
-      description: A reference to the Fault Management Job that is source of the notification.
+      description: >-
+        A reference to the Fault Management Job that is source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Job.
@@ -657,30 +704,29 @@ components:
         id:
           description: ID of the Fault Management Job.
           type: string
-        reportPreparationFailedReason:
-          description: Reason for Report preparation failure.
-          type: string
       required:
-      - id
+        - id
       type: object
     FaultManagementJobReportReadyEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementJobReportReadyEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Job event.
-            enum:
-            - faultManagementJobReportReadyEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementJobReportReadyEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementJobReportReadyEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Job event.
+              enum:
+                - faultManagementJobReportReadyEvent
+              type: string
+            event:
+              $ref: '#/components/schemas/FaultManagementJobReportReadyEventPayload'
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementJobReportReadyEventPayload:
-      description: A reference to the Fault Management Job that is source of the notification.
+      description: >-
+        A reference to the Fault Management Job that is source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Job.
@@ -695,27 +741,29 @@ components:
           description: ID of generated Fault Management Report.
           type: string
       required:
-      - id
-      - reportId
+        - id
+        - reportId
       type: object
     FaultManagementJobStateChangeEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementJobStateChangeEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Job event.
-            enum:
-            - faultManagementJobStateChangeEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementJobStateChangeEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementJobStateChangeEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Job event.
+              enum:
+                - faultManagementJobStateChangeEvent
+              type: string
+            event:
+              $ref: '#/components/schemas/FaultManagementJobStateChangeEventPayload'
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementJobStateChangeEventPayload:
-      description: A reference to the Fault Management Job that is source of the notification.
+      description: >-
+        A reference to the Fault Management Job that is source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Job.
@@ -726,56 +774,57 @@ components:
         state:
           $ref: '#/components/schemas/FaultManagementJobStateType'
       required:
-      - id
-      - state
+        - id
+        - state
       type: object
     FaultManagementJobStateType:
-      description: |-
+      description: >-
         The state of the Fault Management Job.
 
-        | state                   | MEF 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-        | ----------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-        | `acknowledged`          | Acknowledged          | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
-        | `cancelled`             | Cancelled             | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-        | `completed`             | Completed             | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-        | `inProgress`            | In-Progress           | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
-        | `pending`               | Pending               | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
-        | `pendingCancel`         | Pending Cancel        | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
-        | `rejected`              | Rejected              | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-        | `resourcesUnavailable`  | Resources Unavailable | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
-        | `scheduled`             | Scheduled             | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
-        | `suspended`             | Suspended             | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
+        | state                   | Mplify 133 name          | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+        | ----------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `acknowledged`          | Acknowledged             | A Create Fault Management Job request has been received by the Seller/Server and has passed basic validation. Fault Management Job Identifier is assigned in the Acknowledged state. The request remains Acknowledged until all validations as applicable are completed. If the attributes are validated the request determines if the start time is immediate or scheduled. If immediate, the Fault Management Job moves to the In-progress state. If scheduled, the Fault Management Job moves to the Scheduled state. If not all attributes are validated, the request moves to the Rejected state.                                                                           |
+        | `cancelled`             | Cancelled                | A Fault Management Job that is In-Progress, Suspended, or Scheduled is cancelled.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+        | `completed`             | Completed                | A non-recurring Fault Management Job finished execution.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+        | `inProgress`            | In-Progress              | A Fault Management Job is running. Upon completion of the Job, a determination if the Fault Management Job is a one-time Job or is recurring is performed. If the Fault Management Job is a one-time Job, the state of the Fault Management Job moves to the Completed state. If the Fault Management Job is recurring, the Fault Management Job circles back to determine if it has an immediate start time or a scheduled start time. If a Suspend Fault Management Job request is accepted, the Job moves to the Suspended state. If a Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state.                                                 |
+        | `pending`               | Pending                  | A Modify Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending while updates to the Job are completed. Once updates are complete, the Job returns to the Scheduled or In-Progress status depending on the schedule definition.                                                                                                                                                                                                                                                                                                                                                                                           |
+        | `pendingCancel`         | Pending Cancel           | A Cancel Fault Management Job request has been accepted by the Seller/Server. The Fault Management Job remains Pending Cancel while resources used by the Job are being released. Once updates are complete, the Job moves to the Cancelled status.                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `rejected`              | Rejected                 | A Create Fault Management Job request fails validation and is rejected with error indications by the Seller/Server.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+        | `resourcesUnavailable`  | Resources Unavailable    | A Fault Management Job cannot be allocated necessary resources when moving to execution (In-Progress state).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+        | `scheduled`             | Scheduled                | A Fault Management Job is created that does not have an immediate start time. The Fault Management Job stays Scheduled until the start time is reached. The Fault Management Job then moves to In-Progress. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                                            |
+        | `suspended`             | Suspended                | A Suspend Fault Management Job request is accepted by the Seller/Server. The Job remains Suspended until a Resume Fault Management Job request is accepted by the Seller/Server at which time the Job returns to the In-Progress state. If the Cancel Fault Management Job request is accepted, the Job moves to the Cancelled state. If the Modify Fault Management Job request is accepted, the Job moves to the Pending state.                                                                                                                                                                                                                                                |
       enum:
-      - acknowledged
-      - cancelled
-      - completed
-      - inProgress
-      - pending
-      - pendingCancel
-      - rejected
-      - resourcesUnavailable
-      - scheduled
-      - suspended
+        - acknowledged
+        - cancelled
+        - completed
+        - inProgress
+        - pending
+        - pendingCancel
+        - rejected
+        - resourcesUnavailable
+        - scheduled
+        - suspended
       type: string
     FaultManagementReportCreateEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementReportCreateEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Report event.
-            enum:
-            - faultManagementReportCreateEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementReportEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementReportCreateEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Report event.
+              enum:
+                - faultManagementReportCreateEvent
+              type: string
+            event:
+              $ref: '#/components/schemas/FaultManagementReportEventPayload'
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementReportEventPayload:
-      description: A reference to the Fault Management Report that is the  source
-        of the notification.
+      description: >-
+        A reference to the Fault Management Report that is the  source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Report.
@@ -784,27 +833,29 @@ components:
           description: ID of the Fault Management Report.
           type: string
       required:
-      - id
+        - id
       type: object
     FaultManagementReportStateChangeEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: FaultManagementReportStateChangeEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Fault Management Report event.
-            enum:
-            - faultManagementReportStateChangeEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/FaultManagementReportStateChangeEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: FaultManagementReportStateChangeEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Fault Management Report event.
+              enum:
+                - faultManagementReportStateChangeEvent
+              type: string
+            event:
+              $ref: >-
+                #/components/schemas/FaultManagementReportStateChangeEventPayload
+          required:
+            - event
+            - eventType
+          type: object
     FaultManagementReportStateChangeEventPayload:
-      description: A reference to the Fault Management Report that is the  source
-        of the notification.
+      description: >-
+        A reference to the Fault Management Report that is the  source of the
+        notification.
       properties:
         href:
           description: Hyperlink to access the Fault Management Report.
@@ -815,11 +866,11 @@ components:
         state:
           $ref: '#/components/schemas/FaultManagementReportStateType'
       required:
-      - id
-      - state
+        - id
+        - state
       type: object
     FaultManagementReportStateType:
-      description: |-
+      description: >-
         Possible values for the state of a Fault Management Report.
 
         | State        | Description                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -830,28 +881,29 @@ components:
         | inProgress   | A Fault Management Report processing has started.                                                                                                                                                                                                                                                                                                                                                 |
         | rejected     | This state indicates that the request failed to meet validation rules for `FaultManagementReport` delivery (processing).                                                                                                                                                                                                                                                                          |
       enum:
-      - acknowledged
-      - completed
-      - failed
-      - inProgress
-      - rejected
+        - acknowledged
+        - completed
+        - failed
+        - inProgress
+        - rejected
       type: string
     ModifyFaultManagementJobStateChangeEvent:
       allOf:
-      - $ref: '#/components/schemas/Event'
-      - description: ModifyFaultManagementJobStateChangeEvent structure
-        properties:
-          eventType:
-            description: Indicates the type of Modify Fault Management Job event.
-            enum:
-            - modifyFaultManagementJobStateChangeEvent
-            type: string
-          event:
-            $ref: '#/components/schemas/ModifyFaultManagementJobStateChangeEventPayload'
-        required:
-        - event
-        - eventType
-        type: object
+        - $ref: '#/components/schemas/Event'
+        - description: ModifyFaultManagementJobStateChangeEvent structure
+          properties:
+            eventType:
+              description: Indicates the type of Modify Fault Management Job event.
+              enum:
+                - modifyFaultManagementJobStateChangeEvent
+              type: string
+            event:
+              $ref: >-
+                #/components/schemas/ModifyFaultManagementJobStateChangeEventPayload
+          required:
+            - event
+            - eventType
+          type: object
     ModifyFaultManagementJobStateChangeEventPayload:
       description: |-
         A reference to the Modify Fault Management Job that is source
@@ -866,16 +918,16 @@ components:
         state:
           $ref: '#/components/schemas/FaultManagementJobProcessStateType'
       required:
-      - id
-      - state
+        - id
+        - state
       type: object
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code
       flows:
         clientCredentials:
-          refreshUrl: http://mef.net/example/refresh
+          refreshUrl: 'http://mef.net/example/refresh'
           scopes:
             default: default scope
-          tokenUrl: http://mef.net/example/token
+          tokenUrl: 'http://mef.net/example/token'
       type: oauth2

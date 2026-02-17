@@ -1,13 +1,10 @@
 @startuml faultManagementJobComplexQueryModel
 
 class FaultManagementJobComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
     jobPriority: integer
     jobType: JobType
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
     outputFormat: OutputFormat
     resultFormat: ResultFormat
     state: FaultManagementJobStateType
@@ -19,30 +16,39 @@ FaultManagementJobComplexQuery_Create *--> TimeDuration : reportingPeriod
 FaultManagementJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
 FaultManagementJobComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-enum FaultManagementJobStateType {
+class MonitoredObjectRef {
 
-    acknowledged
-    cancelled
-    completed
-    inProgress
-    pending
-    pendingCancel
-    rejected
-    resourcesUnavailable
-    scheduled
-    suspended
 }
 
-class TimeDuration {
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
 
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
+
+class TimeDuration {
     timeDurationValue*: integer
     timeDurationUnits*: TimeDurationUnits
 }
 
-
-
 enum TimeDurationUnits {
-
     NS
     US
     MS
@@ -56,7 +62,6 @@ enum TimeDurationUnits {
 }
 
 enum JobType {
-
     proactive
     on-demand
     passive
@@ -72,6 +77,19 @@ enum OutputFormat {
 enum ResultFormat {
     attachment
     payload
+}
+
+enum FaultManagementJobStateType {
+    acknowledged
+    cancelled
+    completed
+    inProgress
+    pending
+    pendingCancel
+    rejected
+    resourcesUnavailable
+    scheduled
+    suspended
 }
 
 @enduml

@@ -1,5 +1,17 @@
 # Service Catalog Management: Release notes
 
+## Release Kylie:
+
+**Readiness status**: early draft version, on hold
+
+**Summary** - No changes.
+
+## Release Janis:
+
+**Readiness status**: early draft version, on hold
+
+**Summary** - No changes.
+
 ## Release Irene:
 
 **Readiness status**: early draft version, on hold

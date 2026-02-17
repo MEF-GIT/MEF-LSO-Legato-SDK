@@ -1,0 +1,19 @@
+@startuml pmUsecasesPerformanceReport
+
+left to right direction
+
+actor "Buyer/Client" as B
+
+rectangle {
+Usecase UC18 as "**18. Create Performance Monitoring Report**"
+Usecase UC19 as "**19. Retrieve Performance Monitoring Report List**"
+Usecase UC20 as "**20. Retrieve Performance Monitoring Report by Identifier**"
+Usecase UC21 as "**21. Performance Monitoring Report Complex Query**"
+}
+
+B --> UC18
+B --> UC19
+B --> UC20
+B --> UC21
+
+@enduml

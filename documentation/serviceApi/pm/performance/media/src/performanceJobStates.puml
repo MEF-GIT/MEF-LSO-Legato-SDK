@@ -1,75 +1,73 @@
 @startuml performanceJobStates
 
-'skinparam Linetype polyline
-'skinparam Linetype ortho
-skinparam state {
-    BackgroundColor White
-    BorderColor Black
-}
+top to bottom direction
+
 hide empty description
 
-'''decisions'''
-state validation_successful <<choice>> 
- note top of validation_successful : Validation successful?
+skinparam shadowing false
+skinparam state {
+	BackgroundColor #F9F9F9
+	BorderColor #777
+	FontSize 12
+}
+skinparam ArrowColor #555
+skinparam ArrowThickness 1
+skinparam defaultTextAlignment center
 
-state immediate <<choice>> 
- note top of immediate : Immediate start time?
+' Decision states with notes
+state validation_successful <<choice>>
+note right of validation_successful : Validation successful?
+state immediate <<choice>>
+note right of immediate : Immediate start time?
+state resources <<choice>>
+note right of resources : Resources available?
+state recurring <<choice>>
+note right of recurring : Recurring job?
 
-state modification <<choice>> 
- note top of modification : Modification successful?
+' Concrete states
+state acknowledged
+state rejected
+state in_progress as "inProgress"
+state resource_unavailable as "resourcesUnavailable"
+state pending_cancel as "pendingCancel"
+state scheduled
+state suspended
+state pending
+state completed
+state cancelled
+state end1 <<end>>
 
-state resources <<choice>> 
- note right of resources : Resources available?
+' === Validation ===
+[*] --> acknowledged
+acknowledged --> validation_successful
+validation_successful --> immediate : Yes
+validation_successful --> rejected : No
+rejected --> end1
 
-state recurring <<choice>> 
- note left of recurring : Recurring job?
+' === Scheduling ===
+immediate -d-> resources : Yes
+immediate -d-> scheduled : No
+scheduled -r-> resources : schedule start time
+scheduled --> pending_cancel : Cancel
+scheduled --> pending : Modify
+pending --> immediate
 
-state "inProgress" as in_progress
-state "resourcesUnavailable" as resource_unavailable
+' === Execution ===
+resources --> in_progress : Yes
+resources --> resource_unavailable : No
+in_progress --> recurring
+in_progress --> pending_cancel : Cancel
+in_progress --> suspended : Suspend
+suspended --> in_progress : Resume
+suspended --> pending_cancel : Cancel
+suspended --> pending : Modify
+recurring --> completed : No
+recurring --> immediate : Yes
 
-state "pendingCancel" as pending_cancel
-
-''' diagram'''
-[*] -d-> acknowledged
-
-acknowledged -d-> validation_successful
-
-validation_successful -d-> rejected: No
-
-validation_successful -r-> immediate: Yes
-
-immediate -r-> scheduled: No
-scheduled -d-> pending_cancel: Cancel
-scheduled -d-> resources: schedule start time
-resources -d-> resource_unavailable: No
-resources -r-> in_progress: Yes
-
-immediate -r-> resources: Yes
-in_progress -d-> recurring
-recurring -d-> completed: No
-recurring -u-> immediate: Yes
-
-in_progress -d-> pending_cancel: Cancel
-in_progress -u-> suspended: Suspend
-suspended -r-> in_progress: Resume
-suspended -r-> pending_cancel: Cancel
-
-pending_cancel -> cancelled
-
-suspended -u-> modification: Modify
-modification -d-> suspended: No
-
-scheduled -u-> modification: Modify
-modification -d-> scheduled: No
-
-
-modification -r-> pending: Yes
-
-pending -r-> immediate
-
-rejected -d-> [*]
-completed -d-> [*]
-cancelled -d-> [*]
-resource_unavailable -d-> [*]
+' === Termination ===
+pending_cancel --> cancelled
+completed --> [*]
+cancelled --> [*]
+resource_unavailable --> [*]
 
 @enduml

@@ -1,0 +1,30 @@
+@startuml
+
+class Ipvc {
+    "...attributes are not shown"
+}
+
+class IpvcEndPoint {
+    "...attributes are not shown"
+}
+
+class IpUni {
+    "...attributes are not shown"
+}
+
+class IpUniAccessLink {
+    "...attributes are not shown"
+}
+
+class IpUniAccessLinkTrunk {
+    "...attributes are not shown"
+}
+
+
+Ipvc "1" *--> "1..*" IpvcEndPoint: IP_UNI_ENDPOINT_OF_IPVC
+IpvcEndPoint "1" o--> "1" IpUni: CONNECTS_TO_IP_UNI
+IpUniAccessLink "0..*" o--> "1" IpUni: PART_OF_IP_UNI
+IpUniAccessLink "0..*" o--> "1" IpUniAccessLinkTrunk: CARRIED_OVER_TRUNK
+
+
+@enduml

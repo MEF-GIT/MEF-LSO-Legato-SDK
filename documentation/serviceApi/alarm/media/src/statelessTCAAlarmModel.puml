@@ -1,8 +1,4 @@
 @startuml statelessTCAAlarmModel
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 class Alarm {
 

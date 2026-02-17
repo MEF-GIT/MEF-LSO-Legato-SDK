@@ -25,11 +25,11 @@ TestJob_Common <|-- TestJob
 enum TestJobStateType {
 
     acknowledged
-    assessing_cancelation
-    assessing_modification
+    assessingCancellation
+    assessingModification
     cancelled
     completed
-    in_progress
+    inProgress
     rejected
     scheduled
     suspended
@@ -40,9 +40,9 @@ TestJob_Common *--> Duration : recurrencePeriod
 TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
 TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
 TestJob_Common *-->"1" ServiceRef : relatedServiceTo
-TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguration : serviceSpecificTestJobConfiguration
 
-class ServiceSpecificTestJobConfiguraton {
+class ServiceSpecificTestJobConfiguration {
     @type*: string
 }
 
@@ -66,11 +66,11 @@ class TestProfileRefOrValue {
 
 TestProfileRefOrValue <|-- TestProfileValue
 
-TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
 TestProfileValue *-->"*" RelatedContact : relatedContact
 
-class ServiceSpecificTestProfileConfiguraton {
+class ServiceSpecificTestProfileConfiguration {
     @type*: string <<discriminator>>
 }
 class ServiceSpecificationRef {

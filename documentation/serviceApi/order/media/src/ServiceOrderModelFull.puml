@@ -1,10 +1,6 @@
 @startuml
 
-enum BusSofType {
 
-    bus
-    sof
-}
 class ContactInformation {
 
     number*: string
@@ -159,14 +155,6 @@ class OrderItemCoordinatedAction {
 
 OrderItemCoordinatedAction *-->"1" Duration : coordinatedActionDelay
 
-
-enum OrderItemCoordinationDependencyType {
-
-    startToStart
-    startToFinish
-    finishToStart
-    finishToFinish
-}
 class PlaceRefOrQuery {
 
 }
@@ -203,12 +191,7 @@ class SubUnit {
 
 
 
-enum ServiceActionType {
 
-    add
-    modify
-    delete
-}
 class ServiceOrder {
 
     href: uri
@@ -286,28 +269,7 @@ class ServiceOrderRelationship {
 ServiceOrderRelationship *-->"1" ServiceOrderRef : serviceOrder
 
 
-enum ServiceOrderStateType {
 
-    acknowledged
-    rejected
-    pending
-    held
-    inProgress
-    completed
-    failed
-    partial
-}
-
-enum ServiceOrderItemStateType {
-
-    acknowledged
-    rejected
-    pending
-    held
-    inProgress
-    completed
-    failed
-}
 
 class ServiceOrder_Common {
 
@@ -347,15 +309,7 @@ class ServiceRelationship {
 ServiceRelationship *-->"1" ServiceRef : service
 
 
-enum ServiceStateType {
 
-    feasibilityChecked
-    designed
-    reserved
-    inactive
-    active
-    terminated
-}
 class ServiceValue {
 
     href: string
@@ -386,15 +340,5 @@ class TerminationError {
 
 
 
-enum TimeUnit {
 
-    seconds
-    minutes
-    businessHours
-    calendarHours
-    businessDays
-    calendarDays
-    months
-    years
-}
 @enduml

@@ -1,69 +1,118 @@
 @startuml performanceMonitoringDataModelPart2
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
-
-
-class CancelPerformanceJob {
-
-    creationDate*: date-time
-    href: string
+class PerformanceJob {
+    creationDateTime*: date-time
+    href: uri
     id*: string
-    state*: PerformanceJobProcessStateType
+    lastTimeModified: date-time
+    state*: PerformanceJobStateType
 }
-CancelPerformanceJob_Create <|-- CancelPerformanceJob
+PerformanceJob *-->"*" TerminationError: terminationError
 
+PerformanceJob_Create <|-- PerformanceJob
 
-
-class CancelPerformanceJob_Create {
-
-}
-
-CancelPerformanceJob_Create *-->"1" PerformanceJobRef : performanceJob
-
-class ModifyPerformanceJob {
-
-    creationDate*: date-time
-    href: string
-    id*: string
-    state*: PerformanceJobProcessStateType
-}
-ModifyPerformanceJob_Create <|-- ModifyPerformanceJob
-
-
-
-class ModifyPerformanceJob_Create {
-
+class PerformanceJob_Create {
     buyerJobId: string
     consumingApplicationId: string
     description: string
     producingApplicationId: string
 }
 
-ModifyPerformanceJob_Create *-->"1" PerformanceJobRef : performanceJob
-ModifyPerformanceJob_Create *--> PerformanceProfileValue_Modify : performanceProfile
-ModifyPerformanceJob_Create *--> ScheduleDefinition : scheduleDefinition
+PerformanceJob_Create *-->"1" MonitoredObjectRef : monitoredObject
+PerformanceJob_Create *-u->"1" PerformanceProfileRefOrValue : performanceProfile
+PerformanceJob_Create *-u->"1" ScheduleDefinition : scheduleDefinition
 
-
-class PerformanceProfileValue_Modify {
-
-    jobPriority: integer
-    outputFormat: OutputFormat
-    resultFormat: ResultFormat
+class TerminationError {
+    code: Error422Code
+    propertyPath: string
+    value: string
 }
 
-PerformanceProfileValue_Modify *--> TimeDuration : granularity
-PerformanceProfileValue_Modify *--> TimeDuration : reportingPeriod
-PerformanceProfileValue_Modify *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+class MonitoredObjectRef {
 
-enum PerformanceJobProcessStateType {
+}
+
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class ServiceFromToRef {
+
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
+
+class PerformanceProfileRefOrValue {
+
+}
+
+class PerformanceProfileRef {
+    performanceProfileHref: string
+    performanceProfileId*: string
+    @type*: string
+}
+
+class PerformanceProfileValue {
+    granularity*: TimeDuration
+    jobPriority: integer
+    jobType*: JobType
+    outputFormat*: OutputFormat
+    reportingPeriod*: TimeDuration 
+    resultFormat*: ResultFormat
+    serviceSpecificConfiguration*: ServiceSpecificConfiguration
+    @type*: string
+}
+
+PerformanceProfileRefOrValue <|-- PerformanceProfileRef
+PerformanceProfileRefOrValue <|-- PerformanceProfileValue
+
+class ScheduleDefinition {
+    scheduleDefinitionStartTime: date-time
+    scheduleDefinitionEndTime: date-time
+}
+
+ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+ScheduleDefinition *--> TimeDuration : executionDuration
+
+class RecurringSchedule {
+    second: string
+    minute: string
+    hour: string
+    dayOfMonth: string
+    month: string
+    dayOfWeek: string
+}
+
+class TimeDuration {
+    timeDurationValue*: integer
+    timeDurationUnits*: TimeDurationUnits
+}
+
+enum PerformanceJobStateType {
     acknowledged
+    cancelled
     completed
     inProgress
+    pending
+    pendingCancel
     rejected
+    resourcesUnavailable
+    scheduled
+    suspended
 }
-
 
 @enduml

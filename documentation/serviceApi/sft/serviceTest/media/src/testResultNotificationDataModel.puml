@@ -1,10 +1,5 @@
 @startuml testResultNotificationDataModel
 
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
-
 class Event {
 
     eventId*: string

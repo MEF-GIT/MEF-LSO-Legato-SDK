@@ -1,12 +1,10 @@
 @startuml performanceJobComplexQueryModel
 
-
 class PerformanceJobComplexQuery_Create {
-
     buyerJobId: string
     consumingApplicationId: string
-    creationDate.gt: date-time
-    creationDate.lt: date-time
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
     producingApplicationId: string
     state: PerformanceJobStateType
 }
@@ -20,7 +18,6 @@ class PerformanceProfileRefOrValue_Query {
 }
 
 class PerformanceProfileValue_Query {
-
     granularity: TimeDuration
     jobPriority: integer
     jobType: JobType
@@ -32,7 +29,6 @@ class PerformanceProfileValue_Query {
 }
 
 class PerformanceProfileRef {
-
     performanceProfileHref: string
     performanceProfileId*: string
     @type*: string
@@ -42,7 +38,6 @@ PerformanceProfileRefOrValue_Query <|-- PerformanceProfileRef
 PerformanceProfileRefOrValue_Query <|-- PerformanceProfileValue_Query
 
 enum PerformanceJobStateType {
-
     acknowledged
     cancelled
     completed
@@ -60,7 +55,6 @@ class MonitoredObjectRef {
 }
 
 class EntityRef {
-
     @referredType*: string
     entityHref: string
     entityId*: string
@@ -68,16 +62,12 @@ class EntityRef {
 }
 
 class ServiceFromToRef {
-
     serviceFrom*: object
     serviceTo*: object
     @type*: string
 }
 
-
-
 class ServiceRef {
-
     serviceHref: string
     serviceId*: string
     @type*: string

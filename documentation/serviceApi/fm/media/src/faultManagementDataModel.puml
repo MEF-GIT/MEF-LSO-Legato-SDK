@@ -1,54 +1,17 @@
 @startuml faultManagementDataModel
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
 class FaultManagementJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: uri
     id*: string
-    lastModifiedDate: date-time
-    rejectionReason: string
+    lastTimeModified: date-time
     state*: FaultManagementJobStateType
 }
+FaultManagementJob *-->"*" TerminationError: terminationError
+
 FaultManagementJob_Create <|-- FaultManagementJob
 
-class FaultManagementJobComplexQuery_Create {
-
-    creationDate.gt: date-time
-    creationDate.lt: date-time
-    jobPriority: integer
-    jobType: JobType
-    lastModifiedDate.gt: date-time
-    lastModifiedDate.lt: date-time
-    outputFormat: OutputFormat
-    resultFormat: ResultFormat
-    state: FaultManagementJobStateType
-}
-
-FaultManagementJobComplexQuery_Create *--> TimeDuration : granularity
-FaultManagementJobComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
-FaultManagementJobComplexQuery_Create *--> TimeDuration : reportingPeriod
-FaultManagementJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
-FaultManagementJobComplexQuery_Create *-u-> ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-enum FaultManagementJobStateType {
-
-    acknowledged
-    cancelled
-    completed
-    inProgress
-    pending
-    pendingCancel
-    rejected
-    resourcesUnavailable
-    scheduled
-    suspended
-}
 class FaultManagementJob_Create {
-
     description: string
     jobPriority: integer
     jobType*: JobType
@@ -62,20 +25,26 @@ FaultManagementJob_Create *-->"1" TimeDuration : reportingPeriod
 FaultManagementJob_Create *-->"1" ScheduleDefinition : scheduleDefinition
 FaultManagementJob_Create *-u->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
+class TerminationError {
+    code: Error422Code
+    propertyPath: string
+    value: string
+}
 
 class MonitoredObjectRef {
 
 }
 
-MonitoredObjectRef <|-- EntityRef
-MonitoredObjectRef <|-- ServiceFromToRef
-MonitoredObjectRef <|-- ServiceRef
-
 class EntityRef {
-
     @referredType*: string
     entityHref: string
     entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
     @type*: string
 }
 
@@ -86,36 +55,19 @@ class ServiceFromToRef {
     @type*: string
 }
 
-class ServiceRef {
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
 
-    serviceHref: string
-    serviceId*: string
-    @type*: string
+class ScheduleDefinition {
+    scheduleDefinitionStartTime: date-time
+    scheduleDefinitionEndTime: date-time
 }
 
-class HourRange {
-
-    start*: string
-    end*: string
-}
-
-enum JobType {
-
-    proactive
-    on-demand
-    passive
-}
-
-enum OutputFormat {
-
-    json
-    xml
-    avro
-    csv
-}
+ScheduleDefinition *--> RecurringSchedule : recurringSchedule
+ScheduleDefinition *--> TimeDuration : executionDuration
 
 class RecurringSchedule {
-
     second: string
     minute: string
     hour: string
@@ -124,36 +76,34 @@ class RecurringSchedule {
     dayOfWeek: string
 }
 
-RecurringSchedule *-->"*" HourRange : hourRange
-
-enum ResultFormat {
-
-    attachment
-    payload
-}
-
-class ScheduleDefinition {
-
-    scheduleDefinitionStartTime: date-time
-    scheduleDefinitionEndTime: date-time
-}
-
-ScheduleDefinition *--> RecurringSchedule : recurringSchedule
-ScheduleDefinition *--> TimeDuration : executionDuration
-
-class ServiceSpecificConfiguration {
-
-    @type*: string
-}
-
 class TimeDuration {
-
     timeDurationValue*: integer
     timeDurationUnits*: TimeDurationUnits
 }
 
-enum TimeDurationUnits {
+enum JobType {
+    proactive
+    on-demand
+    passive
+}
 
+enum OutputFormat {
+    json
+    xml
+    avro
+    csv
+}
+
+enum ResultFormat {
+    attachment
+    payload
+}
+
+class ServiceSpecificConfiguration {
+    @type*: string
+}
+
+enum TimeDurationUnits {
     NS
     US
     MS
@@ -166,15 +116,17 @@ enum TimeDurationUnits {
     YEAR
 }
 
-class TrackingRecord {
-
-    creationDate*: date-time
-    description: string
-    id*: string
-    relatedObjectId*: string
-    request: string
-    system: string
-    user: string
+enum FaultManagementJobStateType {
+    acknowledged
+    cancelled
+    completed
+    inProgress
+    pending
+    pendingCancel
+    rejected
+    resourcesUnavailable
+    scheduled
+    suspended
 }
 
 @enduml

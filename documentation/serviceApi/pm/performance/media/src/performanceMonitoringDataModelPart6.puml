@@ -1,96 +1,85 @@
 @startuml performanceMonitoringDataModelPart6
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
+
+class PerformanceReportComplexQuery_Create {
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
+    granularity: TimeDuration
+    outputFormat: OutputFormat
+    reportingTimeframe.startDate.gt: date-time
+    reportingTimeframe.startDate.lt: date-time
+    reportingTimeframe.endDate.gt: date-time
+    reportingTimeframe.endDate.lt: date-time
+    resultFormat: ResultFormat
+    state: PerformanceReportStateType
 }
 
-class Error {
-    message: string
-    reason*: string
-    referenceError: uri
+PerformanceReportComplexQuery_Create *--> "*" MonitoredObjectRef : monitoredObject
+PerformanceReportComplexQuery_Create *--> PerformanceJobRef : performanceJob
+PerformanceReportComplexQuery_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+enum PerformanceReportStateType {
+    acknowledged
+    completed
+    failed
+    inProgress
+    rejected
 }
 
-class Error400 {
-    code*: Error400Code
-}
-Error <|-l- Error400
-
-enum Error400Code {
-    missingQueryParameter
-    missingQueryValue
-    invalidQuery
-    invalidBody
-}
-
-class Error401 {
-    code*: Error401Code
-}
-Error <|-l- Error401
-
-enum Error401Code {
-    missingCredentials
-    invalidCredentials
-}
-
-class Error403 {
-    code*: Error403Code
-}
-Error <|-r- Error403
-
-enum Error403Code {
-    accessDenied
-    forbiddenRequester
-    tooManyUsers
-}
-
-class Error404 {
-    code*: string
-}
-Error <|-r- Error404
-
-class Error409 {
-    code*: string
-}
-Error <|-u- Error409
-
-class Error422 {
-    code*: Error422Code
-    propertyPath: string
-}
-Error <|-u- Error422
-
-enum Error422Code {
-    missingProperty
-    invalidValue
-    invalidFormat
-    referenceNotFound
-    unexpectedProperty
-    tooLargeDataset
-    tooManyRecords
-    tooManyRequests
-    performanceProfileInUse
-    otherIssue
-}
-class Error500 {
-
-    code*: string
-}
-Error <|-- Error500
-
-class Error501 {
-    code*: string
-}
-Error <|-- Error501
-
-class EventSubscription {
-    callback*: string
+class PerformanceReport_Find {
+    creationDateTime*: date-time
+    description: string
+    granularity*: TimeDuration
     id*: string
-    query: string
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
+    state*: PerformanceReportStateType
 }
 
-class EventSubscriptionInput {
-    callback*: string
-    query: string
+PerformanceReport_Find *-->"1..*" MonitoredObjectRef : monitoredObject
+PerformanceReport_Find *-->"1" PerformanceJobRef : performanceJob
+PerformanceReport_Find *-->"1" ReportingTimeframe : reportingTimeframe
+PerformanceReport_Find *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+class MonitoredObjectRef {
+
+}
+
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
+
+class PerformanceJobRef {
+    performanceJobHref: string
+    performanceJobId*: string
+    @type*: string
+}
+
+class ServiceSpecificConfiguration {
+    @type*: string
+}
+
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
 }
 
 @enduml

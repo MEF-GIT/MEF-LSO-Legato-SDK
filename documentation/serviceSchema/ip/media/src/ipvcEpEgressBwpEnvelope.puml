@@ -1,0 +1,49 @@
+@startuml
+
+
+class IpBwpEnvelope {
+
+    tE: integer
+}
+
+IpBwpEnvelope *--> InformationRate : maxIrE
+
+class IpvcEpEgressBwpEnvelope {
+
+}
+
+IpBwpEnvelope <|-- IpvcEpEgressBwpEnvelope
+
+IpvcEpEgressBwpEnvelope *-->"*" IpvcEpEgressBwp : ipvcEpEgressBwp
+IpvcEpEgressBwpEnvelope *--> IpvcEpEgressBwpAll : ipvcEpEgressBwpAll
+
+class IpvcEpEgressBwp {
+    cosName: string
+}
+
+class InformationRate {
+
+    irValue: number
+    irUnits: IrUnits
+}
+
+
+class IpvcEpEgressBwpAll {
+
+}
+
+IpBwpFlow <|-- IpvcEpEgressBwp
+IpBwpFlow <|-- IpvcEpEgressBwpAll
+
+class IpBwpFlow {
+
+    flowIdentifier: integer
+    weight: integer
+    burstBehavior: BurstBehavior
+}
+
+IpBwpFlow *--> InformationRate : maxIr
+IpBwpFlow *--> InformationRate : cir
+
+
+@enduml

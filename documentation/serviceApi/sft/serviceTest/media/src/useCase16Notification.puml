@@ -11,7 +11,7 @@ S --> B: 201 confirmation with {{id}}
 B -> S: POST {{baseUrl}}/suspendTestJob (SuspendTestJob_Common)
 S -> S: basic validation
 
-alt succesful inquiry
+alt successful inquiry
   S --> B: 201 SuspendTestJob with {{id}}, `acknowledged` state 
   ...
 

@@ -20,7 +20,7 @@ FJ -> FJ: status: suspended
 B <-- S : 204 Suspended
 
 opt
-    FJ -> B: POST faultManagementJobStateChangeEvent
+    FJ -> B: POST {{callbackUrl}}/listener/faultManagementJobStateChangeEvent
 end
 
 @enduml

@@ -1,0 +1,4410 @@
+openapi: 3.0.1
+info:
+  description: "**This file forms part of Mplify 99.1** \n \n\nSupported use cases:\n\
+    - Create Service Order\n- Retrieve List of Service Orders\n- Retrieve Service\
+    \ Order by Service Order Identifier\n- Register for Notifications\n\nCopyright\
+    \ 2025 Mplify Alliance and its contributors.\n\nThis file includes content based\
+    \ on the TM Forum Service Order API (TMF641\nv4.1.0) available at https://github.com/tmforum-apis/TMF641_ServiceOrder,\n\
+    which is licensed by the TM Forum under the Apache License version 2.0. Such\n\
+    content has been modified by the Mplify Alliance and its contributors.\n"
+  title: Service Ordering Management
+  version: 6.0.0
+servers:
+- url: "https://{serverBase}/mefApi/legato/serviceOrderingManagement/v6/"
+  variables:
+    serverBase:
+      default: mplify.net
+      description: The base of SOF's URL.
+tags:
+- description: Operations for Service Order Resource
+  name: Service Order
+- description: Endpoints to register and terminate an Event Listener
+  name: Events subscription
+paths:
+  /serviceOrder:
+    get:
+      description: This operation retrieves list of ServiceOrder entities.
+      operationId: listServiceOrder
+      parameters:
+      - description: State of the Service Order
+        in: query
+        name: state
+        required: false
+        schema:
+          $ref: '#/components/schemas/ServiceOrderStateType'
+      - description: Date when the order was created greater than
+        in: query
+        name: orderDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the order was created lesser than
+        in: query
+        name: orderDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Effective completion date greater than
+        in: query
+        name: completionDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Effective completion date lesser than
+        in: query
+        name: completionDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Expected delivery date greater than
+        in: query
+        name: expectedCompletionDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Expected delivery date lesser than
+        in: query
+        name: expectedCompletionDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the order was started for processing
+        in: query
+        name: startDate.gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Date when the order was started for processing
+        in: query
+        name: startDate.lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+      - description: Requested index for start of item to be provided in response
+          requested by the client. Note that the index starts with "0".
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+      - description: Requested number of items to be provided in response requested
+          by client
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ServiceOrder'
+                type: array
+          description: OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)
+          headers:
+            X-Pagination-Throttled:
+              description: |
+                Used to indicate that result page was throttled to maximum possible size  and there are additional results that can be fetched
+              schema:
+                type: boolean
+            X-Total-Count:
+              description: |
+                The total number of matching items. E.g. if there are 50 matching items in total, but the request has offset=10 and limit=10, then the X-Total-Count is 50.
+              schema:
+                type: integer
+            X-Result-Count:
+              description: The number of items included in the response
+              schema:
+                type: integer
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: List or find ServiceOrder objects
+      tags:
+      - Service Order
+    post:
+      description: This operation creates a ServiceOrder entity.
+      operationId: createServiceOrder
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/ServiceOrder_Create'
+        description: The ServiceOrder to be created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: Created (https://tools.ietf.org/html/rfc7231#section-6.3.2)
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to the business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: Creates a ServiceOrder
+      tags:
+      - Service Order
+  /serviceOrder/{id}:
+    get:
+      description: This operation retrieves a ServiceOrder entity.
+      operationId: retrieveServiceOrder
+      parameters:
+      - description: Identifier of the ServiceOrder
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ServiceOrder'
+          description: OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: Retrieves a ServiceOrder by ID
+      tags:
+      - Service Order
+  /hub:
+    post:
+      description: "Sets the communication endpoint address the service instance must\
+        \ use to deliver information about its health state, execution state, failures\
+        \ and metrics."
+      operationId: registerListener
+      requestBody:
+        content:
+          application/json;charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/EventSubscriptionInput'
+        description: Data containing the callback endpoint to deliver the information
+        required: true
+      responses:
+        "201":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Subscribed
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: Register a listener
+      tags:
+      - Events subscription
+  /hub/{id}:
+    delete:
+      description: "Resets the communication endpoint address the service instance\
+        \ must use to deliver information about its health state, execution state,\
+        \ failures and metrics."
+      operationId: unregisterListener
+      parameters:
+      - description: The id of the registered listener
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "422":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Error422'
+                type: array
+          description: Unprocessable entity due to business validation problems
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: Unregister a listener
+      tags:
+      - Events subscription
+    get:
+      description: This operation retrieves a EventSubscription entity.
+      operationId: retrieveEventSubscription
+      parameters:
+      - description: Identifier of the EventSubscription
+        in: path
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/EventSubscription'
+          description: Success
+        "400":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error400'
+          description: Bad Request
+        "401":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error401'
+          description: Unauthorized
+        "403":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error403'
+          description: Forbidden
+        "404":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error404'
+          description: Not Found
+        "500":
+          content:
+            application/json;charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Error500'
+          description: Internal Server Error
+      summary: Retrieves a EventSubscription by ID
+      tags:
+      - Events subscription
+components:
+  schemas:
+    AccessLinkBfd:
+      description: The Access Link BFD Service Attribute indicates whether Bidirectional
+        Forwarding Detection (BFD) is enabled on the UNI Access Link. Reference MEF
+        61.1 Section 13.8 and Section 16.5
+      properties:
+        connectionAddressFamily:
+          $ref: '#/components/schemas/AddressFamilyIpv4Ipv6Both'
+          description: The Connection Address Family parameter specifies whether the
+            session is established over IPv4 or IPv6 or whether two separate sessions
+            are established using IPv4 and IPv6. Reference - MEF 61.1 Section 13.8
+            and 16.5
+        transmissionInterval:
+          description: Transmission Interval Reference - MEF 61.1 Section 13.8 and
+            16.5
+          minimum: 0
+          type: integer
+        detectMultiplier:
+          description: BFD Detect multiple as an Integer. Reference - MEF 61.1 Section
+            13.8 and 16.5 Attribute.
+          minimum: 0
+          type: integer
+        activeEnd:
+          $ref: '#/components/schemas/BfdActiveEnd'
+          description: "BFD Active End. At least one end of BFD session has to have\
+            \ an active role, meaning that it sends out asynchronous control messages\
+            \ regardless of whether it has received any. Reference - MEF 61.1 Section\
+            \ 13.8"
+        authenticationType:
+          $ref: '#/components/schemas/BfdAuthenticationType'
+          description: BFD Authentication as describer in RFC 5880. Reference - MEF
+            61.1 Section 13.8 and 16.5
+      type: object
+    AddressFamilyIpv4Ipv6:
+      description: Specifies whether the session is established over IPv4 or IPv6.
+      enum:
+      - IPV4
+      - IPV6
+      type: string
+    AddressFamilyIpv4Ipv6Both:
+      description: Specifies whether the session is established over IPv4 or IPv6
+        or whether two separate session are established using IPv4 and IPv6.
+      enum:
+      - IPV4
+      - IPV6
+      - BOTH
+      type: string
+    BfdActiveEnd:
+      description: |
+        At least one end of the BFD session must have an active role, meaning that
+        it sends out asynchronous control messages regardless of whether it has
+        received any. This enumeration represents the values that can be set for
+        the BFD Active End. Reference - MEF 61.1 Section 13.8 [R171] and [R172].
+        - SUBSCRIBER: Subscriber takes active BFD role.
+        - SP: Service Provider takes active BFD role.
+        - BOTH: Subscriber and Service Provider take active BFD role.
+      enum:
+      - SUBSCRIBER
+      - SP
+      - BOTH
+      type: string
+    BfdAuthenticationType:
+      description: "Enumeration of possible BFD Authentication Type, as specified\
+        \ by\nRFC 5880 [4]. In case other than `NONE` is specified additional\nspecific\
+        \ parameters need to be agreed between the Buyer and the Seller. \n- NONE:\
+        \ No BFD authentication.\n- SIMPLE_PASSWORD: Simple Password Authentication\
+        \ is the most \nstraightforward (and weakest) form of authentication. In this\
+        \ method\nof authentication one or more Passwords (with corresponding Key\
+        \ IDs) \nare configured in each system and one of these Password/ID pairs\
+        \ is \ncarried in each BFD Control packet. The receiving system accepts the\
+        \ \npacket if the Password and Key ID matches one of the Password/ID \npairs\
+        \ configured in that system. Reference IETF RFC5880 Section 6.7.2.\n- KEYED_MD5:\
+        \ The Keyed MD5 and Meticulous Key MD5 Authentication \nmechanisms are very\
+        \ similar to those used in other protocols. \nIn these methods of authentication,\
+        \ one or more security keys \n(with corresponding key IDs) are configured\
+        \ in each system. \nReference RFC5880 Section 6.7.3\n- METICULOUS_KEYED_MD5:\
+        \ The Keyed MD5 and Meticulous Key MD5 \nAuthentication mechanisms are very\
+        \ similar to those used in other \nprotocols. In these methods of authentication,\
+        \ one or more security\nkeys (with corresponding key IDs) are configured in\
+        \ each system.\nReference RFC5880 Section \n- KEYED_SHA1: The Keyed SHA1 and\
+        \ Meticulous Key SHA1 Authentication\nmechanisms are very similar to those\
+        \ used in other protocols. In \nthese methods of authentication, one or more\
+        \ secret keys (with \ncorresponding key IDs) are configured in each system.\
+        \ Reference\nRFC5880 Section 6.7.4\n- METICULOUS_KEYED_SHA1: The Keyed SHA1\
+        \ and Meticulous Key \nSHA1 Authentication mechanisms are very similar to\
+        \ those used in\nother protocols. In these methods of authentication, one\
+        \ or more \nsecret keys (with corresponding key IDs) are configured in each\
+        \ system.\nReference RFC5880 Section 6.7.4\n"
+      enum:
+      - NONE
+      - SIMPLE_PASSWORD
+      - KEYED_MD5
+      - METICULOUS_KEYED_MD5
+      - KEYED_SHA1
+      - METICULOUS_KEYED_SHA1
+      type: string
+    Bgp:
+      description: "When an entry in the UNI Routing Protocol is for BGP, BGP as specified\
+        \ in RFC 4271 is used across the UNI to exchange information. Reference -\
+        \ MEF 61.1 Section 12.7.3."
+      properties:
+        subscriberAsNumber:
+          $ref: '#/components/schemas/FourOctetInteger'
+          description: BGP Subscriber Autonomous System number.
+        peerAsNumber:
+          $ref: '#/components/schemas/FourOctetInteger'
+          description: BGP Peer Autonomous System Number.
+        connectionAddressFamily:
+          $ref: '#/components/schemas/AddressFamilyIpv4Ipv6'
+          description: Connection Address Family (IPv4 or IPv6).
+        peeringAddresses:
+          $ref: '#/components/schemas/PeeringAddress'
+          description: Peering Addresses.
+        authentication:
+          description: BGP Authentication. It is either empty list or if present is
+            it a value of MD5 Password. It is assumed that an encrypted channel is
+            used when this data is passed across the API so that the password is protected.
+          items:
+            type: string
+          maxItems: 1
+          type: array
+        bgpCommunityList:
+          description: "Used to control which routers are accepted, preferred, distributed,\
+            \ or advertised."
+          items:
+            $ref: '#/components/schemas/BgpCommunity'
+          type: array
+        bgpExtendedCommunityList:
+          description: "Mechanism for labeling information carried in BGP-4. Provide\
+            \ enhancement over existing BGP Community Attribute an extended range,\
+            \ the addition of type field."
+          items:
+            $ref: '#/components/schemas/BgpExtendedCommunity'
+          type: array
+        holdTime:
+          $ref: '#/components/schemas/TwoOctetInteger'
+          description: Hold time in seconds. Indicates the agreed Hold Time used for
+            BGP sessions. The possible values are 0 or an integer in the range 3-65535.
+        damping:
+          description: "Route flap damping. When the Damping parameter is empty, the\
+            \ attribute is not set. When set - a single set of parameters described\
+            \ in Section 4.3 of RFC 2430 MUST be agreed."
+          items:
+            $ref: '#/components/schemas/Damping'
+          maxItems: 1
+          type: array
+        asOverride:
+          $ref: '#/components/schemas/EnabledDisabled'
+          description: "Autonomous System Override. The SP (or Operator) can overwrite\
+            \ instances of the Subscriber's AS Number in the AS Path with their own\
+            \ AS Number, when advertising routes to the Subscriber. This needs to\
+            \ be explicitly agreed between the SP and the Subscriber, and/or between\
+            \ an SP/SO and an Operator."
+        administrativeDistance:
+          description: BGP Administrative Distance.
+          minimum: 1
+          type: integer
+      type: object
+    BgpCommunity:
+      description: |
+        A community is a group of destinations which share some common property. Each autonomous system administrator may define which communities a destination belongs to.
+      properties:
+        autonomousSystemNumber:
+          $ref: '#/components/schemas/TwoOctetInteger'
+          description: The first two octets encoding the Autonomous System value.
+        autonomousSystemDefined:
+          $ref: '#/components/schemas/TwoOctetInteger'
+          description: The remaining octets.
+        semantics:
+          description: Text describing how the Seller will handle routes tagged with
+            this Community
+          type: string
+      type: object
+    BgpExtendedCommunity:
+      description: "This attribute provides a mechanism for labeling information carried\
+        \ in BGP-4. These labels can be used to control the distribution of this information,\
+        \ or for other applications."
+      properties:
+        regularOrExtended:
+          $ref: '#/components/schemas/BgpExtendedCommunityType'
+          description: Indicates whether the BGP Extended Community is of Regular
+            Type or Extended Type.
+        semantics:
+          description: Text describing how the Seller will handle routes tagged with
+            this Community
+          type: string
+      type: object
+    BgpExtendedCommunityType:
+      description: Options for BGP Extended Community Type. Either Regular Type or
+        Extended Type.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        regular:
+          $ref: '#/components/schemas/BgpRegularType'
+        extended:
+          $ref: '#/components/schemas/BgpExtendedType'
+      type: object
+    BgpExtendedType:
+      description: This resource provides a mechanism for labeling information carried
+        in.
+      properties:
+        extendedType:
+          $ref: '#/components/schemas/TwoOctetInteger'
+          description: "Extended Type Field, 2 octets length"
+        extendedValue:
+          description: Octets 3 - 8 of the value part of the address. Used in case
+            only Extended Type is provided.
+          format: int64
+          maximum: 281474976710655
+          minimum: 0
+          type: integer
+      type: object
+    BgpRegularType:
+      description: This resource provides a mechanism for labeling information carried
+        in.
+      properties:
+        regularType:
+          description: "Regular Type Field, 1 octet length"
+          maximum: 255
+          minimum: 0
+          type: integer
+        regularValue:
+          description: Octets 2 - 8 of the value part of the address. Used in case
+            only Regular Type is provided.
+          format: int64
+          maximum: 72057594037927940
+          minimum: 0
+          type: integer
+      type: object
+    BurstBehavior:
+      description: |
+        Enumeration used to select the Bandwidth Profile Flow Burst Behavior attribute.  Reference - MEF 61.1 Section 17.3 Table 29 - OPTIMIZE_DELAY: Enumeration representing the Burst Behavior of optimization of delay. - OPTIMIZE_THROUGHPUT: Enumeration representing the Burst Behavior of optimization of throughput.
+      enum:
+      - OPTIMIZE_DELAY
+      - OPTIMIZE_THROUGHPUT
+      type: string
+    BusSofType:
+      description: An enumeration with BUS and SOF values.
+      enum:
+      - bus
+      - sof
+      type: string
+    ClassOfServiceMapEntry:
+      description: "Values for the Cloud Ingress Class of Service Map. Reference MEF\
+        \ 61.1 Table 11 - Values for the Cloud Ingress Class of Service Map, 11.0\
+        \ IPVC EP Ingress Class of Service Map Service Attribute."
+      properties:
+        cosName:
+          description: Class of Service name
+          type: string
+        destinationIpAddress:
+          $ref: '#/components/schemas/Ipv4Prefix'
+          description: Destination IP Address
+        destinationL4Port:
+          description: Destination Layer 4 Port
+          maximum: 65535
+          minimum: 0
+          type: integer
+        ethernetPcp:
+          description: Ethernet PCP value
+          maximum: 7
+          minimum: 0
+          type: integer
+        ipds:
+          description: DSCP value
+          maximum: 63
+          minimum: 0
+          type: integer
+        l4protocol:
+          description: Layer 4 Protocol
+          maximum: 255
+          minimum: 0
+          type: integer
+        sourceIpAddress:
+          $ref: '#/components/schemas/Ipv4Prefix'
+          description: Source IP Address
+        sourceL4Port:
+          description: Source Layer 4 Port
+          maximum: 65535
+          minimum: 0
+          type: integer
+      type: object
+    CloudDataLimit:
+      description: "Specifies an absolute limit on the amount of data the Subscriber\
+        \ can transmit to, or receive from, the cloud service in a given time period.\
+        \ It is either Unlimited or a 4-tuple (scdl, tcdl, ucdl, dcdl).  Reference\
+        \ MEF 61.1 Section 10.13.3 Cloud Data Limit."
+      properties:
+        startTime:
+          description: Specifies a start time.
+          format: date-time
+          type: string
+        duration:
+          $ref: '#/components/schemas/TimeDuration'
+          description: "Specifies a duration. Together with the start time, it describes\
+            \ a service of contiguous time intervals, starting at the specified start\
+            \ time and each lasting for the specified duration."
+        upload:
+          description: "An integer indicating a limit, in octets, on the amount of\
+            \ IP traffic that can be transmitted towards the cloud service during\
+            \ each time interval described by startTime and duration."
+          type: integer
+        download:
+          description: "An integer indicating a limit, in octets, on the amount of\
+            \ IP traffic received from the cloud service that can be delivered to\
+            \ the Subscriber during each time interval described by startTime and\
+            \ duration."
+          type: integer
+      type: object
+    CloudDns:
+      description: "Data type representing a Domain Name System. Reference MEF 69.1\
+        \ Section 9.1 [R13].  \nFor an Internet Access Service, if the Cloud DNS parameter\
+        \ of the IPVC Cloud Service \nAttribute is STATIC, the associated list of\
+        \ DNS Servers MUST have at least one entry. \n[D4] For an Internet Access\
+        \ Service, if the Cloud DNS parameter of the IPVC Cloud \nService Attribute\
+        \ is STATIC, the associated list of DNS Servers\nSHOULD contain at least two\
+        \ DNS servers.\n"
+      properties:
+        dnsServerIpv4List:
+          description: DNS server list an IPv4 addresses.
+          items:
+            $ref: '#/components/schemas/Ipv4Address'
+          type: array
+        dnsServerIpv6List:
+          description: DNS server list an IPv6 addresses.
+          items:
+            $ref: '#/components/schemas/Ipv6Address'
+          type: array
+        dnsType:
+          $ref: '#/components/schemas/DnsType'
+          description: Domain Name System type.
+      type: object
+    CloudType:
+      description: "Indicates the type of cloud service being accessed. Reference\
+        \ MEF 61.1 Table 10 \nSubscriber IPVC Cloud Service Attribute.\n- INTERNET_ACCESS:\
+        \ Indicates the cloud access IPVC is used to access the public Internet.\n\
+        - PRIVATE: Indicates the cloud access IPVC provides a direct connection over\
+        \ the Service Provider's network to a cloud service.\n"
+      enum:
+      - INTERNET_ACCESS
+      - PRIVATE
+      type: string
+    ConnectionType:
+      description: |
+        An enumeration representing the connection type.
+        - POINT_TO_POINT indicates that the link is logically point to Point.
+        - MULTIPOINT indicates the link is logically multipoint.
+      enum:
+      - POINT_TO_POINT
+      - MULTIPOINT
+      type: string
+    ConnectorType:
+      description: Enumeration representing type of connector presented to Subscriber.
+      enum:
+      - RJ45
+      - SC
+      - LC
+      - OTHER
+      type: string
+    ContactInformation:
+      description: Contact data for a person or organization that is involved in the
+        product offering qualification. In a given context it is always specified
+        by the SOF (e.g. SOF Contact Information) or by the BUS.
+      properties:
+        number:
+          description: Phone number
+          type: string
+        emailAddress:
+          description: Email address
+          type: string
+        postalAddress:
+          $ref: '#/components/schemas/FieldedAddressRepresentation'
+        organization:
+          description: The organization or company that the contact belongs to
+          type: string
+        name:
+          description: Name of the contact
+          type: string
+        numberExtension:
+          description: Phone number extension
+          type: string
+      required:
+      - emailAddress
+      - name
+      - number
+      type: object
+    ControlProtocol:
+      description: "Data type representing Control Protocol. Each entry consists of\
+        \ a 3-tuple containing the protocol name, addressing information (either SP/Operator\
+        \ Addresses or Any) and one or more references. Reference - MEF 61.1 Section\
+        \ 12.6"
+      properties:
+        addressing:
+          $ref: '#/components/schemas/ControlProtocolAddressing'
+          description: Enumeration representing the addressing.
+        protocolName:
+          description: Protocol name.
+          type: string
+        reference:
+          description: Protocol reference.
+          items:
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    ControlProtocolAddressing:
+      description: "Enumeration representing the Address type for the Control Protocols\
+        \ data\ntype. Reference - MEF 61.1 Section 12.6 \n- SP_OPERATOR_ADDRESSES:\
+        \ If the addressing information is\nSP/Operator Addresses, then Ingress IP\
+        \ Packets for the specified  protocol\nthat have a multicast or broadcast\
+        \ destination address, or a unicast\ndestination address  that is reachable\
+        \ within the SP's or Operator's\nnetwork, are considered to be IP Control\
+        \ Protocol  Packets, and Egress IP\nPackets for the specified protocol that\
+        \ have a source address that is\nreachable  within the SP's or Operator's\
+        \ network are considered to be IP\nControl Protocol Packets.\n- ANY: If the\
+        \ addressing information is Any, then all IP Packets for the\nspecified protocol\
+        \ that cross the UNI are considered to be \nIP Control Protocol Packets.\n"
+      enum:
+      - SP_OPERATOR_ADDRESSES
+      - ANY
+      type: string
+    Damping:
+      description: "Damping parameters as defined in RFC 2439 BGP Route Flap Damping,\
+        \ Section 4.2"
+      properties:
+        cutoffThreshold:
+          description: This value is expressed as a number of route withdrawals.  It
+            is the value above which a route advertisement will be suppressed.
+          minimum: 0
+          type: integer
+        decayHalfLifeWhileReachable:
+          description: This value is the time duration in seconds during which the
+            accumulated stability figure of merit will be reduced by half if the route
+            if considered reachable (whether suppressed or not).
+          minimum: 0
+          type: integer
+        decayHalfLifeWhileUnReachable:
+          description: "This value is the time duration in seconds during which the\
+            \ accumulated stability figure of merit will be reduced by half if the\
+            \ route if considered unreachable.  If not specified or set to zero, no\
+            \ decay will occur while a route remains unreachable."
+          minimum: 0
+          type: integer
+        decayMemoryLimit:
+          description: "This is the maximum time (in seconds) that any memory of previous\
+            \ instability will be retained given that the route's state remains unchanged,\
+            \ whether reachable or unreachable.  This parameter is generally used\
+            \ to determine array sizes."
+          minimum: 0
+          type: integer
+        maxHoldDownTime:
+          description: This value is the maximum time a route can be suppressed no
+            matter how unstable it has been prior to this period of stability. In
+            seconds.
+          minimum: 0
+          type: integer
+        numberOfReuseLists:
+          description: This is the number of reuse lists.  It may be determined from
+            reuse-list-max or set explicitly.
+          minimum: 0
+          type: integer
+        reuseListMemory:
+          description: This is the time (in seconds) value corresponding to the last
+            reuse list. This may be the maximum value of T-hold for all parameter
+            sets of may be configured.
+          minimum: 0
+          type: integer
+        reuseListTimeGranularity:
+          description: This is the time (in seconds) interval between evaluations
+            of the reuse lists.  Each reuse lists corresponds to an additional time
+            increment.
+          minimum: 0
+          type: integer
+        reuseThreshold:
+          description: This value is expressed as a number of route withdrawals.  It
+            is the value below which a suppressed route will now be used again.
+          minimum: 0
+          type: integer
+        timeGranularity:
+          description: This is the time granularity in seconds used to perform all
+            decay computations.
+          minimum: 0
+          type: integer
+        reuseIndexArraySize:
+          description: This is the size of reuse index arrays.  This size determines
+            the accuracy with which suppressed routes can be placed within the set
+            of reuse lists when suppressed for a long time.
+          minimum: 0
+          type: integer
+      type: object
+    Demux:
+      description: Is a value that is specific to each type of UNI Access Link Trunk
+        and  indicates which Layer 2 sub-channel should be select for this UNI Access
+        Link.
+      properties:
+        utpt:
+          description: Untagged and priority tagged frames.
+          type: boolean
+        vlanId:
+          description: VLAN ID.
+          items:
+            $ref: '#/components/schemas/VlanId'
+          minItems: 0
+          type: array
+      type: object
+    DhcpRelay:
+      description: The UNI Access Link DHCP Relay Server Attribute is either Disabled
+        or a pair containing a list of one or more DHCP Server IP addresses and an
+        IPVC End Point Identifier.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        dhcpRelayDisabled:
+          description: DHCP Relay Disabled.
+          enum:
+          - DISABLED
+          type: string
+        dhcpRelayEnabled:
+          $ref: '#/components/schemas/DhcpRelayEnabled'
+          description: Pointer to DhcpRelay.
+      type: object
+    DhcpRelayEnabled:
+      description: "Dynamic Host Configuration Protocol (DHCP) Relay functionality\
+        \ is useful when the Subscriber uses DHCP (per RFC 2131[15] and RFC 8415[24])\
+        \ in the Subscriber Network but does not want to place a DHCP server (or possibly\
+        \ a pair of redundant DHCP servers) in each part of the network."
+      properties:
+        dhcpServerList:
+          description: Non-empty list of IP addresses for DHCP Servers belonging to
+            the Subscriber. Reference MEF 61.1 Section 13.6 UNI Access Link DHCP Relay
+            Server Attribute.
+          items:
+            $ref: '#/components/schemas/DhcpServer'
+          minItems: 1
+          type: array
+        ipvcEndPointIdentifier:
+          description: IPVC identifier as described in MEF 61.1 Section 11.1.
+          maxLength: 53
+          minLength: 1
+          pattern: "[ -\x7f]+"
+          type: string
+      type: object
+    DhcpServer:
+      description: Data type representing a DHCP Server
+      properties:
+        ipv4Address:
+          $ref: '#/components/schemas/Ipv4Address'
+          description: DHCP Server IPv4 address.
+        ipv6Address:
+          $ref: '#/components/schemas/Ipv6Address'
+          description: DHCP Server IPv6 address.
+      type: object
+    DnsType:
+      description: |
+        Enumeration representing the different types of DNS. Reference - MEF
+        61.1 10.13.5 Cloud DNS Service
+      enum:
+      - NONE
+      - DHCP
+      - PPP
+      - STATIC
+      - SLAAC
+      type: string
+    DscpMapping:
+      description: IP DSCP mapping of CoS name to DSCP value
+      properties:
+        cosName:
+          description: Class of Service name
+          type: string
+        ipDscp:
+          $ref: '#/components/schemas/DscpValue'
+      type: object
+    DscpValue:
+      description: DSCP value
+      maximum: 63
+      minimum: 0
+      type: integer
+    Duration:
+      description: "A Duration in a given unit of time e.g. 3 hours, or 5 days."
+      properties:
+        amount:
+          description: "Duration (number of seconds, minutes, hours, etc.)"
+          minimum: 0
+          type: integer
+        units:
+          $ref: '#/components/schemas/TimeUnit'
+      required:
+      - amount
+      - units
+      type: object
+    EgressClassOfServiceMap:
+      description: "Pair of values (D,P). D specifies how to set the DS field in Egress\
+        \ IP Data Packets based on CoS Name. It is either None, or a mapping from\
+        \ CoS Names to DSCP values. P specifies how to set the PCP field in VLAN Tagged\
+        \ Ethernet Frames containing Egress IP Data Packets based on CoS Name. It\
+        \ is eitherNone, or a mapping from CoS Names to PCP values. Reference MEF\
+        \ 61.1 Section 11.10 IPVC EP  Egress Class of Service Map Service Attribute.\
+        \         "
+      properties:
+        defaultCosName:
+          description: Default Class of Service Name.
+          type: string
+        dscpMapping:
+          items:
+            $ref: '#/components/schemas/DscpMapping'
+          type: array
+        pcpMapping:
+          items:
+            $ref: '#/components/schemas/PcpMapping'
+          type: array
+      type: object
+    EnabledDisabled:
+      description: Enumeration to indicate Enabled/Disabled state of an attribute.
+      enum:
+      - ENABLED
+      - DISABLED
+      type: string
+    EndPointIdentifierAndCosName:
+      description: Data type representing IPVC End Point Identifier and CoS name use
+        for Bandwidth Profiles.
+      properties:
+        cosName:
+          description: Class of Service name.
+          type: string
+        ipvcEndPointIdentifier:
+          maxLength: 53
+          minLength: 1
+          pattern: "[ -\x7f]+"
+          type: string
+      type: object
+    EnniIpv4ConnectionAddressing:
+      description: "The ENNI Link IPv4 Connection Addressing specifies how IPv4 addresses\
+        \ are allocated  to the devices connected to the ENNI Link. It is either NONE\
+        \ or STATIC, plus in the  case of STATIC, some additional parameters. Reference\
+        \ MEF 61.1 Section 16.3 ENNI  Link IPv4 Connection Addressing Attribute."
+      properties:
+        enniLinkIpv4AddressType:
+          $ref: '#/components/schemas/EnniLinkIpv4AddressType'
+        ipv4PrimarySubnet:
+          $ref: '#/components/schemas/EnniIpv4Subnet'
+        ipv4SecondarySubnetList:
+          items:
+            $ref: '#/components/schemas/EnniIpv4Subnet'
+          minItems: 0
+          type: array
+      type: object
+    EnniIpv4Subnet:
+      description: Data type representing IPv4 Subnet for ENNI Links. Reference MEF
+        61.1 Section 16.3 ENNI Link IPv4 Connection Addressing Attribute.
+      properties:
+        ipv4Prefix:
+          $ref: '#/components/schemas/Ipv4Prefix'
+        firstLloIpv4Address:
+          description: First LLO (Lowest Level Operator IPv4 Address.
+          type: string
+        secondLloIpv4Address:
+          description: Second LLO (Lowest Level Operator IPv4 Address.
+          type: string
+      type: object
+    EnniIpv6ConnectionAddressing:
+      description: "The ENNI Link IPv4 Connection Addressing specifies how IPv4 addresses\
+        \ are allocated to the devices connected to the ENNI Link. It is either NONE\
+        \ or STATIC, plus in the case of STATIC, some additional parameters. Reference\
+        \ MEF 61.1 Section 16.3 ENNI Link IPv4 Connection Addressing Attribute."
+      properties:
+        enniLinkIpv6AddressType:
+          $ref: '#/components/schemas/EnniLinkIpv6AddressType'
+        ipv6Subnet:
+          $ref: '#/components/schemas/EnniIpv6Subnet'
+      type: object
+    EnniIpv6Subnet:
+      description: "Data type representing IPv6 Subnet for ENNI Links. Reference MEF\
+        \ 61.1[1] Section 16.4 ENNI Link IPv6 Connection Addressing Attribute."
+      properties:
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        firstLloIpv6Address:
+          description: First LLO (Lowest Level Operator IPv6 Address.
+          type: string
+        secondLloIpv6Address:
+          description: Second LLO (Lowest Level Operator IPv6 Address.
+          type: string
+      type: object
+    EnniLinkIpv4AddressType:
+      description: Enumeration to indicate ENNI Link IPv4 Address Type.
+      enum:
+      - STATIC
+      type: string
+    EnniLinkIpv6AddressType:
+      description: Enumeration to indicate ENNI Link IPv6 Address Type.
+      enum:
+      - STATIC
+      - LL_ONLY
+      type: string
+    EnniList:
+      description: "The ENNI List of ENNI Links Common Attribute is a list of 3-tuples\
+        \ of  the form (ID, L1, Links). Each entry in the list corresponds to a  distinct\
+        \ L1 link across the ENNI – in most cases, this means a separate  physical\
+        \ link (although virtual or logical links are not precluded).  The first element\
+        \ in the 3-tuple, ID, is the identifier of the L1 link.  The second element,\
+        \ L1, contains the details of the L1 technology used  for the link. The third\
+        \ element, Links, is a list (possibly empty) of  ENNI Link Identifiers (see\
+        \ section 16.1) for the ENNI Links in this ENNI  that traverse the L1 link.\
+        \ Reference MEF 61.1 Section 15.3 ENNI List of  ENNI Links Common Attribute."
+      properties:
+        identifier:
+          maxLength: 53
+          minLength: 1
+          pattern: "[ -\x7f]+"
+          type: string
+        l1Technology:
+          $ref: '#/components/schemas/L1Technology'
+        enniIdentifier:
+          items:
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    EnniPeeringType:
+      description: "Attribute indicates the type of BGP Peering used across the ENNI.\
+        \ The possible values  are Option A, Option B, Option C or Option B and C.\
+        \ They refer to the options described  in RFC 4364. Reference MEF 61.1 Section\
+        \ 15.2 ENNI Peering Type Common Attribute. For  Options reference MEF 61.1\
+        \ Section 8.6 Connecting Services across an ENNI. OPTION_A is a separate eBGP\
+        \ session is used across each ENNI Link and each session  carries routes for\
+        \ one service. This results in packets for different services being  sent\
+        \ over different ENNI Links. The packets can be plain IP Packets since it\
+        \ is the  different links that distinguish them. OPTION_B is for when one\
+        \ or more eBGP sessions are used across the ENNI, each exchanging  labelled\
+        \ VPN routes for multiple services. The routes for different services are\
+        \  distinguished by attributes such a Route Distinguishers and Route Targets.\
+        \ This results  in IP Packets across the ENNI being encapsulated in MPLS where\
+        \ IP Packets for different  services have different MPLS labels. Typically,\
+        \ each packet has a single MPLS label, that  identifies both the egress PE\
+        \ and the service. OPTION_C is for when one or more eBGP sessions are used\
+        \ across the ENNI only to distribute  labeled unicast routes (and labels)\
+        \ towards each Operator's own routers; furthermore,  multi-hop eBGP sessions\
+        \ are used between the ingress PE and the egress PE (or equivalent  route\
+        \ reflectors) to exchange labelled VPN routes for each service.  This results\
+        \ in IP  Packets across the ENNI being encapsulated in MPLS, typically with\
+        \ two MPLS labels, one  representing the egress PE, and the second that (roughly\
+        \ speaking) identifies the service. OPTIONS_B_AND_C is a combination of Options\
+        \ B and C."
+      enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C
+      - OPTIONS_B_AND_C
+      type: string
+    EnniRoutingInformation:
+      description: "For an ENNI Option A, the ENNI Routing Information Service Attribute\
+        \ is a mapping  of ENNI Service Mapping Identifiers to four-tuples of the\
+        \ form (Administrative Distance,  Route Flap Damping, AS Override, Static\
+        \ Routes). Each four-tuple applies to the  corresponding ENNI Service Mapping\
+        \ Identifier. Reference MEF 61.1 Section 14.3.1 ENNI  Routing Protocols for\
+        \ Option A."
+      properties:
+        enniServiceMappingIdentifier:
+          description: A string identifier that is used at the ENNI to match the IPVC
+            EP on one side  of the ENNI with IPVC EPs on the other side. Reference
+            MEF 61.1 Section 11.6  IPVC EP ENNI Service Mapping Identifier Service
+            Attribute.
+          maxLength: 53
+          minLength: 1
+          pattern: "[ -\x7f]+"
+          type: string
+        administrativeDistance:
+          description: The Administrative Distance for a given ENNI Service Mapping
+            Identifier is an  integer greater than 0 that indicates the value of the
+            administrative distance  assigned by the Operator to eBGP routes received
+            from another Operator over  the ENNI Links that are assigned to that ENNI
+            Service Mapping Identifier at an  ENNI using Option A. Reference MEF 61.1
+            Section 14.3.1.1 Administrative Distance.
+          type: integer
+        routeFlapDamping:
+          $ref: '#/components/schemas/EnabledDisabled'
+        asOverride:
+          $ref: '#/components/schemas/EnabledDisabled'
+        staticRoute:
+          description: The Static Routes parameter for a given ENNI Service Mapping
+            Identifier is a  list of static routes over the ENNI for the service identified
+            by that ENNI  Service Mapping Identifier. The list can be empty. Reference
+            MEF 61.1 Section  14.3.1.4 Static Routes.
+          items:
+            $ref: '#/components/schemas/StaticRoute'
+          minItems: 0
+          type: array
+      type: object
+    EnniServiceMap:
+      description: "For an ENNI using Option A, the ENNI Service Map Common Attribute\
+        \ is  a mapping from ENNI Service Mapping Contexts a set of ENNI Link Identifiers\
+        \  for ENNI Links in the ENNI. Reference MEF 61.1[1] Section 15.6.1 ENNI \
+        \ Service Map for Option A."
+      properties:
+        enniServiceMappingContext:
+          $ref: '#/components/schemas/EnniServiceMappingContext'
+        enniLinks:
+          description: Pointer to ENNI Link list.
+          items:
+            $ref: '#/components/schemas/EnniList'
+          minItems: 1
+          type: array
+      type: object
+    EnniServiceMappingContext:
+      description: "A pair of SP/SO, ENNI Service Mapping Identifier. It uniquely\
+        \ identifies  services for a given SP/SO on either side of the ENNI that have\
+        \ been  assigned the same ENNI Service Mapping Identifier. Reference MEF 61.1\
+        \  Section 15.6.1 ENNI Service Map for Option A."
+      properties:
+        serviceProvider:
+          description: Service Provider identifier.
+          type: string
+        serviceOperator:
+          description: Service Operator identifier.
+          type: string
+        enniServiceMappingIdentifier:
+          description: ENNI Service Mapping identifier
+          type: string
+      type: object
+    EnniType:
+      description: Indication of the type of BGP Peering at the ENNI. Reference MEF
+        61.1 Section 14  ENNI Service Attributes.
+      enum:
+      - OPTION_A
+      - OPTION_B
+      - OPTION_C
+      type: string
+    Error:
+      description: |
+        Standard Class used to describe API response error Not intended to be used directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
+      properties:
+        message:
+          description: Text that provides mode details and corrective actions related
+            to the error. This can be shown to a client user.
+          type: string
+        reason:
+          description: Text that explains the reason for the error. This can be shown
+            to a client user.
+          maxLength: 255
+          type: string
+        referenceError:
+          description: URL pointing to documentation describing the error
+          format: uri
+          type: string
+      required:
+      - reason
+      type: object
+    Error400:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error400Code'
+        required:
+        - code
+        type: object
+      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+    Error400Code:
+      description: |-
+        One of the following error codes:
+        - missingQueryParameter: The URI is missing a required query-string parameter
+        - missingQueryValue: The URI is missing a required query-string parameter value
+        - invalidQuery: The query section of the URI is invalid.
+        - invalidBody: The request has an invalid body
+      enum:
+      - missingQueryParameter
+      - missingQueryValue
+      - invalidQuery
+      - invalidBody
+      type: string
+    Error401:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error401Code'
+        required:
+        - code
+        type: object
+      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
+    Error401Code:
+      description: |-
+        One of the following error codes:
+        - missingCredentials: No credentials provided.
+        - invalidCredentials: Provided credentials are invalid or expired
+      enum:
+      - missingCredentials
+      - invalidCredentials
+      type: string
+    Error403:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error403Code'
+        required:
+        - code
+        type: object
+      description: Forbidden. This code indicates that the server understood the request
+        but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+    Error403Code:
+      description: |-
+        This code indicates that the server understood
+        the request but refuses to authorize it because
+        of one of the following error codes:
+        - accessDenied: Access denied
+        - forbiddenRequester: Forbidden requester
+        - tooManyUsers: Too many users
+      enum:
+      - accessDenied
+      - forbiddenRequester
+      - tooManyUsers
+      type: string
+    Error404:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - notFound: A current representation for the target resource not found
+            enum:
+            - notFound
+            type: string
+        required:
+        - code
+        type: object
+      description: Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+    Error422:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            $ref: '#/components/schemas/Error422Code'
+          propertyPath:
+            description: |
+              A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
+              Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
+            type: string
+        required:
+        - code
+        type: object
+      description: Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
+    Error422Code:
+      description: |
+        One of the following error codes:
+        - missingProperty: The property that was expected is not present in the payload
+        - invalidValue: The property has an incorrect value
+        - invalidFormat: The property value does not comply with the expected value format
+        - referenceNotFound: The object referenced by the property cannot be identified in the target system
+        - unexpectedProperty: Additional, not expected property has been provided
+        - tooManyRecords: the number of records to be provided in the response exceeds the  threshold.
+        - otherIssue: Other problem was identified (detailed information provided in a reason)
+      enum:
+      - missingProperty
+      - invalidValue
+      - invalidFormat
+      - referenceNotFound
+      - unexpectedProperty
+      - tooManyRecords
+      - otherIssue
+      type: string
+    Error500:
+      allOf:
+      - $ref: '#/components/schemas/Error'
+      - properties:
+          code:
+            description: |-
+              The following error code:
+              - internalError: Internal server error - the server encountered an unexpected condition that prevented it from fulfilling the request.
+            enum:
+            - internalError
+            type: string
+        required:
+        - code
+        type: object
+      description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+    EthernetPhysicalLayer:
+      description: Enumeration representing the different Ethernet physical layers.
+        Reference MEF 61.1.1 Table A1-4 Ethernet PHYs for UNI Access Link Trunks.
+      enum:
+      - 10BASE_FB
+      - 10BASE_FL
+      - 10BASE_FP
+      - 10BASE_T
+      - 10BASE_T1L
+      - 10BASE_T1S
+      - 10BASE_TE
+      - 10BROAD36
+      - 10PASS_TS
+      - 100BASE_BX10
+      - 100BASE_FX
+      - 100BASE_LX10
+      - 100BASE_T
+      - 100BASE_T1
+      - 100BASE_T2
+      - 100BASE_T4
+      - 100BASE_TX
+      - 100BASE_X
+      - 1000BASE_BX10
+      - 1000BASE_CX
+      - 1000BASE_LX
+      - 1000BASE_LX10
+      - 1000BASE_PX10
+      - 1000BASE_PX20
+      - 1000BASE_RHA
+      - 1000BASE_RHB
+      - 1000BASE_RHC
+      - 1000BASE_SX
+      - 1000BASE_T
+      - 1000BASE_T1
+      - 1000BASE_X
+      - 2_5GBASE_T
+      - 2_5GBASE_T1
+      - 5GBASE_T
+      - 5GBASE_T1
+      - 10GBASE_E
+      - 10GBASE_EW
+      - 10GBASE_L
+      - 10GBASE_LR
+      - 10GBASE_LRM
+      - 10GBASE_LW
+      - 10GBASE_LX4
+      - 10GBASE_R
+      - 10GBASE_S
+      - 10GBASE_SR
+      - 10GBASE_SW
+      - 10GBASE_T
+      - 10GBASE_T1
+      - 10GBASE_X
+      - 25GBASE_CR
+      - 25GBASE_CR_S
+      - 25GBASE_ER
+      - 25GBASE_SR
+      - 25GBASE_T
+      - 40GBASE_CR4
+      - 40GBASE_ER4
+      - 40GBASE_FR
+      - 40GBASE_LR4
+      - 40GBASE_R
+      - 40GBASE_SR4
+      - 40GBASE_T
+      - 50GBASE_CR
+      - 50GBASE_ER
+      - 50GBASE_FR
+      - 50GBASE_LR
+      - 50GBASE_SR
+      - 100GBASE_CR10
+      - 100GBASE_CR2
+      - 100GBASE_CR4
+      - 100GBASE_DR
+      - 100GBASE_ER4
+      - 100GBASE_LR4
+      - 100GBASE_R
+      - 100GBASE_SR10
+      - 100GBASE_SR2
+      - 100GBASE_SR4
+      - 200GBASE_CR4
+      - 200GBASE_DR4
+      - 200GBASE_ER4
+      - 200GBASE_FR4
+      - 200GBASE_LR4
+      - 200GBASE_SR4
+      - 400GBASE_DR4
+      - 400GBASE_ER8
+      - 400GBASE_FR8
+      - 400GBASE_LR8
+      - 400GBASE_SR16
+      - 400GBASE_SR4_2
+      - 400GBASE_SR8
+      type: string
+    EthernetPhysicalLink:
+      description: Data type representing UNI Access Link Trunk List of Ethernet Physical
+        Links as defined in MEF 61.1.1 Section A1-1.3.1.
+      properties:
+        identifier:
+          $ref: '#/components/schemas/IdentifierString'
+          description: |
+            Identifier of the Physical LInk
+        physicalLayer:
+          $ref: '#/components/schemas/EthernetPhysicalLayer'
+          description: |
+            Enumeration representing the different Ethernet physical layers. Reference - MEF 61.1.1 Table A1-4 Ethernet PHYs for UNI Access Link Trunks.
+        synchronousEthernet:
+          $ref: '#/components/schemas/SynchronousEthernet'
+          description: Enumeration indicating if the physical link supports Synchronous
+            Ethernet.
+        connectorType:
+          $ref: '#/components/schemas/ConnectorType'
+          description: Enumeration representing type of connector presented to Subscriber.
+        gender:
+          $ref: '#/components/schemas/Gender'
+          description: |
+            Enumeration representing the gender of the connector presented to the Subscriber.
+      type: object
+    EthernetUniAccessLinkTrunk:
+      description: A single point-to-point physical Ethernet channel or multiple physical
+        Ethernet links combined into a Link Aggregation Group. The Ethernet frames
+        associated with a given UNI Access Link can be either untagged/priority-tagged
+        or VLAN tagged. Reference - MEF 61.1.1 A1-1.3 Ethernet UNI Access Link Trunk
+        Service Attributes.
+      properties:
+        ethernetPhysicalLink:
+          description: A list of the physical link types along with some additional
+            capabilities
+          items:
+            $ref: '#/components/schemas/EthernetPhysicalLink'
+          minItems: 1
+          type: array
+        ethernetLinkAggregation:
+          $ref: '#/components/schemas/UniAccessLinkEthernetLinkAggregation'
+          description: Configuration of Link Aggregation for the UNI Access Link Trunk.
+        ethernetLinkOam:
+          $ref: '#/components/schemas/EnabledDisabled'
+          description: Indicates whether Link OAM is used on the UNI Access Link Trunk.
+      type: object
+    EventSubscription:
+      description: |
+        This resource is used to respond to notification subscriptions.
+      properties:
+        callback:
+          description: The value provided by in `EventSubscriptionInput` during notification
+            registration
+          type: string
+        id:
+          description: An identifier of this Event Subscription assigned when a resource
+            is created.
+          type: string
+        query:
+          description: The value provided by the `EventSubscriptionInput` during notification
+            registration
+          type: string
+      required:
+      - callback
+      - id
+      type: object
+    EventSubscriptionInput:
+      description: This class is used to register for Notifications.
+      properties:
+        callback:
+          description: "This callback value must be set to *host* property from Service\
+            \ Order Notification API (serviceOrderNotification.api.yaml). This property\
+            \ is appended with the base path and notification resource path specified\
+            \ in that API to construct an URL to which notification is sent. E.g.\
+            \ for \"callback\": \"https://client.mef.com/listenerEndpoint\", the service\
+            \ order state change event notification will be sent to: `https://client.mef.com/listenerEndpoint/mefApi/legato/serviceOrderingManagement/v6/listener/serviceOrderStateChangeEvent`"
+          type: string
+        query:
+          description: "This attribute is used to define to which type of events to\
+            \ register to. Example: \"query\":\"eventType = serviceOrderStateChangeEvent\"\
+            . To subscribe for more than one event type, put the values separated\
+            \ by comma: `eventType=serviceOrderStateChangeEvent,serviceOrderItemStateChangeEvent`.\
+            \ The possible values are enumerated by 'serviceOrderEventType' in serviceOrderNotification.api.yaml.\
+            \ An empty query is treated as specifying no filters - ending in subscription\
+            \ for all event types."
+          type: string
+      required:
+      - callback
+      type: object
+    ExternalInterfaceType:
+      description: Enumeration representing the different External Interface types.
+      enum:
+      - UNI
+      - ENNI
+      type: string
+    FieldedAddressRepresentation:
+      description: "A type of Address that has a discrete field and value for each\
+        \ type of boundary or identifier down to the lowest level of detail. For example\
+        \ \"street number\" is one field, \"street name\" is another field, etc."
+      properties:
+        streetNr:
+          description: Number identifying a specific property on a public street.
+            It may be combined with streetNrLast for ranged addresses.
+          type: string
+        streetNrSuffix:
+          description: The first street number suffix (in a street number range) or
+            the suffix for the street number if there is no range
+          type: string
+        streetNrLast:
+          description: Last number in a range of street numbers allocated to an Address
+          type: string
+        streetNrLastSuffix:
+          description: Last street number suffix for a ranged Address
+          type: string
+        streetPreDirection:
+          description: The direction of the street that appears before the Street
+            Name
+          type: string
+        streetName:
+          description: Name of the street or other street type
+          type: string
+        streetType:
+          description: "The type of street (e.g., alley, avenue, boulevard, brae,\
+            \ crescent, drive, highway, lane, terrace, parade, place, tarn, way, wharf)"
+          type: string
+        streetPostDirection:
+          description: A modifier denoting a relative direction that appears after
+            the Street Name.
+          type: string
+        poBox:
+          description: Number identifying a specific location in a post office.
+          type: string
+        locality:
+          description: An area of defined or undefined boundaries within a local authority
+            or other legislatively defined area.
+          type: string
+        city:
+          description: City in which the Address is located.
+          type: string
+        postcode:
+          description: A descriptor for a postal delivery area used to speed and simplify
+            the delivery of mail (also known as zip code)
+          type: string
+        postcodeExtension:
+          description: "The extension used on a postal code. Note: there are different\
+            \ use codes for this attribute depending upon the country."
+          type: string
+        stateOrProvince:
+          description: The State or Province in which the Address is located.
+          type: string
+        countryCode:
+          description: "Country in which the Address is located, defined using two\
+            \ characters as defined in ISO 3166"
+          maxLength: 2
+          minLength: 2
+          type: string
+        subUnit:
+          description: The Sub Unit represented as a list. This is a list to allow
+            complex sub-unit information such as SUITE 42 ROOM A
+          items:
+            $ref: '#/components/schemas/SubUnit'
+          type: array
+        buildingName:
+          description: |
+            The well-known name of a building that is located at this Address (e.g., where there is one Address for a campus).
+          type: string
+        privateStreetNumber:
+          description: Street number on a private street within the Address.
+          type: string
+        privateStreetName:
+          description: "Private streets internal to a property (e.g., a university)\
+            \ may have internal names that are not recorded by the land title office."
+          type: string
+        language:
+          description: The language in which the address is expressed. It MUST use
+            the ISO 639:2023 two letter code 639:2023
+          maxLength: 2
+          minLength: 2
+          type: string
+      type: object
+    FormattedAddressRepresentation:
+      description: 'A freeform text representation agreed to by the BUS and SOF. '
+      properties:
+        formattedAddress:
+          description: A formatted Address Representation that contains a non-fielded
+            address.
+          type: string
+        language:
+          description: The language in which the address is expressed. Based on ISO
+            639:2023
+          maxLength: 2
+          minLength: 2
+          type: string
+      required:
+      - formattedAddress
+      type: object
+    ForwardingInformation:
+      description: "Forwarding information, consisting of either a nexthop IP address\
+        \ in the Subscriber Network (if the access medium is multipoint capable, e.g.,\
+        \ Ethernet), or a specific UNI Access Link (if the access medium is strictly\
+        \ point-to-point, e.g., HDLC, PPP over DSL)."
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        nextHopIpAddress:
+          $ref: '#/components/schemas/Ipv4OrIpv6Address'
+          description: Next hop IP address.
+        uniAccessLink:
+          $ref: '#/components/schemas/IdentifierString'
+          description: UNI Access Link identifier as set by the Buyer in IpUniAccessLink.identifier
+            attribute.
+      type: object
+    FourOctetInteger:
+      description: A four-octet value range integer 0-4294967295
+      format: int64
+      maximum: 4294967295
+      minimum: 0
+      type: integer
+    Gender:
+      description: Enumeration representing the gender of the connector presented
+        to the Subscriber.
+      enum:
+      - SOCKET
+      - PLUG
+      type: string
+    GeographicAddressRef:
+      allOf:
+      - $ref: '#/components/schemas/PlaceRefOrQuery'
+      - description: |
+          A reference to a Geographic Address resource available through Address Validation API.
+        properties:
+          href:
+            description: |
+              Hyperlink to the referenced Address. Hyperlink MAY be used by the SOF in responses. Hyperlink MUST be ignored by the SOF in case it is provided by the BUS in a request.
+            type: string
+          id:
+            description: Identifier of the referenced Geographic Address. This identifier
+              is assigned during a successful address validation request (Geographic
+              Address Management API)
+            type: string
+        required:
+        - '@type'
+        - id
+        type: object
+      x-discriminator-value: GeographicAddressRef
+    GeographicAddress_Query:
+      allOf:
+      - $ref: '#/components/schemas/PlaceRefOrQuery'
+      - description: A list of representations being a subset of Geographic Address
+          entity. This is to be used when providing a list of representations to validate
+          a Geographic Address
+        minProperties: 2
+        properties:
+          fieldedAddressRepresentation:
+            description: A list of Fielded Address representations
+            items:
+              $ref: '#/components/schemas/FieldedAddressRepresentation'
+            type: array
+          formattedAddressRepresentation:
+            description: A list of Formatted Address representations
+            items:
+              $ref: '#/components/schemas/FormattedAddressRepresentation'
+            type: array
+          geographicPointRepresentation:
+            description: A list of Geographic Point Address representations
+            items:
+              $ref: '#/components/schemas/GeographicPointRepresentation'
+            type: array
+          labelRepresentation:
+            description: A list of Label Address representations
+            items:
+              $ref: '#/components/schemas/LabelRepresentation'
+            type: array
+        required:
+        - '@type'
+        type: object
+      x-discriminator-value: GeographicAddress_Query
+    GeographicPointRepresentation:
+      description: |
+        A GeographicPointRepresentation defines a geographic point through coordinates.
+      properties:
+        spatialRef:
+          description: The spatial reference system used to determine the coordinates.
+            The system used and the value of this field are to be agreed during the
+            onboarding process.
+          type: string
+        latitude:
+          description: The latitude expressed in the format specified by the `spacialRef`
+          type: string
+        longitude:
+          description: The longitude expressed in the format specified by the `spacialRef`
+          type: string
+        elevation:
+          description: The elevation expressed in the format specified by the `spacialRef`
+          type: string
+      required:
+      - latitude
+      - longitude
+      - spatialRef
+      type: object
+    GeographicSiteRef:
+      allOf:
+      - $ref: '#/components/schemas/PlaceRefOrQuery'
+      - description: |
+          A reference to a Geographic Site resource available through Service Site API
+        properties:
+          href:
+            description: |
+              Hyperlink to the referenced Site. Hyperlink MAY be used by the SOF in responses. Hyperlink MUST be ignored by the SOF in case it is provided by the BUS in a request.
+            type: string
+          id:
+            description: Identifier of the referenced Geographic Site.
+            type: string
+        required:
+        - '@type'
+        - id
+        type: object
+      x-discriminator-value: GeographicSiteRef
+    HeaderFieldTypes:
+      description: "HeaderFieldTypes is an enumeration for fields defined in MEF 61.1[1]\
+        \ Section 10.13.2 Cloud Ingress Class of Service Map."
+      enum:
+      - SOURCE_IP_ADDRESS
+      - DESTINATION_IP_ADDRESS
+      - L4_PROTOCOL
+      - SOURCE_L4_PORT
+      - DESTINATION_L4_PORT
+      - ETHERNET_PCP
+      - IP_DS
+      type: string
+    IdentifierString:
+      description: Identifier String - max 53 alpha-numerical characters
+      maxLength: 53
+      pattern: "[ -\x7f]+"
+      type: string
+    InformationRate:
+      description: A value and a unit of measure that specifies an Information Rate.
+      properties:
+        irValue:
+          description: The value in the information rate. For example if the information
+            rate is 70 kbps this element is 70.
+          minimum: 0
+          type: number
+        irUnits:
+          $ref: '#/components/schemas/InformationRateUnits'
+          description: "The unit of measure for the Information Rate. For example\
+            \ if the Information Rate is 70KBPS this element is KBPS. Note that the\
+            \ values are decimal values. 1 KBPS is 1000 bits per second and 1MBPS\
+            \ is 1,000,000 bits per second."
+      type: object
+    InformationRateUnits:
+      description: Enum of information rates (such as MBPS)
+      enum:
+      - BPS
+      - KBPS
+      - MBPS
+      - GBPS
+      - TBPS
+      - PBPS
+      - EBPS
+      - ZBPS
+      - YBPS
+      type: string
+    IngressClassOfServiceMap:
+      description: "Is a triple (F,M,D) where F is a list of one or more fields in\
+        \ the packet  header that are used to determine the CoS Name, M is a mapping\
+        \ from combinations  of values of those fields to CoS Names, and D is a default\
+        \ CoS Name used when the  map cannot be applied.  Reference MEF 61.1 Section\
+        \ 10.13.2 Cloud Ingress Class  of Service Map and Section 11.10 IPVC EP Egress\
+        \ Class of Service Map Service Attribute."
+      properties:
+        defaultCosName:
+          description: Default Class of Service Name. Reference MEF 61.1 Section 10.13.2
+            Cloud Ingress Class of Service Map and Section 11.9 IPVC EP Ingress Class
+            of  Service Map Service Attribute.
+          type: string
+        headerFieldTypes:
+          items:
+            $ref: '#/components/schemas/HeaderFieldTypes'
+          minItems: 1
+          type: array
+        ingressClassOfServiceMapping:
+          items:
+            $ref: '#/components/schemas/ClassOfServiceMapEntry'
+          minItems: 0
+          type: array
+      type: object
+    IpBwpEnvelope:
+      description: "A BWP Envelope is a list of Bandwidth Profile Flows, plus additional\
+        \ parameters for the BWP as a whole. A BWP Envelope is a set of one or more\
+        \ BWP Flows that are associated such that the amount of traffic for one flow\
+        \ can affect the amount that is permitted for another flow. Reference MEF\
+        \ 61.1 Section 17.3 Bandwidth Profile Envelopes."
+      properties:
+        maxIrE:
+          $ref: '#/components/schemas/InformationRate'
+        tE:
+          description: The Envelope IR Time in milliseconds. This is the time period
+            over which average Information Rates are calculated and thus it limits
+            the size of a burst. Reference MEF 61.1 Section 17.3 Bandwidth Profile
+            Envelopes.
+          type: integer
+      type: object
+    IpBwpFlow:
+      description: A Bandwidth Profile Flow is a stream of IP Packets meeting certain
+        criteria. The criteria than can be used depends on which BWP Envelope the
+        BWP Flow is a part of. Reference MEF 61.1 Section 17.2 Bandwidth Profile Flows.
+      properties:
+        burstBehavior:
+          $ref: '#/components/schemas/BurstBehavior'
+        cir:
+          $ref: '#/components/schemas/InformationRate'
+        flowIdentifier:
+          description: Identifier for the BWP Flow within the BWP Envelope. Unique
+            integer  between 1 and n where n is the number of BWP Flows in the BWP
+            Envelope.  Reference MEF 61.1 Table 29 - Bandwidth Profile Parameters
+            for a   Bandwidth Profile Flow.
+          type: integer
+        maxIr:
+          $ref: '#/components/schemas/InformationRate'
+        weight:
+          description: 'Identifier for Weight as an integer greater than or equal
+            to 0. Relative  weight for this BWP Flow compared to other BWP Flows in
+            the BWP Envelope.  Reference MEF 61.1 Table 29 - Bandwidth Profile Parameters
+            for a   Bandwidth Profile Flow. '
+          type: integer
+      type: object
+    IpEnni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - $ref: '#/components/schemas/IpEnniCommon'
+      - properties:
+          identifier:
+            description: Unique String identifier for the ENNI. Reference MEF 61.1
+              Section 14.1 ENNI  Identifier Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          enniType:
+            $ref: '#/components/schemas/EnniType'
+          routingInformation:
+            $ref: '#/components/schemas/EnniRoutingInformation'
+          ingressBwpEnvelopes:
+            $ref: '#/components/schemas/IpEnniIngressBwpEnvelopePerEnniLink'
+          egressBwpEnvelopes:
+            $ref: '#/components/schemas/IpEnniEgressBwpEnvelopePerEnniLink'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ip-enni:v1.0.0:all
+    IpEnniCommon:
+      description: "ENNI Common Attributes that apply to each ENNI agreed between\
+        \ two LLOs  (Lowest Level Operators). Reference MEF 61.1[1] Section 15 ENNI\
+        \ Common  Attributes."
+      properties:
+        peeringIdentifier:
+          description: Unique identifier for the ENNI for management purposes. Reference
+            MEF  61.1 Section 14.1 ENNI Identifier Service Attribute.
+          maxLength: 53
+          minLength: 1
+          pattern: "[ -\x7f]+"
+          type: string
+        peeringType:
+          $ref: '#/components/schemas/EnniPeeringType'
+        controlProtocolsList:
+          items:
+            $ref: '#/components/schemas/ControlProtocol'
+          minItems: 0
+          type: array
+        routingProtocols:
+          $ref: '#/components/schemas/RoutingProtocols'
+        serviceMap:
+          $ref: '#/components/schemas/EnniServiceMap'
+      type: object
+    IpEnniEgressBwp:
+      description: All Egress IP Data Packets at the ENNI Access Link.  Reference
+        MEF 61.1 Section 14.5. NOTE- No attributes are needed.
+    IpEnniEgressBwpCos:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - description: "All Egress-Eligible IP Data Packets at the ENNI that if transmitted,\
+          \ would be transmitted over the ENNI Link, and that were mapped on ingress\
+          \ to any of a given set of CoS Names. Reference MEF 61.1 Section 14.5."
+        properties:
+          ipEnniIngressBwp:
+            description: Class of Service name.
+            type: string
+        type: object
+    IpEnniEgressBwpEnvelopePerEnniLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "Is a list (possibly empty) of pairs of (ENNI Service Mapping\
+          \ Identifier, Bandwidth Profile Envelope), where each Bandwidth Profile\
+          \ Envelope consists of parameters and Bandwidth Profile Flow specifications.\
+          \ An Egress Bandwidth Profile Envelope at an ENNI can be specific for either\
+          \ ENNI Links or an IPVC EP. Reference MEF 61.1 Section 14.5 ENNI Egress\
+          \ Bandwidth Profile Envelopes Service Attribute."
+        properties:
+          ipEnniEgressBwp:
+            $ref: '#/components/schemas/IpEnniEgressBwp'
+            description: Reference to IpEnniEgressBwp.
+          ipEnniEgressBwpCos:
+            $ref: '#/components/schemas/IpEnniEgressBwpCos'
+            description: Reference to IpEnniEgressBwpCos.
+        type: object
+    IpEnniIngressBwp:
+      description: "All Ingress IP Data Packets at the ENNI Access Link.  Reference\
+        \ MEF 61.1[1] Section 14.4. NOTE- No attributes  are needed.     "
+    IpEnniIngressBwpCos:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - description: "All Egress-Eligible IP Data Packets at the ENNI that if transmitted,\
+          \ would be transmitted over the ENNI Link, and that were mapped on ingress\
+          \ to any of a given set of CoS Names. Reference MEF 61.1[1] Section 14.4."
+        properties:
+          ipEnniIngressBwp:
+            description: Class of Service name.
+            type: string
+        type: object
+    IpEnniIngressBwpEnvelopePerEnniLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "Is a list (possibly empty) of pairs of (ENNI Service Mapping\
+          \ Identifier, Bandwidth Profile Envelope), where each Bandwidth Profile\
+          \ Envelope consists of parameters and Bandwidth Profile Flow specifications.\
+          \ An Ingress Bandwidth Profile Envelope at an ENNI can be specific for either\
+          \ ENNI Links or an IPVC EP. Reference MEF 61.1 Section 14.4 ENNI Ingress\
+          \ Bandwidth Profile Envelopes Service Attribute."
+        properties:
+          ipEnniIngressBwp:
+            $ref: '#/components/schemas/IpEnniIngressBwp'
+            description: Reference to IpEnniIngressBwp.
+          ipEnniIngressBwpCos:
+            $ref: '#/components/schemas/IpEnniIngressBwpCos'
+            description: Reference to IpEnniIngressBwpCos.
+        type: object
+    IpEnniLink:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: "An ENNI can comprise one or more distinct IP Links, each of\
+          \ which is a single IP hop. \nThese links are known as ENNI Links, and typically\
+          \ each corresponds to a distinct IP \nsubnet (which can have both IPv4 and\
+          \ IPv6 addressing).  ENNI Links are assumed to be \npoint-to-point. Reference\
+          \ MEF 61.1 Section 8.2 ENNIs and ENNI Links.\n"
+        properties:
+          identifier:
+            description: Unique String identifier for the ENNI Link. Reference MEF
+              61.1 Section 16.1 ENNI  Link Identifier Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          l2Technology:
+            $ref: '#/components/schemas/L2Technology'
+            description: Describes the underlying Layer 2 that carries IP Packets
+              over the ENNI. Reference  MEF 61.1 Section 16.2 ENNI Link L2 Technology
+              Attribute.
+          ipv4ConnectionAddressing:
+            $ref: '#/components/schemas/EnniIpv4ConnectionAddressing'
+            description: Reference MEF 16.3 ENNI Link IPv3 Connection Addressing Attribute.
+          ipv6ConnectionAddressing:
+            $ref: '#/components/schemas/EnniIpv6ConnectionAddressing'
+            description: Reference MEF 61.1 Section 16.4 ENNI Link IPv6 Connection
+              Addressing Attribute.
+          bfd:
+            $ref: '#/components/schemas/AccessLinkBfd'
+            description: "Indicates whether Bidirectional Forwarding Detection (BFD)\
+              \ is enabled on the ENNI  Link, and if so if the parameters that need\
+              \ to be agreed. Reference MEF 61.1  Section 16.5 ENNI Link BFD Attribute. "
+          mtu:
+            description: "Maximum size, in octets of an IP Packet that can traverse\
+              \ the ENNI Link. Reference MEF 61.1 Section 16.6 ENNI Link IP MTU Attribute."
+            type: integer
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ip-enni-link:v1.0.0:all
+    IpSls:
+      description: "The IPVC Service Level Specification (SLS) describes the performance\
+        \ objectives for the performance of conformant IP Data Packets that flow over\
+        \ the IPVC. The IPVC Service Level Specification Attribute is either None,\
+        \ or a four-tuple of the form (s,T,E,L) where s is the start time, T is a\
+        \ period of time, E is a set of SLS entries and L is a set of the CoS Name\
+        \ and number of other parameters specific to the Performance Metric. Reference\
+        \ MEF 61.1 Section 10.9 IPVC Service Level Specification Service Attribute."
+      properties:
+        startTime:
+          format: date-time
+          type: string
+        periodOfTime:
+          $ref: '#/components/schemas/TimeDuration'
+        oneWayMeanPacketDelay:
+          items:
+            $ref: '#/components/schemas/OneWayMeanPacketDelay'
+          type: array
+        oneWayInterPacketDelayVariation:
+          items:
+            $ref: '#/components/schemas/OneWayInterPacketDelayVariation'
+          type: array
+        oneWayPacketDelayPercentile:
+          items:
+            $ref: '#/components/schemas/OneWayPacketDelayPercentile'
+          type: array
+        oneWayPacketDelayRange:
+          items:
+            $ref: '#/components/schemas/OneWayPacketDelayRange'
+          type: array
+        oneWayPacketDelayLossRatio:
+          items:
+            $ref: '#/components/schemas/OneWayPacketDelayLossRatio'
+          type: array
+        serviceUptime:
+          items:
+            $ref: '#/components/schemas/ServiceUptime'
+          type: array
+        meanTimeToRepair:
+          items:
+            $ref: '#/components/schemas/MeanTimeToRepair'
+          type: array
+        locationList:
+          items:
+            $ref: '#/components/schemas/Location'
+          minItems: 1
+          type: array
+      type: object
+    IpUni:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: "A User Network Interface (UNI) is the demarcation point between\
+          \ the responsibility \nof the SP and the responsibility of the Subscriber.\
+          \ Note that a given UNI always \nrelates to a single SP and a single Subscriber.\
+          \ Reference MEF 61.1 Section 7.3 UNIs \nand UNI Access Links.\n"
+        properties:
+          identifier:
+            description: Unique string identifier for the UNI. Reference MEF 61.1
+              Section 12.1 UNI  Identifier Service Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          managementType:
+            $ref: '#/components/schemas/UniManagementType'
+            description: Indicates whether the CE is the responsibility of the Subscriber
+              or the Service  Provider. Reference MEF 61.1 Section 12.2 UNI Management
+              Type Service Attribute.
+          ingressBwpEnvelope:
+            $ref: '#/components/schemas/IpUniIngressBwpEnvelope'
+            description: "None, or a single Bandwidth Profile Envelope consisting\
+              \ of parameters and Bandwidth  Profile Flow specifications. Reference\
+              \ MEF 61.1 Section 12.4 UNI Ingress Bandwidth Profile Service Attribute."
+          egressBwpEnvelope:
+            $ref: '#/components/schemas/IpUniEgressBwpEnvelope'
+            description: "None, or a single Bandwidth Profile Envelope consisting\
+              \ of parameters and Bandwidth  Profile Flow specifications. Reference\
+              \ MEF 61.1 Section 12.5 UNI Egress Bandwidth Profile Service Attribute."
+          listOfControlProtocols:
+            description: Indication of IP Control Protocols that are not forwarded
+              transparently by the SP. Reference MEF 61.1 Section 12.6 UNI List of
+              Control Protocols Service Attribute. Absence of this attribute corresponds
+              to a value of "None".
+            items:
+              $ref: '#/components/schemas/ControlProtocol'
+            minItems: 0
+            type: array
+          routingProtocols:
+            $ref: '#/components/schemas/RoutingProtocols'
+            description: List of Routing Protocols used across the UNI. Reference
+              MEF 61.1 Section 12.7 UNI Routing Protocols Service Attribute. Absence
+              of this attribute corresponds to a value of "None".
+          reversePathForwarding:
+            $ref: '#/components/schemas/EnabledDisabled'
+            description: "Indicates whether Reverse Path Forwarding checks are used\
+              \ by the SP at the UNI. Reference MEF 61.1 Section 12.8 UNI Reverse\
+              \ Path Forwarding Service Attribute.  [D11]\tAt a UNI with an IPVC EP\
+              \ for an Internet Access Service, reversePathForwarding SHOULD be ENABLED."
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ip-uni:v1.0.0:all
+    IpUniAccessLink:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: An individual connection between the Subscriber and the SP that
+          forms part of a  UNI. Reference MEF 61.1 Section 7.3 UNIs and UNI Access
+          Link.
+        properties:
+          identifier:
+            description: Unique identifier for the UNI Access Link management purposes.
+              Reference  MEF 61.1 Section 13.1 UNI Access Link Identifier Service
+              Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          connectionType:
+            $ref: '#/components/schemas/ConnectionType'
+            description: Indicates the number of interfaces that can be attached to
+              the UNI Access Link. Reference  MEF 61.1 Section 13.2 UNI Access Link
+              Connection Type Service Attribute.
+          l2Technology:
+            $ref: '#/components/schemas/L2Technology'
+            description: Describes the underlying network layers that carry IP Packets
+              across the UNI. Reference  MEF 61.1 Section 13.3 UNI Access Link L2
+              Technology Service Attribute
+          ipv4ConnectionAddressing:
+            $ref: '#/components/schemas/UniIpv4ConnectionAddressing'
+            description: Specifies how IPv4 addresses are allocated to the devices
+              connected to the UNI Access Link.  Reference MEF 61.1 Section 13.4 UNI
+              Access Link IPv4 Connection Addressing Service Attribute.
+          ipv6ConnectionAddressing:
+            $ref: '#/components/schemas/UniIpv6ConnectionAddressing'
+            description: Specifies how IPv6 addresses are allocated to the devices
+              connected to the UNI Access Link.  Reference MEF 61.1 Section 13.5 UNI
+              Access Link IPv6 Connection Addressing Service Attribute.
+          dhcpRelay:
+            $ref: '#/components/schemas/DhcpRelay'
+            description: Indicates whether the DHCP Relay function is enabled or disabled
+              on the UNI Access Link.  Reference MEF 61.1 Section 13.6 UNI Access
+              Link DHCP Relay Service Attribute.
+          prefixDelegation:
+            $ref: '#/components/schemas/EnabledDisabled'
+            description: "In certain situations (particularly for Internet access),\
+              \ a Subscriber might not have their  own IP Prefixes for use in the\
+              \ Subscriber Network. Reference MEF 61.1 Section 13.7 UNI Access  Link\
+              \ Prefix Delegation Service Attribute."
+          bfd:
+            $ref: '#/components/schemas/AccessLinkBfd'
+            description: Indicates whether the Bidirectional Forwarding Detection
+              (BFD) function is enabled or disabled  on the UNI Access Link. Reference
+              MEF 61.1 Section 13.8 UNI Access Link BFD Service Attribute.
+          mtu:
+            description: "Maximum size, in octets of an IP Packet that can traverse\
+              \ the UNI Access Link.  Reference MEF 61.1 Section 13.9 UNI Access Link\
+              \ IP MTU Service Attribute."
+            type: integer
+          ingressBwpEnvelope:
+            $ref: '#/components/schemas/IpUniAccessLinkIngressBwpEnvelope'
+            description: A single Bandwidth Profile Envelope. Reference MEF 61.1 Section
+              13.10 UNI Access Link Ingress  Bandwidth Profile Envelope Service Attribute.
+          egressBwpEnvelope:
+            $ref: '#/components/schemas/IpUniAccessLinkEgressBwpEnvelope'
+            description: A single Bandwidth Profile Envelope. Reference MEF 61.1 Section
+              13.11 UNI Access Link Egress  Bandwidth Profile Envelope Service Attribute.
+          reservedVrids:
+            items:
+              $ref: '#/components/schemas/Vrid'
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ip-uni-access-link:1.0.0:all
+    IpUniAccessLinkEgressBwp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+        description: "All Egress IP Data Packets at the UNI Access Link.  Reference\
+          \ MEF 61.1 Reference MEF 61.1[1] Section 13.11 UNI Access Link Egress BWP\
+          \ Envelope. NOTE: No attributes are needed. "
+    IpUniAccessLinkEgressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and Bandwidth Profile Flow specifications. An Egress Bandwidth Profile\
+          \ Envelope can be specified for one of a UNI, a UNI Access, or an IPVC EP.\
+          \ Reference MEF 61.1 Section 13.11 UNI Access Link Egress Bandwidth Profile\
+          \ Envelope Service Attribute."
+        properties:
+          ipUniAccessLinkEgressBwp:
+            $ref: '#/components/schemas/IpUniAccessLinkEgressBwp'
+          ipUniAccessLinkEgressBwpIpvcEp:
+            description: Pointer to IpUniAccessLinkEgressBwpIpvcEp
+            items:
+              $ref: '#/components/schemas/IpUniAccessLinkEgressBwpIpvcEp'
+            minItems: 0
+            type: array
+          ipUniAccessLinkEgressBwpIpvcEpCos:
+            description: Pointer to IpUniAccessLinkEgressBwpIpvcEpCos
+            items:
+              $ref: '#/components/schemas/IpUniAccessLinkEgressBwpIpvcEpCos'
+            minItems: 0
+            type: array
+        type: object
+    IpUniAccessLinkEgressBwpIpvcEp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - properties:
+          ipvcEpIdentifier:
+            description: IPVC End Point Identifier for an IPVC End Point located at
+              the UNI Access Link. Reference MEF 61.1 Table 28.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniAccessLinkEgressBwpIpvcEpCos:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - properties:
+          ipvcEpIdentifier:
+            type: string
+          ipvcEpIdCosName:
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniAccessLinkIngressBwp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+        description: "All Egress IP Data Packets at the UNI Access Link. Reference\
+          \ MEF 61.1 Reference MEF 61.1[1] Section 13.11 UNI Access Link Egress BWP\
+          \ Envelope. NOTE: No attributes are needed.       "
+    IpUniAccessLinkIngressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and  Bandwidth Profile Flow specifications. An Ingress Bandwidth Profile\
+          \  Envelope can be specified for one of a UNI, a UNI Ac-cess, or an IPVC\
+          \  EP. Reference MEF 61.1 Section 13.10 UNI Access Link Ingress Bandwidth\
+          \  Profile Envelope Service Attribute."
+        properties:
+          ipUniAccessLinkIngressBwp:
+            $ref: '#/components/schemas/IpUniAccessLinkIngressBwp'
+          ipUniAccessLinkIngressBwpIpvcEp:
+            description: Pointer to IpUniAccessLinkIngressBwpIpvcEp.
+            items:
+              $ref: '#/components/schemas/IpUniAccessLinkIngressBwpIpvcEp'
+            minItems: 0
+            type: array
+          ipUniAccessLinkIngressBwpIpvcEpCos:
+            description: Pointer to IpUniAccessLinkIngressBwpIpvcEpCos.
+            items:
+              $ref: '#/components/schemas/IpUniAccessLinkEgressBwpIpvcEpCos'
+            minItems: 0
+            type: array
+        type: object
+    IpUniAccessLinkIngressBwpIpvcEp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - description: "All Ingress IP Data Packets at the UNI that are received over\
+          \ the UNI Access  Link, and are mapped to any of a given set of IPVC End\
+          \ Points. Reference MEF 61.1  Section 13.10 UNI Access Link Ingress BWP\
+          \ Envelope."
+        properties:
+          ipvcEpIdentifier:
+            description: IPVC End Point Identifier for an IPVC End Point located at
+              the UNI Access Link. Reference MEF 61.1 Table 28.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniAccessLinkTrunk:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: A UNI Access Link Trunk is a construct that encapsulates the
+          details of Layer 1  and Layer 2 configuration shared by one or more UNI
+          Access Links. Reference MEF  61.1.1 Section A1-1 UNI Access Link Trunk Service
+          Attributes.
+        properties:
+          identifier:
+            description: Unique identifier for the UNI Access Link Trunk for management
+              purposes. Reference  MEF 61.1.1 Section A1-1.1 UNI Access Link Trunk
+              Identifier Service Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          accessLinkTrunk:
+            $ref: '#/components/schemas/UniAccessLinkTrunk'
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ip-uni-access-link-trunk:1.0.0:all
+    IpUniEgressBwpAccessLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: All Ingress IP Data Packets at the UNI that are received over
+          one of a give set of UNI Access Links. Reference MEF 61.1 Section 12.5 UNI
+          Egress BWP Envelope.
+        properties:
+          uniAccessLinkIdentifier:
+            description: UNI Access Link Identifier.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniEgressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and Bandwidth Profile  Flow specifications. If specified, the BWP Envelope\
+          \ is used for an egress Bandwidth Profile. The BWP Flows can be defined\
+          \ per UNI, per IPVC EP, per UNI Access Link, per CosName, etc. Reference\
+          \ MEF 61.1 Section 12.5 UNI Egress Bandwidth Profile Envelope Service Attribute."
+        properties:
+          ipUniEgressBwpAccessLink:
+            description: "All Egress IP Data Packets at the UNI that are mapped to\
+              \ any of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1\
+              \ Section 12.5 UNI Egress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniEgressBwpAccessLink'
+            type: array
+          ipUniEgressBwpIpvcEp:
+            description: All Egress IP Data Packets at the UNI that are mapped to
+              any of a given set of IPVC EPs. Reference MEF 61.1 Section 12.5 UNI
+              Egress BWP Envelope.
+            items:
+              $ref: '#/components/schemas/IpUniEgressBwpIpvcEp'
+            type: array
+          ipUniEgressBwpIpvcEpAccessLink:
+            description: All Egress IP Data Packets at the UNI that are received over
+              one of a give set of UNI Access Links. Reference MEF 61.1 Section 12.5
+              UNI Egress BWP Envelope.
+            items:
+              $ref: '#/components/schemas/IpUniEgressIpvcBwpIpvcEpAccessLink'
+            type: array
+          ipUniEgressBwpIpvcEpCos:
+            description: "All Egress IP Data Packets at the UNI that are mapped to\
+              \ any of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1\
+              \ Section 12.5 UNI Egress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniEgressBwpIpvcEpCos'
+            type: array
+          ipUniEgressBwpIpvcEpCosAccessLink:
+            description: "All Egress IP Data Packets at the UNI that are received\
+              \ over one of a given set of UNI Access Links, and that are mapped to\
+              \ the any of a given set of (IPVC EP, Cos Name) pairs. Reference MEF\
+              \ 61.1 Section 12.5 UNI Egress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniEgressBwpIpvcEpCosAccessLink'
+            type: array
+          ipUniEgressBwpUni:
+            $ref: '#/components/schemas/IpUniEgressBwpUni'
+            description: All Egress IP Data Packets at the UNI. Reference MEF 61.1
+              Section 12.5 UNI Egress BWP Envelope.
+        type: object
+    IpUniEgressBwpIpvcEp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - description: All Ingress IP Data Packets at the UNI that are mapped to any
+          of a given set of IPVC EPs. Reference MEF 61.1 Section 12.5 UNI Egress BWP
+          Envelope.
+        properties:
+          ipvcEndPointIdentifier:
+            description: IPVC End Point Identifier for an IPVC End Point located at
+              the UNI.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniEgressBwpIpvcEpCos:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "All Ingress IP Data Packets at the UNI that are mapped to any\
+          \ of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1 Section\
+          \ 12.5 UNI Egress BWP Envelope."
+        properties:
+          ipvcEpIdCosName:
+            description: IPVC End Point and CoS Identifier. Reference MEF 61.1 Table
+              28.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniEgressBwpIpvcEpCosAccessLink:
+      description: "All Ingress IP Data Packets at the UNI that are received over\
+        \ one of a given set of UNI Access Links,and that are mapped to the any of\
+        \ a given set of (IPVC EP, Cos Name) pairs. Reference MEF 61.1 Section 12.4\
+        \ UNI Ingress BWP Envelope."
+      properties:
+        ipvcEpIdCosName:
+          description: IPVC End Point and CoS Identifier. Reference MEF 61.1 Table
+            28.
+          items:
+            $ref: '#/components/schemas/EndPointIdentifierAndCosName'
+          minItems: 1
+          type: array
+        uniAccessLinkIdentifier:
+          description: UNI Access Link Identifier.
+          items:
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    IpUniEgressBwpUni:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      description: All Ingress IP Data Packets at the UNI. Reference MEF 61.1 Section
+        12.5 UNI Egress BWP Envelope.
+    IpUniEgressIpvcBwpIpvcEpAccessLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: All Ingress IP Data Packets at the UNI that are received over
+          one of a give set of UNI Access Links. Reference MEF 61.1 Section 12.4 UNI
+          Ingress BWP Envelope.
+        properties:
+          ipvcEndPointIdentifier:
+            description: IPVC End Point Identifier
+            items:
+              type: string
+            minItems: 1
+            type: array
+          uniAccessLinkIdentifier:
+            description: UNI Access Link Identifier.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniIngressBwpAccessLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: All Ingress IP Data Packets at the UNI that are received over
+          one of a give set of UNI Access Links. Reference MEF 61.1 Section 12.4 UNI
+          Ingress BWP Envelope.
+        properties:
+          uniAccessLinkIdentifier:
+            description: UNI Access Link Identifier.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniIngressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and Bandwidth Profile  Flow specifications. If specified, the BWP Envelope\
+          \ is used for an ingress Bandwidth Profile. The BWP Flows can be defined\
+          \ per UNI, per IPVC EP, per UNI Access Link, per CosName, etc. Reference\
+          \ MEF 61.1 Section 12.4 UNI Ingress Bandwidth Profile Envelope Service Attribute."
+        properties:
+          ipUniIngressBwpAccessLink:
+            description: "All Ingress IP Data Packets at the UNI that are mapped to\
+              \ any of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1\
+              \ Section 12.4 UNI Ingress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniIngressBwpAccessLink'
+            type: array
+          ipUniIngressBwpIpvcEp:
+            description: All Ingress IP Data Packets at the UNI that are mapped to
+              any of a given set of IPVC EPs. Reference MEF 61.1 Section 12.4 UNI
+              Ingress BWP Envelope.
+            items:
+              $ref: '#/components/schemas/IpUniIngressBwpIpvcEp'
+            type: array
+          ipUniIngressBwpIpvcEpAccessLink:
+            description: All Ingress IP Data Packets at the UNI that are received
+              over one of a give set of UNI Access Links. Reference MEF 61.1 Section
+              12.4 UNI Ingress BWP Envelope.
+            items:
+              $ref: '#/components/schemas/IpUniIngressIpvcBwpIpvcEpAccessLink'
+            type: array
+          ipUniIngressBwpIpvcEpCos:
+            description: "All Ingress IP Data Packets at the UNI that are mapped to\
+              \ any of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1\
+              \ Section 12.4 UNI Ingress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniIngressBwpIpvcEpCos'
+            type: array
+          ipUniIngressBwpIpvcEpCosAccessLink:
+            description: "All Ingress IP Data Packets at the UNI that are received\
+              \ over one of a given set of UNI Access Links, and that are mapped to\
+              \ the any of a given set of (IPVC EP, Cos Name) pairs. Reference MEF\
+              \ 61.1 Section 12.4 UNI Ingress BWP Envelope."
+            items:
+              $ref: '#/components/schemas/IpUniIngressBwpIpvcEpCosAccessLink'
+            type: array
+          ipUniIngressBwpUni:
+            $ref: '#/components/schemas/IpUniIngressBwpUni'
+            description: All Ingress IP Data Packets at the UNI. Reference MEF 61.1
+              Section 12.4 UNI Ingress BWP Envelope.
+        type: object
+    IpUniIngressBwpIpvcEp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - description: All Ingress IP Data Packets at the UNI that are mapped to any
+          of a given set of IPVC EPs. Reference MEF 61.1 Section 12.4 UNI Ingress
+          BWP Envelope.
+        properties:
+          ipvcEndPointIdentifier:
+            description: IPVC End Point Identifier for an IPVC End Point located at
+              the UNI.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniIngressBwpIpvcEpCos:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "All Ingress IP Data Packets at the UNI that are mapped to any\
+          \ of a given set of (IPVC, EP, CoS Name) pairs. Reference MEF 61.1 Section\
+          \ 12.4 UNI Ingress BWP Envelope."
+        properties:
+          ipvcEpIdCosName:
+            description: IPVC End Point and CoS Identifier. Reference MEF 61.1 Table
+              28.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    IpUniIngressBwpIpvcEpCosAccessLink:
+      description: "All Ingress IP Data Packets at the UNI that are received over\
+        \ one of a given set of UNI Access Links,and that are mapped to the any of\
+        \ a given set of (IPVC EP, Cos Name) pairs. Reference MEF 61.1 Section 12.4\
+        \ UNI Ingress BWP Envelope."
+      properties:
+        ipvcEpidCosName:
+          description: IPVC End Point and CoS Identifier. Reference MEF 61.1 Table
+            28.
+          items:
+            $ref: '#/components/schemas/EndPointIdentifierAndCosName'
+          minItems: 1
+          type: array
+        uniAccessLinkIdentifier:
+          description: UNI Access Link Identifier.
+          items:
+            type: string
+          minItems: 1
+          type: array
+      type: object
+    IpUniIngressBwpUni:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      description: All Ingress IP Data Packets at the UNI. Reference MEF 61.1 Section
+        12.4 UNI Ingress BWP Envelope.
+    IpUniIngressIpvcBwpIpvcEpAccessLink:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: All Ingress IP Data Packets at the UNI that are received over
+          one of a give set of UNI Access Links. Reference MEF 61.1 Section 12.4 UNI
+          Ingress BWP Envelope.
+        properties:
+          ipvcEndPointIdentifier:
+            description: IPVC End Point Identifier
+            items:
+              type: string
+            minItems: 1
+            type: array
+          uniAccessLinkIdentifier:
+            description: UNI Access Link Identifier.
+            items:
+              type: string
+            minItems: 1
+            type: array
+        type: object
+    Ipv4Address:
+      description: Data type representing IPv4 address.
+      format: ipv4
+      type: string
+    Ipv4AddressingType:
+      description: "Enumeration representing IPv4 Address Types specific for UNI Access\
+        \ Links.\n- DHCP: Dynamic Host Configuration Protocol (DHCP) is used the Subscriber\
+        \ devices \nto request IPv4 addresses in a given subnet from the SP or Operator.\n\
+        - STATIC: IPv4 addresses in a given IPv4 subnet are statically assigned to\
+        \ the \nSP or Operator and to the Subscriber.\n- UNNUMBERED: The SP or Operator\
+        \ and the Subscriber each assigned an IPv4 address\n(from their own address\
+        \ pools) independently. These addresses can be on different \nsubnets, and\
+        \ so an interface-based routing protocol is needed to ensure reachability.\n"
+      enum:
+      - DHCP
+      - STATIC
+      - UNNUMBERED
+      type: string
+    Ipv4OrIpv6Address:
+      description: Data type representing IPv4 or IPV6 address.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        ipv4Address:
+          $ref: '#/components/schemas/Ipv4Address'
+          description: IPv4 address.
+        ipv6Address:
+          $ref: '#/components/schemas/Ipv6Address'
+          description: IPv6 address.
+      type: object
+    Ipv4OrIpv6Prefix:
+      description: IPv4 or IPv6 prefix. Includes subnet address and prefix length.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        ipv4Prefix:
+          $ref: '#/components/schemas/Ipv4Prefix'
+          description: IPv4 prefix.
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+          description: IPv6 prefix.
+      type: object
+    Ipv4Prefix:
+      description: Data type representing IPv4 address prefix and mask length between
+        0 and 31 bits.
+      properties:
+        ipv4Address:
+          $ref: '#/components/schemas/Ipv4Address'
+          description: IPv4 address.
+        prefixLength:
+          description: IPv4 address prefix. Length 0-31.
+          maximum: 31
+          minimum: 0
+          type: integer
+      type: object
+    Ipv4PrimarySubnet:
+      allOf:
+      - $ref: '#/components/schemas/Ipv4SecondarySubnet'
+      - description: IPv4 Subnet used in context of Primary Ipvc subnet. It adds the
+          subscriberIpv4Address attribute to the Ipv4SecondarySubnet.
+        properties:
+          subscriberIpv4Address:
+            $ref: '#/components/schemas/Ipv4Address'
+            description: Subscriber IPv4 Address
+        type: object
+    Ipv4SecondarySubnet:
+      description: Data type representing an IPv4 subnet logical partition of an IP
+        network. Included is list of Service Provider IPv4 addresses.
+      properties:
+        ipv4Prefix:
+          $ref: '#/components/schemas/Ipv4Prefix'
+          description: IPv4 address prefix (IPv4 address prefix and mask length between
+            0 and 31 in bits).
+        serviceProviderIpv4Addresses:
+          description: |
+            List of Service Provider IPv4 addresses. [R25] "If IPv4 Connection Addressing is DHCP, the UNI Access Link IPv4 Connection Addressing Primary Subnet parameter MUST contain only a single Service Provider IPv4 Address." Reference - MEF 69.1 Section 9.4.
+          items:
+            $ref: '#/components/schemas/Ipv4Address'
+          minItems: 1
+          type: array
+        reservedPrefixes:
+          description: "List of IPv4 Prefixes, possibly empty"
+          items:
+            $ref: '#/components/schemas/Ipv4Prefix'
+          type: array
+      type: object
+    Ipv6Address:
+      description: Data type representing IPv6 address.
+      format: ipv6
+      type: string
+    Ipv6AddressingType:
+      description: "Enumeration representing IPv6 Address Types specific for UNI Access\
+        \ Links.\n-DHCP: Dynamic Host Configuration Protocol (DHCP) is used by the\
+        \ Subscriber\ndevices to request IPv6 addresses in a given subnet from the\
+        \ SP or Operator.\n-SLAAC: Stateless Address Autoconfiguration (SLAAC) is\
+        \ used by the Subscriber \ndevices to create unique IPv6 global addresses\
+        \ within an IP Prefix advertised \nby the SP or Operator as described in RFC\
+        \ 4862.\n-STATIC: IPv6 addresses in a given IPv6 subnet are statically assigned\
+        \ to the \nSP or Operator and to the Subscriber.\n- LL_ONLY: If the value\
+        \ is LL-only, these are only IPv6 addresses used on \nthe UNI Access Link.\n"
+      enum:
+      - DHCP
+      - SLAAC
+      - STATIC
+      - LL_ONLY
+      type: string
+    Ipv6Prefix:
+      description: Data type representing IPv6 address prefix and mask length between
+        0 and 127 in bits.
+      properties:
+        ipv6Address:
+          $ref: '#/components/schemas/Ipv6Address'
+          description: IPv6 address.
+        prefixLength:
+          description: IPv6 address prefix. Length 0-127.
+          maximum: 127
+          minimum: 0
+          type: integer
+      type: object
+    Ipv6Subnet:
+      description: IPv6Subnet is a data type representing an IPv6 subnet logical partition
+        of an IP network. Included is list of Service Provider IPv6 addresses.
+      properties:
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+          description: IPv6 Prefix (IPv6 address prefix and mask length between 0
+            and 127 in bits).
+        serviceProviderIpv6Addresses:
+          description: List of IPv6 Service Provider addresses.
+          items:
+            $ref: '#/components/schemas/Ipv6Address'
+          minItems: 1
+          type: array
+        reservedPrefixes:
+          description: "List of IPv6 Prefixes, possibly empty"
+          items:
+            $ref: '#/components/schemas/Ipv6Prefix'
+          type: array
+      type: object
+    Ipvc:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: An IP Service is formed of an IP Virtual Connection (IPVC) that
+          links together  IPVC End Points at External Interfaces (EIs). Reference
+          MEF 61.1 Section 7.4  IP Virtual Connections and IPVC End Points.
+        properties:
+          identifier:
+            description: A unique string identifier for the IPVC. Reference MEF 61.1
+              Section 10.1  IPVC Identifier Service Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          ipvcTopology:
+            $ref: '#/components/schemas/ServiceTopology'
+            description: Attribute denoting the packet flow between any of the IPVC
+              End Points for  the IPVC. Reference MEF 61.1 Section 10.2 IPVC Topology
+              Service Attribute.
+          packetDelivery:
+            $ref: '#/components/schemas/PacketDelivery'
+            description: Indicates whether packets are delivered per standard IP routing
+              behavior or  by some other means. Reference MEF 61.1 Section 10.3 IPVC
+              Packet Delivery Service Attribute.
+          maximumNumberOfIpv4Routes:
+            $ref: '#/components/schemas/MaximumNumberOfIpv4Routes'
+            description: 'Maximum number of IPv4 routes supported by the service as
+              a whole. Absence of this  attribute corresponds to a value of “Unlimited”.
+              Reference MEF 61.1 Section 10.5  IPVC Maximum Number of IPv4 Routes
+              Service Attribute. '
+          maximumNumberOfIpv6Routes:
+            $ref: '#/components/schemas/MaximumNumberOfIpv6Routes'
+            description: Maximum number of IPv6 routes supported by the service as
+              a whole. Absence of this  attribute corresponds to a value of “Unlimited”.
+              Reference MEF 61.1 Section 10.6  IPVC Maximum Number of IPv6 Routes
+              Service Attribute.
+          dscpPreservation:
+            $ref: '#/components/schemas/EnabledDisabled'
+            description: Indicates where the SP or Operator is allowed to modify the
+              value of the IP DS field  in the IP header of the Subscriber's traffic
+              as it traverses the IPVC. Reference  MEF 61.1 Section 10.7 IPVC DSCP
+              Preservation Service Attribute
+          listOfClassOfServiceNames:
+            description: The list of CoS Names supported by the IPVC. Reference MEF
+              61.1 Section 10.8 IPVC  List of Class of Service Names Service Attribute.
+            items:
+              type: string
+            minItems: 1
+            type: array
+          serviceLevelSpecification:
+            $ref: '#/components/schemas/IpSls'
+            description: The set of performance objectives for each CoS Name in the
+              IPVC. The absence of this  attribute corresponds to a value of "NONE".
+              Reference MEF 61.1 Section 10.9 IPVC  Service Level Specification Service
+              Attribute.
+          maximumTransferUnit:
+            description: Indicates the maximum size (in octets) of an IP packet that
+              can traverse the IPVC without  fragmentation.  Reference MEF 61.1 Section
+              10.10 IPVC MTU Service Attribute.
+            type: integer
+          pathMtuDiscovery:
+            $ref: '#/components/schemas/EnabledDisabled'
+            description: Indicates whether the Patch MTU Discovery is supported for
+              the IPVC. Reference MEF 61.1  Section 10.11 IPVC Path MTU Discovery
+              Service Attribute.
+          fragmentation:
+            $ref: '#/components/schemas/EnabledDisabled'
+            description: Indicates whether IPv4 Packets can be fragmented. Reference
+              MEF 61.1 Section 10.12 IPVC  Fragmentation Service Attribute.
+          cloud:
+            $ref: '#/components/schemas/IpvcCloud'
+            description: Reference MEF 61.1 Section 10.13 IPVC Cloud Service Attribute.
+              The absence of this attribute corresponds to a value of "NONE".
+          reservedPrefixes:
+            description: "Reference MEF 61.1 Section 10.14. For an Internet Access\
+              \ Service, IPVC Reserved Prefixes MUST  be either empty, or free from\
+              \ any public address prefixes. (Reference MEF 69.1 Section 9.1 [R14])"
+            items:
+              $ref: '#/components/schemas/Ipv4OrIpv6Prefix'
+            type: array
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ipvc:v1.0.0:all
+    IpvcCloud:
+      description: The IPVC Cloud Service Attribute is a set of parameters describing
+        the access to the cloud service. Reference MEF 61.1 Section 10.13 IPVC Cloud
+        Service Attribute.
+      properties:
+        cloudType:
+          $ref: '#/components/schemas/CloudType'
+        ingressClassOfServiceMap:
+          $ref: '#/components/schemas/IngressClassOfServiceMap'
+        dataLimit:
+          $ref: '#/components/schemas/CloudDataLimit'
+        dns:
+          $ref: '#/components/schemas/CloudDns'
+        networkAddressTranslation:
+          $ref: '#/components/schemas/Ipv4Prefix'
+        subscriberPrefixList:
+          $ref: '#/components/schemas/Ipv4OrIpv6Prefix'
+      type: object
+    IpvcEndPoint:
+      allOf:
+      - $ref: '#/components/schemas/MefServiceConfiguration'
+      - description: "An IPVC End Point is a logical entity at an EI, to which a subset\
+          \ of packets that  traverse the EI is mapped. Reference MEF 61.1 Section\
+          \ 7.4 IP Virtual Connections and IPVC End Points."
+        properties:
+          identifier:
+            description: A unique identifier for the IPVC End Point for management
+              purposes. Reference MEF  61.1 Section 11.1 IPVC EP Identifier Service
+              Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          eiType:
+            $ref: '#/components/schemas/ExternalInterfaceType'
+            description: Indicates whether the IPVC End Point is at a UNI or an ENNI.
+              (Operator IPVC End  Points only). Reference MEF 61.1 Section 11.2 IPVC
+              EP EI Type Service Attribute.
+          role:
+            $ref: '#/components/schemas/IpvcEndPointRole'
+            description: Role of the IPVC End Point in a rooted mulitipoint IPVC.
+              Reference MEF 61.1 Section 11.4  IPVC EP Role Service Attribute.
+          prefixMapping:
+            $ref: '#/components/schemas/Ipv4OrIpv6Prefix'
+            description: "Is a list, possibly empty of IP Pre-fixes. It is used to\
+              \ specify which subnets with the Subscriber Network can access the IPVC\
+              \ via this IPVC EP. Reference MEF 61.1 Section 11.5  IPVC EP Prefix\
+              \ Mapping Service Attribute."
+          enniServiceMappingIdentifier:
+            description: ENNI Service Mapping Identifier assigned by the SP/SO for
+              associating IPVC End Points across  and ENNI. (Operator IPVC End Points
+              only). Reference MEF 61.1 Section 11.6 IPVC EP ENNI  Service Mapping
+              Identifier Service Attribute.
+            maxLength: 53
+            minLength: 1
+            pattern: "[ -\x7f]+"
+            type: string
+          maximumNumberOfIpv4Routes:
+            $ref: '#/components/schemas/MaximumNumberOfIpv4Routes'
+            description: Maximum number of IPv4 routes supported by this IPVC End
+              Point. Reference MEF 61.1 Section  11.7 IPVC EP Maximum Number of IPv4
+              Routes Service Attribute. Absence of this attribute  corresponds to
+              a value of “Unlimited”.
+          maximumNumberOfIpv6Routes:
+            $ref: '#/components/schemas/MaximumNumberOfIpv6Routes'
+            description: Maximum number of IPv6 routes supported by this IPVC End
+              Point. Reference MEF 61.1 Section  11.8 IPVC EP Maximum Number of IPv6
+              Routes Service Attribute. Absence of this attribute  corresponds to
+              a value of “Unlimited”.
+          ingressClassOfServiceMap:
+            $ref: '#/components/schemas/IngressClassOfServiceMap'
+            description: Specification of how ingress packets are mapped to different
+              CoS Names. Reference MEF 61.1  Section 11.9 IPVC EP Ingress Class of
+              Service Map Service Attribute.
+          egressClassOfServiceMap:
+            $ref: '#/components/schemas/EgressClassOfServiceMap'
+            description: Specification of how packets with different CoS Names are
+              treated on egress packets. Reference MEF 61.1 Section 11.10 IPVC EP
+              Egress Class of Service Map Service Attribute.
+          ingressBandwidthProfileEnvelope:
+            $ref: '#/components/schemas/IpvcEpIngressBwpEnvelopeOrNone'
+            description: Ingress Bandwidth Profile Envelope for the IPVC End Point.
+              The absence of this attribute  corresponds to a value of "None". Reference
+              MEF 61.1 Section 11.11 IPVC EP Ingress Bandwidth Profile Service Attribute.
+          egressBandwidthProfileEnvelope:
+            $ref: '#/components/schemas/IpvcEpEgressBwpEnvelopeOrNone'
+            description: Egress Bandwidth Profile Envelope for the IPVC End Point.
+              The absence of this attribute corresponds to a value of "None". Reference
+              MEF 61.1 Section 11.12 IPVC EP Egress Bandwidth Profile Service Attribute.
+        type: object
+      x-discriminator-value: urn:mef:lso:spec:service:ipvc-end-point:v1.0.0:all
+    IpvcEndPointIdentifier:
+      description: "IPVC End Point identifier as described in MEF 61.1 Section 11.1.\
+        \ Note, it points to the value of IpvcEndPoint.identifier Service Attribute."
+      maxLength: 53
+      type: string
+    IpvcEndPointRef:
+      allOf:
+      - $ref: '#/components/schemas/SlsReferencePoint'
+      - description: A subclass of a SlsReferencePoint point to an instance of IPVC
+          Endpoint.
+        properties:
+          ipvcEndPointIdentifier:
+            $ref: '#/components/schemas/IpvcEndPointIdentifier'
+        type: object
+    IpvcEndPointRole:
+      description: Indicates that the IPVC End Points carry traffic from both roots
+        and leaves.  Reference MEF 61.1 Section 8.7 Rooted Multipoint Services across
+        an ENNI.
+      enum:
+      - ROOT
+      - LEAF
+      - TRUNK
+      type: string
+    IpvcEpBwp:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+      - properties:
+          cosName:
+            description: TODO
+            items:
+              type: string
+            type: array
+        type: object
+    IpvcEpBwpAll:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpFlow'
+    IpvcEpEgressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and Bandwidth Profile specifications. An Egress Bandwidth Profile Envelope\
+          \ can be specified for one of a UNI, a UNI Access Link and ENNI Link or\
+          \ an IPVC End Point. Reference MEF 61.1 Section 11.11 IPVC EP Egress Bandwidth\
+          \ Profile Envelope Service Attribute."
+        properties:
+          ipvcEpEgressBwp:
+            description: Pointer to IpvcEpBwp
+            items:
+              $ref: '#/components/schemas/IpvcEpBwp'
+            minItems: 1
+            type: array
+          ipvcEpEgressBwpAll:
+            $ref: '#/components/schemas/IpvcEpBwpAll'
+            description: Pointer to IpvcEpBwpAll
+        type: object
+    IpvcEpEgressBwpEnvelopeOrNone:
+      description: Egress Bandwidth Profile Envelope for the IPVC End Point. The absence
+        of this attribute corresponds to a value of "None". Reference MEF 61.1 Section
+        11.12 IPVC EP Egress Bandwidth Profile Service Attribute.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        egressBwpEnvelopeValue:
+          $ref: '#/components/schemas/IpvcEpEgressBwpEnvelope'
+        egressBwpEnvelopeNone:
+          description: Indicates that there is no Egress Bandwidth Profile Envelope.
+          enum:
+          - NONE
+          type: string
+      type: object
+    IpvcEpIngressBwpEnvelope:
+      allOf:
+      - $ref: '#/components/schemas/IpBwpEnvelope'
+      - description: "A single Bandwidth Profile Envelope consisting of parameters\
+          \ and Bandwidth Profile specifications. An Ingress Bandwidth Profile Envelope\
+          \ can be specified for one of a UNI, a UNI Access Link and ENNI Link or\
+          \ an IPVC End Point. Reference MEF 61.1 Section 11.11 IPVC EP Ingress Bandwidth\
+          \ Profile Envelope Service Attribute."
+        properties:
+          ipvcEpIngressBwp:
+            description: Pointer to IpvcEpBwp
+            items:
+              $ref: '#/components/schemas/IpvcEpBwp'
+            minItems: 1
+            type: array
+          ipvcEpIngressBwpAll:
+            $ref: '#/components/schemas/IpvcEpBwpAll'
+            description: Pointer to IpvcEpBwpAll
+        type: object
+    IpvcEpIngressBwpEnvelopeOrNone:
+      description: Ingress Bandwidth Profile Envelope for the IPVC End Point. The
+        absence of this attribute corresponds to a value of "None". Reference MEF
+        61.1 Section 11.11 IPVC EP Ingress Bandwidth Profile Service Attribute.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        ingressBwpEnvelopeValue:
+          $ref: '#/components/schemas/IpvcEpIngressBwpEnvelope'
+        ingressBwpEnvelopeNone:
+          description: Indicates that there is no Ingress Bandwidth Profile Envelope.
+          enum:
+          - NONE
+          type: string
+      type: object
+    L1Technology:
+      description: Layer 1 technology
+      enum:
+      - 10BASE_T
+      - 10BASE_FP
+      - 10BASE_FB
+      - 10BASE_FL
+      - 100BASE_T
+      - 100BASE_T4
+      - 100BASE_X
+      - 100BASE_T2
+      - 1000BASE_X
+      - 1000BASE_T
+      - 1000BASE_SX
+      - 1000BASE_LX
+      - 1000BASE_CX
+      - 10GBASE_W
+      - 10GBASE_SR
+      - 10GBASE_LR
+      - 10GBASE_ER
+      - 10GBASE_LX4
+      - 10GBASE_SW
+      - 10GBASE_LW
+      - 10GBASE_EW
+      type: string
+    L2Technology:
+      description: Specifies the UNI Access Link Trunk used to carry IP Packets across
+        the  UNI along with information needed to identify IP Packets for this UNI  Access
+        Link. Reference MEF 61.1.1 Section 13.3 UNI Access Link L2 Technology  Service
+        Attribute.
+      properties:
+        trunkId:
+          type: string
+        demux:
+          $ref: '#/components/schemas/Demux'
+      type: object
+    LabelRepresentation:
+      description: A unique identifier controlled by a generally accepted independent
+        administrative authority that specifies a fixed geographical location.
+      properties:
+        label:
+          description: The unique reference to a Geographic Address assigned by the
+            Administrative Authority.
+          type: string
+        administrativeAuthority:
+          description: The organization or standard from the organization that administers
+            this Geographic Address Label ensuring it is unique within the Administrative
+            Authority.
+          type: string
+        language:
+          description: The language in which the label is expressed. Based on ISO
+            639:2023
+          maxLength: 2
+          minLength: 2
+          type: string
+      required:
+      - administrativeAuthority
+      - label
+      type: object
+    LacpVersion:
+      description: "Indicates which version of the Link Aggregation Control Protocol,\
+        \ LACP, is used. (See clause 6.4 in IEEE Std 802.1AX-2020). The possible values\
+        \ are LACPv1, LACPv2, or Static. If the value is Static, LACP is not used."
+      enum:
+      - LACPV1
+      - LACPV2
+      - STATIC
+      type: string
+    Location:
+      allOf:
+      - $ref: '#/components/schemas/SlsReferencePoint'
+      - description: A subclass of a SlsReferencePoint.
+        properties:
+          name:
+            description: Location name
+            type: string
+          description:
+            description: Location description
+            type: string
+          cloudService:
+            description: Attribute to indicate if associated with a cloud service.
+            type: boolean
+          ipvcEndpointIdentifier:
+            description: Pointer to IPVC End Point.
+            items:
+              $ref: '#/components/schemas/IpvcEndPointRef'
+            minItems: 1
+            type: array
+        type: object
+    MaximumNumberOfIpv4Routes:
+      description: Maximum number of IPv4 routes supported by the service as a whole.
+        Absence of this  attribute corresponds to a value of “Unlimited”. Reference
+        MEF 61.1 Section 10.5  IPVC Maximum Number of IPv4 Routes Service Attribute
+        and MEF 61.1 Section  11.7 IPVC EP Maximum Number of IPv4 Routes Service Attribute.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        value:
+          description: The maximum number of IPv4 routes.
+          minimum: 0
+          type: integer
+        numOfIpv4RoutesUnlimited:
+          description: Indicates whether the maximum is unlimited.
+          enum:
+          - UNLIMITED
+          type: string
+      type: object
+    MaximumNumberOfIpv6Routes:
+      description: Maximum number of IPv6 routes supported by the service as a whole.
+        Absence of this  attribute corresponds to a value of “Unlimited”. Reference
+        MEF 61.1 Section 10.6  IPVC Maximum Number of IPv6 Routes Service Attribute
+        and MEF 61.1 Section  11.8 IPVC EP Maximum Number of IPv6 Routes Service Attribute.
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        value:
+          description: The maximum number of IPv4 routes.
+          minimum: 0
+          type: integer
+        numOfIpv6RoutesUnlimited:
+          description: Indicates whether the maximum is unlimited.
+          enum:
+          - UNLIMITED
+          type: string
+      type: object
+    MeanTimeToRepair:
+      description: "The Mean Time To Repair Performance Metric is the arithmetic mean\
+        \ of the durations of all outages that start in a given time period, excluding\
+        \ any pre-agreed maintenance."
+      properties:
+        name:
+          type: string
+        mttrObjective:
+          $ref: '#/components/schemas/TimeDuration'
+      type: object
+    MefServiceConfiguration:
+      description: MefServiceConfiguration is used as an extension point for MEF specific
+        service payload. The `@type` attribute is used as a discriminator
+      discriminator:
+        mapping:
+          urn:mef:lso:spec:service:ip-enni-link:v1.0.0:all: '#/components/schemas/IpEnniLink'
+          urn:mef:lso:spec:service:ip-uni:v1.0.0:all: '#/components/schemas/IpUni'
+          urn:mef:lso:spec:service:ip-uni-access-link-trunk:1.0.0:all: '#/components/schemas/IpUniAccessLinkTrunk'
+          urn:mef:lso:spec:service:ipvc:v1.0.0:all: '#/components/schemas/Ipvc'
+          urn:mef:lso:spec:service:ip-uni-access-link:1.0.0:all: '#/components/schemas/IpUniAccessLink'
+          urn:mef:lso:spec:service:ip-enni:v1.0.0:all: '#/components/schemas/IpEnni'
+          urn:mef:lso:spec:service:ipvc-end-point:v1.0.0:all: '#/components/schemas/IpvcEndPoint'
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: The value of the "$id" as defined in the JSON schema of the
+            service.
+          enum:
+          - urn:mef:lso:spec:service:ip-enni-link:v1.0.0:all
+          - urn:mef:lso:spec:service:ip-uni:v1.0.0:all
+          - urn:mef:lso:spec:service:ip-uni-access-link-trunk:1.0.0:all
+          - urn:mef:lso:spec:service:ipvc:v1.0.0:all
+          - urn:mef:lso:spec:service:ip-uni-access-link:1.0.0:all
+          - urn:mef:lso:spec:service:ip-enni:v1.0.0:all
+          - urn:mef:lso:spec:service:ipvc-end-point:v1.0.0:all
+          type: string
+      required:
+      - '@type'
+      type: object
+    Note_BusSof:
+      description: Extra information about a given entity. Only useful in processes
+        involving human interaction. Not applicable for an automated process.
+      properties:
+        author:
+          description: Author of the note
+          type: string
+        date:
+          description: Date of the note
+          format: date-time
+          type: string
+        id:
+          description: "Identifier of the note within its containing entity (may or\
+            \ may not be globally unique, depending on provider implementation)"
+          type: string
+        source:
+          $ref: '#/components/schemas/BusSofType'
+        text:
+          description: Text of the note
+          type: string
+      required:
+      - author
+      - date
+      - id
+      - source
+      - text
+      type: object
+    OneWayInterPacketDelayVariation:
+      description: "The One-way Inter-Packet Delay Variation Performance Metric is\
+        \ the maximum, over all the ordered pairs of SLS-RPs in a given set S, of\
+        \ the vth percentile of differences between the one-way packet delays of Qualified\
+        \ Packets that arrive at time separated by a given interval tau, for a given\
+        \ ordered pair of SLS-RPs, a given CoS Name, and a given time period Tk. Reference\
+        \ MEF 61.1 Section 10.9.6 One-way Inter-Packet Delay Variation Performance\
+        \ Metric."
+      properties:
+        slsRpPair:
+          description: "Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          items:
+            $ref: '#/components/schemas/SlsRpPair'
+          minItems: 1
+          type: array
+        cosName:
+          description: "One of the values in the IPVC List of Class of Service Names\
+            \ Service Attribute. Reference MEF 61.1 Section 10.9.6 One-way Inter-Packet\
+            \ Delay Variation Performance Metric, Table-6."
+          type: string
+        packetArrivalTimeDifference:
+          description: "Difference in the time of arrival of packets. Reference MEF\
+            \ 61.1 Section 10.9.6 One-way Inter-Packet Delay Variation Performance\
+            \ Metric, Table 6."
+          type: number
+        interPacketDelayVariationPercentile:
+          $ref: '#/components/schemas/Percentage'
+        interPacketDelayVariationObjective:
+          description: "Inter-Packet Delay Variation Objective. Reference MEF 61.1\
+            \ Section 10.9.6 One-way Inter-Packet Delay Variation Performance Metric,\
+            \ Table 6."
+          type: number
+      type: object
+    OneWayMeanPacketDelay:
+      description: "The One-way Mean Packet Delay Performance Metric is the maximum,\
+        \ over all the ordered pairs of SLS-RPs in a given set S, of the arithmetic\
+        \ mean of one-way packet delay for Qualified Packets for a given ordered pair\
+        \ of SLS-RPs, a given CoS Name, and a  given time period Tk. Reference MEF\
+        \ 61.1 Section 10.9.5 One-way Mean Packet Delay Performance Metric."
+      properties:
+        slsRpPair:
+          description: "Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          items:
+            $ref: '#/components/schemas/SlsRpPair'
+          minItems: 1
+          type: array
+        meanPacketDelayObjective:
+          description: "Mean Packet Delay Objective. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          type: number
+        cosName:
+          description: "One of the values in the IPVC List of Class of Service Names\
+            \ Service Attribute. Reference MEF 61.1 Section 10.9.5 One-way Mean Packet\
+            \ Delay Performance Metric, Table-5."
+          type: string
+      type: object
+    OneWayPacketDelayLossRatio:
+      description: "The One-way Packet Loss Ratio Performance Metric is the maximum,\
+        \ over the ordered pairs of SLS-RPs in a given set S, of the ratio of lost\
+        \ packets to transmitted packets for a given ordered pair of SLS-RPs, a given\
+        \ CoS Name and a given time period Tk. Reference MEF 61.1 Section 10.9.8 One-way\
+        \ Packet Loss Ratio Performance Metric."
+      properties:
+        slsRpPair:
+          description: "Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          items:
+            $ref: '#/components/schemas/SlsRpPair'
+          minItems: 1
+          type: array
+        packetLossRatioObjective:
+          $ref: '#/components/schemas/Percentage'
+        cosName:
+          description: "One of the values in the IPVC List of Class of Service Names\
+            \ Service Attribute. Reference MEF 61.1 Section 10.9.8 One-way Packet\
+            \ Loss Ratio Performance Metric, Table-8."
+          type: string
+      type: object
+    OneWayPacketDelayPercentile:
+      description: "The One-way Packet Delay Percentile Performance Metric is the\
+        \ maximum, over all the order pairs of SLS-RPs in a given set S, of the pth\
+        \ percentile of one-way packet delay for Qualified Packets for a given order\
+        \ pair of SLS-RPs, a given CoS Name and a given time period Tk. Reference\
+        \ MEF 61.1 Section 10.9.4 One-way Packet Delay Percentile Performance Metric."
+      properties:
+        slsRpPair:
+          description: "Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          items:
+            $ref: '#/components/schemas/SlsRpPair'
+          minItems: 1
+          type: array
+        cosName:
+          description: "One of the values in the IPVC List of Class of Service Names\
+            \ Service Attribute. Reference MEF 61.1 Section 10.9.4 One-way Packet\
+            \ Delay Percentile Performance Metric, Table-4."
+          type: string
+        packetDelayRangePercentile:
+          $ref: '#/components/schemas/Percentage'
+        packetDelayRangeObjective:
+          description: "Packet Delay Objective. Reference MEF 61.1 Section 10.9.4\
+            \ One-way Packet Delay Percentile Performance Metric, Table-4."
+          type: number
+      type: object
+    OneWayPacketDelayRange:
+      description: "The One-way Packet Delay Range Performance Metric is the maximum,\
+        \ over all the ordered pairs of SLS-RPs in a given set S, of the difference\
+        \ between the rth percentile of one-way packet delay and the minimum one-way\
+        \ packet delay, for Qualified Packets for a given ordered pair of SLS-RPs,\
+        \ a given CoS Name, and a given time period Tk. Reference MEF 61.1 Section\
+        \ 10.9.7 One-way Packet Delay Range Performance Metric."
+      properties:
+        slsRpPair:
+          description: "Set of ordered SLS-RP pairs. Reference MEF 61.1 Section 10.9.5\
+            \ One-way Mean Packet Delay Performance Metric, Table-5."
+          items:
+            $ref: '#/components/schemas/SlsRpPair'
+          minItems: 1
+          type: array
+        packetDelayRangePercentile:
+          $ref: '#/components/schemas/Percentage'
+        packetDelayRangeObjective:
+          description: "Packet Delay Range Objective. Reference MEF 61.1 Section 10.9.7\
+            \ One-way Packet Delay Range Performance Metric, Table 7."
+          type: number
+        cosName:
+          description: "One of the values in the IPVC List of Class of Service Names\
+            \ Service Attribute. Reference MEF 61.1 Section 10.9.7 One-way Mean Packet\
+            \ Delay Performance Metric, Table-7."
+          type: string
+      type: object
+    OrderCoordinatedAction:
+      description: The interval after the completion of one or more related Order
+        that this Order can be started or completed
+      properties:
+        coordinatedActionDelay:
+          $ref: '#/components/schemas/Duration'
+        coordinationDependency:
+          $ref: '#/components/schemas/OrderItemCoordinationDependencyType'
+        orderId:
+          description: Specifies Order that is to be coordinated with this Order.
+          type: string
+      required:
+      - coordinatedActionDelay
+      - coordinationDependency
+      - orderId
+      type: object
+    OrderItemCoordinatedAction:
+      description: The interval after the completion of one or more related Order
+        Items that this Order Item can be started or completed
+      properties:
+        coordinatedActionDelay:
+          $ref: '#/components/schemas/Duration'
+        coordinationDependency:
+          $ref: '#/components/schemas/OrderItemCoordinationDependencyType'
+        itemId:
+          description: Specifies Order Item that is to be coordinated with this Order
+            Item.
+          type: string
+      required:
+      - coordinatedActionDelay
+      - coordinationDependency
+      - itemId
+      type: object
+    OrderItemCoordinationDependencyType:
+      description: |
+        Possible values of the Order Item Coordination Dependency
+
+        | OrderItemCoordinationDependencyType | Description                                                                                        |
+        |-------------------------------------|----------------------------------------------------------------------------------------------------|
+        | startToStart                        | Work on the Specified Order Item can only be started after the Coordinated Order Items are started |
+        | startToFinish                       | The Coordinated Order Items must complete before work on the Specified Order Item begins           |
+        | finishToStart                       | Work on the Related Order Items begins after the completion of the Specified Order Item            |
+        | finishToFinish                      | Work on the Related Order Items completes at the same time as the Specified Order Item             |
+      enum:
+      - startToStart
+      - startToFinish
+      - finishToStart
+      - finishToFinish
+      type: string
+    Ospf:
+      description: "When an entry in the UNI Routing Protocols is for OSPF, OSPF as\
+        \ specified in RFC 2328 (for IPv4) and/or RFC 5340 (for IPv6) is used across\
+        \ each UNI Access Link to exchange routing information. Reference - MEF 61.1\
+        \ Section 12.7.2."
+      properties:
+        areaId:
+          $ref: '#/components/schemas/Ipv4Address'
+          description: Area ID (0-429496295) normally expressed as an IPv4 address.
+        areaType:
+          $ref: '#/components/schemas/OspfAreaType'
+          description: OSPF Area Type enumeration.
+        authenticationType:
+          $ref: '#/components/schemas/OspfAuthenticationType'
+          description: OSPF Authentication Type.
+        helloInterval:
+          $ref: '#/components/schemas/TwoOctetInteger'
+          description: "Hello interval (0-65535, in seconds)."
+        deadInterval:
+          description: "Dead interval (0-429496295, in seconds)."
+          maximum: 429967295
+          minimum: 0
+          type: integer
+        retransmissionInterval:
+          description: "Retransmit interval (integer greater than 0, in seconds)."
+          minimum: 0
+          type: integer
+        administrativeDistance:
+          description: Administrative distance (integer greater than 0).
+          minimum: 1
+          type: integer
+      type: object
+    OspfAreaType:
+      description: |-
+        OSPF Area Type enumeration. Reference - MEF 61.1 Section 12.7.2
+        - NORMAL - the Area is not a stub or NSSA (Not So Stubby Area) - STUB -  the Area is a stub - NSSA - the Area is NSSA (see RFC 3101)
+      enum:
+      - NORMAL
+      - STUB
+      - NSSA
+      type: string
+    OspfAuthenticationType:
+      description: Enumeration of possible OSPF Authentication Type. In case other
+        than `NONE`  is specified additional specific parameters need to be agreed
+        between the  Buyer and the Seller. - NONE - No authentication is used. - PASSWORD
+        - the 64-bit clear password is used which is inserted into the OSPF packet
+        header - MESSAGE_DIGEST - Cryptographic authentication is used as specified
+        in RFC 2828
+      enum:
+      - NONE
+      - PASSWORD
+      - MESSAGE_DIGEST
+      type: string
+    PacketDelivery:
+      description: "For each Ingress IP Data Packet that is mapped to one of the IPVC\
+        \ EPs for\nthe IPVC it takes one of two values. STANDARD_ROUTING or\nPOLICY-BASED_ROUTING\n\
+        STANDARD_ROUTING: If the IPVC Packet Delivery is Standard Routing,\nthe egress\
+        \ UNI and UNI Ac-cess Link or egress ENNI and ENNI Link are\ngenerally selected\
+        \ by examining the destination IP address in the packet\nand matching it to\
+        \ an IP Prefix reachable via the IPVC EP at the egress \nEI - in other words,\
+        \ by normal IP routing.\nPOLICY_BASED_ROUTING: The behavior and requirements\
+        \ when the\nIPVC Packet Delivery Service Attribute is set to Policy-Based\
+        \ Routing\nare deferred to a future revision of this specification (MEF 61.1)\n"
+      enum:
+      - STANDARD_ROUTING
+      - POLICY_BASED_ROUTING
+      type: string
+    PcpMapping:
+      description: Ethernet PCP mapping of CoS name to PCP value
+      properties:
+        cosName:
+          description: Class of Service name
+          type: string
+        ethernetPcp:
+          description: PCP value
+          maximum: 7
+          minimum: 0
+          type: integer
+      type: object
+    PeeringAddress:
+      description: "Peering Addresses. Connection Addresses, or Loopbacks plus a list\
+        \ of pairs of IP addresses. Reference - MEF 61.1 Section 12.7.3."
+      properties:
+        peeringAddressType:
+          $ref: '#/components/schemas/PeeringAddressType'
+          description: |
+            If the Peering Addresses parameter is CONNECTION_ADDRESSES, a separate
+            BGP peering session is established over each UNI Access Link, using
+            the primary IPv4 addresses in the UNI Access Link IPv4 Connection
+            Addressing Service Attribute (section 13.4) or the first IPv6
+            addresses in the UNI Access Link IPv6 Connection Addressing Service
+            Attribute (section 13.5), as indicated by the Connection Address
+            Family parameter.
+            If the Peering Addresses parameter is LOOPBACKS, a list of pairs of IP
+            addresses is additionally specified, each pair containing the
+            Subscriber's loopback address and the SP's or Operator's loopback
+            address. A single BGP peering session is established for each pair of
+            addresses.
+        subscriberAndSpLoopbackAddresses:
+          description: "A list of pairs of IP addresses, each pair containing the\
+            \ Subscriber's loopback address and the SP's or Operator's loopback address.\
+            \ A single BGP peering session is established for each pair of addresses."
+          items:
+            $ref: '#/components/schemas/SubscriberAndSpLoopbackAddresses'
+          type: array
+      type: object
+    PeeringAddressType:
+      description: |
+        If the Peering Addresses parameter is CONNECTION_ADDRESSES, a separate BGP peering session is established over each UNI Access Link, using the primary IPv4 addresses in the UNI Access Link IPv4 Connection Addressing Service Attribute (section 13.4) or the first IPv6 addresses in the UNI Access Link IPv6 Connection Addressing Service Attribute (section 13.5), as indicated by the Connection Address Family parameter. If the Peering Addresses parameter is LOOPBACKS, a list of pairs of IP addresses is additionally specified, each pair containing the Subscriber's loopback address and the SP's or Operator's loopback address. A single BGP peering session is established for each pair of addresses.
+      enum:
+      - CONNECTION_ADDRESSES
+      - LOOPBACKS
+      type: string
+    Percentage:
+      description: This is a number of percent - a number between 0 and 100.
+      maximum: 100
+      minimum: 0
+      type: number
+    PlaceRefOrQuery:
+      discriminator:
+        mapping:
+          GeographicAddressRef: '#/components/schemas/GeographicAddressRef'
+          GeographicAddress_Query: '#/components/schemas/GeographicAddress_Query'
+          GeographicSiteRef: '#/components/schemas/GeographicSiteRef'
+        propertyName: '@type'
+      properties:
+        '@type':
+          description: Used to unambiguously designate the class type when using `oneOf`
+          enum:
+          - GeographicAddressRef
+          - GeographicAddress_Query
+          - GeographicSiteRef
+          type: string
+      required:
+      - '@type'
+      type: object
+    PortMap:
+      description: "LACP Portmap as a 2-tuple <vid,lspl> where vid is VLAN ID and\
+        \ lslp is Link Selection  Priority List. Reference MEF 61.1.1 Section A1-1.3.2\
+        \ UNI Access Link Ethernet Link  Aggregation Service Attribute."
+      properties:
+        vlanId:
+          $ref: '#/components/schemas/VlanId'
+        linkSelectionPriorityList:
+          items:
+            type: integer
+          type: array
+      type: object
+    RelatedContactInformation:
+      description: Contact information of an individual or organization playing a
+        role for this Order Item. The rule for mapping a represented attribute value
+        to a `role` is to use the _lowerCamelCase_ pattern. In a given context it
+        is always specified by the SOF (e.g. SOF Contact Information) or by the BUS.
+      properties:
+        role:
+          description: The role of the particular contact in the request
+          type: string
+        number:
+          description: Phone number
+          type: string
+        emailAddress:
+          description: Email address
+          type: string
+        postalAddress:
+          $ref: '#/components/schemas/FieldedAddressRepresentation'
+        organization:
+          description: The organization or company that the contact belongs to
+          type: string
+        name:
+          description: Name of the contact
+          type: string
+        numberExtension:
+          description: Phone number extension
+          type: string
+      required:
+      - emailAddress
+      - name
+      - number
+      - role
+      type: object
+    RelatedPlaceRefOrQuery:
+      description: "Allows pointing to a place by referring to a GeographicAddress,\
+        \ GeographicSite, or providing GeographicAddress by value. It also provides\
+        \ additional information like the `role` the place plays for given Product\
+        \ and `contact` needed access to this place."
+      properties:
+        place:
+          $ref: '#/components/schemas/PlaceRefOrQuery'
+        role:
+          description: Role of this place. The values that can be specified here are
+            described by Product Specification (e.g. "INSTALL_LOCATION").
+          type: string
+        contact:
+          description: The person to call to get access to this place in case such
+            access is required to complete the evaluation of this POQ Item.
+          items:
+            $ref: '#/components/schemas/ContactInformation'
+          type: array
+      required:
+      - place
+      - role
+      type: object
+    RoutingProtocols:
+      description: "Data type to support routing protocols and associated parameters\
+        \ that are used to exchange IP routes across the UNI. It has three attributes\
+        \ allowing for providing configuration of BGP, OSPF and Static routing protocols.\
+        \ Reference - MEF 61.1 Section 12.7"
+      properties:
+        bgp:
+          description: BGP routing protocol configuration options.
+          items:
+            $ref: '#/components/schemas/RoutingProtocolsBgpOptions'
+          maxItems: 1
+          type: array
+        ospf:
+          description: OSPF routing protocol configuration options.
+          items:
+            $ref: '#/components/schemas/RoutingProtocolsOspfOptions'
+          maxItems: 1
+          type: array
+        static:
+          description: Static routing configuration options.
+          items:
+            $ref: '#/components/schemas/Static'
+          maxItems: 1
+          type: array
+      type: object
+    RoutingProtocolsBgpOptions:
+      description: |
+        BGP routing protocol configuration options. The configuration of the BGP
+        can be provided for the following type of routes that will be exchanged:
+        - ipv4, or
+        - ipv6, or
+        - both, or (one BGP session exchanging both IPv4 and IPv6)
+        - ipv4 and ipv6 (separate BGP session for exchanging IPv4 and IPv6)
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/Bgp'
+          description: Configuration for exchanging IPv4 types of routes.
+        ipv6:
+          $ref: '#/components/schemas/Bgp'
+          description: Configuration for exchanging IPv6 types of routes.
+        both:
+          $ref: '#/components/schemas/Bgp'
+          description: Common configuration for exchanging both IPv4 and IPv6 types
+            of routes.
+      type: object
+    RoutingProtocolsOspfOptions:
+      description: |
+        OSPF routing protocol configuration options. The configuration of the OSPF
+        can be provided for the following type of routes that will be exchanged:
+        - ipv4, or
+        - ipv6, or
+        - ipv4 and ipv6
+      properties:
+        ipv4:
+          $ref: '#/components/schemas/Ospf'
+          description: Configuration for exchanging IPv4 types of routes.
+        ipv6:
+          $ref: '#/components/schemas/Ospf'
+          description: Configuration for exchanging IPv6 types of routes.
+      type: object
+    ServiceActionType:
+      description: |
+        Action to be applied to the Service referred by this Service Order
+        Item
+      enum:
+      - add
+      - modify
+      - delete
+      type: string
+    ServiceOrder:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrder_Common'
+      - properties:
+          href:
+            description: Hyperlink reference
+            type: string
+          id:
+            description: unique identifier
+            type: string
+          completionDate:
+            description: Effective delivery date amended by the provider
+            format: date-time
+            type: string
+          expectedCompletionDate:
+            description: Expected delivery date amended by the provider
+            format: date-time
+            type: string
+          serviceOrderItem:
+            description: A list of service order items to be processed by this order
+            items:
+              $ref: '#/components/schemas/ServiceOrderItem'
+            minItems: 1
+            type: array
+          startDate:
+            description: Date when the order was started for processing
+            format: date-time
+            type: string
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+          orderDate:
+            description: Date when the Service Order was created in the SOF's system
+              and a Service Order Identifier was assigned
+            format: date-time
+            type: string
+        required:
+        - id
+        - orderDate
+        - serviceOrderItem
+        - state
+        type: object
+      description: "A Service Order is used to request operations on a Service instance.\
+        \ A Service Order groups one or more one Service Order Items - one per specific\
+        \ action on a Service instance. The Action associated with the Service Order\
+        \ Item describes the operation (add, modify, delete) to be applied on the\
+        \ specified Service instance.The Service Order Item and its associated Action\
+        \ can operate on both existing (modify, delete) as well as future (add) Service\
+        \ instance.The Service Order is triggered from the Business Application (BA)\
+        \ system in charge of the Service Order management to the Service Orchestration\
+        \ Function (SOF) system that will orchestrate the Service fulfillment."
+    ServiceOrderItem:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrderItem_Common'
+      - description: |
+          An identified part of the order. A service order is decomposed into
+          one or more order items.
+          The modelling pattern introduces the `Common` supertype to
+          aggregate attributes that are common to both `ServiceOrderItem` and
+          `ServiceOrderItem_Create`. The `Create` type has a subset of
+          attributes of the response type and does not introduce any new,
+          thus the `Create` type has an empty definition
+        properties:
+          state:
+            $ref: '#/components/schemas/ServiceOrderStateType'
+          terminationError:
+            description: "When the SOF cannot process the request, the SOF returns\
+              \ a text-based list of reasons here."
+            items:
+              $ref: '#/components/schemas/TerminationError'
+            type: array
+        required:
+        - state
+        type: object
+    ServiceOrderItemRef:
+      description: "A reference to a Service Order Item. When referencing item from\
+        \ within the same Service Order, the `serviceOrderId` and `serviceOrderHref`\
+        \ MUST be empty."
+      properties:
+        itemId:
+          description: Identifier of referenced item within the referenced Service
+            Order
+          type: string
+        serviceOrderHref:
+          description: Link to the order to which the referenced item belongs to
+          type: string
+        serviceOrderId:
+          description: Identifier of the order to which the referenced item belongs
+            to
+          type: string
+      required:
+      - itemId
+      type: object
+    ServiceOrderItemRelationship:
+      description: |
+        Specifies the type (nature) of the relationship to the related
+        Service. The nature of required relationships varies for Services of
+        different types. For example, a UNI or ENNI Service may not have any
+        relationships, but an E-Line may have two mandatory
+        relationships (related to the UNI on one end and the ENNI on the
+        other). More complex Services such as multipoint IP or Firewall
+        Services may have more complex relationships. As a result, the
+        allowed and mandatory `relationshipType` values are defined in the
+        Service Specification.
+        Related item can be both from within the same Service Order or from
+        other one. When referencing item from within the same Service Order,
+        the `orderItem.serviceOrderId` and `orderItem.serviceOrderHref` MUST
+        be empty.
+      properties:
+        orderItem:
+          $ref: '#/components/schemas/ServiceOrderItemRef'
+        relationshipType:
+          description: Specifies the nature of the relationship to the related Service
+            Order Item. A string that is one of the relationship types specified in
+            the Service Specification.
+          type: string
+      required:
+      - orderItem
+      - relationshipType
+      type: object
+    ServiceOrderItem_Common:
+      description: An identified part of the order. A service order is decomposed
+        into one or more order items. This type holds the attributes common to request
+        and response representation of the Service Order Item.
+      properties:
+        id:
+          description: "Identifier of the order item (generally it is a sequence number\
+            \ 01, 02, 03, ...)"
+          type: string
+        action:
+          $ref: '#/components/schemas/ServiceActionType'
+        coordinatedAction:
+          description: The interval after the completion of one or more related Service
+            Order Items that this Service Order Item can be started or completed
+          items:
+            $ref: '#/components/schemas/OrderItemCoordinatedAction'
+          type: array
+        note:
+          description: Extra-information about the order item; e.g. useful to add
+            extra delivery information that could be useful for a human process
+          items:
+            $ref: '#/components/schemas/Note_BusSof'
+          type: array
+        relatedContactInformation:
+          description: |-
+            Contact information of an individual or organization playing a role for this Service Order.
+            For providing Notification Contact, `role=notificationContact` MUST be used.
+          items:
+            $ref: '#/components/schemas/RelatedContactInformation'
+          type: array
+        service:
+          $ref: '#/components/schemas/ServiceValue'
+        serviceOrderItemRelationship:
+          description: |
+            Specifies the type (nature) of the relationship to the related
+            Service. The nature of required relationships varies for Services of
+            different types. For example, a UNI or ENNI Service may not have any
+            relationships, but an E-Line may have two mandatory
+            relationships (related to the UNI on one end and the ENNI on the
+            other). More complex Services such as multipoint IP or Firewall
+            Services may have more complex relationships. As a result, the
+            allowed and mandatory `relationshipType` values are defined in the
+            Service Specification.
+            Related items can be both from within the same Service Order or from
+            other one. When referencing item within the same Service Order,
+          items:
+            $ref: '#/components/schemas/ServiceOrderItemRelationship'
+          type: array
+      required:
+      - action
+      - id
+      - service
+      type: object
+    ServiceOrderItem_Create:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrderItem_Common'
+      - description: |
+          An identified part of the order. A service order is decomposed into one or more order items. This type is used in the request.
+        type: object
+    ServiceOrderRef:
+      description: Reference to a Service Order instance.
+      properties:
+        href:
+          description: A hyperlink to the related order
+          type: string
+        id:
+          description: The id of the related order
+          type: string
+      required:
+      - id
+    ServiceOrderRelationship:
+      description: Reference to a related Service Order and the type of that association.
+      properties:
+        serviceOrder:
+          $ref: '#/components/schemas/ServiceOrderRef'
+        relationshipType:
+          description: "Specifies the type (nature) of the relationship to the related\
+            \ Service. The nature of required relationships varies for Services of\
+            \ different types. For example, a UNI or ENNI Service may not have any\
+            \ relationships, but an Access E-Line may have two mandatory relationships\
+            \ (related to the UNI on one end and the ENNI on the other). More complex\
+            \ Services such as multipoint IP or Firewall Services may have more complex\
+            \ relationships. As a result, the allowed and mandatory `relationshipType`\
+            \ values are defined in the Service Specification."
+          type: string
+      required:
+      - relationshipType
+      - serviceOrder
+      type: object
+    ServiceOrderStateType:
+      description: |
+        Possible values for the state of a Service Order
+
+        | State        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+        | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | acknowledged | A `ServiceOrder` request has been received and has passed message and basic validations and a _Success Response_ has been sent.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+        | rejected     | This state indicates that: <br>- Invalid information is provided through the `ServiceOrder` / `ServiceOrderItem` request <br>- The request fails to meet validation rules for `Service` delivery (processing) <br>If one `ServiceOrderItem` is rejected, then the entire `ServiceOrder` request is rejected and a _Error Response_ is sent.                                                                                                                                                                                                           |
+        | inProgress   | This state indicates that all `ServiceOrderItems` have successfully passed the validations checks and the scheduled `Service` delivery/processing has started. <br> The `ServiceOrder` will be in _`inProgress`_ state if _at least one_ `ServiceOrderItem` is in _`inProgress`_ state                                                                                                                                                                                                                                                                |
+        | pending      | This state indicates that a `ServiceOrderItem` is currently in a waiting stage for an action/activity to be completed before the order-processing can progress further (this may happen also via non-API channel). <br> A _`pending`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`pending`_ state if _at least one_ `ServiceOrderItem` is in _`pending`_ state                                                                               |
+        | held         | This state indicates that a `ServiceOrderItem` cannot be progressed due to an issue. The `Service` delivery (processing) has been temporarily delayed to resolve an infrastructure shortfall to facilitate supply of order. Upon resolution of the issue, the `ServiceOrderItem` will continue to progress.<br> A _`held`_ state can lead into automatic `failed` of an `ServiceOrderItem`, if no action is taken within the agreed timeframe.<br>The `ServiceOrder` will be in _`held`_ state if at least one `ServiceOrderItem` is in _`held`_ state |
+        | failed       | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has failed. This indicates an irrecoverable error as opposed to _`held`_ or _`pending`_ issues.<br>The `ServiceOrder` will be in _`failed`_ state if at _ALL_ `ServiceOrderItems` are in _`failed`_ state                                                                                                                                                                                                                                              |
+        | completed    | This state indicates that `Service` delivery (processing) associated with a `ServiceOrderItem` has completed. <br>The `ServiceOrder` will be in _`completed`_ state if at _ALL_ `ServiceOrderItems` are in _`completed`_ state                                                                                                                                                                                                                                                                                                                        |
+        | partial      | This state indicates that some `ServiceOrderItem` are in _`completed`_ state while others are in _`failed`_ states, so the entire `ServiceOrder` is in a _`partial`_ state. Not applicable to _`ServiceOrderItem`_.                                                                                                                                                                                                                                                                                                              |
+      enum:
+      - acknowledged
+      - rejected
+      - pending
+      - held
+      - inProgress
+      - completed
+      - failed
+      - partial
+      type: string
+    ServiceOrder_Common:
+      description: |
+        A Service Order is used to request operations on a Service instance. A
+        Service Order groups one or more one Service Order Items - one per
+        specific action on a Service instance. The Action associated with the
+        Service Order Item describes the operation (add, modify, delete) to be
+        applied on the specified Service instance.The Service Order Item and its
+        associated Action can operate on both existing (modify, delete) as well
+        as future (add) Service instance.The Service Order is triggered from the
+        Business Application (BA) system in charge of the Service Order
+        management to the Service Orchestration Function (SOF) system that will
+        orchestrate the Service fulfillment.
+
+        This type defines all attributes common to objects used in request and
+        response.
+      properties:
+        coordinatedAction:
+          description: The interval after the completion of one or more related Service
+            Order Items that this Service Order Item can be started or completed
+          items:
+            $ref: '#/components/schemas/OrderCoordinatedAction'
+          type: array
+        description:
+          description: A free-text description of the service order
+          type: string
+        externalId:
+          description: ID given by the consumer to facilitate searches
+          type: string
+        note:
+          description: Extra-information about the order; e.g. useful to add extra
+            delivery information that could be useful for a human process
+          items:
+            $ref: '#/components/schemas/Note_BusSof'
+          type: array
+        orderRelationship:
+          description: A list of service orders related to this order
+          items:
+            $ref: '#/components/schemas/ServiceOrderRelationship'
+          type: array
+        relatedContactInformation:
+          description: |-
+            Contact information of an individual or organization playing a role for this Service Order.
+            For providing Notification Contact, `role=notificationContact` MUST be used.
+          items:
+            $ref: '#/components/schemas/RelatedContactInformation'
+          type: array
+        requestedCompletionDate:
+          description: Requested delivery date from the requestors perspective
+          format: date-time
+          type: string
+        requestedStartDate:
+          description: Order start date wished by the requestor
+          format: date-time
+          type: string
+      required:
+      - requestedCompletionDate
+      - requestedStartDate
+      type: object
+    ServiceOrder_Create:
+      allOf:
+      - $ref: '#/components/schemas/ServiceOrder_Common'
+      - properties:
+          serviceOrderItem:
+            description: A list of service order items to be processed by this order
+            items:
+              $ref: '#/components/schemas/ServiceOrderItem_Create'
+            minItems: 1
+            type: array
+        required:
+        - serviceOrderItem
+      description: |-
+        A Service Order is used to request operations on a Service instance. A Service Order groups one or more one Service Order Items - one per specific action on a Service instance. The Action associated with the Service Order Item describes the operation (add, modify, delete) to be applied on the specified Service instance.The Service Order Item and its associated Action can operate on both existing (modify, delete) as well as future (add) Service instance.The Service Order is triggered from the Business Application (BA) system in charge of the Service Order management to the Service Orchestration Function (SOF) system that will orchestrate the Service fulfillment.
+        This type extends `ServiceOrder_Common` and adds attributes specific to the request response.
+    ServiceRef:
+      description: Reference to a Service instance.
+      properties:
+        href:
+          description: Hyperlink reference to Service
+          type: string
+        id:
+          description: unique identifier of Service
+          type: string
+      required:
+      - id
+      type: object
+    ServiceRelationship:
+      description: A relationship to an existing Service. The requirements for usage
+        for given Service are described in the Service Specification.
+      properties:
+        relationshipType:
+          description: |
+            Specifies the type (nature) of the relationship to the related
+            Service. The nature of required relationships varies for Services of
+            different types. For example, a UNI or ENNI Service may not have any
+            relationships, but an Access E-Line may have two mandatory
+            relationships (related to the UNI on one end and the ENNI on the
+            other). More complex Services such as multipoint IP or Firewall
+            Services may have more complex relationships. As a result, the
+            allowed and mandatory `relationshipType` values are defined in the
+            Service Specification.
+          type: string
+        service:
+          $ref: '#/components/schemas/ServiceRef'
+      required:
+      - relationshipType
+      - service
+      type: object
+    ServiceStateType:
+      description: |
+        Valid values for the lifecycle state of the Service.
+
+        | State              | Description                                                                                                           |
+        | ------------------ | --------------------------------------------------------------------------------------------------------------------- |
+        | feasibilityChecked | Initial check whether the necessary resources are available and sufficient for the installation of a given service.   |
+        | designed           | The Service is designed. The resources are identified and/or allocated, but not reserved.                             |
+        | reserved           | All required resources for given service are reserved and ready.                                                      |
+        | inactive           | The service is deactivated and is no longer available.                                                                |
+        | active             | The service is fully available and active                                                                             |
+        | terminated         | The service is 'logically deleted'. All associated resources are freed and made available for service to other users. |
+      enum:
+      - feasibilityChecked
+      - designed
+      - reserved
+      - inactive
+      - active
+      - terminated
+      type: string
+    ServiceTopology:
+      description: Enumeration used to represent the different Service Topologies.
+      enum:
+      - MULTIPOINT
+      - ROUTED_MULTIPOINT
+      - CLOUD_ACCESS
+      type: string
+    ServiceUptime:
+      description: "The Service Uptime Performance Metric is the proportion of time,\
+        \ during a given time period Tk, that the service is working from the perspective\
+        \ of the Subscriber (for a Subscriber IP Service) or the  perspective of the\
+        \ SP/SO (for an Operator IP Service), excluding any pre-agreed exceptions,\
+        \ for  example maintenance intervals. Reference MEF 61.1[1] Section 10.9 Service\
+        \ Uptime Performance Metric.."
+      properties:
+        serviceUptimeObjective:
+          $ref: '#/components/schemas/Percentage'
+          description: "Service Uptime Objective. Reference MEF 61.1 Section 10.9.9\
+            \ Service Uptime Performance Metric, Table 9."
+      type: object
+    ServiceValue:
+      description: ServiceValue is a base class for defining the Service.
+      properties:
+        href:
+          description: Hyperlink reference to a Service
+          type: string
+        id:
+          description: unique identifier of a Service
+          type: string
+        description:
+          description: Free-text description of the service
+          type: string
+        externalId:
+          description: ID given by the consumer to facilitate searches
+          type: string
+        startDate:
+          description: Date when the service starts
+          format: date-time
+          type: string
+        endDate:
+          description: Date when the service ends
+          format: date-time
+          type: string
+        state:
+          $ref: '#/components/schemas/ServiceStateType'
+        note:
+          description: A list of notes made on this service
+          items:
+            $ref: '#/components/schemas/Note_BusSof'
+          type: array
+        serviceType:
+          description: Business type of the service
+          type: string
+        name:
+          description: Name of the service
+          type: string
+        serviceRelationship:
+          description: "Specifies the type (nature) of the relationship to the related\
+            \ Service. The nature of required relationships varies for Services of\
+            \ different types. For example, a UNI or ENNI Service may not have any\
+            \ relationships, but an Access E-Line may have two mandatory relationships\
+            \ (related to the UNI on one end and the ENNI on the other). More complex\
+            \ Services such as multipoint IP or Firewall Services may have more complex\
+            \ relationships. As a result, the allowed and mandatory `relationshipType`\
+            \ values are defined in the Service Specification."
+          items:
+            $ref: '#/components/schemas/ServiceRelationship'
+          type: array
+        relatedContactInformation:
+          description: Contact information of an individual or organization playing
+            a role for this Service
+          items:
+            $ref: '#/components/schemas/RelatedContactInformation'
+          type: array
+        place:
+          description: The relationships between this Service Order Item and one or
+            more Places as defined in the Service Specification.
+          items:
+            $ref: '#/components/schemas/RelatedPlaceRefOrQuery'
+          type: array
+        serviceConfiguration:
+          $ref: '#/components/schemas/MefServiceConfiguration'
+        serviceOrderItem:
+          description: A list of service order items related to this service
+          items:
+            $ref: '#/components/schemas/ServiceOrderItemRef'
+          type: array
+      type: object
+    SlsReferencePoint:
+      description: SlsReferencePoint is an abstract data type that can be subclassed
+        to IpvcEndPoint and Location. Reference MEF 61.1 Section 10.9.1 SLS Reference
+        Points.
+      type: object
+    SlsRpPair:
+      description: "Service Level Specification Reference Point Pair. In a multipoint\
+        \ or rooted multipoint IPVC, performance objectives are ideally specified\
+        \ as applying between pairs of IPVC EPs - in other words, they apply to the\
+        \ performance that IP Data Packets experience as they flow from one EI to\
+        \ another. The SlsRpPair is a representation of this association. Reference\
+        \ MEF 61.1 Section 10.9.1"
+      properties:
+        fromSlsReferencePoint:
+          $ref: '#/components/schemas/SlsReferencePoint'
+          description: Pointer to the "from" SLS Reference Point.
+        toSlsReferencePoint:
+          $ref: '#/components/schemas/SlsReferencePoint'
+          description: Pointer to the "to" SLS Reference Point.
+      required:
+      - fromSlsReferencePoint
+      - toSlsReferencePoint
+      type: object
+    Static:
+      description: "When an entry in the UNI Routing Protocols list is for Static,\
+        \ the IP Prefixes used in the Subscriber Network that are reachable via this\
+        \ UNI are specified as additional parameters in the entry. These are known\
+        \ as Static IP Prefixes. Reference - MEF 61.1 Section 12.7.1."
+      properties:
+        staticIpEntry:
+          description: Static IP address entry.
+          items:
+            $ref: '#/components/schemas/StaticIpEntry'
+          minItems: 1
+          type: array
+      type: object
+    StaticIpEntry:
+      description: "StaticIpEntry data type including IPv4/IPv6 prefixes, forwarding\
+        \ information and administrative distance."
+      properties:
+        administrativeDistance:
+          description: "Administrative distance, an integer > 0."
+          minimum: 1
+          type: integer
+        forwardingInformation:
+          $ref: '#/components/schemas/ForwardingInformation'
+          description: Forwarding information with either Next Hop IP address or UNI
+            Access Link identifier.
+        staticPrefix:
+          $ref: '#/components/schemas/Ipv4OrIpv6Prefix'
+          description: IPv4 or IPv6 Prefix that is advertised.
+      type: object
+    StaticRoute:
+      description: Data type representing IP static routes.
+      properties:
+        ipv4Prefix:
+          $ref: '#/components/schemas/Ipv4Prefix'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+        administrativeDistance:
+          description: "The administrative distance is a numeric metric used to control\
+            \ which routes  are selected, when there are multiple routes for the same\
+            \ IP Prefix. A lower  number indicates a more preferable route."
+          type: integer
+        targetRole:
+          $ref: '#/components/schemas/TargetRole'
+      type: object
+    SubUnit:
+      description: Allows for sub unit identification
+      properties:
+        subUnitNumber:
+          description: "The discriminator used for the subunit, often just a simple\
+            \ number but may also be a range."
+          type: string
+        subUnitType:
+          description: "The type of subunit e.g. BERTH, FLAT, PIER, SUITE, SHOP, TOWER,\
+            \ UNIT, WHARF."
+          type: string
+      required:
+      - subUnitNumber
+      - subUnitType
+      type: object
+    SubscriberAndSpLoopbackAddresses:
+      description: "A list of pairs of IP addresses, each pair containing the Subscriber's\
+        \ loopback address and the SP's or Operator's loopback address. A single BGP\
+        \ peering session is established for each pair of addresses."
+      properties:
+        subscriberLoopbackAddress:
+          $ref: '#/components/schemas/Ipv4OrIpv6Address'
+          description: Subscriber's loopback Address for BGP establishing a session
+        spLoopbackAddress:
+          $ref: '#/components/schemas/Ipv4OrIpv6Address'
+          description: Service Provider's loopback Address for BGP establishing a
+            session
+      type: object
+    SynchronousEthernet:
+      description: Enumeration representing the value of fs which indicates if the
+        physical link  supports Synchronous Ethernet.
+      enum:
+      - DISABLED
+      - ESMC
+      - NO_ESMC
+      type: string
+    TargetRole:
+      description: Enumeration representing the Static Route Target Role. Reference
+        MEF 61.1 Section  14.3.1.4 Static Routes. ROOT - Root role. LEAK - Leaf role.
+      enum:
+      - ROOT
+      - LEAF
+      type: string
+    TerminationError:
+      description: This indicates an error that caused an Item to be terminated. The
+        code and propertyPath should be used like in Error422.
+      properties:
+        code:
+          $ref: '#/components/schemas/Error422Code'
+        propertyPath:
+          description: |
+            A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
+            Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
+          type: string
+        value:
+          description: Text to describe the reason of the termination.
+          type: string
+      type: object
+    TimeDuration:
+      description: "This class is used to describe durations expressed as a 2-tuple,\
+        \ (value, units). The units from from nanoseconds to years."
+      properties:
+        timeDurationValue:
+          description: "The value of the duration. For example, if the duration is\
+            \ 20 ms, this element is 20."
+          minimum: 0
+          type: integer
+        timeDurationUnits:
+          $ref: '#/components/schemas/TimeDurationUnits'
+          description: "The unit of measure in the duration. For example, if an interval\
+            \ is 2ms, this element is MS."
+      type: object
+    TimeDurationUnits:
+      description: Enum listing the units of measure for a Time Duration
+      enum:
+      - NS
+      - US
+      - MS
+      - SEC
+      - MIN
+      - HOUR
+      - DAY
+      - WEEK
+      - MONTH
+      - YEAR
+      type: string
+    TimeUnit:
+      description: |
+        Represents a unit of time.
+      enum:
+      - seconds
+      - minutes
+      - businessHours
+      - calendarHours
+      - businessDays
+      - calendarDays
+      - months
+      - years
+      type: string
+    TwoOctetInteger:
+      description: A two octet integer. Value range 0 - 65535
+      maximum: 65535
+      minimum: 0
+      type: integer
+    UniAccessLinkEthernetLinkAggregation:
+      description: "Link Aggregation, as described in IEEE Std. 802.1AX-2020 allows\
+        \ one or more parallel instances of full-duplex point-to-point Ethernet links\
+        \ to be aggregated to form a Link Aggregation Group  (LAG) such that the MAC\
+        \ Client (the UNI Access Link) can treat the LAG as if it were a single  link.\
+        \ Reference MEF 61.1.1 Section A1-1.3.2 UNI Access Link Trunk Ethernet Link\
+        \ Aggregation  Service Attribute."
+      properties:
+        lacpVersion:
+          $ref: '#/components/schemas/LacpVersion'
+        portMap:
+          $ref: '#/components/schemas/PortMap'
+      type: object
+    UniAccessLinkTrunk:
+      description: 'A UNI Access Link Trunk is a construct that encapsulates the physical
+        link properties  of one or more UNI Access Links. '
+      maxProperties: 1
+      minProperties: 1
+      properties:
+        otherUniAccessLink:
+          description: Indicates that the UNI Access Link is of a type other.
+          enum:
+          - OTHER
+          type: string
+        ethernetAccessLinkTrunk:
+          $ref: '#/components/schemas/EthernetUniAccessLinkTrunk'
+    UniIpv4ConnectionAddressing:
+      description: "UniIpv4ConnectionAddressing is a data type representing how IPv4\
+        \ addresses are allocated to the devices on the UNI Access Link. Reference\
+        \ - MEF 61 Section 13.4. [R22] \"At a UNI Access Link in a UNI with an IPVC\
+        \ EP for an Advanced Internet Access Service, UNI Access Link IPv4 Connection\
+        \ Addressing MUST be Static or null. Reference - MEF 69.1 Section 9.4."
+      properties:
+        ipv4AddressingType:
+          $ref: '#/components/schemas/Ipv4AddressingType'
+          description: IPv4 Connection Addressing.
+        ipv4PrimarySubnet:
+          $ref: '#/components/schemas/Ipv4PrimarySubnet'
+          description: Primary IPv4 Subnet. Includes IPv4 Prefix and Service Provider
+            IPv4 Addresses.
+        ipv4SecondarySubnetList:
+          description: Secondary IPv4 Subnet List. Includes IPv4 Prefix and Service
+            Provider IPv4 Addresses.
+          items:
+            $ref: '#/components/schemas/Ipv4SecondarySubnet'
+          type: array
+      type: object
+    UniIpv6ConnectionAddressing:
+      description: "UniIpv6ConnectionAddressing is a data type representing how IPv6\
+        \ addresses are allocated to the devices on the UNI Access Link. Reference\
+        \ - MEF 61 Section 13.5. [R26] \"At a UNI Access Link in a UNI with an IPVC\
+        \ EP for an Advanced Internet Access Service, UNI Access Link IPv6 Connection\
+        \ Addressing MUST be Static or null. Reference - MEF 69.1 Section 9.4."
+      properties:
+        ipv6AddressingType:
+          $ref: '#/components/schemas/Ipv6AddressingType'
+          description: IPv6 Connection Addressing.
+        subscriberIpv6Address:
+          $ref: '#/components/schemas/Ipv6Address'
+          description: Subscriber IPv6 address.
+        ipv6Subnet:
+          description: Ipv6 Subnet
+          items:
+            $ref: '#/components/schemas/Ipv6Subnet'
+          type: array
+      type: object
+    UniManagementType:
+      description: Enumeration representing the UNI Management Type options. Reference
+        MEF 61.1 Section 12.2 UNI Management Type Service Attribute.
+      enum:
+      - SUBSCRIBER_MANAGEMENT
+      - PROVIDER_MANAGEMENT
+      type: string
+    VlanId:
+      description: "Data type used for VLAN id configuration. Defined as a Integer,\
+        \ Value 1 to 4094."
+      maximum: 4094
+      minimum: 1
+      type: integer
+    Vrid:
+      description: "VRID (Virtual Router ID) as defined in RFC 5798[29] is a number\
+        \ between 1 and 255"
+      maximum: 255
+      minimum: 1
+      type: integer

@@ -13,7 +13,7 @@
         <mxCell id="ltWMZJDPjPNoV4Ph2O7P-3" value="TestProfile" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="529" y="60" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-4" value="ServiceSpecific&lt;br&gt;TestJobConfiguraton" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-4" value="ServiceSpecific&lt;br&gt;TestJobConfiguration" style="rounded=1;html=1;whiteSpace=wrap;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
           <mxGeometry x="323" y="155" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ltWMZJDPjPNoV4Ph2O7P-5" value="" style="endArrow=classic;html=1;startArrow=diamond;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-2" target="ltWMZJDPjPNoV4Ph2O7P-4" edge="1">
@@ -28,7 +28,7 @@
             <mxPoint x="393" y="165" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-7" value="ServiceSpecific&lt;br&gt;TestProfileConfiguraton" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
+        <mxCell id="ltWMZJDPjPNoV4Ph2O7P-7" value="ServiceSpecific&lt;br&gt;TestProfileConfiguration" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" parent="1" vertex="1">
           <mxGeometry x="529" y="155" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ltWMZJDPjPNoV4Ph2O7P-8" value="" style="endArrow=classic;html=1;startArrow=diamond;startFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="ltWMZJDPjPNoV4Ph2O7P-3" target="ltWMZJDPjPNoV4Ph2O7P-7" edge="1">

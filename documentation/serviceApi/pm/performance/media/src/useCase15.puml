@@ -1,6 +1,5 @@
 @startuml useCase15
 
-
 hide footbox
 
 participant "Buyer/Client" as B
@@ -21,7 +20,7 @@ PJ -> PJ: status: suspended
 B <-- S : 204 Suspended
 
 opt
-    PJ -> B: POST performanceJobStateChangeEvent
+    PJ -> B: POST {{callbackUrl}}/listener/performanceJobStateChangeEvent
 end
 
 @enduml

@@ -1,7 +1,5 @@
 @startuml testJobDataModel
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
     scale 4096 width
 }
 
@@ -23,14 +21,14 @@ class ServiceRef {
 
 
 
-class ServiceSpecificTestJobConfiguraton {
+class ServiceSpecificTestJobConfiguration {
 
     @type*: string
 }
 
 
 
-class ServiceSpecificTestProfileConfiguraton {
+class ServiceSpecificTestProfileConfiguration {
 
     @type*: string
 }
@@ -71,7 +69,7 @@ TestJob_Common *--> Duration : recurrencePeriod
 TestJob_Common *-->"1" TestProfileRefOrValue : testProfile
 TestJob_Common *-->"1" ServiceRef : relatedServiceFrom
 TestJob_Common *-->"1" ServiceRef : relatedServiceTo
-TestJob_Common *-->"1" ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+TestJob_Common *-->"1" ServiceSpecificTestJobConfiguration : serviceSpecificTestJobConfiguration
 
 
 class TestJob_Find {
@@ -108,7 +106,7 @@ class TestProfileValue {
 }
 TestProfileRefOrValue <|-- TestProfileValue
 
-TestProfileValue *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfileValue *--> ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 TestProfileValue *--> ServiceSpecificationRef : relatedServiceSpecification
 TestProfileValue *-->"*" RelatedContact : relatedContact
 
@@ -122,7 +120,7 @@ enum TestJobProcessStateType {
 enum TestJobStateType {
 
     acknowledged
-    assessingCancelation
+    assessingCancellation
     assessingModification
     cancelled
     completed

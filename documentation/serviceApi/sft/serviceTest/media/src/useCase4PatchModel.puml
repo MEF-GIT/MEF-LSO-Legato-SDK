@@ -15,7 +15,7 @@ class TestProfile_Common {
 }
 
 TestProfile_Common *-->"*" TestProfileRelationship : testProfileRelationship
-TestProfile_Common *--> ServiceSpecificTestProfileConfiguraton : serviceSpecificTestProfileConfiguraton
+TestProfile_Common *--> ServiceSpecificTestProfileConfiguration : serviceSpecificTestProfileConfiguration
 TestProfile_Common *-->"1" ServiceSpecificationRef : relatedServiceSpecification
 TestProfile_Common *-->"*" RelatedContact : relatedContact
 
@@ -32,7 +32,7 @@ class TestProfileRelationship {
     <<... attributes are skipped ...>>
 }
 
-class ServiceSpecificTestProfileConfiguraton {
+class ServiceSpecificTestProfileConfiguration {
 
     <<... attributes are skipped ...>>
 }

@@ -1,6 +1,5 @@
 @startuml useCase16
 
-
 hide footbox
 
 participant "Buyer/Client" as B
@@ -25,7 +24,7 @@ end
 B <-- S : 204 Resumed
 
 opt
-    PJ -> B: POST performanceJobStateChangeEvent
+    PJ -> B: POST {{callbackUrl}}/listener/performanceJobStateChangeEvent
 end
 
 @enduml

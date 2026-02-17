@@ -1,14 +1,11 @@
 @startuml extensionPattern
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-    ClassBorderColor<<ServiceSpecificConfiguration>> FireBrick
-    ClassBorderColor<<ServiceSpecificResult>> FireBrick
+    ClassBorderColor<<ProductSpecification>> FireBrick
 }
+
 set namespaceSeparator none
 
 class PerformanceJob {
-
     id: string 
     href: string 
     jobType: JobType
@@ -17,24 +14,18 @@ class PerformanceJob {
     <<... attributes are skipped ...>>
 }
 
-
 class ServiceSpecificConfiguration {
     @type*: string <<discriminator>>
 }
 
-
 PerformanceJob *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 class urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all <<ServiceSpecificConfiguration>> {
-
     <<... attributes are skipped ...>>
 }
 ServiceSpecificConfiguration <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-configuration:v0.0.1:all"
 
-
-
 class PerformanceReport {
-
     id: string 
     href: string 
     <<... attributes are skipped ...>>
@@ -45,6 +36,7 @@ class ReportContentPerMonitoredObject {
 }
 
 class ReportContentItem {
+    measurementTime: MeasurementTime
 
 }
 class ServiceSpecificResult {
@@ -53,13 +45,12 @@ class ServiceSpecificResult {
 
 PerformanceReport *-->"*" ReportContentPerMonitoredObject : reportContent
 ReportContentPerMonitoredObject *-->"*" ReportContentItem : reportContentItem
-ReportContentItem -->"*" ServiceSpecificResult : measurementDataPoints
+ReportContentItem -->"*" ServiceSpecificResult : measurementData
 
 class urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all <<ServiceSpecificResult>> {
 
     <<... attributes are skipped ...>>
 }
 ServiceSpecificResult <|-- "urn:mef:lso:spec:legato:ip-performance-monitoring-results:v0.0.1:all"
-
 
 @enduml

@@ -1,18 +1,14 @@
 @startuml modifyFaultManagementJobModel
 
 class ModifyFaultManagementJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: string
     id*: string
     state*: FaultManagementJobProcessStateType
 }
 ModifyFaultManagementJob_Create <|-- ModifyFaultManagementJob
 
-
-
 class ModifyFaultManagementJob_Create {
-
     description: string
     jobPriority: integer
     outputFormat: OutputFormat
@@ -24,6 +20,12 @@ ModifyFaultManagementJob_Create *--> TimeDuration : granularity
 ModifyFaultManagementJob_Create *--> TimeDuration : reportingPeriod
 ModifyFaultManagementJob_Create *--> ScheduleDefinition : scheduleDefinition
 ModifyFaultManagementJob_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
+
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type*: string
+}
 
 enum FaultManagementJobProcessStateType {
     acknowledged

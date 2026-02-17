@@ -1,14 +1,32 @@
 @startuml trackingRecordModel
 
-class TrackingRecord {
-
-    creationDate*: date-time
+class FmTrackingRecord {
+    creationDateTime*: date-time
     description: string
     id*: string
-    relatedObjectId*: string
     request: string
-    system: string
-    user: string
+    source: string
 }
+
+FmTrackingRecord *-->"1" RelatedObjectRef : relatedObjectId
+
+class RelatedObjectRef {
+
+}
+
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type*: string    
+}
+
+class FaultManagementReportRef {
+    faultManagementReportHref: string
+    faultManagementReportId*: string
+    @type*: string
+}
+
+RelatedObjectRef <|-- FaultManagementJobRef
+RelatedObjectRef <|-- FaultManagementReportRef
 
 @enduml

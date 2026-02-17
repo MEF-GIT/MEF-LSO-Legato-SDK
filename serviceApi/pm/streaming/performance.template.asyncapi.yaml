@@ -1,7 +1,7 @@
 asyncapi: '2.0.0'
-id: <<Add Your specific ID for seler produer app      >>
+id: <<Add Your specific ID for Seller producer app>>
 info:
-  title: MEF W133 streaming template
+  title: MEF 133.1 streaming template
   version: 0.0.1
 channels:
   performance/statistics/{uuid}:

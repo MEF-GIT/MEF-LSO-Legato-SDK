@@ -2,7 +2,7 @@
 
 class ModifyPerformanceJob {
 
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: string
     id*: string
     state*: PerformanceJobProcessStateType
@@ -10,7 +10,6 @@ class ModifyPerformanceJob {
 ModifyPerformanceJob_Create <|-- ModifyPerformanceJob
 
 class ModifyPerformanceJob_Create {
-
     buyerJobId: string
     consumingApplicationId: string
     description: string
@@ -22,7 +21,6 @@ ModifyPerformanceJob_Create *--> PerformanceProfileValue_Modify : performancePro
 ModifyPerformanceJob_Create *--> ScheduleDefinition : scheduleDefinition
 
 class PerformanceProfileValue_Modify {
-
     jobPriority: integer
     outputFormat: OutputFormat
     resultFormat: ResultFormat
@@ -32,12 +30,17 @@ PerformanceProfileValue_Modify *--> TimeDuration : granularity
 PerformanceProfileValue_Modify *--> TimeDuration : reportingPeriod
 PerformanceProfileValue_Modify *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-enum PerformanceJobProcessStateType {
+class PerformanceJobRef {
+    performanceJobHref: string
+    performanceJobId*: string
+    @type*: string
+}
 
-    accepted
+enum PerformanceJobProcessStateType {
     acknowledged
     completed
-    declined
+    inProgress
+    rejected
 }
 
 @enduml

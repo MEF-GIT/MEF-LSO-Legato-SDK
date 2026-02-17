@@ -6,21 +6,21 @@ participant "Buyer/Client" as B
 participant "Seller/Server" as S
 
 B -> S: POST {{baseUrl}}/hub with {{callbackUrl}} details
-S --> B: 201 confirmation with {{id}}
+S --> B: 201 Subscribed with {{id}}
 ...
 B -> S: POST {{baseUrl}}/modifyFaultManagementJob (ModifyFaultManagementJob_Create)
 S -> S: basic validation
 
 alt successful inquiry
-  S --> B: 201 ModifyFaultManagementJob with {{id}}, `acknowledged` state 
-  ...
+S --> B: 201 ModifyFaultManagementJob with {{id}}, `acknowledged` state 
+...
 
-  group loop [until ModifyFaultManagementJob in terminal state]
-      S -> B: {{callbackUrl}}/listener/modifyFaultManagementJobStateChangeEvent ({{id}})
-      B --> S: 204 confirmation
-      B -> S:   GET {{baseUrl}}/modifyFaultManagementJob/{{id}}
-      return 200 ModifyFaultManagementJob in current state
-  end
+S -> S: process ModifyFaultManagementJob
+
+S -> B: {{callbackUrl}}/listener/modifyFaultManagementJobStateChangeEvent ({{id}})
+B --> S: 204 confirmation
+B -> S:   GET {{baseUrl}}/modifyFaultManagementJob/{{id}}
+return 200 ModifyFaultManagementJob in current state
 
 else validation or internal problem
   S --> B : 4xx or 5xx error response
@@ -29,6 +29,6 @@ end
 ...
 
 B -> S : DELETE {{baseUrl}}/hub/{{id}} 
-S --> B : 204 confirmation
+S --> B : 204 Deleted
 
 @enduml

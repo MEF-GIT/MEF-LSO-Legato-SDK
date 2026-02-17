@@ -1,19 +1,23 @@
 @startuml faultManagementReportModel
 
 class FaultManagementReport {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     description: string
-    failureReason: string
+    granularity*: TimeDuration
     href: uri
     id*: string
-    lastModifiedDate: date-time
+    outputFormat*: OutputFormat
+    resultFormat*: ResultFormat
     state*: FaultManagementReportStateType
+    terminationError: TerminationError
 }
-FaultManagementReport *-->"1" FaultManagementJobRef : faultManagementJob
+
+FaultManagementReport *-l->"1" FaultManagementJobRef : faultManagementJob
+FaultManagementReport *-r->"1" MonitoredObjectRef : monitoredObject
 FaultManagementReport *-->"0..*" ReportContentItem : reportContent
 FaultManagementReport *-->"1" ReportingTimeframe : reportingTimeframe
-FaultManagementReport *-->"0..1" AttachmentURL : reportUrl
+FaultManagementReport *-u->"0..1" AttachmentURL : reportUrl
+FaultManagementReport *-u->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 enum FaultManagementReportStateType {
     acknowledged
@@ -28,11 +32,53 @@ class ReportContentItem {
 }
 
 ReportContentItem *-->"1" MeasurementTime : measurementTime
-ReportContentItem *-->"1..*" ResultPayload : measurementDataPoints
+ReportContentItem *-->"0..*" ServiceSpecificResult : measurementData
 
-class ResultPayload {
-
+class ServiceSpecificResult {
     @type*: string
 }
+
+class ReportingTimeframe {
+    reportingStartDate: date-time
+    reportingEndDate: date-time
+}
+
+class MeasurementTime {
+    measurementStartDate*: date-time
+    measurementEndDate: date-time
+    measurementInterval: TimeDuration
+}
+
+class AttachmentURL {
+    retentionPeriod: date-time
+    url*: uri
+}
+
+class MonitoredObjectRef {
+
+}
+
+class EntityRef {
+    @referredType*: string
+    entityHref: string
+    entityId*: string
+    @type*: string
+}
+
+class ServiceRef {
+    serviceHref: string
+    serviceId*: string
+    @type*: string
+}
+
+class ServiceFromToRef {
+    serviceFrom*: object
+    serviceTo*: object
+    @type*: string
+}
+
+MonitoredObjectRef <|-- EntityRef
+MonitoredObjectRef <|-- ServiceFromToRef
+MonitoredObjectRef <|-- ServiceRef
 
 @enduml

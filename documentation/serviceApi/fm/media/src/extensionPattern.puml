@@ -1,14 +1,11 @@
 @startuml extensionPattern
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-    ClassBorderColor<<ServiceSpecificConfiguration>> FireBrick
-    ClassBorderColor<<ServiceSpecificResult>> FireBrick
+    ClassBorderColor<<ProductSpecification>> FireBrick
 }
+
 set namespaceSeparator none
 
 class FaultManagementJob {
-
     id: string 
     href: string 
     jobType: JobType
@@ -17,31 +14,25 @@ class FaultManagementJob {
     <<... attributes are skipped ...>>
 }
 
-
 class ServiceSpecificConfiguration {
     @type*: string <<discriminator>>
 }
 
-
 FaultManagementJob *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 class urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all <<ServiceSpecificConfiguration>> {
-
     <<... attributes are skipped ...>>
 }
 ServiceSpecificConfiguration <|-- "urn:mef:lso:spec:legato:ping-configuration:v0.0.1:all"
 
-
-
 class FaultManagementReport {
-
     id: string 
     href: string 
     <<... attributes are skipped ...>>
 }
 
 class ReportContentItem {
-
+    measurementTime: MeasurementTime
 }
 
 class ServiceSpecificResult {
@@ -49,10 +40,9 @@ class ServiceSpecificResult {
 }
 
 FaultManagementReport *-->"0..*" ReportContentItem : reportContent
-ReportContentItem -->"*" ServiceSpecificResult : measurementDataPoint
+ReportContentItem -->"0..*" ServiceSpecificResult : measurementData
 
 class urn:mef:lso:spec:legato:ping-report:v0.0.1:all <<ServiceSpecificResult>> {
-
     <<... attributes are skipped ...>>
 }
 ServiceSpecificResult <|-- "urn:mef:lso:spec:legato:ping-report:v0.0.1:all"

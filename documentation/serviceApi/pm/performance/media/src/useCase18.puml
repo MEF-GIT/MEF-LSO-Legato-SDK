@@ -1,6 +1,5 @@
 @startuml useCase18
 
-
 hide footbox
 
 participant "Buyer/Client" as B
@@ -9,13 +8,10 @@ participant "Seller/Server" as S
 alt Report generated internally by PM Job
   note over S
     The Performance Monitoring Job starts 
-    collecting data on a scheduled date.
+    processing on a scheduled date 
+    and creates a Performance Report.
   end note
-  S -> S : collect data
-  note over S
-    The Performance Monitoring Job 
-    internally creates a Performance Report.
-  end note
+
   S -> S : create PerformanceReport
 else Report triggered by the request from Buyer/Client
   B -> S : POST {{baseUrl}}/performanceReport (PerformanceReport_Create)

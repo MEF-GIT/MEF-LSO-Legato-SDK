@@ -61,6 +61,9 @@ definitions:
           The upstream bandwidth value.
         $ref: '#/definitions/InformationRate'
     type: object
+    required:
+      - downstream
+      - upstream
   ConnectorType:
     description:
       Enumeration representing type of connector presented to Subscriber.
@@ -115,7 +118,8 @@ definitions:
       - amount
       - units
   EnabledDisabled:
-    description: Enumeration to indicate Enabled/Disabled state of an attribute.
+    description:
+      Enumeration to indicate Enabled/Disabled state of an attribute.
     type: string
     enum:
       - ENABLED

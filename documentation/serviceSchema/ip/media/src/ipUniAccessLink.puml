@@ -1,0 +1,35 @@
+@startuml
+
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class IpUniAccessLink {
+    identifier: String[1]
+    connectionType: ConnectionType[1]
+    l2Technology: L2Technology[1]
+    ipv4ConnectionAddressing: UniIpv4ConnectionAddressing[0..1]
+    ipv6ConnectionAddressing: UniIpv6ConnectionAddressing[0..1]
+    dhcpRelay: DhcpRelay[0..1]
+    prefixDelegation: EnabledDisabled[1]
+    bfd: AccessLinkBfd[0..1]
+    mtu: Integer[1]
+    ingressBwpProfileEnvelope: IpUniAccessLinkIngressBwpEnvelope[0..1]
+    egressBwpProfileEnvelope: IpUniAccessLinkEgressBwpEnvelope[0,,1] 
+    reservedVrids: Vrid[0..1]
+}
+
+MefServiceConfiguration <|-- IpUniAccessLink
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

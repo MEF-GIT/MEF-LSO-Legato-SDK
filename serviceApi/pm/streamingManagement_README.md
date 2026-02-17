@@ -2,8 +2,7 @@
 
 ## Release Kylie:
 
-**Readiness status**:  Requested Letter Ballot. It will be most likely published
-as a standard in this form.
+**Readiness status**:  Published Standard
 
 **Summary** - No changes.
 

@@ -1,7 +1,5 @@
 @startuml testJobProcessDataModel
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
     scale 4096 width
 }
 
@@ -50,7 +48,7 @@ ModifyTestJob_Common *-->"1" TestJobRef : testJob
 ModifyTestJob_Common *--> TestProfileRefOrValue : testProfile
 ModifyTestJob_Common *--> ServiceRef : relatedServiceFrom
 ModifyTestJob_Common *--> ServiceRef : relatedServiceTo
-ModifyTestJob_Common *--> ServiceSpecificTestJobConfiguraton : serviceSpecificTestJobConfiguraton
+ModifyTestJob_Common *--> ServiceSpecificTestJobConfiguration : serviceSpecificTestJobConfiguration
 
 
 class ResumeTestJob {
@@ -117,7 +115,7 @@ class TestProfileRefOrValue {
     @type*: string
 }
 
-class ServiceSpecificTestJobConfiguraton {
+class ServiceSpecificTestJobConfiguration {
 
     @type*: string
 }

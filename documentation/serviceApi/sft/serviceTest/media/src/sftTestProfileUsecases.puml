@@ -1,0 +1,21 @@
+@startuml sftTestProfileUsecases
+
+left to right direction
+
+actor "Buyer/Client" as B
+
+rectangle {
+Usecase UC1 as "1. Create Test Profile"
+Usecase UC2 as "2. Retrieve Test Profile List"
+Usecase UC3 as "3. Retrieve Test Profile by Profile Identifier"
+Usecase UC4 as "4. Modify Test Profile"
+Usecase UC5 as "5. Delete Test Profile"
+}
+
+B --> UC1
+B --> UC2
+B --> UC3
+B --> UC4
+B --> UC5
+
+@enduml

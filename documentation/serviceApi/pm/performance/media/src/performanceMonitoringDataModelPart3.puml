@@ -1,55 +1,27 @@
 @startuml performanceMonitoringDataModelPart3
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
+
+class PerformanceJobComplexQuery_Create {
+    buyerJobId: string
+    consumingApplicationId: string
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
+    producingApplicationId: string
+    state: PerformanceJobStateType
 }
 
-class PerformanceProfile {
-
-    creationDate*: date-time
-    href: uri
-    id*: string
-    isAssigned*: boolean
-    lastModifiedDate: date-time
-}
-PerformanceProfile_Create <|-- PerformanceProfile
-
-class PerformanceProfileRef {
-
-    performanceProfileHref: string
-    performanceProfileId*: string
-    @type*: string
-}
-
-
-
-class PerformanceProfileRefOrValue {
-
-}
-
-
+PerformanceJobComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+PerformanceJobComplexQuery_Create *--> PerformanceProfileRefOrValue_Query : performanceProfile
+PerformanceJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
 
 class PerformanceProfileRefOrValue_Query {
 
 }
 
-
-
-class PerformanceProfileValue {
-
-    jobPriority: integer
-    jobType*: JobType
-    outputFormat*: OutputFormat
-    resultFormat*: ResultFormat
+class PerformanceProfileRef {
+    performanceProfileHref: string
+    performanceProfileId*: string
     @type*: string
 }
-
-PerformanceProfileValue *-->"1" TimeDuration : granularity
-PerformanceProfileValue *-->"1" TimeDuration : reportingPeriod
-PerformanceProfileValue *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-
-
 
 class PerformanceProfileValue_Query {
 
@@ -64,43 +36,7 @@ PerformanceProfileValue_Query *--> TimeDuration : granularity
 PerformanceProfileValue_Query *--> TimeDuration : reportingPeriod
 PerformanceProfileValue_Query *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
-
-class PerformanceProfile_Create {
-
-    description: string
-    jobPriority: integer
-    jobType*: JobType
-    lifecycleStatus*: PerformanceProfileLifecycleStatusType
-    outputFormat*: OutputFormat
-    resultFormat*: ResultFormat
-}
-
-PerformanceProfile_Create *-->"1" TimeDuration : granularity
-PerformanceProfile_Create *-u->"1" TimeDuration : reportingPeriod
-PerformanceProfile_Create *-->"1" ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-
-class PerformanceProfile_Update {
-
-    description: string
-    jobPriority: integer
-    lifecycleStatus: PerformanceProfileLifecycleStatusType
-    outputFormat: OutputFormat
-    resultFormat: ResultFormat
-}
-
-PerformanceProfile_Update *--> TimeDuration : granularity
-PerformanceProfile_Update *--> TimeDuration : reportingPeriod
-PerformanceProfile_Update *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-enum PerformanceProfileLifecycleStatusType {
-
-    approved
-    deprecated
-    experimental
-    pending
-}
-
-
+PerformanceProfileRefOrValue_Query <|-- PerformanceProfileRef
+PerformanceProfileRefOrValue_Query <|-- PerformanceProfileValue_Query
 
 @enduml

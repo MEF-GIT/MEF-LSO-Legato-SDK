@@ -1,0 +1,157 @@
+@startuml sftNotificationDataModel
+
+class Event {
+
+    eventId*: string
+    eventTime*: date-time
+    eventType*: string
+    event*: object
+}
+
+class TestJobCreateEvent {
+
+    eventType*: string
+}
+Event <|-u- TestJobCreateEvent
+
+TestJobCreateEvent *-u->"1" TestJobEventPayload : event
+
+
+class TestJobAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- TestJobAttributeValueChangeEvent
+
+TestJobAttributeValueChangeEvent *-->"1" TestJobEventPayload : event
+
+
+class TestJobStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- TestJobStateChangeEvent
+
+TestJobStateChangeEvent *-u->"1" TestJobStateChangeEventPayload : event
+
+
+class TestJobEventPayload {
+
+    id*: string
+    href: string
+}
+
+
+
+class TestJobStateChangeEventPayload {
+    state*: TestJobStateType
+}
+TestJobEventPayload <|-u- TestJobStateChangeEventPayload
+
+
+class CancelTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- CancelTestJobProcessStateChangeEvent
+
+CancelTestJobProcessStateChangeEvent *-u->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class ModifyTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- ModifyTestJobProcessStateChangeEvent
+
+ModifyTestJobProcessStateChangeEvent *-u->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class SuspendTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- SuspendTestJobProcessStateChangeEvent
+
+SuspendTestJobProcessStateChangeEvent *-u->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class ResumeTestJobProcessStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-u- ResumeTestJobProcessStateChangeEvent
+
+ResumeTestJobProcessStateChangeEvent *-u->"1" TestJobProcessStateChangeEventPayload : event
+
+
+class TestJobProcessStateChangeEventPayload {
+
+    id*: string
+    href: string
+    state*: TestJobProcessStateType
+}
+
+class TestProfileCreateEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileCreateEvent
+
+TestProfileCreateEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileAttributeValueChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileAttributeValueChangeEvent
+
+TestProfileAttributeValueChangeEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileDeleteEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileDeleteEvent
+
+TestProfileDeleteEvent *-->"1" TestProfileEventPayload : event
+
+
+class TestProfileLifecycleStateChangeEvent {
+
+    eventType*: string
+}
+Event <|-- TestProfileLifecycleStateChangeEvent
+
+TestProfileLifecycleStateChangeEvent *-->"1" TestProfileLifecycleStateChangeEventPayload : event
+
+
+class TestProfileEventPayload {
+
+    id*: string
+    href: string
+}
+
+
+
+class TestProfileLifecycleStateChangeEventPayload {
+    state*: TestProfileLifecycleStateType
+}
+TestProfileEventPayload <|-- TestProfileLifecycleStateChangeEventPayload
+
+class TestResultCreateEvent {
+
+    eventType*: string
+}
+Event <|-- TestResultCreateEvent
+
+TestResultCreateEvent *-->"1" TestResultEventPayload : event
+
+
+class TestResultEventPayload {
+
+    id*: string
+    href: string
+}

@@ -12,14 +12,14 @@ B -> SOF : POST {{baseUrl}}/testJob
 SOF -> SOF : basic validation
 SOF -> SOF : assign testJob.id
 
-alt succesful inquiry
+alt successful inquiry
   SOF --> B : 201 TestJob with {{id}} in `acknowledged` state
   SOF -> B: {{callbackUrl}}/listener/testJobCreateEvent {{id}}
   B --> SOF : 204 confirmation  
   ...
 
   
-  note over B, SOF : TestJob moves to `in_progress`
+  note over B, SOF : TestJob moves to `inProgress`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
   ...
@@ -56,7 +56,7 @@ alt succesful inquiry
   SOF -> B: {{callbackUrl}}/listener/resumeTestJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
   
-  note over B, SOF : TestJob moves to `in_progress`
+  note over B, SOF : TestJob moves to `inProgress`
   SOF -> B: {{callbackUrl}}/listener/testJobStateChangeEvent {{id}}
   B --> SOF : 204 confirmation
   
@@ -64,7 +64,7 @@ alt succesful inquiry
 
 
 else validation or internal problem
-  SOF --> B : 4xx or 5xx errorresponse
+  SOF --> B : 4xx or 5xx error response
 end 
 
 ...

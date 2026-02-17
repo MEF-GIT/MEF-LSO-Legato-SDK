@@ -1,294 +1,319 @@
 openapi: 3.0.1
 info:
-  description: |
-    **This file forms part of MEF W146**
+  description: >
+    **This file forms part of Mplify 146**
+
 
     **This API implements part of Business Requirements & Use Cases described
-    in MEF W133.**
 
-    **This specification represents MEF work in progress and is subject to
-    change.**
+    in Mplify 133.1**
 
-    MEF Alarm Management is used to notify listening client about a specific event that has occured.
-    An alarm may or may not represent an error. The Alarm can indicate that a TCA has been crossed.
+
+    Mplify Alarm Management is used to notify listening client about a specific
+    event that has occurred.
+
+    An alarm may or may not represent an error. The Alarm can indicate that a
+    TCA has been crossed.
+
     Not all alarms are an indication of a failure.
 
 
+
     List of use cases by supported the API:
+
     - Retrieve Alarm List
+
     - Retrieve Alarm by ID
+
     - Subscribe for Alarms
+
     - Unsubscribe to Alarms
 
-    Copyright 2025 MEF Forum and its contributors
+
+    Copyright 2025 Mplify Alliance and its contributors
+
+    This file includes content based on the TM Forum Alarm Management API
+    (TMF642 v5.0.0) available at
+
+    https://www.tmforum.org/oda/open-apis/directory/alarm-management-api-TMF642/v5.0,
+
+    which is licensed by the TM Forum under the Apache License version 2.0.
+    Such content
+
+    has been modified by the Mplify Alliance and its contributors.
   title: Alarm Management
-  version: 2.0.0-RC
+  version: 3.0.0
 servers:
-- url: "https://{serverBase}/mefApi/legato/alarmManagement/v2/"
-  variables:
-    serverBase:
-      default: mef.net
-      description: The base of SOF's URL.
+  - url: 'https://{serverBase}/mefApi/legato/alarmManagement/v3/'
+    variables:
+      serverBase:
+        default: mplify.net
+        description: The base of SOF's URL.
 security:
-- oauth2MEFLSOAPI:
-  - default
+  - oauth2MEFLSOAPI:
+      - default
 tags:
-- name: alarm
+  - name: alarm
 paths:
   /alarm:
     get:
-      description: "The Buyer/Client  requests a list of Alarms using none or more\
-        \ of the filter criteria. The Seller/Server returns a summarized list of \
-        \ Alarms. For each Alarm returned, the Seller/Server also  provides a Alarm\
-        \ Identifier that uniquely identifiers this  Alarm within the Seller/Server.\
-        \ The order of the elements  returned to the Buyer/Client is defined by the\
-        \ Seller/Server (e.g.  natural order) and does not change between the pages."
+      description: >-
+        The Buyer/Client  requests a list of Alarms using none or more of the
+        filter criteria. The Seller/Server returns a summarized list
+        of  Alarms. For each Alarm returned, the Seller/Server also  provides a
+        Alarm Identifier that uniquely identifiers this  Alarm within the
+        Seller/Server. The order of the elements  returned to the Buyer/Client
+        is defined by the Seller/Server (e.g.  natural order) and does not
+        change between the pages.
       operationId: listAlarms
       parameters:
-      - description: The identifier of the Alarm.
-        in: query
-        name: id
-        required: false
-        schema:
-          type: string
-      - description: Requested index for start of item to be provided in response
-          requested by the client. Note that the index starts with "0".
-        in: query
-        name: description
-        required: false
-        schema:
-          type: string
-      - description: Date when the alarm was changed - greater than.
-        in: query
-        name: alarmChangedTime.gt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Date when the alarm was changed - lower than.
-        in: query
-        name: alarmChangedTime.lt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Date when the alarm was cleared - greater than.
-        in: query
-        name: alarmClearedTime.gt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Date when the alarm was cleared - lower than.
-        in: query
-        name: alarmClearedTime.lt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Date when the alarm was reported - greater than.
-        in: query
-        name: alarmReportingTime.gt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Date when the alarm was reported - lower than.
-        in: query
-        name: alarmReportingTime.lt
-        required: false
-        schema:
-          format: date-time
-          type: string
-      - description: Type of the Alarm.
-        in: query
-        name: alarmType
-        required: false
-        schema:
-          $ref: '#/components/schemas/AlarmType'
-      - description: Type of the Alarm Object.
-        in: query
-        name: alarmedObjectType
-        required: false
-        schema:
-          type: string
-      - description: Perceived Severity of the Alarm.
-        in: query
-        name: perceivedSeverity
-        required: false
-        schema:
-          $ref: '#/components/schemas/PerceivedSeverity'
-      - description: Planned Outage Indicator of the Alarm.
-        in: query
-        name: plannedOutageIndicator
-        required: false
-        schema:
-          $ref: '#/components/schemas/PlannedOutageIndicator'
-      - description: Alarm Reporting system identity.
-        in: query
-        name: reportingSystemId
-        required: false
-        schema:
-          type: string
-      - description: Service Affecting Alarms.
-        in: query
-        name: serviceAffecting
-        required: false
-        schema:
-          type: boolean
-      - description: Alarm state.
-        in: query
-        name: state
-        required: false
-        schema:
-          $ref: '#/components/schemas/AlarmState'
-      - description: Affected Service Id.
-        in: query
-        name: affectedServiceId
-        required: false
-        schema:
-          type: string
-      - description: Correlated Alarm Id.
-        in: query
-        name: correlatedAlarmId
-        required: false
-        schema:
-          type: string
-      - description: Requested index for start of item to be provided in response
-          requested by the client. Note that the index starts with "0".
-        in: query
-        name: offset
-        required: false
-        schema:
-          type: integer
-      - description: Requested number of resources to be provided in response.
-        in: query
-        name: limit
-        required: false
-        schema:
-          format: int32
-          type: integer
+        - description: The identifier of the Alarm.
+          in: query
+          name: id
+          required: false
+          schema:
+            type: string
+        - description: Date when the alarm was changed - greater than.
+          in: query
+          name: alarmChangedTime.gt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Date when the alarm was changed - lower than.
+          in: query
+          name: alarmChangedTime.lt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Date when the alarm was cleared - greater than.
+          in: query
+          name: alarmClearedTime.gt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Date when the alarm was cleared - lower than.
+          in: query
+          name: alarmClearedTime.lt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Date when the alarm was reported - greater than.
+          in: query
+          name: alarmReportingTime.gt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Date when the alarm was reported - lower than.
+          in: query
+          name: alarmReportingTime.lt
+          required: false
+          schema:
+            format: date-time
+            type: string
+        - description: Type of the Alarm.
+          in: query
+          name: alarmType
+          required: false
+          schema:
+            $ref: '#/components/schemas/AlarmType'
+        - description: Type of the Alarm Object.
+          in: query
+          name: alarmedObjectType
+          required: false
+          schema:
+            type: string
+        - description: Perceived Severity of the Alarm.
+          in: query
+          name: perceivedSeverity
+          required: false
+          schema:
+            $ref: '#/components/schemas/PerceivedSeverity'
+        - description: Planned Outage Indicator of the Alarm.
+          in: query
+          name: plannedOutageIndicator
+          required: false
+          schema:
+            $ref: '#/components/schemas/PlannedOutageIndicator'
+        - description: Alarm Reporting system identity.
+          in: query
+          name: reportingSystemId
+          required: false
+          schema:
+            type: string
+        - description: Service Affecting Alarms.
+          in: query
+          name: serviceAffecting
+          required: false
+          schema:
+            type: boolean
+        - description: Alarm state.
+          in: query
+          name: state
+          required: false
+          schema:
+            $ref: '#/components/schemas/AlarmState'
+        - description: Affected Service Id.
+          in: query
+          name: affectedServiceId
+          required: false
+          schema:
+            type: string
+        - description: Correlated Alarm Id.
+          in: query
+          name: correlatedAlarmId
+          required: false
+          schema:
+            type: string
+        - description: >-
+            Requested index for start of item to be provided in response
+            requested by the client. Note that the index starts with "0".
+          in: query
+          name: offset
+          required: false
+          schema:
+            type: integer
+        - description:
+            Requested number of resources to be provided in response.
+          in: query
+          name: limit
+          required: false
+          schema:
+            format: int32
+            type: integer
       responses:
-        "200":
+        '200':
           content:
             application/json;charset=utf-8:
               schema:
                 items:
                   $ref: '#/components/schemas/Alarm_Common'
                 type: array
-          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
+          description:
+            "'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'"
           headers:
             X-Pagination-Throttled:
-              description: Used to indicate that result page was throttled to maximum
-                possible size  and there are additional results that can be fetched.
+              description: >-
+                Used to indicate that result page was throttled to maximum
+                possible size  and there are additional results that can be
+                fetched.
               schema:
                 type: boolean
             X-Total-Count:
-              description: "The total number of matching items. E.g. if there are\
-                \ 50 matching items in total, but the request has offset=10 and limit=10,\
-                \ then the X-Total-Count is 50."
+              description: >-
+                The total number of matching items. E.g. if there are 50
+                matching items in total, but the request has offset=10 and
+                limit=10, then the X-Total-Count is 50.
               schema:
                 type: integer
             X-Result-Count:
               description: The number of items included in the response.
               schema:
                 type: integer
-        "400":
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "422":
+        '422':
           content:
             application/json;charset=utf-8:
               schema:
                 items:
                   $ref: '#/components/schemas/Error422'
                 type: array
-          description: Unprocessable entity due to the business validation problems
-        "500":
+          description:
+            Unprocessable entity due to the business validation problems
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - listAlarms
+        - oauth2MEFLSOAPI:
+            - listAlarms
       summary: List or find Alarm objects.
       tags:
-      - alarm
-  /alarm/{id}:
+        - alarm
+  '/alarm/{id}':
     get:
-      description: The Buyer/Client requests detailed information about a single Alarm
+      description: >-
+        The Buyer/Client requests detailed information about a single Alarm
         based on the Alarm Identifier.
       operationId: retrieveAlarm
       parameters:
-      - description: Identifier of the Alarm
-        in: path
-        name: id
-        required: true
-        schema:
-          type: string
+        - description: Identifier of the Alarm
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Alarm'
-          description: '''OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'''
-        "400":
+          description:
+            "'OK. (https://tools.ietf.org/html/rfc7231#section-6.3.1)'"
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "404":
+        '404':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error404'
           description: Not Found
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
       security:
-      - oauth2MEFLSOAPI:
-        - retrieveAlarm
+        - oauth2MEFLSOAPI:
+            - retrieveAlarm
       summary: Retrieves an Alarm by ID.
       tags:
-      - alarm
+        - alarm
   /hub:
     post:
-      description: The Buyer/Client or Administrator requests to subscribe to  Alarm
+      description: >-
+        The Buyer/Client or Administrator requests to subscribe to  Alarm
         Notifications.
       operationId: registerListener
       requestBody:
@@ -296,207 +321,211 @@ paths:
           application/json;charset=utf-8:
             schema:
               $ref: '#/components/schemas/EventSubscriptionInput'
-        description: Data containing the callback endpoint to deliver the information.
+        description:
+          Data containing the callback endpoint to deliver the information.
         required: true
       responses:
-        "201":
+        '201':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EventSubscription'
           description: Subscribed
-        "400":
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-        "501":
+        '501':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
       security:
-      - oauth2MEFLSOAPI:
-        - registerListener
+        - oauth2MEFLSOAPI:
+            - registerListener
       summary: Register a listener
       tags:
-      - events subscription
-  /hub/{id}:
+        - events subscription
+  '/hub/{id}':
     delete:
-      description: The Buyer/Client or Administrator requests to unsubscribe from  Alarm
+      description: >-
+        The Buyer/Client or Administrator requests to unsubscribe from  Alarm
         Notifications.
       operationId: unregisterListener
       parameters:
-      - description: The id of the registered listener
-        in: path
-        name: id
-        required: true
-        schema:
-          type: string
+        - description: The id of the registered listener
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
-        "204":
+        '204':
           description: Deleted
-        "400":
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "404":
+        '404':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error404'
           description: Not Found
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-        "501":
+        '501':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
       security:
-      - oauth2MEFLSOAPI:
-        - unregisterListener
+        - oauth2MEFLSOAPI:
+            - unregisterListener
       summary: Unregister a listener
       tags:
-      - events subscription
+        - events subscription
     get:
-      description: The Buyer/Client requests detailed information about  a single
+      description: >-
+        The Buyer/Client requests detailed information about  a single
         Notification Hub based on the Hub Identifier.
       operationId: retrieveHub
       parameters:
-      - description: Identifier of the Hub
-        in: path
-        name: id
-        required: true
-        schema:
-          type: string
+        - description: Identifier of the Hub
+          in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
+        '200':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/EventSubscription'
           description: Success
-        "400":
+        '400':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error400'
           description: Bad Request
-        "401":
+        '401':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error401'
           description: Unauthorized
-        "403":
+        '403':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error403'
           description: Forbidden
-        "404":
+        '404':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error404'
           description: Not Found
-        "500":
+        '500':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error500'
           description: Internal Server Error
-        "501":
+        '501':
           content:
             application/json;charset=utf-8:
               schema:
                 $ref: '#/components/schemas/Error501'
           description: Method not implemented.
       security:
-      - oauth2MEFLSOAPI:
-        - retrieveHub
+        - oauth2MEFLSOAPI:
+            - retrieveHub
       summary: Retrieves a Hub by ID.
       tags:
-      - events subscription
+        - events subscription
 components:
   schemas:
     Alarm:
       allOf:
-      - $ref: '#/components/schemas/Alarm_Common'
-      - description: A definition of an Alarm.
-        properties:
-          alarmedObject:
-            description: Identifies the Managed Object instance associated with the
-              alarm.
-            items:
-              $ref: '#/components/schemas/AlarmedObjectRef'
-            type: array
-          comment:
-            items:
-              $ref: '#/components/schemas/Comment'
-            type: array
-          externalAlarmId:
-            description: An identifier of the alarm in the source system.
-            type: string
-          isRootCause:
-            description: Indicates whether the alarm is a root cause alarm.
-            type: boolean
-          parentAlarm:
-            $ref: '#/components/schemas/AlarmRef'
-          probableCause:
-            $ref: '#/components/schemas/ProbableCause'
-          alarmSpecificAttributes:
-            $ref: '#/components/schemas/AlarmSpecificAttributes'
-          sourceSystemId:
-            description: Source system identity.
-            type: string
-          specificProblem:
-            description: Provides more specific information about the alarm.
-            type: string
-        required:
-        - alarmedObject
-        - isRootCause
-        type: object
+        - $ref: '#/components/schemas/Alarm_Common'
+        - description: A definition of an Alarm.
+          properties:
+            alarmedObject:
+              description: >-
+                Identifies the Managed Object instance associated with the
+                alarm.
+              items:
+                $ref: '#/components/schemas/AlarmedObjectRef'
+              type: array
+            comment:
+              items:
+                $ref: '#/components/schemas/Comment'
+              type: array
+            externalAlarmId:
+              description: An identifier of the alarm in the source system.
+              type: string
+            isRootCause:
+              description: Indicates whether the alarm is a root cause alarm.
+              type: boolean
+            parentAlarm:
+              $ref: '#/components/schemas/AlarmRef'
+            probableCause:
+              $ref: '#/components/schemas/ProbableCause'
+            alarmSpecificAttributes:
+              $ref: '#/components/schemas/AlarmSpecificAttributes'
+            sourceSystemId:
+              description: Source system identity.
+              type: string
+            specificProblem:
+              description: Provides more specific information about the alarm.
+              type: string
+          required:
+            - alarmedObject
+            - isRootCause
+          type: object
     AlarmedObjectRef:
       properties:
         id:
@@ -506,11 +535,13 @@ components:
           description: hyperlink to the referenced Alarm
           type: string
         '@referredType':
-          description: The actual type of the target instance when needed for disambiguation.
+          description: >-
+            The actual type of the target instance when needed for
+            disambiguation.
           type: string
       required:
-      - '@referredType'
-      - id
+        - '@referredType'
+        - id
       type: object
     AlarmRef:
       properties:
@@ -521,39 +552,41 @@ components:
           description: hyperlink to the referenced Alarm
           type: string
       required:
-      - id
+        - id
       type: object
     AlarmSpecificAttributes:
-      description: AlarmSpecificAttributes is used as an extension for Alarm specific
+      description: >-
+        AlarmSpecificAttributes is used as an extension for Alarm specific
         payload.  The @type attribute is used as a discriminator.
       discriminator:
         propertyName: '@type'
       properties:
         '@type':
-          description: The named type must be a subclass of AlarmSpecificAttributes.
+          description:
+            The named type must be a subclass of AlarmSpecificAttributes.
           type: string
       required:
-      - '@type'
+        - '@type'
       type: object
     AlarmState:
       description: |-
         Defines the alarm state during its life cycle.
 
-        | state            | MEF 133 name    |        Description                                                                                                                               |
+        | state            | Mplify 133.1 name    |        Description                                                                                                                               |
         | ---------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
         | `acknowledged`   | Acknowledged    | An alarm that is still active but has been acknowledged by an operator, meaning the operator is aware of the issue and has taken note for action.|
         | `cleared`        | Cleared         | Indicates that the underlying fault or abnormal condition that triggered the alarm has been resolved, and the alarm is no longer active.         |
         | `unAcknowledged` | Unacknowledged  | An alarm that has been raised and is still visible to the operator, but has not yet been acknowledged.                                           |
-      enum:
-      - acknowledged
-      - cleared
-      - unAcknowledged
       type: string
+      enum:
+        - acknowledged
+        - cleared
+        - unAcknowledged
     AlarmType:
       description: |-
         Categorize the alarm. Values as defined in X.733 8.1.1 or 3GPP TS32.111.
 
-        | state                            | MEF 133 name             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+        | state                            | Mplify 133.1 name             | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
         | -------------------------------- | -------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
         | `communicationsAlarm`            | Communications Alarm     | An alarm of this type is principally associated with the procedures and/or processes required to convey information from one point to another. |
         | `processingErrorAlarm`           | Processing Error Alarm   | An alarm of this type is principally associated with a software or processing fault.                                                           |
@@ -571,19 +604,19 @@ components:
         | `securityService`                | Security Service         | A security attack has been detected by a security service.                                                                                     |
         | `mechanismViolation`             | Mechanism Violation      | A security attack has been detected by a security mechanism.                                                                                   |
         | `timeDomainViolation`            | Time Domain Violation    | An event has occurred at an unexpected or prohibited time.                                                                                     |
-      enum:
-      - communicationsAlarm
-      - processingErrorAlarm
-      - environmentalAlarm
-      - qualityOfServiceAlarm
-      - equipmentAlarm
-      - integrityViolation
-      - operationalViolation
-      - physicalViolation
-      - securityService
-      - mechanismViolation
-      - timeDomainViolation
       type: string
+      enum:
+        - communicationsAlarm
+        - processingErrorAlarm
+        - environmentalAlarm
+        - qualityOfServiceAlarm
+        - equipmentAlarm
+        - integrityViolation
+        - operationalViolation
+        - physicalViolation
+        - securityService
+        - mechanismViolation
+        - timeDomainViolation
     Alarm_Common:
       description: A definition of an Alarm.
       properties:
@@ -600,34 +633,40 @@ components:
             $ref: '#/components/schemas/ServiceRef'
           type: array
         alarmChangedTime:
-          description: Indicates the last date and time when the alarm is changed
-            on the alarm  owning system. Any change to the alarm whether coming from
+          description: >-
+            Indicates the last date and time when the alarm is changed on the
+            alarm  owning system. Any change to the alarm whether coming from
             the alarmed  resource is changing this time.
           format: date-time
           type: string
         alarmClearedTime:
-          description: Indicates the time (as a date + time) at which the alarm is
-            cleared at  the source.
+          description: >-
+            Indicates the time (as a date + time) at which the alarm is cleared
+            at  the source.
           format: date-time
           type: string
         alarmDetails:
           description: Contains further information on the Alarm.
           type: string
         alarmedObjectType:
-          description: The type (class) of the Managed Object associated with the
-            event e.g. port.
+          description: >-
+            The type (class) of the Managed Object associated with the event
+            e.g. port.
           type: string
         alarmRaisedTime:
-          description: The time that an alarm was raised.  This time may differ from
-            the Alarm  Reported Time
+          description: >-
+            The time that an alarm was raised.  This time may differ from the
+            Alarm  Reported Time
           format: date-time
           type: string
         alarmReportingTime:
-          description: "Indicates the time (as a date + time) at which the alarm was\
-            \ reported by  the owning OSS. It might be different from the alarm-RaisedTime.\
-            \ For instance,  if the alarm list is maintained by an EMS, the alarmRaisedtime\
-            \ would be  the time the alarm was detected by the NE, while the alarmReportingTime\
-            \  would be the time this alarm was stored in the alarm list of the EMS."
+          description: >-
+            Indicates the time (as a date + time) at which the alarm was
+            reported by  the owning OSS. It might be different from the
+            alarm-RaisedTime. For instance,  if the alarm list is maintained by
+            an EMS, the alarmRaisedTime would be  the time the alarm was
+            detected by the NE, while the alarmReportingTime  would be the time
+            this alarm was stored in the alarm list of the EMS.
           format: date-time
           type: string
         correlatedAlarm:
@@ -650,14 +689,14 @@ components:
         state:
           $ref: '#/components/schemas/AlarmState'
       required:
-      - alarmDetails
-      - alarmRaisedTime
-      - alarmReportingTime
-      - alarmType
-      - id
-      - perceivedSeverity
-      - serviceAffecting
-      - state
+        - alarmDetails
+        - alarmRaisedTime
+        - alarmReportingTime
+        - alarmType
+        - id
+        - perceivedSeverity
+        - serviceAffecting
+        - state
       type: object
     Comment:
       description: A comment entered on the alarm
@@ -666,7 +705,8 @@ components:
           description: The text of the comment.
           type: string
         systemIdentifier:
-          description: The system identifier of the system that set the comment.
+          description:
+            The system identifier of the system that set the comment.
           type: string
         time:
           description: The time commenting the alarm
@@ -677,16 +717,20 @@ components:
           type: string
       type: object
     Error:
-      description: |
-        Standard Class used to describe API response error Not intended to be used directly. The `code` in the HTTP header is used as a discriminator for the type of error returned in runtime.
+      description: >
+        Standard Class used to describe API response error Not intended to be
+        used directly. The `code` in the HTTP header is used as a discriminator
+        for the type of error returned in runtime.
       properties:
         message:
-          description: Text that provides mode details and corrective actions related
-            to the error. This can be shown to a client user.
+          description: >-
+            Text that provides mode details and corrective actions related to
+            the error. This can be shown to a client user.
           type: string
         reason:
-          description: Text that explains the reason for the error. This can be shown
-            to a client user.
+          description: >-
+            Text that explains the reason for the error. This can be shown to a
+            client user.
           maxLength: 255
           type: string
         referenceError:
@@ -694,18 +738,19 @@ components:
           format: uri
           type: string
       required:
-      - reason
+        - reason
       type: object
     Error400:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error400Code'
-        required:
-        - code
-        type: object
-      description: Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error400Code'
+          required:
+            - code
+          type: object
+      description:
+        'Bad Request. (https://tools.ietf.org/html/rfc7231#section-6.5.1)'
     Error400Code:
       description: |
         One of the following error codes:
@@ -716,41 +761,44 @@ components:
         - invalidQuery: The query section of the URI is invalid.
         - invalidBody: The request has an invalid body
       enum:
-      - missingQueryParameter
-      - missingQueryValue
-      - invalidQuery
-      - invalidBody
+        - missingQueryParameter
+        - missingQueryValue
+        - invalidQuery
+        - invalidBody
       type: string
     Error401:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error401Code'
-        required:
-        - code
-        type: object
-      description: Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error401Code'
+          required:
+            - code
+          type: object
+      description:
+        'Unauthorized.  (https://tools.ietf.org/html/rfc7235#section-3.1)'
     Error401Code:
       description: |
         One of the following error codes:
         - missingCredentials: No credentials provided.
         - invalidCredentials: Provided credentials are invalid or expired
       enum:
-      - missingCredentials
-      - invalidCredentials
+        - missingCredentials
+        - invalidCredentials
       type: string
     Error403:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error403Code'
-        required:
-        - code
-        type: object
-      description: Forbidden. This code indicates that the server understood the request
-        but refuses to authorize it. (https://tools.ietf.org/html/rfc7231#section-6.5.3)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error403Code'
+          required:
+            - code
+          type: object
+      description: >-
+        Forbidden. This code indicates that the server understood the request
+        but refuses to authorize it.
+        (https://tools.ietf.org/html/rfc7231#section-6.5.3)
     Error403Code:
       description: |-
         This code indicates that the server understood
@@ -760,57 +808,66 @@ components:
         - forbiddenRequester: Forbidden requester
         - tooManyUsers: Too many users
       enum:
-      - accessDenied
-      - forbiddenRequester
-      - tooManyUsers
+        - accessDenied
+        - forbiddenRequester
+        - tooManyUsers
       type: string
     Error404:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: |
-              The following error code:
-              - notFound: A current representation for the target resource
-              not found
-            enum:
-            - notFound
-            type: string
-        required:
-        - code
-        type: object
-      description: Resource for the requested path not found. (https://tools.ietf.org/html/rfc7231#section-6.5.4)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              description: |
+                The following error code:
+                - notFound: A current representation for the target resource
+                not found
+              enum:
+                - notFound
+              type: string
+          required:
+            - code
+          type: object
+      description: >-
+        Resource for the requested path not found.
+        (https://tools.ietf.org/html/rfc7231#section-6.5.4)
     Error409:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: |
-              The following error code:
-              - conflict: The client has provided a value whose semantics are
-              not appropriate for the property.
-            enum:
-            - conflict
-            type: string
-        required:
-        - code
-        type: object
-      description: Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              description: |
+                The following error code:
+                - conflict: The client has provided a value whose semantics are
+                not appropriate for the property.
+              enum:
+                - conflict
+              type: string
+          required:
+            - code
+          type: object
+      description:
+        'Conflict (https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.8)'
     Error422:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            $ref: '#/components/schemas/Error422Code'
-          propertyPath:
-            description: |
-              A pointer to a particular property of the payload that caused the validation issue. It is highly recommended that this property should be used.
-              Defined using JavaScript Object Notation (JSON) Pointer (https://tools.ietf.org/html/rfc6901).
-            type: string
-        required:
-        - code
-        type: object
-      description: Unprocessable entity due to a business validation problem. (https://tools.ietf.org/html/rfc4918#section-11.2)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              $ref: '#/components/schemas/Error422Code'
+            propertyPath:
+              description: >
+                A pointer to a particular property of the payload that caused
+                the validation issue. It is highly recommended that this
+                property should be used.
+
+                Defined using JavaScript Object Notation (JSON) Pointer
+                (https://tools.ietf.org/html/rfc6901).
+              type: string
+          required:
+            - code
+          type: object
+      description: >-
+        Unprocessable entity due to a business validation problem.
+        (https://tools.ietf.org/html/rfc4918#section-11.2)
     Error422Code:
       description: |
         One of the following error codes:
@@ -822,188 +879,184 @@ components:
           - tooManyRecords: the number of records to be provided in the response exceeds the Seller's threshold.
           - otherIssue: Other problem was identified (detailed information provided in a reason)
       enum:
-      - missingProperty
-      - invalidValue
-      - invalidFormat
-      - referenceNotFound
-      - unexpectedProperty
-      - tooManyRecords
-      - otherIssue
+        - missingProperty
+        - invalidValue
+        - invalidFormat
+        - referenceNotFound
+        - unexpectedProperty
+        - tooManyRecords
+        - otherIssue
       type: string
     Error500:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: |
-              The following error code:
-              - internalError: Internal server error - the server encountered
-              an unexpected condition that prevented it from fulfilling the
-              request.
-            enum:
-            - internalError
-            type: string
-        required:
-        - code
-        type: object
-      description: Internal Server Error. (https://tools.ietf.org/html/rfc7231#section-6.6.1)
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              description: |
+                The following error code:
+                - internalError: Internal server error - the server encountered
+                an unexpected condition that prevented it from fulfilling the
+                request.
+              enum:
+                - internalError
+              type: string
+          required:
+            - code
+          type: object
+      description: >-
+        Internal Server Error.
+        (https://tools.ietf.org/html/rfc7231#section-6.6.1)
     Error501:
       allOf:
-      - $ref: '#/components/schemas/Error'
-      - properties:
-          code:
-            description: |-
-              The following error code:
-              - notImplemented: Method not supported by the server
-            enum:
-            - notImplemented
-            type: string
-        required:
-        - code
-        type: object
-      description: Not Implemented. Used in case Seller is not supporting an optional
+        - $ref: '#/components/schemas/Error'
+        - properties:
+            code:
+              description: |-
+                The following error code:
+                - notImplemented: Method not supported by the server
+              enum:
+                - notImplemented
+              type: string
+          required:
+            - code
+          type: object
+      description: >-
+        Not Implemented. Used in case Seller is not supporting an optional
         operation (https://tools.ietf.org/html/rfc7231#section-6.6.2)
     EventSubscription:
       allOf:
-      - $ref: '#/components/schemas/EventSubscriptionInput'
-      - description: This resource is used to respond to notification subscriptions.
-        properties:
-          id:
-            description: An identifier of this Event Subscription assigned when a
-              resource is created.
-            type: string
-        type: object
+        - $ref: '#/components/schemas/EventSubscriptionInput'
+        - description:
+            This resource is used to respond to notification subscriptions.
+          properties:
+            id:
+              description: >-
+                An identifier of this Event Subscription assigned when a
+                resource is created.
+              type: string
+          type: object
       required:
-      - id
+        - id
     EventSubscriptionInput:
       description: This class is used to register for Notifications.
       properties:
         callback:
-          description: "This callback value must be set to *host* property from Alarm\
-            \ Notification API (alarmNotification.api.yaml). This property is appended\
-            \ with the base path and notification resource path specified in that\
-            \ API to construct an URL to which  notification is sent. E.g. for 'callback':\
-            \  \"https://bus.mef.com/listenerEndpoint\", the alarm event notification\
-            \ will be  sent to: `https://bus.mef.com/listenerEndpoint/mefApi/legato/alarmNotification/v2/listener/`"
+          description: >-
+            This callback value must be set to *host* property from Alarm
+            Notification API (alarmNotification.api.yaml). This property is
+            appended with the base path and notification resource path
+            specified in that API to construct an URL to which  notification is
+            sent. E.g. for
+            'callback':  "https://buyer.mplify.com/listenerEndpoint", the alarm
+            event notification will be  sent to:
+            `https://buyer.mplify.com/listenerEndpoint/mefApi/legato/alarmNotification/v2/listener/`
           type: string
         query:
-          description: "This attribute is used to define which type of events to register\
-            \ to. Example: 'query':'eventType =  createAlarm'. To subscribe for more\
-            \ than one event type, put the values separated by a comma: `eventType=alarmCreateEvent,\
-            \ alarmAttributeValueChangeEvent`. The possible values are enumerated\
-            \ by Event type enums in alarmNotification.api.yaml. An empty query is\
-            \ treated as specifying no filters - ending in subscription for all event\
-            \ types."
+          description: >-
+            This attribute is used to define which type of events to register
+            to. Example: 'query':'eventType =  createAlarm'. To subscribe for
+            more than one event type, put the values separated by a comma:
+            `eventType=alarmCreateEvent, alarmAttributeValueChangeEvent`. The
+            possible values are enumerated by Event type enums in
+            alarmNotification.api.yaml. An empty query is treated as specifying
+            no filters - ending in subscription for all event types.
           type: string
       required:
-      - callback
+        - callback
       type: object
     PerceivedSeverity:
-      description: "List of possible severities that can be allocated to an Alarm.\
-        \ \nThe values are consistent with ITU - T Recommendation X.733.\nOnce an\
-        \ alarm has been cleared, its perceived severity is set to \n'cleared' and\
-        \ can no longer be set.\n\n| state           | MEF 133 name    |        Description\
-        \                                                                        \
-        \                                                                        \
-        \                                                |\n| --------------- | ---------------\
-        \ | -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
-        \ |\n| `cleared`       | Cleared         |  The Cleared severity level indicates\
-        \ the clearing of one or more previously reported alarms.                \
-        \                                                                        \
-        \                             |\n| `critical`      | Critical        |  The\
-        \ Critical severity level indicates that a service affecting condition has\
-        \ occurred and an immediate corrective action is required.               \
-        \                                                             |\n| `indeterminate`\
-        \ | Indeterminate   |  The Indeterminate severity level indicates that the\
-        \ severity level cannot be determined.                                   \
-        \                                                                        \
-        \              |\n| `major`         | Major           |  The Major severity\
-        \ level indicates that a service affecting condition has developed and an\
-        \ urgent corrective action is required.                                  \
-        \                                               |\n| `minor`         | Minor\
-        \           |  The Minor severity level indicates the existence of a non-service\
-        \ affecting fault condition and that corrective action should be taken in\
-        \ order to prevent a more serious (for example, service affecting) fault.|\n\
-        | `warning`       | Warning         |  The Warning severity level indicates\
-        \ the detection of a potential or impending service affecting fault, before\
-        \ any significant effects have been felt.                                \
-        \                           |"
+      description: |-
+        List of possible severities that can be allocated to an Alarm. 
+        The values are consistent with ITU - T Recommendation X.733.
+        Once an alarm has been cleared, its perceived severity is set to 
+        'cleared' and can no longer be set.
+
+        | state           | Mplify 133.1 name    |        Description                                                                                                                                                                                                |
+        | --------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+        | `cleared`       | Cleared         |  The Cleared severity level indicates the clearing of one or more previously reported alarms.                                                                                                                     |
+        | `critical`      | Critical        |  The Critical severity level indicates that a service affecting condition has occurred and an immediate corrective action is required.                                                                            |
+        | `indeterminate` | Indeterminate   |  The Indeterminate severity level indicates that the severity level cannot be determined.                                                                                                                         |
+        | `major`         | Major           |  The Major severity level indicates that a service affecting condition has developed and an urgent corrective action is required.                                                                                 |
+        | `minor`         | Minor           |  The Minor severity level indicates the existence of a non-service affecting fault condition and that corrective action should be taken in order to prevent a more serious (for example, service affecting) fault.|
+        | `warning`       | Warning         |  The Warning severity level indicates the detection of a potential or impending service affecting fault, before any significant effects have been felt.                                                           |
       enum:
-      - cleared
-      - critical
-      - indeterminate
-      - major
-      - minor
-      - warning
+        - cleared
+        - critical
+        - indeterminate
+        - major
+        - minor
+        - warning
       type: string
     PlannedOutageIndicator:
-      description: "Indicates that the Managed Object (related to this alarm) is in\
-        \ in planned maintenance, or out of service."
+      description: >-
+        Indicates that the Managed Object (related to this alarm) is in in
+        planned maintenance, or out of service.
       enum:
-      - inPlannedMaintenance
-      - outOfService
+        - inPlannedMaintenance
+        - outOfService
       type: string
     ProbableCause:
-      description: list of alarm probable cause as defined in ITU - T Recommendation
-        X.733 or 3GPP TS 32.111 - 2 Annex B.
+      description: >-
+        list of alarm probable cause as defined in ITU - T Recommendation X.733
+        or 3GPP TS 32.111 - 2 Annex B.
       enum:
-      - adapterError
-      - applicationSubsystemFailure
-      - bandwidthReduced
-      - callEstablishmentError
-      - communicationsProtocolError
-      - communicationsSubsystemFailure
-      - configurationOrCustomizationError
-      - congestion
-      - corruptData
-      - cpuCyclesLimitExceeded
-      - datasetOrModemError
-      - degradedSignal
-      - dteDceInterfaceError
-      - enclosureDoorOpen
-      - equipmentMalfunction
-      - excessiveVibration
-      - fileError
-      - fireDetected
-      - floodDetected
-      - framingError
-      - heatingVentilationCoolingSystemProblem
-      - humidityUnacceptable
-      - ioDeviceError
-      - inputDeviceError
-      - lanError
-      - leakDetected
-      - localNodeTransmissionError
-      - lossOfFrame
-      - lossOfSignal
-      - materialSupplyExhausted
-      - multiplexerProblem
-      - outOfMemory
-      - outputDeviceError
-      - performanceDegraded
-      - powerProblem
-      - pressureUnacceptable
-      - processorProblem
-      - pumpFailure
-      - queueSizeExceeded
-      - receiveFailure
-      - receiverFailure
-      - remoteNodeTransmissionError
-      - resourceNearingCapacity
-      - responseTimeExcessive
-      - retransmissionRateExcessive
-      - softwareError
-      - softwareProgramTerminated
-      - softwareProgramError
-      - storageCapacityProblem
-      - temperatureUnacceptable
-      - thresholdCrossed
-      - timingProblem
-      - toxicLeakDetected
-      - transmitFailure
-      - transmitterFailure
-      - underlyingResourceUnavailable
-      - versionMismatch
+        - adapterError
+        - applicationSubsystemFailure
+        - bandwidthReduced
+        - callEstablishmentError
+        - communicationsProtocolError
+        - communicationsSubsystemFailure
+        - configurationOrCustomizationError
+        - congestion
+        - corruptData
+        - cpuCyclesLimitExceeded
+        - datasetOrModemError
+        - degradedSignal
+        - dteDceInterfaceError
+        - enclosureDoorOpen
+        - equipmentMalfunction
+        - excessiveVibration
+        - fileError
+        - fireDetected
+        - floodDetected
+        - framingError
+        - heatingVentilationCoolingSystemProblem
+        - humidityUnacceptable
+        - ioDeviceError
+        - inputDeviceError
+        - lanError
+        - leakDetected
+        - localNodeTransmissionError
+        - lossOfFrame
+        - lossOfSignal
+        - materialSupplyExhausted
+        - multiplexerProblem
+        - outOfMemory
+        - outputDeviceError
+        - performanceDegraded
+        - powerProblem
+        - pressureUnacceptable
+        - processorProblem
+        - pumpFailure
+        - queueSizeExceeded
+        - receiveFailure
+        - receiverFailure
+        - remoteNodeTransmissionError
+        - resourceNearingCapacity
+        - responseTimeExcessive
+        - retransmissionRateExcessive
+        - softwareError
+        - softwareProgramTerminated
+        - softwareProgramError
+        - storageCapacityProblem
+        - temperatureUnacceptable
+        - thresholdCrossed
+        - timingProblem
+        - toxicLeakDetected
+        - transmitFailure
+        - transmitterFailure
+        - underlyingResourceUnavailable
+        - versionMismatch
       type: string
     ServiceRef:
       description: Reference to a Service instance.
@@ -1015,15 +1068,15 @@ components:
           description: unique identifier of Service
           type: string
       required:
-      - id
+        - id
       type: object
   securitySchemes:
     oauth2MEFLSOAPI:
       description: Default m2m client code
       flows:
         clientCredentials:
-          refreshUrl: http://mef.net/example/refresh
+          refreshUrl: 'http://mef.net/example/refresh'
           scopes:
             default: default scope
-          tokenUrl: http://mef.net/example/token
+          tokenUrl: 'http://mef.net/example/token'
       type: oauth2

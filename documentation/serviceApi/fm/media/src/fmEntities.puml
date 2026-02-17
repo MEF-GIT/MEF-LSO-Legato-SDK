@@ -26,7 +26,7 @@ FMR -> FMR: state: completed
 
 FMR --> FJ: (report completed)
 
-note right of FJ: non-recurring Job
+note over of FJ: non-recurring Job
 FJ -> FJ: state: completed
 
 B -> FMR: GET /faultManagementReport

@@ -1,20 +1,16 @@
 @startuml faultManagementJobModel
 
 class FaultManagementJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: uri
     id*: string
-    lastModifiedDate: date-time
-    rejectionReason: string
+    lastTimeModified: date-time
     state*: FaultManagementJobStateType
+    terminationError: TerminationError
 }
 FaultManagementJob_Create <|-d- FaultManagementJob
 
-
-
 enum FaultManagementJobStateType {
-
     acknowledged
     cancelled
     completed
@@ -28,7 +24,6 @@ enum FaultManagementJobStateType {
 }
 
 class FaultManagementJob_Create {
-
     description: string
     jobPriority: integer
     jobType*: JobType
@@ -44,7 +39,6 @@ FaultManagementJob_Create *-->"1" ServiceSpecificConfiguration : serviceSpecific
 
 class ServiceSpecificConfiguration {
 
-    @type*: string
 }
 
 @enduml

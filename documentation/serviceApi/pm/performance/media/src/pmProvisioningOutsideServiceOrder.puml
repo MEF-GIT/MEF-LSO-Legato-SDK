@@ -1,31 +1,29 @@
 @startuml pmProvisioningOutsideServiceOrder
 autonumber
 
-actor BUS as B
+actor "Buyer/Client" as B
+box "Seller/Server"
 collections "SOF:PerformanceMonitoring" as PM
 
 entity Hub 
 
 opt
-B -> Hub: registerListener (PerformanceJobNotification)
-B -> Hub: registerListener (PerformanceReportNotification)
+B -> Hub : POST {{baseUrl}}/hub with {{callbackUrl}} 
 end
 
-B -> PM: listPerformanceProfile
-PM --> B: Response (listPerformanceProfile)
+B -> PM: GET {{baseUrl}}/performanceProfile request 
+PM --> B: List of PerformanceProfile
 
-B -> PM: createPerformanceJob
+B -> PM: POST {{baseUrl}}/performanceJob request with PerformanceProfile
 
 create entity PerformanceJob as PJ
 PM -> PJ: <<create>>
 activate PJ
-PM --> B: Response (PerformanceJob)
-
-
+PM --> B: PerformanceJob with {{id}}
 
 opt
 PJ -> Hub: createEvent
-Hub -> B: notifyListeners (performanceJobCreateEvent)
+Hub -> B: POST {{callbackUrl}}/listener/performanceJobCreateEvent
 end
 
 note right of PJ: On scheduled date
@@ -33,7 +31,7 @@ PJ -> PJ: state: inProgress
 
 opt
 PJ -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (performanceJobStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/performanceJobStateChangeEvent
 end
 
 create entity PerformanceReport as PR
@@ -44,14 +42,14 @@ activate PR
 
 opt
   PR -> Hub: createEvent
-  Hub -> B: notifyListeners (performanceReportCreateEvent)
+  Hub -> B: POST {{callbackUrl}}/listener/performanceReportCreateEvent
 end 
 
 PR -> PR: state: inProgress
 
 opt
   PR -> Hub: stateChangeEvent
-  Hub -> B: notifyListeners (performanceReportStateChangeEvent)
+  Hub -> B: POST {{callbackUrl}}/listener/performanceReportStateChangeEvent
 end
 
 PJ -> PR: collectData
@@ -61,14 +59,14 @@ note right of PJ: reportingPeriod elapses
 PR -> PR: state: completed
 opt
 PR -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (performanceReportStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/performanceReportStateChangeEvent
 end
 
 PR --> PJ: (report completed)
 
 opt
 PJ -> Hub: reportReadyEvent
-Hub -> B: notifyListeners (performanceJobReportReadyEvent)
+Hub -> B: POST {{callbackUrl}}/listener/performanceJobReportReadyEvent
 end
 
 note right of PJ: Schedule elapses
@@ -77,13 +75,13 @@ PJ -> PJ: state: completed|scheduled
 
 opt
 PJ -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (performanceJobStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/performanceJobStateChangeEvent
 end
 
-B -> PM: getReport
+B -> PM: GET {{baseUrl}}/performanceReport/{{id}} request
 PM -> PR: <<retrieve>>
-PM --> B: Response (PerformanceReport)
+PM --> B: PerformanceReport with {{id}}
 
 entity Hub
-
+end box
 @enduml

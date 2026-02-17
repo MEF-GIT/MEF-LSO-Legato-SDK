@@ -1,0 +1,77 @@
+@startuml
+
+class IpBwpEnvelope {
+    tE: integer
+}
+
+IpBwpEnvelope *--> InformationRate : maxIrE
+
+class IpUniEgressBwpEnvelope {
+
+}
+
+class IpUniEgressBwpUni {
+
+}
+
+class IpUniEgressBwpAccessLink {
+    uniAccessLinkIdentifier: string
+}
+
+class IpUniEgressIpvcBwpIpvcEpAccessLink {
+    ipvcEndPointIdentifier: string
+    uniAccessLinkIdentifier: string
+}
+
+class IpUniEgressBwpIpvcEpCos {
+    ipvcEpIdCosName: string
+}
+
+class IpUniEgressBwpIpvcEpCosAccessLink {
+    uniAccessLinkIdentifier: string
+}
+
+class IpUniEgressBwpIpvcEp {
+    ipvcEndPointIdentifier: string
+}
+
+class EndPointIdentifierAndCosName {
+    ipvcEndPointIdentifier: string
+    cosName: string
+}
+
+class InformationRate {
+
+    irValue: number
+    irUnits: IrUnits
+}
+
+class IpBwpFlow {
+
+    flowIdentifier: integer
+    weight: integer
+    burstBehavior: BurstBehavior
+}
+
+IpBwpEnvelope <|-- IpUniEgressBwpEnvelope
+IpBwpEnvelope <|-- IpUniEgressBwpAccessLink
+IpBwpEnvelope <|-- IpUniEgressIpvcBwpIpvcEpAccessLink
+IpBwpEnvelope <|-- IpUniEgressBwpIpvcEpCos
+
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressIpvcBwpIpvcEpAccessLink : ipUniEgressBwpIpvcEpAccessLink
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressBwpAccessLink : ipUniEgressBwpAccessLink
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressBwpIpvcEpCosAccessLink : ipUniEgressBwpIpvcEpCosAccessLink
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressBwpIpvcEpCos : ipUniEgressBwpIpvcEpCos
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressBwpUni : ipUniEgressBwpUni
+IpUniEgressBwpEnvelope *-->"*" IpUniEgressBwpIpvcEp : ipUniEgressBwpIpvcEp
+IpUniEgressBwpIpvcEpCosAccessLink *--> EndPointIdentifierAndCosName : endPointIdentifierAndCosName 
+
+
+IpBwpFlow <|-- IpUniEgressBwpUni
+IpBwpFlow <|-- IpUniEgressBwpIpvcEp
+
+IpBwpFlow *--> InformationRate : maxIr
+IpBwpFlow *--> InformationRate : cir
+
+
+@enduml

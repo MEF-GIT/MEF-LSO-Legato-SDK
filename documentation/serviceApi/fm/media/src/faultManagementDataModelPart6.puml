@@ -1,0 +1,43 @@
+@startuml faultManagementDataModelPart6
+
+class FmTrackingRecord {
+    creationDateTime*: date-time
+    description: string
+    id*: string
+    request: string
+    source: string
+}
+
+FmTrackingRecord *-->"1" RelatedObjectRef : relatedObjectId
+
+class RelatedObjectRef {
+
+}
+
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type*: string    
+}
+
+class FaultManagementReportRef {
+    faultManagementReportHref: string
+    faultManagementReportId*: string
+    @type*: string
+}
+
+RelatedObjectRef <|-- FaultManagementJobRef
+RelatedObjectRef <|-- FaultManagementReportRef
+
+class EventSubscription {
+    callback*: string
+    id*: string
+    query: string
+}
+
+class EventSubscriptionInput {
+    callback*: string
+    query: string
+}
+
+@enduml

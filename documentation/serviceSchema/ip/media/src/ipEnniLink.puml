@@ -1,0 +1,29 @@
+@startuml
+
+
+class ServiceValue {
+    id: String
+    href: String
+    place: RelatedPlaceRefOrValue
+    serviceOffering: ServiceOfferingRef
+    serviceRelationship: ServiceRelationship
+    << ...attributes are skipped ...>>
+}
+
+class MefServiceConfiguration {
+    @type: String <<discriminator>>
+}
+
+class IpEnniLink {
+    identifier: String[1]
+    l2Technology: L2Technology[1]
+    ipv4ConnectionAddressing: EnniIpv4ConnectionAddressing[0..1]
+    ipv6ConnectionAddressing: EnniIpv6ConnectionAddressing[0..1]
+    bfd: AccessLinkBfd[0..1]
+    mtu: Integer[1]
+}
+
+MefServiceConfiguration <|-- IpEnniLink
+ServiceValue "1" *--> "0..1" MefServiceConfiguration: serviceConfiguration
+
+@enduml

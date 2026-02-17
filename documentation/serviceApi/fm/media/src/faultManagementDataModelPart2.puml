@@ -1,63 +1,19 @@
 @startuml faultManagementDataModelPart2
-skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
-}
 
-class CancelFaultManagementJob {
-
-    creationDate*: date-time
-    href: string
-    id*: string
-    state*: FaultManagementJobProcessStateType
-}
-CancelFaultManagementJob_Create <|-- CancelFaultManagementJob
-
-
-
-class CancelFaultManagementJob_Create {
-
-}
-
-CancelFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
-
-class ModifyFaultManagementJob {
-
-    creationDate*: date-time
-    href: string
-    id*: string
-    state*: FaultManagementJobProcessStateType
-}
-ModifyFaultManagementJob_Create <|-- ModifyFaultManagementJob
-
-
-
-class ModifyFaultManagementJob_Create {
-
-    description: string
+class FaultManagementJobComplexQuery_Create {
+    creationDateTime.gt: date-time
+    creationDateTime.lt: date-time
     jobPriority: integer
+    jobType: JobType
     outputFormat: OutputFormat
     resultFormat: ResultFormat
+    state: FaultManagementJobStateType
 }
 
-ModifyFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
-ModifyFaultManagementJob_Create *--> TimeDuration : granularity
-ModifyFaultManagementJob_Create *--> TimeDuration : reportingPeriod
-ModifyFaultManagementJob_Create *--> ScheduleDefinition : scheduleDefinition
-ModifyFaultManagementJob_Create *--> ServiceSpecificConfiguration : serviceSpecificConfiguration
-
-class FaultManagementJobRef {
-
-    faultManagementJobHref: string
-    faultManagementJobId*: string
-}
-
-enum FaultManagementJobProcessStateType {
-
-    acknowledged
-    completed
-    inProgress
-    rejected
-}
+FaultManagementJobComplexQuery_Create *--> TimeDuration : granularity
+FaultManagementJobComplexQuery_Create *--> MonitoredObjectRef : monitoredObject
+FaultManagementJobComplexQuery_Create *--> TimeDuration : reportingPeriod
+FaultManagementJobComplexQuery_Create *--> ScheduleDefinition : scheduleDefinition
+FaultManagementJobComplexQuery_Create *-u-> ServiceSpecificConfiguration : serviceSpecificConfiguration
 
 @enduml

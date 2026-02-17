@@ -3,14 +3,14 @@
 hide footbox
 
 participant "Buyer/Client" as B
-participant SOF
+participant "Seller/Server" as SOF
 
 B -> SOF : POST {{baseUrl}}/hub with {{callbackUrl}} 
 SOF --> B: 201 confirmation with {{id}}
 ...
 B -> SOF : POST {{baseUrl}}/performanceJob
 SOF -> SOF : basic validation
-SOF -> SOF : assign performanceJob.id
+SOF -> SOF : assign id
 
 alt succesful inquiry
   SOF --> B : 201 PerformanceJob with {{id}} in `acknowledged` state
@@ -51,7 +51,7 @@ alt succesful inquiry
   B --> SOF : 204 confirmation
 
   note over B, SOF : PerformanceReport generation failed
-  SOF -> B: {{callbackUrl}}/listener/performanceJobReportPreparationErrorEvent {{id}}, failureReason
+  SOF -> B: {{callbackUrl}}/listener/performanceJobReportPreparationErrorEvent {{id}}
   B --> SOF : 204 confirmation
 
   note over B, SOF : PerformanceJob is not recurring

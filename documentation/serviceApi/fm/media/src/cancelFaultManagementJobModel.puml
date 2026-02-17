@@ -1,15 +1,12 @@
 @startuml cancelFaultManagementJobModel
 
 class CancelFaultManagementJob {
-
-    creationDate*: date-time
+    creationDateTime*: date-time
     href: string
     id*: string
     state*: FaultManagementJobProcessStateType
 }
 CancelFaultManagementJob_Create <|-- CancelFaultManagementJob
-
-
 
 class CancelFaultManagementJob_Create {
 
@@ -17,6 +14,11 @@ class CancelFaultManagementJob_Create {
 
 CancelFaultManagementJob_Create *-->"1" FaultManagementJobRef : faultManagementJob
 
+class FaultManagementJobRef {
+    faultManagementJobHref: string
+    faultManagementJobId*: string
+    @type*: string
+}
 
 enum FaultManagementJobProcessStateType {
     acknowledged

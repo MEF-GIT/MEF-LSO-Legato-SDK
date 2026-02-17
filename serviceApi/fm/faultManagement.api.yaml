@@ -3,8 +3,10 @@ info:
   description: |
     **This file forms part of Mplify 148**
 
+
     **This API implements part of Business Requirements & Use Cases described
     in Mplify 133.1.**
+
 
     Mplify Fault Management API allows to manage Fault Management Jobs, collect 
     Fault Management Reports, as well as receive notifications related to these
@@ -13,15 +15,18 @@ info:
     the results of the Job. Examples of the Fault Management Job are Link Trace 
     and Loopback. 
 
+
     Two types of entities are supported by the API:
     - **Fault Management Job** - specifies the Fault Management Job
       configuration. FM Job is typically run as part of a troubleshooting or 
       diagnostic process of a service, an ordered pair (e.g., two UNIs), 
       or an entity (e.g., port). 
 
+
     - **Fault Management Report** - The execution of Fault Management Job 
       results in Fault Management Reports that provide Buyer/Client with the 
       job results.
+
 
     List of use cases supported by the API:
     - Create Fault Management Job

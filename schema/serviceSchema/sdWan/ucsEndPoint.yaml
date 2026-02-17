@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:ucs-end-point:v0.0.3:all
+$id: urn:mef:lso:spec:service:ucs-end-point:v0.0.4:all
 title: MEF LSO Service - SD-WAN Underlay Connectivity Service End Point
     # Mplify Alliance - Date: 20251220  Edit-level: 
     # File: schema/serviceSchema/sdWan/ucsEndPoint.yaml

@@ -1,7 +1,5 @@
 @startuml extensionPattern
 skinparam {
-    ClassBackgroundColor White
-    ClassBorderColor Black
     ClassBorderColor<<ServiceSpecificTestProfileConfiguration>> FireBrick
     ClassBorderColor<<ServiceSpecificTestJobConfiguration>> FireBrick
     ClassBorderColor<<ServiceSpecificTestResultConfiguration>> FireBrick

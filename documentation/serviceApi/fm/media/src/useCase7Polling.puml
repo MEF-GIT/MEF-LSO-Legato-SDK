@@ -15,7 +15,7 @@ alt successful inquiry
   ...
 
   loop periodically until CancelFaultManagementJob in terminal state
-      B -> S :   GET {{baseUrl}}/cancelFaultManagementJob/{{id}}
+      B -> S : GET {{baseUrl}}/cancelFaultManagementJob/{{id}}
       return 200 CancelFaultManagementJob in current state
   end
 

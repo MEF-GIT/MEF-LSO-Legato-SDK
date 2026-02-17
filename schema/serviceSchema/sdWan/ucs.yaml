@@ -1,5 +1,5 @@
 $schema: http://json-schema.org/draft-07/schema#
-$id: urn:mef:lso:spec:service:ucs:v0.0.3:all
+$id: urn:mef:lso:spec:service:ucs:v0.0.4:all
 title: Mplify LSO Service - SD-WAN Underlay Connectivity Service
     # Mplify Alliance - Date: 20251230  Edit-level: 
     # File: schema/serviceSchema/sdWan/ucs.yaml

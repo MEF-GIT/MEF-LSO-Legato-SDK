@@ -1,28 +1,26 @@
 @startuml fmProvisioning
 autonumber
 
-actor BUS as B
+actor "Buyer/Client" as B
+box "Seller/Server"
 collections "SOF:FaultManagement" as SOF
 
 entity Hub 
 
 opt
-B -> Hub: registerListener (FaultManagementJobNotification)
-B -> Hub: registerListener (FaultManagementReportNotification)
+B -> Hub : POST {{baseUrl}}/hub with {{callbackUrl}} 
 end
 
-B -> SOF: createFaultManagementJob
+B -> SOF: POST {{baseUrl}}/faultManagementJob request
 
 create entity FaultManagementJob as FMJ
 SOF -> FMJ: <<create>>
-
-SOF --> B: Response (FaultManagementJob)
-
 activate FMJ
+SOF --> B: FaultManagementJob with {{id}}
 
 opt
 FMJ -> Hub: createEvent
-Hub -> B: notifyListeners (faultManagementJobCreateEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementJobCreateEvent
 end
 
 note right of FMJ: On scheduled date
@@ -30,7 +28,7 @@ FMJ -> FMJ: state: inProgress
 
 opt
 FMJ -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementJobStateChangeEvent
 end
 
 create entity FaultManagementReport as FMR
@@ -40,14 +38,14 @@ activate FMR
 
 opt
 FMR -> Hub: createEvent
-Hub -> B: notifyListeners (faultManagementReportCreateEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementReportCreateEvent
 end
 
 FMR -> FMR: state: inProgress
 
 opt
 FMR -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementReportStateChangeEvent
 end
 
 FMJ -> FMR: collectData
@@ -59,14 +57,14 @@ FMR -> FMR: state: completed
 
 opt
 FMR -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (faultManagementReportStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementReportStateChangeEvent
 end
 
 FMR --> FMJ: (report completed)
 
 opt
 FMJ -> Hub: reportReadyEvent
-Hub -> B: notifyListeners (faultManagementJobReportReadyEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementJobReportReadyEvent
 end
 
 note right of FMJ: Schedule elapses
@@ -75,13 +73,15 @@ FMJ -> FMJ: state: completed|scheduled
 
 opt
 FMJ -> Hub: stateChangeEvent
-Hub -> B: notifyListeners (faultManagementJobStateChangeEvent)
+Hub -> B: POST {{callbackUrl}}/listener/faultManagementJobStateChangeEvent
 end
 
-B -> SOF: getReport
+B -> SOF: GET {{baseUrl}}/faultManagementReport/{{id}} request
 SOF -> FMR: <<retrieve>>
-SOF --> B: Response (FaultManagementReport)
+SOF --> B: FaultManagementReport with {{id}}
 
 entity Hub
+
+end box
 
 @enduml
